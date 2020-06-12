@@ -11,7 +11,7 @@ build and deploy:
   script:
     - export KUBECONFIG=$MANIFEST_HOME/config
     - docker build -t $imageTag .
-    - helm upgrade $MANIFEST_HOME/manifest/lumenswap-front -n lumenswap-prod --set image.tag=$CI_COMMIT_SHORT_SHA --wait --install --atomic
+    - helm upgrade lumenswap-front $MANIFEST_HOME/manifest/lumenswap-front -n lumenswap-prod --set image.tag=$CI_COMMIT_SHORT_SHA --wait --install --atomic
   tags:
     - runner
 
