@@ -1,0 +1,12 @@
+variables:
+  imageTag: lumenswap-front:$CI_COMMIT_SHORT_SHA
+
+stages:
+  - build
+  - deploy
+
+build and generate docker image:
+  build:
+    - export KUBECONFIG=$MANIFEST_HOME/config
+    - docker build -t $imageTag .
+    - helm upgrade $MANIFEST_HOME/manifest/lumenswap-front -n lumenswap --set-image.tag=$CI_COMMIT_SHORT_SHA --wait --install --atomic
