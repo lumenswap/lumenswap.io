@@ -9,7 +9,7 @@ build and deploy:
     - master
   stage: build
   script:
-    - export KUBECONFIG=$MANIFEST_HOME/config
+    - export KUBECONFIG=$MANIFEST_HOME/../config
     - docker build -t $imageTag .
     - helm upgrade lumenswap-front $MANIFEST_HOME/manifest/lumenswap-front -n lumenswap-prod --set image.tag=$CI_COMMIT_SHORT_SHA --wait --install --atomic
   tags:
