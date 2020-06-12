@@ -9,4 +9,4 @@ build and generate docker image:
   build:
     - export KUBECONFIG=$MANIFEST_HOME/config
     - docker build -t $imageTag .
-    - helm upgrade $MANIFEST_HOME/manifest/lumenswap-front -n lumenswap --set-image.tag=$CI_COMMIT_SHORT_SHA --wait --install --atomic
+    - helm upgrade $MANIFEST_HOME/manifest/lumenswap-front -n lumenswap-prod --set-image.tag=$CI_COMMIT_SHORT_SHA --wait --install --atomic
