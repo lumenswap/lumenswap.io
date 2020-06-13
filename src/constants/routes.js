@@ -1,2 +1,2 @@
 export const homePage = '/';
-export const swapPage = '/swap';
+export const exchangePage = '/exchange';

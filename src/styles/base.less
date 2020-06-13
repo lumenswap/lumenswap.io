@@ -39,8 +39,8 @@ html, body, #root {
   transform: translate(-50%, -50%);
 }
 
-.td-light{
-  color: @battleship-grey!important;
+.td-light {
+  color: @battleship-grey !important;
 }
 
 
@@ -62,4 +62,26 @@ html, body, #root {
   border-radius: 10px;
   background-color: @vibrant-blue;
   cursor: pointer;
+}
+
+.shadow-card {
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  border-radius: 8px;
+  background: white;
+}
+
+.primary-label {
+  font-size: 18px;
+  color: @black;
+}
+
+.primary-input {
+  border-radius: 8px;
+  border: 1px solid @very-light-blue;
+  height: 54px;
+}
+
+.primary-input:focus, .primary-input:active {
+  box-shadow: none;
+  border: 1px solid @vibrant-blue;
 }
