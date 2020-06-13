@@ -5,10 +5,10 @@ import Header from './Header';
 import Footer from './Footer';
 import styles from './styles.less';
 
-const BaseLayout = ({ children }) => (
+const BaseLayout = ({ children, connectWallet }) => (
   <>
     <div id="header" className={styles.back} style={{ paddingTop: '42px' }}>
-      <Header />
+      <Header connectWallet={connectWallet} />
     </div>
     <div id="content" className={styles.back}>
       {children}

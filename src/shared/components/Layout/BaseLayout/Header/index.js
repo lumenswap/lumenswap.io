@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.less';
 
-const Header = (props) => (
+const Header = ({ connectWallet }) => (
   <div className="row justify-content-between">
     <div className="col-auto">
       <div className="row">
@@ -21,6 +21,13 @@ const Header = (props) => (
       </div>
     </div>
     <div className="col-auto">
+      {connectWallet && (
+      <button type="button" className={classNames(styles.connect)}>
+        Connect Wallet
+      </button>
+      )}
+      {!connectWallet
+      && (
       <div className="row justify-content-end">
         <div className="col-auto">
           <p className={classNames(styles.badge, styles.address)}>
@@ -31,18 +38,24 @@ const Header = (props) => (
         <div className="col-auto">
           <button
             type="button"
-            className={classNames('btn ml-1 d-flex align-items-center h-100', styles.exit)}
+            className={classNames('btn ml-1 d-flex align-items-center h-100',
+              styles.exit)}
           >
             <span className="icon-shutdown" />
           </button>
         </div>
       </div>
+      )}
     </div>
   </div>
 );
 
-Header.propTypes = {
+Header.defaultProps = {
+  connectWallet: false,
+};
 
+Header.propTypes = {
+  connectWallet: PropTypes.bool,
 };
 
 export default Header;
