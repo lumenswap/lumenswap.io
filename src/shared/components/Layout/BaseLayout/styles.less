@@ -1,6 +1,11 @@
 @import "~Root/styles/colors.less";
+@import "~Root/styles/vars";
 
 :local(.back) {
   background: @pale-grey;
   padding: 0 40px;
+
+  @media (max-width: @md) {
+    padding: 0 20px;
+  }
 }
