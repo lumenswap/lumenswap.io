@@ -8,14 +8,17 @@
 }
 
 :local(.badge) {
-  margin-bottom: 0;
-  margin-left: 49px;
-  background: white;
-  font-size: 16px;
-  color: @vibrant-blue;
   border-radius: 4px;
+  background: white;
   border: 1px solid @very-light-blue;
   padding: 6px 8px;
+  margin-bottom: 0;
+}
+
+:local(.order) {
+  margin-left: 49px;
+  font-size: 16px;
+  color: @vibrant-blue;
   display: flex;
 
   :local(.badge-num) {
@@ -26,5 +29,30 @@
     background: @pale-grey;
     position: relative;
     margin-left: 10px;
+  }
+}
+
+:local(.exit) {
+  font-size: 20px;
+  padding: 0 !important;
+  color: @battleship-grey;
+}
+
+:local(.exit):hover {
+  color: @battleship-grey;
+}
+
+:local(.address) {
+  display: flex;
+  font-size: 14px;
+
+  :local(.address-title) {
+    color: @light-grey-blue;
+    margin-right: 2px;
+  }
+
+  :local(.address-value) {
+    font-weight: 500;
+    color: @black;
   }
 }
