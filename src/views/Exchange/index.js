@@ -19,7 +19,7 @@ const Exchange = (props) => {
   return (
     <BaseLayout connectWallet>
       <div className="row justify-content-center h-100 align-items-center">
-        <div className="col-xl-3 col-lg-5 col-md-7 col-sm-8 col-10 px-0">
+        <div className="col-xl-3 col-lg-5 col-md-7 col-sm-8 col-11 px-0">
           <div className={classNames('shadow-card', styles.card)}>
             <Nav tabs>
               <NavItem>

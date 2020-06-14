@@ -79,9 +79,30 @@ html, body, #root {
   border-radius: 8px;
   border: 1px solid @very-light-blue;
   height: 54px;
+  color: @black;
+  font-size: 24px;
 }
 
 .primary-input:focus, .primary-input:active {
   box-shadow: none;
   border: 1px solid @vibrant-blue;
+}
+
+.primary-input::placeholder {
+  color: @battleship-grey;
+  font-size: 24px;
+}
+
+button:focus {
+  outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
 }
