@@ -1,0 +1,68 @@
+@import '~Root/styles/colors';
+
+:local(.btn) {
+  height: 32px;
+  border-radius: 6px;
+  background: @so-light-grey;
+  border: 1px solid @so-light-grey;
+  font-size: 14px;
+  color: @battleship-grey;
+  margin-right: 8px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+:local(.active) {
+  background: @vibrant-blue;
+  border: 1px solid @vibrant-blue;
+  color: white;
+}
+
+:local(.group) {
+  background: @so-light-grey;
+  border: 1px solid @so-light-grey;
+  border-radius: 6px;
+  padding-right: 7px;
+  padding-left: 7px;
+  height: 32px;
+
+  input {
+    background: @so-light-grey;
+    border: 1px solid @so-light-grey;
+    height: 30px;
+    margin-top: -0.5px;
+    font-size: 14px;
+    color: @black;
+    padding: 6px;
+  }
+
+  input:focus {
+    box-shadow: none;
+    background: @so-light-grey;
+    border: 1.5px solid @so-light-grey;
+  }
+}
+
+:local(.group):focus-within {
+  border: 1px solid @vibrant-blue;
+  transition: 0.3s ease-in-out;
+}
+
+:local(.percentage), :local(.input-name) {
+  .input-group-text {
+    background: @so-light-grey;
+    font-size: 14px;
+    color: @battleship-grey;
+    padding-right: 0;
+    padding-left: 0;
+    border: none;
+    height: 30px;
+    margin-top: -0.5px;
+  }
+}
+
+:local(.input-name) {
+  .input-group-text {
+    padding-right: 1px;
+  }
+}

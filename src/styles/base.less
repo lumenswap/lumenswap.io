@@ -106,3 +106,18 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }
+
+
+.tooltip-inner {
+  background-color: @pale-grey;
+  color: @black;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+  opacity: 1;
+  padding: 8px 20px;
+}
+
+.bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
+  border-top-color: @pale-grey !important;
+  box-shadow: -15px 0 15px -15px inset;
+}
