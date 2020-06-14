@@ -8,8 +8,8 @@ import btcLogo from 'Root/assets/images/btc-logo.png';
 import ethLogo from 'Root/assets/images/eth-logo.png';
 import xlmLogo from 'Root/assets/images/xlm-logo.png';
 import CryptoRouteItem from 'Root/shared/components/CryptoRouteItem';
+import ToleranceGroup from 'Root/shared/components/ToleranceGroup';
 import styles from './styles.less';
-import ToleranceGroup from '../../../shared/components/ToleranceGroup';
 
 const Advanced = (props) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -86,6 +86,7 @@ html, body, #root {
 .primary-input:focus, .primary-input:active {
   box-shadow: none;
   border: 1px solid @vibrant-blue;
+  transition: 0.3s ease-in-out;
 }
 
 .primary-input::placeholder {
@@ -119,5 +120,33 @@ input[type=number] {
 
 .bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
   border-top-color: @pale-grey !important;
-  box-shadow: -15px 0 15px -15px inset;
+}
+
+.rc-switch:focus {
+  box-shadow: none !important;
+}
+
+.rc-switch:after {
+  background-color: @light-grey-blue;
+  width: 22px;
+  height: 22px;
+  box-shadow: none;
+}
+
+.rc-switch-checked:after{
+  background-color: @vibrant-blue;
+}
+
+.rc-switch{
+  width: 48px;
+  height: 26px;
+  line-height: 24px;
+  border-radius: 24px 24px;
+  background-color: @so-light-grey;
+  border: 1px solid @so-light-grey;
+}
+
+.rc-switch:hover:after {
+  transform: unset!important;
+  animation-name: unset;
 }
