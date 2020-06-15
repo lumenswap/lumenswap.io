@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import btcLogo from 'Root/assets/images/btc-logo.png';
 import ethLogo from 'Root/assets/images/eth-logo.png';
 import arrowDown from 'Root/assets/images/arrow-down.png';
-import InfoItem from 'Root/InfoItem';
+import InfoItem from 'Root/shared/components/InfoItem';
 import styles from './styles.less';
 
 const ConfirmSendContent = (props) => {
