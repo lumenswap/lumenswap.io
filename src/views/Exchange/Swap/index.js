@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import arrowDown from 'Root/assets/images/arrow-down.png';
 import arrowRepeat from 'Root/assets/images/arrow-repeat.png';
 import btcLogo from 'Root/assets/images/btc-logo.png';
@@ -52,7 +53,12 @@ const Swap = (props) => (
           />
         </p>
       </div>
-      <button type="button" className={styles.btn}>Connect Wallet</button>
+      <button
+        type="button"
+        className={classNames(styles.btn,
+          'button-primary-lg')}
+      >Connect Wallet
+      </button>
     </form>
   </div>
 );

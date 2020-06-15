@@ -87,7 +87,12 @@ const Send = (props) => {
             />
           </div>
         </div>
-        <button type="button" className={styles.btn}>Send</button>
+        <button
+          type="button"
+          className={classNames(styles.btn,
+            'button-primary-lg')}
+        >Send
+        </button>
       </form>
     </div>
   );

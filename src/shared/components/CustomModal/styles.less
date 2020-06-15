@@ -1,0 +1,76 @@
+@import "~Root/styles/colors";
+@import "~Root/styles/vars";
+
+:local(.modal) {
+  //width: 480px!important;
+  .modal-content {
+    //padding: 17px 25px 30px 25px;
+    //border: none;
+    //border-radius: 4px!important;
+    //@media (max-width: @sm) {
+    //  padding: 17px 10px 30px 10px;
+    //}
+  }
+
+  //@media (max-width: @sm) {
+  //  width:  400px!important;
+  //}
+  //
+  //@media (max-width: @x-sm) {
+  //  width:  330px!important;
+  //}
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal {
+  text-align: center;
+  padding: 0 !important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+:local(.remove) {
+  padding: 0 !important;
+
+  span {
+    font-size: 18px;
+    color: @very-light-blue;
+  }
+}
+
+:local(.header) {
+  padding: 11px 18px 10px 18px;
+}
+
+:local(.title) {
+  font-size: 18px;
+  font-weight: bold;
+  color: @black;
+  margin-bottom: 0;
+}
+
+:local(.hr) {
+  border: 0;
+  clear: both;
+  display: block;
+  width: 100%;
+  background-color: @very-light-blue;
+  height: 1px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+:local(.content) {
+  padding: 20px 18px;
+}
