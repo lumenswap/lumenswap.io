@@ -1,0 +1,49 @@
+@import '~Root/styles/colors';
+
+:local(.img) {
+  height: 40px;
+  width: 40px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+}
+
+:local(.title) {
+  font-size: 18px;
+  font-weight: bold;
+  color: @black;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+:local(.text) {
+  font-size: 14px;
+  color: @battleship-grey;
+  margin-bottom: 0;
+  word-break: break-all;
+  margin-top: 9px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+:local(.btn) {
+  width: 178px;
+  height: 40px;
+  border-radius: 8px;
+  color: white;
+  background-color: @vibrant-blue;
+  border: 1px solid @vibrant-blue;
+  box-shadow: 0 2px 30px -4px rgba(15, 48, 168, 0.2);
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none !important;
+  text-align: center;
+  margin: 30px auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:local(.btn):hover {
+  color: white;
+}
