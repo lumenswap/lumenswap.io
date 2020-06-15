@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import CustomModal from '../../shared/components/CustomModal';
-import ConfirmSendContent from '../../shared/components/ModalContent/ConfirmSendContent';
-import TokenContent from '../../shared/components/ModalContent/TokenContent';
-import ConfirmSwapContent
-  from '../../shared/components/ModalContent/ConfirmSwapContent';
+import CustomModal from 'Root/shared/components/CustomModal';
+import ConfirmSendContent from 'Root/shared/components/ModalContent/ConfirmSendContent';
+import TokenContent from 'Root/shared/components/ModalContent/TokenContent';
+import ConfirmSwapContent from 'Root/shared/components/ModalContent/ConfirmSwapContent';
+import WaitingContent
+  from '../../shared/components/ModalContent/WaitingContent';
 
 const ModalPage = () => {
   const [confirmSendModal, toggleConfirmSendModal] = useState(false);
   const [confirmSwapModal, toggleConfirmSwapModal] = useState(false);
   const [tokenModal, toggleTokenModal] = useState(false);
+  const [waitingModal, toggleWaitingModal] = useState(false);
   return (
     <div className="h-100" style={{ background: '#09112c' }}>
       <div className="container mt-5">
@@ -26,6 +28,7 @@ const ModalPage = () => {
         >
           <ConfirmSendContent />
         </CustomModal>
+
         {/* confirm swap */}
         <button
           className="btn btn-primary mr-3"
@@ -40,9 +43,10 @@ const ModalPage = () => {
         >
           <ConfirmSwapContent />
         </CustomModal>
+
         {/* token modal */}
         <button
-          className="btn btn-primary"
+          className="btn btn-primary mr-3"
           onClick={() => { toggleTokenModal(true); }}
         >select token
         </button>
@@ -53,6 +57,20 @@ const ModalPage = () => {
           modalSize="360"
         >
           <TokenContent />
+        </CustomModal>
+
+        {/* modal */}
+        <button
+          className="btn btn-primary"
+          onClick={() => { toggleWaitingModal(true); }}
+        >waiting
+        </button>
+        <CustomModal
+          toggle={toggleWaitingModal}
+          modal={waitingModal}
+          modalSize="360"
+        >
+          <WaitingContent message="Waiting for sign transaction" />
         </CustomModal>
       </div>
     </div>
