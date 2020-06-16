@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import angleDown from 'Root/assets/images/angle-down.svg';
+import angleDown from 'src/assets/images/angle-down.svg';
 import styles from './styles.less';
 
 const TxnInput = ({

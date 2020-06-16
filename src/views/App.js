@@ -4,8 +4,8 @@ import { homePage, exchangePage, modalPage } from '../constants/routes';
 import Home from './Home';
 import Exchange from './Exchange';
 import ModalPage from './ModalPage';
-import '../../node_modules/rc-switch/assets/index.css';
-import 'Root/styles/base.less';
+import 'rc-switch/assets/index.css';
+import 'src/styles/base.less';
 
 export default () => (
   <Switch>

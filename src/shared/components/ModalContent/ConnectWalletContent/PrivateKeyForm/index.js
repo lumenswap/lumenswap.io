@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
-import Loading from 'Root/shared/components/Loading';
+import Loading from 'src/shared/components/Loading';
 import styles from './styles.less';
 
 const PrivateKeyForm = (props) => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import btcLogo from 'Root/assets/images/btc-logo.png';
-import ethLogo from 'Root/assets/images/eth-logo.png';
-import arrowDown from 'Root/assets/images/arrow-down.png';
-import InfoItem from 'Root/shared/components/InfoItem';
+import btcLogo from 'src/assets/images/btc-logo.png';
+import ethLogo from 'src/assets/images/eth-logo.png';
+import arrowDown from 'src/assets/images/arrow-down.png';
+import InfoItem from 'src/shared/components/InfoItem';
 import styles from './styles.less';
 
 const ConfirmSendContent = (props) => {

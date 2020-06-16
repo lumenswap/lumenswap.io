@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Modal } from 'reactstrap';
-import isEmpty from 'Root/helpers/is-empty';
-import arrowLeft from 'Root/assets/images/arrow-left.png';
-import { connectModalTab } from 'Root/constants/enum';
+import isEmpty from 'src/helpers/is-empty';
+import arrowLeft from 'src/assets/images/arrow-left.png';
+import { connectModalTab } from 'src/constants/enum';
 import styles from './styles.less';
 
 const CustomModal = ({

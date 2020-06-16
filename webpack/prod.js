@@ -24,6 +24,7 @@ module.exports = Object.assign({}, common, {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
+      ...process.env,
       ...envs,
     }),
     new MiniCssExtractPlugin({

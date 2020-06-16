@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { arrowRightSvg } from 'Root/constants/valus';
-import { connectModalTab } from 'Root/constants/enum';
+import { arrowRightSvg } from 'src/constants/valus';
+import { connectModalTab } from 'src/constants/enum';
 import PublicKeyForm from './PublicKeyForm';
 import PrivateKeyForm from './PrivateKeyForm';
 import styles from './styles.less';

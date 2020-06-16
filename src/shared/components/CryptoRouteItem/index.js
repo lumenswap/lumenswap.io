@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import angleRight from 'Root/assets/images/angle-right-light.png';
+import angleRight from 'src/assets/images/angle-right-light.png';
 import styles from './styles.less';
 
 const CryptoRouteItem = ({ logo, name, isLast }) => (

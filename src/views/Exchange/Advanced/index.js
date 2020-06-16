@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Collapse } from 'reactstrap';
-import angleDown from 'Root/assets/images/angle-down-blue.svg';
-import DetailTooltip from 'Root/shared/components/DetailTooltip';
-import btcLogo from 'Root/assets/images/btc-logo.png';
-import ethLogo from 'Root/assets/images/eth-logo.png';
-import xlmLogo from 'Root/assets/images/xlm-logo.png';
-import CryptoRouteItem from 'Root/shared/components/CryptoRouteItem';
-import ToleranceGroup from 'Root/shared/components/ToleranceGroup';
+import angleDown from 'src/assets/images/angle-down-blue.svg';
+import DetailTooltip from 'src/shared/components/DetailTooltip';
+import btcLogo from 'src/assets/images/btc-logo.png';
+import ethLogo from 'src/assets/images/eth-logo.png';
+import xlmLogo from 'src/assets/images/xlm-logo.png';
+import CryptoRouteItem from 'src/shared/components/CryptoRouteItem';
+import ToleranceGroup from 'src/shared/components/ToleranceGroup';
 import styles from './styles.less';
 
 const Advanced = (props) => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import copyText from 'Root/helpers/copyText';
+import copyText from 'src/helpers/copyText';
 
 import styles from './styles.less';
 

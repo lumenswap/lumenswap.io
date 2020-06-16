@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import btcLogo from 'Root/assets/images/btc-logo.png';
-import ethLogo from 'Root/assets/images/eth-logo.png';
-import xlmLogo from 'Root/assets/images/xlm-logo.png';
+import btcLogo from 'src/assets/images/btc-logo.png';
+import ethLogo from 'src/assets/images/eth-logo.png';
+import xlmLogo from 'src/assets/images/xlm-logo.png';
 import styles from './styles.less';
 
 const tokens = [

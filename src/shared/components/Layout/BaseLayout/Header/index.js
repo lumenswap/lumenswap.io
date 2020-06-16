@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Select from 'react-select';
-import btcLogo from 'Root/assets/images/btc-logo.png';
-import ethLogo from 'Root/assets/images/eth-logo.png';
-import xlmLogo from 'Root/assets/images/xlm-logo.png';
+import btcLogo from 'src/assets/images/btc-logo.png';
+import ethLogo from 'src/assets/images/eth-logo.png';
+import xlmLogo from 'src/assets/images/xlm-logo.png';
 import styles from './styles.less';
 
 const item = (logo, name, web) => (

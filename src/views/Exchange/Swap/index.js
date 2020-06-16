@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import arrowDown from 'Root/assets/images/arrow-down.png';
-import arrowRepeat from 'Root/assets/images/arrow-repeat.png';
-import btcLogo from 'Root/assets/images/btc-logo.png';
-import ethLogo from 'Root/assets/images/eth-logo.png';
-import TxnInput from 'Root/shared/components/TxnInput';
+import arrowDown from 'src/assets/images/arrow-down.png';
+import arrowRepeat from 'src/assets/images/arrow-repeat.png';
+import btcLogo from 'src/assets/images/btc-logo.png';
+import ethLogo from 'src/assets/images/eth-logo.png';
+import TxnInput from 'src/shared/components/TxnInput';
 import styles from './styles.less';
 
 const Swap = () => {

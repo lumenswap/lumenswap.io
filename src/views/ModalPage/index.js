@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import CustomModal from 'Root/shared/components/CustomModal';
-import ConfirmSendContent from 'Root/shared/components/ModalContent/ConfirmSendContent';
-import TokenContent from 'Root/shared/components/ModalContent/TokenContent';
-import ConfirmSwapContent from 'Root/shared/components/ModalContent/ConfirmSwapContent';
-import WaitingContent from 'Root/shared/components/ModalContent/WaitingContent';
-import TransactionStatusContent from 'Root/shared/components/ModalContent/TransactionStatusContent';
-import { trsStatus, connectModalTab } from 'Root/constants/enum';
-import ConnectWalletContent from 'Root/shared/components/ModalContent/ConnectWalletContent';
+import CustomModal from 'src/shared/components/CustomModal';
+import ConfirmSendContent from 'src/shared/components/ModalContent/ConfirmSendContent';
+import TokenContent from 'src/shared/components/ModalContent/TokenContent';
+import ConfirmSwapContent from 'src/shared/components/ModalContent/ConfirmSwapContent';
+import WaitingContent from 'src/shared/components/ModalContent/WaitingContent';
+import TransactionStatusContent from 'src/shared/components/ModalContent/TransactionStatusContent';
+import { trsStatus, connectModalTab } from 'src/constants/enum';
+import ConnectWalletContent from 'src/shared/components/ModalContent/ConnectWalletContent';
 
 const ModalPage = () => {
   const [confirmSendModal, toggleConfirmSendModal] = useState(false);

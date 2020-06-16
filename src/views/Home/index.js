@@ -1,8 +1,8 @@
 import React from 'react';
-import BaseLayout from 'Root/shared/components/Layout/BaseLayout';
-import { activeOrderTHeader, completeOrderTHeader } from 'Root/constants/valus';
-import Table from 'Root/shared/components/Table';
-import TableInfo from 'Root/shared/components/TableInfo';
+import BaseLayout from 'src/shared/components/Layout/BaseLayout';
+import { activeOrderTHeader, completeOrderTHeader } from 'src/constants/valus';
+import Table from 'src/shared/components/Table';
+import TableInfo from 'src/shared/components/TableInfo';
 import styles from './styles.less';
 
 const Home = (props) => {

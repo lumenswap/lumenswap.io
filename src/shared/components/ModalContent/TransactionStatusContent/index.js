@@ -2,10 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { trsStatus } from 'Root/constants/enum';
-import failLogo from 'Root/assets/images/exclamation-circle.png';
-import successLogo from 'Root/assets/images/tick-circle.png';
-import angleRight from 'Root/assets/images/angle-right-light.svg';
+import { trsStatus } from 'src/constants/enum';
+import failLogo from 'src/assets/images/exclamation-circle.png';
+import successLogo from 'src/assets/images/tick-circle.png';
+import angleRight from 'src/assets/images/angle-right-light.svg';
 import styles from './styles.less';
 
 const TransactionStatusContent = ({ status, address, toggle }) => {

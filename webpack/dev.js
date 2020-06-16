@@ -17,6 +17,7 @@ module.exports = Object.assign({}, common, {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
+      ...process.env,
       ...envs,
     }),
     new webpack.HotModuleReplacementPlugin(),

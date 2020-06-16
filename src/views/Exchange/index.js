@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
   TabContent, TabPane, Nav, NavItem, NavLink,
 } from 'reactstrap';
-import BaseLayout from 'Root/shared/components/Layout/BaseLayout';
+import BaseLayout from 'src/shared/components/Layout/BaseLayout';
 import styles from './styles.less';
 import Swap from './Swap';
 import Send from './Send';
 import Advanced from './Advanced';
 
-const Exchange = (props) => {
+const Exchange = () => {
   const [activeTab, setActiveTab] = useState('swap');
 
   const toggle = (tab) => {
