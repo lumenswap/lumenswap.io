@@ -18,7 +18,7 @@ const Exchange = (props) => {
   };
 
   return (
-    <BaseLayout connectWallet>
+    <BaseLayout notAccess>
       <div className="row h-100 align-items-center">
         <div className="col-12">
           <div className="row justify-content-center">
@@ -53,7 +53,7 @@ const Exchange = (props) => {
               </div>
             </div>
           </div>
-          <div className="row justify-content-center mt-2 pt-2 mb-1">
+          <div className="row justify-content-center mt-2 pt-2 pb-5">
             <div className={classNames('col-auto', styles['box-size'])}>
               <Advanced />
             </div>

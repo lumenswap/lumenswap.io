@@ -178,3 +178,70 @@ input[type=number] {
   box-shadow: none;
 }
 
+.rc-select {
+
+  .basic-single {
+    width: 192px;
+  }
+
+  .react-select__control {
+    background-color: white;
+    border: 1px solid @very-light-blue;
+    border-radius: 4px;
+    box-shadow: none !important;
+    cursor: pointer;
+    min-height: 26px;
+  }
+
+  .react-select__control:hover {
+    border: 1px solid @very-light-blue;
+  }
+
+  .react-select__indicator-separator {
+    display: none;
+  }
+
+  .react-select__placeholder {
+    font-size: 15px;
+  }
+
+  .react-select__indicator {
+    padding-right: 10px;
+    padding-left: 0;
+  }
+
+  .react-select__indicator svg {
+    color: black;
+    height: 14px;
+    width: 14px;
+  }
+
+  .react-select__option input {
+    font-size: 14px;
+    color: @black;
+  }
+
+  .react-select__option {
+    cursor: pointer;
+  }
+
+  .react-select__option:hover, .react-select__option--is-focused {
+    background-color: transparent;
+  }
+
+  .react-select__option--is-selected {
+    background-color: white !important;
+    color: @black;
+  }
+
+  .react-select__menu {
+    border-radius: 4px;
+    box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  }
+
+  .react-select__menu-notice--no-options {
+    font-size: 10px;
+    color: @black;
+  }
+}
+

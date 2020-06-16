@@ -5,10 +5,8 @@ import TokenContent from 'Root/shared/components/ModalContent/TokenContent';
 import ConfirmSwapContent from 'Root/shared/components/ModalContent/ConfirmSwapContent';
 import WaitingContent from 'Root/shared/components/ModalContent/WaitingContent';
 import TransactionStatusContent from 'Root/shared/components/ModalContent/TransactionStatusContent';
-import { trsStatus } from 'Root/constants/enum';
-import ConnectWalletContent
-  from '../../shared/components/ModalContent/ConnectWalletContent';
-import { connectModalTab } from '../../constants/enum';
+import { trsStatus, connectModalTab } from 'Root/constants/enum';
+import ConnectWalletContent from 'Root/shared/components/ModalContent/ConnectWalletContent';
 
 const ModalPage = () => {
   const [confirmSendModal, toggleConfirmSendModal] = useState(false);
@@ -18,7 +16,6 @@ const ModalPage = () => {
   const [successModal, toggleSuccessModal] = useState(false);
   const [failModal, toggleFailModal] = useState(false);
   const [connectModal, toggleConnectModal] = useState(false);
-  const [connectTab, setConnectTab] = useState(false);
   const [tab, setTab] = useState(connectModalTab.CONNECT);
   return (
     <div className="h-100" style={{ background: '#09112c' }}>

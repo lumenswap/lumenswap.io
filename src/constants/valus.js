@@ -12,3 +12,9 @@ export const arrowRightSvg = (
     </g>
   </svg>
 );
+
+export const statusSelectItem = [
+  { value: 'active', label: 'Active' },
+  { value: 'expired', label: 'Expired' },
+  { value: 'pending', label: 'Pending' },
+];

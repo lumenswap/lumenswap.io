@@ -5,10 +5,10 @@ import Header from './Header';
 import Footer from './Footer';
 import styles from './styles.less';
 
-const BaseLayout = ({ children, connectWallet }) => (
+const BaseLayout = ({ children, notAccess }) => (
   <>
     <div id="header" className={styles.back} style={{ paddingTop: '42px' }}>
-      <Header connectWallet={connectWallet} />
+      <Header notAccess={notAccess} />
     </div>
     <div id="content" className={styles.back}>
       {children}

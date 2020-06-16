@@ -1,4 +1,5 @@
 @import '~Root/styles/colors';
+@import '~Root/styles/vars';
 
 :local(.logo) {
   font-size: 20px;
@@ -11,15 +12,19 @@
   border-radius: 4px;
   background: white;
   border: 1px solid @very-light-blue;
-  padding: 6px 8px;
+  padding: 5.5px 8px;
   margin-bottom: 0;
+  height: 36px;
 }
 
 :local(.order) {
-  margin-left: 49px;
   font-size: 16px;
   color: @vibrant-blue;
   display: flex;
+  margin-left: 42px;
+  @media (max-width: @sm) {
+    margin-left: 28px;
+  }
 
   :local(.badge-num) {
     display: inline-block;
@@ -45,6 +50,9 @@
 :local(.address) {
   display: flex;
   font-size: 14px;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
+  height: 36px;
 
   :local(.address-title) {
     color: @light-grey-blue;
@@ -71,4 +79,31 @@
 
 :local(.connect):focus {
   outline: none;
+}
+
+:local(.option-name) {
+  font-size: 12px;
+  font-weight: 500;
+  color: @vibrant-blue;
+}
+
+:local(.option-web) {
+  font-size: 11px;
+  color: @battleship-grey;
+}
+
+.rc-select {
+  .react-select__value-container--has-value {
+    img {
+      display: none !important;
+    }
+
+    :local(.option-name) {
+      font-size: 14px;
+    }
+
+    :local(.option-web) {
+      font-size: 11px;
+    }
+  }
 }
