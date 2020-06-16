@@ -1,0 +1,41 @@
+@import "~Root/styles/colors";
+
+:local(.btn) {
+  width: 100%;
+  height: 54px;
+  border-radius: 8px;
+  font-size: 20px;
+  color: @black;
+  border: 1px solid @very-light-blue;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding-right: 18px;
+  padding-left: 18px;
+}
+
+:local(.btn):hover {
+  border: 1px solid @vibrant-blue;
+  transition: 0.3s ease-in-out;
+}
+
+:local(.icon-holder) {
+  width: 32px;
+  height: 32px;
+  background-color: @pale-grey;
+  border-radius: 50%;
+  display: block;
+  margin-right: 12px;
+  font-size: 18px;
+  color: @vibrant-blue;
+  position: relative;
+
+  .icon-key {
+    font-size: 17.5px;
+  }
+}
+
+:local(.btn):hover #arrow {
+  stroke: @vibrant-blue;
+  transition: 0.3s ease-in-out;
+}
