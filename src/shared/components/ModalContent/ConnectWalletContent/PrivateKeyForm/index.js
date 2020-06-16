@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import Loading from 'src/shared/components/Loading';
 import styles from './styles.less';
 
-const PrivateKeyForm = (props) => {
+const PrivateKeyForm = ({ toggleModal }) => {
   const {
-    register, handleSubmit, errors, formState,
+    register, handleSubmit, formState,
   } = useForm({
     mode: 'onChange',
   });
 
   const [loadingTimer, setLoadingTimer] = useState(false);
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     setLoadingTimer(true);
     const timer = setTimeout(() => {
       setLoadingTimer(false);
+      toggleModal(false);
     }, 2000);
     return () => clearTimeout(timer);
   };
@@ -29,10 +29,10 @@ const PrivateKeyForm = (props) => {
         <input
           type="text"
           className="form-control primary-input"
-          placeholder="G …"
+          placeholder="S ..."
           name="key"
           id="key"
-          ref={register({ required: true })}
+          ref={register({ minLength: 56, maxLength: 56, required: true })}
         />
       </div>
       <button
@@ -43,16 +43,12 @@ const PrivateKeyForm = (props) => {
       >
         {loadingTimer ? (
           <div className="d-flex align-items-center justify-content-center w-100 h-100">
-                Connecting<div className="ml-2"><Loading size={21} /></div>
+            Connecting<div className="ml-2"><Loading size={21} /></div>
           </div>
         ) : 'Connect'}
       </button>
     </form>
   );
-};
-
-PrivateKeyForm.propTypes = {
-
 };
 
 export default PrivateKeyForm;

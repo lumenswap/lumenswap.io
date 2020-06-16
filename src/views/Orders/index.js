@@ -5,7 +5,7 @@ import Table from 'src/shared/components/Table';
 import TableInfo from 'src/shared/components/TableInfo';
 import styles from './styles.less';
 
-const Home = (props) => {
+const Order = () => {
   const activeTableRows = [];
   const completeTableRows = [];
   [0, 1, 2, 3, 4, 5].map((item) => {
@@ -42,8 +42,4 @@ const Home = (props) => {
   );
 };
 
-Home.propTypes = {
-
-};
-
-export default Home;
+export default Order;

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Select from 'react-select';
+import { useSelector } from 'react-redux';
+import ConnectWalletContent from 'src/shared/components/ModalContent/ConnectWalletContent';
+import CustomModal from 'src/shared/components/CustomModal';
 import btcLogo from 'src/assets/images/btc-logo.png';
 import ethLogo from 'src/assets/images/eth-logo.png';
 import xlmLogo from 'src/assets/images/xlm-logo.png';
@@ -21,11 +23,13 @@ const selectItems = [
   { value: 'btc', label: item(btcLogo, '2 BTC', 'apay.com') },
 ];
 
-const Header = ({ notAccess }) => {
+const Header = () => {
+  const [connectWalletModal, setConnectWalletModal] = useState(false);
   const [selectedOption, setSelectOption] = useState(selectItems[0]);
   const handleChange = (selected) => {
     setSelectOption(selected);
   };
+  const userLogged = useSelector((state) => state.user.logged);
 
   const select = (
     <div className="rc-select">
@@ -49,6 +53,15 @@ const Header = ({ notAccess }) => {
   );
   return (
     <>
+      <CustomModal
+        modal={connectWalletModal}
+        toggle={setConnectWalletModal}
+        title="Connect Wallet"
+        modalSize="360"
+      >
+        <ConnectWalletContent toggleModal={setConnectWalletModal} />
+      </CustomModal>
+
       <div className="row justify-content-between align-items-center">
         {/* left part header */}
         <div className="col-auto">
@@ -68,10 +81,16 @@ const Header = ({ notAccess }) => {
         </div>
         {/* right part header */}
         <div className="col-auto">
-          {notAccess && (
-            <button type="button" className={classNames(styles.connect)}>Connect Wallet</button>
+          {!userLogged && (
+            <button
+              type="button"
+              className={classNames(styles.connect)}
+              onClick={() => setConnectWalletModal(true)}
+            >
+              Connect Wallet
+            </button>
           )}
-          {!notAccess && (
+          {userLogged && (
             <div className="row justify-content-between h-100 align-items-center">
               <div className="col-auto d-lg-flex d-md-none d-sm-none d-none">
                 {select}
@@ -92,7 +111,7 @@ const Header = ({ notAccess }) => {
         </div>
       </div>
       {/* responsive items */}
-      {!notAccess && (
+      {userLogged && (
       <div className="row d-lg-none d-md-flex d-sm-flex d-flex mt-lg-0 mt-md-3 mt-sm-3 mt-3">
         <div className="col-auto mb-lg-0 mb-md-2 mb-sm-2 mb-2">{select}</div>
         <div className="col-auto mb-lg-0 mb-md-2 mb-sm-2 mb-2">{address}</div>
@@ -100,14 +119,6 @@ const Header = ({ notAccess }) => {
       )}
     </>
   );
-};
-
-Header.defaultProps = {
-  notAccess: false,
-};
-
-Header.propTypes = {
-  notAccess: PropTypes.bool,
 };
 
 export default Header;
