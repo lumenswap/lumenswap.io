@@ -3,10 +3,10 @@ import Header from './Header';
 import Footer from './Footer';
 import styles from './styles.less';
 
-const BaseLayout = ({ children, notAccess }) => (
+const BaseLayout = ({ children }) => (
   <>
     <div id="header" className={styles.back} style={{ paddingTop: '42px' }}>
-      <Header notAccess={notAccess} />
+      <Header />
     </div>
     <div id="content" className={styles.back}>
       {children}
