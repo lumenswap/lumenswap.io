@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { arrowRightSvg } from 'Root/constants/valus';
 import { connectModalTab } from 'Root/constants/enum';
+import PublicKeyForm from './PublicKeyForm';
+import PrivateKeyForm from './PrivateKeyForm';
 import styles from './styles.less';
 
 const buttonContent = (text) => (
@@ -20,16 +22,16 @@ const ConnectWalletContent = ({ tab, setTab }) => {
     setTab(value);
   };
   return (
-    <div className="mt-3">
+    <div>
       {(() => {
         switch (tab) {
           case connectModalTab.PUBLIC:
-            return 'public';
+            return <PublicKeyForm />;
           case connectModalTab.PRIVATE:
-            return 'private';
+            return <PrivateKeyForm />;
           default:
             return (
-              <>
+              <div className="mt-3 pt-1">
                 <button
                   type="button"
                   className={styles.btn}
@@ -45,7 +47,7 @@ const ConnectWalletContent = ({ tab, setTab }) => {
                 >
                   {buttonContent('Private key')}
                 </button>
-              </>
+              </div>
             );
         }
       })()}

@@ -90,7 +90,7 @@ const CustomModal = ({
 CustomModal.propTypes = {
   modal: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
-  modalSize: PropTypes.number.isRequired,
+  modalSize: PropTypes.any.isRequired,
   title: PropTypes.string,
   tab: PropTypes.string,
   setTab: PropTypes.func,
