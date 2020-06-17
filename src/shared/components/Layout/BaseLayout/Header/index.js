@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
-import ConnectWalletContent from 'src/shared/components/ModalContent/ConnectWalletContent';
-import CustomModal from 'src/shared/components/CustomModal';
 import btcLogo from 'src/assets/images/btc-logo.png';
 import ethLogo from 'src/assets/images/eth-logo.png';
 import xlmLogo from 'src/assets/images/xlm-logo.png';
-import hideConnectModal from 'src/actions/hideConnectModal';
-import showConnectModal from 'src/actions/showConnectModal';
+import connectModal from 'src/actions/modal/connectModal';
 import styles from './styles.less';
 
 const item = (logo, name, web) => (
@@ -30,8 +27,8 @@ const Header = () => {
   const handleChange = (selected) => {
     setSelectOption(selected);
   };
-  const { userLogged, connectModal } = useSelector(
-    (state) => ({ userLogged: state.user.logged, connectModal: state.connectModalState }),
+  const userLogged = useSelector(
+    (state) => state.user.logged,
   );
 
   const select = (
@@ -56,15 +53,6 @@ const Header = () => {
   );
   return (
     <>
-      <CustomModal
-        modal={connectModal}
-        toggle={hideConnectModal}
-        title="Connect Wallet"
-        modalSize="360"
-      >
-        <ConnectWalletContent toggleModal={hideConnectModal} />
-      </CustomModal>
-
       <div className="row justify-content-between align-items-center">
         {/* left part header */}
         <div className="col-auto">
@@ -88,7 +76,7 @@ const Header = () => {
             <button
               type="button"
               className={classNames(styles.connect)}
-              onClick={showConnectModal}
+              onClick={connectModal}
             >
               Connect Wallet
             </button>

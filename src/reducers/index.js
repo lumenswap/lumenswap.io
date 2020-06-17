@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import user from './user';
-import connectModalState from './connectModalState';
+import modal from './modal';
 
 export default combineReducers({
   user,
-  connectModalState,
+  modal,
 });

@@ -1,6 +1,8 @@
 export default {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
-  SHOW_CONNECT_MODAL: 'SHOW_CONNECT_MODAL',
-  HIDE_CONNECT_MODAL: 'HIDE_CONNECT_MODAL',
+  modal: {
+    SHOW: 'modal/SHOW',
+    HIDE: 'modal/HIDE',
+  },
 };
