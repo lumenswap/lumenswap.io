@@ -32,7 +32,10 @@ const Swap = () => {
             web={checkout.fromAsset.web}
             assetCode={checkout.fromAsset.code}
             logo={checkout.fromAsset.logo}
-            onClick={() => showTokenModal({ excludeToken: checkout.toAsset })}
+            onClick={() => showTokenModal({
+              excludeToken: checkout.toAsset,
+              setToken: (fromAsset) => updateCheckout({ fromAsset }),
+            })}
           >
             <input
               type="number"
@@ -59,7 +62,10 @@ const Swap = () => {
             web={checkout.toAsset.web}
             assetCode={checkout.toAsset.code}
             logo={checkout.toAsset.logo}
-            onClick={() => showTokenModal({ excludeToken: checkout.fromAsset })}
+            onClick={() => showTokenModal({
+              excludeToken: checkout.fromAsset,
+              setToken: (toAsset) => updateCheckout({ fromAsset: toAsset }),
+            })}
           >
             <input
               type="number"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import defaultTokens from 'src/constants/defaultTokens';
+import hideModal from 'src/actions/modal/hide';
 import styles from './styles.less';
 
 const TokenContent = (props) => {
@@ -41,7 +42,15 @@ const TokenContent = (props) => {
           placeholder="Search name or paste address"
         />
         {searchResults.map((token, index) => (
-          <div key={index} className="mt-3 pt-2">
+          <div
+            key={index}
+            className="mt-3 pt-2"
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              props.setToken(token);
+              hideModal();
+            }}
+          >
             {item(token)}
           </div>
         ))}
