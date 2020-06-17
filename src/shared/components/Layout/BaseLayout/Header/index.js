@@ -6,6 +6,8 @@ import btcLogo from 'src/assets/images/btc-logo.png';
 import ethLogo from 'src/assets/images/eth-logo.png';
 import xlmLogo from 'src/assets/images/xlm-logo.png';
 import connectModal from 'src/actions/modal/connectModal';
+import minimizeAddress from 'src/helpers/minimizeAddress';
+import userLogout from 'src/actions/user/logout';
 import styles from './styles.less';
 
 const item = (logo, name, web) => (
@@ -27,9 +29,8 @@ const Header = () => {
   const handleChange = (selected) => {
     setSelectOption(selected);
   };
-  const userLogged = useSelector(
-    (state) => state.user.logged,
-  );
+
+  const userData = useSelector((state) => state.user);
 
   const select = (
     <div className="rc-select">
@@ -48,7 +49,7 @@ const Header = () => {
   const address = (
     <p className={classNames(styles.badge, styles.address)}>
       <span className={styles['address-title']}>Your address</span>
-      <span className={styles['address-value']}>G123…8942</span>
+      <span className={styles['address-value']}>{minimizeAddress(userData.detail.publicKey)}</span>
     </p>
   );
   return (
@@ -72,7 +73,7 @@ const Header = () => {
         </div>
         {/* right part header */}
         <div className="col-auto">
-          {!userLogged && (
+          {!userData.logged && (
             <button
               type="button"
               className={classNames(styles.connect)}
@@ -81,7 +82,7 @@ const Header = () => {
               Connect Wallet
             </button>
           )}
-          {userLogged && (
+          {userData.logged && (
             <div className="row justify-content-between h-100 align-items-center">
               <div className="col-auto d-lg-flex d-md-none d-sm-none d-none">
                 {select}
@@ -93,6 +94,7 @@ const Header = () => {
                 <button
                   type="button"
                   className={classNames('btn ml-1 d-flex align-items-center h-100', styles.exit)}
+                  onClick={userLogout}
                 >
                   <span className="icon-shutdown" />
                 </button>
@@ -102,7 +104,7 @@ const Header = () => {
         </div>
       </div>
       {/* responsive items */}
-      {userLogged && (
+      {userData.logged && (
       <div className="row d-lg-none d-md-flex d-sm-flex d-flex mt-lg-0 mt-md-3 mt-sm-3 mt-3">
         <div className="col-auto mb-lg-0 mb-md-2 mb-sm-2 mb-2">{select}</div>
         <div className="col-auto mb-lg-0 mb-md-2 mb-sm-2 mb-2">{address}</div>

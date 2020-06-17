@@ -5,13 +5,17 @@ const defaultState = {
   detail: {},
 };
 
+export const loginTypes = {
+  PV: 'private_key',
+};
+
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case types.LOGIN: {
-      return { logged: true, detail: action.detail };
+    case types.user.LOGIN: {
+      return { logged: true, loginType: action.loginType, detail: action.detail };
     }
 
-    case types.LOGOUT: {
+    case types.user.LOGOUT: {
       return { logged: false, detail: {} };
     }
 

@@ -5,6 +5,8 @@ import arrowRepeat from 'src/assets/images/arrow-repeat.png';
 import btcLogo from 'src/assets/images/btc-logo.png';
 import ethLogo from 'src/assets/images/eth-logo.png';
 import TxnInput from 'src/shared/components/TxnInput';
+import showConnectModal from 'src/actions/modal/connectModal';
+import { useSelector } from 'react-redux';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -13,6 +15,8 @@ const Swap = () => {
     web: 'stellarterm',
     logo: btcLogo,
   });
+
+  const userLogged = useSelector((state) => state.user.logged);
 
   return (
     <div className={styles.content}>
@@ -59,12 +63,15 @@ const Swap = () => {
             />
           </p>
         </div>
-        <button
-          type="button"
-          className={classNames(styles.btn,
-            'button-primary-lg')}
-        >Connect Wallet
-        </button>
+        {!userLogged && (
+          <button
+            type="button"
+            className={classNames(styles.btn, 'button-primary-lg')}
+            onClick={showConnectModal}
+          >
+            Connect Wallet
+          </button>
+        )}
       </form>
     </div>
   );

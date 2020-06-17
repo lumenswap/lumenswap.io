@@ -55,6 +55,6 @@ import PrivateKeyForm from './PrivateKeyForm';
 //   );
 // };
 
-const ConnectWalletContent = ({ toggleModal }) => <PrivateKeyForm toggleModal={toggleModal} />;
+const ConnectWalletContent = () => <PrivateKeyForm />;
 
 export default ConnectWalletContent;

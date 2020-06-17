@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import Loading from 'src/shared/components/Loading';
+import fetchAccountFromPrivateKey from 'src/actions/user/fetchAccountFromPrivateKey';
+import hideModal from 'src/actions/modal/hide';
+import userLoginAsPv from 'src/actions/user/loginAsPv';
 import styles from './styles.less';
 
-const PrivateKeyForm = ({ toggleModal }) => {
+const PrivateKeyForm = () => {
   const {
     register, handleSubmit, formState,
   } = useForm({
@@ -13,13 +16,18 @@ const PrivateKeyForm = ({ toggleModal }) => {
 
   const [loadingTimer, setLoadingTimer] = useState(false);
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     setLoadingTimer(true);
-    const timer = setTimeout(() => {
+
+    const address = fetchAccountFromPrivateKey(data.key);
+    if (address) {
+      userLoginAsPv(data.key, address);
+
       setLoadingTimer(false);
-      toggleModal(false);
-    }, 2000);
-    return () => clearTimeout(timer);
+      hideModal();
+    } else {
+      setLoadingTimer(false);
+    }
   };
 
   return (
