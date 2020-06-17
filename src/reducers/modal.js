@@ -13,6 +13,7 @@ export default (state = defaultState, action) => {
         show: true,
         Modal: action.Modal,
         customProps: action.customProps || {},
+        modalProps: action.modalProps || {},
       };
     }
 

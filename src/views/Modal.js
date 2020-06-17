@@ -17,7 +17,7 @@ export default function Modal() {
       toggle={hideModal}
       modal={modalState.show}
     >
-      <modalState.Modal />
+      <modalState.Modal {...modalState.modalProps} />
     </CustomModal>
   );
 }

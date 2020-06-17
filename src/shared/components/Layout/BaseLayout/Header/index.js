@@ -52,6 +52,7 @@ const Header = () => {
       <span className={styles['address-value']}>{minimizeAddress(userData.detail.publicKey)}</span>
     </p>
   );
+
   return (
     <>
       <div className="row justify-content-between align-items-center">

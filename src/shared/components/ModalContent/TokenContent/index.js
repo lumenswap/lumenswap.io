@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import btcLogo from 'src/assets/images/btc-logo.png';
-import ethLogo from 'src/assets/images/eth-logo.png';
-import xlmLogo from 'src/assets/images/xlm-logo.png';
+import defaultTokens from 'src/constants/defaultTokens';
 import styles from './styles.less';
-
-const tokens = [
-  { name: 'BTC', logo: btcLogo, web: 'amir.com' },
-  { name: 'ETH', logo: ethLogo, web: 'apay.com' },
-  { name: 'BTC', logo: btcLogo, web: 'amir.com' },
-  { name: 'ETH', logo: ethLogo, web: 'apay.com' },
-  { name: 'BTC', logo: btcLogo, web: 'amir.com' },
-  { name: 'ETH', logo: ethLogo, web: 'apay.com' },
-  { name: 'XLM', logo: xlmLogo, web: 'web.com' },
-];
 
 const TokenContent = (props) => {
   const [searchString, setSearchString] = useState('');
@@ -24,7 +11,9 @@ const TokenContent = (props) => {
   };
 
   useEffect(() => {
-    const results = tokens.filter((token) => token.name.toLowerCase().includes(searchString.toLowerCase()));
+    const results = defaultTokens.filter(
+      (token) => token.code.toLowerCase().includes(searchString.toLowerCase()),
+    ).filter((token) => token.code !== props.excludeToken.code);
     setSearchResults(results);
   }, [searchString]);
 
@@ -35,7 +24,7 @@ const TokenContent = (props) => {
           src={data.logo}
           alt="logo"
         />
-        {data.name}
+        {data.code}
       </div>
       <div className={classNames('col-auto', styles.web)}>{data.web}</div>
     </div>
@@ -59,10 +48,6 @@ const TokenContent = (props) => {
       </div>
     </div>
   );
-};
-
-TokenContent.propTypes = {
-
 };
 
 export default TokenContent;

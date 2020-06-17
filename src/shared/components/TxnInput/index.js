@@ -1,17 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import angleDown from 'src/assets/images/angle-down.svg';
 import styles from './styles.less';
 
 const TxnInput = ({
-  children, logo, name, web,
+  children, logo, assetCode, web, onClick = () => {},
 }) => (
-  <div className={styles.input}>
+  <div className={styles.input} onClick={onClick}>
     {children}
     <button type="button" className={styles['input-btn']}>
       <img className={styles.coin} src={logo} alt="logo" />
       <div className="d-flex flex-column text-left pl-1">
-        <span className={styles.name}>{name}</span>
+        <span className={styles.name}>{assetCode}</span>
         <span className={styles.web}>{web}</span>
       </div>
       <img
@@ -24,10 +23,5 @@ const TxnInput = ({
     </button>
   </div>
 );
-
-TxnInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  web: PropTypes.string.isRequired,
-};
 
 export default TxnInput;

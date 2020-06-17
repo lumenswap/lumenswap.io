@@ -7,4 +7,8 @@ export default {
     LOGIN: 'user/LOGIN',
     LOGOUT: 'user/LOGOUT',
   },
+  checkout: {
+    UPDATE: 'checkout/UPDATE',
+    CLEAR: 'checkout/CLEAR',
+  },
 };
