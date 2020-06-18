@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, Fragment } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 
@@ -11,11 +10,10 @@ const ToleranceGroup = ({ values, defaultIndex }) => {
   return (
     <div className="d-flex mt-2">
       {values.map((item, index) => (
-        <>
+        <Fragment key={index}>
           {item.value !== 'custom'
             ? (
               <button
-                key={index}
                 type="button"
                 onClick={() => { setActive(index); console.warn(active); }}
                 className={classNames((index === active) && styles.active, styles.btn)}
@@ -37,15 +35,10 @@ const ToleranceGroup = ({ values, defaultIndex }) => {
                 </div>
               </div>
             )}
-        </>
+        </Fragment>
       ))}
     </div>
   );
-};
-
-ToleranceGroup.propTypes = {
-  values: PropTypes.array.isRequired,
-  defaultIndex: PropTypes.number.isRequired,
 };
 
 export default ToleranceGroup;

@@ -6,18 +6,46 @@ import TxnInput from 'src/shared/components/TxnInput';
 import showConnectModal from 'src/actions/modal/connectModal';
 import { useSelector } from 'react-redux';
 import showTokenModal from 'src/actions/modal/tokenModal';
-import defaultTokens from 'src/constants/defaultTokens';
+import defaultTokens from 'src/tokens/defaultTokens';
 import updateCheckout from 'src/actions/checkout/update';
 import fetchCounterPrice from 'src/helpers/fetchCounterPrice';
+import { useForm } from 'react-hook-form';
 import styles from './styles.less';
 
 const Swap = () => {
   const { userLogged, checkout } = useSelector((state) => ({
-    logged: state.user.logged,
+    userLogged: state.user.logged,
     checkout: state.checkout,
   }));
-
   const [loading, setLoading] = useState(true);
+  const {
+    handleSubmit, setValue, register,
+  } = useForm();
+
+  function changeOtherInput(targetInput, mode) {
+    return (val) => {
+      const amount = val.currentTarget.value;
+      const parsed = parseFloat(amount);
+      if (parsed) { // eslint-disable-line
+        let calculatedPrice;
+        if (mode) {
+          calculatedPrice = parsed * checkout.counterPrice;
+        } else {
+          calculatedPrice = parsed / checkout.counterPrice;
+        }
+
+        setValue(targetInput, calculatedPrice.toFixed(5));
+        updateCheckout({
+          showAdvanced: true,
+        });
+      } else {
+        setValue(targetInput, null);
+        updateCheckout({
+          showAdvanced: false,
+        });
+      }
+    };
+  }
 
   useEffect(() => {
     const fromAsset = defaultTokens.find((item) => item.code === 'XLM');
@@ -58,10 +86,11 @@ const Swap = () => {
             })}
           >
             <input
-              type="number"
               className="form-control primary-input"
               placeholder="0.0"
-              id="from"
+              ref={register}
+              name="fromAmount"
+              onChange={changeOtherInput('toAmount', true)}
             />
           </TxnInput>
         </div>
@@ -88,10 +117,11 @@ const Swap = () => {
             })}
           >
             <input
-              type="number"
               className="form-control primary-input"
               placeholder="0.0"
-              id="to"
+              ref={register}
+              name="toAmount"
+              onChange={changeOtherInput('fromAmount', false)}
             />
           </TxnInput>
           <p className={styles.info}>
@@ -115,6 +145,16 @@ const Swap = () => {
             />
           </p>
         </div>
+        {userLogged && (
+          <button
+            type="button"
+            className={classNames(styles.btn, 'button-primary-lg')}
+            disabled={!checkout.showAdvanced}
+          >
+            {checkout.showAdvanced ? 'Swap' : 'Enter an amount'}
+          </button>
+        )}
+
         {!userLogged && (
           <button
             type="button"
