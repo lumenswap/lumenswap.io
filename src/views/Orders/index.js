@@ -1,5 +1,4 @@
 import React from 'react';
-import BaseLayout from 'src/shared/components/Layout/BaseLayout';
 import { activeOrderTHeader, completeOrderTHeader } from 'src/constants/valus';
 import Table from 'src/shared/components/Table';
 import TableInfo from 'src/shared/components/TableInfo';
@@ -31,14 +30,12 @@ const Order = () => {
   });
 
   return (
-    <BaseLayout>
-      <div className="pb-5 mb-2">
-        <TableInfo title="Active orders" link="/" style={{ marginTop: '42px' }} className="mb-2" />
-        <Table tableRows={activeTableRows} tableHead={activeOrderTHeader} />
-        <TableInfo title="Complete orders" link="/" style={{ marginTop: '42px' }} className="mb-2" />
-        <Table tableRows={completeTableRows} tableHead={completeOrderTHeader} />
-      </div>
-    </BaseLayout>
+    <div className="pb-5 mb-2">
+      <TableInfo title="Active orders" link="/" style={{ marginTop: '42px' }} className="mb-2" />
+      <Table tableRows={activeTableRows} tableHead={activeOrderTHeader} />
+      <TableInfo title="Complete orders" link="/" style={{ marginTop: '42px' }} className="mb-2" />
+      <Table tableRows={completeTableRows} tableHead={completeOrderTHeader} />
+    </div>
   );
 };
 

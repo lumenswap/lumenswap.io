@@ -15,17 +15,21 @@ import minimizeAddress from 'src/helpers/minimizeAddress';
 import history from 'src/history';
 import XLM from 'src/tokens/XLM';
 import questionLogo from 'src/assets/images/question.png';
+import showConfirmSwap from 'src/actions/modal/confirmSwap';
 import styles from './styles.less';
 
 const Swap = () => {
-  const { userLogged, checkout, userToken } = useSelector((state) => ({
+  const {
+    userLogged, checkout, userToken, user,
+  } = useSelector((state) => ({
     userLogged: state.user.logged,
     checkout: state.checkout,
     userToken: state.userToken,
+    user: state.user,
   }));
   const [loading, setLoading] = useState(true);
   const {
-    setValue, register,
+    setValue, register, getValues,
   } = useForm();
   const { fromCustomAsset, toCustomAsset } = useParams();
 
@@ -117,8 +121,12 @@ const Swap = () => {
     }
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
+  useEffect(() => {
+    changeOtherInput('toAmount', true)({ currentTarget: { value: getValues('toAmount') } });
+  }, [checkout.counterPrice]);
+
   function swapButtonText() {
-    if (checkout.showAdvanced) {
+    if (checkout.showAdvanced && userToken.length > 0) {
       let found;
       if (checkout.fromAsset.code === 'XLM') {
         found = userToken.find((item) => item.asset_type === 'native');
@@ -130,9 +138,9 @@ const Swap = () => {
       }
 
       if (!found || found.balance <= checkout.fromAmount) {
-        updateCheckout({
-          showAdvanced: false,
-        });
+        // updateCheckout({
+        //   showAdvanced: false,
+        // });
         return 'Insufficient funds';
       }
 
@@ -209,6 +217,13 @@ const Swap = () => {
             type="button"
             className={classNames(styles.btn, 'button-primary-lg')}
             disabled={!checkout.showAdvanced}
+            onClick={() => {
+              updateCheckout({
+                fromAddress: user.detail.publicKey,
+                toAddress: user.detail.publicKey,
+              });
+              showConfirmSwap(checkout);
+            }}
           >
             {swapButtonText()}
           </button>

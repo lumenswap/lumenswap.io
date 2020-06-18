@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/mobi.png';
+import logo from 'src/assets/images/btc-logo.png';
 
 export default {
   code: 'BTC',
