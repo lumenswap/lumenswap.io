@@ -11,6 +11,9 @@ import updateCheckout from 'src/actions/checkout/update';
 import cleaerCheckout from 'src/actions/checkout/clear';
 import fetchCounterPrice from 'src/helpers/fetchCounterPrice';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import minimizeAddress from 'src/helpers/minimizeAddress';
+import history from 'src/history';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -23,6 +26,32 @@ const Swap = () => {
   const {
     setValue, register,
   } = useForm();
+  const { fromCustomAsset, toCustomAsset } = useParams();
+
+  let includeToken = [];
+  let modifiedFromAsset;
+  let modifiedToAsset;
+  if (fromCustomAsset && toCustomAsset) {
+    const splittedFrom = fromCustomAsset.split('-');
+    modifiedFromAsset = {
+      code: splittedFrom[0],
+      issuer: splittedFrom[1],
+      web: minimizeAddress(splittedFrom[1]),
+    };
+
+    const splittedTo = toCustomAsset.split('-');
+    modifiedToAsset = {
+      code: splittedTo[0],
+      issuer: splittedTo[1],
+      web: minimizeAddress(splittedTo[1]),
+    };
+
+    includeToken.push(modifiedFromAsset, modifiedToAsset);
+  } else {
+    includeToken = [];
+    modifiedFromAsset = null;
+    modifiedToAsset = null;
+  }
 
   function changeOtherInput(targetInput, mode) {
     return (val) => {
@@ -55,8 +84,8 @@ const Swap = () => {
     const toAsset = defaultTokens.find((item) => item.code === 'MOBI');
     cleaerCheckout();
     updateCheckout({
-      fromAsset,
-      toAsset,
+      fromAsset: modifiedFromAsset || fromAsset,
+      toAsset: modifiedToAsset || toAsset,
     });
   }, []);
 
@@ -68,12 +97,14 @@ const Swap = () => {
           updateCheckout({
             counterPrice: res,
           });
+        } else {
+          history.push('/');
         }
       }).finally(() => {
         setLoading(false);
       });
     }
-  }, [checkout.fromAsset, checkout.toAsset]);
+  }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
   function swapButtonText() {
     if (checkout.showAdvanced) {
@@ -112,6 +143,7 @@ const Swap = () => {
             onClick={() => showTokenModal({
               excludeToken: checkout.toAsset,
               setToken: (fromAsset) => updateCheckout({ fromAsset }),
+              includeToken,
             })}
           >
             <input
@@ -137,12 +169,13 @@ const Swap = () => {
         <div className="form-group mb-0" style={{ marginTop: '-8px' }}>
           <label className="primary-label" htmlFor="to">To (estimated)</label>
           <TxnInput
-            web={checkout.toAsset.web}
+            web={checkout.toAsset.web || minimizeAddress(checkout.toAsset.issuer)}
             assetCode={checkout.toAsset.code}
             logo={checkout.toAsset.logo}
             onClick={() => showTokenModal({
               excludeToken: checkout.fromAsset,
               setToken: (toAsset) => updateCheckout({ fromAsset: toAsset }),
+              includeToken,
             })}
           >
             <input

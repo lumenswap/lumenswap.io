@@ -4,7 +4,7 @@ import defaultTokens from 'src/tokens/defaultTokens';
 import hideModal from 'src/actions/modal/hide';
 import styles from './styles.less';
 
-const TokenContent = ({ setToken, excludeToken }) => {
+const TokenContent = ({ setToken, excludeToken, includeToken }) => {
   const [searchString, setSearchString] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const handleChange = (e) => {
@@ -12,7 +12,7 @@ const TokenContent = ({ setToken, excludeToken }) => {
   };
 
   useEffect(() => {
-    const results = defaultTokens.filter(
+    const results = [...includeToken, ...defaultTokens].filter(
       (token) => token.code.toLowerCase().includes(searchString.toLowerCase()),
     ).filter((token) => token.code !== excludeToken.code);
     setSearchResults(results);

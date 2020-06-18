@@ -39,7 +39,6 @@ export default async function fetchCounterPrice(fromAsset, toAsset) {
 
     return parseFloat(nativeToTo.asks[0].price) * fromCounterPrice;
   } catch (e) {
-    console.error('error on fetching from stellar', e);
     return null;
   }
 }
