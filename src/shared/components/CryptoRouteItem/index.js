@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import angleRight from 'src/assets/images/angle-right-light.png';
 import styles from './styles.less';
 
-const CryptoRouteItem = ({ logo, name, isLast }) => (
+const CryptoRouteItem = ({ logo, code, isLast }) => (
   <>
     <img src={logo} height="24px" width="24px" alt="" />
-    <h6 className={styles.crypto}>{name}</h6>
+    <h6 className={styles.crypto}>{code}</h6>
     {!isLast
     && (
     <img
@@ -19,10 +18,5 @@ const CryptoRouteItem = ({ logo, name, isLast }) => (
     )}
   </>
 );
-
-CryptoRouteItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  isLast: PropTypes.bool.isRequired,
-};
 
 export default CryptoRouteItem;

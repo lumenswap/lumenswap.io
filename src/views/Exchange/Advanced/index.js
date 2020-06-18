@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Collapse } from 'reactstrap';
 import angleDown from 'src/assets/images/angle-down-blue.svg';
 import DetailTooltip from 'src/shared/components/DetailTooltip';
-import btcLogo from 'src/assets/images/btc-logo.png';
-import ethLogo from 'src/assets/images/eth-logo.png';
-import xlmLogo from 'src/assets/images/xlm-logo.png';
 import CryptoRouteItem from 'src/shared/components/CryptoRouteItem';
 import ToleranceGroup from 'src/shared/components/ToleranceGroup';
+import { useSelector } from 'react-redux';
+import updateCheckout from 'src/actions/checkout/update';
+import XLM from 'src/tokens/XLM';
 import styles from './styles.less';
 
-const Advanced = (props) => {
+const Advanced = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const checkout = useSelector((state) => state.checkout);
 
-  const routes = [
-    { name: 'BTC', logo: btcLogo },
-    { name: 'ETH', logo: ethLogo },
-    { name: 'XLM', logo: xlmLogo },
-  ];
+  const routes = [];
+  routes.push(checkout.fromAsset);
+  if (checkout.fromAmount.issuer !== 'native' && checkout.toAsset.issuer !== 'native') {
+    routes.push(XLM);
+  }
+  routes.push(checkout.toAsset);
 
   const advanceBtnValue = [
-    { value: '0.1' }, { value: '0.5' }, { value: '0.3' }, { value: 'custom' },
+    { value: '0.1' }, { value: '0.5' }, { value: '1.0' }, { value: 'custom' },
   ];
 
   return (
@@ -48,13 +49,26 @@ const Advanced = (props) => {
               Minimum received
               <DetailTooltip id="eth-tooltip" info="This a tooltip" />
             </div>
-            <div className={classNames('col-auto', styles.value)}>2952 ETH</div>
+            <div className={classNames('col-auto', styles.value)}>
+              {(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(3)}
+              {' '}{checkout.toAsset.code}
+            </div>
           </div>
           <p className={classNames(styles.title, 'mt-2 pt-1 mb-0')}>
-             Set slippage tolerance
+            Set slippage tolerance
             <DetailTooltip id="tolerance-tooltip" info="This a tooltip" />
           </p>
-          <ToleranceGroup defaultIndex={1} values={advanceBtnValue} />
+          <ToleranceGroup
+            defaultIndex={1}
+            values={advanceBtnValue}
+            onChange={(x) => {
+              if (x !== '' && parseFloat(x)) {
+                updateCheckout({
+                  tolerance: parseFloat(x) / 100,
+                });
+              }
+            }}
+          />
         </div>
         {/* second box */}
         <p className={classNames(styles.title, 'mt-2 mb-0')}>
@@ -67,7 +81,7 @@ const Advanced = (props) => {
             {routes.map((route, index) => (
               <div className={classNames('col d-flex h-100 align-items-center', styles.col)} key={index}>
                 <CryptoRouteItem
-                  name={route.name}
+                  code={route.code}
                   logo={route.logo}
                   isLast={index === (routes.length - 1)}
                 />
@@ -78,10 +92,6 @@ const Advanced = (props) => {
       </Collapse>
     </div>
   );
-};
-
-Advanced.propTypes = {
-
 };
 
 export default Advanced;

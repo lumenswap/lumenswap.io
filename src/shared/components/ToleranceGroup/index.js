@@ -2,11 +2,13 @@ import React, { useState, useEffect, Fragment } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 
-const ToleranceGroup = ({ values, defaultIndex }) => {
+const ToleranceGroup = ({ values, defaultIndex, onChange }) => {
   const [active, setActive] = useState(defaultIndex);
+
   useEffect(() => {
     setActive(defaultIndex);
   }, [defaultIndex]);
+
   return (
     <div className="d-flex mt-2">
       {values.map((item, index) => (
@@ -15,7 +17,7 @@ const ToleranceGroup = ({ values, defaultIndex }) => {
             ? (
               <button
                 type="button"
-                onClick={() => { setActive(index); console.warn(active); }}
+                onClick={() => { setActive(index); onChange(item.value); }}
                 className={classNames((index === active) && styles.active, styles.btn)}
               >{item.value}%
               </button>
@@ -28,7 +30,8 @@ const ToleranceGroup = ({ values, defaultIndex }) => {
                 <input
                   type="number"
                   className="form-control"
-                  onClick={() => setActive(4)}
+                  onClick={(val) => { setActive(4); onChange(val.currentTarget.value); }}
+                  onChange={(val) => { onChange(val.currentTarget.value); }}
                 />
                 <div className={classNames('input-group-prepend', styles.percentage)}>
                   <div className="input-group-text">%</div>

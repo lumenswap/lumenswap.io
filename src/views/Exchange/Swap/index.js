@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import showTokenModal from 'src/actions/modal/tokenModal';
 import defaultTokens from 'src/tokens/defaultTokens';
 import updateCheckout from 'src/actions/checkout/update';
+import cleaerCheckout from 'src/actions/checkout/clear';
 import fetchCounterPrice from 'src/helpers/fetchCounterPrice';
 import { useForm } from 'react-hook-form';
 import styles from './styles.less';
@@ -19,7 +20,7 @@ const Swap = () => {
   }));
   const [loading, setLoading] = useState(true);
   const {
-    handleSubmit, setValue, register,
+    setValue, register,
   } = useForm();
 
   function changeOtherInput(targetInput, mode) {
@@ -36,6 +37,7 @@ const Swap = () => {
 
         setValue(targetInput, calculatedPrice.toFixed(5));
         updateCheckout({
+          fromAmount: mode ? parsed : calculatedPrice,
           showAdvanced: true,
         });
       } else {
@@ -50,6 +52,7 @@ const Swap = () => {
   useEffect(() => {
     const fromAsset = defaultTokens.find((item) => item.code === 'XLM');
     const toAsset = defaultTokens.find((item) => item.code === 'MOBI');
+    cleaerCheckout();
     updateCheckout({
       fromAsset,
       toAsset,
