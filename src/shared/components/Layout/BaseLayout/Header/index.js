@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
-import btcLogo from 'src/assets/images/btc-logo.png';
-import ethLogo from 'src/assets/images/eth-logo.png';
-import xlmLogo from 'src/assets/images/xlm-logo.png';
 import connectModal from 'src/actions/modal/connectModal';
 import minimizeAddress from 'src/helpers/minimizeAddress';
 import userLogout from 'src/actions/user/logout';
 import defaultTokens from 'src/tokens/defaultTokens';
 import XLM from 'src/tokens/XLM';
+import questionLogo from 'src/assets/images/question.png';
 import styles from './styles.less';
 
 const item = (logo, code, web) => (
@@ -19,12 +17,6 @@ const item = (logo, code, web) => (
     <span className={styles['option-web']}> - {web}</span>
   </>
 );
-
-const selectItems = [
-  { value: 'xlm', label: item(xlmLogo, '10 XLM', 'stellarterm.com') },
-  { value: 'eth', label: item(ethLogo, '2 ETH', 'apay.com') },
-  { value: 'btc', label: item(btcLogo, '2 BTC', 'apay.com') },
-];
 
 const Header = () => {
   const [selectedOption, setSelectOption] = useState(null);
@@ -46,7 +38,7 @@ const Header = () => {
     if (!found) {
       return {
         value: token.asset_code,
-        label: item(XLM.logo, `${token.balance} ${token.asset_code}`, minimizeAddress(token.asset_issuer)),
+        label: item(questionLogo, `${token.balance} ${token.asset_code}`, minimizeAddress(token.asset_issuer)),
       };
     }
 
@@ -59,7 +51,7 @@ const Header = () => {
   const select = (
     <div className="rc-select">
       <Select
-        defaultValue={selectItems[0]}
+        defaultValue={selectedOption || userToken[0]}
         isSearchable
         className="basic-single"
         classNamePrefix="react-select"

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import arrowDown from 'src/assets/images/arrow-down.png';
-import arrowRepeat from 'src/assets/images/arrow-repeat.png';
 import TxnInput from 'src/shared/components/TxnInput';
 import showConnectModal from 'src/actions/modal/connectModal';
 import { useSelector } from 'react-redux';
@@ -15,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import minimizeAddress from 'src/helpers/minimizeAddress';
 import history from 'src/history';
 import XLM from 'src/tokens/XLM';
+import questionLogo from 'src/assets/images/question.png';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -41,6 +41,7 @@ const Swap = () => {
         code: splittedFrom[0],
         issuer: splittedFrom[1],
         web: minimizeAddress(splittedFrom[1]),
+        logo: questionLogo,
       };
     }
 
@@ -52,6 +53,7 @@ const Swap = () => {
         code: splittedTo[0],
         issuer: splittedTo[1],
         web: minimizeAddress(splittedTo[1]),
+        logo: questionLogo,
       };
     }
 
@@ -183,7 +185,7 @@ const Swap = () => {
             logo={checkout.toAsset.logo}
             onClick={() => showTokenModal({
               excludeToken: checkout.fromAsset,
-              setToken: (toAsset) => updateCheckout({ fromAsset: toAsset }),
+              setToken: (toAsset) => updateCheckout({ toAsset }),
               includeToken,
             })}
           >
@@ -198,22 +200,8 @@ const Swap = () => {
           <p className={styles.info}>
             {loading && 'Fetching counter price...'}
             {!loading && (
-              `1 ${checkout.fromAsset.code} = ${checkout.counterPrice.toFixed(7)} ${checkout.toAsset.code}`
+              `1 ${checkout.toAsset.code} = ${(1 / checkout.counterPrice).toFixed(7)} ${checkout.fromAsset.code}`
             )}
-            <img
-              src={arrowRepeat}
-              width="18px"
-              height="18px"
-              alt="arrow"
-              className="ml-1"
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                updateCheckout({
-                  fromAsset: checkout.toAsset,
-                  toAsset: checkout.fromAsset,
-                });
-              }}
-            />
           </p>
         </div>
         {userLogged && (

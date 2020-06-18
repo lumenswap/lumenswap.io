@@ -1,8 +1,8 @@
-import ethLogo from 'src/assets/images/eth-logo.png';
+import logo from 'src/assets/images/repo.jpeg';
 
 export default {
   code: 'REPO',
-  logo: ethLogo,
+  logo,
   web: 'repocoin.io',
   issuer: 'GCZNF24HPMYTV6NOEHI7Q5RJFFUI23JKUKY3H3XTQAFBQIBOHD5OXG3B',
 };
