@@ -5,6 +5,8 @@ import Loading from 'src/shared/components/Loading';
 import fetchAccountFromPrivateKey from 'src/actions/user/fetchAccountFromPrivateKey';
 import hideModal from 'src/actions/modal/hide';
 import userLoginAsPv from 'src/actions/user/loginAsPv';
+import fetchUserBalance from 'src/api/fetchUserBalance';
+import setToken from 'src/actions/setToken';
 import styles from './styles.less';
 
 const PrivateKeyForm = () => {
@@ -16,12 +18,18 @@ const PrivateKeyForm = () => {
 
   const [loadingTimer, setLoadingTimer] = useState(false);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setLoadingTimer(true);
 
     const address = fetchAccountFromPrivateKey(data.key);
     if (address) {
       userLoginAsPv(data.key, address);
+      try {
+        const balances = await fetchUserBalance(address);
+        setToken(balances);
+      } catch (e) {
+        setToken([]);
+      }
 
       setLoadingTimer(false);
       hideModal();

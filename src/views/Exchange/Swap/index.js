@@ -14,9 +14,10 @@ import { useForm } from 'react-hook-form';
 import styles from './styles.less';
 
 const Swap = () => {
-  const { userLogged, checkout } = useSelector((state) => ({
+  const { userLogged, checkout, userToken } = useSelector((state) => ({
     userLogged: state.user.logged,
     checkout: state.checkout,
+    userToken: state.userToken,
   }));
   const [loading, setLoading] = useState(true);
   const {
@@ -73,6 +74,31 @@ const Swap = () => {
       });
     }
   }, [checkout.fromAsset, checkout.toAsset]);
+
+  function swapButtonText() {
+    if (checkout.showAdvanced) {
+      let found;
+      if (checkout.fromAsset.code === 'XLM') {
+        found = userToken.find((item) => item.asset_type === 'native');
+      } else {
+        found = userToken.find(
+          (item) => checkout.fromAsset.code === item.asset_code
+        && checkout.fromAsset.issuer === item.asset_issuer,
+        );
+      }
+
+      if (!found || found.balance <= checkout.fromAmount) {
+        updateCheckout({
+          showAdvanced: false,
+        });
+        return 'Insufficient funds';
+      }
+
+      return 'Swap';
+    }
+
+    return 'Enter an amount';
+  }
 
   return (
     <div className={styles.content}>
@@ -154,7 +180,7 @@ const Swap = () => {
             className={classNames(styles.btn, 'button-primary-lg')}
             disabled={!checkout.showAdvanced}
           >
-            {checkout.showAdvanced ? 'Swap' : 'Enter an amount'}
+            {swapButtonText()}
           </button>
         )}
 

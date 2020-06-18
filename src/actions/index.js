@@ -11,4 +11,7 @@ export default {
     UPDATE: 'checkout/UPDATE',
     CLEAR: 'checkout/CLEAR',
   },
+  userToken: {
+    SET: 'userToken/SET',
+  },
 };

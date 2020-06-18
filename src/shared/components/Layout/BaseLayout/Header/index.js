@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
@@ -8,12 +8,14 @@ import xlmLogo from 'src/assets/images/xlm-logo.png';
 import connectModal from 'src/actions/modal/connectModal';
 import minimizeAddress from 'src/helpers/minimizeAddress';
 import userLogout from 'src/actions/user/logout';
+import defaultTokens from 'src/tokens/defaultTokens';
+import XLM from 'src/tokens/XLM';
 import styles from './styles.less';
 
-const item = (logo, name, web) => (
+const item = (logo, code, web) => (
   <>
     <img width="16px" height="16px" className="mr-1" src={logo} alt="logo" />
-    <span className={styles['option-name']}>{name}</span>
+    <span className={styles['option-name']}>{code}</span>
     <span className={styles['option-web']}> - {web}</span>
   </>
 );
@@ -25,12 +27,34 @@ const selectItems = [
 ];
 
 const Header = () => {
-  const [selectedOption, setSelectOption] = useState(selectItems[0]);
+  const [selectedOption, setSelectOption] = useState(null);
   const handleChange = (selected) => {
     setSelectOption(selected);
   };
 
   const userData = useSelector((state) => state.user);
+  const userToken = useSelector((state) => state.userToken).map((token) => {
+    if (token.asset_type === 'native') {
+      return {
+        value: 'XLM',
+        label: item(XLM.logo, `${token.balance} XLM`, 'stellarterm.com'),
+      };
+    }
+    const found = defaultTokens.find(
+      (oneToken) => oneToken.code === token.asset_code && oneToken.issuer === token.asset_issuer,
+    );
+    if (!found) {
+      return {
+        value: token.asset_code,
+        label: item(XLM.logo, `${token.balance} ${token.asset_code}`, minimizeAddress(token.asset_issuer)),
+      };
+    }
+
+    return {
+      value: found.code,
+      label: item(found.logo, `${token.balance} ${found.code}`, found.web),
+    };
+  });
 
   const select = (
     <div className="rc-select">
@@ -39,8 +63,8 @@ const Header = () => {
         isSearchable
         className="basic-single"
         classNamePrefix="react-select"
-        options={selectItems}
-        value={selectedOption}
+        options={userToken}
+        value={selectedOption || userToken[0]}
         onChange={handleChange}
       />
     </div>
