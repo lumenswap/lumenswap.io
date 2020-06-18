@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import minimizeAddress from 'src/helpers/minimizeAddress';
 import history from 'src/history';
+import XLM from 'src/tokens/XLM';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -32,19 +33,27 @@ const Swap = () => {
   let modifiedFromAsset;
   let modifiedToAsset;
   if (fromCustomAsset && toCustomAsset) {
-    const splittedFrom = fromCustomAsset.split('-');
-    modifiedFromAsset = {
-      code: splittedFrom[0],
-      issuer: splittedFrom[1],
-      web: minimizeAddress(splittedFrom[1]),
-    };
+    if (fromCustomAsset === 'XLM') {
+      modifiedFromAsset = XLM;
+    } else {
+      const splittedFrom = fromCustomAsset.split('-');
+      modifiedFromAsset = {
+        code: splittedFrom[0],
+        issuer: splittedFrom[1],
+        web: minimizeAddress(splittedFrom[1]),
+      };
+    }
 
-    const splittedTo = toCustomAsset.split('-');
-    modifiedToAsset = {
-      code: splittedTo[0],
-      issuer: splittedTo[1],
-      web: minimizeAddress(splittedTo[1]),
-    };
+    if (toCustomAsset === 'XLM') {
+      modifiedToAsset = XLM;
+    } else {
+      const splittedTo = toCustomAsset.split('-');
+      modifiedToAsset = {
+        code: splittedTo[0],
+        issuer: splittedTo[1],
+        web: minimizeAddress(splittedTo[1]),
+      };
+    }
 
     includeToken.push(modifiedFromAsset, modifiedToAsset);
   } else {
