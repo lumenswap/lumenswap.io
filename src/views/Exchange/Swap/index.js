@@ -32,6 +32,7 @@ const Swap = () => {
     setValue, register, getValues,
   } = useForm();
   const { fromCustomAsset, toCustomAsset } = useParams();
+  const [swapButtonText, setSwapButtonText] = useState('Enter an amount');
 
   let includeToken = [];
   let modifiedFromAsset;
@@ -81,11 +82,31 @@ const Swap = () => {
         }
 
         setValue(targetInput, calculatedPrice.toFixed(5));
+
+        let found;
+        let advanced = true;
+        if (checkout.fromAsset.code === 'XLM') {
+          found = userToken.find((item) => item.asset_type === 'native');
+        } else {
+          found = userToken.find(
+            (item) => checkout.fromAsset.code === item.asset_code
+        && checkout.fromAsset.issuer === item.asset_issuer,
+          );
+        }
+
+        if (!found || found.balance <= (mode ? parsed : calculatedPrice)) {
+          setSwapButtonText('Insuffiecent fund');
+          advanced = false;
+        } else {
+          setSwapButtonText('Swap');
+        }
+
         updateCheckout({
           fromAmount: mode ? parsed : calculatedPrice,
-          showAdvanced: true,
+          showAdvanced: advanced,
         });
       } else {
+        setSwapButtonText('Enter an amount');
         setValue(targetInput, null);
         updateCheckout({
           showAdvanced: false,
@@ -122,33 +143,8 @@ const Swap = () => {
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
   useEffect(() => {
-    changeOtherInput('toAmount', true)({ currentTarget: { value: getValues('toAmount') } });
+    changeOtherInput('toAmount', true)({ currentTarget: { value: getValues('fromAmount') } });
   }, [checkout.counterPrice]);
-
-  function swapButtonText() {
-    if (checkout.showAdvanced && userToken.length > 0) {
-      let found;
-      if (checkout.fromAsset.code === 'XLM') {
-        found = userToken.find((item) => item.asset_type === 'native');
-      } else {
-        found = userToken.find(
-          (item) => checkout.fromAsset.code === item.asset_code
-        && checkout.fromAsset.issuer === item.asset_issuer,
-        );
-      }
-
-      if (!found || found.balance <= checkout.fromAmount) {
-        // updateCheckout({
-        //   showAdvanced: false,
-        // });
-        return 'Insufficient funds';
-      }
-
-      return 'Swap';
-    }
-
-    return 'Enter an amount';
-  }
 
   return (
     <div className={styles.content}>
@@ -225,7 +221,7 @@ const Swap = () => {
               showConfirmSwap(checkout);
             }}
           >
-            {swapButtonText()}
+            {swapButtonText}
           </button>
         )}
 
