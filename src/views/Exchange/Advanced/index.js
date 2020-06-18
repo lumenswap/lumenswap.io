@@ -17,7 +17,7 @@ const Advanced = () => {
 
   const routes = [];
   routes.push(checkout.fromAsset);
-  if (checkout.fromAmount.issuer !== 'native' && checkout.toAsset.issuer !== 'native') {
+  if (checkout.fromAsset.issuer !== 'native' && checkout.toAsset.issuer !== 'native') {
     routes.push(XLM);
   }
   routes.push(checkout.toAsset);
