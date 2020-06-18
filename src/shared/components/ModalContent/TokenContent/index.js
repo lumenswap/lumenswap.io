@@ -14,7 +14,7 @@ const TokenContent = ({ setToken, excludeToken, includeToken }) => {
   useEffect(() => {
     const results = [...includeToken, ...defaultTokens].filter(
       (token) => token.code.toLowerCase().includes(searchString.toLowerCase()),
-    ).filter((token) => token.code !== excludeToken.code);
+    );
     setSearchResults(results);
   }, [searchString]);
 
@@ -47,7 +47,11 @@ const TokenContent = ({ setToken, excludeToken, includeToken }) => {
             className="mt-3 pt-2"
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              setToken(token);
+              if (token.code === excludeToken.code && token.issuer === excludeToken.issuer) {
+                setToken(token, true);
+              } else {
+                setToken(token);
+              }
               hideModal();
             }}
           >

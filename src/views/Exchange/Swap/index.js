@@ -146,6 +146,21 @@ const Swap = () => {
     changeOtherInput('toAmount', true)({ currentTarget: { value: getValues('fromAmount') } });
   }, [checkout.counterPrice]);
 
+  function setToken(field) {
+    return (token, swapMode) => {
+      if (swapMode) {
+        updateCheckout({
+          fromAsset: checkout.toAsset,
+          toAsset: checkout.fromAsset,
+        });
+      } else {
+        updateCheckout({
+          [field]: token,
+        });
+      }
+    };
+  }
+
   return (
     <div className={styles.content}>
       <form>
@@ -157,7 +172,7 @@ const Swap = () => {
             logo={checkout.fromAsset.logo}
             onClick={() => showTokenModal({
               excludeToken: checkout.toAsset,
-              setToken: (fromAsset) => updateCheckout({ fromAsset }),
+              setToken: setToken('fromAsset'),
               includeToken,
             })}
           >
@@ -189,7 +204,7 @@ const Swap = () => {
             logo={checkout.toAsset.logo}
             onClick={() => showTokenModal({
               excludeToken: checkout.fromAsset,
-              setToken: (toAsset) => updateCheckout({ toAsset }),
+              setToken: setToken('toAsset'),
               includeToken,
             })}
           >
