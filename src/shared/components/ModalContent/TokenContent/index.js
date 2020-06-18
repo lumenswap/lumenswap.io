@@ -4,7 +4,7 @@ import defaultTokens from 'src/constants/defaultTokens';
 import hideModal from 'src/actions/modal/hide';
 import styles from './styles.less';
 
-const TokenContent = (props) => {
+const TokenContent = ({ setToken, excludeToken }) => {
   const [searchString, setSearchString] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const handleChange = (e) => {
@@ -14,7 +14,7 @@ const TokenContent = (props) => {
   useEffect(() => {
     const results = defaultTokens.filter(
       (token) => token.code.toLowerCase().includes(searchString.toLowerCase()),
-    ).filter((token) => token.code !== props.excludeToken.code);
+    ).filter((token) => token.code !== excludeToken.code);
     setSearchResults(results);
   }, [searchString]);
 
@@ -47,7 +47,7 @@ const TokenContent = (props) => {
             className="mt-3 pt-2"
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              props.setToken(token);
+              setToken(token);
               hideModal();
             }}
           >

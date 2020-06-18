@@ -5,11 +5,11 @@ import styles from './styles.less';
 const TxnInput = ({
   children, logo, assetCode, web, onClick = () => {},
 }) => (
-  <div className={styles.input} onClick={onClick}>
+  <div className={styles.input}>
     {children}
     <button type="button" className={styles['input-btn']}>
       <img className={styles.coin} src={logo} alt="logo" />
-      <div className="d-flex flex-column text-left pl-1">
+      <div className="d-flex flex-column text-left pl-1" onClick={onClick}>
         <span className={styles.name}>{assetCode}</span>
         <span className={styles.web}>{web}</span>
       </div>

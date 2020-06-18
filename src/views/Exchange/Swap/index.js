@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import arrowDown from 'src/assets/images/arrow-down.png';
 import arrowRepeat from 'src/assets/images/arrow-repeat.png';
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import showTokenModal from 'src/actions/modal/tokenModal';
 import defaultTokens from 'src/constants/defaultTokens';
 import updateCheckout from 'src/actions/checkout/update';
+import fetchCounterPrice from 'src/helpers/fetchCounterPrice';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -16,12 +17,31 @@ const Swap = () => {
     checkout: state.checkout,
   }));
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    const fromAsset = defaultTokens.find((item) => item.code === 'XLM');
+    const toAsset = defaultTokens.find((item) => item.code === 'MOBI');
     updateCheckout({
-      fromAsset: defaultTokens.find((item) => item.code === 'XLM'),
-      toAsset: defaultTokens.find((item) => item.code === 'MOBI'),
+      fromAsset,
+      toAsset,
     });
   }, []);
+
+  useEffect(() => {
+    if (checkout.fromAsset.issuer && checkout.toAsset.issuer) {
+      setLoading(true);
+      fetchCounterPrice(checkout.fromAsset, checkout.toAsset).then((res) => {
+        if (res) {
+          updateCheckout({
+            counterPrice: res,
+          });
+        }
+      }).finally(() => {
+        setLoading(false);
+      });
+    }
+  }, [checkout.fromAsset, checkout.toAsset]);
 
   return (
     <div className={styles.content}>
@@ -74,13 +94,24 @@ const Swap = () => {
               id="to"
             />
           </TxnInput>
-          <p className={styles.info}>1 BTC = 12 ETH
+          <p className={styles.info}>
+            {loading && 'Fetching counter price...'}
+            {!loading && (
+              `1 ${checkout.fromAsset.code} = ${checkout.counterPrice.toFixed(7)} ${checkout.toAsset.code}`
+            )}
             <img
               src={arrowRepeat}
               width="18px"
               height="18px"
               alt="arrow"
               className="ml-1"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                updateCheckout({
+                  fromAsset: checkout.toAsset,
+                  toAsset: checkout.fromAsset,
+                });
+              }}
             />
           </p>
         </div>
