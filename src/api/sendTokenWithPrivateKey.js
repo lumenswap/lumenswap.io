@@ -9,6 +9,7 @@ import { trsStatus } from 'src/constants/enum';
 const server = new StellarSDK.Server(process.env.HORIZON);
 
 export default async function sendTokenWithPrivateKey() {
+  showWaitingModal({ message: 'Sending to network' });
   try {
     const { checkout, userToken, user } = store.getState();
 
@@ -42,8 +43,6 @@ export default async function sendTokenWithPrivateKey() {
   && !getAssetDetails(checkout.toAsset).isNative()) {
       path.push(new StellarSDK.Asset.native()); // eslint-disable-line
     }
-
-    showWaitingModal({ message: 'Sending to network' });
 
     transaction = transaction
       .addOperation(
