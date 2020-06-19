@@ -51,7 +51,7 @@ const Advanced = () => {
               <DetailTooltip id="eth-tooltip" info={minimumReceived} />
             </div>
             <div className={classNames('col-auto', styles.value)}>
-              {(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(3)}
+              {(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7)}
               {' '}{checkout.toAsset.code}
             </div>
           </div>
