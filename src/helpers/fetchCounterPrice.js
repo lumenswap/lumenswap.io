@@ -37,7 +37,7 @@ export default async function fetchCounterPrice(fromAsset, toAsset) {
       return null;
     }
 
-    return parseFloat(nativeToTo.asks[0].price) * fromCounterPrice;
+    return parseFloat(nativeToTo.bids[0].price) * fromCounterPrice;
   } catch (e) {
     return null;
   }
