@@ -79,7 +79,7 @@ const Swap = () => {
           calculatedPrice = val / checkout.counterPrice;
         }
 
-        setterVal(calculatedPrice.toFixed(5));
+        setterVal(calculatedPrice.toFixed(7));
 
         let found;
         if (checkout.fromAsset.code === 'XLM') {

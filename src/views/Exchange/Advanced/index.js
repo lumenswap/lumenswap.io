@@ -72,7 +72,7 @@ const Advanced = () => {
         </div>
         {/* second box */}
         <p className={classNames(styles.title, 'mt-2 mb-0')}>
-          Route
+          Path
           <DetailTooltip id="route-tooltip" info="This a tooltip" />
         </p>
         {/* routes */}
