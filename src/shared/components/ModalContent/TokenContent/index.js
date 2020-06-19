@@ -39,25 +39,30 @@ const TokenContent = ({ setToken, excludeToken, includeToken }) => {
           className={classNames(styles.input, 'form-control primary-input')}
           value={searchString}
           onChange={(e) => { handleChange(e); }}
-          placeholder="Search name or paste address"
+          placeholder="Asset code"
         />
-        {searchResults.map((token, index) => (
-          <div
-            key={index}
-            className="mt-3 pt-2"
-            style={{ cursor: 'pointer' }}
-            onClick={() => {
-              if (token.code === excludeToken.code && token.issuer === excludeToken.issuer) {
-                setToken(token, true);
-              } else {
-                setToken(token);
-              }
-              hideModal();
-            }}
-          >
-            {item(token)}
-          </div>
-        ))}
+        <div
+          className={classNames(styles.scroll, 'mt-3')}
+          style={{ paddingRight: (searchResults.length > 5) && '4px' }}
+        >
+          {searchResults.map((token, index) => (
+            <div
+              key={index}
+              className={classNames((index === 0) ? 'pt-2' : 'mt-3 pt-2')}
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                if (token.code === excludeToken.code && token.issuer === excludeToken.issuer) {
+                  setToken(token, true);
+                } else {
+                  setToken(token);
+                }
+                hideModal();
+              }}
+            >
+              {item(token)}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
