@@ -79,14 +79,16 @@ const Header = () => {
             <div className="col-auto position-relative">
               <img src={logo} alt="logo" width="146px" height="34px" />
             </div>
-            <div className="col-auto">
-              <p className={classNames(styles.badge, styles.order)}>
-                <span>Orders</span>
-                <span className={styles['badge-num']}>
-                  <span className="center-ver-hor">4</span>
-                </span>
-              </p>
-            </div>
+            {userData.logged && (
+              <div className="col-auto">
+                <p className={classNames(styles.badge, styles.order)}>
+                  <span>My Orders</span>
+                  <span className={styles['badge-num']}>
+                    <span className="center-ver-hor">4</span>
+                  </span>
+                </p>
+              </div>
+            )}
           </div>
         </div>
         {/* right part header */}
