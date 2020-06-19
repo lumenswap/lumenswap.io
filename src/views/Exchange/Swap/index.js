@@ -79,7 +79,7 @@ const Swap = () => {
           calculatedPrice = val / checkout.counterPrice;
         }
 
-        setterVal(calculatedPrice.toFixed(5));
+        setterVal(calculatedPrice.toFixed(7));
 
         let found;
         if (checkout.fromAsset.code === 'XLM') {
@@ -93,7 +93,9 @@ const Swap = () => {
 
         if (!found || found.balance <= (mode ? val : calculatedPrice)) {
           setSwapButtonText(`Insuffiecent ${checkout.fromAsset.code} balance`);
+          setButtonDisable(true);
         } else {
+          setButtonDisable(false);
           setSwapButtonText('Swap');
         }
 
@@ -101,6 +103,7 @@ const Swap = () => {
           fromAmount: mode ? val : calculatedPrice,
         });
       } else {
+        setButtonDisable(true);
         setSwapButtonText('Enter an amount');
         setterVal('');
       }
@@ -135,7 +138,7 @@ const Swap = () => {
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
   useEffect(() => {
-    changeOtherInput(setInputToAmount, true)(inputFromAmount);
+    changeOtherInput(setInputToAmount, true)(checkout.fromAmount);
   }, [checkout.counterPrice]);
 
   function setToken(field) {
@@ -182,6 +185,13 @@ const Swap = () => {
               width="24px"
               className="d-block mx-auto"
               alt="arrow"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                updateCheckout({
+                  fromAsset: checkout.toAsset,
+                  toAsset: checkout.fromAsset,
+                });
+              }}
             />
           </div>
         </div>
