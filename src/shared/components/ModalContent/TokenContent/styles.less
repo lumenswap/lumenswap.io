@@ -24,3 +24,26 @@
   font-size: 14px;
   color: @battleship-grey;
 }
+
+:local(.scroll) {
+  max-height: 250px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+:local(.scroll)::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+:local(.scroll)::-webkit-scrollbar {
+  width: 7px;
+  background-color: transparent;
+}
+
+:local(.scroll)::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: @vibrant-blue;
+  cursor: pointer;
+}
+

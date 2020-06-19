@@ -73,7 +73,7 @@ const Header = () => {
 
   const address = (
     <p className={classNames(styles.badge, styles.address)}>
-      <span className={styles['address-title']}>Your address</span>
+      {/* <span className={styles['address-title']}>Your address</span> */}
       <span className={styles['address-value']}>{minimizeAddress(userData.detail.publicKey, 6)}</span>
     </p>
   );
