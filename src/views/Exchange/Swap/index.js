@@ -138,7 +138,7 @@ const Swap = () => {
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
   useEffect(() => {
-    changeOtherInput(setInputToAmount, true)(inputFromAmount);
+    changeOtherInput(setInputToAmount, true)(checkout.fromAmount);
   }, [checkout.counterPrice]);
 
   function setToken(field) {
