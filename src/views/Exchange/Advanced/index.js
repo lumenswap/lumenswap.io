@@ -7,6 +7,7 @@ import CryptoRouteItem from 'src/shared/components/CryptoRouteItem';
 import ToleranceGroup from 'src/shared/components/ToleranceGroup';
 import { useSelector } from 'react-redux';
 import updateCheckout from 'src/actions/checkout/update';
+import { path, minimumReceived, slippageTolerance } from 'src/constants/info';
 import XLM from 'src/tokens/XLM';
 import styles from './styles.less';
 
@@ -47,7 +48,7 @@ const Advanced = () => {
           <div className="row justify-content-between">
             <div className={classNames('col-auto', styles.title)}>
               Minimum received
-              <DetailTooltip id="eth-tooltip" info="This a tooltip" />
+              <DetailTooltip id="eth-tooltip" info={minimumReceived} />
             </div>
             <div className={classNames('col-auto', styles.value)}>
               {(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(3)}
@@ -56,7 +57,7 @@ const Advanced = () => {
           </div>
           <p className={classNames(styles.title, 'mt-2 pt-1 mb-0')}>
             Set slippage tolerance
-            <DetailTooltip id="tolerance-tooltip" info="This a tooltip" />
+            <DetailTooltip id="tolerance-tooltip" info={slippageTolerance} />
           </p>
           <ToleranceGroup
             defaultIndex={1}
@@ -73,7 +74,7 @@ const Advanced = () => {
         {/* second box */}
         <p className={classNames(styles.title, 'mt-2 mb-0')}>
           Route
-          <DetailTooltip id="route-tooltip" info="This a tooltip" />
+          <DetailTooltip id="route-tooltip" info={path} />
         </p>
         {/* routes */}
         <div className={styles.box} style={{ marginTop: '2px', padding: '15px 16px' }}>
