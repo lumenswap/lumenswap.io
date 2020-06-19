@@ -33,11 +33,12 @@ const Exchange = () => {
                   </NavLink>
                 </NavItem>
                 <NavItem>
+                  {/* onClick={() => { toggle('send'); }} */}
                   <NavLink
+                    style={{ cursor: 'not-allowed' }}
                     className={classNames({ active: activeTab === 'send' })}
-                    onClick={() => { toggle('send'); }}
                   >
-                    Send
+                    Send <span style={{ fontSize: '11px' }}>(soon)</span>
                   </NavLink>
                 </NavItem>
               </Nav>
