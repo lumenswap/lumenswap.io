@@ -26,7 +26,15 @@ const Header = () => {
   };
 
   const userData = useSelector((state) => state.user);
-  const userToken = useSelector((state) => state.userToken).map((token) => {
+  const userToken = useSelector((state) => state.userToken).sort((a, b) => {
+    if (a.asset_type === 'native') {
+      return -1;
+    } if (b.asset_type === 'native') {
+      return 1;
+    }
+
+    return 0;
+  }).map((token) => {
     if (token.asset_type === 'native') {
       return {
         value: 'XLM',

@@ -5,7 +5,7 @@ export default (props) => {
   show(
     TokenContent,
     {
-      title: 'Select Token',
+      title: 'Select Asset',
     },
     props,
   );

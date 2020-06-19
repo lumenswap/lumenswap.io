@@ -3,6 +3,6 @@ import show from './show';
 
 export default () => {
   show(ConnectWalletContent, {
-    title: 'Connect Modal',
+    title: 'Connect Wallet',
   });
 };
