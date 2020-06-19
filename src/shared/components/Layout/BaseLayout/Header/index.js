@@ -11,9 +11,9 @@ import questionLogo from 'src/assets/images/question.png';
 import logo from 'src/assets/images/logo.png';
 import styles from './styles.less';
 
-const item = (logo, code, web) => (
+const item = (innerLogo, code, web) => (
   <>
-    <img width="16px" height="16px" className="mr-1" src={logo} alt="logo" />
+    <img width="16px" height="16px" className="mr-1" src={innerLogo} alt="logo" />
     <span className={styles['option-name']}>{code}</span>
     <span className={styles['option-web']}> - {web}</span>
   </>
@@ -66,7 +66,7 @@ const Header = () => {
   const address = (
     <p className={classNames(styles.badge, styles.address)}>
       <span className={styles['address-title']}>Your address</span>
-      <span className={styles['address-value']}>{minimizeAddress(userData.detail.publicKey)}</span>
+      <span className={styles['address-value']}>{minimizeAddress(userData.detail.publicKey, 6)}</span>
     </p>
   );
 
