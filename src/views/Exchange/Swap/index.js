@@ -9,13 +9,13 @@ import defaultTokens from 'src/tokens/defaultTokens';
 import updateCheckout from 'src/actions/checkout/update';
 import cleaerCheckout from 'src/actions/checkout/clear';
 import fetchCounterPrice from 'src/helpers/fetchCounterPrice';
-import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import minimizeAddress from 'src/helpers/minimizeAddress';
 import history from 'src/history';
 import XLM from 'src/tokens/XLM';
 import questionLogo from 'src/assets/images/question.png';
 import showConfirmSwap from 'src/actions/modal/confirmSwap';
+import NumberOnly from 'src/shared/components/NumberOnly';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -28,11 +28,11 @@ const Swap = () => {
     user: state.user,
   }));
   const [loading, setLoading] = useState(true);
-  const {
-    setValue, register, getValues,
-  } = useForm();
   const { fromCustomAsset, toCustomAsset } = useParams();
   const [swapButtonText, setSwapButtonText] = useState('Enter an amount');
+  const [isButtonDisable, setButtonDisable] = useState(false);
+  const [inputFromAmount, setInputFromAmount] = useState('');
+  const [inputToAmount, setInputToAmount] = useState('');
 
   let includeToken = [];
   let modifiedFromAsset;
@@ -69,22 +69,19 @@ const Swap = () => {
     modifiedToAsset = null;
   }
 
-  function changeOtherInput(targetInput, mode) {
+  function changeOtherInput(setterVal, mode) {
     return (val) => {
-      const amount = val.currentTarget.value;
-      const parsed = parseFloat(amount);
-      if (parsed) { // eslint-disable-line
+      if (val) {
         let calculatedPrice;
         if (mode) {
-          calculatedPrice = parsed * checkout.counterPrice;
+          calculatedPrice = val * checkout.counterPrice;
         } else {
-          calculatedPrice = parsed / checkout.counterPrice;
+          calculatedPrice = val / checkout.counterPrice;
         }
 
-        setValue(targetInput, calculatedPrice.toFixed(5));
+        setterVal(calculatedPrice.toFixed(5));
 
         let found;
-        let advanced = true;
         if (checkout.fromAsset.code === 'XLM') {
           found = userToken.find((item) => item.asset_type === 'native');
         } else {
@@ -94,23 +91,18 @@ const Swap = () => {
           );
         }
 
-        if (!found || found.balance <= (mode ? parsed : calculatedPrice)) {
-          setSwapButtonText('Insuffiecent fund');
-          advanced = false;
+        if (!found || found.balance <= (mode ? val : calculatedPrice)) {
+          setSwapButtonText(`Insuffiecent ${checkout.fromAsset.code} balance`);
         } else {
           setSwapButtonText('Swap');
         }
 
         updateCheckout({
-          fromAmount: mode ? parsed : calculatedPrice,
-          showAdvanced: advanced,
+          fromAmount: mode ? val : calculatedPrice,
         });
       } else {
         setSwapButtonText('Enter an amount');
-        setValue(targetInput, null);
-        updateCheckout({
-          showAdvanced: false,
-        });
+        setterVal('');
       }
     };
   }
@@ -143,7 +135,7 @@ const Swap = () => {
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
   useEffect(() => {
-    changeOtherInput('toAmount', true)({ currentTarget: { value: getValues('fromAmount') } });
+    changeOtherInput(setInputToAmount, true)(inputFromAmount);
   }, [checkout.counterPrice]);
 
   function setToken(field) {
@@ -176,12 +168,9 @@ const Swap = () => {
               includeToken,
             })}
           >
-            <input
-              className="form-control primary-input"
-              placeholder="0.0"
-              ref={register}
-              name="fromAmount"
-              onChange={changeOtherInput('toAmount', true)}
+            <NumberOnly
+              onChange={changeOtherInput(setInputToAmount, true)}
+              initValue={inputFromAmount}
             />
           </TxnInput>
         </div>
@@ -208,12 +197,9 @@ const Swap = () => {
               includeToken,
             })}
           >
-            <input
-              className="form-control primary-input"
-              placeholder="0.0"
-              ref={register}
-              name="toAmount"
-              onChange={changeOtherInput('fromAmount', false)}
+            <NumberOnly
+              onChange={changeOtherInput(setInputFromAmount, false)}
+              initValue={inputToAmount}
             />
           </TxnInput>
           <p className={styles.info}>
@@ -227,7 +213,7 @@ const Swap = () => {
           <button
             type="button"
             className={classNames(styles.btn, 'button-primary-lg')}
-            disabled={!checkout.showAdvanced}
+            disabled={isButtonDisable}
             onClick={() => {
               updateCheckout({
                 fromAddress: user.detail.publicKey,

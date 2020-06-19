@@ -3,14 +3,12 @@ import classNames from 'classnames';
 import {
   TabContent, TabPane, Nav, NavItem, NavLink,
 } from 'reactstrap';
-import { useSelector } from 'react-redux';
 import styles from './styles.less';
 import Swap from './Swap';
 import Send from './Send';
 import Advanced from './Advanced';
 
 const Exchange = () => {
-  const showAdvanced = useSelector((state) => state.checkout.showAdvanced);
   const [activeTab, setActiveTab] = useState('swap');
 
   const toggle = (tab) => {
@@ -52,13 +50,11 @@ const Exchange = () => {
             </div>
           </div>
         </div>
-        {showAdvanced && (
         <div className="row justify-content-center mt-2 pt-2 pb-5">
           <div className={classNames('col-auto', styles['box-size'])}>
             <Advanced />
           </div>
         </div>
-        )}
       </div>
     </div>
   );
