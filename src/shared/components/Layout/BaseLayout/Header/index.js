@@ -47,7 +47,7 @@ const Header = () => {
     if (!found) {
       return {
         value: token.asset_code,
-        label: item(questionLogo, `${token.balance} ${token.asset_code}`, minimizeAddress(token.asset_issuer)),
+        label: item(questionLogo, `${token.balance} ${token.asset_code}`, minimizeAddress(token.asset_issuer, 6)),
       };
     }
 

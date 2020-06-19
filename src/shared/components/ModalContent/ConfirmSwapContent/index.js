@@ -6,6 +6,14 @@ import hideModal from 'src/actions/modal/hide';
 import sendTokenWithPrivateKey from 'src/api/sendTokenWithPrivateKey';
 import styles from './styles.less';
 
+function normalizeAddress(str) {
+  if (str.length > 16) {
+    return `${str.slice(0, 16)}...`;
+  }
+
+  return str;
+}
+
 const ConfirmSwapContent = (checkout) => {
   const confirmInfo = [
     {
@@ -22,7 +30,7 @@ const ConfirmSwapContent = (checkout) => {
         <div className={classNames('col-auto', styles.value)}>{checkout.fromAmount.toFixed(7)}</div>
         <div className={classNames('col-auto', styles.crypto)}>
           <img src={checkout.fromAsset.logo} alt="logo" />{checkout.fromAsset.code}
-          <span className={styles.web}>({checkout.fromAsset.web})</span>
+          <span className={styles.web}>({normalizeAddress(checkout.fromAsset.web)})</span>
         </div>
       </div>
       <img
@@ -35,7 +43,7 @@ const ConfirmSwapContent = (checkout) => {
         <div className={classNames('col-auto', styles.value)}>{(checkout.fromAmount * checkout.counterPrice).toFixed(7)}</div>
         <div className={classNames('col-auto', styles.crypto)}>
           <img src={checkout.toAsset.logo} alt="logo" />{checkout.toAsset.code}
-          <span className={styles.web}>({checkout.toAsset.web})</span>
+          <span className={styles.web}>({normalizeAddress(checkout.toAsset.web)})</span>
         </div>
       </div>
       <div className={styles.box}>
