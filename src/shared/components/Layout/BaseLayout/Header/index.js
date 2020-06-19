@@ -8,6 +8,7 @@ import userLogout from 'src/actions/user/logout';
 import defaultTokens from 'src/tokens/defaultTokens';
 import XLM from 'src/tokens/XLM';
 import questionLogo from 'src/assets/images/question.png';
+import logo from 'src/assets/images/logo.png';
 import styles from './styles.less';
 
 const item = (logo, code, web) => (
@@ -76,7 +77,7 @@ const Header = () => {
         <div className="col-auto">
           <div className="row">
             <div className="col-auto position-relative">
-              <h6 className={classNames('center-ver', styles.logo)}>Logo</h6>
+              <img src={logo} alt="logo" width="146px" height="34px" />
             </div>
             <div className="col-auto">
               <p className={classNames(styles.badge, styles.order)}>
