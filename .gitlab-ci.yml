@@ -6,7 +6,7 @@ stages:
   - deploy-demo
   - deploy-prod
 
-build and deploy:
+build:
   only:
     - master
   stage: build
@@ -22,7 +22,7 @@ deploy to demo:
   stage: deploy-demo
   script:
     - export KUBECONFIG=$MANIFEST_HOME/../config
-    - helm upgrade lumenswap-demo lumenswap-demo --set image.tag=$CI_COMMIT_SHORT_SHA  --namespace lumenswap-demo --wait --atomic --install
+    - helm upgrade lumenswap-demo $MANIFEST_HOME/lumenswap-demo --set image.tag=$CI_COMMIT_SHORT_SHA  --namespace lumenswap-demo --wait --atomic --install
   tags:
     - runner
 
@@ -34,6 +34,6 @@ deploy to prod:
   when: manual
   script:
     - export KUBECONFIG=$MANIFEST_HOME/../config
-    - helm upgrade lumenswap-front lumenswap-front --set image.tag=$CI_COMMIT_SHORT_SHA --namespace lumenswap-prod --wait --atomic --install
+    - helm upgrade lumenswap-front $MANIFEST_HOME/lumenswap-front --set image.tag=$CI_COMMIT_SHORT_SHA --namespace lumenswap-prod --wait --atomic --install
   tags:
     - runner
