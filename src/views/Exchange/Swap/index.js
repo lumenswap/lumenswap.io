@@ -103,6 +103,11 @@ const Swap = () => {
           fromAmount: mode ? val : calculatedPrice,
         });
       } else {
+        if (mode) {
+          updateCheckout({
+            fromAmount: '',
+          });
+        }
         setButtonDisable(true);
         setSwapButtonText('Enter an amount');
         setterVal('');
