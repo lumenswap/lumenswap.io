@@ -93,7 +93,9 @@ const Swap = () => {
 
         if (!found || found.balance <= (mode ? val : calculatedPrice)) {
           setSwapButtonText(`Insuffiecent ${checkout.fromAsset.code} balance`);
+          setButtonDisable(true);
         } else {
+          setButtonDisable(false);
           setSwapButtonText('Swap');
         }
 
@@ -101,6 +103,7 @@ const Swap = () => {
           fromAmount: mode ? val : calculatedPrice,
         });
       } else {
+        setButtonDisable(true);
         setSwapButtonText('Enter an amount');
         setterVal('');
       }
