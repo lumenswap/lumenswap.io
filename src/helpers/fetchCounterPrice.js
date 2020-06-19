@@ -18,7 +18,7 @@ export default async function fetchCounterPrice(fromAsset, toAsset) {
     } if (!from.isNative() && to.isNative()) {
       const result = await server.orderbook(from, to).limit(1).call();
       if (result.asks.length > 0) {
-        return parseFloat(result.asks[0].price);
+        return parseFloat(result.bids[0].price);
       }
 
       return null;
