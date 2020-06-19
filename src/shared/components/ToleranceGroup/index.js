@@ -23,19 +23,17 @@ const ToleranceGroup = ({ values, defaultIndex, onChange }) => {
               </button>
             )
             : (
-              <div className={classNames('input-group mb-0 d-flex', styles.group)}>
-                <div className={classNames('input-group-prepend', styles['input-name'])}>
-                  <div className="input-group-text">Custom</div>
-                </div>
+              <div className={classNames('mb-0 d-flex', styles.group)}>
                 <input
                   type="number"
                   className="form-control"
+                  placeholder="custom"
                   onClick={(val) => { setActive(4); onChange(val.currentTarget.value); }}
                   onChange={(val) => { onChange(val.currentTarget.value); }}
                 />
-                <div className={classNames('input-group-prepend', styles.percentage)}>
-                  <div className="input-group-text">%</div>
-                </div>
+                {/* <div className={classNames('input-group-prepend', styles.percentage)}> */}
+                {/*  <div className="input-group-text">%</div> */}
+                {/* </div> */}
               </div>
             )}
         </Fragment>

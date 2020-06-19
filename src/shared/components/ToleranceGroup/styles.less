@@ -22,8 +22,6 @@
   background: @so-light-grey;
   border: 1px solid @so-light-grey;
   border-radius: 6px;
-  padding-right: 7px;
-  padding-left: 7px;
   height: 32px;
 
   input {
@@ -39,12 +37,12 @@
   input:focus {
     box-shadow: none;
     background: @so-light-grey;
-    border: 1.5px solid @so-light-grey;
+    border: 1px solid @so-light-grey;
   }
 }
 
 :local(.group):focus-within {
-  border: 1px solid @vibrant-blue;
+  border: 1px solid @so-light-grey;
   transition: 0.3s ease-in-out;
 }
 
@@ -62,7 +60,7 @@
 }
 
 :local(.input-name) {
-  .input-group-text {
-    padding-right: 1px;
-  }
+  //.input-group-text {
+  //  padding-right: 1px;
+  //}
 }
