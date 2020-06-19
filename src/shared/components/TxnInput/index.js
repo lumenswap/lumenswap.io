@@ -7,9 +7,9 @@ const TxnInput = ({
 }) => (
   <div className={styles.input}>
     {children}
-    <button type="button" className={styles['input-btn']}>
+    <button type="button" className={styles['input-btn']} onClick={onClick}>
       <img className={styles.coin} src={logo} alt="logo" />
-      <div className="d-flex flex-column text-left pl-1" onClick={onClick}>
+      <div className="d-flex flex-column text-left pl-1">
         <span className={styles.name}>{assetCode}</span>
         <span className={styles.web}>{web}</span>
       </div>

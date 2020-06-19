@@ -40,7 +40,7 @@ export default async function sendTokenWithPrivateKey() {
     const path = [];
     if (!getAssetDetails(checkout.fromAsset).isNative()
   && !getAssetDetails(checkout.toAsset).isNative()) {
-      path.push(new StellarSDK.Asset.native());
+      path.push(new StellarSDK.Asset.native()); // eslint-disable-line
     }
 
     showWaitingModal({ message: 'Sending to network' });
@@ -52,7 +52,8 @@ export default async function sendTokenWithPrivateKey() {
           sendAmount: checkout.fromAmount.toFixed(7),
           destination: checkout.toAddress,
           destAsset: getAssetDetails(checkout.toAsset),
-          destMin: (checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7),
+          destMin: (checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance))
+            .toFixed(7),
           path,
         }),
       )
