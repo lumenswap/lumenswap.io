@@ -3,15 +3,37 @@ variables:
 
 stages:
   - build
+  - deploy-demo
+  - deploy-prod
 
 build and deploy:
   only:
     - master
   stage: build
   script:
-    - export KUBECONFIG=$MANIFEST_HOME/../config
     - docker build -t $imageTag .
-    - helm upgrade lumenswap-front $MANIFEST_HOME/lumenswap-front -n lumenswap-prod --set image.tag=$CI_COMMIT_SHORT_SHA --wait --install --atomic
   tags:
     - runner
 
+
+deploy to demo:
+  only:
+    - master
+  stage: deploy-demo
+  script:
+    - export KUBECONFIG=$MANIFEST_HOME/../config
+    - helm upgrade lumenswap-demo lumenswap-demo --set image.tag=$CI_COMMIT_SHORT_SHA  --namespace lumenswap-demo --wait --atomic --install
+  tags:
+    - runner
+
+
+deploy to prod:
+  only:
+    - master
+  stage: deploy-prod
+  when: manual
+  script:
+    - export KUBECONFIG=$MANIFEST_HOME/../config
+    - helm upgrade lumenswap-front lumenswap-front --set image.tag=$CI_COMMIT_SHORT_SHA --namespace lumenswap-prod --wait --atomic --install
+  tags:
+    - runner
