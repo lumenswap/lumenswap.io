@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const activeOrderTHeader = ['TX Hash', 'Sell', 'Buy', 'Date', '#'];
+export const activeOrderTHeader = ['Offer ID', 'Sell', 'Buy', 'Date', '#'];
 export const completeOrderTHeader = ['Sold', 'Bought', 'Date'];
 export const arrowRightSvg = (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

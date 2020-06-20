@@ -5,6 +5,7 @@ import showWaitingModal from 'src/actions/modal/waiting';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
+import createManageBuyOffer from './createManageBuyOffer';
 
 const server = new StellarSDK.Server(process.env.HORIZON);
 
@@ -79,10 +80,18 @@ export default async function sendTokenWithPrivateKey() {
         : e.response.data.extras.result_codes.operations[0];
 
       if (code === 'op_under_dest_min') {
-        showTxnStatus({ status: trsStatus.FAIL, message: `There is some issue in your transaction. reason: ${code}` });
+        showTxnStatus({
+          status: trsStatus.WARNING,
+          message: 'Your order is too large to be processed by the network. Do you want to register it as an active order on the network?',
+          action: () => {
+            createManageBuyOffer();
+          },
+        });
       } else {
         showTxnStatus({ status: trsStatus.FAIL, message: `There is some issue in your transaction. reason: ${code}` });
       }
+    } else {
+      showTxnStatus({ status: trsStatus.FAIL, message: 'There is some issue in your transaction.' });
     }
   }
 }

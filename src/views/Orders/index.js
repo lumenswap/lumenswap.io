@@ -7,6 +7,7 @@ import fetchUserCompletedOrders from 'src/api/fetchUserCompletedOrders';
 import { useSelector } from 'react-redux';
 import history from 'src/history';
 import age from 'src/helpers/age';
+import deleteManageBuyOffer from 'src/api/deleteManageBuyOffer';
 import styles from './styles.less';
 
 const Order = () => {
@@ -20,21 +21,20 @@ const Order = () => {
     }
   }, [user.logged]);
 
-  useEffect(() => {
-    async function fetchData() {
-      if (user.logged) {
-        try {
-          const activeOrders = await fetchUserActiveOrders(user.detail.publicKey);
-          const completedOrders = await fetchUserCompletedOrders(user.detail.publicKey);
-          setActiveTableRows(activeOrders._embedded.records);
-          setCompletedTableRows(completedOrders._embedded.records);
-        } catch (e) {
-          setActiveTableRows([]);
-          setCompletedTableRows([]);
-        }
+  async function fetchData() {
+    if (user.logged) {
+      try {
+        const activeOrders = await fetchUserActiveOrders(user.detail.publicKey);
+        const completedOrders = await fetchUserCompletedOrders(user.detail.publicKey);
+        setActiveTableRows(activeOrders._embedded.records);
+        setCompletedTableRows(completedOrders._embedded.records);
+      } catch (e) {
+        setActiveTableRows([]);
+        setCompletedTableRows([]);
       }
     }
-
+  }
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -45,7 +45,15 @@ const Order = () => {
       <td>{item.amount * item.price} {item.buying.asset_type === 'native' ? 'XLM' : item.buying.asset_code}</td>
       <td width="18%" className="td-light">{age(item.last_modified_time)} ago</td>
       <td width="8%">
-        <button type="button" className={styles.cancel}>Cancel</button>
+        <button
+          type="button"
+          className={styles.cancel}
+          onClick={() => {
+            deleteManageBuyOffer(item);
+            fetchData();
+          }}
+        >Cancel
+        </button>
       </td>
     </tr>
   ));
