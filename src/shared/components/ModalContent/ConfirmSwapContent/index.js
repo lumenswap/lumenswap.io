@@ -4,6 +4,7 @@ import arrowDown from 'src/assets/images/arrow-down.png';
 import InfoItem from 'src/shared/components/InfoItem';
 import hideModal from 'src/actions/modal/hide';
 import sendTokenWithPrivateKey from 'src/api/sendTokenWithPrivateKey';
+import { minimumReceived, slippageTolerance } from 'src/constants/info';
 import styles from './styles.less';
 
 function normalizeAddress(str) {
@@ -17,10 +18,10 @@ function normalizeAddress(str) {
 const ConfirmSwapContent = (checkout) => {
   const confirmInfo = [
     {
-      subject: 'Minimum received', value: `${(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7)} ${checkout.toAsset.code}`, tooltipId: 'rc-eth', tooltipInfo: 'This is a tooltip',
+      subject: 'Minimum received', value: `${(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7)} ${checkout.toAsset.code}`, tooltipId: 'rc-eth', tooltipInfo: minimumReceived,
     },
     {
-      subject: 'Set slippage tolerance', value: `${checkout.tolerance * 100}%`, tooltipId: 'tolerance', tooltipInfo: 'This is a tooltip',
+      subject: 'Set slippage tolerance', value: `${checkout.tolerance * 100}%`, tooltipId: 'tolerance', tooltipInfo: slippageTolerance,
     },
   ];
 
