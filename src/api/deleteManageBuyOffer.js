@@ -46,7 +46,6 @@ export default async function deleteManageBuyOffer(offer) {
       },
     });
   } catch (e) {
-    console.log(e);
     hideModal();
 
     if (e?.response?.data?.extras?.result_codes?.operations) {

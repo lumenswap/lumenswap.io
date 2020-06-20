@@ -67,7 +67,6 @@ export default async function createManageBuyOffer() {
       },
     });
   } catch (e) {
-    console.log(e);
     hideModal();
 
     if (e?.response?.data?.extras?.result_codes?.operations) {
