@@ -55,7 +55,7 @@ const Order = () => {
     let buyAmount = item.counter_amount;
     let sellCode = item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
     let buyCode = item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
-    if (item.counter_amount === user.detail.publicKey) {
+    if (item.counter_account === user.detail.publicKey) {
       sellAmount = item.counter_amount;
       buyAmount = item.base_amount;
       buyCode = item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;

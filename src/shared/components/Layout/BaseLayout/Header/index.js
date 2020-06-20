@@ -11,6 +11,7 @@ import questionLogo from 'src/assets/images/question.png';
 import logo from 'src/assets/images/logo.png';
 import history from 'src/history';
 import { orderPages } from 'src/constants/routes';
+import { Link } from 'react-router-dom';
 import styles from './styles.less';
 import CopyInfo from '../../../CopyInfo';
 
@@ -91,9 +92,11 @@ const Header = () => {
         {/* left part header */}
         <div className="col-auto">
           <div className="row">
-            <div className="col-auto position-relative">
-              <img src={logo} alt="logo" width="146px" height="34px" />
-            </div>
+            <Link to="/">
+              <div className="col-auto position-relative" style={{ cursor: 'pointer' }}>
+                <img src={logo} alt="logo" width="146px" height="34px" />
+              </div>
+            </Link>
             {userData.logged && (
               <div className="col-auto" onClick={() => history.push(orderPages)} style={{ cursor: 'pointer' }}>
                 <p className={classNames(styles.badge, styles.order)}>
