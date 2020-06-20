@@ -63,7 +63,13 @@ export default async function sendTokenWithPrivateKey() {
 
     const result = await server.submitTransaction(transaction);
     hideModal();
-    showTxnStatus({ status: trsStatus.SUCCESS, message: result.hash, link: `https://lumenscan.io/txns/${result.hash}` });
+    showTxnStatus({
+      status: trsStatus.SUCCESS,
+      message: result.hash,
+      action: () => {
+        global.window.open(`https://lumenscan.io/txns/${result.hash}`, '_blank');
+      },
+    });
   } catch (e) {
     hideModal();
 

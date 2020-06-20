@@ -61,6 +61,7 @@ const Order = () => {
       buyCode = item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
       sellCode = item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
     }
+
     return (
       <tr key={item.id}>
         <td>{sellAmount} {sellCode}</td>

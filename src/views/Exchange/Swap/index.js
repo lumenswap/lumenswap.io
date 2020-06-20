@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import showTokenModal from 'src/actions/modal/tokenModal';
 import defaultTokens from 'src/tokens/defaultTokens';
 import updateCheckout from 'src/actions/checkout/update';
-import cleaerCheckout from 'src/actions/checkout/clear';
+import clearCheckoout from 'src/actions/checkout/clear';
 import fetchCounterPrice from 'src/helpers/fetchCounterPrice';
 import { useParams } from 'react-router-dom';
 import minimizeAddress from 'src/helpers/minimizeAddress';
@@ -118,11 +118,15 @@ const Swap = () => {
   useEffect(() => {
     const fromAsset = defaultTokens.find((item) => item.code === 'XLM');
     const toAsset = defaultTokens.find((item) => item.code === 'MOBI');
-    cleaerCheckout();
+    clearCheckoout();
     updateCheckout({
       fromAsset: modifiedFromAsset || fromAsset,
       toAsset: modifiedToAsset || toAsset,
     });
+
+    return () => {
+      clearCheckoout();
+    };
   }, []);
 
   useEffect(() => {
@@ -144,7 +148,7 @@ const Swap = () => {
 
   useEffect(() => {
     changeOtherInput(setInputToAmount, true)(checkout.fromAmount);
-  }, [checkout.counterPrice]);
+  }, [checkout.counterPrice, JSON.stringify(userToken)]);
 
   function setToken(field) {
     return (token, swapMode) => {

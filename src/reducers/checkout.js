@@ -6,8 +6,8 @@ const defaultState = {
   fromAsset: {},
   toAsset: {},
   counterPrice: 0,
-  showAdvanced: false,
   tolerance: 0.005,
+  fromAmount: '',
 };
 
 export default (state = defaultState, action) => {
