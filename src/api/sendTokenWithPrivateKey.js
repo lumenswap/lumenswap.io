@@ -63,9 +63,20 @@ export default async function sendTokenWithPrivateKey() {
 
     const result = await server.submitTransaction(transaction);
     hideModal();
-    showTxnStatus({ status: trsStatus.SUCCESS, address: 'aaa' });
+    showTxnStatus({ status: trsStatus.SUCCESS, message: result.hash, link: `https://lumenscan.io/txns/${result.hash}` });
   } catch (e) {
     hideModal();
-    showTxnStatus({ status: trsStatus.FAIL, address: 'aaa' });
+
+    if (e?.response?.data?.extras?.result_codes?.operations) {
+      const code = e.response.data.extras.result_codes.operations[1]
+        ? e.response.data.extras.result_codes.operations[1]
+        : e.response.data.extras.result_codes.operations[0];
+
+      if (code === 'op_under_dest_min') {
+        showTxnStatus({ status: trsStatus.FAIL, message: `There is some issue in your transaction. reason: ${code}` });
+      } else {
+        showTxnStatus({ status: trsStatus.FAIL, message: `There is some issue in your transaction. reason: ${code}` });
+      }
+    }
   }
 }

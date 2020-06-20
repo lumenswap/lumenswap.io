@@ -95,7 +95,7 @@ const Header = () => {
             {userData.logged && (
               <div className="col-auto">
                 <p className={classNames(styles.badge, styles.order)}>
-                  <span>My Orders</span>
+                  <span>Orders</span>
                   <span className={styles['badge-num']}>
                     <span className="center-ver-hor">4</span>
                   </span>

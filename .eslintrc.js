@@ -7,6 +7,7 @@ module.exports = {
     'operator-assignment': [2, 'never'],
     'prefer-destructuring': 0,
     'no-underscore-dangle': 0,
+    'camelcase': 0,
     'import/no-unresolved': 0,
     'import/no-extraneous-dependencies': 0,
     'react/no-array-index-key': 0,
