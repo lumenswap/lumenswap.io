@@ -62,7 +62,14 @@
   :local(.address-value) {
     font-weight: 500;
     color: @black;
+    cursor: pointer;
   }
+}
+
+:local(.address) div:first-child{
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 :local(.connect) {
@@ -84,12 +91,12 @@
 :local(.option-name) {
   font-size: 12px;
   font-weight: 500;
-  color: @vibrant-blue;
+  color: @battleship-grey;
 }
 
 :local(.option-web) {
   font-size: 11px;
-  color: @battleship-grey;
+  color: @vibrant-blue;
 }
 
 .rc-select {
