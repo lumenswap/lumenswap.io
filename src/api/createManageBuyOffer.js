@@ -11,15 +11,35 @@ const server = new StellarSDK.Server(process.env.HORIZON);
 export default async function createManageBuyOffer() {
   showWaitingModal({ message: 'Sending to network' });
   try {
-    const { checkout, user } = store.getState();
+    const { checkout, user, userToken } = store.getState();
 
     const account = await server.loadAccount(checkout.fromAddress);
     const fee = await server.fetchBaseFee();
 
-    const transaction = new StellarSDK.TransactionBuilder(
+    let needToTrust;
+    if (checkout.toAsset.issuer === 'native') {
+      needToTrust = false;
+    } else {
+      needToTrust = !userToken.find(
+        (token) => token.asset_code === checkout.toAsset.code
+      && token.asset_issuer === checkout.toAsset.issuer,
+      );
+    }
+
+    let transaction = new StellarSDK.TransactionBuilder(
       account,
       { fee, networkPassphrase: StellarSDK.Networks.PUBLIC },
-    ).addOperation(
+    );
+
+    if (needToTrust) {
+      transaction = transaction.addOperation(
+        StellarSDK.Operation.changeTrust({
+          asset: getAssetDetails(checkout.toAsset),
+        }),
+      );
+    }
+
+    transaction = transaction.addOperation(
       StellarSDK.Operation.manageBuyOffer({
         selling: getAssetDetails(checkout.fromAsset),
         buying: getAssetDetails(checkout.toAsset),

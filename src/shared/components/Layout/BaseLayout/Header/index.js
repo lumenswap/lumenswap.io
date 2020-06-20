@@ -42,7 +42,7 @@ const Header = () => {
     if (token.asset_type === 'native') {
       return {
         value: 'XLM',
-        label: item(XLM.logo, `${token.balance} XLM`, 'stellarterm.com'),
+        label: item(XLM.logo, `${token.balance} XLM`, 'stellar.org'),
       };
     }
     const found = defaultTokens.find(
