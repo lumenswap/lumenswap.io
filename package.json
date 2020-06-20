@@ -52,6 +52,7 @@
     "express": "^4.17.1",
     "rc-switch": "^3.2.0",
     "react": "^16.9.0",
+    "react-clipboard.js": "^2.0.16",
     "react-dom": "^16.9.0",
     "react-hook-form": "^5.7.2",
     "react-redux": "^7.1.1",
