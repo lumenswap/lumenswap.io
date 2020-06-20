@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.less';
 
@@ -15,10 +14,5 @@ const Table = ({ tableHead, tableRows }) => (
     </table>
   </div>
 );
-
-Table.propTypes = {
-  tableHead: PropTypes.array.isRequired,
-  tableRows: PropTypes.array.isRequired,
-};
 
 export default Table;

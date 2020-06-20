@@ -1,40 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { activeOrderTHeader, completeOrderTHeader } from 'src/constants/valus';
 import Table from 'src/shared/components/Table';
 import TableInfo from 'src/shared/components/TableInfo';
+import fetchUserActiveOrders from 'src/api/fetchUserActiveOrders';
+import fetchUserCompletedOrders from 'src/api/fetchUserCompletedOrders';
+import { useSelector } from 'react-redux';
+import history from 'src/history';
+import age from 'src/helpers/age';
 import styles from './styles.less';
 
 const Order = () => {
-  const activeTableRows = [];
-  const completeTableRows = [];
-  [0, 1, 2, 3, 4, 5].map((item) => {
-    activeTableRows.push(
-      <tr>
-        <td>0x401b914336…078ff425697f8</td>
-        <td>1 BTC - amir.com</td>
-        <td>14 ETH - apay.com</td>
-        <td width="18%" className="td-light">2 min ago</td>
-        <td width="8%"><button type="button" className={styles.cancel}>Cancel</button></td>
-      </tr>,
-    );
-  });
+  const [activeTableRows, setActiveTableRows] = useState([]);
+  const [completedTableRows, setCompletedTableRows] = useState([]);
+  const user = useSelector((state) => state.user);
 
-  [0, 1, 2, 3, 4, 5].map((item) => {
-    completeTableRows.push(
-      <tr>
-        <td>1 BTC - amir.com</td>
-        <td>14 ETH - apay.com</td>
-        <td className="td-light">2 min ago</td>
-      </tr>,
+  useEffect(() => {
+    if (!user.logged) {
+      history.push('/');
+    }
+  }, [user.logged]);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (user.logged) {
+        try {
+          const activeOrders = await fetchUserActiveOrders(user.detail.publicKey);
+          const completedOrders = await fetchUserCompletedOrders(user.detail.publicKey);
+          setActiveTableRows(activeOrders._embedded.records);
+          setCompletedTableRows(completedOrders._embedded.records);
+        } catch (e) {
+          setActiveTableRows([]);
+          setCompletedTableRows([]);
+        }
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const activeRows = activeTableRows.map((item) => (
+    <tr key={item.id}>
+      <td>{item.id}</td>
+      <td>{item.amount} {item.selling.asset_type === 'native' ? 'XLM' : item.selling.asset_code}</td>
+      <td>{item.amount * item.price} {item.buying.asset_type === 'native' ? 'XLM' : item.buying.asset_code}</td>
+      <td width="18%" className="td-light">{age(item.last_modified_time)} ago</td>
+      <td width="8%">
+        <button type="button" className={styles.cancel}>Cancel</button>
+      </td>
+    </tr>
+  ));
+
+  const completedRows = completedTableRows.map((item) => {
+    let sellAmount = item.base_amount;
+    let buyAmount = item.counter_amount;
+    let sellCode = item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
+    let buyCode = item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
+    if (item.counter_amount === user.detail.publicKey) {
+      sellAmount = item.counter_amount;
+      buyAmount = item.base_amount;
+      buyCode = item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
+      sellCode = item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
+    }
+    return (
+      <tr key={item.id}>
+        <td>{sellAmount} {sellCode}</td>
+        <td>{buyAmount} {buyCode}</td>
+        <td className="td-light">{age(item.ledger_close_time)} ago</td>
+      </tr>
     );
   });
 
   return (
     <div className="pb-5 mb-2">
-      <TableInfo title="Active orders" link="/" style={{ marginTop: '42px' }} className="mb-2" />
-      <Table tableRows={activeTableRows} tableHead={activeOrderTHeader} />
-      <TableInfo title="Complete orders" link="/" style={{ marginTop: '42px' }} className="mb-2" />
-      <Table tableRows={completeTableRows} tableHead={completeOrderTHeader} />
+      <TableInfo
+        title="Active orders"
+        link={`https://lumenscan.io/offers?a=${user.detail.publicKey}`}
+        style={{ marginTop: '42px' }}
+        className="mb-2"
+      />
+      <Table tableRows={activeRows} tableHead={activeOrderTHeader} />
+      <TableInfo
+        title="Complete orders"
+        link={`https://lumenscan.io/trades?a=${user.detail.publicKey}`}
+        style={{ marginTop: '42px' }}
+        className="mb-2"
+      />
+      <Table tableRows={completedRows} tableHead={completeOrderTHeader} />
     </div>
   );
 };

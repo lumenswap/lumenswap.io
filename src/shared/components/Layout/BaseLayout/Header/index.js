@@ -9,6 +9,8 @@ import defaultTokens from 'src/tokens/defaultTokens';
 import XLM from 'src/tokens/XLM';
 import questionLogo from 'src/assets/images/question.png';
 import logo from 'src/assets/images/logo.png';
+import history from 'src/history';
+import { orderPages } from 'src/constants/routes';
 import styles from './styles.less';
 import CopyInfo from '../../../CopyInfo';
 
@@ -93,12 +95,12 @@ const Header = () => {
               <img src={logo} alt="logo" width="146px" height="34px" />
             </div>
             {userData.logged && (
-              <div className="col-auto">
+              <div className="col-auto" onClick={() => history.push(orderPages)} style={{ cursor: 'pointer' }}>
                 <p className={classNames(styles.badge, styles.order)}>
                   <span>Orders</span>
-                  <span className={styles['badge-num']}>
+                  {/* <span className={styles['badge-num']}>
                     <span className="center-ver-hor">4</span>
-                  </span>
+                  </span> */}
                 </p>
               </div>
             )}
