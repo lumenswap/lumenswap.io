@@ -21,10 +21,10 @@ export default async function deleteManageBuyOffer(offer) {
     ).addOperation(
       StellarSDK.Operation.manageBuyOffer({
         selling: offer.selling.asset_type === 'native'
-          ? new StellarSDK.Asset.native()
+          ? new StellarSDK.Asset.native() // eslint-disable-line
           : new StellarSDK.Asset(offer.selling.asset_code, offer.selling.asset_issuer),
         buying: offer.buying.asset_type === 'native'
-          ? new StellarSDK.Asset.native()
+          ? new StellarSDK.Asset.native() // eslint-disable-line
           : new StellarSDK.Asset(offer.buying.asset_code, offer.buying.asset_issuer),
         buyAmount: '0',
         price: offer.price_r,

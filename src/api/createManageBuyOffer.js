@@ -25,11 +25,10 @@ export default async function createManageBuyOffer() {
         buying: getAssetDetails(checkout.toAsset),
         buyAmount: (checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance))
           .toFixed(7),
-        // price: {
-        //   n: parseFloat(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance).toFixed(5)),
-        //   d: parseFloat(checkout.fromAmount.toFixed(5)),
-        // },
-        price: ((1 / checkout.counterPrice) * (1 - checkout.tolerance)).toFixed(7),
+        price: {
+          n: 1 * 10000000,
+          d: Math.floor((checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7) * 10000000),
+        },
         offerId: 0,
       }),
     )
