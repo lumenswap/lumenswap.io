@@ -34,7 +34,6 @@ export default async function createManageBuyOffer() {
     )
       .setTimeout(30)
       .build();
-    console.log((checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7));
 
     transaction.sign(StellarSDK.Keypair.fromSecret(user.detail.privateKey));
 
