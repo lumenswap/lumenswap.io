@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { trsStatus } from 'src/constants/enum';
 import failLogo from 'src/assets/images/exclamation-circle.png';
@@ -20,7 +19,7 @@ const TransactionStatusContent = ({ status, address, toggle }) => {
       {isSuccess
         ? (
           <Link to="/" className={styles.btn}>
-        View on explorer
+            View on explorer
             <img
               src={angleRight}
               width="11px"
@@ -40,10 +39,6 @@ const TransactionStatusContent = ({ status, address, toggle }) => {
         )}
     </div>
   );
-};
-
-TransactionStatusContent.propTypes = {
-
 };
 
 export default TransactionStatusContent;

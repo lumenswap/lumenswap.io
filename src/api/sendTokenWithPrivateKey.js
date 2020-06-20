@@ -62,11 +62,9 @@ export default async function sendTokenWithPrivateKey() {
     transaction.sign(StellarSDK.Keypair.fromSecret(user.detail.privateKey));
 
     const result = await server.submitTransaction(transaction);
-    console.log(result);
     hideModal();
     showTxnStatus({ status: trsStatus.SUCCESS, address: 'aaa' });
   } catch (e) {
-    console.log('error', e);
     hideModal();
     showTxnStatus({ status: trsStatus.FAIL, address: 'aaa' });
   }
