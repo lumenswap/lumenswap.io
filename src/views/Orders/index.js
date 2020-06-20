@@ -49,8 +49,7 @@ const Order = () => {
           type="button"
           className={styles.cancel}
           onClick={() => {
-            deleteManageBuyOffer(item);
-            fetchData();
+            deleteManageBuyOffer(item).then(fetchData);
           }}
         >Cancel
         </button>
