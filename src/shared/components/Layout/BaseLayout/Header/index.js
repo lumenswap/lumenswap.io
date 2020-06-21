@@ -8,7 +8,7 @@ import userLogout from 'src/actions/user/logout';
 import defaultTokens from 'src/tokens/defaultTokens';
 import XLM from 'src/tokens/XLM';
 import questionLogo from 'src/assets/images/question.png';
-import logo from 'src/assets/images/logo.png';
+import logo from 'src/assets/images/logo.svg';
 import history from 'src/history';
 import { orderPages } from 'src/constants/routes';
 import { Link } from 'react-router-dom';
