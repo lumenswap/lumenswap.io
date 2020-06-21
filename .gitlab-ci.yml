@@ -3,6 +3,7 @@ variables:
 
 stages:
   - build
+  - package
   - deploy-demo
   - deploy-prod
 
@@ -15,6 +16,18 @@ build:
   tags:
     - runner
 
+release package:
+  stage: package
+  script:
+
+    - helm package --app-version $CI_COMMIT_SHORT_SHA  $MANIFEST_PATH/lumenswap-front -d $PACKAGE_PATH/lumenswap-front
+    - mv $PACKAGE_PATH/lumenswap-front/lumenswap-front-latest.tgz $PACKAGE_PATH/lumenswap-front/lumenswap-front-$CI_COMMIT_SHORT_SHA.tgz
+
+    - helm package --app-version $CI_COMMIT_SHORT_SHA  $MANIFEST_PATH/lumenswap-demo -d $PACKAGE_PATH/lumenswap-demo
+    - mv $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-latest.tgz $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-$CI_COMMIT_SHORT_SHA.tgz
+
+
+
 
 deploy to demo:
   only:
@@ -24,7 +37,7 @@ deploy to demo:
     - build
   script:
     - export KUBECONFIG=$MANIFEST_HOME/../config
-    - helm upgrade lumenswap-demo $MANIFEST_HOME/lumenswap-demo --set image.tag=$CI_COMMIT_SHORT_SHA  --namespace lumenswap-demo --wait --atomic --install
+    - helm upgrade lumenswap-demo $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-demo --wait --atomic --install
   tags:
     - runner
 
@@ -38,6 +51,6 @@ deploy to prod:
   when: manual
   script:
     - export KUBECONFIG=$MANIFEST_HOME/../config
-    - helm upgrade lumenswap-front $MANIFEST_HOME/lumenswap-front --set image.tag=$CI_COMMIT_SHORT_SHA --namespace lumenswap-prod --wait --atomic --install
+    - helm upgrade lumenswap-front $PACKAGE_PATH/lumenswap-front/lumenswap-front-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-prod --wait --atomic --install
   tags:
     - runner
