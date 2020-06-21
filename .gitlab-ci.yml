@@ -40,7 +40,7 @@ deploy to demo:
     - master
   stage: deploy-demo
   needs:
-    - build
+    - release package
   script:
     - export KUBECONFIG=$MANIFEST_HOME/../config
     - helm upgrade lumenswap-demo $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-demo --wait --atomic --install
@@ -53,7 +53,7 @@ deploy to prod:
     - master
   stage: deploy-prod
   needs:
-    - build
+    - release package
   when: manual
   script:
     - export KUBECONFIG=$MANIFEST_HOME/../config
