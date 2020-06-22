@@ -11,9 +11,9 @@ const server = new StellarSDK.Server(process.env.HORIZON);
 
 export default async function sendTokenWithPrivateKey() {
   showWaitingModal({ message: 'Sending to network' });
-  try {
-    const { checkout, userToken, user } = store.getState();
+  const { checkout, userToken, user } = store.getState();
 
+  try {
     let needToTrust;
     if (checkout.toAsset.issuer === 'native') {
       needToTrust = false;
@@ -87,6 +87,8 @@ export default async function sendTokenWithPrivateKey() {
             createManageBuyOffer();
           },
         });
+      } else if (code === 'op_underfunded') {
+        showTxnStatus({ status: trsStatus.FAIL, message: `You have not enough funds to send and still satisfy "${checkout.fromAsset.code}" selling liabilities, Note that if sending ${checkout.toAsset.code} then the you must additionally maintain its minimum ${checkout.toAsset.code} reserve.` });
       } else {
         showTxnStatus({ status: trsStatus.FAIL, message: `There is some issue in your transaction. reason: ${code}` });
       }
