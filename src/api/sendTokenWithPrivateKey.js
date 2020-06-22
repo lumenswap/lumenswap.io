@@ -88,7 +88,7 @@ export default async function sendTokenWithPrivateKey() {
           },
         });
       } else if (code === 'op_underfunded') {
-        showTxnStatus({ status: trsStatus.FAIL, message: `You have not enough funds to send and still satisfy "${checkout.fromAsset.code}" selling liabilities, Note that if sending ${checkout.toAsset.code} then the you must additionally maintain its minimum ${checkout.toAsset.code} reserve.` });
+        showTxnStatus({ status: trsStatus.FAIL, message: `You have not enough funds to send and still satisfy "${checkout.fromAsset.code}" selling liabilities, Note that if sending XLM then the you must additionally maintain its minimum XLM reserve.` });
       } else {
         showTxnStatus({ status: trsStatus.FAIL, message: `There is some issue in your transaction. reason: ${code}` });
       }
