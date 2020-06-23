@@ -17,6 +17,7 @@ import questionLogo from 'src/assets/images/question.png';
 import showConfirmSwap from 'src/actions/modal/confirmSwap';
 import NumberOnly from 'src/shared/components/NumberOnly';
 import reportSwapClick from 'src/api/metrics/reportSwapClick';
+import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -251,7 +252,10 @@ const Swap = () => {
           <button
             type="button"
             className={classNames(styles.btn, 'button-primary-lg')}
-            onClick={showConnectModal}
+            onClick={() => {
+              reportLoginClick();
+              showConnectModal();
+            }}
           >
             Connect Wallet
           </button>
