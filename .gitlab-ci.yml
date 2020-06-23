@@ -33,8 +33,6 @@ release package:
     - runner
 
 
-
-
 deploy to demo:
   only:
     - master
@@ -42,7 +40,7 @@ deploy to demo:
   needs:
     - release package
   script:
-    - export KUBECONFIG=$MANIFEST_HOME/../config
+    - export KUBECONFIG=$CONFIG_PATH/kube_config
     - helm upgrade lumenswap-demo $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-demo --wait --atomic --install
   tags:
     - runner
@@ -56,7 +54,7 @@ deploy to prod:
     - release package
   when: manual
   script:
-    - export KUBECONFIG=$MANIFEST_HOME/../config
+    - export KUBECONFIG=$CONFIG_PATH/kube_config
     - helm upgrade lumenswap-front $PACKAGE_PATH/lumenswap-front/lumenswap-front-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-prod --wait --atomic --install
   tags:
-    - runner
+    - runner  
