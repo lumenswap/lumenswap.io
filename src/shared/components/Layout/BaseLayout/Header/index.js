@@ -12,6 +12,7 @@ import logo from 'src/assets/images/logo.svg';
 import history from 'src/history';
 import { orderPages } from 'src/constants/routes';
 import { Link } from 'react-router-dom';
+import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import styles from './styles.less';
 import CopyInfo from '../../../CopyInfo';
 
@@ -115,7 +116,10 @@ const Header = () => {
             <button
               type="button"
               className={classNames(styles.connect)}
-              onClick={connectModal}
+              onClick={() => {
+                reportLoginClick();
+                connectModal();
+              }}
             >
               Connect Wallet
             </button>

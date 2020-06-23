@@ -7,6 +7,7 @@ import hideModal from 'src/actions/modal/hide';
 import userLoginAsPv from 'src/actions/user/loginAsPv';
 import fetchUserBalance from 'src/api/fetchUserBalance';
 import setToken from 'src/actions/setToken';
+import reportConnectClick from 'src/api/metrics/reportConnectClick';
 import styles from './styles.less';
 
 const PrivateKeyForm = () => {
@@ -20,6 +21,7 @@ const PrivateKeyForm = () => {
   const [theUser, setTheUser] = useState('');
 
   const onSubmit = async (data) => {
+    reportConnectClick();
     userLoginAsPv(data.key, theUser);
     setLoadingTimer(true);
     try {

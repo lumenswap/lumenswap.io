@@ -5,6 +5,7 @@ import InfoItem from 'src/shared/components/InfoItem';
 import hideModal from 'src/actions/modal/hide';
 import sendTokenWithPrivateKey from 'src/api/sendTokenWithPrivateKey';
 import { minimumReceived, slippageTolerance } from 'src/constants/info';
+import reportSwapConfirmClick from 'src/api/metrics/reportSwapConfirmClick';
 import styles from './styles.less';
 
 function normalizeAddress(str) {
@@ -60,6 +61,7 @@ const ConfirmSwapContent = (checkout) => {
         style={{ marginTop: '32px', marginBottom: '10px' }}
         onClick={() => {
           hideModal();
+          reportSwapConfirmClick();
           sendTokenWithPrivateKey();
         }}
       >Confirm

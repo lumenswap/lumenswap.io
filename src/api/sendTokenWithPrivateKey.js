@@ -6,6 +6,8 @@ import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
 import createManageBuyOffer from './createManageBuyOffer';
+import reportSuccessfulSwap from './metrics/reportSuccessfulSwap';
+import reportFailureSwap from './metrics/reportFailureSwap';
 
 const server = new StellarSDK.Server(process.env.HORIZON);
 
@@ -64,6 +66,7 @@ export default async function sendTokenWithPrivateKey() {
 
     const result = await server.submitTransaction(transaction);
     hideModal();
+    reportSuccessfulSwap();
     showTxnStatus({
       status: trsStatus.SUCCESS,
       message: result.hash,
@@ -73,6 +76,7 @@ export default async function sendTokenWithPrivateKey() {
     });
   } catch (e) {
     hideModal();
+    reportFailureSwap();
 
     if (e?.response?.data?.extras?.result_codes?.operations) {
       const code = e.response.data.extras.result_codes.operations[1]

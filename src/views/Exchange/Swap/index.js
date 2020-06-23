@@ -16,6 +16,7 @@ import XLM from 'src/tokens/XLM';
 import questionLogo from 'src/assets/images/question.png';
 import showConfirmSwap from 'src/actions/modal/confirmSwap';
 import NumberOnly from 'src/shared/components/NumberOnly';
+import reportSwapClick from 'src/api/metrics/reportSwapClick';
 import styles from './styles.less';
 
 const Swap = () => {
@@ -238,6 +239,7 @@ const Swap = () => {
                 fromAddress: user.detail.publicKey,
                 toAddress: user.detail.publicKey,
               });
+              reportSwapClick();
               showConfirmSwap(checkout);
             }}
           >
