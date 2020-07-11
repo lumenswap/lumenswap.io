@@ -4,8 +4,8 @@ variables:
 stages:
   - build
   - package
-  - deploy-demo
-  - deploy-prod
+  # - deploy-demo
+  # - deploy-prod
 
 build:
   only:
@@ -21,7 +21,7 @@ release package:
     - master
   stage: package
   needs:
-    - build  
+    - build
   script:
 
     - helm package --app-version $CI_COMMIT_SHORT_SHA  $MANIFEST_PATH/lumenswap-front -d $PACKAGE_PATH/lumenswap-front
@@ -33,28 +33,28 @@ release package:
     - runner
 
 
-deploy to demo:
-  only:
-    - master
-  stage: deploy-demo
-  needs:
-    - release package
-  script:
-    - export KUBECONFIG=$CONFIG_PATH/kube_config
-    - helm upgrade lumenswap-demo $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-demo --wait --atomic --install
-  tags:
-    - runner
-
-
-deploy to prod:
-  only:
-    - master
-  stage: deploy-prod
-  needs:
-    - release package
-  when: manual
-  script:
-    - export KUBECONFIG=$CONFIG_PATH/kube_config
-    - helm upgrade lumenswap-front $PACKAGE_PATH/lumenswap-front/lumenswap-front-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-prod --wait --atomic --install
-  tags:
-    - runner  
+# deploy to demo:
+#   only:
+#     - master
+#   stage: deploy-demo
+#   needs:
+#     - release package
+#   script:
+#     - export KUBECONFIG=$CONFIG_PATH/kube_config
+#     - helm upgrade lumenswap-demo $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-demo --wait --atomic --install
+#   tags:
+#     - runner
+#
+#
+# deploy to prod:
+#   only:
+#     - master
+#   stage: deploy-prod
+#   needs:
+#     - release package
+#   when: manual
+#   script:
+#     - export KUBECONFIG=$CONFIG_PATH/kube_config
+#     - helm upgrade lumenswap-front $PACKAGE_PATH/lumenswap-front/lumenswap-front-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-prod --wait --atomic --install
+#   tags:
+#     - runner
