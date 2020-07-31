@@ -9,7 +9,7 @@ import createManageBuyOffer from './createManageBuyOffer';
 import reportSuccessfulSwap from './metrics/reportSuccessfulSwap';
 import reportFailureSwap from './metrics/reportFailureSwap';
 
-const server = new StellarSDK.Server(process.env.HORIZON);
+const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function sendTokenWithPrivateKey() {
   showWaitingModal({ message: 'Sending to network' });
