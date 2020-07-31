@@ -1,6 +1,6 @@
 import React from 'react';
 import angleDown from 'src/assets/images/angle-down.svg';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const TxnInput = ({
   children, logo, assetCode, web, onClick = () => {},

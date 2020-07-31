@@ -6,7 +6,7 @@ import hideModal from 'src/actions/modal/hide';
 import sendTokenWithPrivateKey from 'src/api/sendTokenWithPrivateKey';
 import { minimumReceived, slippageTolerance } from 'src/constants/info';
 import reportSwapConfirmClick from 'src/api/metrics/reportSwapConfirmClick';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 function normalizeAddress(str) {
   if (str.length > 16) {

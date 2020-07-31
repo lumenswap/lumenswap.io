@@ -5,7 +5,7 @@ import { Modal } from 'reactstrap';
 import isEmpty from 'src/helpers/is-empty';
 import arrowLeft from 'src/assets/images/arrow-left.png';
 import { connectModalTab } from 'src/constants/enum';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const CustomModal = ({
   modal, toggle, modalSize, title, children, setTab, tab, isConnect,

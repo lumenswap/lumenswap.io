@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import updateCheckout from 'src/actions/checkout/update';
 import { path, minimumReceived, slippageTolerance } from 'src/constants/info';
 import XLM from 'src/tokens/XLM';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const Advanced = () => {
   const [isOpen, setIsOpen] = useState(false);

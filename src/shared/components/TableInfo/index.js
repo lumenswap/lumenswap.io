@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import angleRight from '../../../assets/images/angle-right.svg';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const TableInfo = ({
   title, link, className, style,

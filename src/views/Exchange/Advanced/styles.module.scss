@@ -1,4 +1,4 @@
-@import '~src/styles/colors';
+@import 'src/styles/colors';
 
 :local(.card) {
   padding: 19px 18px;
@@ -8,7 +8,7 @@
   background: transparent;
   border: none;
   font-size: 18px;
-  color: @black;
+  color: $black;
   padding: 0;
   width: 100%;
   display: flex;
@@ -18,18 +18,18 @@
 
 :local(.box) {
   border-radius: 8px;
-  border: 1px solid @very-light-blue;
+  border: 1px solid $very-light-blue;
   padding: 16px 16px 20px 16px;
 }
 
 :local(.title) {
   font-size: 14px;
-  color: @battleship-grey;
+  color: $battleship-grey;
 }
 
 :local(.value) {
   font-size: 14px;
-  color: @black;
+  color: $black;
 }
 
 :local(.col):nth-child(2) {

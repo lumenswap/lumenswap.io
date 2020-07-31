@@ -40,7 +40,7 @@ html, body, #root {
 }
 
 .td-light {
-  color: @battleship-grey !important;
+  color: $battleship-grey !important;
 }
 
 
@@ -60,7 +60,7 @@ html, body, #root {
 
 .table-scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: @vibrant-blue;
+  background-color: $vibrant-blue;
   cursor: pointer;
 }
 
@@ -72,25 +72,25 @@ html, body, #root {
 
 .primary-label {
   font-size: 18px;
-  color: @black;
+  color: $black;
 }
 
 .primary-input {
   border-radius: 8px;
-  border: 1px solid @very-light-blue;
+  border: 1px solid $very-light-blue;
   height: 54px;
-  color: @black;
+  color: $black;
   font-size: 24px;
 }
 
 .primary-input:focus, .primary-input:active {
   box-shadow: none;
-  border: 1px solid @very-light-blue;
+  border: 1px solid $very-light-blue;
   //transition: 0.3s ease-in-out;
 }
 
 .primary-input::placeholder {
-  color: @battleship-grey;
+  color: $battleship-grey;
   font-size: 24px;
 }
 
@@ -110,8 +110,8 @@ input[type=number] {
 
 
 .tooltip-inner {
-  background-color: @pale-grey;
-  color: @black;
+  background-color: $pale-grey;
+  color: $black;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   font-size: 12px;
   opacity: 1;
@@ -119,7 +119,7 @@ input[type=number] {
 }
 
 .bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
-  border-top-color: @pale-grey !important;
+  border-top-color: $pale-grey !important;
 }
 
 .rc-switch:focus {
@@ -127,14 +127,14 @@ input[type=number] {
 }
 
 .rc-switch:after {
-  background-color: @light-grey-blue;
+  background-color: $light-grey-blue;
   width: 22px;
   height: 22px;
   box-shadow: none;
 }
 
 .rc-switch-checked:after {
-  background-color: @vibrant-blue;
+  background-color: $vibrant-blue;
 }
 
 .rc-switch {
@@ -142,8 +142,8 @@ input[type=number] {
   height: 26px;
   line-height: 24px;
   border-radius: 24px 24px;
-  background-color: @so-light-grey;
-  border: 1px solid @so-light-grey;
+  background-color: $so-light-grey;
+  border: 1px solid $so-light-grey;
 }
 
 .rc-switch:hover:after {
@@ -156,22 +156,22 @@ input[type=number] {
   width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 30px -4px rgba(15, 48, 168, 0.2);
-  background: @vibrant-blue;
-  border: 1px solid @vibrant-blue;
+  background: $vibrant-blue;
+  border: 1px solid $vibrant-blue;
   color: white;
   font-size: 18px;
   font-weight: bold;
 }
 
 .button-primary-lg:disabled {
-  background-color: @very-light-blue;
-  border: 1px solid @very-light-blue;
+  background-color: $very-light-blue;
+  border: 1px solid $very-light-blue;
   cursor: not-allowed;
   box-shadow: none;
 }
 
 .loading-btn:disabled {
-  color: @vibrant-blue;
+  color: $vibrant-blue;
 }
 
 .btn:focus {
@@ -186,7 +186,7 @@ input[type=number] {
 
   .react-select__control {
     background-color: white;
-    border: 1px solid @very-light-blue;
+    border: 1px solid $very-light-blue;
     border-radius: 4px;
     box-shadow: none !important;
     cursor: pointer;
@@ -194,7 +194,7 @@ input[type=number] {
   }
 
   .react-select__control:hover {
-    border: 1px solid @very-light-blue;
+    border: 1px solid $very-light-blue;
   }
 
   .react-select__indicator-separator {
@@ -218,7 +218,7 @@ input[type=number] {
 
   .react-select__option input {
     font-size: 14px;
-    color: @black;
+    color: $black;
   }
 
   .react-select__option {
@@ -231,7 +231,7 @@ input[type=number] {
 
   .react-select__option--is-selected {
     background-color: white !important;
-    color: @black;
+    color: $black;
   }
 
   .react-select__menu {
@@ -241,11 +241,10 @@ input[type=number] {
 
   .react-select__menu-notice--no-options {
     font-size: 10px;
-    color: @black;
+    color: $black;
   }
 }
 
  .popover-inner  {
   padding: 5px 10px;
 }
-

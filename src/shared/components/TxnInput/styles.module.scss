@@ -1,4 +1,4 @@
-@import '~src/styles/colors';
+@import 'src/styles/colors';
 
 :local(.input) {
   position: relative;
@@ -18,8 +18,8 @@
 
 :local(.input-btn) {
   border-radius: 6px;
-  background: @so-light-grey;
-  border: 1px solid @so-light-grey;
+  background: $so-light-grey;
+  border: 1px solid $so-light-grey;
   display: flex;
   align-items: center;
   padding: 6px 8px;
@@ -36,7 +36,7 @@
 
   :local(.web) {
     font-size: 11px;
-    color: @battleship-grey;
+    color: $battleship-grey;
     margin-top: -5px;
   }
 }

@@ -11,7 +11,7 @@ import Exchange from './Exchange';
 // import ModalPage from './ModalPage';
 import Modal from './Modal';
 import 'rc-switch/assets/index.css';
-import 'src/styles/base.less';
+import 'src/styles/base.scss';
 
 export default () => (
   <BaseLayout>

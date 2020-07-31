@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import copyText from 'src/helpers/copyText';
 
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const checkIcon = 'icon-check-circle';
 const copyIcon = 'icon-copy';

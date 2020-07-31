@@ -1,13 +1,13 @@
-@import "~src/styles/colors";
+@import 'src/styles/colors';
 
 :local(.subject) {
   font-size: 20px;
-  color: @battleship-grey;
+  color: $battleship-grey;
 }
 
 :local(.address) {
   font-size: 18px;
-  color: @black;
+  color: $black;
 }
 
 :local(.hr) {
@@ -15,7 +15,7 @@
   clear: both;
   display: block;
   width: 100%;
-  background-color: @very-light-blue;
+  background-color: $very-light-blue;
   height: 1px;
   margin-top: 19px;
   margin-bottom: 0;
@@ -23,11 +23,11 @@
 
 :local(.value) {
   font-size: 24px;
-  color: @black;
+  color: $black;
 }
 
 :local(.crypto) {
-  color: @battleship-grey;
+  color: $battleship-grey;
   font-size: 18px;
 
   :local(.web) {
@@ -43,7 +43,7 @@
 
 :local(.box) {
   padding: 16px 16px 12px 16px;
-  border: 1px solid @very-light-blue;
+  border: 1px solid $very-light-blue;
   border-radius: 8px;
   margin-top: 30px;
 }

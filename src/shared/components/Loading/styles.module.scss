@@ -1,7 +1,7 @@
-@import "~src/styles/colors";
+@import 'src/styles/colors';
 
 :local(.loading) {
-  color: @vibrant-blue;
+  color: $vibrant-blue;
   position: sticky;
   border: 2px solid;
   border-radius: 50%;

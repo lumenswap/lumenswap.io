@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {
   TabContent, TabPane, Nav, NavItem, NavLink,
 } from 'reactstrap';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 import Swap from './Swap';
 import Send from './Send';
 import Advanced from './Advanced';

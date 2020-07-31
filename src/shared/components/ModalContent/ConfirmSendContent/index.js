@@ -5,7 +5,7 @@ import btcLogo from 'src/assets/images/btc-logo.png';
 import ethLogo from 'src/assets/images/eth-logo.png';
 import arrowDown from 'src/assets/images/arrow-down.png';
 import InfoItem from 'src/shared/components/InfoItem';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const ConfirmSendContent = (props) => {
   const confirmInfo = [

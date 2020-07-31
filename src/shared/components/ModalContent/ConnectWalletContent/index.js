@@ -5,7 +5,7 @@ import React from 'react';
 // import { connectModalTab } from 'src/constants/enum';
 // import PublicKeyForm from './PublicKeyForm';
 import PrivateKeyForm from './PrivateKeyForm';
-// import styles from './styles.less';
+// import styles from './styles.module.scss';
 
 // const buttonContent = (text) => (
 //   <>

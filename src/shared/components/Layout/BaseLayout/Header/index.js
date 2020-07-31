@@ -13,7 +13,7 @@ import history from 'src/history';
 import { orderPages } from 'src/constants/routes';
 import { Link } from 'react-router-dom';
 import reportLoginClick from 'src/api/metrics/reportLoginClick';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 import CopyInfo from '../../../CopyInfo';
 
 const item = (innerLogo, code, web) => (

@@ -1,17 +1,17 @@
-@import '~src/styles/colors';
-@import '~src/styles/vars';
+@import 'src/styles/colors';
+@import 'src/styles/vars';
 
 :local(.logo) {
   font-size: 20px;
   font-weight: 500;
-  color: @black;
+  color: $black;
   margin-bottom: 0;
 }
 
 :local(.badge) {
   border-radius: 4px;
   background: white;
-  border: 1px solid @very-light-blue;
+  border: 1px solid $very-light-blue;
   padding: 5.5px 8px;
   margin-bottom: 0;
   height: 36px;
@@ -19,10 +19,10 @@
 
 :local(.order) {
   font-size: 16px;
-  color: @vibrant-blue;
+  color: $vibrant-blue;
   display: flex;
   margin-left: 19px;
-  @media (max-width: @sm) {
+  @media (max-width: $sm) {
     margin-left: 10px;
   }
 
@@ -31,7 +31,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: @pale-grey;
+    background: $pale-grey;
     position: relative;
     margin-left: 10px;
   }
@@ -40,11 +40,11 @@
 :local(.exit) {
   font-size: 20px;
   padding: 0 !important;
-  color: @battleship-grey;
+  color: $battleship-grey;
 }
 
 :local(.exit):hover {
-  color: @battleship-grey;
+  color: $battleship-grey;
 }
 
 :local(.address) {
@@ -55,13 +55,13 @@
   height: 36px;
 
   :local(.address-title) {
-    color: @light-grey-blue;
+    color: $light-grey-blue;
     margin-right: 2px;
   }
 
   :local(.address-value) {
     font-weight: 500;
-    color: @black;
+    color: $black;
     cursor: pointer;
   }
 }
@@ -73,11 +73,11 @@
 }
 
 :local(.connect) {
-  background: @pale-purple-blue;
-  border: 1px solid @pale-purple-blue;
+  background: $pale-purple-blue;
+  border: 1px solid $pale-purple-blue;
   font-size: 14px;
   font-weight: 500;
-  color: @vibrant-blue;
+  color: $vibrant-blue;
   width: 134px;
   height: 36px;
   border-radius: 4px;
@@ -91,12 +91,12 @@
 :local(.option-name) {
   font-size: 12px;
   font-weight: 500;
-  color: @battleship-grey;
+  color: $battleship-grey;
 }
 
 :local(.option-web) {
   font-size: 11px;
-  color: @vibrant-blue;
+  color: $vibrant-blue;
 }
 
 .rc-select {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import gitlab from 'src/assets/images/gitlab-icon.png';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const Footer = (props) => (
   <div className="row justify-content-between">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Tooltip } from 'reactstrap';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const DetailTooltip = ({ info, id }) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);

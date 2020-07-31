@@ -1,5 +1,5 @@
-@import "~src/styles/colors";
-@import "~src/styles/vars";
+@import 'src/styles/colors';
+@import 'src/styles/vars';
 
 .modal-dialog {
   display: inline-block;
@@ -25,7 +25,7 @@
 
   span {
     font-size: 18px;
-    color: @very-light-blue;
+    color: $very-light-blue;
   }
 }
 
@@ -36,7 +36,7 @@
 :local(.title) {
   font-size: 18px;
   font-weight: bold;
-  color: @black;
+  color: $black;
   margin-bottom: 0;
 }
 
@@ -45,7 +45,7 @@
   clear: both;
   display: block;
   width: 100%;
-  background-color: @very-light-blue;
+  background-color: $very-light-blue;
   height: 1px;
   margin-top: 0;
   margin-bottom: 0;
