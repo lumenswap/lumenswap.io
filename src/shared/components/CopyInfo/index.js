@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Clipboard from 'react-clipboard.js';
 import { Popover } from 'reactstrap';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const CopyInfo = ({ id, text, children }) => {
   const [popoverOpen, handlePopover] = useState(false);

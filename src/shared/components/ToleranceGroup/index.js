@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import classNames from 'classnames';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const ToleranceGroup = ({ values, defaultIndex, onChange }) => {
   const [active, setActive] = useState(defaultIndex);

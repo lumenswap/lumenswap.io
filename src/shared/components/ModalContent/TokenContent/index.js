@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import defaultTokens from 'src/tokens/defaultTokens';
 import hideModal from 'src/actions/modal/hide';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const TokenContent = ({ setToken, excludeToken, includeToken }) => {
   const [searchString, setSearchString] = useState('');

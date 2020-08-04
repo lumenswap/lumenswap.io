@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import Loading from 'src/shared/components/Loading';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const PublicKeyForm = (props) => {
   const {

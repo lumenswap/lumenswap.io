@@ -5,7 +5,7 @@ import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
 
-const server = new StellarSDK.Server(process.env.HORIZON);
+const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function deleteManageBuyOffer(offer) {
   showWaitingModal({ message: 'Sending to network' });

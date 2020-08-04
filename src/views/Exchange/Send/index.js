@@ -7,7 +7,7 @@ import arrowRepeat from 'src/assets/images/arrow-repeat.png';
 import btcLogo from 'src/assets/images/btc-logo.png';
 import ethLogo from 'src/assets/images/eth-logo.png';
 import TxnInput from 'src/shared/components/TxnInput';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const Send = (props) => {
   const [isChecked, setSwitch] = useState(true);

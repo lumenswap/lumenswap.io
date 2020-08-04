@@ -6,7 +6,7 @@ import successLogo from 'src/assets/images/tick-circle.png';
 import angleRight from 'src/assets/images/angle-right-light.svg';
 import hideModal from 'src/actions/modal/hide';
 import alertLogo from 'src/assets/images/alert.png';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 function generateTitle(status) {
   if (status === trsStatus.FAIL) {

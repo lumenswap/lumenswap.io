@@ -1,0 +1,45 @@
+@import 'src/styles/colors';
+
+:local(.card) {
+  background: white;
+  padding: 3px 26px 0 26px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+}
+
+:local(.table) {
+  margin-bottom: 0;
+
+  thead th {
+    border-bottom: none;
+    border-top: none;
+    padding-bottom: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: $vibrant-blue;
+    white-space: nowrap;
+    padding-left: 0;
+  }
+
+  tbody td {
+    border-bottom: 1px solid $very-light-blue;
+    font-weight: normal;
+    white-space: nowrap;
+    color: $black;
+    font-size: 16px;
+    padding: 15px 13px 15px 0;
+  }
+
+  thead tr th {
+    border-bottom: none !important;
+  }
+
+  tbody tr:first-child td {
+    border-top: none !important;
+    padding-top: 18px;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+}

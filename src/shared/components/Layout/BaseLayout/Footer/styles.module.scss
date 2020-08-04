@@ -1,0 +1,43 @@
+@import 'src/styles/colors';
+
+:local(.btn) {
+  height: 36px;
+  border-radius: 4px;
+  text-align: center;
+  position: relative;
+  display: block;
+  padding: 0;
+}
+
+:local(.btn):focus {
+  outline: none;
+}
+
+:local(.git) {
+  width: 36px;
+  background: $secondary-very-light-blue;
+  border: 1px solid $secondary-very-light-blue;
+  font-size: 20px;
+  color: $black;
+  padding: 3px 0;
+}
+
+:local(.guide) {
+  background: $pale-purple-blue;
+  border: 1px solid $pale-purple-blue;
+  font-size: 14px;
+  font-weight: 500;
+  color: $vibrant-blue;
+  margin-right: 16px;
+  width: 71px;
+}
+
+:local(.theme) {
+  background: $pale-purple-blue;
+  border: 1px solid $pale-purple-blue;
+  font-size: 20px;
+  font-weight: bold;
+  color: $vibrant-blue;
+  width: 36px;
+  padding: 5px 0;
+}

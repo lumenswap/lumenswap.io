@@ -1,0 +1,42 @@
+@import 'src/styles/colors';
+
+:local(.input) {
+  position: relative;
+
+  input {
+    padding: 8px 152px 6px 16px;
+  }
+
+  button {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    height: 42px;
+    width: 142px;
+  }
+}
+
+:local(.input-btn) {
+  border-radius: 6px;
+  background: $so-light-grey;
+  border: 1px solid $so-light-grey;
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+
+  :local(.coin) {
+    width: 24px;
+    height: 24px;
+  }
+
+  :local(.name) {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  :local(.web) {
+    font-size: 11px;
+    color: $battleship-grey;
+    margin-top: -5px;
+  }
+}

@@ -1,7 +1,7 @@
 import StellarSDK from 'stellar-sdk';
 import getAssetDetails from './getAssetDetails';
 
-const server = new StellarSDK.Server(process.env.HORIZON);
+const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function fetchCounterPrice(fromAsset, toAsset) {
   try {

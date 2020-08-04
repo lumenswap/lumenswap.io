@@ -8,7 +8,7 @@ import userLoginAsPv from 'src/actions/user/loginAsPv';
 import fetchUserBalance from 'src/api/fetchUserBalance';
 import setToken from 'src/actions/setToken';
 import reportConnectClick from 'src/api/metrics/reportConnectClick';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const PrivateKeyForm = () => {
   const {

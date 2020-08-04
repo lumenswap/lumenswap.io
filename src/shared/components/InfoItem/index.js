@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 import DetailTooltip from '../DetailTooltip';
 
 const InfoItem = ({

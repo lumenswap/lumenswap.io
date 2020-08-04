@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import history from 'src/history';
 import age from 'src/helpers/age';
 import deleteManageBuyOffer from 'src/api/deleteManageBuyOffer';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const Order = () => {
   const [activeTableRows, setActiveTableRows] = useState([]);

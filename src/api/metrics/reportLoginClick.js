@@ -1,3 +1,3 @@
 export default function reportLoginClick() {
-  global.fetch(`${process.env.METRIC_SERVER}/login`).catch(() => {});
+  global.fetch(`${process.env.REACT_APP_METRIC_SERVER}/login`).catch(() => {});
 }

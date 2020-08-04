@@ -18,7 +18,7 @@ import showConfirmSwap from 'src/actions/modal/confirmSwap';
 import NumberOnly from 'src/shared/components/NumberOnly';
 import reportSwapClick from 'src/api/metrics/reportSwapClick';
 import reportLoginClick from 'src/api/metrics/reportLoginClick';
-import styles from './styles.less';
+import styles from './styles.module.scss';
 
 const Swap = () => {
   const {
