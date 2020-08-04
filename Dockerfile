@@ -4,5 +4,7 @@ COPY . /app
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
 ENV REACT_APP_METRIC_SERVER=https://metricreporter.lumenswap.com
 RUN npm ci
-RUN npm run prod
+RUN npm i serve
+RUN npm run build
+ENV PORT=8080
 CMD ["node", "server.js"]
