@@ -4,8 +4,8 @@ variables:
 stages:
   - build
   - package
-  # - deploy-demo
-  # - deploy-prod
+  - deploy-demo
+  - deploy-prod
 
 build:
   only:
