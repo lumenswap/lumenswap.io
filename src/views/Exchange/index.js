@@ -7,7 +7,7 @@ import Send from './Send';
 import Advanced from './Advanced';
 
 const Exchange = () => {
-  const [activeTab, setActiveTab] = useState('send');
+  const [activeTab, setActiveTab] = useState('swap');
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
