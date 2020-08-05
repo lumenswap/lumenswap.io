@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import {
-  TabContent, TabPane, Nav, NavItem, NavLink,
-} from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import styles from './styles.module.scss';
 import Swap from './Swap';
 import Send from './Send';
 import Advanced from './Advanced';
 
 const Exchange = () => {
-  const [activeTab, setActiveTab] = useState('swap');
+  const [activeTab, setActiveTab] = useState('send');
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -25,18 +23,21 @@ const Exchange = () => {
                 <NavItem>
                   <NavLink
                     className={classNames({ active: activeTab === 'swap' })}
-                    onClick={() => { toggle('swap'); }}
+                    onClick={() => {
+                      toggle('swap');
+                    }}
                   >
                     Swap
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  {/* onClick={() => { toggle('send'); }} */}
                   <NavLink
-                    style={{ cursor: 'not-allowed' }}
                     className={classNames({ active: activeTab === 'send' })}
+                    onClick={() => {
+                      toggle('send');
+                    }}
                   >
-                    Send <span style={{ fontSize: '11px' }}>(soon)</span>
+                    Send
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -59,10 +60,6 @@ const Exchange = () => {
       </div>
     </div>
   );
-};
-
-Exchange.propTypes = {
-
 };
 
 export default Exchange;
