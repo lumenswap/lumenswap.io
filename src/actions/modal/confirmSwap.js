@@ -5,8 +5,8 @@ export default (props) => {
   show(
     ConfirmSwapContent,
     {
-      title: 'Select Token',
+      title: 'Confirm Swap',
     },
-    props,
+    props
   );
 };
