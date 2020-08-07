@@ -8,6 +8,7 @@ stages:
   - deploy-prod
 
 build:
+  resource_group: $CI_PROJECT_NAME
   only:
     - master
   stage: build
@@ -17,6 +18,7 @@ build:
     - runner
 
 release package:
+  resource_group: $CI_PROJECT_NAME
   only:
     - master
   stage: package
@@ -34,6 +36,7 @@ release package:
 
 
 deploy to demo:
+  resource_group: $CI_PROJECT_NAME
   only:
     - master
   stage: deploy-demo
@@ -47,6 +50,7 @@ deploy to demo:
 
 
 deploy to prod:
+  resource_group: $CI_PROJECT_NAME
   only:
     - master
   stage: deploy-prod
