@@ -57,6 +57,7 @@ deploy to prod:
   needs:
     - release package
     - build
+    - deploy to demo
   when: manual
   script:
     - export KUBECONFIG=$CONFIG_PATH/kube_config
