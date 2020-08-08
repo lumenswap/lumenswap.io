@@ -56,26 +56,31 @@ const ConfirmSendContent = (checkout) => {
           </span>
         </div>
       </div>
-      <img src={arrowDown} height="24px" width="24px" alt="arrow" />
-      <div className="row justify-content-between h-100 align-items-center">
-        <div className={classNames('col-auto', styles.value)}>
-          {(checkout.fromAmount * checkout.counterPrice).toFixed(7)}
-        </div>
-        <div className={classNames('col-auto', styles.crypto)}>
-          <img src={checkout.toAsset.logo} alt="logo" />
-          {checkout.toAsset.code}
-          <span className={styles.web}>
-            ({minimizeAddress(checkout.toAsset.web)})
-          </span>
-        </div>
-      </div>
-      <div className={styles.box}>
-        {confirmInfo.map((item, index) => (
-          <div key={index}>
-            <InfoItem item={item} />
+      {!checkout.useSameCoin && (
+        <div>
+          <img src={arrowDown} height="24px" width="24px" alt="arrow" />
+          <div className="row justify-content-between h-100 align-items-center">
+            <div className={classNames('col-auto', styles.value)}>
+              {(checkout.fromAmount * checkout.counterPrice).toFixed(7)}
+            </div>
+            <div className={classNames('col-auto', styles.crypto)}>
+              <img src={checkout.toAsset.logo} alt="logo" />
+              {checkout.toAsset.code}
+              <span className={styles.web}>
+                ({minimizeAddress(checkout.toAsset.web)})
+              </span>
+            </div>
           </div>
-        ))}
-      </div>
+          <div className={styles.box}>
+            {confirmInfo.map((item, index) => (
+              <div key={index}>
+                <InfoItem item={item} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <button
         type="button"
         className="button-primary-lg "

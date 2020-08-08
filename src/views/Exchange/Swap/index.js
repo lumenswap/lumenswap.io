@@ -21,9 +21,7 @@ import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import styles from './styles.module.scss';
 
 const Swap = () => {
-  const {
-    userLogged, checkout, userToken, user,
-  } = useSelector((state) => ({
+  const { userLogged, checkout, userToken, user } = useSelector((state) => ({
     userLogged: state.user.logged,
     checkout: state.checkout,
     userToken: state.userToken,
@@ -88,8 +86,9 @@ const Swap = () => {
           found = userToken.find((item) => item.asset_type === 'native');
         } else {
           found = userToken.find(
-            (item) => checkout.fromAsset.code === item.asset_code
-        && checkout.fromAsset.issuer === item.asset_issuer,
+            (item) =>
+              checkout.fromAsset.code === item.asset_code &&
+              checkout.fromAsset.issuer === item.asset_issuer
           );
         }
 
@@ -134,17 +133,19 @@ const Swap = () => {
   useEffect(() => {
     if (checkout.fromAsset.issuer && checkout.toAsset.issuer) {
       setLoading(true);
-      fetchCounterPrice(checkout.fromAsset, checkout.toAsset).then((res) => {
-        if (res) {
-          updateCheckout({
-            counterPrice: res,
-          });
-        } else {
-          history.push('/');
-        }
-      }).finally(() => {
-        setLoading(false);
-      });
+      fetchCounterPrice(checkout.fromAsset, checkout.toAsset)
+        .then((res) => {
+          if (res) {
+            updateCheckout({
+              counterPrice: res,
+            });
+          } else {
+            history.push('/');
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
@@ -171,16 +172,20 @@ const Swap = () => {
     <div className={styles.content}>
       <form>
         <div className="form-group">
-          <label className="primary-label" htmlFor="from">From</label>
+          <label className="primary-label" htmlFor="from">
+            From
+          </label>
           <TxnInput
             web={checkout.fromAsset.web}
             assetCode={checkout.fromAsset.code}
             logo={checkout.fromAsset.logo}
-            onClick={() => showTokenModal({
-              excludeToken: checkout.toAsset,
-              setToken: setToken('fromAsset'),
-              includeToken,
-            })}
+            onClick={() =>
+              showTokenModal({
+                excludeToken: checkout.toAsset,
+                setToken: setToken('fromAsset'),
+                includeToken,
+              })
+            }
           >
             <NumberOnly
               onChange={changeOtherInput(setInputToAmount, true)}
@@ -207,16 +212,22 @@ const Swap = () => {
           </div>
         </div>
         <div className="form-group mb-0" style={{ marginTop: '-8px' }}>
-          <label className="primary-label" htmlFor="to">To (estimated)</label>
+          <label className="primary-label" htmlFor="to">
+            To (estimated)
+          </label>
           <TxnInput
-            web={checkout.toAsset.web || minimizeAddress(checkout.toAsset.issuer)}
+            web={
+              checkout.toAsset.web || minimizeAddress(checkout.toAsset.issuer)
+            }
             assetCode={checkout.toAsset.code}
             logo={checkout.toAsset.logo}
-            onClick={() => showTokenModal({
-              excludeToken: checkout.fromAsset,
-              setToken: setToken('toAsset'),
-              includeToken,
-            })}
+            onClick={() =>
+              showTokenModal({
+                excludeToken: checkout.fromAsset,
+                setToken: setToken('toAsset'),
+                includeToken,
+              })
+            }
           >
             <NumberOnly
               onChange={changeOtherInput(setInputFromAmount, false)}
@@ -225,9 +236,10 @@ const Swap = () => {
           </TxnInput>
           <p className={styles.info}>
             {loading && 'Fetching counter price...'}
-            {!loading && (
-              `1 ${checkout.toAsset.code} = ${(1 / checkout.counterPrice).toFixed(7)} ${checkout.fromAsset.code}`
-            )}
+            {!loading &&
+              `1 ${checkout.toAsset.code} = ${(
+                1 / checkout.counterPrice
+              ).toFixed(7)} ${checkout.fromAsset.code}`}
           </p>
         </div>
         {userLogged && (

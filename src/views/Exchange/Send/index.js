@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Switch from 'rc-switch';
 import arrowDown from 'src/assets/images/arrow-down.png';
 import arrowRepeat from 'src/assets/images/arrow-repeat.png';
-import btcLogo from 'src/assets/images/btc-logo.png';
-import ethLogo from 'src/assets/images/eth-logo.png';
 import TxnInput from 'src/shared/components/TxnInput';
 import styles from './styles.module.scss';
 import { useSelector } from 'react-redux';
@@ -24,7 +21,7 @@ import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import showConnectModal from 'src/actions/modal/connectModal';
 import showConfirmSend from 'src/actions/modal/confirmSend';
 
-const Send = () => {
+const Send = ({ showAdvanced, setShowAdvanced }) => {
   const { userLogged, checkout, userToken, user } = useSelector((state) => ({
     userLogged: state.user.logged,
     checkout: state.checkout,
@@ -102,7 +99,7 @@ const Send = () => {
           setButtonDisable(true);
         } else {
           setButtonDisable(false);
-          setSwapButtonText('Swap');
+          setSwapButtonText('Send');
         }
 
         updateCheckout({
@@ -152,7 +149,13 @@ const Send = () => {
           setLoading(false);
         });
     }
-  }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
+  }, [
+    checkout.fromAsset,
+    checkout.toAsset,
+    fromCustomAsset,
+    showAdvanced,
+    toCustomAsset,
+  ]);
 
   useEffect(() => {
     changeOtherInput(setInputToAmount, true)(checkout.fromAmount);
@@ -211,14 +214,16 @@ const Send = () => {
         className={classNames(styles.btn, 'button-primary-lg')}
         disabled={isButtonDisable}
         onClick={() => {
-          updateCheckout({
+          const newCheckout = {
             fromAddress: user.detail.publicKey,
             toAddress: inputToAddress,
-          });
+            useSameCoin: !showAdvanced,
+          };
+
+          updateCheckout(newCheckout);
           showConfirmSend({
             ...checkout,
-            fromAddress: user.detail.publicKey,
-            toAddress: inputToAddress,
+            ...newCheckout,
           });
         }}
       >
@@ -227,11 +232,12 @@ const Send = () => {
     );
   }
 
-  const [isChecked, setSwitch] = useState(true);
-
   const onChange = (value, event) => {
-    // console.log(`switch checked: ${value}`, event);
-    setSwitch(value);
+    updateCheckout({
+      useSameCoin: !value,
+    });
+
+    setShowAdvanced(value);
   };
   return (
     <div className={styles.content}>
@@ -258,7 +264,7 @@ const Send = () => {
             />
           </TxnInput>
         </div>
-        {isChecked && (
+        {showAdvanced && (
           <>
             <div className="row">
               <div className="col-12">
@@ -301,13 +307,6 @@ const Send = () => {
                   `1 ${checkout.toAsset.code} = ${(
                     1 / checkout.counterPrice
                   ).toFixed(7)} ${checkout.fromAsset.code}`}
-                <img
-                  src={arrowRepeat}
-                  width="18px"
-                  height="18px"
-                  alt="arrow"
-                  className="ml-1"
-                />
               </p>
             </div>
           </>
@@ -328,10 +327,14 @@ const Send = () => {
         </div>
         <div className="row justify-content-between mt-4 pt-2 h-100 align-items-center d-flex">
           <div className={classNames('col-auto', styles.receive)}>
-            Minimum received
+            Send + Swap
           </div>
           <div className="col-auto">
-            <Switch onChange={onChange} onClick={onChange} defaultChecked />
+            <Switch
+              onChange={onChange}
+              onClick={onChange}
+              defaultChecked={showAdvanced}
+            />
           </div>
         </div>
         {renderButton()}

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import arrowDown from 'src/assets/images/arrow-down.png';
 import InfoItem from 'src/shared/components/InfoItem';
 import hideModal from 'src/actions/modal/hide';
-import sendTokenWithPrivateKey from 'src/api/sendTokenWithPrivateKey';
+import swapTokenWithPrivateKey from 'src/api/swapTokenWithPrivateKey';
 import { minimumReceived, slippageTolerance } from 'src/constants/info';
 import reportSwapConfirmClick from 'src/api/metrics/reportSwapConfirmClick';
 import styles from './styles.module.scss';
@@ -80,7 +80,7 @@ const ConfirmSwapContent = (checkout) => {
         onClick={() => {
           hideModal();
           reportSwapConfirmClick();
-          sendTokenWithPrivateKey();
+          swapTokenWithPrivateKey();
         }}
       >
         Confirm

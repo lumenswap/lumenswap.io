@@ -7,9 +7,16 @@ import Send from './Send';
 import Advanced from './Advanced';
 
 const Exchange = () => {
-  const [activeTab, setActiveTab] = useState('swap');
+  const [activeTab, setActiveTab] = useState('send');
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const toggle = (tab) => {
+    if (tab === 'send') {
+      setShowAdvanced(false);
+    } else {
+      setShowAdvanced(true);
+    }
+
     if (activeTab !== tab) setActiveTab(tab);
   };
 
@@ -43,20 +50,28 @@ const Exchange = () => {
               </Nav>
               <TabContent activeTab={activeTab}>
                 <TabPane tabId="swap">
-                  <Swap />
+                  <Swap
+                    setShowAdvanced={setShowAdvanced}
+                    showAdvanced={showAdvanced}
+                  />
                 </TabPane>
                 <TabPane tabId="send">
-                  <Send />
+                  <Send
+                    setShowAdvanced={setShowAdvanced}
+                    showAdvanced={showAdvanced}
+                  />
                 </TabPane>
               </TabContent>
             </div>
           </div>
         </div>
-        <div className="row justify-content-center mt-2 pt-2 pb-5">
-          <div className={classNames('col-auto', styles['box-size'])}>
-            <Advanced />
+        {showAdvanced && (
+          <div className="row justify-content-center mt-2 pt-2 pb-5">
+            <div className={classNames('col-auto', styles['box-size'])}>
+              <Advanced />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

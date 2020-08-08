@@ -9,28 +9,17 @@ import setToken from './actions/setToken';
 setInterval(() => {
   const detail = store.getState().user.detail;
   if (detail.publicKey) {
-    fetchUserBalance(detail.publicKey).then((balances) => {
-      setToken(balances);
-    }).catch(() => {
-      setToken([]);
-    });
+    fetchUserBalance(detail.publicKey)
+      .then((balances) => {
+        setToken(balances);
+      })
+      .catch(() => {
+        setToken([]);
+      });
   }
 }, 2000);
 
-ReactDOM.render(
-  <App />,
-  global.document.getElementById('root'),
-);
-
-if (module.hot) {
-  module.hot.accept();
-
-  module.hot.addStatusHandler((status) => {
-    if (status === 'prepare') {
-      console.clear();
-    }
-  });
-}
+ReactDOM.render(<App />, global.document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

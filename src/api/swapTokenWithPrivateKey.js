@@ -11,7 +11,7 @@ import reportFailureSwap from './metrics/reportFailureSwap';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function sendTokenWithPrivateKey() {
+export default async function swapTokenWithPrivateKey() {
   showWaitingModal({ message: 'Sending to network' });
   const { checkout, userToken, user } = store.getState();
 
@@ -67,24 +67,6 @@ export default async function sendTokenWithPrivateKey() {
       )
       .setTimeout(30)
       .build();
-
-    if (checkout.useSameCoin) {
-      transaction = new StellarSDK.TransactionBuilder(account, {
-        fee,
-        networkPassphrase: StellarSDK.Networks.PUBLIC,
-      });
-
-      transaction = transaction
-        .addOperation(
-          StellarSDK.Operation.payment({
-            destination: checkout.toAddress,
-            asset: getAssetDetails(checkout.fromAsset),
-            amount: checkout.fromAmount.toFixed(7),
-          })
-        )
-        .setTimeout(30)
-        .build();
-    }
 
     transaction.sign(StellarSDK.Keypair.fromSecret(user.detail.privateKey));
 
