@@ -1,6 +1,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "./fonts";
 @import "./colors";
+@import "./vars";
 
 html, body {
   font-family: 'Inter', sans-serif;
@@ -245,6 +246,26 @@ input[type=number] {
   }
 }
 
- .popover-inner  {
+.popover-inner {
   padding: 5px 10px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.bm-burger-button {
+  display: none;
+  height: 24px;
+  width: 30px;
+  position: absolute;
+  right: 27px;
+  top: 31px;
+  @media (max-width: $lg) {
+    display: block;
+  }
+}
+
+.bm-menu-wrap {
+  background: white;
 }

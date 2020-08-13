@@ -12,6 +12,7 @@
     "numeral": "^2.0.6",
     "rc-switch": "^3.2.0",
     "react": "^16.13.1",
+    "react-burger-menu": "^2.7.1",
     "react-clipboard.js": "^2.0.16",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.2.0",

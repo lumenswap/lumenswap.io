@@ -1,0 +1,11 @@
+@import 'src/styles/vars';
+
+.bm-burger-button {
+  display: none;
+  height: 0;
+  width: 30px;
+  float: right;
+  @media (max-width: $md) {
+    display: block;
+  }
+}
