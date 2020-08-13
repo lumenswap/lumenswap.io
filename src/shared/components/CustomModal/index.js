@@ -8,7 +8,7 @@ import { connectModalTab } from 'src/constants/enum';
 import styles from './styles.module.scss';
 
 const CustomModal = ({
-  modal, toggle, modalSize, title, children, setTab, tab, isConnect,
+  modal, toggle, modalSize, title, children, setTab, tab, isConnect, marginTop
 }) => {
   const isNeedTitle = (tab === connectModalTab.CONNECT);
 
@@ -17,7 +17,7 @@ const CustomModal = ({
       isOpen={modal}
       toggle={() => toggle()}
       size="lg"
-      style={{ width: `${modalSize}px` }}
+      style={{ width: `${modalSize}px`, marginTop: marginTop && `${marginTop}px` }}
       className={classNames(styles.modal)}
     >
       {isConnect ? (
@@ -95,6 +95,7 @@ CustomModal.propTypes = {
   tab: PropTypes.string,
   setTab: PropTypes.func,
   isConnect: PropTypes.bool,
+  marginTop: PropTypes.number,
 };
 
 export default CustomModal;

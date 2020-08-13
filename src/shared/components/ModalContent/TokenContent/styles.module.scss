@@ -47,3 +47,17 @@
   cursor: pointer;
 }
 
+:local(.add) {
+  height: 54px;
+  width: 54px;
+  border: 1px solid $vibrant-blue;
+  border-radius: 8px;
+  background: white;
+  padding: 17px;
+
+  span {
+    font-size: 20px;
+    color: $vibrant-blue;
+  }
+}
+
