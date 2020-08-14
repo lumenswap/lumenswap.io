@@ -7,8 +7,8 @@ import { minimumReceived, slippageTolerance } from 'src/constants/info';
 import minimizeAddress from 'src/helpers/minimizeAddress';
 import hideModal from 'src/actions/modal/hide';
 import reportSwapConfirmClick from 'src/api/metrics/reportSwapConfirmClick';
-import sendTokenWithPrivateKey from 'src/api/sendTokenWithPrivateKey';
 import normalizeAmount from 'src/helpers/normalizeAmount';
+import sendTokenMaker from 'src/api/sendTokenMaker';
 
 const ConfirmSendContent = (checkout) => {
   const confirmInfo = [
@@ -87,7 +87,7 @@ const ConfirmSendContent = (checkout) => {
         onClick={() => {
           hideModal();
           reportSwapConfirmClick();
-          sendTokenWithPrivateKey();
+          sendTokenMaker();
         }}
       >
         Confirm

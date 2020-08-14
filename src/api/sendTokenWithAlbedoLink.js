@@ -104,6 +104,7 @@ export default async function sendTokenWithAlbedoLink() {
       },
     });
   } catch (error) {
+    console.log('mamad', error);
     const e = {
       response: {
         data: error.ext,
