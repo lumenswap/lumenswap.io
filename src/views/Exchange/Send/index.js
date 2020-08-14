@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import Switch from 'rc-switch';
 import arrowDown from 'src/assets/images/arrow-down.png';
-import arrowRepeat from 'src/assets/images/arrow-repeat.png';
 import TxnInput from 'src/shared/components/TxnInput';
 import styles from './styles.module.scss';
 import { useSelector } from 'react-redux';
