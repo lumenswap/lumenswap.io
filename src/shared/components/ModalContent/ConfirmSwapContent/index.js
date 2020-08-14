@@ -3,28 +3,20 @@ import classNames from 'classnames';
 import arrowDown from 'src/assets/images/arrow-down.png';
 import InfoItem from 'src/shared/components/InfoItem';
 import hideModal from 'src/actions/modal/hide';
-import swapTokenWithPrivateKey from 'src/api/swapTokenWithPrivateKey';
 import { minimumReceived, slippageTolerance } from 'src/constants/info';
 import reportSwapConfirmClick from 'src/api/metrics/reportSwapConfirmClick';
 import styles from './styles.module.scss';
-
-function normalizeAddress(str) {
-  if (str.length > 16) {
-    return `${str.slice(0, 16)}...`;
-  }
-
-  return str;
-}
+import normalizeAmount from 'src/helpers/normalizeAmount';
+import minimizeAddress from 'src/helpers/minimizeAddress';
+import { swapTokenMaker } from 'src/api/swapTokenMaker';
 
 const ConfirmSwapContent = (checkout) => {
   const confirmInfo = [
     {
       subject: 'Minimum received',
-      value: `${(
-        checkout.fromAmount *
-        checkout.counterPrice *
-        (1 - checkout.tolerance)
-      ).toFixed(7)} ${checkout.toAsset.code}`,
+      value: `${normalizeAmount(
+        checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)
+      )} ${checkout.toAsset.code}`,
       tooltipId: 'rc-eth',
       tooltipInfo: minimumReceived,
     },
@@ -43,26 +35,26 @@ const ConfirmSwapContent = (checkout) => {
         style={{ marginTop: '-12px' }}
       >
         <div className={classNames('col-auto', styles.value)}>
-          {checkout.fromAmount.toFixed(7)}
+          {normalizeAmount(checkout.fromAmount)}
         </div>
         <div className={classNames('col-auto', styles.crypto)}>
           <img src={checkout.fromAsset.logo} alt="logo" />
           {checkout.fromAsset.code}
           <span className={styles.web}>
-            ({normalizeAddress(checkout.fromAsset.web)})
+            ({minimizeAddress(checkout.fromAsset.web)})
           </span>
         </div>
       </div>
       <img src={arrowDown} height="24px" width="24px" alt="arrow" />
       <div className="row justify-content-between h-100 align-items-center">
         <div className={classNames('col-auto', styles.value)}>
-          {(checkout.fromAmount * checkout.counterPrice).toFixed(7)}
+          {normalizeAmount(checkout.fromAmount * checkout.counterPrice)}
         </div>
         <div className={classNames('col-auto', styles.crypto)}>
           <img src={checkout.toAsset.logo} alt="logo" />
           {checkout.toAsset.code}
           <span className={styles.web}>
-            ({normalizeAddress(checkout.toAsset.web)})
+            ({minimizeAddress(checkout.toAsset.web)})
           </span>
         </div>
       </div>
@@ -80,7 +72,7 @@ const ConfirmSwapContent = (checkout) => {
         onClick={() => {
           hideModal();
           reportSwapConfirmClick();
-          swapTokenWithPrivateKey();
+          swapTokenMaker();
         }}
       >
         Confirm

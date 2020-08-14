@@ -5,14 +5,16 @@ import showWaitingModal from 'src/actions/modal/waiting';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
+import createManageBuyOffer from './createManageBuyOffer';
 import reportSuccessfulSwap from './metrics/reportSuccessfulSwap';
 import reportFailureSwap from './metrics/reportFailureSwap';
+import albedo from '@albedo-link/intent';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function sendTokenWithPrivateKey() {
+export default async function swapTokenWithAlbedoLink() {
   showWaitingModal({ message: 'Sending to network' });
-  const { checkout, userToken, user } = store.getState();
+  const { checkout, userToken } = store.getState();
 
   try {
     let needToTrust;
@@ -67,40 +69,30 @@ export default async function sendTokenWithPrivateKey() {
       .setTimeout(30)
       .build();
 
-    if (checkout.useSameCoin) {
-      transaction = new StellarSDK.TransactionBuilder(account, {
-        fee,
-        networkPassphrase: StellarSDK.Networks.PUBLIC,
-      });
+    const result = await albedo.tx({
+      xdr: transaction.toXDR(),
+      submit: true,
+    });
 
-      transaction = transaction
-        .addOperation(
-          StellarSDK.Operation.payment({
-            destination: checkout.toAddress,
-            asset: getAssetDetails(checkout.fromAsset),
-            amount: checkout.fromAmount.toFixed(7),
-          })
-        )
-        .setTimeout(30)
-        .build();
-    }
-
-    transaction.sign(StellarSDK.Keypair.fromSecret(user.detail.privateKey));
-
-    const result = await server.submitTransaction(transaction);
     hideModal();
     reportSuccessfulSwap();
     showTxnStatus({
       status: trsStatus.SUCCESS,
-      message: result.hash,
+      message: result.result.hash,
       action: () => {
         global.window.open(
-          `https://lumenscan.io/txns/${result.hash}`,
+          `https://lumenscan.io/txns/${result.result.hash}`,
           '_blank'
         );
       },
     });
-  } catch (e) {
+  } catch (error) {
+    const e = {
+      response: {
+        data: error.ext,
+      },
+    };
+
     hideModal();
     reportFailureSwap();
 
@@ -112,9 +104,10 @@ export default async function sendTokenWithPrivateKey() {
       if (code === 'op_under_dest_min') {
         showTxnStatus({
           status: trsStatus.WARNING,
-          message: 'Your order is too large to be processed by the network.',
+          message:
+            'Your order is too large to be processed by the network. Do you want to register it as an active order on the network?',
           action: () => {
-            hideModal();
+            createManageBuyOffer();
           },
         });
       } else if (code === 'op_underfunded') {

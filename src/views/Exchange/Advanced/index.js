@@ -10,6 +10,7 @@ import updateCheckout from 'src/actions/checkout/update';
 import { path, minimumReceived, slippageTolerance } from 'src/constants/info';
 import XLM from 'src/tokens/XLM';
 import styles from './styles.module.scss';
+import normalizeAmount from 'src/helpers/normalizeAmount';
 
 const Advanced = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,22 +19,25 @@ const Advanced = () => {
 
   const routes = [];
   routes.push(checkout.fromAsset);
-  if (checkout.fromAsset.issuer !== 'native' && checkout.toAsset.issuer !== 'native') {
+  if (
+    checkout.fromAsset.issuer !== 'native' &&
+    checkout.toAsset.issuer !== 'native'
+  ) {
     routes.push(XLM);
   }
   routes.push(checkout.toAsset);
 
   const advanceBtnValue = [
-    { value: '0.1' }, { value: '0.5' }, { value: '1.0' }, { value: 'custom' },
+    { value: '0.1' },
+    { value: '0.5' },
+    { value: '1.0' },
+    { value: 'custom' },
   ];
 
   return (
     <div className={classNames(classNames('shadow-card', styles.card))}>
-      <button
-        className={styles.open}
-        color="primary"
-        onClick={toggle}
-      >Show advanced
+      <button className={styles.open} color="primary" onClick={toggle}>
+        Show advanced
         <img
           src={angleDown}
           width="12px"
@@ -51,8 +55,12 @@ const Advanced = () => {
               <DetailTooltip id="eth-tooltip" info={minimumReceived} />
             </div>
             <div className={classNames('col-auto', styles.value)}>
-              {(checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7)}
-              {' '}{checkout.toAsset.code}
+              {normalizeAmount(
+                checkout.fromAmount *
+                  checkout.counterPrice *
+                  (1 - checkout.tolerance)
+              )}{' '}
+              {checkout.toAsset.code}
             </div>
           </div>
           <p className={classNames(styles.title, 'mt-2 pt-1 mb-0')}>
@@ -77,14 +85,23 @@ const Advanced = () => {
           <DetailTooltip id="route-tooltip" info={path} />
         </p>
         {/* routes */}
-        <div className={styles.box} style={{ marginTop: '2px', padding: '15px 16px' }}>
+        <div
+          className={styles.box}
+          style={{ marginTop: '2px', padding: '15px 16px' }}
+        >
           <div className="row">
             {routes.map((route, index) => (
-              <div className={classNames('col d-flex h-100 align-items-center', styles.col)} key={index}>
+              <div
+                className={classNames(
+                  'col d-flex h-100 align-items-center',
+                  styles.col
+                )}
+                key={index}
+              >
                 <CryptoRouteItem
                   code={route.code}
                   logo={route.logo}
-                  isLast={index === (routes.length - 1)}
+                  isLast={index === routes.length - 1}
                 />
               </div>
             ))}
