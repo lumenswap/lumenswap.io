@@ -63,6 +63,23 @@
     font-weight: 500;
     color: $black;
     cursor: pointer;
+    font-size: 14px;
+
+    @media (max-width: $sm) {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: $lg) {
+    margin-right: 80px;
+  }
+
+  @media (max-width: $md) {
+    margin-right: 60px;
+  }
+
+  @media (max-width: $sm) {
+    margin-right: 50px;
   }
 }
 

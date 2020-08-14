@@ -11,7 +11,7 @@ const BaseLayout = ({ children }) => {
   return(
   <>
     <div id="header">
-      {userData.logged && <ResponsiveMenu /> }
+      {userData.logged && <div className="d-xl-none d-lg-none d-md-flex d-sm-flex d-flex"><ResponsiveMenu /></div> }
       <div className={styles.back} style={{ paddingTop: '42px' }}>
         <Header />
       </div>
