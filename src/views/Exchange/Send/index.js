@@ -332,7 +332,7 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
             <Switch
               onChange={onChange}
               onClick={onChange}
-              defaultChecked={showAdvanced}
+              checked={showAdvanced}
             />
           </div>
         </div>

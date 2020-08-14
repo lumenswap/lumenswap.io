@@ -5,7 +5,6 @@ import showWaitingModal from 'src/actions/modal/waiting';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
-import createManageBuyOffer from './createManageBuyOffer';
 import reportSuccessfulSwap from './metrics/reportSuccessfulSwap';
 import reportFailureSwap from './metrics/reportFailureSwap';
 
@@ -113,10 +112,9 @@ export default async function sendTokenWithPrivateKey() {
       if (code === 'op_under_dest_min') {
         showTxnStatus({
           status: trsStatus.WARNING,
-          message:
-            'Your order is too large to be processed by the network. Do you want to register it as an active order on the network?',
+          message: 'Your order is too large to be processed by the network.',
           action: () => {
-            createManageBuyOffer();
+            hideModal();
           },
         });
       } else if (code === 'op_underfunded') {

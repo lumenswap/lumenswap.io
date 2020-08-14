@@ -5,14 +5,13 @@ import showWaitingModal from 'src/actions/modal/waiting';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
-import createManageBuyOffer from './createManageBuyOffer';
 import reportSuccessfulSwap from './metrics/reportSuccessfulSwap';
 import reportFailureSwap from './metrics/reportFailureSwap';
 import albedo from '@albedo-link/intent';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function swapTokenWithAlbedoLink() {
+export default async function sendTokenWithAlbedoLink() {
   showWaitingModal({ message: 'Sending to network' });
   const { checkout, userToken } = store.getState();
 
@@ -69,6 +68,24 @@ export default async function swapTokenWithAlbedoLink() {
       .setTimeout(30)
       .build();
 
+    if (checkout.useSameCoin) {
+      transaction = new StellarSDK.TransactionBuilder(account, {
+        fee,
+        networkPassphrase: StellarSDK.Networks.PUBLIC,
+      });
+
+      transaction = transaction
+        .addOperation(
+          StellarSDK.Operation.payment({
+            destination: checkout.toAddress,
+            asset: getAssetDetails(checkout.fromAsset),
+            amount: checkout.fromAmount.toFixed(7),
+          })
+        )
+        .setTimeout(30)
+        .build();
+    }
+
     const result = await albedo.tx({
       xdr: transaction.toXDR(),
       submit: true,
@@ -104,10 +121,9 @@ export default async function swapTokenWithAlbedoLink() {
       if (code === 'op_under_dest_min') {
         showTxnStatus({
           status: trsStatus.WARNING,
-          message:
-            'Your order is too large to be processed by the network. Do you want to register it as an active order on the network?',
+          message: 'Your order is too large to be processed by the network.',
           action: () => {
-            createManageBuyOffer();
+            hideModal();
           },
         });
       } else if (code === 'op_underfunded') {
