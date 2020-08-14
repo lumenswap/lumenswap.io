@@ -8,16 +8,15 @@ import minimizeAddress from 'src/helpers/minimizeAddress';
 import hideModal from 'src/actions/modal/hide';
 import reportSwapConfirmClick from 'src/api/metrics/reportSwapConfirmClick';
 import sendTokenWithPrivateKey from 'src/api/sendTokenWithPrivateKey';
+import normalizeAmount from 'src/helpers/normalizeAmount';
 
 const ConfirmSendContent = (checkout) => {
   const confirmInfo = [
     {
       subject: 'Minimum received',
-      value: `${(
-        checkout.fromAmount *
-        checkout.counterPrice *
-        (1 - checkout.tolerance)
-      ).toFixed(7)} ${checkout.toAsset.code}`,
+      value: `${normalizeAmount(
+        checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance)
+      )} ${checkout.toAsset.code}`,
       tooltipId: 'rc-eth',
       tooltipInfo: minimumReceived,
     },
@@ -46,7 +45,7 @@ const ConfirmSendContent = (checkout) => {
       <hr className={styles.hr} />
       <div className="row justify-content-between mt-3 h-100 align-items-center">
         <div className={classNames('col-auto', styles.value)}>
-          {checkout.fromAmount.toFixed(7)}
+          {normalizeAmount(checkout.fromAmount)}
         </div>
         <div className={classNames('col-auto', styles.crypto)}>
           <img src={checkout.fromAsset.logo} alt="logo" />
@@ -61,7 +60,7 @@ const ConfirmSendContent = (checkout) => {
           <img src={arrowDown} height="24px" width="24px" alt="arrow" />
           <div className="row justify-content-between h-100 align-items-center">
             <div className={classNames('col-auto', styles.value)}>
-              {(checkout.fromAmount * checkout.counterPrice).toFixed(7)}
+              {normalizeAmount(checkout.fromAmount * checkout.counterPrice)}
             </div>
             <div className={classNames('col-auto', styles.crypto)}>
               <img src={checkout.toAsset.logo} alt="logo" />
