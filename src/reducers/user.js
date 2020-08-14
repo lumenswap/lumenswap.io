@@ -7,12 +7,17 @@ const defaultState = {
 
 export const loginTypes = {
   PV: 'private_key',
+  ALBEDO: 'albedo_link',
 };
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.user.LOGIN: {
-      return { logged: true, loginType: action.loginType, detail: action.detail };
+      return {
+        logged: true,
+        loginType: action.loginType,
+        detail: action.detail,
+      };
     }
 
     case types.user.LOGOUT: {

@@ -9,6 +9,7 @@ import reportSwapConfirmClick from 'src/api/metrics/reportSwapConfirmClick';
 import styles from './styles.module.scss';
 import normalizeAmount from 'src/helpers/normalizeAmount';
 import minimizeAddress from 'src/helpers/minimizeAddress';
+import { swapTokenMaker } from 'src/api/swapTokenMaker';
 
 const ConfirmSwapContent = (checkout) => {
   const confirmInfo = [
@@ -72,7 +73,7 @@ const ConfirmSwapContent = (checkout) => {
         onClick={() => {
           hideModal();
           reportSwapConfirmClick();
-          swapTokenWithPrivateKey();
+          swapTokenMaker();
         }}
       >
         Confirm
