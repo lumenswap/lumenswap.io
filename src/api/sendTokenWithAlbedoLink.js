@@ -1,7 +1,6 @@
 import StellarSDK from 'stellar-sdk';
 import store from 'src/store';
 import getAssetDetails from 'src/helpers/getAssetDetails';
-import showWaitingModal from 'src/actions/modal/waiting';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
@@ -12,7 +11,6 @@ import albedo from '@albedo-link/intent';
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function sendTokenWithAlbedoLink() {
-  showWaitingModal({ message: 'Sending to network' });
   const { checkout, userToken } = store.getState();
 
   try {
@@ -104,7 +102,6 @@ export default async function sendTokenWithAlbedoLink() {
       },
     });
   } catch (error) {
-    console.log('mamad', error);
     const e = {
       response: {
         data: error.ext,
