@@ -29,7 +29,7 @@ const Exchange = () => {
               <Nav tabs>
                 <NavItem>
                   <NavLink
-                    className={classNames({ active: activeTab === 'swap' })}
+                    className={classNames((activeTab === 'swap') && styles.active)}
                     onClick={() => {
                       toggle('swap');
                     }}
@@ -39,7 +39,7 @@ const Exchange = () => {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={classNames({ active: activeTab === 'send' })}
+                    className={classNames((activeTab === 'send') && styles.active)}
                     onClick={() => {
                       toggle('send');
                     }}
