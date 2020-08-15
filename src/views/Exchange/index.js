@@ -21,7 +21,7 @@ const Exchange = () => {
   };
 
   return (
-    <div className="row h-100 align-items-center">
+    <div className="row">
       <div className="col-12">
         <div className="row justify-content-center">
           <div className={classNames('col-auto', styles['box-size'])}>
