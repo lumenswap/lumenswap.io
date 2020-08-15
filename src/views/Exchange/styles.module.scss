@@ -23,16 +23,20 @@
     border-bottom: 1px solid $grey !important;
   }
 
-  ul > li a.active {
+  ul > li :local(.active) {
     color: $vibrant-blue !important;
     border: 1px solid white !important;
     border-bottom: 1.5px solid $vibrant-blue !important;
     font-weight: bold;
   }
+
+  ul > li :local(.active):hover {
+    border-bottom: 1.5px solid $vibrant-blue !important;
+  }
 }
 
 :local(.box-size) {
-  width: 360px!important;
-  padding-right: 0!important;
-  padding-left: 0!important;
+  width: 360px !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }

@@ -36,8 +36,8 @@ const TokenContent = ({ setToken, excludeToken, includeToken }) => {
 
   return (
       <>
-        <div className="row">
-          <div className="col-auto">
+        <div className="row justify-content-between">
+          <div className="col">
             <input
                 type="text"
                 className={classNames(styles.input, 'form-control primary-input')}
@@ -46,7 +46,7 @@ const TokenContent = ({ setToken, excludeToken, includeToken }) => {
                 placeholder="Asset code"
             />
           </div>
-          <div className="col-2 pl-0">
+          <div className="col-auto pl-0">
             <button
                type="button"
                className={styles.add}

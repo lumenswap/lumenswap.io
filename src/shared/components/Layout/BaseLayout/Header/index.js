@@ -15,7 +15,6 @@ import {Link} from 'react-router-dom';
 import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import CopyInfo from 'src/shared/components/CopyInfo';
 import styles from './styles.module.scss';
-import ResponsiveMenu from '../ResponsiveMenu';
 
 const item = (innerLogo, code, web) => (
     <>
@@ -98,9 +97,9 @@ const Header = () => {
                 </div>
               </div>
               {/* right part header */}
-              <div className={`col-auto ${desktopClass}`}>
+              <div className="col-auto">
                 <div className="row justify-content-between h-100 align-items-center">
-                  <div className="col-auto">
+                  <div className={`col-auto ${desktopClass}`}>
                     <div className="rc-select">
                       <Select
                           defaultValue={selectedOption || userToken[0]}
@@ -123,7 +122,7 @@ const Header = () => {
                       </CopyInfo>
                     </p>
                   </div>
-                  <div className="col-auto">
+                  <div className={`col-auto ${desktopClass}`}>
                     <button
                         type="button"
                         className={classNames('btn ml-1 d-flex align-items-center h-100', styles.exit)}

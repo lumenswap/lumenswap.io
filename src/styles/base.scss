@@ -65,6 +65,31 @@ html, body, #root {
   cursor: pointer;
 }
 
+.vertical-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.vertical-scroll::-webkit-scrollbar-track-piece{
+  background-color: $so-light-grey-blue;
+  border-color: white;
+  border-width: 1px 9px 1px 9px;
+  border-style: solid;
+}
+
+.vertical-scroll::-webkit-scrollbar {
+  width: 20px;
+  border-width: 5px;
+}
+
+.vertical-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: $very-light-blue;
+  border-color: white;
+  border-style: solid;
+  border-width: 0.5px 6px 0.5px 6px;
+}
+
 .shadow-card {
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
   border-radius: 8px;
@@ -260,7 +285,7 @@ input[type=number] {
   width: 30px;
   position: absolute;
   right: 27px;
-  top: 31px;
+  top: 45px;
   @media (max-width: $lg) {
     display: block;
   }
@@ -268,4 +293,8 @@ input[type=number] {
 
 .bm-menu-wrap {
   background: white;
+}
+
+.bm-item:focus {
+  outline: none;
 }
