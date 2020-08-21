@@ -5,6 +5,13 @@ import USD from './USD';
 import CENTUS from './CENTUS';
 import BTC from './BTC';
 import ETH from './ETH';
+import SLVR from './SLVR';
+import GOLD from './GOLD';
+import PALL from './PALL';
+import LTC from './LTC';
+import NGNT from './NGNT';
+import CNY from './CNY';
+import USDT from './USDT';
 
 export default [
   XLM,
@@ -14,4 +21,11 @@ export default [
   BTC,
   ETH,
   REPO,
+  USDT,
+  SLVR,
+  GOLD,
+  PALL,
+  LTC,
+  NGNT,
+  CNY,
 ];
