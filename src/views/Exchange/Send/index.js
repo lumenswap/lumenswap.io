@@ -273,6 +273,13 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
                   width="24px"
                   className="d-block mx-auto"
                   alt="arrow"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    updateCheckout({
+                      fromAsset: checkout.toAsset,
+                      toAsset: checkout.fromAsset,
+                    });
+                  }}
                 />
               </div>
             </div>
