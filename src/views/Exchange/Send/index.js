@@ -19,6 +19,7 @@ import NumberOnly from 'src/shared/components/NumberOnly';
 import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import showConnectModal from 'src/actions/modal/connectModal';
 import showConfirmSend from 'src/actions/modal/confirmSend';
+import fetchUserBalance from 'src/api/fetchUserBalance';
 
 const Send = ({ showAdvanced, setShowAdvanced }) => {
   const { userLogged, checkout, userToken, user } = useSelector((state) => ({
@@ -34,6 +35,21 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
   const [inputFromAmount, setInputFromAmount] = useState('');
   const [inputToAmount, setInputToAmount] = useState('');
   const [inputToAddress, setInputToAddress] = useState('');
+  const [checkedAddressText, setCheckedAddressText] = useState(false);
+
+  useEffect(() => {
+    setCheckedAddressText(false);
+
+    if (
+      inputToAddress !== '' &&
+      inputToAddress.length === 56 &&
+      inputToAddress.startsWith('G')
+    ) {
+      fetchUserBalance(inputToAddress)
+        .then(() => setCheckedAddressText(true))
+        .catch(() => setCheckedAddressText(false));
+    }
+  }, [inputToAddress]);
 
   let includeToken = [];
   let modifiedFromAsset;
@@ -194,7 +210,8 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
     if (
       inputToAddress === '' ||
       inputToAddress.length !== 56 ||
-      !inputToAddress.startsWith('G')
+      !inputToAddress.startsWith('G') ||
+      !checkedAddressText
     ) {
       return (
         <button
