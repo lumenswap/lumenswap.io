@@ -4,10 +4,11 @@ import { useForm } from 'react-hook-form';
 import Loading from 'src/shared/components/Loading';
 import styles from './styles.module.scss';
 import checkAsset from 'src/api/checkAsset';
+import lumenTokensAdd from 'src/actions/lumenTokens/add';
+import questionLogo from 'src/assets/images/question.png';
 
-const AddAssetContent = () => {
+const AddAssetContent = ({ toggleModal }) => {
   const [loadingTimer, setLoadingTimer] = useState(false);
-  const [safeToGo, setSafeToGo] = useState(false);
   const { register, handleSubmit, formState, getValues } = useForm({
     mode: 'onChange',
   });
@@ -60,6 +61,14 @@ const AddAssetContent = () => {
           loadingTimer && 'loading-btn'
         )}
         disabled={!formState.isValid || loadingTimer}
+        onClick={() => {
+          lumenTokensAdd({
+            code: getValues('code'),
+            logo: questionLogo,
+            issuer: getValues('issuer'),
+          });
+          toggleModal();
+        }}
       >
         {loadingTimer ? (
           <div className="d-flex align-items-center justify-content-center w-100 h-100">

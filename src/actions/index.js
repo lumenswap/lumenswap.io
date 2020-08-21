@@ -14,4 +14,8 @@ export default {
   userToken: {
     SET: 'userToken/SET',
   },
+  lumenTokens: {
+    SET: 'lumenTokens/SET',
+    ADD: 'lumenTokens/ADD',
+  },
 };

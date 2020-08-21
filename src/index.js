@@ -5,6 +5,8 @@ import App from './views';
 import store from './store';
 import fetchUserBalance from './api/fetchUserBalance';
 import setToken from './actions/setToken';
+import lumenTokensSet from './actions/lumenTokens/set';
+import defaultTokens from './tokens/defaultTokens';
 
 setInterval(() => {
   const detail = store.getState().user.detail;
@@ -18,6 +20,8 @@ setInterval(() => {
       });
   }
 }, 2000);
+
+lumenTokensSet(defaultTokens);
 
 ReactDOM.render(<App />, global.document.getElementById('root'));
 
