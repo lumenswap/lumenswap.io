@@ -4,10 +4,10 @@ import getAssetDetails from 'src/helpers/getAssetDetails';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
-import createManageBuyOffer from './createManageBuyOffer';
 import reportSuccessfulSwap from './metrics/reportSuccessfulSwap';
 import reportFailureSwap from './metrics/reportFailureSwap';
 import albedo from '@albedo-link/intent';
+import createManageBuyOfferMaker from './createMangeBuyOfferMaker';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
@@ -105,7 +105,7 @@ export default async function swapTokenWithAlbedoLink() {
           message:
             'Your order is too large to be processed by the network. Do you want to register it as an active order on the network?',
           action: () => {
-            createManageBuyOffer();
+            createManageBuyOfferMaker();
           },
         });
       } else if (code === 'op_underfunded') {

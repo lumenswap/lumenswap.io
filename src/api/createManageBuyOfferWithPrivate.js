@@ -8,7 +8,7 @@ import { trsStatus } from 'src/constants/enum';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function createManageBuyOffer() {
+export default async function createManageBuyOfferWithPrivate() {
   showWaitingModal({ message: 'Sending to network' });
   try {
     const { checkout, user, userToken } = store.getState();
@@ -21,37 +21,45 @@ export default async function createManageBuyOffer() {
       needToTrust = false;
     } else {
       needToTrust = !userToken.find(
-        (token) => token.asset_code === checkout.toAsset.code
-      && token.asset_issuer === checkout.toAsset.issuer,
+        (token) =>
+          token.asset_code === checkout.toAsset.code &&
+          token.asset_issuer === checkout.toAsset.issuer
       );
     }
 
-    let transaction = new StellarSDK.TransactionBuilder(
-      account,
-      { fee, networkPassphrase: StellarSDK.Networks.PUBLIC },
-    );
+    let transaction = new StellarSDK.TransactionBuilder(account, {
+      fee,
+      networkPassphrase: StellarSDK.Networks.PUBLIC,
+    });
 
     if (needToTrust) {
       transaction = transaction.addOperation(
         StellarSDK.Operation.changeTrust({
           asset: getAssetDetails(checkout.toAsset),
-        }),
+        })
       );
     }
 
-    transaction = transaction.addOperation(
-      StellarSDK.Operation.manageBuyOffer({
-        selling: getAssetDetails(checkout.fromAsset),
-        buying: getAssetDetails(checkout.toAsset),
-        buyAmount: (checkout.fromAmount * checkout.counterPrice * (1 - checkout.tolerance))
-          .toFixed(7),
-        price: {
-          n: 1 * 10000000,
-          d: Math.floor((checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7) * 10000000),
-        },
-        offerId: 0,
-      }),
-    )
+    transaction = transaction
+      .addOperation(
+        StellarSDK.Operation.manageBuyOffer({
+          selling: getAssetDetails(checkout.fromAsset),
+          buying: getAssetDetails(checkout.toAsset),
+          buyAmount: (
+            checkout.fromAmount *
+            checkout.counterPrice *
+            (1 - checkout.tolerance)
+          ).toFixed(7),
+          price: {
+            n: 1 * 10000000,
+            d: Math.floor(
+              (checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7) *
+                10000000
+            ),
+          },
+          offerId: 0,
+        })
+      )
       .setTimeout(30)
       .build();
 
@@ -63,7 +71,10 @@ export default async function createManageBuyOffer() {
       status: trsStatus.SUCCESS,
       message: result.hash,
       action: () => {
-        global.window.open(`https://lumenscan.io/txns/${result.hash}`, '_blank');
+        global.window.open(
+          `https://lumenscan.io/txns/${result.hash}`,
+          '_blank'
+        );
       },
     });
   } catch (e) {
@@ -71,9 +82,15 @@ export default async function createManageBuyOffer() {
 
     if (e?.response?.data?.extras?.result_codes?.operations) {
       const code = e.response.data.extras.result_codes.operations[0];
-      showTxnStatus({ status: trsStatus.FAIL, message: `There is some issue in your transaction. reason: ${code}` });
+      showTxnStatus({
+        status: trsStatus.FAIL,
+        message: `There is some issue in your transaction. reason: ${code}`,
+      });
     } else {
-      showTxnStatus({ status: trsStatus.FAIL, message: 'There is some issue in your transaction.' });
+      showTxnStatus({
+        status: trsStatus.FAIL,
+        message: 'There is some issue in your transaction.',
+      });
     }
   }
 }

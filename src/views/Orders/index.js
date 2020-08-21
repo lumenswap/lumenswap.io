@@ -7,8 +7,8 @@ import fetchUserCompletedOrders from 'src/api/fetchUserCompletedOrders';
 import { useSelector } from 'react-redux';
 import history from 'src/history';
 import age from 'src/helpers/age';
-import deleteManageBuyOffer from 'src/api/deleteManageBuyOffer';
 import styles from './styles.module.scss';
+import deleteManageBuyOfferMaker from 'src/api/deleteManageBuyOfferMaker';
 
 const Order = () => {
   const [activeTableRows, setActiveTableRows] = useState([]);
@@ -25,7 +25,9 @@ const Order = () => {
     if (user.logged) {
       try {
         const activeOrders = await fetchUserActiveOrders(user.detail.publicKey);
-        const completedOrders = await fetchUserCompletedOrders(user.detail.publicKey);
+        const completedOrders = await fetchUserCompletedOrders(
+          user.detail.publicKey
+        );
         setActiveTableRows(activeOrders._embedded.records);
         setCompletedTableRows(completedOrders._embedded.records);
       } catch (e) {
@@ -41,17 +43,26 @@ const Order = () => {
   const activeRows = activeTableRows.map((item) => (
     <tr key={item.id}>
       <td>{item.id}</td>
-      <td>{item.amount} {item.selling.asset_type === 'native' ? 'XLM' : item.selling.asset_code}</td>
-      <td>{item.amount * item.price} {item.buying.asset_type === 'native' ? 'XLM' : item.buying.asset_code}</td>
-      <td width="18%" className="td-light">{age(item.last_modified_time)} ago</td>
+      <td>
+        {item.amount}{' '}
+        {item.selling.asset_type === 'native' ? 'XLM' : item.selling.asset_code}
+      </td>
+      <td>
+        {item.amount * item.price}{' '}
+        {item.buying.asset_type === 'native' ? 'XLM' : item.buying.asset_code}
+      </td>
+      <td width="18%" className="td-light">
+        {age(item.last_modified_time)} ago
+      </td>
       <td width="8%">
         <button
           type="button"
           className={styles.cancel}
           onClick={() => {
-            deleteManageBuyOffer(item).then(fetchData);
+            deleteManageBuyOfferMaker(item).then(fetchData);
           }}
-        >Cancel
+        >
+          Cancel
         </button>
       </td>
     </tr>
@@ -60,19 +71,27 @@ const Order = () => {
   const completedRows = completedTableRows.map((item) => {
     let sellAmount = item.base_amount;
     let buyAmount = item.counter_amount;
-    let sellCode = item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
-    let buyCode = item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
+    let sellCode =
+      item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
+    let buyCode =
+      item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
     if (item.counter_account === user.detail.publicKey) {
       sellAmount = item.counter_amount;
       buyAmount = item.base_amount;
-      buyCode = item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
-      sellCode = item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
+      buyCode =
+        item.base_asset_type === 'native' ? 'XLM' : item.base_asset_code;
+      sellCode =
+        item.counter_asset_type === 'native' ? 'XLM' : item.counter_asset_code;
     }
 
     return (
       <tr key={item.id}>
-        <td>{sellAmount} {sellCode}</td>
-        <td>{buyAmount} {buyCode}</td>
+        <td>
+          {sellAmount} {sellCode}
+        </td>
+        <td>
+          {buyAmount} {buyCode}
+        </td>
         <td className="td-light">{age(item.ledger_close_time)} ago</td>
       </tr>
     );
