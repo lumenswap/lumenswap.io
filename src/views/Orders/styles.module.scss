@@ -3,12 +3,12 @@
 :local(.cancel) {
   width: 77px;
   height: 28px;
-  background: $pale-grey;
+  background: $orange;
   border: 1px solid $very-light-blue;
   border-radius: 6px;
   padding: 3px 0 3.5px 0;
   font-size: 14px;
-  color: $light-grey-blue;
+  color: white;
 }
 
 :local(.cancel):focus {

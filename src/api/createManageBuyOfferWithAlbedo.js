@@ -10,7 +10,7 @@ const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function createManageBuyOfferWithAlbedo() {
   try {
-    const { checkout, user, userToken } = store.getState();
+    const { checkout, userToken } = store.getState();
 
     const account = await server.loadAccount(checkout.fromAddress);
     const fee = await server.fetchBaseFee();
@@ -61,8 +61,6 @@ export default async function createManageBuyOfferWithAlbedo() {
       )
       .setTimeout(30)
       .build();
-
-    transaction.sign(StellarSDK.Keypair.fromSecret(user.detail.privateKey));
 
     const result = await albedo.tx({
       xdr: transaction.toXDR(),

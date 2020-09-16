@@ -1,14 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
-import history from 'src/history';
+import { BrowserRouter } from 'react-router-dom';
 import store from 'src/store';
 import App from './App';
 
 export default () => (
   <Provider store={store}>
-    <Router history={history}>
+    <BrowserRouter>
       <App />
-    </Router>
+    </BrowserRouter>
   </Provider>
 );

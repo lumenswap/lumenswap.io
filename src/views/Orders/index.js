@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { activeOrderTHeader, completeOrderTHeader } from 'src/constants/valus';
 import Table from 'src/shared/components/Table';
 import TableInfo from 'src/shared/components/TableInfo';
 import fetchUserActiveOrders from 'src/api/fetchUserActiveOrders';
 import fetchUserCompletedOrders from 'src/api/fetchUserCompletedOrders';
 import { useSelector } from 'react-redux';
-import history from 'src/history';
 import age from 'src/helpers/age';
 import styles from './styles.module.scss';
 import deleteManageBuyOfferMaker from 'src/api/deleteManageBuyOfferMaker';
@@ -15,13 +14,7 @@ const Order = () => {
   const [completedTableRows, setCompletedTableRows] = useState([]);
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (!user.logged) {
-      history.push('/');
-    }
-  }, [user.logged]);
-
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
     if (user.logged) {
       try {
         const activeOrders = await fetchUserActiveOrders(user.detail.publicKey);
@@ -35,10 +28,11 @@ const Order = () => {
         setCompletedTableRows([]);
       }
     }
-  }
+  }, [user]);
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const activeRows = activeTableRows.map((item) => (
     <tr key={item.id}>

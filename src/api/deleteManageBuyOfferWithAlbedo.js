@@ -1,9 +1,9 @@
 import StellarSDK from 'stellar-sdk';
 import store from 'src/store';
-import showWaitingModal from 'src/actions/modal/waiting';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
+import albedo from '@albedo-link/intent';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
@@ -42,9 +42,11 @@ export default async function deleteManageBuyOfferWithAlbedo(offer) {
       .setTimeout(30)
       .build();
 
-    transaction.sign(StellarSDK.Keypair.fromSecret(user.detail.privateKey));
+    const result = await albedo.tx({
+      xdr: transaction.toXDR(),
+      submit: true,
+    });
 
-    const result = await server.submitTransaction(transaction);
     hideModal();
     showTxnStatus({
       status: trsStatus.SUCCESS,
@@ -56,7 +58,13 @@ export default async function deleteManageBuyOfferWithAlbedo(offer) {
         );
       },
     });
-  } catch (e) {
+  } catch (error) {
+    const e = {
+      response: {
+        data: error.ext,
+      },
+    };
+
     hideModal();
 
     if (e?.response?.data?.extras?.result_codes?.operations) {

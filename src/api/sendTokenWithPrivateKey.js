@@ -49,36 +49,31 @@ export default async function sendTokenWithPrivateKey() {
       path.push(new StellarSDK.Asset.native()); // eslint-disable-line
     }
 
-    transaction = transaction
-      .addOperation(
-        StellarSDK.Operation.pathPaymentStrictSend({
-          sendAsset: getAssetDetails(checkout.fromAsset),
-          sendAmount: checkout.fromAmount.toFixed(7),
-          destination: checkout.toAddress,
-          destAsset: getAssetDetails(checkout.toAsset),
-          destMin: (
-            checkout.fromAmount *
-            checkout.counterPrice *
-            (1 - checkout.tolerance)
-          ).toFixed(7),
-          path,
-        })
-      )
-      .setTimeout(30)
-      .build();
-
     if (checkout.useSameCoin) {
-      transaction = new StellarSDK.TransactionBuilder(account, {
-        fee,
-        networkPassphrase: StellarSDK.Networks.PUBLIC,
-      });
-
       transaction = transaction
         .addOperation(
           StellarSDK.Operation.payment({
             destination: checkout.toAddress,
             asset: getAssetDetails(checkout.fromAsset),
             amount: checkout.fromAmount.toFixed(7),
+          })
+        )
+        .setTimeout(30)
+        .build();
+    } else {
+      transaction = transaction
+        .addOperation(
+          StellarSDK.Operation.pathPaymentStrictSend({
+            sendAsset: getAssetDetails(checkout.fromAsset),
+            sendAmount: checkout.fromAmount.toFixed(7),
+            destination: checkout.toAddress,
+            destAsset: getAssetDetails(checkout.toAsset),
+            destMin: (
+              checkout.fromAmount *
+              checkout.counterPrice *
+              (1 - checkout.tolerance)
+            ).toFixed(7),
+            path,
           })
         )
         .setTimeout(30)

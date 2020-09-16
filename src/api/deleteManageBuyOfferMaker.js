@@ -6,8 +6,8 @@ import deleteManageBuyOfferWithPrivate from './deleteManageBuyOfferWithPrivate';
 export default function deleteManageBuyOfferMaker(offer) {
   const { user } = store.getState();
   if (user.loginType === loginTypes.ALBEDO) {
-    deleteManageBuyOfferWithAlbedo(offer);
+    return deleteManageBuyOfferWithAlbedo(offer);
   } else if (user.loginType === loginTypes.PV) {
-    deleteManageBuyOfferWithPrivate(offer);
+    return deleteManageBuyOfferWithPrivate(offer);
   }
 }
