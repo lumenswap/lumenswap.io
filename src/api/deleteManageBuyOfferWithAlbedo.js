@@ -53,7 +53,7 @@ export default async function deleteManageBuyOfferWithAlbedo(offer) {
       message: result.hash,
       action: () => {
         global.window.open(
-          `https://lumenscan.io/txns/${result.hash}`,
+          `https://lumenscan.io/txns/${result.result.hash}`,
           '_blank'
         );
       },
