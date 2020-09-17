@@ -48,7 +48,6 @@ export default async function deleteManageBuyOfferWithAlbedo(offer) {
     });
 
     hideModal();
-    console.log(result);
     showTxnStatus({
       status: trsStatus.SUCCESS,
       message: result.hash,
