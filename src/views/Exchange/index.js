@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import styles from './styles.module.scss';
 import Swap from './Swap';
 import Send from './Send';
 import Advanced from './Advanced';
+import { useHistory } from 'react-router-dom';
 
 const Exchange = () => {
+  const { location, push } = useHistory();
   const [activeTab, setActiveTab] = useState('swap');
   const [showAdvanced, setShowAdvanced] = useState(true);
+
+  useEffect(() => {
+    if (location.pathname === '/send') {
+      setActiveTab('send');
+    } else {
+      setActiveTab('swap');
+    }
+  }, [location.pathname]);
 
   const toggle = (tab) => {
     if (tab === 'send') {
@@ -17,7 +27,7 @@ const Exchange = () => {
       setShowAdvanced(true);
     }
 
-    if (activeTab !== tab) setActiveTab(tab);
+    push('/' + tab);
   };
 
   return (
@@ -29,7 +39,9 @@ const Exchange = () => {
               <Nav tabs>
                 <NavItem>
                   <NavLink
-                    className={classNames((activeTab === 'swap') && styles.active)}
+                    className={classNames(
+                      activeTab === 'swap' && styles.active
+                    )}
                     onClick={() => {
                       toggle('swap');
                     }}
@@ -39,7 +51,9 @@ const Exchange = () => {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={classNames((activeTab === 'send') && styles.active)}
+                    className={classNames(
+                      activeTab === 'send' && styles.active
+                    )}
                     onClick={() => {
                       toggle('send');
                     }}

@@ -13,12 +13,9 @@ export default () => (
     <Modal />
     <Switch>
       <Route path={orderPages} exact component={Orders} />
+      <Route path="/send" exact component={Exchange} />
+      <Route path="/swap" exact component={Exchange} />
       <Route path={homePage} exact component={Exchange} />
-      <Route
-        path="/:fromCustomAsset/:toCustomAsset"
-        exact
-        component={Exchange}
-      />
     </Switch>
   </BaseLayout>
 );
