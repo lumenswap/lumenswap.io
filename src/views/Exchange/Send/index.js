@@ -45,9 +45,7 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
       inputToAddress.length === 56 &&
       inputToAddress.startsWith('G')
     ) {
-      checkAddress(inputToAddress)
-        .then(() => setCheckedAddressText(true))
-        .catch(() => setCheckedAddressText(false));
+      setCheckedAddressText(checkAddress(inputToAddress));
     }
   }, [inputToAddress]);
 
@@ -219,7 +217,9 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
           className={classNames(styles.btn, 'button-primary-lg')}
           disabled
         >
-          Enter recipient address
+          {inputToAddress.length > 0
+            ? 'Enter valid recipient address'
+            : 'Enter recipient address'}
         </button>
       );
     }
