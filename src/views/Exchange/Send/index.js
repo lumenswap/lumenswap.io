@@ -20,6 +20,7 @@ import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import showConnectModal from 'src/actions/modal/connectModal';
 import showConfirmSend from 'src/actions/modal/confirmSend';
 import checkAddress from 'src/api/checkAddress';
+import fetchUserBalance from 'src/api/fetchUserBalance';
 
 const Send = ({ showAdvanced, setShowAdvanced }) => {
   const { userLogged, checkout, userToken, user } = useSelector((state) => ({
@@ -45,7 +46,9 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
       inputToAddress.length === 56 &&
       inputToAddress.startsWith('G')
     ) {
-      setCheckedAddressText(checkAddress(inputToAddress));
+      fetchUserBalance(inputToAddress)
+        .then(() => setCheckedAddressText(true))
+        .catch(() => setCheckedAddressText(false));
     }
   }, [inputToAddress]);
 
@@ -211,15 +214,24 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
       !inputToAddress.startsWith('G') ||
       !checkedAddressText
     ) {
+      function recipientErrorHandler() {
+        if (inputToAddress.length === 56 && checkAddress(inputToAddress)) {
+          return 'Enter an active address';
+        }
+
+        if (inputToAddress.length > 0) {
+          return 'Enter valid recipient address';
+        }
+
+        return 'Enter recipient address';
+      }
       return (
         <button
           type="button"
           className={classNames(styles.btn, 'button-primary-lg')}
           disabled
         >
-          {inputToAddress.length > 0
-            ? 'Enter valid recipient address'
-            : 'Enter recipient address'}
+          {recipientErrorHandler()}
         </button>
       );
     }

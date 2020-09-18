@@ -15,18 +15,14 @@ const Exchange = () => {
   useEffect(() => {
     if (location.pathname === '/send') {
       setActiveTab('send');
+      setShowAdvanced(false);
     } else {
       setActiveTab('swap');
+      setShowAdvanced(true);
     }
   }, [location.pathname]);
 
   const toggle = (tab) => {
-    if (tab === 'send') {
-      setShowAdvanced(false);
-    } else {
-      setShowAdvanced(true);
-    }
-
     push('/' + tab);
   };
 
