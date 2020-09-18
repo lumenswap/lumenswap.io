@@ -4,13 +4,12 @@ import { slide as Menu } from 'react-burger-menu';
 import { Link } from 'react-router-dom';
 import leftArrow from 'src/assets/images/long-arrow-left.svg';
 import { orderPages } from 'src/constants/routes';
-import logo from 'src/assets/images/xlm-logo.png';
 import styles from './styles.module.scss';
 import questionLogo from 'src/assets/images/question.png';
 import { useSelector } from 'react-redux';
 import defaultTokens from 'src/tokens/defaultTokens';
 import XLM from 'src/tokens/XLM';
-import minimizeAddress from 'src/helpers/minimizeAddress';
+import logout from 'src/actions/user/logout';
 
 const ResponsiveMenu = (props) => {
   const [isOpen, toggleOpen] = useState(false);
@@ -99,7 +98,12 @@ const ResponsiveMenu = (props) => {
         <Link className={styles.link} to={orderPages}>
           Orders
         </Link>
-        <Link className={styles.link} to="/">
+        <Link
+          className={styles.link}
+          onClick={() => {
+            logout();
+          }}
+        >
           Logout
         </Link>
       </div>
