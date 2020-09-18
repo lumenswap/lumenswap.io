@@ -9,12 +9,18 @@ const Footer = (props) => (
   <div className="row justify-content-between">
     <div className="col-auto">
       <a
-        href="https://gitlab.com/lumenswap.com/lumenswap-front"
+        href="https://gitlab.com/lumenswap.io/lumenswap.io"
         className={classNames(styles.btn, styles.git)}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
       >
-        <img src={gitlab} alt="gitLab" width="20px" height="18px" className="center-ver-hor" />
+        <img
+          src={gitlab}
+          alt="gitLab"
+          width="20px"
+          height="18px"
+          className="center-ver-hor"
+        />
       </a>
     </div>
     {/* <div className="col-auto d-flex"> */}
@@ -26,8 +32,6 @@ const Footer = (props) => (
   </div>
 );
 
-Footer.propTypes = {
-
-};
+Footer.propTypes = {};
 
 export default Footer;
