@@ -70,7 +70,7 @@ export default async function createManageBuyOfferWithAlbedo() {
     hideModal();
     showTxnStatus({
       status: trsStatus.SUCCESS,
-      message: result.hash,
+      message: result.result.hash,
       action: () => {
         global.window.open(
           `https://lumenscan.io/txns/${result.result.hash}`,
