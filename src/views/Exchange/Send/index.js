@@ -19,7 +19,7 @@ import NumberOnly from 'src/shared/components/NumberOnly';
 import reportLoginClick from 'src/api/metrics/reportLoginClick';
 import showConnectModal from 'src/actions/modal/connectModal';
 import showConfirmSend from 'src/actions/modal/confirmSend';
-import fetchUserBalance from 'src/api/fetchUserBalance';
+import checkAddress from 'src/api/checkAddress';
 
 const Send = ({ showAdvanced, setShowAdvanced }) => {
   const { userLogged, checkout, userToken, user } = useSelector((state) => ({
@@ -45,7 +45,7 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
       inputToAddress.length === 56 &&
       inputToAddress.startsWith('G')
     ) {
-      fetchUserBalance(inputToAddress)
+      checkAddress(inputToAddress)
         .then(() => setCheckedAddressText(true))
         .catch(() => setCheckedAddressText(false));
     }

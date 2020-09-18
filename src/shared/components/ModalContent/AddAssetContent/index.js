@@ -33,7 +33,10 @@ const AddAssetContent = ({ toggleModal }) => {
           placeholder="USD"
           name="code"
           id="code"
-          ref={register({ required: true })}
+          ref={register({
+            required: true,
+            validate: (code) => checkAsset(code, getValues('issuer')),
+          })}
         />
       </div>
       <div className="form-group pt-2">
@@ -78,7 +81,7 @@ const AddAssetContent = ({ toggleModal }) => {
             </div>
           </div>
         ) : (
-          'Add assets'
+          'Add asset'
         )}
       </button>
     </form>
