@@ -12,6 +12,8 @@ import LTC from './LTC';
 import NGNT from './NGNT';
 import CNY from './CNY';
 import USDT from './USDT';
+import AFR from './AFR';
+import DEB from './DEB';
 
 export default [
   XLM,
@@ -28,4 +30,6 @@ export default [
   LTC,
   NGNT,
   CNY,
+  AFR,
+  DEB,
 ];
