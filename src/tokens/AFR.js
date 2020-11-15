@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/question.png';
+import logo from 'src/assets/images/afreum.png';
 
 export default {
   code: 'AFR',
