@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/question.png';
+import logo from 'src/assets/images/deb.png';
 
 export default {
   code: 'DEB',
