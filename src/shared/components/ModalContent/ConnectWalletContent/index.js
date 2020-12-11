@@ -10,6 +10,9 @@ import loginAsAlbedo from 'src/actions/user/loginAsAlbedo';
 import hideModal from 'src/actions/modal/hide';
 import fetchUserBalance from 'src/api/fetchUserBalance';
 import setToken from 'src/actions/setToken';
+import Str from '@ledgerhq/hw-app-str';
+import Transport from '@ledgerhq/hw-transport-u2f';
+import loginAsLedgerS from 'src/actions/user/loginAsLedgerS';
 
 function getPublicKeyFromAlbedo() {
   albedo
@@ -22,6 +25,20 @@ function getPublicKeyFromAlbedo() {
     .then((res) => loginAsAlbedo(res.pubkey))
     .catch(console.error)
     .finally(hideModal);
+}
+
+async function getPublicKeyFromLedgerS() {
+  try {
+    const transport = await Transport.create();
+    const str = new Str(transport);
+    const result = await str.getPublicKey("44'/148'/0'");
+    const balances = await fetchUserBalance(result.publicKey);
+    setToken(balances);
+    loginAsLedgerS(result.publicKey);
+    hideModal();
+  } catch (e) {
+    console.log('error', e);
+  }
 }
 
 const buttonContent = (text) => (
@@ -58,6 +75,13 @@ const ConnectWalletContent = () => {
                   onClick={getPublicKeyFromAlbedo}
                 >
                   {buttonContent('Albedo Link')}
+                </button>
+                <button
+                  type="button"
+                  className={classNames(styles.btn, 'mt-4')}
+                  onClick={getPublicKeyFromLedgerS}
+                >
+                  {buttonContent('Ledger')}
                 </button>
                 <button
                   type="button"

@@ -2,6 +2,7 @@ import store from 'src/store';
 import { loginTypes } from 'src/reducers/user';
 import deleteManageBuyOfferWithAlbedo from './deleteManageBuyOfferWithAlbedo';
 import deleteManageBuyOfferWithPrivate from './deleteManageBuyOfferWithPrivate';
+import deleteManageBuyOfferWithLedgerS from 'src/stellar-transactions/deleteManageBuyOfferWithLedgerS';
 
 export default function deleteManageBuyOfferMaker(offer) {
   const { user } = store.getState();
@@ -9,5 +10,7 @@ export default function deleteManageBuyOfferMaker(offer) {
     return deleteManageBuyOfferWithAlbedo(offer);
   } else if (user.loginType === loginTypes.PV) {
     return deleteManageBuyOfferWithPrivate(offer);
+  } else if (user.loginType === loginTypes.LEDGER_S) {
+    return deleteManageBuyOfferWithLedgerS(offer);
   }
 }

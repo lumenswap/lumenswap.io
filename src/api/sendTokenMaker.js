@@ -2,6 +2,7 @@ import sendTokenWithPrivateKey from './sendTokenWithPrivateKey';
 import store from 'src/store';
 import { loginTypes } from 'src/reducers/user';
 import sendTokenWithAlbedoLink from './sendTokenWithAlbedoLink';
+import sendTokenWithLedgerS from 'src/stellar-transactions/sendTokenWithLedgerS';
 
 export default function sendTokenMaker() {
   const { user } = store.getState();
@@ -9,5 +10,7 @@ export default function sendTokenMaker() {
     sendTokenWithAlbedoLink();
   } else if (user.loginType === loginTypes.PV) {
     sendTokenWithPrivateKey();
+  } else if (user.loginType === loginTypes.LEDGER_S) {
+    sendTokenWithLedgerS();
   }
 }

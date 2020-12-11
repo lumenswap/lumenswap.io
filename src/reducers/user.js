@@ -8,6 +8,7 @@ const defaultState = {
 export const loginTypes = {
   PV: 'private_key',
   ALBEDO: 'albedo_link',
+  LEDGER_S: 'LEDGER_S',
 };
 
 export default (state = defaultState, action) => {
