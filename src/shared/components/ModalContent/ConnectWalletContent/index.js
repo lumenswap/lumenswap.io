@@ -13,6 +13,8 @@ import setToken from 'src/actions/setToken';
 import Str from '@ledgerhq/hw-app-str';
 import Transport from '@ledgerhq/hw-transport-u2f';
 import loginAsLedgerS from 'src/actions/user/loginAsLedgerS';
+import TrezorConnect from 'trezor-connect';
+import loginAsTrezor from 'src/actions/user/loginAsTrezor';
 
 function getPublicKeyFromAlbedo() {
   albedo
@@ -37,7 +39,25 @@ async function getPublicKeyFromLedgerS() {
     loginAsLedgerS(result.publicKey);
     hideModal();
   } catch (e) {
-    console.log('error', e);
+    console.log('error while login with Ledger', e);
+  }
+}
+
+async function getPublickKeyFromTrezor() {
+  try {
+    const payloadFromTrezor = await TrezorConnect.stellarGetAddress({
+      path: "m/44'/148'/0'",
+    });
+    if (payloadFromTrezor.success) {
+      const balances = await fetchUserBalance(
+        payloadFromTrezor.payload.address
+      );
+      setToken(balances);
+      loginAsTrezor(payloadFromTrezor.payload.address);
+      hideModal();
+    }
+  } catch (e) {
+    console.error('error while login with trezor', e);
   }
 }
 
@@ -83,6 +103,13 @@ const ConnectWalletContent = () => {
                 >
                   {buttonContent('Ledger')}
                 </button>
+                {/* <button
+                  type="button"
+                  className={classNames(styles.btn, 'mt-4')}
+                  onClick={getPublickKeyFromTrezor}
+                >
+                  {buttonContent('Trezor')}
+                </button> */}
                 <button
                   type="button"
                   className={classNames(styles.btn, 'mt-4')}

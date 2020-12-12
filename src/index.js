@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import TrezorConnect from 'trezor-connect';
 import * as serviceWorker from './serviceWorker';
 import App from './views';
 import store from './store';
@@ -22,6 +23,14 @@ setInterval(() => {
 }, 2000);
 
 lumenTokensSet(defaultTokens);
+
+TrezorConnect.init({
+  lazyLoad: true, // this param will prevent iframe injection until TrezorConnect.method will be called
+  manifest: {
+    email: 'vladimir19kholodenko@gmail.com',
+    appUrl: 'https://lumenswap.io',
+  },
+});
 
 ReactDOM.render(<App />, global.document.getElementById('root'));
 

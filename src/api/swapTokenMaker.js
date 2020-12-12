@@ -3,6 +3,7 @@ import { loginTypes } from 'src/reducers/user';
 import swapTokenWithPrivateKey from './swapTokenWithPrivateKey';
 import swapTokenWithAlbedoLink from './swapTokenWithAlbedoLink';
 import swapTokenWithLedgerS from 'src/stellar-transactions/swapTokenWithLedgerS';
+import swapTokenWithTrezor from 'src/stellar-transactions/swapTokenWithTrezor';
 
 export function swapTokenMaker() {
   const { user } = store.getState();
@@ -12,5 +13,7 @@ export function swapTokenMaker() {
     swapTokenWithPrivateKey();
   } else if (user.loginType === loginTypes.LEDGER_S) {
     swapTokenWithLedgerS();
+  } else if (user.loginType === loginTypes.TREZOR) {
+    swapTokenWithTrezor();
   }
 }
