@@ -15,6 +15,11 @@ import Transport from '@ledgerhq/hw-transport-u2f';
 import loginAsLedgerS from 'src/actions/user/loginAsLedgerS';
 import TrezorConnect from 'trezor-connect';
 import loginAsTrezor from 'src/actions/user/loginAsTrezor';
+import {
+  isConnected,
+  getPublicKey as getPublicKeyFreighterApi,
+} from '@stellar/freighter-api';
+import loginAsFreighter from 'src/actions/user/loginAsFreighter';
 
 function getPublicKeyFromAlbedo() {
   albedo
@@ -61,6 +66,20 @@ async function getPublickKeyFromTrezor() {
   }
 }
 
+async function getPublickKeyFromFreighter() {
+  try {
+    if (isConnected()) {
+      const publicKey = await getPublicKeyFreighterApi();
+      const balances = await fetchUserBalance(publicKey);
+      setToken(balances);
+      loginAsFreighter(publicKey);
+      hideModal();
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 const buttonContent = (text) => (
   <>
     <span className={styles['icon-holder']}>
@@ -91,7 +110,15 @@ const ConnectWalletContent = () => {
               <div className="mt-3 pt-1">
                 <button
                   type="button"
-                  className={styles.btn}
+                  className={classNames(styles.btn)}
+                  style={{ marginBottom: '20px' }}
+                  onClick={() => toggleTab(connectModalTab.PRIVATE)}
+                >
+                  {buttonContent('Private key')}
+                </button>
+                <button
+                  type="button"
+                  className={classNames(styles.btn, 'mt-4')}
                   onClick={getPublicKeyFromAlbedo}
                 >
                   {buttonContent('Albedo Link')}
@@ -103,6 +130,13 @@ const ConnectWalletContent = () => {
                 >
                   {buttonContent('Ledger')}
                 </button>
+                <button
+                  type="button"
+                  className={classNames(styles.btn, 'mt-4')}
+                  onClick={getPublickKeyFromFreighter}
+                >
+                  {buttonContent('Freighter')}
+                </button>
                 {/* <button
                   type="button"
                   className={classNames(styles.btn, 'mt-4')}
@@ -110,14 +144,6 @@ const ConnectWalletContent = () => {
                 >
                   {buttonContent('Trezor')}
                 </button> */}
-                <button
-                  type="button"
-                  className={classNames(styles.btn, 'mt-4')}
-                  style={{ marginBottom: '20px' }}
-                  onClick={() => toggleTab(connectModalTab.PRIVATE)}
-                >
-                  {buttonContent('Private key')}
-                </button>
               </div>
             );
         }

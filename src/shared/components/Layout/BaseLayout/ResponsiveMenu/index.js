@@ -78,7 +78,7 @@ const ResponsiveMenu = (props) => {
         />
         <div className={classNames('vertical-scroll', styles.scroll)}>
           {userToken.map((item) => (
-            <div className={styles.crypto} key={item}>
+            <div className={styles.crypto} key={item.value}>
               <div className="row align-items-center h-100">
                 <div className="col-auto">
                   <img src={item.logo} className={styles.logo} alt="logo" />

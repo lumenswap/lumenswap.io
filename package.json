@@ -6,6 +6,7 @@
     "@ledgerhq/hw-app-str": "^5.34.0",
     "@ledgerhq/hw-transport-node-hid": "^5.34.0",
     "@ledgerhq/hw-transport-u2f": "^5.34.0",
+    "@stellar/freighter-api": "^1.0.0-beta.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
