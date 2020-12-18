@@ -5,85 +5,16 @@ import { connectModalTab } from 'src/constants/enum';
 import PublicKeyForm from './PublicKeyForm';
 import PrivateKeyForm from './PrivateKeyForm';
 import styles from './styles.module.scss';
-import albedo from '@albedo-link/intent';
-import loginAsAlbedo from 'src/actions/user/loginAsAlbedo';
-import hideModal from 'src/actions/modal/hide';
-import fetchUserBalance from 'src/api/fetchUserBalance';
-import setToken from 'src/actions/setToken';
-import Str from '@ledgerhq/hw-app-str';
-import Transport from '@ledgerhq/hw-transport-u2f';
-import loginAsLedgerS from 'src/actions/user/loginAsLedgerS';
-import TrezorConnect from 'trezor-connect';
-import loginAsTrezor from 'src/actions/user/loginAsTrezor';
-import {
-  isConnected,
-  getPublicKey as getPublicKeyFreighterApi,
-} from '@stellar/freighter-api';
-import loginAsFreighter from 'src/actions/user/loginAsFreighter';
+import { ReactComponent as PrivateSvg } from 'src/assets/logins/private.svg';
+import { ReactComponent as AlbedoSvg } from 'src/assets/logins/albedo.svg';
+import { ReactComponent as FreighterSvg } from 'src/assets/logins/freighter.svg';
+import { ReactComponent as LedgerSvg } from 'src/assets/logins/ledger.svg';
+import ConnectingForm from './ConnectingForm';
 
-function getPublicKeyFromAlbedo() {
-  albedo
-    .publicKey()
-    .then(async (res) => {
-      const balances = await fetchUserBalance(res.pubkey);
-      setToken(balances);
-      return res;
-    })
-    .then((res) => loginAsAlbedo(res.pubkey))
-    .catch(console.error)
-    .finally(hideModal);
-}
-
-async function getPublicKeyFromLedgerS() {
-  try {
-    const transport = await Transport.create();
-    const str = new Str(transport);
-    const result = await str.getPublicKey("44'/148'/0'");
-    const balances = await fetchUserBalance(result.publicKey);
-    setToken(balances);
-    loginAsLedgerS(result.publicKey);
-    hideModal();
-  } catch (e) {
-    console.log('error while login with Ledger', e);
-  }
-}
-
-async function getPublickKeyFromTrezor() {
-  try {
-    const payloadFromTrezor = await TrezorConnect.stellarGetAddress({
-      path: "m/44'/148'/0'",
-    });
-    if (payloadFromTrezor.success) {
-      const balances = await fetchUserBalance(
-        payloadFromTrezor.payload.address
-      );
-      setToken(balances);
-      loginAsTrezor(payloadFromTrezor.payload.address);
-      hideModal();
-    }
-  } catch (e) {
-    console.error('error while login with trezor', e);
-  }
-}
-
-async function getPublickKeyFromFreighter() {
-  try {
-    if (isConnected()) {
-      const publicKey = await getPublicKeyFreighterApi();
-      const balances = await fetchUserBalance(publicKey);
-      setToken(balances);
-      loginAsFreighter(publicKey);
-      hideModal();
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-const buttonContent = (text) => (
+const buttonContent = (text, LoginIcon) => (
   <>
     <span className={styles['icon-holder']}>
-      <span className="icon-link center-ver-hor" />
+      <LoginIcon width={18} height={18} />
     </span>
     <span>{text}</span>
     <span className={classNames('ml-auto', styles.svg)}>{arrowRightSvg}</span>
@@ -105,6 +36,12 @@ const ConnectWalletContent = () => {
             return <PublicKeyForm />;
           case connectModalTab.PRIVATE:
             return <PrivateKeyForm />;
+          case connectModalTab.CONNECTING_LEDGER:
+            return <ConnectingForm type="ledger" />;
+          case connectModalTab.CONNECTING_FREIGHTER:
+            return <ConnectingForm type="freighter" />;
+          case connectModalTab.CONNECTING_ALBEDO:
+            return <ConnectingForm type="albedo" />;
           default:
             return (
               <div className="mt-3 pt-1">
@@ -114,28 +51,30 @@ const ConnectWalletContent = () => {
                   style={{ marginBottom: '20px' }}
                   onClick={() => toggleTab(connectModalTab.PRIVATE)}
                 >
-                  {buttonContent('Private key')}
+                  {buttonContent('Private key', PrivateSvg)}
                 </button>
                 <button
                   type="button"
                   className={classNames(styles.btn, 'mt-4')}
-                  onClick={getPublicKeyFromAlbedo}
+                  onClick={() => toggleTab(connectModalTab.CONNECTING_LEDGER)}
                 >
-                  {buttonContent('Albedo Link')}
+                  {buttonContent('Ledger', LedgerSvg)}
                 </button>
                 <button
                   type="button"
                   className={classNames(styles.btn, 'mt-4')}
-                  onClick={getPublicKeyFromLedgerS}
+                  onClick={() =>
+                    toggleTab(connectModalTab.CONNECTING_FREIGHTER)
+                  }
                 >
-                  {buttonContent('Ledger')}
+                  {buttonContent('Freighter', FreighterSvg)}
                 </button>
                 <button
                   type="button"
                   className={classNames(styles.btn, 'mt-4')}
-                  onClick={getPublickKeyFromFreighter}
+                  onClick={() => toggleTab(connectModalTab.CONNECTING_ALBEDO)}
                 >
-                  {buttonContent('Freighter')}
+                  {buttonContent('Albedo Link', AlbedoSvg)}
                 </button>
                 {/* <button
                   type="button"
