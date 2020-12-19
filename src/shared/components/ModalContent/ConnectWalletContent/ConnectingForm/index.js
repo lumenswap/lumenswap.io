@@ -28,7 +28,8 @@ function getPublicKeyFromAlbedo() {
       setToken(balances);
       return res;
     })
-    .then((res) => loginAsAlbedo(res.pubkey));
+    .then((res) => loginAsAlbedo(res.pubkey))
+    .then(hideModal);
 }
 
 async function getPublicKeyFromLedgerS() {
@@ -101,6 +102,26 @@ function chooseLogo(type) {
   return null;
 }
 
+function chooseWalletDesc(type) {
+  if (type === 'ledger') {
+    return 'Hardware';
+  }
+
+  if (type === 'trezor') {
+    return 'Hardware';
+  }
+
+  if (type === 'albedo') {
+    return 'Browser Extension';
+  }
+
+  if (type === 'freighter') {
+    return 'Browser Extension';
+  }
+
+  return null;
+}
+
 export default function ConnectingForm({ type }) {
   const [conError, setConError] = useState(null);
 
@@ -134,7 +155,7 @@ export default function ConnectingForm({ type }) {
     if (conError) {
       return (
         <p style={{ margin: 0 }}>
-          Error Connecting, Message: {conError}{' '}
+          Error While Connecting.
           <span onClick={loginThroughThird} className={styles.tryBox}>
             Try Again
           </span>
@@ -171,7 +192,9 @@ export default function ConnectingForm({ type }) {
           >
             {chooseName(type)}
           </p>
-          <p className={styles.subText}>Easy-to-use hardware wallet</p>
+          <p className={styles.subText}>
+            Easy-to-use {chooseWalletDesc(type)} wallet
+          </p>
         </div>
         <div>{chooseLogo(type)}</div>
       </div>
