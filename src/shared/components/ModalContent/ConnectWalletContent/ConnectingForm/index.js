@@ -155,7 +155,7 @@ export default function ConnectingForm({ type }) {
     if (conError) {
       return (
         <p style={{ margin: 0 }}>
-          Error While Connecting.
+          Error Connecting.
           <span onClick={loginThroughThird} className={styles.tryBox}>
             Try Again
           </span>

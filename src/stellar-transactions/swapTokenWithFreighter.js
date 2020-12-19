@@ -15,13 +15,26 @@ const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 export default async function swapTokenWithFreighter() {
   const { checkout } = store.getState();
 
+  showWaitingModal({
+    message: 'Creating transaction',
+  });
+
   try {
     const stripTransaction = await getSwapTRX();
+
+    showWaitingModal({
+      message: 'Waiting for signing',
+    });
+
     const signedFromFreighter = await signTransaction(stripTransaction.toXDR());
     const transaction = StellarSDK.TransactionBuilder.fromXDR(
       signedFromFreighter,
       process.env.REACT_APP_HORIZON
     );
+
+    showWaitingModal({
+      message: 'Sending to Network',
+    });
 
     const result = await server.submitTransaction(transaction);
     hideModal();

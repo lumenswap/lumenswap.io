@@ -24,7 +24,7 @@ export default async function swapTokenWithLedgerS() {
     const transaction = await getSwapTRX(true);
 
     showWaitingModal({
-      message: 'Sending to your ledger device to sign',
+      message: 'Waiting for signing',
     });
     const transport = await Transport.create();
     const str = new Str(transport);

@@ -20,8 +20,9 @@ export default async function createManageBuyOfferWithLedgerS() {
     const transaction = await getCreateManageBuyOfferTRX();
 
     showWaitingModal({
-      message: 'Sending to your ledger device to sign',
+      message: 'Waiting for signing',
     });
+
     const transport = await Transport.create();
     const str = new Str(transport);
     const signatureFromLedger = await str.signTransaction(
@@ -36,6 +37,10 @@ export default async function createManageBuyOfferWithLedgerS() {
       signature: signatureFromLedger.signature,
     });
     transaction.signatures.push(decorated);
+
+    showWaitingModal({
+      message: 'Sending to network',
+    });
 
     const result = await server.submitTransaction(transaction);
     hideModal();

@@ -4,10 +4,15 @@ import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import { trsStatus } from 'src/constants/enum';
 import albedo from '@albedo-link/intent';
+import showWaitingModal from 'src/actions/modal/waiting';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function deleteManageBuyOfferWithAlbedo(offer) {
+  showWaitingModal({
+    message: 'Creating Transaction',
+  });
+
   try {
     const { user } = store.getState();
 
@@ -41,6 +46,10 @@ export default async function deleteManageBuyOfferWithAlbedo(offer) {
       )
       .setTimeout(30)
       .build();
+
+    showWaitingModal({
+      message: 'Waiting for signing',
+    });
 
     const result = await albedo.tx({
       xdr: transaction.toXDR(),

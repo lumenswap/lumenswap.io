@@ -7,11 +7,16 @@ import { trsStatus } from 'src/constants/enum';
 import reportSuccessfulSwap from './metrics/reportSuccessfulSwap';
 import reportFailureSwap from './metrics/reportFailureSwap';
 import albedo from '@albedo-link/intent';
+import showWaitingModal from 'src/actions/modal/waiting';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function sendTokenWithAlbedoLink() {
   const { checkout, userToken } = store.getState();
+
+  showWaitingModal({
+    message: 'Creating Transaction',
+  });
 
   try {
     let needToTrust;
@@ -78,6 +83,10 @@ export default async function sendTokenWithAlbedoLink() {
         .setTimeout(30)
         .build();
     }
+
+    showWaitingModal({
+      message: 'Waiting for signing',
+    });
 
     const result = await albedo.tx({
       xdr: transaction.toXDR(),

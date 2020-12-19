@@ -20,8 +20,9 @@ export default async function deleteManageBuyOfferWithLedgerS(offer) {
     const transaction = await getDeleteManageBuyOfferTRX(offer);
 
     showWaitingModal({
-      message: 'Sending to your ledger device to sign',
+      message: 'Waiting for signing',
     });
+
     const transport = await Transport.create();
     const str = new Str(transport);
     const signatureFromLedger = await str.signTransaction(
@@ -36,6 +37,10 @@ export default async function deleteManageBuyOfferWithLedgerS(offer) {
       signature: signatureFromLedger.signature,
     });
     transaction.signatures.push(decorated);
+
+    showWaitingModal({
+      message: 'Sending to Network',
+    });
 
     const result = await server.submitTransaction(transaction);
     hideModal();

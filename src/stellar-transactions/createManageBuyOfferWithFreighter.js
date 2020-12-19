@@ -15,6 +15,11 @@ export default async function createManageBuyOfferWithFreighter() {
 
   try {
     const originalTransaction = await getCreateManageBuyOfferTRX();
+
+    showWaitingModal({
+      message: 'Waiting for signing',
+    });
+
     const signedFromFreighter = await signTransaction(
       originalTransaction.toXDR()
     );
@@ -24,7 +29,7 @@ export default async function createManageBuyOfferWithFreighter() {
     );
 
     showWaitingModal({
-      message: 'Sending to your ledger device to sign',
+      message: 'Sending to Network',
     });
 
     const result = await server.submitTransaction(transaction);

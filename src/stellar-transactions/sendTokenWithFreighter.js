@@ -21,6 +21,11 @@ export default async function sendTokenWithFreighter() {
 
   try {
     const originalTransaction = await getSendTRX();
+
+    showWaitingModal({
+      message: 'Waiting for signing',
+    });
+
     const signedFromFreighter = await signTransaction(
       originalTransaction.toXDR()
     );
