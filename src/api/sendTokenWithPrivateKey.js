@@ -12,20 +12,9 @@ const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function sendTokenWithPrivateKey() {
   showWaitingModal({ message: 'Sending to network' });
-  const { checkout, userToken, user } = store.getState();
+  const { checkout, user } = store.getState();
 
   try {
-    let needToTrust;
-    if (checkout.toAsset.issuer === 'native') {
-      needToTrust = false;
-    } else {
-      needToTrust = !userToken.find(
-        (token) =>
-          token.asset_code === checkout.toAsset.code &&
-          token.asset_issuer === checkout.toAsset.issuer
-      );
-    }
-
     const account = await server.loadAccount(checkout.fromAddress);
     const fee = await server.fetchBaseFee();
 
@@ -33,13 +22,6 @@ export default async function sendTokenWithPrivateKey() {
       fee,
       networkPassphrase: StellarSDK.Networks.PUBLIC,
     });
-    if (needToTrust) {
-      transaction = transaction.addOperation(
-        StellarSDK.Operation.changeTrust({
-          asset: getAssetDetails(checkout.toAsset),
-        })
-      );
-    }
 
     const path = [];
     if (

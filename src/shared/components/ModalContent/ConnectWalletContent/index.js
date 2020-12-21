@@ -10,6 +10,8 @@ import { ReactComponent as AlbedoSvg } from 'src/assets/logins/albedo.svg';
 import { ReactComponent as FreighterSvg } from 'src/assets/logins/freighter.svg';
 import { ReactComponent as LedgerSvg } from 'src/assets/logins/ledger.svg';
 import ConnectingForm from './ConnectingForm';
+import showConnectModal from 'src/actions/modal/connectModal';
+import { ReactComponent as DanglingLeft } from 'src/assets/images/danglingLeft.svg';
 
 const buttonContent = (text, LoginIcon) => (
   <>
@@ -25,6 +27,17 @@ const ConnectWalletContent = () => {
   const [tab, setTab] = useState(null);
 
   const toggleTab = (value) => {
+    showConnectModal(
+      <DanglingLeft
+        width={28}
+        height={18}
+        style={{ cursor: 'pointer ' }}
+        onClick={() => {
+          showConnectModal('Connect Wallet');
+          setTab(null);
+        }}
+      />
+    );
     setTab(value);
   };
 
