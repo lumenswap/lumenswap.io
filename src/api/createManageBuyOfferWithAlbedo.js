@@ -11,7 +11,7 @@ const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function createManageBuyOfferWithAlbedo() {
   showWaitingModal({
-    message: 'Creating Transaction',
+    message: 'Waiting to sign',
   });
 
   try {
@@ -66,10 +66,6 @@ export default async function createManageBuyOfferWithAlbedo() {
       )
       .setTimeout(30)
       .build();
-
-    showWaitingModal({
-      message: 'Waiting to sign',
-    });
 
     const result = await albedo.tx({
       xdr: transaction.toXDR(),

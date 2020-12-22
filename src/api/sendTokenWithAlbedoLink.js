@@ -15,7 +15,7 @@ export default async function sendTokenWithAlbedoLink() {
   const { checkout } = store.getState();
 
   showWaitingModal({
-    message: 'Creating Transaction',
+    message: 'Waiting for signing',
   });
 
   try {
@@ -65,10 +65,6 @@ export default async function sendTokenWithAlbedoLink() {
         .setTimeout(30)
         .build();
     }
-
-    showWaitingModal({
-      message: 'Waiting for signing',
-    });
 
     const result = await albedo.tx({
       xdr: transaction.toXDR(),

@@ -18,6 +18,7 @@ import showConfirmSwap from 'src/actions/modal/confirmSwap';
 import NumberOnly from 'src/shared/components/NumberOnly';
 import reportSwapClick from 'src/api/metrics/reportSwapClick';
 import reportLoginClick from 'src/api/metrics/reportLoginClick';
+import { ReactComponent as ArrowRepeatCircle } from 'src/assets/images/arrow-repeat-circle.svg';
 import styles from './styles.module.scss';
 
 const Swap = () => {
@@ -33,6 +34,7 @@ const Swap = () => {
   const [isButtonDisable, setButtonDisable] = useState(false);
   const [inputFromAmount, setInputFromAmount] = useState('');
   const [inputToAmount, setInputToAmount] = useState('');
+  const [reverseCal, setReverseCal] = useState(false);
 
   let includeToken = [];
   let modifiedFromAsset;
@@ -150,8 +152,13 @@ const Swap = () => {
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
   useEffect(() => {
-    changeOtherInput(setInputToAmount, true)(checkout.fromAmount);
+    changeOtherInput(setInputToAmount, true);
   }, [checkout.counterPrice, JSON.stringify(userToken)]);
+
+  useEffect(() => {
+    setInputFromAmount('');
+    setInputToAmount('');
+  }, []);
 
   function setToken(field) {
     return (token, swapMode) => {
@@ -188,7 +195,11 @@ const Swap = () => {
             }
           >
             <NumberOnly
-              onChange={changeOtherInput(setInputToAmount, true)}
+              onChange={changeOtherInput(
+                setInputToAmount,
+                true,
+                setInputFromAmount
+              )}
               initValue={inputFromAmount}
             />
           </TxnInput>
@@ -230,16 +241,34 @@ const Swap = () => {
             }
           >
             <NumberOnly
-              onChange={changeOtherInput(setInputFromAmount, false)}
+              onChange={changeOtherInput(
+                setInputFromAmount,
+                false,
+                setInputToAmount
+              )}
               initValue={inputToAmount}
             />
           </TxnInput>
           <p className={styles.info}>
             {loading && 'Fetching counter price...'}
             {!loading &&
+              !reverseCal &&
               `1 ${checkout.toAsset.code} = ${(
                 1 / checkout.counterPrice
               ).toFixed(7)} ${checkout.fromAsset.code}`}
+            {!loading &&
+              reverseCal &&
+              `1 ${checkout.fromAsset.code} = ${checkout.counterPrice.toFixed(
+                7
+              )} ${checkout.toAsset.code}`}
+            <ArrowRepeatCircle
+              width={18}
+              height={18}
+              style={{ marginLeft: 8, cursor: 'pointer' }}
+              onClick={() => {
+                setReverseCal((prev) => !prev);
+              }}
+            />
           </p>
         </div>
         {userLogged && (

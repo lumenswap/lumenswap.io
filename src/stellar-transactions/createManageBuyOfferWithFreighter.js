@@ -10,15 +10,11 @@ const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function createManageBuyOfferWithFreighter() {
   showWaitingModal({
-    message: 'Creating transaction',
+    message: 'Waiting for signing',
   });
 
   try {
     const originalTransaction = await getCreateManageBuyOfferTRX();
-
-    showWaitingModal({
-      message: 'Waiting for signing',
-    });
 
     const signedFromFreighter = await signTransaction(
       originalTransaction.toXDR()

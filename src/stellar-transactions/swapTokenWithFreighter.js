@@ -16,15 +16,11 @@ export default async function swapTokenWithFreighter() {
   const { checkout } = store.getState();
 
   showWaitingModal({
-    message: 'Creating transaction',
+    message: 'Waiting for signing',
   });
 
   try {
     const stripTransaction = await getSwapTRX();
-
-    showWaitingModal({
-      message: 'Waiting for signing',
-    });
 
     const signedFromFreighter = await signTransaction(stripTransaction.toXDR());
     const transaction = StellarSDK.TransactionBuilder.fromXDR(

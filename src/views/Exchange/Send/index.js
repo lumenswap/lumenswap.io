@@ -21,6 +21,7 @@ import showConnectModal from 'src/actions/modal/connectModal';
 import showConfirmSend from 'src/actions/modal/confirmSend';
 import checkAddress from 'src/api/checkAddress';
 import fetchUserBalance from 'src/api/fetchUserBalance';
+import { ReactComponent as ArrowRepeatCircle } from 'src/assets/images/arrow-repeat-circle.svg';
 
 const Send = ({ showAdvanced, setShowAdvanced }) => {
   const { userLogged, checkout, userToken, user } = useSelector((state) => ({
@@ -37,6 +38,7 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
   const [inputToAmount, setInputToAmount] = useState('');
   const [inputToAddress, setInputToAddress] = useState('');
   const [checkedAddressText, setCheckedAddressText] = useState(false);
+  const [reverseCal, setReverseCal] = useState(false);
 
   useEffect(() => {
     setCheckedAddressText(false);
@@ -176,6 +178,11 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
   useEffect(() => {
     changeOtherInput(setInputToAmount, true)(checkout.fromAmount);
   }, [checkout.counterPrice, JSON.stringify(userToken)]);
+
+  useEffect(() => {
+    setInputFromAmount('');
+    setInputToAmount('');
+  }, []);
 
   function setToken(field) {
     return (token, swapMode) => {
@@ -339,9 +346,25 @@ const Send = ({ showAdvanced, setShowAdvanced }) => {
               <p className={styles.info}>
                 {loading && 'Fetching counter price...'}
                 {!loading &&
+                  !reverseCal &&
                   `1 ${checkout.toAsset.code} = ${(
                     1 / checkout.counterPrice
                   ).toFixed(7)} ${checkout.fromAsset.code}`}
+                {!loading &&
+                  reverseCal &&
+                  `1 ${
+                    checkout.fromAsset.code
+                  } = ${checkout.counterPrice.toFixed(7)} ${
+                    checkout.toAsset.code
+                  }`}
+                <ArrowRepeatCircle
+                  width={18}
+                  height={18}
+                  style={{ marginLeft: 8, cursor: 'pointer' }}
+                  onClick={() => {
+                    setReverseCal((prev) => !prev);
+                  }}
+                />
               </p>
             </div>
           </>

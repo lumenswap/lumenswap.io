@@ -17,15 +17,11 @@ export default async function sendTokenWithLedgerS() {
   const { checkout, user } = store.getState();
 
   showWaitingModal({
-    message: 'Creating transaction',
+    message: 'Waiting for signing',
   });
 
   try {
     const transaction = await getSendTRX(true);
-
-    showWaitingModal({
-      message: 'Waiting for signing',
-    });
 
     const transport = await Transport.create();
     const str = new Str(transport);
