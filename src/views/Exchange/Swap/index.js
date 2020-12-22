@@ -152,7 +152,7 @@ const Swap = () => {
   }, [checkout.fromAsset, checkout.toAsset, fromCustomAsset, toCustomAsset]);
 
   useEffect(() => {
-    changeOtherInput(setInputToAmount, true);
+    changeOtherInput(setInputToAmount, true)(checkout.fromAmount);
   }, [checkout.counterPrice, JSON.stringify(userToken)]);
 
   useEffect(() => {
@@ -195,11 +195,7 @@ const Swap = () => {
             }
           >
             <NumberOnly
-              onChange={changeOtherInput(
-                setInputToAmount,
-                true,
-                setInputFromAmount
-              )}
+              onChange={changeOtherInput(setInputToAmount, true)}
               initValue={inputFromAmount}
             />
           </TxnInput>
@@ -241,11 +237,7 @@ const Swap = () => {
             }
           >
             <NumberOnly
-              onChange={changeOtherInput(
-                setInputFromAmount,
-                false,
-                setInputToAmount
-              )}
+              onChange={changeOtherInput(setInputFromAmount, false)}
               initValue={inputToAmount}
             />
           </TxnInput>
