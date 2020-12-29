@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import gitlab from 'src/assets/images/gitlab-icon.png';
+import twitter from 'src/assets/images/twitter.png';
 import styles from './styles.module.scss';
 
 const Footer = (props) => (
-  <div className="row justify-content-between">
+  <div className="row">
     <div className="col-auto">
       <a
         href="https://gitlab.com/lumenswap.io/lumenswap.io"
@@ -23,12 +22,20 @@ const Footer = (props) => (
         />
       </a>
     </div>
-    {/* <div className="col-auto d-flex"> */}
-    {/*  <button type="button" className={classNames(styles.btn, styles.guide)}>Guide</button> */}
-    {/*  <button type="button" className={classNames(styles.btn, styles.theme)}> */}
-    {/*    <span className="icon-brightness" /> */}
-    {/*  </button> */}
-    {/* </div> */}
+    <a
+      href="https://twitter.com/lumenswap"
+      className={classNames(styles.btn, styles.git)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src={twitter}
+        alt="twitter"
+        width="20px"
+        height="18px"
+        className="center-ver-hor"
+      />
+    </a>
   </div>
 );
 
