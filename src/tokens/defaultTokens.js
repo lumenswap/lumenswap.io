@@ -14,9 +14,11 @@ import CNY from './CNY';
 import USDT from './USDT';
 import AFR from './AFR';
 import DEB from './DEB';
+import USDC from './USDC';
 
 export default [
   XLM,
+  USDC,
   MOBI,
   USD,
   CENTUS,
