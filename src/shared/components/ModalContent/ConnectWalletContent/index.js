@@ -55,6 +55,8 @@ const ConnectWalletContent = () => {
             return <ConnectingForm type="freighter" />;
           case connectModalTab.CONNECTING_ALBEDO:
             return <ConnectingForm type="albedo" />;
+          case connectModalTab.CONNECTING_TREZOR:
+            return <ConnectingForm type="trezor" />;
           default:
             return (
               <div className="mt-3 pt-1">
@@ -92,9 +94,9 @@ const ConnectWalletContent = () => {
                 {/* <button
                   type="button"
                   className={classNames(styles.btn, 'mt-4')}
-                  onClick={getPublickKeyFromTrezor}
+                  onClick={() => toggleTab(connectModalTab.CONNECTING_TREZOR)}
                 >
-                  {buttonContent('Trezor')}
+                  {buttonContent('Trezor', () => null)}
                 </button> */}
               </div>
             );

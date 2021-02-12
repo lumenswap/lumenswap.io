@@ -1,6 +1,5 @@
 import store from 'src/store';
 import StellarSDK from 'stellar-sdk';
-import getSwapTRX from './getSwapTRX';
 import hideModal from 'src/actions/modal/hide';
 import showTxnStatus from 'src/actions/modal/transactionStatus';
 import reportSuccessfulSwap from 'src/api/metrics/reportSuccessfulSwap';
@@ -10,66 +9,18 @@ import reportFailureSwap from 'src/api/metrics/reportFailureSwap';
 import showWaitingModal from 'src/actions/modal/waiting';
 import transformTrezorTransaction from 'src/helpers/transformTrezor';
 import TrezorConnect from 'trezor-connect';
-import getCreateManageBuyOfferTRX from './getCreateManageBuyOfferTRX';
-import getAssetDetails from 'src/helpers/getAssetDetails';
+import getSendTRX from './getSendTRX';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function swapTokenWithTrezor() {
-  const { checkout, user, userToken } = store.getState();
+export default async function sendTokenWithTrezor() {
+  const { checkout, user } = store.getState();
 
   try {
-    const account = await server.loadAccount(checkout.fromAddress);
-    const fee = await server.fetchBaseFee();
-
-    let needToTrust;
-    if (checkout.toAsset.issuer === 'native') {
-      needToTrust = false;
-    } else {
-      needToTrust = !userToken.find(
-        (token) =>
-          token.asset_code === checkout.toAsset.code &&
-          token.asset_issuer === checkout.toAsset.issuer
-      );
-    }
-
-    let transaction = new StellarSDK.TransactionBuilder(account, {
-      fee,
-      networkPassphrase: StellarSDK.Networks.PUBLIC,
-    });
-
-    if (needToTrust) {
-      // transaction = transaction.addOperation(
-      //   StellarSDK.Operation.changeTrust({
-      //     asset: getAssetDetails(checkout.toAsset),
-      //   })
-      // );
-    }
-
-    transaction = transaction
-      .addOperation(
-        StellarSDK.Operation.manageSellOffer({
-          selling: getAssetDetails(checkout.fromAsset),
-          buying: getAssetDetails(checkout.toAsset),
-          amount: (
-            checkout.fromAmount *
-            checkout.counterPrice *
-            (1 - checkout.tolerance)
-          ).toFixed(7),
-          price: {
-            n: 1 * 10000000,
-            d: Math.floor(
-              (checkout.counterPrice * (1 - checkout.tolerance)).toFixed(7) *
-                10000000
-            ),
-          },
-          offerId: 0,
-        })
-      )
-      .setTimeout(30)
-      .build();
+    const transaction = await getSendTRX();
 
     const params = transformTrezorTransaction("m/44'/148'/0'", transaction);
+    console.log(params);
     const signedFromTrezor = await TrezorConnect.stellarSignTransaction(params);
     console.log(signedFromTrezor);
 

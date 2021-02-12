@@ -28,7 +28,7 @@
     "reactstrap": "^8.5.1",
     "redux": "^4.0.5",
     "stellar-sdk": "^5.0.4",
-    "trezor-connect": "^8.1.19"
+    "trezor-connect": "^8.1.22"
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",

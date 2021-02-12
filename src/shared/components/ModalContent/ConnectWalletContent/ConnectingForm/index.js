@@ -119,6 +119,10 @@ function chooseWalletDesc(type) {
     return 'Browser Extension';
   }
 
+  if (type === 'trezor') {
+    return 'Hardware';
+  }
+
   return null;
 }
 
@@ -143,6 +147,12 @@ export default function ConnectingForm({ type }) {
     if (type === 'freighter') {
       getPublickKeyFromFreighter().catch((e) => {
         setConError(e.message);
+      });
+    }
+
+    if (type === 'trezor') {
+      getPublickKeyFromTrezor().catch((e) => {
+        console.log(e);
       });
     }
   }
