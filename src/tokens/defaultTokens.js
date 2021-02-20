@@ -17,6 +17,7 @@ import DEB from './DEB';
 import USDC from './USDC';
 import KTHOUSE from './KTHOUSE';
 import SLT from './SLT';
+import EURT from './EURT';
 
 export default [
   XLM,
@@ -38,4 +39,5 @@ export default [
   DEB,
   KTHOUSE,
   SLT,
+  EURT
 ];
