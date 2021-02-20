@@ -15,6 +15,7 @@ import USDT from './USDT';
 import AFR from './AFR';
 import DEB from './DEB';
 import USDC from './USDC';
+import KTHOUSE from './KTHOUSE';
 
 export default [
   XLM,
@@ -34,4 +35,5 @@ export default [
   CNY,
   AFR,
   DEB,
+  KTHOUSE,
 ];
