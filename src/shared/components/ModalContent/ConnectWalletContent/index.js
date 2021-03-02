@@ -57,6 +57,8 @@ const ConnectWalletContent = () => {
             return <ConnectingForm type="albedo" />;
           case connectModalTab.CONNECTING_TREZOR:
             return <ConnectingForm type="trezor" />;
+          case connectModalTab.CONNECTING_RABET:
+            return <ConnectingForm type="rabet" />;
           default:
             return (
               <div className="mt-3 pt-1">
@@ -90,6 +92,13 @@ const ConnectWalletContent = () => {
                   onClick={() => toggleTab(connectModalTab.CONNECTING_ALBEDO)}
                 >
                   {buttonContent('Albedo Link', AlbedoSvg)}
+                </button>
+                <button
+                  type="button"
+                  className={classNames(styles.btn, 'mt-4')}
+                  onClick={() => toggleTab(connectModalTab.CONNECTING_RABET)}
+                >
+                  {buttonContent('Rabet', AlbedoSvg)}
                 </button>
                 {/* <button
                   type="button"

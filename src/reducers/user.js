@@ -11,6 +11,7 @@ export const loginTypes = {
   LEDGER_S: 'LEDGER_S',
   TREZOR: 'TREZOR',
   FREIGHTER: ' FREIGHTER',
+  RABET: 'RABET',
 };
 
 export default (state = defaultState, action) => {

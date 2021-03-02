@@ -5,6 +5,7 @@ import sendTokenWithAlbedoLink from './sendTokenWithAlbedoLink';
 import sendTokenWithLedgerS from 'src/stellar-transactions/sendTokenWithLedgerS';
 import sendTokenWithFreighter from 'src/stellar-transactions/sendTokenWithFreighter';
 import sendTokenWithTrezor from 'src/stellar-transactions/sendTokenWithTrezor';
+import sendTokenWithRabet from 'src/stellar-transactions/sendTokenWithRabet';
 
 export default function sendTokenMaker() {
   const { user } = store.getState();
@@ -18,5 +19,7 @@ export default function sendTokenMaker() {
     sendTokenWithFreighter();
   } else if (user.loginType === loginTypes.TREZOR) {
     sendTokenWithTrezor();
+  } else if (user.loginType === loginTypes.RABET) {
+    sendTokenWithRabet();
   }
 }

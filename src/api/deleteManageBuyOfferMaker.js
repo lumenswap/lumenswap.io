@@ -4,6 +4,7 @@ import deleteManageBuyOfferWithAlbedo from './deleteManageBuyOfferWithAlbedo';
 import deleteManageBuyOfferWithPrivate from './deleteManageBuyOfferWithPrivate';
 import deleteManageBuyOfferWithLedgerS from 'src/stellar-transactions/deleteManageBuyOfferWithLedgerS';
 import deleteManageBuyOfferWithFreighter from 'src/stellar-transactions/deleteManageBuyOfferWithFreighter';
+import deleteManageBuyOfferWithRabet from 'src/stellar-transactions/deleteManageBuyOfferWithRabet';
 
 export default function deleteManageBuyOfferMaker(offer) {
   const { user } = store.getState();
@@ -15,5 +16,7 @@ export default function deleteManageBuyOfferMaker(offer) {
     return deleteManageBuyOfferWithLedgerS(offer);
   } else if (user.loginType === loginTypes.FREIGHTER) {
     return deleteManageBuyOfferWithFreighter(offer);
+  } else if (user.loginType === loginTypes.RABET) {
+    return deleteManageBuyOfferWithRabet(offer);
   }
 }

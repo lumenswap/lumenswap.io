@@ -5,6 +5,7 @@ import swapTokenWithAlbedoLink from './swapTokenWithAlbedoLink';
 import swapTokenWithLedgerS from 'src/stellar-transactions/swapTokenWithLedgerS';
 import swapTokenWithTrezor from 'src/stellar-transactions/swapTokenWithTrezor';
 import swapTokenWithFreighter from 'src/stellar-transactions/swapTokenWithFreighter';
+import swapTokenWithRabet from 'src/stellar-transactions/swapTokenWithRabet';
 
 export function swapTokenMaker() {
   const { user } = store.getState();
@@ -18,5 +19,7 @@ export function swapTokenMaker() {
     swapTokenWithTrezor();
   } else if (user.loginType === loginTypes.FREIGHTER) {
     swapTokenWithFreighter();
+  } else if (user.loginType === loginTypes.RABET) {
+    swapTokenWithRabet();
   }
 }

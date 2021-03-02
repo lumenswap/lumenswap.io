@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import { ReactComponent as AlbedoSvg } from 'src/assets/logins/albedo.svg';
 import { ReactComponent as FreighterSvg } from 'src/assets/logins/freighter.svg';
 import { ReactComponent as LedgerSvg } from 'src/assets/logins/ledger.svg';
+import { ReactComponent as RabetSvg } from 'src/assets/logins/ledger.svg';
 import albedo from '@albedo-link/intent';
 import loginAsAlbedo from 'src/actions/user/loginAsAlbedo';
 import hideModal from 'src/actions/modal/hide';
@@ -14,6 +15,7 @@ import Transport from '@ledgerhq/hw-transport-u2f';
 import loginAsLedgerS from 'src/actions/user/loginAsLedgerS';
 import TrezorConnect from 'trezor-connect';
 import loginAsTrezor from 'src/actions/user/loginAsTrezor';
+import loginAsRabet from 'src/actions/user/loginAsRabet';
 import {
   isConnected,
   getPublicKey as getPublicKeyFreighterApi,
@@ -42,7 +44,7 @@ async function getPublicKeyFromLedgerS() {
   hideModal();
 }
 
-async function getPublickKeyFromTrezor() {
+async function getPublicKeyFromTrezor() {
   const payloadFromTrezor = await TrezorConnect.stellarGetAddress({
     path: "m/44'/148'/0'",
   });
@@ -54,7 +56,7 @@ async function getPublickKeyFromTrezor() {
   }
 }
 
-async function getPublickKeyFromFreighter() {
+async function getPublicKeyFromFreighter() {
   if (isConnected()) {
     const publicKey = await getPublicKeyFreighterApi();
     const balances = await fetchUserBalance(publicKey);
@@ -63,6 +65,18 @@ async function getPublickKeyFromFreighter() {
     hideModal();
   } else {
     throw new Error('You do not have Freighter');
+  }
+}
+
+async function getPublicKeyFromRabet() {
+  if (global.rabet) {
+    const { publicKey } = await global.rabet.connect();
+    const balances = await fetchUserBalance(publicKey);
+    setToken(balances);
+    loginAsRabet(publicKey);
+    hideModal();
+  } else {
+    throw new Error('You do not have Rabet');
   }
 }
 
@@ -83,6 +97,10 @@ function chooseName(type) {
     return 'Freighter';
   }
 
+  if (type === 'rabet') {
+    return 'Rabet';
+  }
+
   return null;
 }
 
@@ -97,6 +115,10 @@ function chooseLogo(type) {
 
   if (type === 'freighter') {
     return <FreighterSvg width={26} height={26} />;
+  }
+
+  if (type === 'rabet') {
+    return <RabetSvg width={26} height={26} />;
   }
 
   return null;
@@ -123,6 +145,10 @@ function chooseWalletDesc(type) {
     return 'Hardware';
   }
 
+  if (type === 'rabet') {
+    return 'Browser Extension';
+  }
+
   return null;
 }
 
@@ -145,14 +171,20 @@ export default function ConnectingForm({ type }) {
     }
 
     if (type === 'freighter') {
-      getPublickKeyFromFreighter().catch((e) => {
+      getPublicKeyFromFreighter().catch((e) => {
         setConError(e.message);
       });
     }
 
     if (type === 'trezor') {
-      getPublickKeyFromTrezor().catch((e) => {
+      getPublicKeyFromTrezor().catch((e) => {
         console.log(e);
+      });
+    }
+
+    if (type === 'rabet') {
+      getPublicKeyFromRabet().catch((e) => {
+        setConError(e);
       });
     }
   }
