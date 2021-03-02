@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { ReactComponent as AlbedoSvg } from 'src/assets/logins/albedo.svg';
 import { ReactComponent as FreighterSvg } from 'src/assets/logins/freighter.svg';
 import { ReactComponent as LedgerSvg } from 'src/assets/logins/ledger.svg';
-import { ReactComponent as RabetSvg } from 'src/assets/logins/ledger.svg';
+import { ReactComponent as RabetSvg } from 'src/assets/logins/rabet.svg';
 import albedo from '@albedo-link/intent';
 import loginAsAlbedo from 'src/actions/user/loginAsAlbedo';
 import hideModal from 'src/actions/modal/hide';

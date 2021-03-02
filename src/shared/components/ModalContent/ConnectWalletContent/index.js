@@ -9,6 +9,7 @@ import { ReactComponent as PrivateSvg } from 'src/assets/logins/private.svg';
 import { ReactComponent as AlbedoSvg } from 'src/assets/logins/albedo.svg';
 import { ReactComponent as FreighterSvg } from 'src/assets/logins/freighter.svg';
 import { ReactComponent as LedgerSvg } from 'src/assets/logins/ledger.svg';
+import { ReactComponent as RabetSvg } from 'src/assets/logins/rabet.svg';
 import ConnectingForm from './ConnectingForm';
 import showConnectModal from 'src/actions/modal/connectModal';
 import { ReactComponent as DanglingLeft } from 'src/assets/images/danglingLeft.svg';
@@ -98,7 +99,7 @@ const ConnectWalletContent = () => {
                   className={classNames(styles.btn, 'mt-4')}
                   onClick={() => toggleTab(connectModalTab.CONNECTING_RABET)}
                 >
-                  {buttonContent('Rabet', AlbedoSvg)}
+                  {buttonContent('Rabet', RabetSvg)}
                 </button>
                 {/* <button
                   type="button"
