@@ -13,7 +13,7 @@ const Home = () => (
               <CurrencyInput label="From" balance="0.0277818" currentCurrency={{ name: 'Btc', img: btc }} max />
               <div className="my-3" />
               <CurrencyInput label="To (estimated)" balance="12" currentCurrency={{ name: 'Btc', img: btc }} />
-              <p className={styles.info}>1 BTC = 12 ETH</p>
+              <p className={styles.info}>1 BTC = 12 ETH<span className="icon-arrow-repeat" /></p>
               <Button
                 htmlType="submit"
                 variant="primary"
