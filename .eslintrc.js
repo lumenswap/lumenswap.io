@@ -39,5 +39,6 @@ module.exports = {
     'react/destructuring-assignment': 0,
     'react/jsx-one-expression-per-line': 0,
     'react/forbid-prop-types': 'off',
+    'linebreak-style': 'off',
   },
 };
