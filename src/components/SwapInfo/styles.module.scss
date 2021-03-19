@@ -1,0 +1,59 @@
+@import "styles/vars";
+
+.card {
+  width: 343px;
+  border-radius: 8px;
+  background-color: white;
+  padding: 28px 12px 14px 12px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.07);
+  z-index: -1;
+  display: block;
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 1.29;
+  color: $RollingStone;
+
+  span {
+    font-size: 13px;
+    margin-left: 4px;
+    color: $Bombay;
+    cursor: pointer;
+  }
+}
+
+.info {
+  font-size: 14px;
+  line-height: 1.29;
+  color: $CodGray;
+}
+
+.path {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: $CodGray;
+  font-weight: 500;
+
+  :global(.icon-arrow-right) {
+    margin: 0 4px;
+    font-size: 9px;
+    color: $DarkAthensGray;
+  }
+}
+
+.path-container:last-child :global(.icon-arrow-right) {
+  display: none;
+}

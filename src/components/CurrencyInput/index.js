@@ -10,7 +10,7 @@ const CurrencyInput = ({
       <div className={styles.label}>
         {label}
       </div>
-      <div className={styles.label}>
+      <div className={styles.balance}>
         Balance:
         {' '}
         {balance}
@@ -23,6 +23,7 @@ const CurrencyInput = ({
         <button type="button" className={styles['drop-down']}>
           <img src={currentCurrency.img} alt="logo" />
           {currentCurrency.name}
+          <span className="icon-angle-down" />
         </button>
       </div>
     </div>
