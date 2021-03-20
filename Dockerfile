@@ -1,4 +1,4 @@
-FROM node:13.8.0-slim
+FROM node:14.16.0-slim
 WORKDIR /app
 COPY . /app
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
