@@ -36,7 +36,7 @@ release package:
 deploy to demo:
   resource_group: $CI_PROJECT_NAME
   only:
-    - master
+    - develop-v2
   stage: deploy-demo
   needs:
     - release package
