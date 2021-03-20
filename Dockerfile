@@ -5,6 +5,6 @@ ENV REACT_APP_HORIZON=https://horizon.stellar.org
 ENV REACT_APP_METRIC_SERVER=https://metricreporter.lumenswap.io
 RUN npm i
 RUN npm i -g serve
-RUN npm run build
 ENV PORT=8080
+RUN npm run build
 CMD ["serve", "-s", "build"]
