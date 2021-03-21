@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
-import CurrencyInput from 'components/CurrencyInput';
+import CurrencyInput from 'blocks/CurrencyInput';
+import SwapInfo from 'blocks/SwapInfo';
 import btc from 'assets/images/btc-logo.png';
 import Button from 'components/Button';
-import SwapInfo from 'components/SwapInfo';
 import styles from './styles.module.scss';
 
 const Home = () => {

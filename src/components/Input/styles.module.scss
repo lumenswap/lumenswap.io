@@ -1,0 +1,32 @@
+@import 'styles/vars';
+
+.label-primary {
+  font-size: 18px;
+  color: $CodGray;
+  margin-bottom: 8px;
+}
+
+.label-optional {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid $CatskillWhite;
+  border-radius: 8px;
+  outline: none;
+  color: $CodGray;
+  padding-right: 16px;
+  padding-left: 16px;
+  transition: ease-in-out;
+}
+
+.input:focus {
+  border: 1px solid $BlueRibbon;
+  outline: none;
+}
+
+.input::placeholder {
+  color: $Manatee;
+}

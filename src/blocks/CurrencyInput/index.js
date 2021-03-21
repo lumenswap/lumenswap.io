@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import styles from './styles.module.scss';
-import ModalDialog from '../ModalDialog';
+import ModalDialog from '../../components/ModalDialog';
 
 const CurrencyInput = ({
   label, currentCurrency, balance, children,
