@@ -4,8 +4,12 @@
   border-radius: 8px;
   box-shadow: 0 9px 40px -4px rgba(15, 48, 168, 0.18);
   height: 48px;
+  font-size: 16px;
   transition: 0.2s ease-in-out;
   font-family: SofiaPro-Medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn:disabled {
@@ -24,6 +28,16 @@
 
 .button-primary:hover {
   background: $BlueRibbon;
+}
+
+.button-secondary, .button-secondary:focus {
+  background-color: $Zumthor;
+  border: 1px solid $Zumthor;
+  color: $BlueRibbon;
+}
+
+.button-secondary:hover {
+  background: $Zumthor;
 }
 
 .button-outline {
