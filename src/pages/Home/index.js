@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import CurrencyInput from 'components/CurrencyInput';
@@ -7,16 +8,20 @@ import SwapInfo from 'components/SwapInfo';
 import styles from './styles.module.scss';
 
 const Home = () => {
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => {
-    // console.log(data);
-  };
-
   const swapData = {
     minimum: '2952 ETH',
     price: '2%',
-    tolerance: ['0.1%', '0.5%'],
+    tolerance: ['0.1', '0.5'],
     path: ['btc', 'eth', 'xlm'],
+  };
+  const [tolerance, setTolerance] = useState(swapData.tolerance[0]);
+  const {
+    register, handleSubmit, setValue, errors,
+  } = useForm();
+  const onSubmit = (data) => {
+    if (data.custom) {
+      setTolerance(data.custom);
+    }
   };
 
   return (
@@ -55,7 +60,9 @@ const Home = () => {
                 />
               </div>
               <div className={styles['swap-info']}>
-                <SwapInfo info={swapData} />
+                <SwapInfo info={swapData} setTolerance={setTolerance} setInput={setValue}>
+                  <input type="number" name="custom" ref={register} autoFocus={!tolerance} />
+                </SwapInfo>
               </div>
             </form>
           </div>

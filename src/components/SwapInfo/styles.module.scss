@@ -57,3 +57,47 @@
 .path-container:last-child :global(.icon-arrow-right) {
   display: none;
 }
+
+.button-group {
+  display: flex;
+
+  button {
+    height: 24px;
+    border-radius: 4px;
+    padding: 0 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $RollingStone;
+    font-size: 12px;
+    background-color: $LightAthensGray;
+    border: 1px solid $LightAthensGray;
+    margin-left: 6px;
+  }
+
+  button:global(.active) {
+    background-color: $BlueRibbon;
+    border: 1px solid $BlueRibbon;
+    color: white;
+  }
+}
+
+.custom {
+  width: 80px;
+
+  input {
+    width: 19px;
+    border: none;
+    outline: none;
+    background-color: $LightAthensGray;
+    color: $RollingStone;
+    padding-left: 3px;
+  }
+}
+
+.custom:global(.active) {
+  input {
+    background-color: $BlueRibbon;
+    color: white;
+  }
+}
