@@ -1,31 +1,39 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import styles from './styles.module.scss';
+import ModalDialog from '../ModalDialog';
 
 const CurrencyInput = ({
   label, currentCurrency, balance, children,
-}) => (
-  <div className={styles.card}>
-    <div className="d-flex justify-content-between">
-      <div className={styles.label}>
-        {label}
+}) => {
+  const [show, setShow] = useState(false);
+  return (
+    <div className={styles.card}>
+      <div className="d-flex justify-content-between">
+        <div className={styles.label}>
+          {label}
+        </div>
+        <div className={styles.balance}>
+          Balance:
+          {' '}
+          {balance}
+        </div>
       </div>
-      <div className={styles.balance}>
-        Balance:
-        {' '}
-        {balance}
+      <div className={classNames('input-group', styles['input-group'])}>
+        {children}
+        <button type="button" className={styles['drop-down']} onClick={() => setShow(true)}>
+          <img src={currentCurrency.img} alt="logo" />
+          {currentCurrency.name}
+          <span className="icon-angle-down" />
+        </button>
+        <ModalDialog show={show} setShow={setShow} title="Select an assets">
+          test
+        </ModalDialog>
       </div>
     </div>
-    <div className={classNames('input-group', styles['input-group'])}>
-      {children}
-      <button type="button" className={styles['drop-down']}>
-        <img src={currentCurrency.img} alt="logo" />
-        {currentCurrency.name}
-        <span className="icon-angle-down" />
-      </button>
-    </div>
-  </div>
-);
+  );
+};
 
 CurrencyInput.propTypes = {
   label: PropTypes.string.isRequired,
