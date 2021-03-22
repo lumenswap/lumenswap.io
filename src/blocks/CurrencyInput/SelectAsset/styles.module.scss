@@ -1,0 +1,43 @@
+@import "styles/vars";
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.info {
+  margin-left: 11px;
+}
+
+.text {
+  font-size: 16px;
+  font-family: SofiaPro-Medium;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 1.29;
+  color: $RollingStone;
+  margin-bottom: 0;
+}
+
+.circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: $CatskillWhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    font-size: 14px;
+    color: $RollingStone;
+    margin-top: 1px;
+    margin-right: 1px;
+  }
+}

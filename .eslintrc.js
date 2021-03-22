@@ -40,5 +40,6 @@ module.exports = {
     'react/jsx-one-expression-per-line': 0,
     'react/forbid-prop-types': 'off',
     'linebreak-style': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };

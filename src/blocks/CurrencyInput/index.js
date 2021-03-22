@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import ModalDialog from 'components/ModalDialog';
+import SelectAsset from './SelectAsset';
 import styles from './styles.module.scss';
-import ModalDialog from '../../components/ModalDialog';
 
 const CurrencyInput = ({
   label, currentCurrency, balance, children,
@@ -28,7 +29,7 @@ const CurrencyInput = ({
           <span className="icon-angle-down" />
         </button>
         <ModalDialog show={show} setShow={setShow} title="Select an assets">
-          test
+          <SelectAsset />
         </ModalDialog>
       </div>
     </div>

@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const Input = ({
-  type, defaultValue, variant, size, height, fontSize, disabled, placeholder, name, register, input, autoFocus,
+  type, value, variant, size, height, fontSize, disabled, placeholder,
+  name, register, input, autoFocus,
 }) => (
   <input
     type={type}
     className={styles.input}
-    value={defaultValue}
+    value={value}
     disabled={disabled}
     placeholder={placeholder}
     style={{ width: `${size}`, fontSize: `${fontSize}px`, height: `${height}px` }}
     name={name}
     ref={register}
-    {...input}
     autoFocus={autoFocus}
+    {...input}
   />
 );
 
