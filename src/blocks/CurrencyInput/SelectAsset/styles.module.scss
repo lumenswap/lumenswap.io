@@ -1,10 +1,18 @@
 @import "styles/vars";
 
+.container {
+  padding-bottom: 50px;
+}
+
 .box {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+}
+
+.box:last-child {
+  margin-bottom: 10px;
 }
 
 .info {
@@ -40,4 +48,35 @@
     margin-top: 1px;
     margin-right: 1px;
   }
+}
+
+.submit {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: $BlueRibbon;
+  background-color: white;
+  border: none;
+  outline: none;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  border-top: 1px solid $CatskillWhite;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  span {
+    font-size: 14px;
+    font-family: SofiaPro-Medium;
+  }
+}
+
+.scroll {
+  overflow-y: auto;
+  max-height: 379px;
 }
