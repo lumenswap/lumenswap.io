@@ -34,7 +34,7 @@ const assetsData = [
 ];
 
 const SelectAsset = () => {
-  const { register, handleSubmit, watch } = useForm();
+  const { register, watch } = useForm();
   const [assets, setAssets] = useState(assetsData);
 
   let searchString = watch('search');

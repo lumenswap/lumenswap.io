@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
-import CurrencyInput from 'blocks/CurrencyInput';
+import CurrencyInput from 'components/CurrencyInput';
 import SwapInfo from 'blocks/SwapInfo';
 import btc from 'assets/images/btc-logo.png';
 import Button from 'components/Button';
+import ModalDialog from 'components/ModalDialog';
+import ConfirmSwap from 'blocks/ConfirmSwap';
 import styles from './styles.module.scss';
 
 const Home = () => {
+  const [show, setShow] = useState(false);
   const swapData = {
     minimum: '2952 ETH',
     price: '2%',
@@ -56,7 +59,11 @@ const Home = () => {
                 fontSize={18}
                 size="100%"
                 className="mt-3"
+                onClick={() => setShow(true)}
               />
+              <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
+                <ConfirmSwap />
+              </ModalDialog>
             </div>
             <div className={styles['swap-info']}>
               <SwapInfo info={swapData} setTolerance={setTolerance} setInput={setValue}>
