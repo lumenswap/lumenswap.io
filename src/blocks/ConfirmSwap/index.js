@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import logo from 'assets/images/btc-logo.png';
+import Button from 'components/Button';
+import Tooltips from 'components/Tooltip';
 import styles from './styles.module.scss';
-import Button from '../../components/Button';
 
 const ConfirmSwap = () => (
   <div>
@@ -19,15 +20,22 @@ const ConfirmSwap = () => (
     </p>
     <div className={styles.info}>
       <div className={styles.container}>
-        <div className={styles.label}>Price<span className="icon-question-circle" /></div>
-        <div className={styles.value}>1 BTC = 12 ETH<span className="icon-arrow-repeat" /></div>
+        <div className={styles.label}>Price
+          <Tooltips id="price" text="helooo1"><span className="icon-question-circle" /></Tooltips>
+        </div>
+        <div className={styles.value}>1 BTC = 12 ETH<span className="icon-arrow-repeat" />
+        </div>
       </div>
       <div className={styles.container}>
-        <div className={styles.label}>Minimum received<span className="icon-question-circle" /></div>
+        <div className={styles.label}>Minimum received
+          <Tooltips id="minimum" text="helooo2"><span className="icon-question-circle" /></Tooltips>
+        </div>
         <div className={classNames(styles.value, styles.important)}>0.8%</div>
       </div>
       <div className={styles.container}>
-        <div className={styles.label}>Price impact<span className="icon-question-circle" /></div>
+        <div className={styles.label}>Price impact
+          <Tooltips id="impact" text="helooo3"><span className="icon-question-circle" /></Tooltips>
+        </div>
         <div className={styles.value}>0.00003 ETH</div>
       </div>
       <Button
