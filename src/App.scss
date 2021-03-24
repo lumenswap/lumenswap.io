@@ -26,3 +26,6 @@ input[type=number] {
 .invisible-scroll::-webkit-scrollbar-thumb {
   background: #FF0000;
 }
+.invisible-scroll {
+  scrollbar-width: none;
+}
