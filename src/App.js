@@ -1,13 +1,16 @@
+import { Provider } from 'react-redux';
+import store from 'store';
+import Home from './pages/Home';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from './pages/Home';
-
 function App() {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Home />
+      </div>
+    </Provider>
   );
 }
 
