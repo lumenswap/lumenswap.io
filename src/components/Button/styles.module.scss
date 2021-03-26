@@ -12,10 +12,6 @@
   justify-content: center;
 }
 
-.btn:disabled {
-  cursor: not-allowed;
-}
-
 .btn:focus {
   outline: none;
 }
@@ -24,10 +20,11 @@
   background-color: $BlueRibbon;
   border: 1px solid $BlueRibbon;
   color: white;
+  transition: 0.2s ease-in;
 }
 
 .button-primary:hover {
-  background: $BlueRibbon;
+  background: $ToreaBay;
 }
 
 .button-secondary, .button-secondary:focus {
@@ -62,3 +59,10 @@
   align-items: center;
 }
 
+
+.btn:disabled {
+  background-color: $CatskillWhite;
+  border: 1px solid $CatskillWhite;
+  color: $RollingStone;
+  box-shadow: none;
+}

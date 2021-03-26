@@ -73,12 +73,22 @@
     background-color: $LightAthensGray;
     border: 1px solid $LightAthensGray;
     margin-left: 6px;
+    transition: 0.2s ease-in;
   }
 
   button:global(.active) {
     background-color: $BlueRibbon;
     border: 1px solid $BlueRibbon;
     color: white;
+  }
+
+  button:global(.active):hover {
+    background-color: $ToreaBay;
+    border: 1px solid $ToreaBay;
+
+    input {
+      background-color: $ToreaBay;
+    }
   }
 }
 
@@ -92,6 +102,7 @@
     background-color: $LightAthensGray;
     color: $RollingStone;
     padding-left: 0;
+    transition: 0.2s ease-in;
   }
 }
 
