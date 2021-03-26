@@ -5,7 +5,7 @@ import { ReactComponent as Rabet } from 'assets/images/rabet.svg';
 import styles from './styles.module.scss';
 
 const CustomDropdown = ({
-  items, width, height, className,
+  width, height, className,
 }) => {
   const [show, setShow] = useState(false);
   const styleSheet = {
