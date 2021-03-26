@@ -36,7 +36,7 @@ const SwapInfo = ({
               type="button"
               key={index}
               className={classNames(isActive(index))}
-              onClick={() => { setActive(index); setTolerance(tolerance[index]); setInput('custom', ''); }}
+              onClick={() => { setActive(index); setTolerance(tolerance[index]); }}
             >{tolerance[index]}%
             </button>
           ))}
@@ -45,7 +45,6 @@ const SwapInfo = ({
             className={classNames(isActive(2), styles.custom)}
             onClick={() => { setActive(2); setTolerance(null); }}
           >
-            custom
             {children}
             %
           </button>

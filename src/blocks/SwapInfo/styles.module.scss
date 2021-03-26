@@ -86,18 +86,22 @@
   width: 80px;
 
   input {
-    width: 19px;
+    width: 60px;
     border: none;
     outline: none;
     background-color: $LightAthensGray;
     color: $RollingStone;
-    padding-left: 3px;
+    padding-left: 0;
   }
 }
 
 .custom:global(.active) {
   input {
     background-color: $BlueRibbon;
+    color: white;
+  }
+
+  input::placeholder {
     color: white;
   }
 }

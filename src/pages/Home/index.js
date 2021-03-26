@@ -67,7 +67,7 @@ const Home = () => {
             </div>
             <div className={styles['swap-info']}>
               <SwapInfo info={swapData} setTolerance={setTolerance} setInput={setValue}>
-                <input type="number" name="custom" ref={register} autoFocus={!tolerance} />
+                <input type="number" name="custom" placeholder="custom" ref={register} autoFocus={!tolerance} />
               </SwapInfo>
             </div>
           </form>
