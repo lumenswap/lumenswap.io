@@ -1,5 +1,15 @@
 @import "styles/vars";
 
+.form {
+  input {
+    border: 1px solid $BlueRibbon;
+  }
+
+  input:focus {
+    border: 1px solid $ToreaBay;
+  }
+}
+
 .container {
   padding-bottom: 50px;
 }

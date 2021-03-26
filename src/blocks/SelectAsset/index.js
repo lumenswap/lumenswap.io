@@ -51,7 +51,7 @@ const SelectAsset = () => {
 
   return (
     <div className={styles.container}>
-      <form>
+      <form className={styles.form}>
         <Input type="text" placeholder="Search asset code" name="search" register={register} fontSize={14} />
         <div className={classNames('invisible-scroll', styles.scroll)}>
           {assets.map((asset, index) => (
