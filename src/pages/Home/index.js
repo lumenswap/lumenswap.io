@@ -27,6 +27,8 @@ const Home = () => {
     }
   };
 
+  const isConnected = true;
+
   return (
     <div className="container-fluid">
       <div className="row justify-content-center">
@@ -54,7 +56,7 @@ const Home = () => {
               <p className={styles.info}>1 BTC = 12 ETH<span className="icon-arrow-repeat" /></p>
               <Button
                 htmlType="submit"
-                variant="primary"
+                variant={isConnected ? 'primary' : 'secondary'}
                 content="Swap"
                 fontSize={18}
                 size="100%"
