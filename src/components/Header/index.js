@@ -7,7 +7,7 @@ const Header = () => (
     <ul className={styles.list}>
       <li><Link to="/"><Logo /></Link></li>
       <li><Link to="/">Swap</Link></li>
-      <li><Link to="/">Stats</Link></li>
+      <li><Link to="/">Stats <span className="icon-external" /></Link></li>
     </ul>
   </div>
 );
