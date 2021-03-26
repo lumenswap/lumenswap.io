@@ -18,11 +18,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  padding: 10px 17px;
+  transition: 0.2s ease-in;
+  cursor: pointer;
 }
 
-.box:last-child {
-  margin-bottom: 20px;
+.box:hover {
+  background-color: $AthensGray;
 }
 
 .info {
@@ -88,5 +90,6 @@
 
 .scroll {
   overflow-y: auto;
-  max-height: 385px;
+  max-height: 365px;
+  margin: 0 -17px;
 }
