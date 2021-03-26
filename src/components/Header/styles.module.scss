@@ -11,6 +11,8 @@
   list-style: none;
   display: flex;
   align-items: center;
+  margin-bottom: 0;
+  padding-left: 0;
 
   li {
     margin-right: 40px;
@@ -30,5 +32,16 @@
 
   li:last-child a {
     color: $RollingStone;
+  }
+}
+
+@media (max-width: $sm) {
+  .list > li {
+    margin-right: 15px;
+  }
+
+  .layout {
+    padding-right: 0;
+    padding-left: 0;
   }
 }

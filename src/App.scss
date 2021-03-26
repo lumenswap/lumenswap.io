@@ -2,7 +2,7 @@
 @import 'styles/vars';
 
 body {
-  background-color: $AthensGray;
+  background-color: $AthensGray !important;
   font-family: SofiaPro-Regular, sans-serif !important;
 }
 
@@ -19,8 +19,8 @@ input[type=number] {
 }
 
 .invisible-scroll::-webkit-scrollbar {
-  width: 0;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
 
 .invisible-scroll {
