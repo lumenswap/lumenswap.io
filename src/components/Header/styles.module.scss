@@ -1,0 +1,18 @@
+@import "styles/vars";
+
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36px 25px 0 25px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+
+  li {
+    margin-right: 40px;
+  }
+}

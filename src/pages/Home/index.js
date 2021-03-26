@@ -7,6 +7,7 @@ import btc from 'assets/images/btc-logo.png';
 import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'blocks/ConfirmSwap';
+import Header from 'components/Header';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -31,6 +32,7 @@ const Home = () => {
 
   return (
     <div className="container-fluid">
+      <Header />
       <div className="row justify-content-center">
         <div className="col-auto">
           <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
