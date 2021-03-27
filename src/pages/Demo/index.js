@@ -2,13 +2,15 @@ import { useState } from 'react';
 import ModalDialog from 'components/ModalDialog';
 import WaitingContent from 'blocks/WaitingContent';
 import TransactionResponse from 'blocks/TransactionResponse';
-import AddAsset from '../../blocks/AddAsset';
+import AddAsset from 'blocks/AddAsset';
+import EnterKey from "blocks/EnterKey";
 
 const Demo = () => {
   const [waitingShow, setWaitingShow] = useState(false);
   const [sresponseShow, setsResponseShow] = useState(false);
   const [fresponseShow, setfResponseShow] = useState(false);
   const [addAsset, setAddAsset] = useState(false);
+  const [key, setKey] = useState(false);
   return (
     <div className="container-fluid my-5 py-5">
       {/* waiting */}
@@ -30,6 +32,11 @@ const Demo = () => {
       <button type="button" className="btn btn-dark ml-3" onClick={() => setAddAsset(true)}>add asset</button>
       <ModalDialog title="Add asset" show={addAsset} setShow={setAddAsset} width={328}>
         <AddAsset toggleModal={() => setAddAsset(false)} />
+      </ModalDialog>
+      {/* key */}
+      <button type="button" className="btn btn-dark ml-3" onClick={() => setKey(true)}>public or private key</button>
+      <ModalDialog show={key} setShow={setKey} back>
+        <EnterKey type="public" />
       </ModalDialog>
     </div>
   );

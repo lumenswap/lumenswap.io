@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
-import Loading from 'components/Loading';
 import Input from 'components/Input';
 import Button from 'components/Button';
+import Submitting from 'components/Submitting';
 import styles from './styles.module.scss';
 
 const AddAsset = ({ toggleModal }) => {
@@ -53,22 +53,15 @@ const AddAsset = ({ toggleModal }) => {
         />
       </div>
       <Button
-        type="submit"
+        htmlType="submit"
         size="100%"
         variant="primary"
         className={classNames(loadingTimer && 'loading-btn', styles.btn)}
         disabled={!formState.isValid || loadingTimer}
-        onClick={() => {
-          toggleModal();
-        }}
+        onClick={() => {}}
         content={
             loadingTimer ? (
-              <div className="d-flex align-items-center justify-content-center w-100 h-100">
-                Adding
-                <div className="ml-2">
-                  <Loading size={21} />
-                </div>
-              </div>
+              <Submitting text="Adding" loadingSize={21} />
             ) : (
               'Add asset'
             )
