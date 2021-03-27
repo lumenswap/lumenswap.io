@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import CurrencyInput from 'components/CurrencyInput';
 import SwapInfo from 'blocks/SwapInfo';
-import btc from 'assets/images/btc-logo.png';
 import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'blocks/ConfirmSwap';
 import Header from 'components/Header';
+import btc from 'assets/images/btc-logo.png';
+import LCurrencyInput from 'components/LCurrencyInput/LCurrencyInput';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -20,9 +21,10 @@ const Home = () => {
   };
   const [tolerance, setTolerance] = useState(swapData.tolerance[0]);
   const {
-    register, handleSubmit, setValue, errors,
+    register, handleSubmit, setValue, control,
   } = useForm();
   const onSubmit = (data) => {
+    console.log(data);
     if (data.custom) {
       setTolerance(data.custom);
     }
@@ -37,14 +39,11 @@ const Home = () => {
         <div className="col-auto">
           <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.card}>
-              <CurrencyInput
-                label="From"
-                balance="0.0277818"
-                currentCurrency={{ name: 'BTC', img: btc }}
-              >
-                <input type="number" name="from" ref={register} placeholder="0.0" />
-                <Button variant="secondary" content="Max" className={styles.max} />
-              </CurrencyInput>
+              <Controller
+                name="from"
+                control={control}
+                render={(props) => <LCurrencyInput {...props} showMax />}
+              />
               <div className="my-2 text-center">
                 <span className={classNames('icon-arrow-down', styles['icon-arrow-down'])} />
               </div>
@@ -63,7 +62,6 @@ const Home = () => {
                 fontSize={18}
                 size="100%"
                 className="mt-3"
-                onClick={() => setShow(true)}
               />
               <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
                 <ConfirmSwap />

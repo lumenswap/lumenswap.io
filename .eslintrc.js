@@ -33,7 +33,6 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'react/jsx-filename-extension': 0,
     'react/prop-types': 0,
-    'no-unused-vars': 'off',
     'no-restricted-syntax': 0,
     'no-console': 0,
     'react/destructuring-assignment': 0,
