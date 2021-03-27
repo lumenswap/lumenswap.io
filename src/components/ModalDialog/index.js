@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const ModalDialog = ({
-  children, title, show, setShow,
+  children, title, show, setShow, width = 360,
 }) => {
   const handleClose = () => setShow(false);
 
@@ -19,9 +19,11 @@ const ModalDialog = ({
           onClick={handleClose}
         />
       </div>
-      <Modal.Body>
-        {children}
-      </Modal.Body>
+      <div style={{ width: `${width}px` }}>
+        <Modal.Body>
+          {children}
+        </Modal.Body>
+      </div>
     </Modal>
   );
 };

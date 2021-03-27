@@ -2,11 +2,13 @@ import { useState } from 'react';
 import ModalDialog from 'components/ModalDialog';
 import WaitingContent from 'blocks/WaitingContent';
 import TransactionResponse from 'blocks/TransactionResponse';
+import AddAsset from '../../blocks/AddAsset';
 
 const Demo = () => {
   const [waitingShow, setWaitingShow] = useState(false);
   const [sresponseShow, setsResponseShow] = useState(false);
   const [fresponseShow, setfResponseShow] = useState(false);
+  const [addAsset, setAddAsset] = useState(false);
   return (
     <div className="container-fluid my-5 py-5">
       {/* waiting */}
@@ -23,6 +25,11 @@ const Demo = () => {
       <button type="button" className="btn btn-dark ml-3" onClick={() => setfResponseShow(true)}>fail response</button>
       <ModalDialog show={fresponseShow} setShow={setfResponseShow}>
         <TransactionResponse status="Failed" message="There is some issue in your transaction" />
+      </ModalDialog>
+      {/* add asset */}
+      <button type="button" className="btn btn-dark ml-3" onClick={() => setAddAsset(true)}>add asset</button>
+      <ModalDialog title="Add asset" show={addAsset} setShow={setAddAsset} width={328}>
+        <AddAsset toggleModal={() => setAddAsset(false)} />
       </ModalDialog>
     </div>
   );
