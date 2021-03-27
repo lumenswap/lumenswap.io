@@ -5,6 +5,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  :global(.icon-arrow-left) {
+    cursor: pointer;
+    color: $Bombay;
+    font-size: 20px;
+  }
 }
 
 .title {
@@ -18,7 +24,7 @@
   border: none;
   background-color: transparent;
   font-size: 16px;
-  color: $DarkAthensGray;
+  color: $Bombay;
   padding: 0;
   z-index: 100;
   outline: none;
