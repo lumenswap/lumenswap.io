@@ -1,19 +1,23 @@
 import Button from 'components/Button';
 import CurrencyInput from 'components/CurrencyInput';
-import btc from 'assets/images/btc-logo.png';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
-  value, onChange, showMax = false,
+  value, onChange, showMax = false, label, initAsset,
 }) {
-  const innerValue = value || { asset: {}, amount: null };
+  const innerValue = value || { asset: initAsset, amount: null };
+
+  function setCurrency(asset) {
+    onChange({ ...innerValue, asset });
+  }
 
   return (
     <CurrencyInput
-      label="From"
+      label={label}
       balance="0.0277818"
-      currentCurrency={{ name: 'BTC', img: btc }}
+      currentCurrency={innerValue.asset}
+      setCurrency={setCurrency}
     >
       <input
         placeholder="0.0"

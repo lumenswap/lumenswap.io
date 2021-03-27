@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
-import CurrencyInput from 'components/CurrencyInput';
 import SwapInfo from 'blocks/SwapInfo';
 import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'blocks/ConfirmSwap';
 import Header from 'components/Header';
-import btc from 'assets/images/btc-logo.png';
 import LCurrencyInput from 'components/LCurrencyInput/LCurrencyInput';
+import XLM from 'tokens/XLM';
+import ETH from 'tokens/ETH';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -42,18 +42,16 @@ const Home = () => {
               <Controller
                 name="from"
                 control={control}
-                render={(props) => <LCurrencyInput {...props} showMax />}
+                render={(props) => <LCurrencyInput {...props} showMax label="From" initAsset={XLM} />}
               />
               <div className="my-2 text-center">
                 <span className={classNames('icon-arrow-down', styles['icon-arrow-down'])} />
               </div>
-              <CurrencyInput
-                label="To (estimated)"
-                balance="12"
-                currentCurrency={{ name: 'BTC', img: btc }}
-              >
-                <input type="number" name="to" ref={register} placeholder="0.0" />
-              </CurrencyInput>
+              <Controller
+                name="to"
+                control={control}
+                render={(props) => <LCurrencyInput {...props} label="To (estimated)" initAsset={ETH} />}
+              />
               <p className={styles.info}>1 BTC = 12 ETH<span className="icon-arrow-repeat" /></p>
               <Button
                 htmlType="submit"

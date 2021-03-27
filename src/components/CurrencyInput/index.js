@@ -6,9 +6,10 @@ import SelectAsset from '../../blocks/SelectAsset';
 import styles from './styles.module.scss';
 
 const CurrencyInput = ({
-  label, currentCurrency, balance, children,
+  label, currentCurrency, balance, children, setCurrency,
 }) => {
   const [show, setShow] = useState(false);
+
   return (
     <div className={styles.card}>
       <div className="d-flex justify-content-between">
@@ -24,12 +25,12 @@ const CurrencyInput = ({
       <div className={classNames('input-group', styles['input-group'])}>
         {children}
         <button type="button" className={styles['drop-down']} onClick={() => setShow(true)}>
-          <img src={currentCurrency.img} alt="logo" />
-          {currentCurrency.name}
+          <img src={currentCurrency?.logo} alt="logo" />
+          {currentCurrency?.code}
           <span className="icon-angle-down" />
         </button>
         <ModalDialog show={show} setShow={setShow} title="Select an assets">
-          <SelectAsset />
+          <SelectAsset setShow={setShow} setCurrency={setCurrency} />
         </ModalDialog>
       </div>
     </div>
