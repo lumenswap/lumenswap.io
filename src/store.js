@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import persistStorage from 'redux-persist/lib/storage';
 import reducers from './reducers';
 
@@ -11,7 +11,7 @@ const persistorConfig = {
 const persistedReducer = persistReducer(persistorConfig, reducers);
 
 const store = createStore(
-  reducers,
+  persistedReducer,
 );
 
 if (process.env.NODE_ENV !== 'production') {
