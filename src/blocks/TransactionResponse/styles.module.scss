@@ -1,0 +1,40 @@
+@import "styles/vars";
+
+.icon {
+  height: 40px;
+  width: 40px;
+  margin: -24px auto 0 auto;
+  display: block;
+}
+
+.title {
+  font-size: 18px;
+  font-family: SofiaPro-Medium;
+  color: $CodGray;
+  margin-bottom: 0;
+  margin-top: 16px;
+}
+
+.text {
+  font-size: 14px;
+  color: $RollingStone;
+  word-break: break-all;
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding: 0 12px;
+  min-height: 38px;
+}
+
+.btn {
+  width: 178px;
+  height: 40px;
+  font-size: 14px;
+  font-family: SofiaPro-SemiBold;
+  display: block;
+  margin: 22px auto 32px auto;
+
+  span {
+    font-size: 10px;
+    margin-left: 11px;
+  }
+}
