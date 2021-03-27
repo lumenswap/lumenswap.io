@@ -5,6 +5,7 @@ import TransactionResponse from 'blocks/TransactionResponse';
 import AddAsset from 'blocks/AddAsset';
 import EnterKey from 'blocks/EnterKey';
 import ConnectWallet from 'blocks/ConnectWallet';
+import Initializing from 'blocks/Initializing';
 
 const Demo = () => {
   const [waitingShow, setWaitingShow] = useState(false);
@@ -13,6 +14,7 @@ const Demo = () => {
   const [addAsset, setAddAsset] = useState(false);
   const [key, setKey] = useState(false);
   const [wallet, setWallet] = useState(false);
+  const [initializing, setInitializing] = useState(false);
   return (
     <div className="container-fluid my-5 py-5">
       {/* waiting */}
@@ -44,6 +46,11 @@ const Demo = () => {
       <button type="button" className="btn btn-dark ml-3" onClick={() => setWallet(true)}>connect wallet</button>
       <ModalDialog show={wallet} setShow={setWallet} title="Connect to wallet">
         <ConnectWallet />
+      </ModalDialog>
+      {/* initializing */}
+      <button type="button" className="btn btn-dark ml-3" onClick={() => setInitializing(true)}>initializing</button>
+      <ModalDialog show={initializing} setShow={setInitializing} back>
+        <Initializing />
       </ModalDialog>
     </div>
   );
