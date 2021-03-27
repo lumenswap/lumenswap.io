@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import store from 'store';
 import history from './history';
 import Home from './pages/Home';
+import Demo from './pages/Demo';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,6 +13,7 @@ function App() {
       <div className="App">
         <Router history={history}>
           <Route exact path="/" component={Home} />
+          <Route exact path="/demo" component={Demo} />
         </Router>
       </div>
     </Provider>

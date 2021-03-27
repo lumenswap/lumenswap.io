@@ -1,0 +1,34 @@
+@import 'styles/vars';
+
+.container {
+  margin-top: 29px;
+}
+
+.message {
+  font-size: 18px;
+  font-family: SofiaPro-Medium;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 91px;
+  color: $CodGray;
+}
+
+.loading {
+  height: 40px;
+  width: 40px;
+  color: $BlueRibbon;
+  position: sticky;
+  border: 3px solid;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: rotate 0.7s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
