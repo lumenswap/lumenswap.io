@@ -3,7 +3,8 @@ import ModalDialog from 'components/ModalDialog';
 import WaitingContent from 'blocks/WaitingContent';
 import TransactionResponse from 'blocks/TransactionResponse';
 import AddAsset from 'blocks/AddAsset';
-import EnterKey from "blocks/EnterKey";
+import EnterKey from 'blocks/EnterKey';
+import ConnectWallet from 'blocks/ConnectWallet';
 
 const Demo = () => {
   const [waitingShow, setWaitingShow] = useState(false);
@@ -11,6 +12,7 @@ const Demo = () => {
   const [fresponseShow, setfResponseShow] = useState(false);
   const [addAsset, setAddAsset] = useState(false);
   const [key, setKey] = useState(false);
+  const [wallet, setWallet] = useState(false);
   return (
     <div className="container-fluid my-5 py-5">
       {/* waiting */}
@@ -37,6 +39,11 @@ const Demo = () => {
       <button type="button" className="btn btn-dark ml-3" onClick={() => setKey(true)}>public or private key</button>
       <ModalDialog show={key} setShow={setKey} back>
         <EnterKey type="public" />
+      </ModalDialog>
+      {/* connect wallet */}
+      <button type="button" className="btn btn-dark ml-3" onClick={() => setWallet(true)}>connect wallet</button>
+      <ModalDialog show={wallet} setShow={setWallet} title="Connect to wallet">
+        <ConnectWallet />
       </ModalDialog>
     </div>
   );
