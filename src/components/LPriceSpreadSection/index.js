@@ -17,7 +17,7 @@ export default function LPriceSpreadSection({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (formValues.from.amount || !(new BN(formValues.from.amount).isEqualTo(0))) {
+    if (formValues.from.amount && !(new BN(formValues.from.amount).isEqualTo(0))) {
       setLoading(true);
       fetchMarketPrice(formValues.from.asset, formValues.to.asset).then((counterPrice) => {
         if (counterPrice) {
@@ -35,7 +35,7 @@ export default function LPriceSpreadSection({
   const calculatedMin = new BN(estimatedPrice)
     .times(new BN(1).minus(new BN(value).div(100)));
   const priceImpact = new BN(1)
-    .minus(new BN(calculatedMin).div(new BN(marketPrice).times(formValues.from.amount)))
+    .minus(new BN(estimatedPrice).div(new BN(marketPrice).times(formValues.from.amount)))
     .times(100);
 
   let finalPriceImpact = priceImpact.isNaN() ? new BN('0') : priceImpact;

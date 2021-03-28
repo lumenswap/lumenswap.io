@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'blocks/ConfirmSwap';
@@ -14,6 +14,7 @@ import calculateReceiveEstimatedAndPath from 'helpers/calculateReceiveEstimatedA
 import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
+import ExchangeRate from './ExchangeRate';
 
 const Home = () => {
   const [show, setShow] = useState(false);
@@ -30,19 +31,13 @@ const Home = () => {
       priceSpread: '0.1',
     },
   });
-  const formValues = useWatch({ control });
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
-  function swapFromWithTo() {
-    const innerFormValues = getValues();
-    setValue('from', { asset: innerFormValues.to.asset, amount: innerFormValues.from.amount });
-    setValue('to', { asset: innerFormValues.from.asset, amount: innerFormValues.to.amount });
-  }
-
   function changeFromInput(amount) {
+    const formValues = getValues();
     if (amount && !(new BN(amount).isEqualTo(0))) {
       setLoading(true);
       calculateSendEstimatedAndPath(
@@ -70,6 +65,7 @@ const Home = () => {
   }
 
   function changeToInput(amount) {
+    const formValues = getValues();
     if (amount && !(new BN(amount).isEqualTo(0))) {
       setLoading(true);
       calculateReceiveEstimatedAndPath(
@@ -94,6 +90,13 @@ const Home = () => {
         amount: '',
       });
     }
+  }
+
+  function swapFromWithTo() {
+    const formValues = getValues();
+    setValue('from', { asset: formValues.to.asset, amount: formValues.to.amount });
+    setValue('to', { asset: formValues.from.asset, amount: '' });
+    changeFromInput(formValues.to.amount);
   }
 
   const isConnected = true;
@@ -131,10 +134,7 @@ const Home = () => {
                   />
                 )}
               />
-              <p className={styles.info}>
-                1 {formValues.to.asset.code} = 12 {formValues.from.asset.code}
-                <span className="icon-arrow-repeat" />
-              </p>
+              <ExchangeRate control={control} estimatedPrice={estimatedPrice} loading={loading} />
               <Button
                 htmlType="submit"
                 variant={isConnected ? 'primary' : 'secondary'}

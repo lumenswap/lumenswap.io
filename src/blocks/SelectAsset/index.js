@@ -5,17 +5,24 @@ import isEmpty from 'helpers/is-empty';
 import defaultTokens from 'tokens/defaultTokens';
 import styles from './styles.module.scss';
 
+function mapper(item) {
+  return {
+    ...item,
+    balance: 0,
+  };
+}
+
 const SelectAsset = ({ setShow, setCurrency }) => {
-  const [assets, setAssets] = useState(defaultTokens);
+  const [assets, setAssets] = useState(defaultTokens.map(mapper));
   const [searchQuery, setSearchQuery] = useState(null);
 
   useEffect(() => {
     if (!isEmpty(searchQuery)) {
       const modified = searchQuery.trim().toLowerCase();
       const formatted = assets.filter((i) => i.name.toLowerCase().match(modified));
-      setAssets(formatted);
+      setAssets(formatted.map(mapper));
     } else {
-      setAssets(defaultTokens);
+      setAssets(defaultTokens.map(mapper));
     }
   }, [searchQuery]);
 
@@ -46,7 +53,7 @@ const SelectAsset = ({ setShow, setCurrency }) => {
                 <p className={styles.desc}>{asset.web}</p>
               </div>
             </div>
-            <div className={styles.text}>{asset.value}</div>
+            <div className={styles.text}>{asset.balance}</div>
           </div>
         ))}
       </div>
