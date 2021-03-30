@@ -3,33 +3,54 @@ import { useState } from 'react';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Submitting from 'components/Submitting';
+import getPubFromPv from 'helpers/getPubFromPv';
+import { fetchAccountTokenList } from 'api/stellar';
+import balanceMapper from 'helpers/balanceMapper';
+import setUserBalance from 'actions/userBalance';
+import userLogin from 'actions/user/login';
+import { loginTypes } from 'reducers/user';
+import { closeModalAction } from 'actions/modal';
 import styles from './styles.module.scss';
 
-const EnterKey = ({ type }) => {
+const EnterKey = () => {
   const [loadingTimer, setLoadingTimer] = useState(false);
   const { register, handleSubmit, formState } = useForm({
     mode: 'onChange',
   });
-  const onSubmit = (data) => {
+
+  function onSubmit(data) {
     setLoadingTimer(true);
-    const timer = setTimeout(() => {
+    const address = getPubFromPv(data.privateKey);
+
+    fetchAccountTokenList(address).then((res) => {
+      userLogin(loginTypes.PV, { address, privateKey: data.privateKey });
+      setUserBalance(res.map(balanceMapper));
+      closeModalAction();
+    }).finally(() => {
       setLoadingTimer(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  };
+    });
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <div className="form-group mb-0">
-        <label htmlFor="code" className="label-primary">Enter {type} key</label>
+        <label htmlFor="code" className="label-primary">Enter Your Private key</label>
         <Input
           type="text"
-          placeholder="G …"
-          name="key"
-          id="key"
+          placeholder="S…"
+          name="privateKey"
+          id="privateKey"
           height={48}
-          ref={register({
+          innerRef={register({
             required: true,
+            validate: (text) => {
+              const pv = getPubFromPv(text);
+              if (pv) {
+                return true;
+              }
+
+              return false;
+            },
           })}
         />
       </div>

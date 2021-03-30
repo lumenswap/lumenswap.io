@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const ModalDialog = ({
-  children, title, show, setShow, width = 360, back,
+  children, title, show, setShow, width = 360, back, backAction,
 }) => {
   const handleClose = () => setShow(false);
 
   return (
     <Modal show={show} onHide={handleClose}>
       <div className={styles.header}>
-        {back ? <span className="icon-arrow-left" />
+        {back ? <span className="icon-arrow-left" style={{ cursor: 'pointer' }} onClick={backAction} />
           : (
             <h2 className={styles.title}>{title}</h2>
           )}

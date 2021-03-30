@@ -1,7 +1,7 @@
 import actionTypes from 'actions';
 import defaultTokens from 'tokens/defaultTokens';
 
-export default function tokenListReducer(state = defaultTokens, action) {
+export default function userCustomTokensReducer(state = defaultTokens, action) {
   switch (action.type) {
     default:
       return state;

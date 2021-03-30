@@ -4,10 +4,11 @@ import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
-  value, onChange, showMax = false, label, onChangeInput,
+  value, onChange, showMax = false, label, onChangeInput, originChange,
 }) {
   function setCurrency(asset) {
     onChange({ ...value, asset });
+    originChange(value.amount);
   }
 
   return (

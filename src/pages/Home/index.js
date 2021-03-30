@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
-import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'blocks/ConfirmSwap';
 import Header from 'components/Header';
@@ -13,8 +12,10 @@ import calculateSendEstimatedAndPath from 'helpers/calculateSendEstimatedAndPath
 import calculateReceiveEstimatedAndPath from 'helpers/calculateReceiveEstimatedAndPath';
 import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
+import { openConnectModal } from 'actions/modal';
 import styles from './styles.module.scss';
 import ExchangeRate from './ExchangeRate';
+import SwapButton from './SwapButton';
 
 const Home = () => {
   const [show, setShow] = useState(false);
@@ -33,6 +34,7 @@ const Home = () => {
   });
 
   const onSubmit = (data) => {
+    openConnectModal();
     console.log(data);
   };
 
@@ -99,8 +101,6 @@ const Home = () => {
     changeFromInput(formValues.to.amount);
   }
 
-  const isConnected = true;
-
   return (
     <div className="container-fluid">
       <Header />
@@ -117,6 +117,7 @@ const Home = () => {
                     showMax
                     label="From"
                     onChangeInput={changeFromInput}
+                    originChange={changeFromInput}
                   />
                 )}
               />
@@ -131,18 +132,12 @@ const Home = () => {
                     {...props}
                     label="To (estimated)"
                     onChangeInput={changeToInput}
+                    originChange={changeFromInput}
                   />
                 )}
               />
               <ExchangeRate control={control} estimatedPrice={estimatedPrice} loading={loading} />
-              <Button
-                htmlType="submit"
-                variant={isConnected ? 'primary' : 'secondary'}
-                content="Swap"
-                fontSize={18}
-                size="100%"
-                className="mt-3"
-              />
+              <SwapButton />
               <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
                 <ConfirmSwap />
               </ModalDialog>

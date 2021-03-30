@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const Input = ({
-  type, value, variant, size, height, fontSize, disabled, placeholder,
-  name, register, input, autoFocus,
+  type, value, size, height, fontSize, disabled, placeholder,
+  name, input, autoFocus, innerRef,
 }) => (
   <input
     type={type}
@@ -14,7 +14,7 @@ const Input = ({
     placeholder={placeholder}
     style={{ width: `${size}`, fontSize: `${fontSize}px`, height: `${height}px` }}
     name={name}
-    ref={register}
+    ref={innerRef}
     autoFocus={autoFocus}
     {...input}
   />
