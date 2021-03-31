@@ -28,7 +28,7 @@ const SelectAsset = ({
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([
       getAssetDetails(XLM),
-      ...userBalance.map((i) => i.asset),
+      // ...userBalance.map((i) => i.asset),
       ...userCustomTokens,
       ...defaultTokens.map((i) => getAssetDetails(i)),
     ]).map((item) => {

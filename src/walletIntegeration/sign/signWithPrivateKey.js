@@ -1,6 +1,5 @@
 import StellarSDK from 'stellar-sdk';
 import extractErrorText from 'helpers/extractErrorText';
-import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 

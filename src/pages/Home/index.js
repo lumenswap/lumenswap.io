@@ -12,7 +12,8 @@ import calculateSendEstimatedAndPath from 'helpers/calculateSendEstimatedAndPath
 import calculateReceiveEstimatedAndPath from 'helpers/calculateReceiveEstimatedAndPath';
 import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
-import { openConnectModal } from 'actions/modal';
+import { openConnectModal, openModalAction } from 'actions/modal';
+import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import ExchangeRate from './ExchangeRate';
 import SwapButton from './SwapButton';
@@ -22,6 +23,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
   const [paths, setPaths] = useState([]);
+  const isLogged = useSelector((state) => state.user.logged);
 
   const {
     handleSubmit, control, setValue, getValues,
@@ -48,8 +50,16 @@ const Home = () => {
   });
 
   const onSubmit = (data) => {
-    openConnectModal();
-    console.log(data);
+    if (!isLogged) {
+      openConnectModal();
+    } else {
+      openModalAction({
+        modalProps: {
+          title: 'Confirm Swap',
+        },
+        content: <ConfirmSwap data={{ ...data, estimatedPrice, paths }} />,
+      });
+    }
   };
 
   function changeFromInput(amount) {
@@ -155,7 +165,7 @@ const Home = () => {
                 )}
               />
               <ExchangeRate control={control} estimatedPrice={estimatedPrice} loading={loading} />
-              <SwapButton />
+              <SwapButton control={control} />
               <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
                 <ConfirmSwap />
               </ModalDialog>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const ModalDialog = ({
-  children, title, show, setShow, width = 360, back, backAction,
+  children, title, show, setShow, width = 360, back, backAction, hasClose = true,
 }) => {
   const handleClose = () => setShow(false);
 
@@ -15,11 +15,13 @@ const ModalDialog = ({
           : (
             <h2 className={styles.title}>{title}</h2>
           )}
+        {hasClose && (
         <button
           type="button"
           className={classNames('icon-multiply', styles.close)}
           onClick={handleClose}
         />
+        )}
       </div>
       <div style={{ width: `${width}px` }}>
         <Modal.Body>
