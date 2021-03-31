@@ -3,12 +3,22 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ModalDialog from 'components/ModalDialog';
 import SelectAsset from 'blocks/SelectAsset';
+import { useSelector } from 'react-redux';
+import isSameAsset from 'helpers/isSameAsset';
+import sevenDigit from 'helpers/sevenDigit';
 import styles from './styles.module.scss';
 
 const CurrencyInput = ({
-  label, currentCurrency, balance, children, setCurrency,
+  label,
+  currentCurrency,
+  children,
+  setCurrency,
+  getFormValues,
+  swapFromWithTo,
 }) => {
   const [show, setShow] = useState(false);
+  const userBalance = useSelector((state) => state.userBalance);
+  const foundBalance = userBalance.find((item) => isSameAsset(currentCurrency.details, item.asset));
 
   return (
     <div className={styles.card}>
@@ -19,18 +29,23 @@ const CurrencyInput = ({
         <div className={styles.balance}>
           Balance:
           {' '}
-          {balance}
+          {foundBalance ? sevenDigit(foundBalance.balance) : '0'}
         </div>
       </div>
       <div className={classNames('input-group', styles['input-group'])}>
         {children}
         <button type="button" className={styles['drop-down']} onClick={() => setShow(true)}>
           <img src={currentCurrency?.logo} alt="logo" />
-          {currentCurrency?.code}
+          {currentCurrency?.details?.getCode()}
           <span className="icon-angle-down" />
         </button>
         <ModalDialog show={show} setShow={setShow} title="Select an assets">
-          <SelectAsset setShow={setShow} setCurrency={setCurrency} />
+          <SelectAsset
+            getFormValues={getFormValues}
+            swapFromWithTo={swapFromWithTo}
+            setShow={setShow}
+            setCurrency={setCurrency}
+          />
         </ModalDialog>
       </div>
     </div>
@@ -39,7 +54,6 @@ const CurrencyInput = ({
 
 CurrencyInput.propTypes = {
   label: PropTypes.string.isRequired,
-  balance: PropTypes.string.isRequired,
   currentCurrency: PropTypes.object.isRequired,
 };
 

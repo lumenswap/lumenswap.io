@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 const Input = ({
   type, value, size, height, fontSize, disabled, placeholder,
-  name, input, autoFocus, innerRef,
+  name, input, autoFocus, innerRef, onChange,
 }) => (
   <input
     type={type}
@@ -16,6 +16,7 @@ const Input = ({
     name={name}
     ref={innerRef}
     autoFocus={autoFocus}
+    onChange={onChange}
     {...input}
   />
 );

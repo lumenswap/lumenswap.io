@@ -1,17 +1,12 @@
-import defaultTokens from 'tokens/defaultTokens';
+export default function pureTokens(list) {
+  const seen = {};
 
-export default function pureTokens(list, newAsset) {
-  const foundInDefault = defaultTokens
-    .find((token) => token.code === newAsset.code && token.issuer === newAsset.issuer);
-  if (foundInDefault) {
-    return false;
-  }
+  return list.filter((item) => {
+    if (seen[`${item.getAssetType()}_${item.getCode()}_${item.getIssuer()}`]) {
+      return false;
+    }
 
-  const foundInList = list
-    .find((token) => token.code === newAsset.code && token.issuer === newAsset.issuer);
-  if (foundInList) {
-    return false;
-  }
-
-  return true;
+    seen[`${item.getAssetType()}_${item.getCode()}_${item.getIssuer()}`] = true;
+    return true;
+  });
 }

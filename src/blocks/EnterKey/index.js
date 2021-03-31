@@ -5,11 +5,11 @@ import Button from 'components/Button';
 import Submitting from 'components/Submitting';
 import getPubFromPv from 'helpers/getPubFromPv';
 import { fetchAccountTokenList } from 'api/stellar';
-import balanceMapper from 'helpers/balanceMapper';
 import setUserBalance from 'actions/userBalance';
 import userLogin from 'actions/user/login';
 import { loginTypes } from 'reducers/user';
 import { closeModalAction } from 'actions/modal';
+import balanceMapper from 'helpers/balanceMapper';
 import styles from './styles.module.scss';
 
 const EnterKey = () => {
@@ -22,13 +22,16 @@ const EnterKey = () => {
     setLoadingTimer(true);
     const address = getPubFromPv(data.privateKey);
 
-    fetchAccountTokenList(address).then((res) => {
-      userLogin(loginTypes.PV, { address, privateKey: data.privateKey });
-      setUserBalance(res.map(balanceMapper));
-      closeModalAction();
-    }).finally(() => {
-      setLoadingTimer(false);
-    });
+    fetchAccountTokenList(address)
+      .then((res) => {
+        userLogin(loginTypes.PV, { address, privateKey: data.privateKey });
+        setUserBalance(res.map(balanceMapper));
+        closeModalAction();
+      })
+      .catch(console.log)
+      .finally(() => {
+        setLoadingTimer(false);
+      });
   }
 
   return (

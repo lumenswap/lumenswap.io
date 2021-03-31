@@ -27,8 +27,22 @@ const Home = () => {
     handleSubmit, control, setValue, getValues,
   } = useForm({
     defaultValues: {
-      from: { asset: XLM, amount: null },
-      to: { asset: USDC, amount: null },
+      from: {
+        asset: {
+          details: getAssetDetails(XLM),
+          logo: XLM.logo,
+          web: XLM.web,
+        },
+        amount: null,
+      },
+      to: {
+        asset: {
+          details: getAssetDetails(USDC),
+          logo: USDC.logo,
+          web: USDC.web,
+        },
+        amount: null,
+      },
       priceSpread: '0.1',
     },
   });
@@ -44,8 +58,8 @@ const Home = () => {
       setLoading(true);
       calculateSendEstimatedAndPath(
         amount,
-        getAssetDetails(formValues.from.asset),
-        getAssetDetails(formValues.to.asset),
+        formValues.from.asset.details,
+        formValues.to.asset.details,
       ).then((res) => {
         setEstimatedPrice(res.minAmount);
         setPaths(res.path);
@@ -72,8 +86,8 @@ const Home = () => {
       setLoading(true);
       calculateReceiveEstimatedAndPath(
         amount,
-        getAssetDetails(formValues.from.asset),
-        getAssetDetails(formValues.to.asset),
+        formValues.from.asset.details,
+        formValues.to.asset.details,
       ).then((res) => {
         setEstimatedPrice(amount);
         setPaths(res.path.reverse());
@@ -118,6 +132,8 @@ const Home = () => {
                     label="From"
                     onChangeInput={changeFromInput}
                     originChange={changeFromInput}
+                    getFormValues={getValues}
+                    swapFromWithTo={swapFromWithTo}
                   />
                 )}
               />
@@ -133,6 +149,8 @@ const Home = () => {
                     label="To (estimated)"
                     onChangeInput={changeToInput}
                     originChange={changeFromInput}
+                    getFormValues={getValues}
+                    swapFromWithTo={swapFromWithTo}
                   />
                 )}
               />

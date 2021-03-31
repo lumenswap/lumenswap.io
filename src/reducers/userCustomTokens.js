@@ -1,8 +1,9 @@
 import actionTypes from 'actions';
-import defaultTokens from 'tokens/defaultTokens';
 
-export default function userCustomTokensReducer(state = defaultTokens, action) {
+export default function userCustomTokensReducer(state = [], action) {
   switch (action.type) {
+    case actionTypes.userCustomTokens.ADD:
+      return [...state, action.asset];
     default:
       return state;
   }

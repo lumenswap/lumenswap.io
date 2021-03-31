@@ -4,23 +4,59 @@ import { useForm } from 'react-hook-form';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Submitting from 'components/Submitting';
+import { checkAssetAPI } from 'api/stellar';
+import getAssetDetails from 'helpers/getAssetDetails';
+import defaultTokens from 'tokens/defaultTokens';
+import store from 'store';
+import isSameAsset from 'helpers/isSameAsset';
+import pureTokens from 'helpers/pureTokens';
+import { addCustomTokenAction } from 'actions/userCustomTokens';
 import styles from './styles.module.scss';
 
-const AddAsset = ({ toggleModal }) => {
+const AddAsset = () => {
   const [loadingTimer, setLoadingTimer] = useState(false);
   const {
-    register, handleSubmit, formState, getValues,
+    register, handleSubmit, formState, getValues, errors, trigger,
   } = useForm({
     mode: 'onChange',
   });
 
   const onSubmit = (data) => {
-    setLoadingTimer(true);
-    const timer = setTimeout(() => {
-      setLoadingTimer(false);
-    }, 2000);
-    return () => clearTimeout(timer);
+    addCustomTokenAction(getAssetDetails({ code: data.code, issuer: data.issuer }));
   };
+
+  async function customValidator() {
+    const { issuer, code } = getValues();
+    if (!issuer || issuer === '' || !code || code === '') {
+      return false;
+    }
+
+    setLoadingTimer(true);
+    try {
+      const res = await checkAssetAPI(code, issuer);
+      if (res) {
+        const pured = pureTokens([
+          ...defaultTokens.map((i) => getAssetDetails(i)),
+          ...store.getState().userCustomTokens,
+        ]);
+        const found = pured.find((i) => isSameAsset(getAssetDetails({ issuer, code }), i));
+        if (found) {
+          return 'Already Added';
+        }
+        return true;
+      }
+
+      return 'Invalid Asset';
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoadingTimer(false);
+    }
+
+    return false;
+  }
+
+  const showError = errors?.code?.message || errors?.issuer?.message;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -32,8 +68,10 @@ const AddAsset = ({ toggleModal }) => {
           name="code"
           id="code"
           height={48}
-          ref={register({
+          onChange={() => trigger()}
+          innerRef={register({
             required: true,
+            validate: customValidator,
           })}
         />
       </div>
@@ -45,10 +83,10 @@ const AddAsset = ({ toggleModal }) => {
           placeholder="G …"
           name="issuer"
           id="issuer"
-          ref={register({
+          onChange={() => trigger()}
+          innerRef={register({
             required: true,
-            maxLength: 56,
-            minLength: 56,
+            validate: customValidator,
           })}
         />
       </div>
@@ -61,9 +99,9 @@ const AddAsset = ({ toggleModal }) => {
         onClick={() => {}}
         content={
             loadingTimer ? (
-              <Submitting text="Adding" loadingSize={21} />
+              <Submitting loadingSize={21} />
             ) : (
-              'Add asset'
+              showError || 'Add asset'
             )
         }
       />

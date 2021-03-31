@@ -4,6 +4,7 @@ import Tooltips from 'components/Tooltip';
 import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'helpers/fetchMarketPrice';
+import sevenDigit from 'helpers/sevenDigit';
 import styles from './styles.module.scss';
 
 export default function LPriceSpreadSection({
@@ -17,19 +18,17 @@ export default function LPriceSpreadSection({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (formValues.from.amount && !(new BN(formValues.from.amount).isEqualTo(0))) {
-      setLoading(true);
-      fetchMarketPrice(formValues.from.asset, formValues.to.asset).then((counterPrice) => {
-        if (counterPrice) {
-          setMarketPrice(counterPrice);
-        }
-      }).finally(() => setLoading(false));
-    }
+    setLoading(true);
+    fetchMarketPrice(formValues.from.asset, formValues.to.asset).then((counterPrice) => {
+      if (counterPrice) {
+        setMarketPrice(counterPrice);
+      }
+    }).finally(() => setLoading(false));
   }, [
-    formValues.from.asset.code,
-    formValues.from.asset.issuer,
-    formValues.to.asset.code,
-    formValues.to.asset.issuer,
+    formValues.from.asset.details.getCode(),
+    formValues.from.asset.details.getIssuer(),
+    formValues.to.asset.details.getCode(),
+    formValues.to.asset.details.getIssuer(),
   ]);
 
   const calculatedMin = new BN(estimatedPrice)
@@ -49,7 +48,7 @@ export default function LPriceSpreadSection({
         <div className={styles.label}>Minimum received
           <Tooltips id="minimum" text="Minimum received"><span className="icon-question-circle" /></Tooltips>
         </div>
-        <div className={styles.info}>{loading || upperLoading ? 'Loading' : calculatedMin.toString()}</div>
+        <div className={styles.info}>{loading || upperLoading ? 'Loading' : sevenDigit(calculatedMin.toString())}</div>
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Price impact
@@ -97,9 +96,9 @@ export default function LPriceSpreadSection({
         </div>
         <div className={styles.path}>
           {[
-            formValues.from.asset.code,
+            formValues.from.asset.details.getCode(),
             ...paths.map((i) => i.asset_code),
-            formValues.to.asset.code,
+            formValues.to.asset.details.getCode(),
           ].map((item, index) => (
             <div className={styles['path-container']} key={index}>
               <span>{item?.toUpperCase() || 'XLM'}</span>
