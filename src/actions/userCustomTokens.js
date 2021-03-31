@@ -7,3 +7,10 @@ export function addCustomTokenAction(asset) {
     asset,
   });
 }
+
+export function removeCustomTokenAction(asset) {
+  store.dispatch({
+    type: actionTypes.userCustomTokens.REMOVE,
+    asset,
+  });
+}

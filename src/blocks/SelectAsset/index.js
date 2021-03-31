@@ -12,6 +12,7 @@ import questionLogo from 'assets/images/question.png';
 import sevenDigit from 'helpers/sevenDigit';
 import { openModalAction } from 'actions/modal';
 import AddAsset from 'blocks/AddAsset';
+import { removeCustomTokenAction } from 'actions/userCustomTokens';
 import styles from './styles.module.scss';
 
 const SelectAsset = ({
@@ -40,6 +41,7 @@ const SelectAsset = ({
           web: foundToken.web,
           logo: foundToken.logo,
           balance: foundBalance ? foundBalance.balance : '0',
+          type: 'default',
         };
       }
 
@@ -48,6 +50,7 @@ const SelectAsset = ({
         web: minimizeAddress(item.getIssuer()),
         logo: questionLogo,
         balance: foundBalance ? foundBalance.balance : '0',
+        type: 'custom',
       };
     });
 
@@ -92,7 +95,18 @@ const SelectAsset = ({
               {asset.logo ? <img src={asset.logo} alt="logo" width={22} height={22} />
                 : <div className={styles.circle}><span className="icon-question-circle" /></div>}
               <div className={styles.info}>
-                <h6 className={styles.text}>{asset.details.getCode()}</h6>
+                <h6 className={styles.text}>
+                  {asset.details.getCode()}
+                  {asset.type === 'custom' && (
+                  <span onClick={(e) => {
+                    e.stopPropagation();
+                    removeCustomTokenAction(asset.details);
+                  }}
+                  >
+                    {' '}(delete)
+                  </span>
+                  )}
+                </h6>
                 <p className={styles.desc}>{asset.web}</p>
               </div>
             </div>
