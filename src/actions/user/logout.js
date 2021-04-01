@@ -1,8 +1,8 @@
-import types from 'src/actions';
-import store from 'src/store';
+import actionTypes from 'actions';
+import store from 'store';
 
 export default () => {
   store.dispatch({
-    type: types.user.LOGOUT,
+    type: actionTypes.user.LOGOUT,
   });
 };

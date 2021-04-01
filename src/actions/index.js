@@ -1,21 +1,24 @@
-export default {
-  modal: {
-    SHOW: 'modal/SHOW',
-    HIDE: 'modal/HIDE',
-  },
+const actionTypes = {
   user: {
     LOGIN: 'user/LOGIN',
     LOGOUT: 'user/LOGOUT',
   },
-  checkout: {
-    UPDATE: 'checkout/UPDATE',
-    CLEAR: 'checkout/CLEAR',
+  tokenList: {
+    SET: 'tokenList/SET',
   },
-  userToken: {
-    SET: 'userToken/SET',
+  modal: {
+    OPEN: 'connectModal/OPEN',
+    CLOSE: 'connectModal/CLOSE',
   },
-  lumenTokens: {
-    SET: 'lumenTokens/SET',
-    ADD: 'lumenTokens/ADD',
+  userBalance: {
+    SET: 'userBalance/SET',
+    CLEAR: 'userBalance/CLEAR',
+  },
+  userCustomTokens: {
+    ADD: 'userCustomTokens/ADD',
+    REMOVE: 'userCustomTokens/REMOVE',
+    SET: 'userCustomTokens/SET',
   },
 };
+
+export default actionTypes;

@@ -1,28 +1,21 @@
-import types from 'src/actions';
+import actionTypes from 'actions';
 
-const defaultState = {
-  show: false,
-  Modal: () => null,
-  customProps: {},
-};
+const defaultState = { open: false, modalProps: {}, content: () => null };
 
-export default (state = defaultState, action) => {
+export default function modalReducer(state = defaultState, action) {
   switch (action.type) {
-    case types.modal.SHOW: {
+    case actionTypes.modal.OPEN:
       return {
-        show: true,
-        Modal: action.Modal,
-        customProps: action.customProps || {},
-        modalProps: action.modalProps || {},
+        open: true,
+        modalProps: action.modalProps,
+        content: action.content,
       };
-    }
-
-    case types.modal.HIDE: {
-      return defaultState;
-    }
-
-    default: {
+    case actionTypes.modal.CLOSE:
+      return {
+        ...state,
+        open: false,
+      };
+    default:
       return state;
-    }
   }
-};
+}

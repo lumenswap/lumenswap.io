@@ -1,0 +1,54 @@
+@import "styles/vars";
+
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36px 25px 0 25px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  padding-left: 0;
+
+  li {
+    margin-right: 40px;
+  }
+
+  li a {
+    font-size: 16px;
+    color: $CodGray;
+    font-family: SofiaPro-Medium;
+    text-decoration: none !important;
+
+    :global(.icon-external) {
+      margin-left: -7px;
+      margin-top: -2px;
+    }
+  }
+
+  li:last-child a {
+    color: $RollingStone;
+  }
+}
+
+@media (max-width: $sm) {
+  .list > li {
+    margin-right: 15px;
+  }
+
+  .layout {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.btn {
+  width: 135px;
+  height: 40px;
+  font-size: 16px;
+  font-family: SofiaPro-Medium;
+}

@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/btc-logo.png';
+import logo from './images/btc.png';
 
 export default {
   code: 'BTC',

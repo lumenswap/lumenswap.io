@@ -1,0 +1,92 @@
+@import "styles/vars";
+
+.dropdown {
+  position: relative;
+
+  button {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    border-radius: 4px;
+
+    svg {
+      margin-right: 8px;
+    }
+  }
+
+  button::after {
+    right: 16px;
+    content: "\e900";
+    font-family: 'icomoon' !important;
+    border: none;
+    font-size: 9px;
+    color: $CodGray;
+    margin-left: auto;
+  }
+
+  button,
+  button:focus,
+  button:active {
+    box-shadow: none !important;
+    background: transparent !important;
+    border: 1px solid $Geyser !important;
+    color: $CodGray !important;
+  }
+
+  :global(.dropdown-menu) {
+    border-radius: 4px;
+    box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+    border: none;
+    padding: 0;
+
+    a {
+      font-size: 12px;
+      color: $CodGray;
+      padding: 8px 12px !important;
+      font-family: SofiaPro-Regular;
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-right: 7px;
+        font-size: 15px;
+        color: $RollingStone;
+      }
+
+      :global(.icon-external) {
+        margin-left: -2px;
+      }
+    }
+
+    a:hover {
+      background-color: $AthensGray;
+    }
+
+    a:first-child {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    a:last-child {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    a:active {
+      background: white !important;
+      color: $CodGray !important;
+    }
+
+  }
+}
+
+.dropdown:hover {
+  button {
+    background-color: white !important;
+  }
+}
+
+.hover {
+  background-color: white !important;
+}

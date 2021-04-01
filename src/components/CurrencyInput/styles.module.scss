@@ -1,0 +1,90 @@
+@import "styles/vars";
+
+.card {
+  border: 1px solid $CatskillWhite;
+  border-radius: 8px;
+  padding: 10px 20px 18px 16px;
+}
+
+.label, .balance {
+  font-size: 14px;
+  line-height: 1.14;
+  color: $RollingStone;
+}
+
+.label {
+  font-family: SofiaPro-Medium;
+}
+
+.input-group {
+  margin-top: 14px;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center!important;
+
+  input {
+    border: none;
+    font-size: 24px;
+    color: $CodGray;
+    background-color: white;
+    width: 0;
+    height: 24px;
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding: 0 10px 0 0;
+  }
+
+  input::placeholder {
+    color: $Aluminium;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+}
+
+.max {
+  color: $BlueRibbon;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.25;
+  background-color: $Zumthor;
+  border: 1px solid $Zumthor;
+  border-radius: 4px;
+  width: 39px;
+  height: 20px;
+  outline: none;
+  font-family: SofiaPro-Medium;
+}
+
+.drop-down {
+  background-color: transparent;
+  border: 1px solid transparent;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 0.89;
+  color: $CodGray;
+  margin-left: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  font-family: SofiaPro-Medium;
+
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  span {
+    margin-left: 15px;
+    font-size: 11px;
+  }
+}
+
+.drop-down:hover {
+  background-color: $AthensGray;
+}

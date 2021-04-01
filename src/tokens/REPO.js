@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/repo.jpeg';
+import logo from './images/repo.jpeg';
 
 export default {
   code: 'REPO',

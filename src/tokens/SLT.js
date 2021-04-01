@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/slt.png';
+import logo from './images/slt.png';
 
 export default {
   code: 'SLT',

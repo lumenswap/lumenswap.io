@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/ngnt.png';
+import logo from './images/ngnt.png';
 
 export default {
   code: 'NGNT',

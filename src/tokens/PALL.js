@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/pall.png';
+import logo from './images/pall.png';
 
 export default {
   code: 'PALL',

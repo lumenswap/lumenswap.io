@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/gold.png';
+import logo from './images/gold.png';
 
 export default {
   code: 'GOLD',

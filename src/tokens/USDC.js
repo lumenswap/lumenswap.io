@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/usdc.png';
+import logo from './images/usdc.png';
 
 export default {
   code: 'USDC',

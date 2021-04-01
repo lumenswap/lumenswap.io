@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/kthouse.png';
+import logo from './images/kthouse.png';
 
 export default {
   code: 'KTHOUSE',
@@ -6,4 +6,3 @@ export default {
   web: 'kthouse.co',
   issuer: 'GB5BK7HJK7SJGJXN4X6BV2QBEWGXVMEZJRGKWBFU6PK6BV4DW7WOQ27W',
 };
-

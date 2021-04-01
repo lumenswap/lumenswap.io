@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/xlm-logo.png';
+import logo from './images/xlm.png';
 
 export default {
   code: 'XLM',

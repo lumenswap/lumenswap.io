@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/mobi.png';
+import logo from './images/mobi.png';
 
 export default {
   code: 'MOBI',

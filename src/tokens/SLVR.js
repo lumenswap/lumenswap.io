@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/slvr.png';
+import logo from './images/slvr.png';
 
 export default {
   code: 'SLVR',

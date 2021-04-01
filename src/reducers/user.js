@@ -1,4 +1,4 @@
-import types from 'src/actions';
+import actionTypes from 'actions';
 
 const defaultState = {
   logged: false,
@@ -16,7 +16,7 @@ export const loginTypes = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case types.user.LOGIN: {
+    case actionTypes.user.LOGIN: {
       return {
         logged: true,
         loginType: action.loginType,
@@ -24,8 +24,8 @@ export default (state = defaultState, action) => {
       };
     }
 
-    case types.user.LOGOUT: {
-      return { logged: false, detail: {} };
+    case actionTypes.user.LOGOUT: {
+      return defaultState;
     }
 
     default: {

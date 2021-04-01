@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
+import modalReducer from './modal';
+import userCustomTokensReducer from './userCustomTokens';
 import user from './user';
-import modal from './modal';
-import checkout from './checkout';
-import userToken from './userToken';
-import lumenTokens from './lumenTokens';
+import userBalanceReducer from './userBalance';
 
 export default combineReducers({
   user,
-  modal,
-  checkout,
-  userToken,
-  lumenTokens,
+  userCustomTokens: userCustomTokensReducer,
+  modal: modalReducer,
+  userBalance: userBalanceReducer,
 });

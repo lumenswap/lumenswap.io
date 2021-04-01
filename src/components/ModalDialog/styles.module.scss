@@ -1,0 +1,58 @@
+@import 'styles/vars';
+
+.header {
+  padding: 21px 17px 24px 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  :global(.icon-arrow-left) {
+    cursor: pointer;
+    color: $Bombay;
+    font-size: 20px;
+  }
+}
+
+.title {
+  font-size: 18px;
+  font-family: SofiaPro-Medium;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.close {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  color: $Bombay;
+  padding: 0;
+  z-index: 100;
+  outline: none;
+}
+
+:global(.modal-body) {
+  padding: 0 17px !important;
+}
+
+:global(.modal) {
+  text-align: center;
+  padding: 0!important;
+}
+
+:global(.modal):before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+:global(.modal-dialog) {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+:global(.modal-content) {
+  border-radius: 8px;
+}

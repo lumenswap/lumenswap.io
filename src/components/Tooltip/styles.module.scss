@@ -1,0 +1,30 @@
+@import "styles/vars";
+
+:global(.tooltip-inner) {
+  background-color: white !important;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13) !important;
+  border: none !important;
+  color: $CodGray !important;
+  font-size: 13px;
+}
+
+:global(.bs-tooltip-top) :global(.arrow)::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  border-top-color: white;
+  display: none;
+}
+
+:global(.arrow) {
+  z-index: -1;
+}
+
+:global(.bs-tooltip-top) :global(.arrow)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  border: 5px solid white;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
+}

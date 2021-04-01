@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/centus.png';
+import logo from './images/centus.png';
 
 export default {
   code: 'CENTUS',

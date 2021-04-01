@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/eth-logo.png';
+import logo from './images/eth.png';
 
 export default {
   code: 'ETH',

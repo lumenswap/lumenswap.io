@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/ltc.png';
+import logo from './images/ltc.png';
 
 export default {
   code: 'LTC',

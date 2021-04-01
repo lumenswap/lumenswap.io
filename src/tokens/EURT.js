@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/eurt.png';
+import logo from './images/eurt.png';
 
 export default {
   code: 'EURT',

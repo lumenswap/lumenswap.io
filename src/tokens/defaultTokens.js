@@ -2,7 +2,7 @@ import XLM from './XLM';
 import MOBI from './MOBI';
 import REPO from './REPO';
 import USD from './USD';
-import CENTUS from './CENTUS';
+// import CENTUS from './CENTUS';
 import BTC from './BTC';
 import ETH from './ETH';
 import SLVR from './SLVR';
@@ -24,7 +24,7 @@ export default [
   USDC,
   MOBI,
   USD,
-  CENTUS,
+  // CENTUS,
   BTC,
   ETH,
   REPO,
@@ -39,5 +39,5 @@ export default [
   DEB,
   KTHOUSE,
   SLT,
-  EURT
+  EURT,
 ];

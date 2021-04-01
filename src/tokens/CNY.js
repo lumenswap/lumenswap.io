@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/cny.png';
+import logo from './images/cny.png';
 
 export default {
   code: 'CNY',

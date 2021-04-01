@@ -1,4 +1,4 @@
-import logo from 'src/assets/images/usdt.png';
+import logo from './images/usdt.png';
 
 export default {
   code: 'USDT',
