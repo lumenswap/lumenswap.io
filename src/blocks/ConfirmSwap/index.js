@@ -12,6 +12,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import TransactionResponse from 'blocks/TransactionResponse';
 import signForThem from 'walletIntegeration/signForThem';
+import { loginTypes } from 'reducers/user';
 import styles from './styles.module.scss';
 
 const ConfirmSwap = ({ data }) => {
@@ -62,7 +63,7 @@ const ConfirmSwap = ({ data }) => {
       modalProps: {
         hasClose: false,
       },
-      content: <WaitingContent message="Sending to Network" />,
+      content: <WaitingContent message="Waiting for Sign" />,
     });
 
     const storeData = store.getState();
@@ -77,7 +78,7 @@ const ConfirmSwap = ({ data }) => {
           toAddress: storeData.user.detail.address,
         },
         needToTrust: !found,
-      });
+      }, storeData.user.loginType === loginTypes.LEDGER_S);
     } catch (e) {
       console.error(e);
       openModalAction({
@@ -93,7 +94,19 @@ const ConfirmSwap = ({ data }) => {
     let trxHash;
     try {
       trxHash = await signForThem(trx);
+      openModalAction({
+        modalProps: {},
+        content: <TransactionResponse
+          message={trxHash}
+          status="success"
+          title="Success Transaction"
+          btnText="View on Explorer"
+          btnType="link"
+          btnLink={`${process.env.REACT_APP_LUMENSCAN_URL}/txns/${trxHash}`}
+        />,
+      });
     } catch (e) {
+      console.log('dude', e);
       openModalAction({
         modalProps: {},
         content: <TransactionResponse
@@ -103,18 +116,6 @@ const ConfirmSwap = ({ data }) => {
         />,
       });
     }
-
-    openModalAction({
-      modalProps: {},
-      content: <TransactionResponse
-        message={trxHash}
-        status="success"
-        title="Success Transaction"
-        btnText="View on Explorer"
-        btnType="link"
-        btnLink={`${process.env.REACT_APP_LUMENSCAN_URL}/txns/${trxHash}`}
-      />,
-    });
   }
 
   return (

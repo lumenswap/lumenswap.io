@@ -5,6 +5,9 @@ export default function userBalanceReducer(state = [], action) {
     case actionTypes.userBalance.SET:
       return action.balance;
 
+    case actionTypes.userBalance.CLEAR:
+      return [];
+
     default:
       return state;
   }

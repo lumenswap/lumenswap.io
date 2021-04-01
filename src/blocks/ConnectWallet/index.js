@@ -5,15 +5,26 @@ import ledgerIcon from 'assets/images/ledger.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import EnterKey from 'blocks/EnterKey';
+import { loginTypes } from 'reducers/user';
+import Initializing from 'blocks/Initializing';
 import styles from './styles.module.scss';
 
-const ConnectWallet = (props) => {
+const ConnectWallet = () => {
   const items = [
-    { icon: albedoIcon, iconSize: '18', text: 'Albedo' },
-    { icon: ledgerIcon, iconSize: '18', text: 'Ledger' },
-    { icon: freighterIcon, iconSize: '16', text: 'Freighter' },
-    { icon: rabetIcon, iconSize: '14', text: 'Rabet' },
+    {
+      icon: freighterIcon, iconSize: '16', text: 'Freighter', loginMethod: loginTypes.FREIGHTER,
+    },
+    {
+      icon: ledgerIcon, iconSize: '18', text: 'Ledger', loginMethod: loginTypes.LEDGER_S,
+    },
+    {
+      icon: albedoIcon, iconSize: '18', text: 'Albedo', loginMethod: loginTypes.ALBEDO,
+    },
+    {
+      icon: rabetIcon, iconSize: '14', text: 'Rabet', loginMethod: loginTypes.RABET,
+    },
   ];
+
   return (
     <div className={styles.box}>
       <button
@@ -38,7 +49,22 @@ const ConnectWallet = (props) => {
         <span className="icon-arrow-left" />
       </button>
       {items.map((item, index) => (
-        <button type="button" className={styles.btn}>
+        <button
+          type="button"
+          className={styles.btn}
+          key={index}
+          onClick={() => {
+            openModalAction({
+              modalProps: {
+                back: true,
+                backAction: () => {
+                  openConnectModal();
+                },
+              },
+              content: <Initializing loginMethod={item.loginMethod} />,
+            });
+          }}
+        >
           <div className="d-flex align-items-center">
             <div className={styles.circle}><img src={item.icon} width={item.icon} alt="icon" /></div>
             {item.text}

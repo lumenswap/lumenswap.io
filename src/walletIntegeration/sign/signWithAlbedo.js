@@ -1,20 +1,32 @@
 import albedo from '@albedo-link/intent';
+import { openModalAction } from 'actions/modal';
+import WaitingContent from 'blocks/WaitingContent';
 import extractErrorText from 'helpers/extractErrorText';
+import StellarSDK from 'stellar-sdk';
+
+const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function signWithAlbedo(trx) {
   try {
-    const result = await albedo.tx({
+    const signedXDR = await albedo.tx({
       xdr: trx.toXDR(),
     });
 
-    console.log(result);
+    const transaction = StellarSDK.TransactionBuilder.fromXDR(
+      signedXDR.signed_envelope_xdr,
+      process.env.REACT_APP_HORIZON,
+    );
 
-    return result.result.hash;
-  } catch (error) {
-    throw new Error(extractErrorText({
-      response: {
-        data: error.ext,
+    openModalAction({
+      modalProps: {
+        hasClose: false,
       },
-    }, {}));
+      content: <WaitingContent message="Sending to network" />,
+    });
+
+    const result = await server.submitTransaction(transaction);
+    return result.hash;
+  } catch (error) {
+    throw new Error(extractErrorText(error));
   }
 }

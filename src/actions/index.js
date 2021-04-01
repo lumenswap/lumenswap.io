@@ -12,6 +12,7 @@ const actionTypes = {
   },
   userBalance: {
     SET: 'userBalance/SET',
+    CLEAR: 'userBalance/CLEAR',
   },
   userCustomTokens: {
     ADD: 'userCustomTokens/ADD',

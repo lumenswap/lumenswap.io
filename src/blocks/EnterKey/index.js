@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import Submitting from 'components/Submitting';
 import getPubFromPv from 'helpers/getPubFromPv';
 import { fetchAccountTokenList } from 'api/stellar';
-import setUserBalance from 'actions/userBalance';
+import { setUserBalance } from 'actions/userBalance';
 import userLogin from 'actions/user/login';
 import { loginTypes } from 'reducers/user';
 import { closeModalAction } from 'actions/modal';

@@ -2,7 +2,7 @@ import { Route, Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import LModal from 'pages/LModal';
-import setUserBalance from 'actions/userBalance';
+import { setUserBalance } from 'actions/userBalance';
 import { fetchAccountTokenList } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
 import history from './history';
