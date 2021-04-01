@@ -3,7 +3,7 @@ import extractErrorText from 'helpers/extractErrorText';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function signWithLedger(trx) {
+export default async function signWithRabet(trx) {
   try {
     const signedTrx = await global.rabet.sign(
       trx.toXDR(),

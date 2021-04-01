@@ -1,15 +1,13 @@
 import albedo from '@albedo-link/intent';
 import extractErrorText from 'helpers/extractErrorText';
-import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 
-export default async function signWithAlbedo() {
+export default async function signWithAlbedo(trx) {
   try {
-    const trx = await generateSwapTRX({});
-
     const result = await albedo.tx({
       xdr: trx.toXDR(),
-      submit: true,
     });
+
+    console.log(result);
 
     return result.result.hash;
   } catch (error) {

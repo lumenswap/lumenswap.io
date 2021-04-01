@@ -10,8 +10,8 @@ import WaitingContent from 'blocks/WaitingContent';
 import store from 'store';
 import isSameAsset from 'helpers/isSameAsset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
-import signWithPrivateKey from 'walletIntegeration/sign/signWithPrivateKey';
 import TransactionResponse from 'blocks/TransactionResponse';
+import signForThem from 'walletIntegeration/signForThem';
 import styles from './styles.module.scss';
 
 const ConfirmSwap = ({ data }) => {
@@ -21,7 +21,7 @@ const ConfirmSwap = ({ data }) => {
 
   useEffect(() => {
     setLoading(true);
-    fetchMarketPrice(data.from.asset, data.to.asset).then((counterPrice) => {
+    fetchMarketPrice(data.from.asset.details, data.to.asset.details).then((counterPrice) => {
       if (counterPrice) {
         setMarketPrice(counterPrice);
       }
@@ -67,18 +67,53 @@ const ConfirmSwap = ({ data }) => {
 
     const storeData = store.getState();
     const found = storeData.userBalance.find((i) => isSameAsset(i.asset, data.to.asset.details));
-    const trx = await generateSwapTRX({
-      checkout: {
-        ...data,
-        fromAddress: storeData.user.detail.address,
-        toAddress: storeData.user.detail.address,
-      },
-      needToTrust: !found,
-    });
-    const trxHash = await signWithPrivateKey(trx, storeData.user.detail.privateKey);
+
+    let trx;
+    try {
+      trx = await generateSwapTRX({
+        checkout: {
+          ...data,
+          fromAddress: storeData.user.detail.address,
+          toAddress: storeData.user.detail.address,
+        },
+        needToTrust: !found,
+      });
+    } catch (e) {
+      console.error(e);
+      openModalAction({
+        modalProps: {},
+        content: <TransactionResponse
+          message="Failed to generate your swap transaction"
+          status="failed"
+          title="Failed"
+        />,
+      });
+    }
+
+    let trxHash;
+    try {
+      trxHash = await signForThem(trx);
+    } catch (e) {
+      openModalAction({
+        modalProps: {},
+        content: <TransactionResponse
+          message={e.message}
+          status="failed"
+          title="Failed"
+        />,
+      });
+    }
+
     openModalAction({
       modalProps: {},
-      content: <TransactionResponse message={trxHash} status="success" />,
+      content: <TransactionResponse
+        message={trxHash}
+        status="success"
+        title="Success Transaction"
+        btnText="View on Explorer"
+        btnType="link"
+        btnLink={`${process.env.REACT_APP_LUMENSCAN_URL}/txns/${trxHash}`}
+      />,
     });
   }
 

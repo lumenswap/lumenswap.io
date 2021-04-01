@@ -17,7 +17,7 @@ export default function LCurrencyInput({
 }) {
   function setCurrency(asset) {
     onChange({ ...value, asset });
-    originChange(value.amount);
+    originChange(getFormValues().from.amount);
   }
 
   function setMaxBalance() {

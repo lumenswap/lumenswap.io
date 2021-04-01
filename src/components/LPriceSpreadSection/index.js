@@ -19,11 +19,12 @@ export default function LPriceSpreadSection({
 
   useEffect(() => {
     setLoading(true);
-    fetchMarketPrice(formValues.from.asset, formValues.to.asset).then((counterPrice) => {
-      if (counterPrice) {
-        setMarketPrice(counterPrice);
-      }
-    }).finally(() => setLoading(false));
+    fetchMarketPrice(formValues.from.asset.details, formValues.to.asset.details)
+      .then((counterPrice) => {
+        if (counterPrice) {
+          setMarketPrice(counterPrice);
+        }
+      }).finally(() => setLoading(false));
   }, [
     formValues.from.asset.details.getCode(),
     formValues.from.asset.details.getIssuer(),

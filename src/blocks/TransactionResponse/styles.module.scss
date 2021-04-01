@@ -38,3 +38,26 @@
     margin-left: 11px;
   }
 }
+
+.btnLink {
+  background-color: $BlueRibbon;
+  border: 1px solid $BlueRibbon;
+  color: white;
+  display: flex;
+  border-radius: 8px;
+  box-shadow: 0 9px 40px -4px rgba(15, 48, 168, 0.18);
+  transition: 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 178px;
+  height: 40px;
+  font-size: 14px;
+  font-family: SofiaPro-SemiBold;
+  margin: 22px auto 32px auto;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}

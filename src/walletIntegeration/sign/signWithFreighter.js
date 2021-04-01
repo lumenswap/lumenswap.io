@@ -4,7 +4,7 @@ import { signTransaction } from '@stellar/freighter-api';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function signWithLedger(trx) {
+export default async function signWithFreighter(trx) {
   try {
     const signedXDR = await signTransaction(trx.toXDR());
     const transaction = StellarSDK.TransactionBuilder.fromXDR(
