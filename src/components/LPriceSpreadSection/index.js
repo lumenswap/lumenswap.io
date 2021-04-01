@@ -33,7 +33,7 @@ export default function LPriceSpreadSection({
   ]);
 
   const calculatedMin = new BN(estimatedPrice)
-    .times(new BN(1).minus(new BN(value).div(100)));
+    .times(new BN(1).minus(new BN(value || 0).div(100)));
   const priceImpact = new BN(1)
     .minus(new BN(estimatedPrice).div(new BN(marketPrice).times(formValues.from.amount)))
     .times(100);
@@ -78,15 +78,26 @@ export default function LPriceSpreadSection({
           <button
             type="button"
             className={classNames(isActive(2), styles.custom)}
-            onClick={(e) => {
+            onClick={() => {
               setActive(2);
-              onChange(e.target.value || 0);
-            }}
-            onChange={(e) => {
-              onChange(e.target.value || 0);
+              onChange(value);
             }}
           >
-            <input type="number" name="custom" placeholder="custom" />
+            <input
+              name="custom"
+              placeholder="custom"
+              value={active !== 2 ? '' : value}
+              onChange={(e) => {
+                e.preventDefault();
+
+                const number = new BN(e.target.value);
+                if (!number.isNaN()) {
+                  onChange(e.target.value);
+                } else if (e.target.value === '') {
+                  onChange(null);
+                }
+              }}
+            />
             %
           </button>
         </div>

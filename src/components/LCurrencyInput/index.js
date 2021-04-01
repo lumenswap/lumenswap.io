@@ -40,8 +40,10 @@ export default function LCurrencyInput({
     >
       <input
         placeholder="0.0"
-        value={value.amount}
+        value={value.amount || ''}
         onChange={(e) => {
+          e.preventDefault();
+
           const number = new BN(e.target.value);
           if (!number.isNaN()) {
             onChange({ ...value, amount: e.target.value });
