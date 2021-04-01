@@ -11,7 +11,6 @@ build:
   resource_group: $CI_PROJECT_NAME
   only:
     - master
-    - develop-v2
   stage: build
   script:
     - docker build -t $imageTag .
@@ -22,7 +21,6 @@ release package:
   resource_group: $CI_PROJECT_NAME
   only:
     - master
-    - develop-v2
   stage: package
   needs:
     - build
@@ -38,7 +36,7 @@ release package:
 deploy to demo:
   resource_group: $CI_PROJECT_NAME
   only:
-    - develop-v2
+    - master
   stage: deploy-demo
   needs:
     - release package
