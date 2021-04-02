@@ -20,6 +20,7 @@ const SelectAsset = ({
   setCurrency,
   getFormValues,
   swapFromWithTo,
+  changeToAsset,
 }) => {
   const userBalance = useSelector((state) => state.userBalance);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
@@ -88,6 +89,7 @@ const SelectAsset = ({
         onChange={(e) => {
           setSearchQuery(e.target.value);
         }}
+        autoFocus
       />
       <div className={classNames('invisible-scroll', styles.scroll)}>
         {enrichedTokens.length === 0
@@ -124,7 +126,7 @@ const SelectAsset = ({
           setShow(false);
           openModalAction({
             modalProps: { title: 'Add custom asset' },
-            content: <AddAsset />,
+            content: <AddAsset changeToAsset={changeToAsset} />,
           });
         }}
       >

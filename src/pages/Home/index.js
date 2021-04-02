@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
 import ModalDialog from 'components/ModalDialog';
@@ -14,6 +14,11 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
+import isSameAsset from 'helpers/isSameAsset';
+import AddAsset from 'blocks/AddAsset';
+import minimizeAddress from 'helpers/minimizeAddress';
+import questionLogo from 'assets/images/question.png';
 import styles from './styles.module.scss';
 import ExchangeRate from './ExchangeRate';
 import SwapButton from './SwapButton';
@@ -24,6 +29,8 @@ const Home = () => {
   const [estimatedPrice, setEstimatedPrice] = useState(0);
   const [paths, setPaths] = useState([]);
   const isLogged = useSelector((state) => state.user.logged);
+  const userCustomTokens = useSelector((state) => state.userCustomTokens);
+  const location = useLocation();
 
   const {
     handleSubmit, control, setValue, getValues, watch,
@@ -125,6 +132,35 @@ const Home = () => {
     changeFromInput(formValues.to.amount);
   }
 
+  function changeToAsset(asset) {
+    const formValues = getValues();
+    setValue('to', { asset, amount: formValues.to.amount });
+  }
+
+  const appLoaded = useSelector((state) => state._persist.rehydrated);
+
+  useEffect(() => {
+    const extracted = location.search.slice(1).split('-');
+    const found = userCustomTokens
+      .find((i) => isSameAsset(i, getAssetDetails({ code: extracted[0], issuer: extracted[1] })));
+    if (location.pathname === '/swap' && location.search && !found && appLoaded) {
+      openModalAction({
+        modalProps: { title: 'Add custom asset' },
+        content: <AddAsset changeToAsset={changeToAsset} />,
+      });
+    } else if (found && appLoaded) {
+      changeToAsset({
+        details: found,
+        web: minimizeAddress(found.getIssuer()),
+        logo: questionLogo,
+      });
+    }
+  }, [
+    location.pathname,
+    location.search,
+    appLoaded,
+  ]);
+
   const showAdvanced = !(new BN(watch('from').amount).isNaN()) && !(new BN(watch('from').amount).isEqualTo(0));
 
   return (
@@ -146,6 +182,7 @@ const Home = () => {
                     originChange={changeFromInput}
                     getFormValues={getValues}
                     swapFromWithTo={swapFromWithTo}
+                    changeToAsset={changeToAsset}
                   />
                 )}
               />
@@ -163,6 +200,7 @@ const Home = () => {
                     originChange={changeFromInput}
                     getFormValues={getValues}
                     swapFromWithTo={swapFromWithTo}
+                    changeToAsset={changeToAsset}
                   />
                 )}
               />

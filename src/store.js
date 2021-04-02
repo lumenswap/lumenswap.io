@@ -24,7 +24,7 @@ const store = createStore(
   persistedReducer,
 );
 
-persistStore(store);
+export const presistedStore = persistStore(store);
 
 if (process.env.NODE_ENV !== 'production') {
   global.store = store;

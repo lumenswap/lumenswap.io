@@ -15,6 +15,7 @@ export default function LCurrencyInput({
   originChange,
   getFormValues,
   swapFromWithTo,
+  changeToAsset,
 }) {
   const isLogged = useSelector((state) => state.user.logged);
 
@@ -40,6 +41,7 @@ export default function LCurrencyInput({
       setCurrency={setCurrency}
       getFormValues={getFormValues}
       swapFromWithTo={swapFromWithTo}
+      changeToAsset={changeToAsset}
     >
       <input
         placeholder="0.0"
@@ -57,7 +59,7 @@ export default function LCurrencyInput({
           }
         }}
       />
-      {showMax && isLogged && <Button variant="secondary" content="Max" className={styles.max} onClick={setMaxBalance} />}
+      {showMax && isLogged && <Button variant="secondary" content="MAX" className={styles.max} onClick={setMaxBalance} />}
     </CurrencyInput>
   );
 }

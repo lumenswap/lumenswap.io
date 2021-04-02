@@ -1,13 +1,11 @@
-import { Route, Router } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import LModal from 'pages/LModal';
 import { setUserBalance } from 'actions/userBalance';
 import { fetchAccountTokenList } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
-import history from './history';
 import Home from './pages/Home';
-import Demo from './pages/Demo';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -24,11 +22,11 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <LModal />
-        <Router history={history}>
+        <BrowserRouter>
+          <LModal />
           <Route exact path="/" component={Home} />
-          <Route exact path="/demo" component={Demo} />
-        </Router>
+          <Route exact path="/swap" component={Home} />
+        </BrowserRouter>
       </div>
     </Provider>
   );

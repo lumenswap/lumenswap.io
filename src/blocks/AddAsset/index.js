@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import Input from 'components/Input';
@@ -11,18 +11,30 @@ import store from 'store';
 import isSameAsset from 'helpers/isSameAsset';
 import pureTokens from 'helpers/pureTokens';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
+import { closeModalAction } from 'actions/modal';
+import minimizeAddress from 'helpers/minimizeAddress';
+import questionLogo from 'assets/images/question.png';
+import { useLocation } from 'react-router';
 import styles from './styles.module.scss';
 
-const AddAsset = () => {
+const AddAsset = ({ changeToAsset }) => {
   const [loadingTimer, setLoadingTimer] = useState(false);
   const {
-    register, handleSubmit, formState, getValues, errors, trigger,
+    register, handleSubmit, formState, getValues, errors, trigger, setValue,
   } = useForm({
     mode: 'onChange',
   });
+  const location = useLocation();
 
   const onSubmit = (data) => {
-    addCustomTokenAction(getAssetDetails({ code: data.code, issuer: data.issuer }));
+    const asset = getAssetDetails({ code: data.code, issuer: data.issuer });
+    addCustomTokenAction(asset);
+    changeToAsset({
+      details: asset,
+      web: minimizeAddress(asset.getIssuer()),
+      logo: questionLogo,
+    });
+    closeModalAction();
   };
 
   async function customValidator() {
@@ -56,6 +68,15 @@ const AddAsset = () => {
     return false;
   }
 
+  useEffect(() => {
+    const extracted = location.search.slice(1).split('-');
+    if (location.pathname === '/swap' && location.search) {
+      setValue('code', extracted[0]);
+      setValue('issuer', extracted[1]);
+      trigger();
+    }
+  }, [location.pathname, location.search]);
+
   const showError = errors?.code?.message || errors?.issuer?.message;
 
   return (
@@ -73,6 +94,8 @@ const AddAsset = () => {
             required: true,
             validate: customValidator,
           })}
+          autoFocus
+          input={{ autoComplete: 'off ' }}
         />
       </div>
       <div className="form-group mb-0">
@@ -88,6 +111,7 @@ const AddAsset = () => {
             required: true,
             validate: customValidator,
           })}
+          input={{ autoComplete: 'off ' }}
         />
       </div>
       <Button
