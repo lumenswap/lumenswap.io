@@ -13,6 +13,8 @@ import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import TransactionResponse from 'blocks/TransactionResponse';
 import signForThem from 'walletIntegeration/signForThem';
 import { loginTypes } from 'reducers/user';
+import ColorizedPriceImpact from 'pages/Home/ColorizedPriceImpact';
+import appConsts from 'appConsts';
 import styles from './styles.module.scss';
 
 const ConfirmSwap = ({ data }) => {
@@ -106,7 +108,7 @@ const ConfirmSwap = ({ data }) => {
         />,
       });
     } catch (e) {
-      console.log('dude', e);
+      console.error(e);
       openModalAction({
         modalProps: {},
         content: <TransactionResponse
@@ -137,7 +139,6 @@ const ConfirmSwap = ({ data }) => {
       <div className={styles.info}>
         <div className={styles.container}>
           <div className={styles.label}>Price
-            <Tooltips id="price" text="helooo1"><span className="icon-question-circle" /></Tooltips>
           </div>
           <div className={styles.value}>1 {leftSide} = {sevenDigit(pricePer)} {rightSide}
             <span className="icon-arrow-repeat" style={{ cursor: 'pointer' }} onClick={() => setReverse((i) => !i)} />
@@ -145,15 +146,15 @@ const ConfirmSwap = ({ data }) => {
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Minimum received
-            <Tooltips id="minimum" text="helooo2"><span className="icon-question-circle" /></Tooltips>
+            <Tooltips id="minimum" text={appConsts.tooltip.min}><span className="icon-question-circle" /></Tooltips>
           </div>
-          <div className={classNames(styles.value, styles.important)}>{loading ? 'Loading' : sevenDigit(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
+          <div className={classNames(styles.value)}>{loading ? 'Loading' : sevenDigit(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Price impact
-            <Tooltips id="impact" text="helooo3"><span className="icon-question-circle" /></Tooltips>
+            <Tooltips id="impact" text={appConsts.tooltip.priceImpact}><span className="icon-question-circle" /></Tooltips>
           </div>
-          <div className={styles.value}>{finalPriceImpact.toFixed(1)}%</div>
+          <div className={styles.value}><ColorizedPriceImpact impact={finalPriceImpact} /></div>
         </div>
         <Button
           htmlType="submit"

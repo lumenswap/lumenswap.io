@@ -90,13 +90,13 @@ const Initializing = ({ loginMethod }) => {
         </div>
       )}
 
-      <button type="button" className={styles.btn}>
+      <div className={styles.btn}>
         <div className="d-flex flex-column text-left">
           <span className={styles.name}>{wallet}</span>
           <span className={styles.msg}>{walletDesc}</span>
         </div>
         <img src={walletIcon} width={22} alt="icon" />
-      </button>
+      </div>
     </div>
   );
 };

@@ -26,7 +26,7 @@ const Home = () => {
   const isLogged = useSelector((state) => state.user.logged);
 
   const {
-    handleSubmit, control, setValue, getValues,
+    handleSubmit, control, setValue, getValues, watch,
   } = useForm({
     defaultValues: {
       from: {
@@ -125,6 +125,8 @@ const Home = () => {
     changeFromInput(formValues.to.amount);
   }
 
+  const showAdvanced = !(new BN(watch('from').amount).isNaN()) && !(new BN(watch('from').amount).isEqualTo(0));
+
   return (
     <div className="container-fluid">
       <Header />
@@ -170,21 +172,23 @@ const Home = () => {
                 <ConfirmSwap />
               </ModalDialog>
             </div>
-            <div className={styles['swap-info']}>
-              <Controller
-                name="priceSpread"
-                control={control}
-                render={(props) => (
-                  <LPriceSpreadSection
-                    {...props}
-                    control={control}
-                    estimatedPrice={estimatedPrice}
-                    paths={paths}
-                    upperLoading={loading}
-                  />
-                )}
-              />
-            </div>
+            {showAdvanced && (
+              <div className={styles['swap-info']}>
+                <Controller
+                  name="priceSpread"
+                  control={control}
+                  render={(props) => (
+                    <LPriceSpreadSection
+                      {...props}
+                      control={control}
+                      estimatedPrice={estimatedPrice}
+                      paths={paths}
+                      upperLoading={loading}
+                    />
+                  )}
+                />
+              </div>
+            )}
           </form>
         </div>
       </div>

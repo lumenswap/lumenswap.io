@@ -3,10 +3,9 @@ import {
   getPublicKey,
 } from '@stellar/freighter-api';
 
-export default async function loginWithFreighter() {
+export default function loginWithFreighter() {
   if (isConnected()) {
-    const publicKey = await getPublicKey();
-    return { publicKey };
+    return getPublicKey();
   }
 
   throw new Error('You do not have Freighter');

@@ -55,6 +55,7 @@ const EnterKey = () => {
               return false;
             },
           })}
+          input={{ autoComplete: 'off' }}
         />
       </div>
       <Button

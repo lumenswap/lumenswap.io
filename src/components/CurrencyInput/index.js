@@ -19,6 +19,7 @@ const CurrencyInput = ({
   const [show, setShow] = useState(false);
   const userBalance = useSelector((state) => state.userBalance);
   const foundBalance = userBalance.find((item) => isSameAsset(currentCurrency.details, item.asset));
+  const isLogged = useSelector((state) => state.user.logged);
 
   return (
     <div className={styles.card}>
@@ -27,9 +28,7 @@ const CurrencyInput = ({
           {label}
         </div>
         <div className={styles.balance}>
-          Balance:
-          {' '}
-          {foundBalance ? sevenDigit(foundBalance.balance) : '0'}
+          {isLogged ? `Balance: ${foundBalance ? sevenDigit(foundBalance.balance) : '0'}` : null}
         </div>
       </div>
       <div className={classNames('input-group', styles['input-group'])}>

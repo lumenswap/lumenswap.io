@@ -5,6 +5,8 @@ import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'helpers/fetchMarketPrice';
 import sevenDigit from 'helpers/sevenDigit';
+import ColorizedPriceImpact from 'pages/Home/ColorizedPriceImpact';
+import appConsts from 'appConsts';
 import styles from './styles.module.scss';
 
 export default function LPriceSpreadSection({
@@ -47,19 +49,19 @@ export default function LPriceSpreadSection({
     <div className={styles.card}>
       <div className={styles.container}>
         <div className={styles.label}>Minimum received
-          <Tooltips id="minimum" text="Minimum received"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="minimum" text={appConsts.tooltip.min}><span className="icon-question-circle" /></Tooltips>
         </div>
         <div className={styles.info}>{loading || upperLoading ? 'Loading' : sevenDigit(calculatedMin.toString())}</div>
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Price impact
-          <Tooltips id="price" text="Price imapct"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="price" text={appConsts.tooltip.priceImpact}><span className="icon-question-circle" /></Tooltips>
         </div>
-        <div className={styles.info}>{loading || upperLoading ? 'Loading' : `${finalPriceImpact.toFixed(1)}%`}</div>
+        <div className={styles.info}>{loading || upperLoading ? 'Loading' : <ColorizedPriceImpact impact={finalPriceImpact} />}</div>
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Slippage tolerance
-          <Tooltips id="tolerance" text="Slippage tolerance"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="tolerance" text={appConsts.tooltip.spread}><span className="icon-question-circle" /></Tooltips>
         </div>
         <div className={styles['button-group']}>
           {tolerances.slice(0, tolerances.length + 1).map((item, index) => (
@@ -104,7 +106,7 @@ export default function LPriceSpreadSection({
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Path
-          <Tooltips id="path" text="path"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="path" text={appConsts.tooltip.path}><span className="icon-question-circle" /></Tooltips>
         </div>
         <div className={styles.path}>
           {[

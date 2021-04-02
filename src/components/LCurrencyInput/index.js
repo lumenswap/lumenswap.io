@@ -2,6 +2,7 @@ import Button from 'components/Button';
 import CurrencyInput from 'components/CurrencyInput';
 import BN from 'helpers/BN';
 import isSameAsset from 'helpers/isSameAsset';
+import { useSelector } from 'react-redux';
 import store from 'store';
 import styles from './styles.module.scss';
 
@@ -15,6 +16,8 @@ export default function LCurrencyInput({
   getFormValues,
   swapFromWithTo,
 }) {
+  const isLogged = useSelector((state) => state.user.logged);
+
   function setCurrency(asset) {
     onChange({ ...value, asset });
     originChange(getFormValues().from.amount);
@@ -54,7 +57,7 @@ export default function LCurrencyInput({
           }
         }}
       />
-      {showMax && <Button variant="secondary" content="Max" className={styles.max} onClick={setMaxBalance} />}
+      {showMax && isLogged && <Button variant="secondary" content="Max" className={styles.max} onClick={setMaxBalance} />}
     </CurrencyInput>
   );
 }

@@ -24,13 +24,14 @@ const SelectAsset = ({
   const userBalance = useSelector((state) => state.userBalance);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const [searchQuery, setSearchQuery] = useState(null);
+  const isLogged = useSelector((state) => state.user.logged);
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([
       getAssetDetails(XLM),
       // ...userBalance.map((i) => i.asset),
-      ...userCustomTokens,
       ...defaultTokens.map((i) => getAssetDetails(i)),
+      ...userCustomTokens,
     ]).map((item) => {
       const foundToken = defaultTokens.find((tok) => isSameAsset(getAssetDetails(tok), item));
       const foundBalance = userBalance.find((balance) => isSameAsset(balance.asset, item));
@@ -89,38 +90,43 @@ const SelectAsset = ({
         }}
       />
       <div className={classNames('invisible-scroll', styles.scroll)}>
-        {enrichedTokens.map((asset) => (
-          <div className={styles.box} key={`${asset.details.getCode()}-${asset.details.getIssuer()}`} onClick={() => selectAsset(asset)}>
-            <div className="d-flex align-items-center">
-              {asset.logo ? <img src={asset.logo} alt="logo" width={22} height={22} />
-                : <div className={styles.circle}><span className="icon-question-circle" /></div>}
-              <div className={styles.info}>
-                <h6 className={styles.text}>
-                  {asset.details.getCode()}
-                  {asset.type === 'custom' && (
-                  <span onClick={(e) => {
-                    e.stopPropagation();
-                    removeCustomTokenAction(asset.details);
-                  }}
-                  >
-                    {' '}(delete)
-                  </span>
-                  )}
-                </h6>
-                <p className={styles.desc}>{asset.web}</p>
+        {enrichedTokens.length === 0
+          ? <p style={{ padding: 16 }}>There is no asset</p>
+          : enrichedTokens.map((asset) => (
+            <div className={styles.box} key={`${asset.details.getCode()}-${asset.details.getIssuer()}`} onClick={() => selectAsset(asset)}>
+              <div className="d-flex align-items-center">
+                {asset.logo ? <img src={asset.logo} alt="logo" width={22} height={22} />
+                  : <div className={styles.circle}><span className="icon-question-circle" /></div>}
+                <div className={styles.info}>
+                  <h6 className={styles.text}>
+                    {asset.details.getCode()}
+                    {asset.type === 'custom' && (
+                    <span onClick={(e) => {
+                      e.stopPropagation();
+                      removeCustomTokenAction(asset.details);
+                    }}
+                    >
+                      {' '}(delete)
+                    </span>
+                    )}
+                  </h6>
+                  <p className={styles.desc}>{asset.web}</p>
+                </div>
               </div>
+              <div className={styles.text}>{isLogged && sevenDigit(asset.balance)}</div>
             </div>
-            <div className={styles.text}>{sevenDigit(asset.balance)}</div>
-          </div>
-        ))}
+          ))}
       </div>
       <button
         type="submit"
         className={styles.submit}
-        onClick={() => openModalAction({
-          modalProps: { title: 'Add custom asset' },
-          content: <AddAsset />,
-        })}
+        onClick={() => {
+          setShow(false);
+          openModalAction({
+            modalProps: { title: 'Add custom asset' },
+            content: <AddAsset />,
+          });
+        }}
       >
         <span
           className="icon-plus-circle mr-2"

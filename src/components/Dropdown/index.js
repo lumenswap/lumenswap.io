@@ -52,7 +52,7 @@ const CustomDropdown = ({
           style={{ height: `${height}`, width: `${width}` }}
           className={styles.hover}
         >
-          <img src={walletIcon} /> {minimizeAddress(userAddress)}
+          <img src={walletIcon} style={{ marginRight: 8 }} /> {minimizeAddress(userAddress)}
         </Dropdown.Toggle>
         <Dropdown.Menu style={styleSheet.div} show={show}>
           <Dropdown.Item eventKey={0}>

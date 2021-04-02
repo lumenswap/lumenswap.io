@@ -16,8 +16,6 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
     networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
-  console.log('hereeeeee', checkout.to.asset.details.isNative(), (needToTrust || forceTrust) && !checkout.to.asset.details.isNative());
-
   if ((needToTrust || forceTrust) && !checkout.to.asset.details.isNative()) {
     transaction = transaction.addOperation(
       StellarSDK.Operation.changeTrust({

@@ -14,7 +14,7 @@ const Header = () => {
       <ul className={styles.list}>
         <li><Link to="/"><Logo /></Link></li>
         <li><Link to="/">Swap</Link></li>
-        <li><Link to="/">Stats <span className="icon-external" /></Link></li>
+        {/* <li><Link to="/">Stats <span className="icon-external" /></Link></li> */}
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
         : <Button variant="secondary" content="Connect Wallet" className={styles.btn} onClick={openConnectModal} /> }
