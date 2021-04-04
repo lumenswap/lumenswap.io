@@ -51,7 +51,15 @@ export default function LPriceSpreadSection({
         <div className={styles.label}>Minimum received
           <Tooltips id="minimum" text={appConsts.tooltip.min}><span className="icon-question-circle" /></Tooltips>
         </div>
-        <div className={styles.info}>{loading || upperLoading ? 'Loading' : sevenDigit(calculatedMin.toString())}</div>
+        <div className={styles.info}>
+          {loading || upperLoading
+            ? 'Loading'
+            : (
+              <>
+                {`${sevenDigit(calculatedMin.toString())} ${formValues.to.asset.details.getCode()}`}
+              </>
+            )}
+        </div>
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Price impact

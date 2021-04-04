@@ -1,7 +1,7 @@
 import rabetIcon from 'assets/images/rabet.svg';
 import privateKeyIcon from 'assets/images/keyword.svg';
 import albedoIcon from 'assets/images/albedo.svg';
-import ledgerIcon from 'assets/images/ledger.svg';
+// import ledgerIcon from 'assets/images/ledger.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import EnterKey from 'blocks/EnterKey';
@@ -14,14 +14,6 @@ import styles from './styles.module.scss';
 const ConnectWallet = () => {
   const items = [
     {
-      icon: freighterIcon,
-      iconSize: '16',
-      text: 'Freighter',
-      loginMethod: loginTypes.FREIGHTER,
-      validator: validateFreighterPresent,
-      link: 'https://www.freighter.app',
-    },
-    {
       icon: rabetIcon,
       iconSize: '14',
       text: 'Rabet',
@@ -30,12 +22,20 @@ const ConnectWallet = () => {
       link: 'https://rabet.io',
     },
     {
-      icon: ledgerIcon,
-      iconSize: '18',
-      text: 'Ledger',
-      loginMethod: loginTypes.LEDGER_S,
-      validator: () => true,
+      icon: freighterIcon,
+      iconSize: '16',
+      text: 'Freighter',
+      loginMethod: loginTypes.FREIGHTER,
+      validator: validateFreighterPresent,
+      link: 'https://www.freighter.app',
     },
+    // {
+    //   icon: ledgerIcon,
+    //   iconSize: '18',
+    //   text: 'Ledger',
+    //   loginMethod: loginTypes.LEDGER_S,
+    //   validator: () => true,
+    // },
     {
       icon: albedoIcon,
       iconSize: '18',
