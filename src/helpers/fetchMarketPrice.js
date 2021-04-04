@@ -31,7 +31,7 @@ export default function fetchMarketPrice(fromAsset, toAsset) {
     ...fromPart,
     ...toPart,
   })
-    .then((res) => new BN(res.destination_amount).times(10 * 7).toString())
+    .then((res) => new BN(res.destination_amount).times(10 * 4).toString())
     .catch((e) => {
       console.error(e);
       return 0;
