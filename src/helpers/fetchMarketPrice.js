@@ -27,7 +27,7 @@ export default function fetchMarketPrice(fromAsset, toAsset) {
   }
 
   return getSendEstimatedValueAPI({
-    source_amount: new BN(1).div(10 * 7).toString(),
+    source_amount: new BN(1).div(10 * 4).toString(),
     ...fromPart,
     ...toPart,
   })
