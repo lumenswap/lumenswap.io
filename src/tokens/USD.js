@@ -1,4 +1,4 @@
-import logo from './images/usdx.png';
+import logo from './images/usd.png';
 
 export default {
   code: 'USD',

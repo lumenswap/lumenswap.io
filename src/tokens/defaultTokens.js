@@ -1,43 +1,33 @@
 import XLM from './XLM';
-import MOBI from './MOBI';
-import REPO from './REPO';
+import CNY from './CNY';
+import USDC from './USDC';
+import ARS from './ARS';
+import BRL from './BRL';
+import NGNT from './NGNT';
+import CENTUS from './CENTUS';
 import USD from './USD';
-// import CENTUS from './CENTUS';
+import EURT from './EURT';
+import SLT from './SLT';
+import RMT from './RMT';
+import TERN from './TERN';
+import USDT from './USDT';
 import BTC from './BTC';
 import ETH from './ETH';
-import SLVR from './SLVR';
-import GOLD from './GOLD';
-import PALL from './PALL';
-import LTC from './LTC';
-import NGNT from './NGNT';
-import CNY from './CNY';
-import USDT from './USDT';
-import AFR from './AFR';
-import DEB from './DEB';
-import USDC from './USDC';
-import KTHOUSE from './KTHOUSE';
-import SLT from './SLT';
-import EURT from './EURT';
 
 export default [
   XLM,
   USDC,
-  MOBI,
+  CNY,
+  ARS,
+  BRL,
+  NGNT,
+  CENTUS,
   USD,
-  // CENTUS,
+  EURT,
+  SLT,
+  RMT,
+  TERN,
+  USDT,
   BTC,
   ETH,
-  REPO,
-  USDT,
-  SLVR,
-  GOLD,
-  PALL,
-  LTC,
-  NGNT,
-  CNY,
-  AFR,
-  DEB,
-  KTHOUSE,
-  SLT,
-  EURT,
 ];
