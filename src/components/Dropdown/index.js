@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dropdown } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 import classNames from 'classnames';
 import logout from 'actions/user/logout';
 import { clearUserBalance } from 'actions/userBalance';
@@ -13,17 +13,8 @@ import freighterIcon from 'assets/images/freighter.svg';
 import { loginTypes } from 'reducers/user';
 import styles from './styles.module.scss';
 
-const CustomDropdown = ({
-  width, height, className,
-}) => {
+const CustomDropdown = ({ className }) => {
   const [show, setShow] = useState(false);
-  const styleSheet = {
-    div: {
-      minWidth: `${width}`,
-      width: `${width}`,
-      marginTop: '1px',
-    },
-  };
   const user = useSelector((state) => state.user);
   const userAddress = user.detail.address;
   const loginMethod = user.loginType;
@@ -42,40 +33,39 @@ const CustomDropdown = ({
 
   return (
     <div className={classNames(styles.dropdown, className)}>
-      <Dropdown
-        style={{ width: `${width}` }}
+      <NavDropdown
+        title={(
+          <>
+            <img
+              src={walletIcon}
+              style={{ marginRight: 8 }}
+            /> {minimizeAddress(userAddress)}
+          </>
+        )}
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
+        show={show}
+        className={show && styles.hover}
+        id="language-switcher-container"
       >
-        <Dropdown.Toggle
-          id="dropdown-basic"
-          style={{ height: `${height}`, width: `${width}` }}
-          className={styles.hover}
+        <NavDropdown.Item eventKey={0}>
+          <span className="icon-copy" />Copy address
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey={1} href={`${process.env.REACT_APP_LUMENSCAN_URL}/account/${userAddress}`} target="_blank">
+          <span className="icon-earth" />
+          Open in lumenscan
+          <span className="icon-external" />
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          eventKey={2}
+          onClick={() => {
+            clearUserBalance();
+            logout();
+          }}
         >
-          <img src={walletIcon} style={{ marginRight: 8 }} /> {minimizeAddress(userAddress)}
-        </Dropdown.Toggle>
-        <Dropdown.Menu style={styleSheet.div} show={show}>
-          <Dropdown.Item eventKey={0}>
-            <span className="icon-copy" />Copy address
-          </Dropdown.Item>
-          <Dropdown.Item eventKey={1}>
-            <a href={`${process.env.REACT_APP_LUMENSCAN_URL}/account/${userAddress}`} target="_blank" rel="noreferrer">
-              <span className="icon-earth" />
-              Open in lumenscan
-              <span className="icon-external" />
-            </a>
-          </Dropdown.Item>
-          <Dropdown.Item
-            eventKey={2}
-            onClick={() => {
-              clearUserBalance();
-              logout();
-            }}
-          >
-            <span className="icon-shutdown" style={{ fontSize: '13px' }} />Disconnect
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+          <span className="icon-shutdown" style={{ fontSize: '13px' }} />Disconnect
+        </NavDropdown.Item>
+      </NavDropdown>
     </div>
   );
 };

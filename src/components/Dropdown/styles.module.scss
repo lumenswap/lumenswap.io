@@ -2,36 +2,37 @@
 
 .dropdown {
   position: relative;
+  display: flex;
 
-  button {
+  :global(.dropdown-toggle) {
     text-align: left;
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 14px !important;
+    color: $CodGray;
     border-radius: 4px;
+    background-color: transparent;
+    border: 1px solid $DarkAthensGray;
+    padding-right: 14px;
+    padding-left: 14px;
+    height: 36px;
 
     svg {
       margin-right: 8px;
     }
   }
 
-  button::after {
-    right: 16px;
+  :global(.dropdown-toggle)::after {
     content: "\e900";
     font-family: 'icomoon' !important;
-    border: none;
-    font-size: 9px;
+    border: none !important;
+    font-size: 10px;
     color: $CodGray;
-    margin-left: auto;
+    margin-left: 15px;
   }
 
-  button,
-  button:focus,
-  button:active {
-    box-shadow: none !important;
-    background: transparent !important;
-    border: 1px solid $Geyser !important;
-    color: $CodGray !important;
+  :global(.dropdown-menu) {
+    width: 100%;
   }
 
   :global(.dropdown-menu) {
@@ -40,7 +41,7 @@
     border: none;
     padding: 0;
 
-    a {
+    :global(.dropdown-item) {
       font-size: 12px;
       color: $CodGray;
       padding: 8px 12px !important;
@@ -59,34 +60,29 @@
       }
     }
 
-    a:hover {
+    :global(.dropdown-item):hover {
       background-color: $AthensGray;
     }
 
-    a:first-child {
+    :global(.dropdown-item):first-child {
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
     }
 
-    a:last-child {
+    :global(.dropdown-item):last-child {
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
     }
 
-    a:active {
+    :global(.dropdown-item):active {
       background: white !important;
       color: $CodGray !important;
     }
-
-  }
-}
-
-.dropdown:hover {
-  button {
-    background-color: white !important;
   }
 }
 
 .hover {
-  background-color: white !important;
+  :global(.dropdown-toggle) {
+    background-color: white;
+  }
 }
