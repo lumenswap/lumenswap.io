@@ -7,7 +7,7 @@ const Tooltips = ({
   <OverlayTrigger
     key={placement}
     placement={placement}
-    overlay={(<Tooltip id={'tooltip-'.concat(id)}>{text}</Tooltip>)}
+    overlay={(<Tooltip id={'tooltip-'.concat(id)} className={styles.tooltip}>{text}</Tooltip>)}
   >
     {children}
   </OverlayTrigger>
