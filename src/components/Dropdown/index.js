@@ -11,6 +11,7 @@ import albedoIcon from 'assets/images/albedo.svg';
 import ledgerIcon from 'assets/images/ledger.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import { loginTypes } from 'reducers/user';
+import copyText from 'helpers/copyText';
 import styles from './styles.module.scss';
 
 const CustomDropdown = ({ className }) => {
@@ -48,7 +49,13 @@ const CustomDropdown = ({ className }) => {
         className={show && styles.hover}
         id="language-switcher-container"
       >
-        <NavDropdown.Item eventKey={0}>
+        <NavDropdown.Item
+          eventKey={0}
+          onClick={() => {
+            setShow(false);
+            copyText(userAddress);
+          }}
+        >
           <span className="icon-copy" />Copy address
         </NavDropdown.Item>
         <NavDropdown.Item eventKey={1} href={`${process.env.REACT_APP_LUMENSCAN_URL}/account/${userAddress}`} target="_blank">
