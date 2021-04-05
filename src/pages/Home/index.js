@@ -89,7 +89,7 @@ const Home = () => {
       });
     }
 
-    if (amount === null) {
+    if (amount === null || new BN(amount).isEqualTo(0)) {
       setValue('to', {
         ...formValues.to,
         amount: '',
@@ -117,7 +117,7 @@ const Home = () => {
       });
     }
 
-    if (amount === null) {
+    if (amount === null || new BN(amount).isEqualTo(0)) {
       setValue('from', {
         ...formValues.from,
         amount: '',

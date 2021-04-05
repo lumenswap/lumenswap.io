@@ -12,7 +12,7 @@ export default function ColorizedPriceImpact({ impact }) {
     color = '#21B479';
   } else if (impact.isLessThan(20)) {
     color = '#F2754F';
-  } else if (impact.isLessThan(100)) {
+  } else {
     color = '#EA4949';
   }
 
