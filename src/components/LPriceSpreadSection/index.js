@@ -21,7 +21,11 @@ export default function LPriceSpreadSection({
 
   useEffect(() => {
     setLoading(true);
-    fetchMarketPrice(formValues.from.asset.details, formValues.to.asset.details)
+
+    fetchMarketPrice(
+      formValues.from.asset.details,
+      formValues.to.asset.details,
+    )
       .then((counterPrice) => {
         if (counterPrice) {
           setMarketPrice(counterPrice);
