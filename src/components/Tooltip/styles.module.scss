@@ -1,5 +1,9 @@
 @import "styles/vars";
 
+.tooltip {
+  font-size: 13px;
+}
+
 :global(.tooltip-inner) {
   background-color: white !important;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13) !important;
