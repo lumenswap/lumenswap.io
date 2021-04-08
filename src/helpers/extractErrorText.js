@@ -5,7 +5,7 @@ export default function extractErrorText(error) {
       : error.response.data.extras.result_codes.operations[0];
 
     if (code === 'op_under_dest_min') {
-      return 'Your order is too large to be processed by the network. Do you want to register it as an active order on the network?';
+      return 'This happens when the network cannot settle your request with the minimum received you set. Set the tolerance to 0.5% and try again.';
     }
     if (code === 'op_underfunded') {
       return 'You have not enough funds to send and still satisfy selling liabilities, Note that if sending XLM then the you must additionally maintain its minimum XLM reserve.';
