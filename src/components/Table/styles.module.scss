@@ -1,0 +1,97 @@
+@import 'styles/vars';
+
+.table {
+  margin-bottom: 0 !important;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+
+  thead th {
+    border: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+    font-weight: 500;
+    //color: @SpunPearl;
+    white-space: nowrap;
+    padding-left: 0;
+    border-radius: 6px;
+  }
+
+  tbody td {
+    border-top: none;
+    //background-color: @AthensGray;
+    font-weight: normal;
+    white-space: nowrap;
+    //color: @Shark;
+    font-size: 14px;
+    padding: 9px 0;
+  }
+
+  tbody tr td:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-left: 10px;
+  }
+
+  tbody tr td:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  thead tr th {
+    border-bottom: none !important;
+  }
+
+  tbody tr:first-child td {
+    border-top: none !important;
+    padding-top: 14px;
+  }
+
+  td a,
+  td a:hover {
+    text-decoration: none !important;
+    //color: @PersianBlue;
+  }
+}
+
+.td-status {
+  display: flex;
+  align-items: center;
+  margin-top: -4.5px;
+}
+
+.td-status::before {
+  content: '•';
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 4px;
+  margin-top: -1px;
+}
+
+.td-success {
+  //color: @Keppel!important;
+}
+
+.td-warn {
+  //color: @Tangerine!important;
+}
+
+.table-scroll {
+  overflow-x: scroll;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.table-scroll::-webkit-scrollbar {
+  height: 7px;
+  background-color: transparent;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  //background-color: @Gray;
+  cursor: pointer;
+}

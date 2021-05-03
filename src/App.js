@@ -6,6 +6,7 @@ import { setUserBalance } from 'actions/userBalance';
 import { fetchAccountTokenList } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
 import Home from './pages/Home';
+import Spot from './pages/Spot';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,6 +27,7 @@ function App() {
           <LModal />
           <Route exact path="/" component={Home} />
           <Route exact path="/swap" component={Home} />
+          <Route exact path="/spot" component={Spot} />
         </BrowserRouter>
       </div>
     </Provider>
