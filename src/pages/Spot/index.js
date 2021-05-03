@@ -4,10 +4,17 @@ import OrderList from 'components/OrderList';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
-const orderListItems = Array(34).fill({
+const orderListItems = Array(17).fill({
   data: ['0.001238', '97', '0.12009'],
   progress: 1,
-});
+  status: 'sell',
+}).concat(Array(17).fill(
+  {
+    data: ['0.001238', '92', '0.12009'],
+    progress: 1,
+    status: 'buy',
+  },
+));
 
 const Spot = () => (
   <div className="container-fluid">
@@ -20,7 +27,7 @@ const Spot = () => (
               headerItem={orderListHeader}
               rowItem={orderListItems}
               gapInfo={{
-                index: 18, status: 'sell', total: '0.001219', price: '$34.76',
+                index: 17, status: 'buy', total: '0.001219', price: '$34.76',
               }}
             />
           </div>

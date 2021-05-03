@@ -1,11 +1,4 @@
-.main-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  margin: 0;
-  justify-content: center;
-  align-items: center;
-}
+@import "styles/vars";
 
 .table-container {
   display: flex;
@@ -28,6 +21,7 @@
   padding: 1.5px 0;
   align-items: center;
   transition: all 0.15s ease-in-out;
+  color: $CodGray;
 }
 
 .row-item:first-child, .row-item:last-child {
@@ -35,15 +29,20 @@
   padding-left: 14px;
 }
 
+.sell .row-item:first-child, .sell.total {
+  color: $Rose;
+}
+
+.buy .row-item:first-child, .buy.total {
+  color: $Limeade;
+}
+
 //header
-.heading {
-  color: #3e3e3e;
+.heading .row-item {
+  color: $Manatee;
   font-weight: bold;
   white-space: nowrap;
   font-size: 10px;
-}
-
-.heading .row-item{
   justify-content: flex-end;
 }
 
@@ -61,6 +60,7 @@
   justify-content: flex-start;
 }
 
+// progress bar
 .progress {
   width: 100%;
   margin: 2px 0;
@@ -69,5 +69,26 @@
 .gap {
   padding: 13px 14px;
   font-size: 12px;
-  //background-color: red;
+  display: flex;
+  align-items: center;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  :global(.icon-arrow-down) {
+    margin-left: 4px;
+    margin-right: 7px;
+    display: block;
+  }
+}
+
+.buy.total {
+  :global(.icon-arrow-down) {
+    transform: scaleY(-1);
+  }
+}
+
+.price {
+  color: $Bombay;
 }

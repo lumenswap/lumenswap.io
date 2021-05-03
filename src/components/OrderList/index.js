@@ -4,6 +4,8 @@ import styles from './styles.module.scss';
 
 const OrderList = ({ headerItem, rowItem, gapInfo }) => {
   const randomProgress = () => Math.floor(Math.random() * 100) + 1;
+  const isForSell = (status) => status === 'sell';
+  const generateProgressStyle = (status) => `linear-gradient(to left, ${isForSell(status) ? '#f5dce6' : '#e8eedc'} ${randomProgress()}%, transparent 0%)`;
   return (
     <div className={styles['table-container']}>
       <div className={classNames(styles.heading, styles['table-row'])}>
@@ -13,20 +15,29 @@ const OrderList = ({ headerItem, rowItem, gapInfo }) => {
       </div>
       <div className={styles['table-body']}>
         {rowItem.map((row, rowIndex) => (
-          <>
+          <div key={`row-${rowIndex}`}>
             <div
-              className={styles.progress}
-              style={{ background: `linear-gradient(to left, #f5dce6 ${randomProgress()}%, transparent 0%)` }}
+              className={classNames(styles.progress,
+                isForSell(row.status) ? styles.sell : styles.buy)}
+              style={{ background: generateProgressStyle(row.status) }}
             >
-              <div className={styles['table-row']} key={rowIndex}>
+              <div className={styles['table-row']}>
                 {row.data.map((item, index) => (
-                  <div className={styles['row-item']} key={index}>{item}</div>
+                  <div className={styles['row-item']} key={`item-${index}`}>{item}</div>
                 ))}
               </div>
             </div>
-            {gapInfo.index === rowIndex
-            && <div className={styles.gap}>this is gap</div>}
-          </>
+            {(gapInfo.index - 1) === rowIndex && (
+            <div className={styles.gap}>
+              <span className={classNames(isForSell(gapInfo.status) ? styles.sell : styles.buy,
+                styles.total)}
+              >{gapInfo.total}
+                <span className="icon-arrow-down" />
+              </span>
+              <span className={styles.price}>{gapInfo.price}</span>
+            </div>
+            )}
+          </div>
         ))}
       </div>
     </div>
@@ -35,7 +46,7 @@ const OrderList = ({ headerItem, rowItem, gapInfo }) => {
 
 OrderList.propTypes = {
   headerItem: PropTypes.array.isRequired,
-  rowItem: PropTypes.object.isRequired,
+  rowItem: PropTypes.array.isRequired,
   gapInfo: PropTypes.object.isRequired,
 };
 
