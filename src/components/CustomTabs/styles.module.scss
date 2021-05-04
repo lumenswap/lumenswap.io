@@ -1,0 +1,21 @@
+@import "styles/vars";
+
+.tab {
+  :global(.nav-tab) {
+    border: 1px solid transparent;
+  }
+
+  :global(.nav-item) {
+    font-size: 12px;
+    color: $RollingStone;
+    background-color: transparent;
+  }
+
+  :global(.nav-link.active) {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    border-bottom: 2px solid $BlueRibbon !important;
+    color: $CodGray;
+    font-weight: bold;
+  }
+}

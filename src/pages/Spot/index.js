@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import Header from 'components/Header';
 import SpotList from 'components/SpotList';
+import CustomTabs from 'components/CustomTabs';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -22,6 +23,11 @@ const tradeListItems = Array(32).fill({
   status: 'buy',
 });
 
+// const tabData = [
+//   { title: 'Market Trades', id: 'market', content: '' },
+//   { title: 'My Trades', id: '', content: '' },
+// ];
+
 const Spot = () => (
   <div className="container-fluid">
     <Header />
@@ -41,6 +47,7 @@ const Spot = () => (
         </div>
         <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1">2</div>
         <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3">
+          <CustomTabs />
           <SpotList type="trade" headerItem={tradeListHeader} items={tradeListItems} />
         </div>
       </div>
