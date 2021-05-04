@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Header from 'components/Header';
-import OrderList from 'components/OrderList';
+import SpotList from 'components/SpotList';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -16,24 +16,33 @@ const orderListItems = Array(17).fill({
   },
 ));
 
+const tradeListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Time'];
+const tradeListItems = Array(32).fill({
+  data: ['0.001238', '92', '15:38:16'],
+  status: 'buy',
+});
+
 const Spot = () => (
   <div className="container-fluid">
     <Header />
     <div className="layout mt-4 other">
       <div className="row">
-        <div className="col-xl-3 col-md-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2">
           <div className={classNames(styles.card, styles['card-left'])}>
-            <OrderList
+            <SpotList
+              type="order"
               headerItem={orderListHeader}
-              rowItem={orderListItems}
+              items={orderListItems}
               gapInfo={{
                 index: 17, status: 'buy', total: '0.001219', price: '$34.76',
               }}
             />
           </div>
         </div>
-        <div className="col-xl-6 col-md-12">2</div>
-        <div className="col-xl-3 col-md-3 col-lg-6 col-md-6 col-sm-12 col-12">1</div>
+        <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1">2</div>
+        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3">
+          <SpotList type="trade" headerItem={tradeListHeader} items={tradeListItems} />
+        </div>
       </div>
     </div>
   </div>

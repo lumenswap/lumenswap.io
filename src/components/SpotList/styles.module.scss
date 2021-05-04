@@ -46,12 +46,19 @@
   color: $Manatee;
   font-weight: bold;
   white-space: nowrap;
-  font-size: 10px;
   justify-content: flex-end;
 }
 
 .heading .row-item:first-child {
   justify-content: flex-start;
+}
+
+.order-header {
+  font-size: 10px;
+}
+
+.trade-header {
+  font-size: 12px;
 }
 
 //body
