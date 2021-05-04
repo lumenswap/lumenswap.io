@@ -39,6 +39,7 @@ export default function SwapButton({ control }) {
       variant={variant}
       content={message}
       fontSize={18}
+      fontWeight={600}
       size="100%"
       className="mt-3"
       disabled={disabled}

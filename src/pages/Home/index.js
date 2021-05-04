@@ -164,7 +164,7 @@ const Home = () => {
   const showAdvanced = !(new BN(watch('from').amount).isNaN()) && !(new BN(watch('from').amount).isEqualTo(0));
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid main">
       <Header />
       <div className="row justify-content-center">
         <div className="col-auto">

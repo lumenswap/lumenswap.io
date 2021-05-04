@@ -118,6 +118,7 @@ const AddAsset = ({ changeToAsset }) => {
         htmlType="submit"
         size="100%"
         variant="primary"
+        fontWeight={600}
         className={classNames(loadingTimer && 'loading-btn', styles.btn)}
         disabled={!formState.isValid || loadingTimer}
         onClick={() => {}}

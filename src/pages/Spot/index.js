@@ -19,7 +19,7 @@ const orderListItems = Array(17).fill({
 const Spot = () => (
   <div className="container-fluid">
     <Header />
-    <div className="layout mt-4">
+    <div className="layout mt-4 other">
       <div className="row">
         <div className="col-xl-3 col-md-3 col-lg-6 col-md-6 col-sm-12 col-12">
           <div className={classNames(styles.card, styles['card-left'])}>

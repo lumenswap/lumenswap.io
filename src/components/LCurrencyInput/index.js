@@ -59,7 +59,7 @@ export default function LCurrencyInput({
           }
         }}
       />
-      {showMax && isLogged && <Button variant="secondary" content="MAX" className={styles.max} onClick={setMaxBalance} />}
+      {showMax && isLogged && <Button variant="secondary" content="MAX" fontWeight={500} className={styles.max} onClick={setMaxBalance} />}
     </CurrencyInput>
   );
 }

@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 36px;
+  font-family: 'SofiaPro';
 }
 
 .list {
@@ -20,8 +21,8 @@
 
   li a {
     font-size: 16px;
+    font-weight: 500;
     color: $CodGray;
-    font-family: SofiaPro-Medium;
     text-decoration: none !important;
 
     :global(.icon-external) {
@@ -50,5 +51,5 @@
   width: 135px;
   height: 40px;
   font-size: 16px;
-  font-family: SofiaPro-Medium;
+  font-weight: 500;
 }

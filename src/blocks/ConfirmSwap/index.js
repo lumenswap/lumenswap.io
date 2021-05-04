@@ -161,7 +161,7 @@ const ConfirmSwap = ({ data }) => {
           variant="primary"
           content="Confirm"
           fontSize={18}
-          fontWeight="Medium"
+          fontWeight={500}
           size="100%"
           className="mt-4"
           onClick={SwapTheTokens}

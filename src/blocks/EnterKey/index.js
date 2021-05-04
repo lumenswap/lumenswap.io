@@ -62,6 +62,7 @@ const EnterKey = () => {
         htmlType="submit"
         size="100%"
         variant="primary"
+        fontWeight={500}
         content={loadingTimer ? <Submitting text="Connecting" loadingSize={21} /> : 'Connect'}
         disabled={!formState.isValid || loadingTimer}
       />

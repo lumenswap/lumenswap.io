@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const Button = ({
-  disabled, content = '', variant, size, fontSize, htmlType, onClick, className, fontWeight = '', children,
+  disabled, content = '', variant, size, fontSize, htmlType, onClick, className, fontWeight = 400, children,
 }) => (
   <button
     // eslint-disable-next-line react/button-has-type
@@ -12,7 +12,7 @@ const Button = ({
     disabled={disabled}
     className={classNames(styles[`button-${variant}`], className, styles.btn)}
     onClick={onClick}
-    style={{ width: `${size}`, fontSize: fontSize && `${fontSize}px`, fontFamily: fontWeight && `SofiaPro-${fontWeight}` }}
+    style={{ width: `${size}`, fontSize: fontSize && `${fontSize}px`, fontWeight }}
   >
     {children || content}
   </button>

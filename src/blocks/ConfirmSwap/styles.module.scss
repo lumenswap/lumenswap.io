@@ -10,7 +10,7 @@
   }
 
   div:first-child {
-    font-family: SofiaPro-Medium;
+    font-weight: 500;
     font-size: 22px;
   }
 
@@ -35,7 +35,8 @@
   margin-top: 20px;
   margin-bottom: 24px;
   color: $Manatee;
-  font-family: SofiaPro-Regularitalic;
+  font-weight: 400;
+  font-style: italic;
 }
 
 .info {

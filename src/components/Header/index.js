@@ -18,7 +18,7 @@ const Header = () => {
         {/* <li><Link to="/">Stats <span className="icon-external" /></Link></li> */}
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
-        : <Button variant="secondary" content="Connect Wallet" className={styles.btn} onClick={openConnectModal} /> }
+        : <Button variant="secondary" content="Connect Wallet" fontWeight={500} className={styles.btn} onClick={openConnectModal} /> }
     </div>
   );
 };

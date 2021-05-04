@@ -31,6 +31,7 @@ const TransactionResponse = ({
           variant="primary"
           content={btnContent}
           className={styles.btn}
+          fontWeight={600}
           onClick={() => {
             if (onClick) {
               onClick();

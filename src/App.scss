@@ -3,7 +3,14 @@
 
 body {
   background-color: $AthensGray !important;
-  font-family: SofiaPro-Regular, sans-serif !important;
+}
+
+.main {
+  font-family: "SofiaPro", sans-serif !important;
+}
+
+.other {
+  font-family: Roboto, sans-serif !important;
 }
 
 /* Chrome, Safari, Edge, Opera */
