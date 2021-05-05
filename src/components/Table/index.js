@@ -10,7 +10,7 @@ const Table = ({ tableHead, tableRows }) => (
         <tr>
           {tableHead.map((head, index) => (
             <th key={index} scope="col">
-              {head && head.toUpperCase()}
+              {head}
             </th>
           ))}
         </tr>

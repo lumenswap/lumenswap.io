@@ -3,6 +3,7 @@ import Header from 'components/Header';
 import SpotList from 'components/SpotList';
 import CustomTabs from 'components/CustomTabs';
 import DetailList from 'components/DetailList';
+import Table from 'components/Table';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -39,10 +40,27 @@ const details = [
   { title: 'USDC asset issuer', value: 'GACPKH..LKELVK' },
 ];
 
+const tableHeader = ['Date', 'Pair', 'Side', 'Price', 'Amount', 'Total'];
+const tableRows = () => [0, 1, 2].map((row, index) => (
+  <tr key={index}>
+    <td className="color-gray">
+      <div className={styles['td-outside']}>
+        04-23  13:43:21
+      </div>
+    </td>
+    <td>USDC/XLM</td>
+    <td className="color-sell">Sell</td>
+    <td>0.50123</td>
+    <td>$130</td>
+    <td width="30%">20 USDT</td>
+  </tr>
+));
+
 const Spot = () => (
   <div className="container-fluid">
     <Header />
     <div className="layout mt-4 other">
+      {/* top section */}
       <div className={classNames('row', styles.row)}>
         <div className="col-3">
           <div className={styles.card} />
@@ -53,6 +71,7 @@ const Spot = () => (
           </div>
         </div>
       </div>
+      {/* middle section */}
       <div className={classNames('row', styles.row)}>
         <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
           <div className={classNames(styles.card, styles['card-left'])}>
@@ -70,6 +89,16 @@ const Spot = () => (
         <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
           <div className={classNames(styles.card, styles['card-right'])}>
             <CustomTabs tabs={tabData} activeTabId={tabData[0].id} />
+          </div>
+        </div>
+      </div>
+      {/* end section */}
+      <div className={classNames('row', styles.row)}>
+        <div className="col-12 c-col">
+          <div className={classNames(styles.card, styles['card-table'])}>
+            <div className={styles['container-table']}>
+              <Table tableRows={tableRows()} tableHead={tableHeader} />
+            </div>
           </div>
         </div>
       </div>

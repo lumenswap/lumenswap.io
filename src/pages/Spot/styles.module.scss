@@ -20,7 +20,6 @@
 }
 
 .card-right {
-  height: 100%;
   padding: 8px 14px 6px 14px;
 }
 
@@ -31,4 +30,17 @@
 .trade-container {
   margin-right: -14px;
   margin-left: -14px;
+}
+
+.card-table {
+  padding: 16px 24px 8px 14px;
+}
+
+.td-outside {
+  margin-left: -20px;
+  position: absolute;
+}
+
+.container-table {
+  margin-left: 63px;
 }
