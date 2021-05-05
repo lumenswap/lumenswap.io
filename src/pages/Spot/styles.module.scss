@@ -1,8 +1,18 @@
 @import "styles/vars";
 
+.row {
+  margin-right: -4px;
+  margin-left: -4px;
+
+  :global(.c-col) {
+    padding: 0 2px !important;
+  }
+}
+
 .card {
   border-radius: 2px;
   background-color: white;
+  margin-top: 4px;
 }
 
 .card-left {
@@ -14,7 +24,11 @@
   padding: 8px 14px 6px 14px;
 }
 
-.trade-container  {
+.card-detail {
+  padding: 11px 16px 14px 16px;
+}
+
+.trade-container {
   margin-right: -14px;
   margin-left: -14px;
 }

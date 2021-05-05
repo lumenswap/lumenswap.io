@@ -18,7 +18,7 @@ const orderListItems = Array(17).fill({
 ));
 
 const tradeListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Time'];
-const tradeListItems = Array(36).fill({
+const tradeListItems = Array(37).fill({
   data: ['0.001238', '92', '15:38:16'],
   status: 'buy',
 });
@@ -32,8 +32,14 @@ const Spot = () => (
   <div className="container-fluid">
     <Header />
     <div className="layout mt-4 other">
-      <div className="row">
-        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2">
+      <div className={classNames('row', styles.row)}>
+        <div className="col-3" />
+        <div className="col-9">
+          <div className={classNames(styles.card, styles['card-detail'])} />
+        </div>
+      </div>
+      <div className={classNames('row', styles.row)}>
+        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
           <div className={classNames(styles.card, styles['card-left'])}>
             <SpotList
               type="order"
@@ -45,8 +51,8 @@ const Spot = () => (
             />
           </div>
         </div>
-        <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1">2</div>
-        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3">
+        <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">2</div>
+        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
           <div className={classNames(styles.card, styles['card-right'])}>
             <CustomTabs tabs={tabData} activeTabId={tabData[0].id} />
           </div>
