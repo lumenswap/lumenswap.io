@@ -1,0 +1,17 @@
+@import "styles/vars";
+
+.col {
+  padding-right: 9px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 10px;
+  color: $Manatee;
+}
+
+.value {
+  font-size: 12px;
+  color: $CodGray;
+}

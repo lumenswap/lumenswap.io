@@ -38,3 +38,19 @@ input[type=number] {
   padding-right: 25px;
   padding-left: 25px;
 }
+
+.color-buy {
+  color: $Limeade !important;
+}
+
+.background-buy {
+  background-color: $Limeade;
+}
+
+.color-sell {
+  color: $Rose !important;
+}
+
+.background-sell {
+  background-color: $Rose;
+}

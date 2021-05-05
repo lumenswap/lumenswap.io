@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import Header from 'components/Header';
 import SpotList from 'components/SpotList';
 import CustomTabs from 'components/CustomTabs';
+import DetailList from 'components/DetailList';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -28,14 +29,28 @@ const tabData = [
   { title: 'My Trades', id: 'two', content: 'You have no trades' },
 ];
 
+const details = [
+  { title: '24 Change', value: '0.0432+7.45%', status: 'buy' },
+  { title: '24 High', value: '2315.07' },
+  { title: '24 Low', value: '2315.07' },
+  { title: '24 Volume (XLM)', value: '2315.07' },
+  { title: '24 Volume (USDC)', value: '2315.07' },
+  { title: 'USDC asset issuer', value: 'GACJOH..LPSDVK' },
+  { title: 'USDC asset issuer', value: 'GACPKH..LKELVK' },
+];
+
 const Spot = () => (
   <div className="container-fluid">
     <Header />
     <div className="layout mt-4 other">
       <div className={classNames('row', styles.row)}>
-        <div className="col-3" />
-        <div className="col-9">
-          <div className={classNames(styles.card, styles['card-detail'])} />
+        <div className="col-3">
+          <div className={styles.card} />
+        </div>
+        <div className="col-9 c-col">
+          <div className={classNames(styles.card, styles['card-detail'])}>
+            <DetailList list={details} />
+          </div>
         </div>
       </div>
       <div className={classNames('row', styles.row)}>
