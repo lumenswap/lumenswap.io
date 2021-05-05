@@ -18,15 +18,15 @@ const orderListItems = Array(17).fill({
 ));
 
 const tradeListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Time'];
-const tradeListItems = Array(32).fill({
+const tradeListItems = Array(36).fill({
   data: ['0.001238', '92', '15:38:16'],
   status: 'buy',
 });
 
-// const tabData = [
-//   { title: 'Market Trades', id: 'market', content: '' },
-//   { title: 'My Trades', id: '', content: '' },
-// ];
+const tabData = [
+  { title: 'Market Trades', id: 'one', content: <div className={styles['trade-container']}><SpotList type="trade" headerItem={tradeListHeader} items={tradeListItems} /></div> },
+  { title: 'My Trades', id: 'two', content: 'You have no trades' },
+];
 
 const Spot = () => (
   <div className="container-fluid">
@@ -47,8 +47,9 @@ const Spot = () => (
         </div>
         <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1">2</div>
         <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3">
-          <CustomTabs />
-          <SpotList type="trade" headerItem={tradeListHeader} items={tradeListItems} />
+          <div className={classNames(styles.card, styles['card-right'])}>
+            <CustomTabs tabs={tabData} activeTabId={tabData[0].id} />
+          </div>
         </div>
       </div>
     </div>

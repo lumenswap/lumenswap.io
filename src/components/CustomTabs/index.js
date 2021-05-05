@@ -1,18 +1,15 @@
+// import { Fragment } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import styles from './styles.module.scss';
 
-const CustomTabs = () => (
+const CustomTabs = ({ tabs, activeTabId }) => (
   <div className={styles.tab}>
-    <Tabs defaultActiveKey="home">
-      <Tab eventKey="home" title="Home">
-        1
-      </Tab>
-      <Tab eventKey="profile" title="Profile">
-        2
-      </Tab>
-      <Tab eventKey="contact" title="Contact">
-        3
-      </Tab>
+    <Tabs defaultActiveKey={activeTabId}>
+      {tabs.map((tab, index) => (
+        <Tab eventKey={tab.id} title={tab.title} key={index}>
+          {tab.content}
+        </Tab>
+      ))}
     </Tabs>
   </div>
 );
