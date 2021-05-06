@@ -27,7 +27,7 @@ function App() {
           <LModal />
           <Route exact path="/" component={Home} />
           <Route exact path="/swap" component={Home} />
-          <Route exact path="/spot" component={Spot} />
+          {/* <Route exact path="/spot" component={Spot} /> */}
         </BrowserRouter>
       </div>
     </Provider>
