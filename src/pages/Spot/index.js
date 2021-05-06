@@ -4,6 +4,7 @@ import SpotList from 'components/SpotList';
 import CustomTabs from 'components/CustomTabs';
 import DetailList from 'components/DetailList';
 import Table from 'components/Table';
+import ButtonGroup from 'components/ButtonGroup';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -56,6 +57,18 @@ const tableRows = () => [0, 1, 2].map((row, index) => (
   </tr>
 ));
 
+// const historyTab = [
+//   { title: 'Open orders', id: 'order', content: '' },
+//   { title: 'Trade History', id: 'trade', content: '' },
+// ];
+
+const buttonGroupItems = [
+  { label: '1 Day', value: '1' },
+  { label: '1 Week', value: '7' },
+  { label: '1 Month', value: '30' },
+  { label: '3 Month', value: '90' },
+];
+
 const Spot = () => (
   <div className="container-fluid">
     <Header />
@@ -96,6 +109,11 @@ const Spot = () => (
       <div className={classNames('row', styles.row)}>
         <div className="col-12 c-col">
           <div className={classNames(styles.card, styles['card-table'])}>
+            <ButtonGroup
+              buttons={buttonGroupItems}
+              activeIndex={0}
+              setValue={(v) => { console.log(v); }}
+            />
             <div className={styles['container-table']}>
               <Table tableRows={tableRows()} tableHead={tableHeader} />
             </div>
