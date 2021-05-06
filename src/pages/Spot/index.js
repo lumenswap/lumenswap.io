@@ -126,12 +126,14 @@ const Spot = () => {
         <div className={classNames('row', styles.row)}>
           <div className="col-12 c-col">
             <div className={classNames(styles.card, styles['card-table'])}>
-              <Checkbox
-                checked={checked}
-                onChange={() => setCheckbox(!checked)}
-                size={15}
-                label="Hide other pairs"
-              />
+              <div className={styles['container-checkbox']}>
+                <Checkbox
+                  checked={checked}
+                  onChange={() => setCheckbox(!checked)}
+                  size={15}
+                  label="Hide other pairs"
+                />
+              </div>
               <CustomTabs tabs={historyTab} activeTabId={historyTab[0].id} fontSize={14} />
             </div>
           </div>

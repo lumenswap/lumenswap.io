@@ -34,6 +34,13 @@
 
 .card-table {
   padding: 16px 24px 8px 14px;
+  position: relative;
+}
+
+.container-checkbox {
+  position: absolute;
+  top: 16px;
+  right: 29px;
 }
 
 .td-outside {
