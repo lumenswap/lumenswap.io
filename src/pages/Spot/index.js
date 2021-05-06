@@ -57,16 +57,29 @@ const tableRows = () => [0, 1, 2].map((row, index) => (
   </tr>
 ));
 
-// const historyTab = [
-//   { title: 'Open orders', id: 'order', content: '' },
-//   { title: 'Trade History', id: 'trade', content: '' },
-// ];
-
 const buttonGroupItems = [
   { label: '1 Day', value: '1' },
   { label: '1 Week', value: '7' },
   { label: '1 Month', value: '30' },
   { label: '3 Month', value: '90' },
+];
+
+const filterTable = (
+  <>
+    <ButtonGroup
+      buttons={buttonGroupItems}
+      activeIndex={0}
+      setValue={(v) => { console.log(v); }}
+    />
+    <div className={styles['container-table']}>
+      <Table tableRows={tableRows()} tableHead={tableHeader} />
+    </div>
+  </>
+);
+
+const historyTab = [
+  { title: 'Open orders', id: 'order', content: filterTable },
+  { title: 'Trade History', id: 'trade', content: filterTable },
 ];
 
 const Spot = () => (
@@ -101,7 +114,7 @@ const Spot = () => (
         <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">2</div>
         <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
           <div className={classNames(styles.card, styles['card-right'])}>
-            <CustomTabs tabs={tabData} activeTabId={tabData[0].id} />
+            <CustomTabs tabs={tabData} activeTabId={tabData[0].id} fontSize={12} />
           </div>
         </div>
       </div>
@@ -109,14 +122,7 @@ const Spot = () => (
       <div className={classNames('row', styles.row)}>
         <div className="col-12 c-col">
           <div className={classNames(styles.card, styles['card-table'])}>
-            <ButtonGroup
-              buttons={buttonGroupItems}
-              activeIndex={0}
-              setValue={(v) => { console.log(v); }}
-            />
-            <div className={styles['container-table']}>
-              <Table tableRows={tableRows()} tableHead={tableHeader} />
-            </div>
+            <CustomTabs tabs={historyTab} activeTabId={historyTab[0].id} fontSize={14} />
           </div>
         </div>
       </div>
