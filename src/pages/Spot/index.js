@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import SpotList from 'components/SpotList';
@@ -5,6 +6,7 @@ import CustomTabs from 'components/CustomTabs';
 import DetailList from 'components/DetailList';
 import Table from 'components/Table';
 import ButtonGroup from 'components/ButtonGroup';
+import Checkbox from 'components/Checkbox';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -82,52 +84,61 @@ const historyTab = [
   { title: 'Trade History', id: 'trade', content: filterTable },
 ];
 
-const Spot = () => (
-  <div className="container-fluid">
-    <Header />
-    <div className="layout mt-4 other">
-      {/* top section */}
-      <div className={classNames('row', styles.row)}>
-        <div className="col-3">
-          <div className={styles.card} />
-        </div>
-        <div className="col-9 c-col">
-          <div className={classNames(styles.card, styles['card-detail'])}>
-            <DetailList list={details} />
+const Spot = () => {
+  const [checked, setCheckbox] = useState(false);
+  return (
+    <div className="container-fluid">
+      <Header />
+      <div className="layout mt-4 other">
+        {/* top section */}
+        <div className={classNames('row', styles.row)}>
+          <div className="col-3">
+            <div className={styles.card} />
+          </div>
+          <div className="col-9 c-col">
+            <div className={classNames(styles.card, styles['card-detail'])}>
+              <DetailList list={details} />
+            </div>
           </div>
         </div>
-      </div>
-      {/* middle section */}
-      <div className={classNames('row', styles.row)}>
-        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
-          <div className={classNames(styles.card, styles['card-left'])}>
-            <SpotList
-              type="order"
-              headerItem={orderListHeader}
-              items={orderListItems}
-              gapInfo={{
-                index: 17, status: 'buy', total: '0.001219', price: '$34.76',
-              }}
-            />
+        {/* middle section */}
+        <div className={classNames('row', styles.row)}>
+          <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
+            <div className={classNames(styles.card, styles['card-left'])}>
+              <SpotList
+                type="order"
+                headerItem={orderListHeader}
+                items={orderListItems}
+                gapInfo={{
+                  index: 17, status: 'buy', total: '0.001219', price: '$34.76',
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">2</div>
+          <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
+            <div className={classNames(styles.card, styles['card-right'])}>
+              <CustomTabs tabs={tabData} activeTabId={tabData[0].id} fontSize={12} />
+            </div>
           </div>
         </div>
-        <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">2</div>
-        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
-          <div className={classNames(styles.card, styles['card-right'])}>
-            <CustomTabs tabs={tabData} activeTabId={tabData[0].id} fontSize={12} />
-          </div>
-        </div>
-      </div>
-      {/* end section */}
-      <div className={classNames('row', styles.row)}>
-        <div className="col-12 c-col">
-          <div className={classNames(styles.card, styles['card-table'])}>
-            <CustomTabs tabs={historyTab} activeTabId={historyTab[0].id} fontSize={14} />
+        {/* end section */}
+        <div className={classNames('row', styles.row)}>
+          <div className="col-12 c-col">
+            <div className={classNames(styles.card, styles['card-table'])}>
+              <Checkbox
+                checked={checked}
+                onChange={() => setCheckbox(!checked)}
+                size={15}
+                label="Hide other pairs"
+              />
+              <CustomTabs tabs={historyTab} activeTabId={historyTab[0].id} fontSize={14} />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Spot;
