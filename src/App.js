@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Spot from './pages/Spot';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'rc-slider/assets/index.css';
 
 setInterval(() => {
   const storeData = store.getState();
