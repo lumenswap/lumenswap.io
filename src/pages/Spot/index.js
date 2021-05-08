@@ -7,6 +7,9 @@ import DetailList from 'components/DetailList';
 import Table from 'components/Table';
 import ButtonGroup from 'components/ButtonGroup';
 import Checkbox from 'components/Checkbox';
+import SelectOption from 'components/SelectOption';
+import stellarLogo from 'assets/images/stellar.png';
+import usdLogo from 'assets/images/usd-coin-usdc.png';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -84,16 +87,29 @@ const historyTab = [
   { title: 'Trade History', id: 'trade', content: filterTable },
 ];
 
+const option = (label) => <div className={styles['select-logo']}><img src={usdLogo} alt="" /><img src={stellarLogo} alt="" />{label}</div>;
+
+const selectOptions = [
+  { label: option('USDC/XLM'), value: 'usdc' },
+  { label: option('TEST/TEST'), value: 'test' },
+];
+
 const Spot = () => {
   const [checked, setCheckbox] = useState(false);
+  const [select, setSelect] = useState(null);
+  console.warn(select);
   return (
     <div className="container-fluid">
       <Header />
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
-          <div className="col-3">
-            <div className={styles.card} />
+          <div className="col-3 c-col">
+            <div className={classNames(styles.card, styles['card-select'])}>
+              <div className={styles['container-select']}>
+                <SelectOption items={selectOptions} width="100%" height="50px" setValue={setSelect} />
+              </div>
+            </div>
           </div>
           <div className="col-9 c-col">
             <div className={classNames(styles.card, styles['card-detail'])}>

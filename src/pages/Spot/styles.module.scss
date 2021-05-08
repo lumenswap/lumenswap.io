@@ -5,14 +5,14 @@
   margin-left: -4px;
 
   :global(.c-col) {
-    padding: 0 2px !important;
+    padding: 0 2px 4px 2px !important;
   }
 }
 
 .card {
   border-radius: 2px;
   background-color: white;
-  margin-top: 4px;
+  height: 100%;
 }
 
 .card-left {
@@ -51,4 +51,29 @@
 .container-table {
   margin-left: 63px;
   margin-top: 12px;
+}
+
+.card-select {
+  background-color: white;
+  display: grid;
+  align-items: center;
+}
+
+.select-logo {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    z-index: 1;
+    margin-top: -1px;
+  }
+
+  img:last-child {
+    margin-right: 10px;
+    margin-left: -10px;
+    z-index: 0;
+  }
 }
