@@ -84,6 +84,26 @@
 }
 
 .card-input {
- padding: 22px 14px 20px 14px;
+  padding: 22px 14px 20px 14px;
   height: auto;
+}
+
+.button {
+  height: 34px;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.form-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: $CodGray;
+}
+
+.form-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: $RollingStone;
+  margin-top: 4px;
 }

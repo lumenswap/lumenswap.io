@@ -59,6 +59,18 @@
   align-items: center;
 }
 
+.button-sell {
+  background-color: $Rose;
+  border: 1px solid $Rose;
+  color: white;
+}
+
+.button-buy {
+  background-color: $Limeade;
+  border: 1px solid $Limeade;
+  color: white;
+}
+
 
 .btn:disabled {
   background-color: $CatskillWhite;
