@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import DetailList from 'components/DetailList';
@@ -11,6 +11,8 @@ import TradeSection from './TradeSection';
 import OrderFormSection from './OrderFormSection';
 import ChartSection from './ChartSection';
 import styles from './styles.module.scss';
+import { openModalAction } from '../../actions/modal';
+import AddCustomPair from '../../blocks/AddCustomPair';
 
 const details = [
   { title: '24 Change', value: '0.0432+7.45%', status: 'buy' },
@@ -31,7 +33,17 @@ const selectOptions = [
 
 const Spot = () => {
   const [select, setSelect] = useState(null);
+  const [open, toggleModal] = useState(false);
   console.warn(select);
+
+  useEffect(() => {
+    if (open) {
+      openModalAction({
+        modalProps: { title: 'Add custom pair' },
+        content: <AddCustomPair />,
+      });
+    }
+  }, [open]);
   return (
     <div className="container-fluid">
       <Header />
@@ -62,6 +74,7 @@ const Spot = () => {
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
             <div className={classNames(styles.card, styles['card-chart'], 'mb-1')}>
               <ChartSection />
+              <button type="button" className="btn btn-dark" onClick={() => toggleModal(!open)}>modal</button>
             </div>
             <div className={classNames(styles.card, styles['card-input'], 'mb-1')}>
               <OrderFormSection />
