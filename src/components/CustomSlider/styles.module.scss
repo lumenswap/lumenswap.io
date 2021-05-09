@@ -1,0 +1,39 @@
+@import "styles/vars";
+
+.slider {
+  margin: 0 6px;
+
+  :global(.rc-slider-rail) {
+    background-color: $CatskillWhite;
+    height: 2px;
+  }
+
+  :global(.rc-slider-dot) {
+    border: 2px solid white;
+    background-color: $CatskillWhite;
+    width: 12px;
+    height: 12px;
+    bottom: -3px;
+  }
+
+  :global(.rc-slider-track) {
+    height: 2px;
+  }
+
+  :global(.rc-slider-dot-active),
+  :global(.rc-slider-track) {
+    background-color: $RollingStone;
+  }
+
+  :global(.rc-slider-handle) {
+    background-color: white;
+    border: 2px solid $RollingStone !important;
+    height: 12px;
+    width: 12px;
+  }
+
+  :global(.rc-slider-handle):active {
+    border: 2px solid $RollingStone;
+    box-shadow: none;
+  }
+}

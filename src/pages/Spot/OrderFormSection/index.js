@@ -11,7 +11,7 @@ const OrderFormSection = () => (
         <div>
           <InputGroup type="number" name="amount" rightLabel="XLM" leftLabel="Amount" />
         </div>
-        <div className="my-3 pl-2">
+        <div className="my-3">
           <CustomSlider />
         </div>
         <div style={{ marginBottom: '12px' }}>

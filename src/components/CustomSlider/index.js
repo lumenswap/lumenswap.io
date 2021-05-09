@@ -1,4 +1,5 @@
 import Slider, { SliderTooltip } from 'rc-slider';
+import styles from './styles.module.scss';
 
 const CustomSlider = ({ title }) => {
   const marks = {
@@ -31,7 +32,7 @@ const CustomSlider = ({ title }) => {
     );
   };
   return (
-    <div className="w-100">
+    <div className={styles.slider}>
       <p className="mb-0">{title}</p>
       <Slider
         min={0}
