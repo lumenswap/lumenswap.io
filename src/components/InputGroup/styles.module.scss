@@ -1,0 +1,43 @@
+@import "styles/vars";
+
+.input-group {
+  border: 1px solid $CatskillWhite;
+  background-color: $AthensGray;
+  border-radius: 4px;
+  transition: 0.2s ease-in;
+
+  input {
+    border: none;
+    background-color: $AthensGray;
+    padding-right: 0;
+    padding-left: 0;
+    color: $CodGray;
+    font-weight: 500;
+    direction: rtl;
+  }
+
+  input:focus {
+    box-shadow: none;
+    background-color: $AthensGray;
+  }
+
+  :global(.input-group-text) {
+    background-color: $AthensGray;
+    border: none;
+    color: $Bombay;
+  }
+
+  :global(.input-group-text):first-child {
+    padding-right: 6px;
+    padding-left: 10px;
+  }
+
+  :global(.input-group-text):last-child {
+    padding-right: 10px;
+    padding-left: 6px;
+  }
+}
+
+.input-group:focus-within{
+  border: 1px solid $BlueRibbon;
+}

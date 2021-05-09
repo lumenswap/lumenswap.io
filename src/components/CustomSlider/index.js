@@ -1,6 +1,6 @@
 import Slider, { SliderTooltip } from 'rc-slider';
 
-const CustomSlider = () => {
+const CustomSlider = ({ title }) => {
   const marks = {
     0: '',
     25: '',
@@ -31,8 +31,8 @@ const CustomSlider = () => {
     );
   };
   return (
-    <div className="w-50 px-5">
-      <p>Range with marks and steps</p>
+    <div className="w-100">
+      <p className="mb-0">{title}</p>
       <Slider
         min={0}
         max={100}

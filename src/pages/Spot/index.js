@@ -10,7 +10,8 @@ import Checkbox from 'components/Checkbox';
 import SelectOption from 'components/SelectOption';
 import stellarLogo from 'assets/images/stellar.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
-import CustomSlider from 'components/CustomSlider';
+// import CustomSlider from 'components/CustomSlider';
+import InputGroup from 'components/InputGroup';
 import styles from './styles.module.scss';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
@@ -133,8 +134,15 @@ const Spot = () => {
             </div>
           </div>
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
-            <div className={classNames(styles.card, styles['card-chart'])}>
-              <CustomSlider />
+            <div className={classNames(styles.card, styles['card-chart'], 'mb-1')}>Chart section</div>
+            <div className={classNames(styles.card, styles['card-input'], 'mb-1')}>
+              <div className="row">
+                <div className="col-6">
+                  <InputGroup type="number" rightLabel="USDC" leftLabel="Price" />
+                  {/* <CustomSlider /> */}
+                </div>
+                <div className="col-6" />
+              </div>
             </div>
           </div>
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
