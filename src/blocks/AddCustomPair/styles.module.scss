@@ -13,3 +13,11 @@
   font-weight: 600;
   width: 100%;
 }
+
+.checkbox {
+  :global(.checkbox-label) {
+    margin-left: 8px !important;
+    font-size: 14px;
+    color: $CodGray;
+  }
+}
