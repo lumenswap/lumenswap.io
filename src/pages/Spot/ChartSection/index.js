@@ -1,6 +1,8 @@
+import TradingviewChart from 'components/TradingviewChart';
+
 const ChartSection = () => (
   <div>
-    this is chart section
+    <TradingviewChart />
   </div>
 );
 
