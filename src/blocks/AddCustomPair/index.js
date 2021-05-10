@@ -30,7 +30,6 @@ const AddCustomPair = () => {
           id="issuer1"
           height={40}
           fontSize={16}
-          autoFocus
         />
       </div>
       <div className="form-group mb-3">
@@ -52,7 +51,6 @@ const AddCustomPair = () => {
           id="code2"
           height={40}
           fontSize={16}
-          autoFocus
         />
       </div>
       <div className="form-group mb-3">
@@ -64,7 +62,6 @@ const AddCustomPair = () => {
           id="issuer2"
           height={40}
           fontSize={16}
-          autoFocus
         />
       </div>
       <div className="form-group mb-4">
