@@ -8,7 +8,8 @@ const TradingviewChart = () => {
   const chartContainerRef = useRef();
   const chart = useRef();
   const resizeObserver = useRef();
-  const [legend, setLegend] = useState('ETC USD 7D VWAP');
+  const sampleLabel = 'ETC USD 7D VWAP:';
+  const [legend, setLegend] = useState(sampleLabel);
 
   const calculateSMA = (data, count) => {
     // eslint-disable-next-line
@@ -99,9 +100,9 @@ const TradingviewChart = () => {
     chart.current.subscribeCrosshairMove((param) => {
       if (param.time) {
         const price = param.seriesPrices.get(volumeSeries);
-        setLegend(`ETC USD 7D VWAP ${price.toFixed(2)}`);
+        setLegend(<>${sampleLabel} <span className={styles.value}>${price.toFixed(2)}</span></>);
       } else {
-        setLegend('ETC USD 7D VWAP');
+        setLegend(sampleLabel);
       }
     });
   }, []);
