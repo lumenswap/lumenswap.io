@@ -1,11 +1,11 @@
 import SpotList from 'components/SpotList';
 
 const orderListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Total'];
-const orderListItems = Array(17).fill({
+const orderListItems = Array(16).fill({
   data: ['0.001238', '97', '0.12009'],
   progress: 1,
   status: 'sell',
-}).concat(Array(17).fill(
+}).concat(Array(16).fill(
   {
     data: ['0.001238', '92', '0.12009'],
     progress: 1,
@@ -19,7 +19,7 @@ const OrderSection = () => (
     headerItem={orderListHeader}
     items={orderListItems}
     gapInfo={{
-      index: 17, status: 'buy', total: '0.001219', price: '$34.76',
+      index: 16, status: 'buy', total: '0.001219', price: '$34.76',
     }}
   />
 );

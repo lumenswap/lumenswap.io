@@ -3,7 +3,7 @@ import SpotList from 'components/SpotList';
 import styles from '../styles.module.scss';
 
 const tradeListHeader = ['Price (USDC)', 'Amounr(XLM)', 'Time'];
-const tradeListItems = Array(37).fill({
+const tradeListItems = Array(35).fill({
   data: ['0.001238', '92', '15:38:16'],
   status: 'buy',
 });

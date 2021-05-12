@@ -1,6 +1,5 @@
 import OrderList from 'components/SpotList/OrderList';
 import TradeList from 'components/SpotList/TradeList';
-import styles from './styles.module.scss';
 
 const SpotList = ({
   type, headerItem = [], items = [], gapInfo = {},
@@ -11,10 +10,9 @@ const SpotList = ({
         headerItem={headerItem}
         rowItem={items}
         gapInfo={gapInfo}
-        styles={styles}
       />
     )
-      : <TradeList headerItem={headerItem} rowItem={items} styles={styles} />}
+      : <TradeList headerItem={headerItem} rowItem={items} />}
   </div>
 );
 

@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import styles from '../styles.module.scss';
 
 const OrderList = ({
-  headerItem, rowItem, gapInfo, styles,
+  headerItem, rowItem, gapInfo,
 }) => {
   const randomProgress = () => Math.floor(Math.random() * 100) + 1;
   const isForSell = (status) => status === 'sell';

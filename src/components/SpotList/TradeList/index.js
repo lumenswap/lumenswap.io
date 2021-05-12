@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import styles from '../styles.module.scss';
 
 const TradeList = ({
-  headerItem, rowItem, styles,
+  headerItem, rowItem,
 }) => {
   const isForSell = (status) => status === 'sell';
   return (
