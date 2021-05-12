@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createChart, CrosshairMode } from 'lightweight-charts';
 import { priceData } from './priceData';
 import { volumeData } from './volumeData';
@@ -8,6 +8,7 @@ const TradingviewChart = () => {
   const chartContainerRef = useRef();
   const chart = useRef();
   const resizeObserver = useRef();
+  const [legend, setLegend] = useState('ETC USD 7D VWAP');
 
   const calculateSMA = (data, count) => {
     // eslint-disable-next-line
@@ -93,6 +94,16 @@ const TradingviewChart = () => {
       lineWidth: 1,
     });
     lineSeries.setData(calculateSMA(priceData, 10));
+
+    // legend
+    chart.current.subscribeCrosshairMove((param) => {
+      if (param.time) {
+        const price = param.seriesPrices.get(volumeSeries);
+        setLegend(`ETC USD 7D VWAP ${price.toFixed(2)}`);
+      } else {
+        setLegend('ETC USD 7D VWAP');
+      }
+    });
   }, []);
 
   // Resize chart on container resizes.
@@ -112,6 +123,7 @@ const TradingviewChart = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.legend}>{legend}</div>
       <div ref={chartContainerRef} className={styles['chart-container']} />
     </div>
   );
