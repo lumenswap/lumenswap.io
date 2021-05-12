@@ -8,7 +8,7 @@ const generateForm = (type, value) => (
   <form>
     <div className="d-flex justify-content-between align-items-center mb-2">
       <div className={styles['form-title']}>{capitalizeFirstLetter(type)} XLM</div>
-      <div className={styles['form-value']}>{value}</div>
+      <div className={styles['form-value']}><span className="icon-wallet" />{value}</div>
     </div>
     <div className="mb-2">
       <InputGroup type="number" name="price" rightLabel="USDC" leftLabel="Price" />
@@ -34,10 +34,10 @@ const generateForm = (type, value) => (
 
 const OrderFormSection = () => (
   <div className="row" style={{ margin: '0 -24px' }}>
-    <div className="col-6 px-4">
+    <div className="col-md-6 col-sm-12 col-12 px-4">
       {generateForm('buy', '0.383 USDC')}
     </div>
-    <div className="col-6 px-4">
+    <div className="col-md-6 col-sm-12 col-12 px-4 mt-0 mt-md-0 mt-sm-4 mt-4">
       {generateForm('sell', '0.383 XLM')}
     </div>
   </div>

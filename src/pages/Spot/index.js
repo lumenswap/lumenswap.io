@@ -23,6 +23,26 @@ const details = [
   { title: 'USDC asset issuer', value: 'GACPKH..LKELVK' },
 ];
 
+const openDialogElement = (className) => (
+  <div className={styles['container-select']}>
+    <button
+      type="button"
+      className={classNames(styles['select-logo'], className)}
+      onClick={() => {
+        openModalAction({
+          modalProps: { title: 'Select a pair' },
+          content: <SelectPair />,
+        });
+      }}
+    >
+      <img className={styles['first-coin']} src={usdLogo} alt="" />
+      <img className={styles['second-coin']} src={stellarLogo} alt="" />
+      USDC/XLM
+      <span className="icon-angle-down ml-auto" />
+    </button>
+  </div>
+);
+
 const Spot = () => {
   const refHeight = useRef(null);
   const [height, setHeight] = useState(0);
@@ -39,29 +59,16 @@ const Spot = () => {
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
-          <div className="col-3 c-col">
+          <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
             <div className={classNames(styles.card, styles['card-select'])}>
-              <div className={styles['container-select']}>
-                <button
-                  type="button"
-                  className={styles['select-logo']}
-                  onClick={() => {
-                    openModalAction({
-                      modalProps: { title: 'Select a pair' },
-                      content: <SelectPair />,
-                    });
-                  }}
-                >
-                  <img className={styles['first-coin']} src={usdLogo} alt="" />
-                  <img className={styles['second-coin']} src={stellarLogo} alt="" />
-                  USDC/XLM
-                  <span className="icon-angle-down ml-auto" />
-                </button>
-              </div>
+              {openDialogElement('w-100')}
             </div>
           </div>
-          <div className="col-9 c-col">
+          <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
             <div className={classNames(styles.card, styles['card-detail'])}>
+              <div className="d-lg-none d-md-inline d-sm-inline d-inline mb-2">
+                {openDialogElement('pl-0')}
+              </div>
               <DetailList list={details} />
             </div>
           </div>
@@ -69,7 +76,7 @@ const Spot = () => {
         <div className={classNames('row', styles.row)}>
           {/* order section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
-            <div className={classNames(styles.card, styles['card-left'])}>
+            <div className={classNames(styles.card, styles['card-left'], 'invisible-scroll')}>
               <OrderSection />
             </div>
           </div>
@@ -87,14 +94,14 @@ const Spot = () => {
           </div>
           {/* trade section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
-            <div className={classNames(styles.card, styles['card-right'])}>
+            <div className={classNames(styles.card, styles['card-right'], 'invisible-scroll')}>
               <TradeSection />
             </div>
           </div>
         </div>
         {/* end section */}
         <div className={classNames('row', styles.row)}>
-          <div className="col-12 c-col">
+          <div className="col-12 c-col mb-5">
             <div className={classNames(styles.card, styles['card-table'])}>
               <InfoSection />
             </div>

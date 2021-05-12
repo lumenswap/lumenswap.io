@@ -58,7 +58,9 @@ const InfoSection = () => {
           label="Hide other pairs"
         />
       </div>
-      <CustomTabs tabs={historyTab} activeTabId={historyTab[0].id} fontSize={14} />
+      <div className="mt-md-0 mt-sm-4 mt-4">
+        <CustomTabs tabs={historyTab} activeTabId={historyTab[0].id} fontSize={14} />
+      </div>
     </>
   );
 };
