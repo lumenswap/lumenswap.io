@@ -19,7 +19,7 @@ const tabData = [
 
 const TradeSection = () => (
   <>
-    <CustomTabs tabs={tabData} activeTabId={tabData[0].id} fontSize={12} />
+    <CustomTabs tabs={tabData} activeTabId={tabData[0].id} fontSize={14} />
   </>
 );
 

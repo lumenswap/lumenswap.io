@@ -18,7 +18,7 @@
   position: relative;
   display: flex;
   flex: 1;
-  padding: 1.5px 0;
+  padding: 0;
   align-items: center;
   transition: all 0.15s ease-in-out;
   color: $CodGray;
@@ -39,12 +39,13 @@
 
 //header
 .heading {
-  margin-bottom: 5px;
+  margin-bottom: 1px;
 }
 
 .heading .row-item {
   color: $Manatee;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 12px;
   white-space: nowrap;
   justify-content: flex-end;
 }
@@ -54,18 +55,18 @@
 }
 
 .order-header {
-  font-size: 10px;
+
 }
 
 .trade-header {
-  font-size: 12px;
+
 }
 
 //body
 .table-body .row-item {
   font-size: 12px;
   justify-content: flex-end;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .table-body .row-item:first-child {
@@ -79,22 +80,18 @@
 }
 
 .gap {
-  padding: 13px 14px;
-  font-size: 12px;
+  padding: 2px 14px;
   display: flex;
   align-items: center;
-  font-weight: 600;
 }
 
 .total {
   display: flex;
   align-items: center;
-
-  :global(.icon-arrow-down) {
-    margin-left: 4px;
-    margin-right: 7px;
-    display: block;
-  }
+  color: $CodGray;
+  padding-right: 6px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .buy.total {
@@ -105,4 +102,6 @@
 
 .price {
   color: $Bombay;
+  font-size: 14px;
+  font-weight: 500;
 }

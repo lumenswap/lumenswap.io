@@ -11,7 +11,7 @@ const InputGroup = ({
     className={classNames('input-group', styles['input-group'])}
     style={{ width: `${size}`, fontSize: `${fontSize}px` }}
   >
-    <span className="input-group-text" style={{ height: `${height}px` }}>{leftLabel}</span>
+    <span className="input-group-text" style={{ height: `${height}px`, fontSize: `${fontSize}px` }}>{leftLabel}</span>
     <input
       type={type}
       className={classNames(styles.input, 'form-control')}
@@ -23,9 +23,9 @@ const InputGroup = ({
       autoFocus={autoFocus}
       onChange={onChange}
       {...input}
-      style={{ height: `${height}px` }}
+      style={{ height: `${height}px`, fontSize: `${fontSize}px` }}
     />
-    <span className="input-group-text" style={{ height: `${height}px` }}>{rightLabel}</span>
+    <span className="input-group-text" style={{ height: `${height}px`, fontSize: `${fontSize}px` }}>{rightLabel}</span>
   </div>
 );
 

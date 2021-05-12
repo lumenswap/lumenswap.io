@@ -30,11 +30,7 @@ const OrderList = ({
             </div>
             {(gapInfo.index - 1) === rowIndex && (
             <div className={styles.gap}>
-              <span className={classNames(isForSell(gapInfo.status) ? styles.sell : styles.buy,
-                styles.total)}
-              >{gapInfo.total}
-                <span className="icon-arrow-down" />
-              </span>
+              <span className={classNames(styles.total)}>{gapInfo.total}</span>
               <span className={styles.price}>{gapInfo.price}</span>
             </div>
             )}
