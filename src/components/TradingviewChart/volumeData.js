@@ -3,8 +3,8 @@
 // const red = 'rgba(255, 73, 118, 0.4)';
 // eslint-disable-next-line
 export const volumeData = [
-  { time: '2018-10-19', value: 19103293.0, color: '#f5dce6' },
-  { time: '2018-10-22', value: 21737523.0, color: '#e8eedc' },
+  { time: '2018-10-19', value: 19103293.0 },
+  { time: '2018-10-22', value: 21737523.0 },
   { time: '2018-10-23', value: 29328713.0 },
   { time: '2018-10-24', value: 37435638.0 },
   { time: '2018-10-25', value: 25269995.0 },
