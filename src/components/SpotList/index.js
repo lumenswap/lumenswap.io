@@ -12,7 +12,7 @@ const SpotList = ({
         gapInfo={gapInfo}
       />
     )
-      : <TradeList headerItem={headerItem} rowItem={items} />}
+      : <TradeList headerItem={headerItem} rowItems={items} />}
   </div>
 );
 

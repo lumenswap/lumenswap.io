@@ -6,7 +6,7 @@ import SelectPair from 'blocks/SelectPair';
 import { openModalAction } from 'actions/modal';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
 import stellarLogo from 'assets/images/stellar.png';
-import { fetchTradeAggregationAPI } from 'api/stellar';
+import { fetchOrderBookAPI, fetchTradeAggregationAPI, fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
@@ -55,6 +55,8 @@ const Spot = () => {
   const [candleSeriesData, setCandleSeriesData] = useState(null);
   const [lineSeriesData, setLineSeriesData] = useState(null);
   const [volumeSeriesData, setVolumeSeriesData] = useState(null);
+  const [tradeListData, setTradeListData] = useState(null);
+  const [orderBookData, setOrderBookData] = useState(null);
 
   useEffect(() => {
     if (refHeight.current) {
@@ -93,6 +95,27 @@ const Spot = () => {
     }).catch(console.error);
   }, []);
 
+  useEffect(() => {
+    fetchTradeAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
+      limit: 35,
+    }).then((res) => {
+      setTradeListData(res.data._embedded.records.map((item) => ({
+        base_amount: item.base_amount,
+        base_is_seller: item.base_is_seller,
+        counter_amount: item.counter_amount,
+        time: item.ledger_close_time,
+      })));
+    }).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    fetchOrderBookAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
+      limit: 15,
+    }).then((res) => {
+      setOrderBookData(res.data);
+    }).catch(console.error);
+  }, []);
+
   return (
     <div className="container-fluid">
       <Header />
@@ -117,7 +140,7 @@ const Spot = () => {
           {/* order section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
             <div className={classNames(styles.card, styles['card-left'], 'invisible-scroll')}>
-              <OrderSection />
+              <OrderSection orderBookData={orderBookData} />
             </div>
           </div>
           {/* middle section */}
@@ -139,7 +162,7 @@ const Spot = () => {
           {/* trade section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
             <div className={classNames(styles.card, styles['card-right'], 'invisible-scroll')}>
-              <TradeSection />
+              <TradeSection tradeListData={tradeListData} />
             </div>
           </div>
         </div>

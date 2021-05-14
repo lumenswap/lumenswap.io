@@ -1,11 +1,14 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import moment from 'moment';
 import styles from '../styles.module.scss';
 
 const TradeList = ({
-  headerItem, rowItem,
+  headerItem, rowItems,
 }) => {
-  const isForSell = (status) => status === 'sell';
+  if (!rowItems) {
+    return null;
+  }
+
   return (
     <div className={styles['table-container']}>
       <div className={classNames(styles.heading, styles['table-row'])}>
@@ -14,13 +17,13 @@ const TradeList = ({
         ))}
       </div>
       <div className={styles['table-body']}>
-        {rowItem.map((row, rowIndex) => (
+        {rowItems.map((row, rowIndex) => (
           <div key={`row-${rowIndex}`}>
-            <div className={classNames(isForSell(row.status) ? styles.sell : styles.buy)}>
+            <div className={classNames(row.base_is_seller ? styles.sell : styles.buy)}>
               <div className={styles['table-row']}>
-                {row.data.map((item, index) => (
-                  <div className={styles['row-item']} key={`item-${index}`}>{item}</div>
-                ))}
+                <div className={styles['row-item']}>{row.counter_amount}</div>
+                <div className={styles['row-item']}>{row.base_amount}</div>
+                <div className={styles['row-item']}>{moment(row.time).format('hh:mm:ss')}</div>
               </div>
             </div>
           </div>
@@ -28,11 +31,6 @@ const TradeList = ({
       </div>
     </div>
   );
-};
-
-TradeList.propTypes = {
-  headerItem: PropTypes.array.isRequired,
-  rowItem: PropTypes.array.isRequired,
 };
 
 export default TradeList;
