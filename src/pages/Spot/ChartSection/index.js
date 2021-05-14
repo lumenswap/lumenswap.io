@@ -1,8 +1,12 @@
 import TradingviewChart from 'components/TradingviewChart';
 
-const ChartSection = () => (
+const ChartSection = ({ candleSeriesData, lineSeriesData, volumeSeriesData }) => (
   <div>
-    <TradingviewChart />
+    <TradingviewChart
+      candleSeriesData={candleSeriesData}
+      lineSeriesData={lineSeriesData}
+      volumeSeriesData={volumeSeriesData}
+    />
   </div>
 );
 

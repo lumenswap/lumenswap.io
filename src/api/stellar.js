@@ -16,6 +16,28 @@ export function fetchAccountTokenList(address) {
     })));
 }
 
+export function fetchTradeAggregationAPI(baseAsset, counterAsset, params) {
+  const assetParam = {};
+
+  if (baseAsset.isNative()) {
+    assetParam.base_asset_type = baseAsset.getAssetType();
+  } else {
+    assetParam.base_asset_type = baseAsset.getAssetType();
+    assetParam.base_asset_code = baseAsset.getCode();
+    assetParam.base_asset_issuer = baseAsset.getIssuer();
+  }
+
+  if (counterAsset.isNative()) {
+    assetParam.counter_asset_type = counterAsset.getAssetType();
+  } else {
+    assetParam.counter_asset_type = counterAsset.getAssetType();
+    assetParam.counter_asset_code = counterAsset.getCode();
+    assetParam.counter_asset_issuer = counterAsset.getIssuer();
+  }
+
+  return axios.get(`${process.env.REACT_APP_HORIZON}/trade_aggregations`, { params: { ...assetParam, ...params } });
+}
+
 export function checkAssetAPI(assetCode, assetIssuer) {
   return global
     .fetch(
