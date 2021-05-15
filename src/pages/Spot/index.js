@@ -12,6 +12,7 @@ import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
 import moment from 'moment';
 import BN from 'helpers/BN';
+import TradingviewChart from 'components/TradingviewChart';
 import InfoSection from './InfoSection';
 import OrderSection from './OrderSection';
 import TradeSection from './TradeSection';
@@ -49,14 +50,76 @@ const openDialogElement = (className) => (
   </div>
 );
 
+function mapStellarAggregationData(oldData, newData) {
+  const candle = newData.map((item) => ({
+    time: moment.utc(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
+    open: item.open,
+    close: item.close,
+    high: item.high,
+    low: item.low,
+  }));
+
+  const line = newData.map((item) => ({
+    time: moment.utc(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
+    value: item.avg,
+  }));
+
+  const volume = newData.map((item) => ({
+    time: moment.utc(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
+    value: parseInt(item.base_volume, 10),
+    color: new BN(item.open).isGreaterThan(item.close) ? '#f5dce6' : '#e8eedc',
+  }));
+
+  console.log('hey mapper', {
+    candle: [...candle, ...oldData.candle],
+    volume: [...volume, ...oldData.volume],
+    line: [...line, ...oldData.line],
+    emptyNew: candle.length === 0,
+  });
+
+  return {
+    candle: [...candle, ...oldData.candle],
+    volume: [...volume, ...oldData.volume],
+    line: [...line, ...oldData.line],
+    emptyNew: candle.length === 0,
+  };
+}
+
+function getTradeAggregation(baseAsset, counterAsset, period, oldData) {
+  const startTime = moment.utc(period).startOf('day').subtract(120, 'days');
+  const endTime = moment.utc(period).endOf('day');
+
+  return fetchTradeAggregationAPI(baseAsset, counterAsset, {
+    start_time: startTime.valueOf(),
+    end_time: endTime.valueOf(),
+    resolution: 86400000,
+    limit: 121,
+  }).then((res) => mapStellarAggregationData(oldData, res.data._embedded.records));
+}
+
 const Spot = () => {
   const refHeight = useRef(null);
   const [height, setHeight] = useState(0);
-  const [candleSeriesData, setCandleSeriesData] = useState(null);
-  const [lineSeriesData, setLineSeriesData] = useState(null);
-  const [volumeSeriesData, setVolumeSeriesData] = useState(null);
+  const [chartData, setChartData] = useState(null);
   const [tradeListData, setTradeListData] = useState(null);
   const [orderBookData, setOrderBookData] = useState(null);
+  const [isLoadingPrevented, setPreventLoading] = useState(false);
+
+  function getAggWrapper(period) {
+    return getTradeAggregation(
+      getAssetDetails(XLM),
+      getAssetDetails(USDC),
+      period,
+      chartData || { candle: [], volume: [], line: [] },
+    )
+      .then((res) => {
+        if (res.emptyNew) {
+          setPreventLoading(true);
+        } else {
+          setChartData(res);
+        }
+      }).catch(console.error);
+  }
 
   useEffect(() => {
     if (refHeight.current) {
@@ -64,36 +127,6 @@ const Spot = () => {
     }
     console.warn(height);
   }, [refHeight.current]);
-
-  useEffect(() => {
-    fetchTradeAggregationAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
-      start_time: 1609513130000,
-      end_time: Date.now(),
-      resolution: 86400000,
-      limit: 200,
-    }).then((res) => {
-      const toData = res.data._embedded.records;
-
-      setCandleSeriesData(toData.map((item) => ({
-        time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
-        open: item.open,
-        close: item.close,
-        high: item.high,
-        low: item.low,
-      })));
-
-      setLineSeriesData(toData.map((item) => ({
-        time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
-        value: item.avg,
-      })));
-
-      setVolumeSeriesData(toData.map((item) => ({
-        time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
-        value: parseInt(item.base_volume, 10),
-        color: new BN(item.open).isGreaterThan(item.close) ? '#f5dce6' : '#e8eedc',
-      })));
-    }).catch(console.error);
-  }, []);
 
   useEffect(() => {
     fetchTradeAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
@@ -146,11 +179,13 @@ const Spot = () => {
           {/* middle section */}
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
             <div className={classNames(styles.card, styles['card-chart'], 'mb-1')} ref={refHeight}>
-              <ChartSection
-                candleSeriesData={candleSeriesData}
-                lineSeriesData={lineSeriesData}
-                volumeSeriesData={volumeSeriesData}
-              />
+              <div>
+                <TradingviewChart
+                  chartData={chartData}
+                  getAggWrapper={getAggWrapper}
+                  isLoadingPrevented={isLoadingPrevented}
+                />
+              </div>
             </div>
             <div
               className={classNames(styles.card, styles['card-input'], 'mb-1')}
