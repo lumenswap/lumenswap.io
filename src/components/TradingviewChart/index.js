@@ -48,7 +48,7 @@ const TradingviewChart = ({
   const setTimoutTimer = useRef(null);
   const candleSeriesRef = useRef(null);
   const volumeSeriesRef = useRef(null);
-  const lineSeriesRef = useRef(null);
+  // const lineSeriesRef = useRef(null);
   const previousFuncRef = useRef(null);
 
   useEffect(() => {
@@ -88,6 +88,7 @@ const TradingviewChart = ({
       downColor: '#ea0070',
       borderDownColor: '#ea0070',
       wickDownColor: '#ea0070',
+      baseLineWidth: 2,
     });
 
     // // volume series
@@ -105,10 +106,10 @@ const TradingviewChart = ({
     });
 
     // // line series
-    lineSeriesRef.current = chart.current.addLineSeries({
-      color: '#E45BEF',
-      lineWidth: 1,
-    });
+    // lineSeriesRef.current = chart.current.addLineSeries({
+    //   color: '#E45BEF',
+    //   lineWidth: 1,
+    // });
     // lineSeries.setData(lineSeriesData);
 
     // // legend
@@ -152,7 +153,7 @@ const TradingviewChart = ({
     if (chart.current && !!chartData) {
       candleSeriesRef.current.setData(chartData.candle);
       volumeSeriesRef.current.setData(chartData.volume);
-      lineSeriesRef.current.setData(chartData.line);
+      // lineSeriesRef.current.setData(chartData.line);
     }
   }, [chartData]);
 

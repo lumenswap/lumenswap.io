@@ -140,7 +140,7 @@ const Spot = () => {
       setTradeListData(res.data._embedded.records.map((item) => ({
         base_amount: item.base_amount,
         base_is_seller: item.base_is_seller,
-        counter_amount: item.counter_amount,
+        counter_amount: new BN(1).div(item.base_amount).times(item.counter_amount).toFixed(5),
         time: item.ledger_close_time,
       })));
     }).catch(console.error);

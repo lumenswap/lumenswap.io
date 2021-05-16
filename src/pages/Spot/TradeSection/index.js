@@ -2,7 +2,7 @@ import CustomTabs from 'components/CustomTabs';
 import SpotList from 'components/SpotList';
 import styles from '../styles.module.scss';
 
-const tradeListHeader = ['Price (USDC)', 'Amount(XLM)', 'Time'];
+const tradeListHeader = ['Price (USDC)', 'Amount (XLM)', 'Time'];
 
 const TradeSection = ({ tradeListData }) => {
   const tabData = [
