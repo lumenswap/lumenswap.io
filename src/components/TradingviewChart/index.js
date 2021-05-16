@@ -43,6 +43,7 @@ const TradingviewChart = ({
   const chart = useRef();
   const resizeObserver = useRef();
   const sampleLabel = '';
+  // eslint-disable-next-line
   const [legend, setLegend] = useState(sampleLabel);
   const setTimoutTimer = useRef(null);
   const candleSeriesRef = useRef(null);

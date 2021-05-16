@@ -17,7 +17,7 @@ import InfoSection from './InfoSection';
 import OrderSection from './OrderSection';
 import TradeSection from './TradeSection';
 import OrderFormSection from './OrderFormSection';
-import ChartSection from './ChartSection';
+// import ChartSection from './ChartSection';
 import styles from './styles.module.scss';
 
 const details = [
