@@ -15,11 +15,28 @@ const DetailList = ({ list }) => {
   return (
     <div className="row">
       {list.map((item, index) => (
-        <div className={classNames('col-auto mb-lg-0 mb-md-1 mb-sm-1 mb-1', styles.col)} key={index}>
+        <div
+          className={classNames('col-auto mb-lg-0 mb-md-1 mb-sm-1 mb-1',
+            styles.col, (item.status === 'bold') && styles.bold)}
+          key={index}
+        >
           <div className={styles.title}>{item.title}</div>
-          <div className={classNames(styles.value, setStatusStyle(item.status))}>
-            {item.value}
-          </div>
+          {item.status === 'link'
+            ? (
+              <a
+                className={classNames(styles.value, styles.link)}
+                href={item.link}
+                target="_blank"
+                rel="noreferrer"
+              >{item.value} <span className="icon-external" />
+              </a>
+            )
+            : (
+              <div className={classNames(styles.value, setStatusStyle(item.status))}>
+
+                {item.value}
+              </div>
+            )}
         </div>
       ))}
     </div>

@@ -21,13 +21,18 @@ import OrderFormSection from './OrderFormSection';
 import styles from './styles.module.scss';
 
 const details = [
+  { title: '0.008623', value: '$5.73', status: 'bold' },
   { title: '24 Change', value: '0.0432+7.45%', status: 'buy' },
   { title: '24 High', value: '2315.07' },
   { title: '24 Low', value: '2315.07' },
   { title: '24 Volume (XLM)', value: '2315.07' },
   { title: '24 Volume (USDC)', value: '2315.07' },
-  { title: 'USDC asset issuer', value: 'GACJOH..LPSDVK' },
-  { title: 'USDC asset issuer', value: 'GACPKH..LKELVK' },
+  {
+    title: 'USDC asset issuer', value: 'GACJOH..LPSDVK', status: 'link', link: '/',
+  },
+  {
+    title: 'USDC asset issuer', value: 'GACPKH..LKELVK', status: 'link', link: '/',
+  },
 ];
 
 const openDialogElement = (className) => (

@@ -24,7 +24,7 @@ const OrderList = ({
                 isForSell(row.status) ? styles.sell : styles.buy)}
               style={{ background: generateProgressStyle(row.status) }}
             >
-              <div className={styles['table-row']}>
+              <div className={styles['table-row']} style={{ cursor: 'pointer' }}>
                 {row.data.map((item, index) => (
                   <div className={styles['row-item']} key={`item-${index}`}>{item}</div>
                 ))}
