@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart, CrosshairMode } from 'lightweight-charts';
 import moment from 'moment';
+import numeral from 'numeral';
 import styles from './styles.module.scss';
 
 function onVisibleLogicalRangeChange(
@@ -32,6 +33,10 @@ function onVisibleLogicalRangeChange(
       setTimoutTimer.current = null;
     }, 50);
   };
+}
+
+function humany(number) {
+  return numeral(number).format('0.0[00]a');
 }
 
 const TradingviewChart = ({
@@ -113,21 +118,22 @@ const TradingviewChart = ({
     // lineSeries.setData(lineSeriesData);
 
     // // legend
-    // chart.current.subscribeCrosshairMove((param) => {
-    //   if (param.time) {
-    //     const currentData = param.seriesPrices.get(candleSeries);
-    //     setLegend(
-    //       <>
-    //         ${sampleLabel}
-    //         <span className={styles.value}>
-    //           H:{currentData.high} L:{currentData.low} O:{currentData.open} C:{currentData.close}
-    //         </span>
-    //       </>,
-    //     );
-    //   } else {
-    //     setLegend(sampleLabel);
-    //   }
-    // });
+    chart.current.subscribeCrosshairMove((param) => {
+      if (param.time) {
+        const currentData = param.seriesPrices.get(candleSeriesRef.current);
+        setLegend(
+          <>
+            {sampleLabel}
+            <span className={styles.value}>
+              H: {humany(currentData.high)}{'   '}L: {humany(currentData.low)}{'   '}
+              O: {humany(currentData.open)}{'   '}C: {humany(currentData.close)}
+            </span>
+          </>,
+        );
+      } else {
+        setLegend(sampleLabel);
+      }
+    });
 
     getAggWrapper(Date.now());
   }, []);

@@ -12,6 +12,7 @@ const DetailList = ({ list }) => {
     }
     return null;
   };
+
   return (
     <div className="row">
       {list.map((item, index) => (

@@ -17,6 +17,7 @@
     "lightweight-charts": "^3.3.0",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",
+    "numeral": "^2.0.6",
     "prop-types": "^15.7.2",
     "rc-slider": "^9.7.2",
     "react": "^17.0.1",

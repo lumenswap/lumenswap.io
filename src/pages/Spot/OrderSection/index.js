@@ -1,27 +1,28 @@
 import SpotList from 'components/SpotList';
+import BN from 'helpers/BN';
+import sevenDigit from 'helpers/sevenDigit';
 
 const orderListHeader = ['Price (USDC)', 'Amount(XLM)', 'Total'];
-const orderListItems = Array(16).fill({
-  data: ['0.001238', '97', '0.12009'],
-  progress: 1,
-  status: 'sell',
-}).concat(Array(16).fill(
-  {
-    data: ['0.001238', '92', '0.12009'],
-    progress: 1,
-    status: 'buy',
-  },
-));
 
-const OrderSection = () => (
-  <SpotList
-    type="order"
-    headerItem={orderListHeader}
-    items={orderListItems}
-    gapInfo={{
-      index: 16, status: 'buy', total: '0.001219', price: '$34.76',
-    }}
-  />
-);
+const OrderSection = ({ orderBookData }) => {
+  let total = 0;
+
+  if (orderBookData?.asks[0]) {
+    total = sevenDigit((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
+      .div(2)
+      .toFixed(7));
+  }
+
+  return (
+    <SpotList
+      type="order"
+      headerItem={orderListHeader}
+      items={orderBookData}
+      gapInfo={{
+        total,
+      }}
+    />
+  );
+};
 
 export default OrderSection;

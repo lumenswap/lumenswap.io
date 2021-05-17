@@ -13,27 +13,14 @@ import XLM from 'tokens/XLM';
 import moment from 'moment';
 import BN from 'helpers/BN';
 import TradingviewChart from 'components/TradingviewChart';
+import sevenDigit from 'helpers/sevenDigit';
+import numeral from 'numeral';
 import InfoSection from './InfoSection';
 import OrderSection from './OrderSection';
 import TradeSection from './TradeSection';
 import OrderFormSection from './OrderFormSection';
 // import ChartSection from './ChartSection';
 import styles from './styles.module.scss';
-
-const details = [
-  { title: '0.008623', value: '$5.73', status: 'bold' },
-  { title: '24 Change', value: '0.0432+7.45%', status: 'buy' },
-  { title: '24 High', value: '2315.07' },
-  { title: '24 Low', value: '2315.07' },
-  { title: '24 Volume (XLM)', value: '2315.07' },
-  { title: '24 Volume (USDC)', value: '2315.07' },
-  {
-    title: 'USDC asset issuer', value: 'GACJOH..LPSDVK', status: 'link', link: '/',
-  },
-  {
-    title: 'USDC asset issuer', value: 'GACPKH..LKELVK', status: 'link', link: '/',
-  },
-];
 
 const openDialogElement = (className) => (
   <div className={styles['container-select']}>
@@ -62,6 +49,9 @@ function mapStellarAggregationData(oldData, newData) {
     close: item.close,
     high: item.high,
     low: item.low,
+    avg: item.avg,
+    base_volume: item.base_volume,
+    counter_volume: item.counter_volume,
   }));
 
   const line = newData.map((item) => ({
@@ -74,13 +64,6 @@ function mapStellarAggregationData(oldData, newData) {
     value: parseInt(item.base_volume, 10),
     color: new BN(item.open).isGreaterThan(item.close) ? '#f5dce6' : '#e8eedc',
   }));
-
-  console.log('hey mapper', {
-    candle: [...candle, ...oldData.candle],
-    volume: [...volume, ...oldData.volume],
-    line: [...line, ...oldData.line],
-    emptyNew: candle.length === 0,
-  });
 
   return {
     candle: [...candle, ...oldData.candle],
@@ -109,6 +92,20 @@ const Spot = () => {
   const [tradeListData, setTradeListData] = useState(null);
   const [orderBookData, setOrderBookData] = useState(null);
   const [isLoadingPrevented, setPreventLoading] = useState(false);
+  const [detailData, setDetailData] = useState([
+    { title: '-', value: '', status: 'bold' },
+    { title: '24 Change', value: '-', status: 'buy' },
+    { title: '24 High', value: '-' },
+    { title: '24 Low', value: '-' },
+    { title: '24 Volume (-)', value: '-' },
+    { title: '24 Volume (-)', value: '-' },
+    {
+      title: '- asset issuer', value: '-', status: 'link', link: '/',
+    },
+    {
+      title: '- asset issuer', value: '-', status: 'link', link: '/',
+    },
+  ]);
 
   function getAggWrapper(period) {
     return getTradeAggregation(
@@ -122,6 +119,29 @@ const Spot = () => {
           setPreventLoading(true);
         } else {
           setChartData(res);
+
+          const lastData = res.candle[res.candle.length - 1];
+          const oBLData = res.candle[res.candle.length - 2];
+          if (lastData && oBLData) {
+            const ch24 = (new BN(oBLData.avg).minus(lastData.avg))
+              .div(lastData.avg)
+              .times(100);
+
+            setDetailData([
+              { title: sevenDigit(lastData.avg), value: '', status: 'bold' },
+              { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gt(0) ? 'buy' : 'sell' },
+              { title: '24 High', value: numeral(lastData.high).format('0.0[00]a') },
+              { title: '24 Low', value: numeral(lastData.low).format('0.0[00]a') },
+              { title: '24 Volume (XLM)', value: numeral(lastData.base_volume).format('0.0a') },
+              { title: '24 Volume (USDC)', value: numeral(lastData.counter_volume).format('0.0a') },
+              {
+                title: '- asset issuer', value: '-', status: 'link', link: '/',
+              },
+              {
+                title: '- asset issuer', value: '-', status: 'link', link: '/',
+              },
+            ]);
+          }
         }
       }).catch(console.error);
   }
@@ -136,6 +156,7 @@ const Spot = () => {
   useEffect(() => {
     fetchTradeAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
       limit: 35,
+      order: 'desc',
     }).then((res) => {
       setTradeListData(res.data._embedded.records.map((item) => ({
         base_amount: item.base_amount,
@@ -170,7 +191,7 @@ const Spot = () => {
               <div className="d-lg-none d-md-inline d-sm-inline d-inline mb-2">
                 {openDialogElement('pl-0')}
               </div>
-              <DetailList list={details} />
+              <DetailList list={detailData} />
             </div>
           </div>
         </div>

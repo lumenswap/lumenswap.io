@@ -14,7 +14,7 @@ const TradeSection = ({ tradeListData }) => {
     <SpotList type="trade" headerItem={tradeListHeader} items={tradeListData} />
   </div>,
     },
-    { title: 'My Trades', id: 'two', content: 'You have no trades' },
+    // { title: 'My Trades', id: 'two', content: 'You have no trades' },
   ];
 
   return (
