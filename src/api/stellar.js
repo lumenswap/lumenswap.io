@@ -79,6 +79,24 @@ export function fetchOrderBookAPI(selling, buying, params) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/order_book`, { params: { ...assetParam, ...params } });
 }
 
+export function fetchOffersOfAccount(account, params) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${account}/offers`, {
+    params: {
+      order: 'desc',
+      ...params,
+    },
+  });
+}
+
+export function fetchTradesOfAccount(account, params) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${account}/trades`, {
+    params: {
+      order: 'desc',
+      ...params,
+    },
+  });
+}
+
 export function checkAssetAPI(assetCode, assetIssuer) {
   return global
     .fetch(

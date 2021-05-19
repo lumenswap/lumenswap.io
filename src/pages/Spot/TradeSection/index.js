@@ -9,17 +9,24 @@ const TradeSection = ({ tradeListData }) => {
     {
       title: 'Market Trades',
       id: 'one',
-      content:
-  <div className={styles['trade-container']}>
-    <SpotList type="trade" headerItem={tradeListHeader} items={tradeListData} />
-  </div>,
     },
     // { title: 'My Trades', id: 'two', content: 'You have no trades' },
   ];
 
+  const TabContent = () => (
+    <div className={styles['trade-container']}>
+      <SpotList type="trade" headerItem={tradeListHeader} items={tradeListData} />
+    </div>
+  );
+
   return (
     <>
-      <CustomTabs tabs={tabData} activeTabId={tabData[0].id} fontSize={14} />
+      <CustomTabs
+        tabs={tabData}
+        activeTabId={tabData[0].id}
+        fontSize={14}
+        tabContent={TabContent}
+      />
     </>
   );
 };

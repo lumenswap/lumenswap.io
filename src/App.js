@@ -18,7 +18,7 @@ setInterval(() => {
       setUserBalance(res.map(balanceMapper));
     });
   }
-}, 2000);
+}, 5000);
 
 function App() {
   return (

@@ -93,7 +93,6 @@ const Spot = () => {
   const [orderBookData, setOrderBookData] = useState(null);
   const [isLoadingPrevented, setPreventLoading] = useState(false);
   const [detailData, setDetailData] = useState([
-    { title: '-', value: '', status: 'bold' },
     { title: '24 Change', value: '-', status: 'buy' },
     { title: '24 High', value: '-' },
     { title: '24 Low', value: '-' },
@@ -106,6 +105,7 @@ const Spot = () => {
       title: '- asset issuer', value: '-', status: 'link', link: '/',
     },
   ]);
+  const [pricePair, setPricePair] = useState(null);
 
   function getAggWrapper(period) {
     return getTradeAggregation(
@@ -128,7 +128,6 @@ const Spot = () => {
               .times(100);
 
             setDetailData([
-              { title: sevenDigit(lastData.avg), value: '', status: 'bold' },
               { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gt(0) ? 'buy' : 'sell' },
               { title: '24 High', value: numeral(lastData.high).format('0.0[00]a') },
               { title: '24 Low', value: numeral(lastData.low).format('0.0[00]a') },
@@ -172,6 +171,14 @@ const Spot = () => {
       limit: 15,
     }).then((res) => {
       setOrderBookData(res.data);
+      let total = 0;
+
+      if (res.data?.asks[0]) {
+        total = sevenDigit((new BN(res.data.asks[0].price).plus(res.data.bids[0].price))
+          .div(2)
+          .toFixed(7));
+      }
+      setPricePair(total);
     }).catch(console.error);
   }, []);
 
@@ -191,7 +198,7 @@ const Spot = () => {
               <div className="d-lg-none d-md-inline d-sm-inline d-inline mb-2">
                 {openDialogElement('pl-0')}
               </div>
-              <DetailList list={detailData} />
+              <DetailList list={detailData} price={pricePair} />
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import SpotList from 'components/SpotList';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 
-const orderListHeader = ['Price (USDC)', 'Amount(XLM)', 'Total'];
+const orderListHeader = ['Price (USDC)', 'Amount (XLM)', 'Total'];
 
 const OrderSection = ({ orderBookData }) => {
   let total = 0;

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-const DetailList = ({ list }) => {
+const DetailList = ({ list, price }) => {
   const setStatusStyle = (status) => {
     if (status === 'buy') {
       return 'color-buy';
@@ -15,6 +15,14 @@ const DetailList = ({ list }) => {
 
   return (
     <div className="row">
+      <div
+        className={classNames('col-auto mb-lg-0 mb-md-1 mb-sm-1 mb-1',
+          styles.col, styles.bold)}
+      >
+        <div className={styles.title}>{price}</div>
+
+        <div className={classNames(styles.value)} />
+      </div>
       {list.map((item, index) => (
         <div
           className={classNames('col-auto mb-lg-0 mb-md-1 mb-sm-1 mb-1',
