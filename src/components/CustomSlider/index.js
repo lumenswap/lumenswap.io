@@ -1,7 +1,14 @@
 import Slider, { SliderTooltip } from 'rc-slider';
+import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
-const CustomSlider = ({ title }) => {
+const CustomSlider = ({ title, onChange, upperValue }) => {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    setValue(upperValue);
+  }, [upperValue]);
+
   const marks = {
     0: '',
     25: '',
@@ -10,24 +17,20 @@ const CustomSlider = ({ title }) => {
     100: '',
   };
 
-  const log = (value) => {
-      console.log(value); //eslint-disable-line
-  };
-
   const { Handle } = Slider;
   const handle = (props) => {
     const {
-      value, dragging, index, ...restProps
+      value: innerval, dragging, index, ...restProps
     } = props;
     return (
       <SliderTooltip
         prefixCls="rc-slider-tooltip"
-        overlay={`${value} %`}
+        overlay={`${innerval} %`}
         visible={dragging}
         placement="top"
         key={index}
       >
-        <Handle value={value} {...restProps} />
+        <Handle value={innerval} {...restProps} />
       </SliderTooltip>
     );
   };
@@ -39,9 +42,13 @@ const CustomSlider = ({ title }) => {
         max={100}
         marks={marks}
         step={1}
-        onAfterChange={log}
-        tipFormatter={(value) => `${value}%`}
+        onChange={(val) => {
+          setValue(val);
+          onChange(val);
+        }}
+        tipFormatter={(val) => `${val}%`}
         handle={handle}
+        value={value}
       />
     </div>
   );

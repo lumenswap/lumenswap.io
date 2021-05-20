@@ -22,6 +22,8 @@ import OrderFormSection from './OrderFormSection';
 // import ChartSection from './ChartSection';
 import styles from './styles.module.scss';
 
+const ST_TR_COUNT = 100;
+
 const openDialogElement = (className) => (
   <div className={styles['container-select']}>
     <button
@@ -43,45 +45,70 @@ const openDialogElement = (className) => (
 );
 
 function mapStellarAggregationData(oldData, newData) {
-  const candle = newData.map((item) => ({
-    time: moment.utc(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
-    open: item.open,
-    close: item.close,
-    high: item.high,
-    low: item.low,
-    avg: item.avg,
-    base_volume: item.base_volume,
-    counter_volume: item.counter_volume,
-  }));
+  const candle = newData.reverse().map((item, index) => {
+    let open;
+    if (index === 0) {
+      if (oldData[oldData.length - 1]) {
+        open = oldData[oldData.length - 1].close;
+      } else {
+        open = item.open;
+      }
+    } else if (newData[index - 1]) {
+      open = newData[index - 1].close;
+    }
+
+    return {
+      time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
+      open,
+      close: item.close,
+      high: item.high,
+      low: item.low,
+      avg: item.avg,
+      base_volume: item.base_volume,
+      counter_volume: item.counter_volume,
+    };
+  });
 
   const line = newData.map((item) => ({
-    time: moment.utc(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
+    time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
     value: item.avg,
   }));
 
   const volume = newData.map((item) => ({
-    time: moment.utc(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
+    time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
     value: parseInt(item.base_volume, 10),
     color: new BN(item.open).isGreaterThan(item.close) ? '#f5dce6' : '#e8eedc',
   }));
 
+  let innerOldCandle = [];
+  const lastNewCandle = candle.slice(-1)[0];
+  if (oldData.candle[0] && lastNewCandle) {
+    innerOldCandle = [
+      {
+        ...oldData.candle[0],
+        open: lastNewCandle.close,
+      },
+    ];
+  } else if (oldData.candle[0]) {
+    innerOldCandle = [oldData.candle[0]];
+  }
+
   return {
-    candle: [...candle, ...oldData.candle],
+    candle: [...candle, ...innerOldCandle, ...oldData.candle.slice(1)],
     volume: [...volume, ...oldData.volume],
     line: [...line, ...oldData.line],
     emptyNew: candle.length === 0,
   };
 }
 
-function getTradeAggregation(baseAsset, counterAsset, period, oldData) {
-  const startTime = moment.utc(period).startOf('day').subtract(120, 'days');
-  const endTime = moment.utc(period).endOf('day');
-
+function getTradeAggregation(baseAsset, counterAsset, startTime, endTime, oldData) {
   return fetchTradeAggregationAPI(baseAsset, counterAsset, {
     start_time: startTime.valueOf(),
     end_time: endTime.valueOf(),
     resolution: 86400000,
-    limit: 121,
+    limit: ST_TR_COUNT + 10,
+    offset: 0,
+    order: 'desc',
   }).then((res) => mapStellarAggregationData(oldData, res.data._embedded.records));
 }
 
@@ -106,12 +133,25 @@ const Spot = () => {
     },
   ]);
   const [pricePair, setPricePair] = useState(null);
+  const lastFetchedTimeRef = useRef(null);
 
-  function getAggWrapper(period) {
+  function getAggWrapper() {
+    let startTime;
+    let endTime;
+    if (lastFetchedTimeRef.current === null) {
+      const currentTime = Date.now();
+      startTime = moment(currentTime).startOf('second').subtract(ST_TR_COUNT, 'days');
+      endTime = moment(currentTime).startOf('second').add(1, 'days');
+    } else {
+      startTime = moment(lastFetchedTimeRef.current).subtract(ST_TR_COUNT + 1, 'days');
+      endTime = moment(lastFetchedTimeRef.current).subtract(1, 'days');
+    }
+
     return getTradeAggregation(
       getAssetDetails(XLM),
       getAssetDetails(USDC),
-      period,
+      startTime,
+      endTime,
       chartData || { candle: [], volume: [], line: [] },
     )
       .then((res) => {
@@ -123,9 +163,9 @@ const Spot = () => {
           const lastData = res.candle[res.candle.length - 1];
           const oBLData = res.candle[res.candle.length - 2];
           if (lastData && oBLData) {
-            const ch24 = (new BN(oBLData.avg).minus(lastData.avg))
-              .div(lastData.avg)
-              .times(100);
+            const ch24 = (new BN(lastData.open).minus(lastData.close))
+              .div(lastData.open)
+              .times(-100);
 
             setDetailData([
               { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gt(0) ? 'buy' : 'sell' },
@@ -141,6 +181,8 @@ const Spot = () => {
               },
             ]);
           }
+
+          lastFetchedTimeRef.current = startTime.valueOf();
         }
       }).catch(console.error);
   }

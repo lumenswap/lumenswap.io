@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Checkbox from 'components/Checkbox';
+// import Checkbox from 'components/Checkbox';
 import CustomTabs from 'components/CustomTabs';
 // import ButtonGroup from 'components/ButtonGroup';
 import Table from 'components/Table';
@@ -51,7 +51,7 @@ const FilterTable = ({ isLogged, rows }) => {
 };
 
 const InfoSection = () => {
-  const [checked, setCheckbox] = useState(false);
+  // const [checked, setCheckbox] = useState(false);
   const historyTab = [
     { title: 'Open orders', id: 'order' },
     { title: 'Trade History', id: 'trade' },
@@ -108,14 +108,14 @@ const InfoSection = () => {
 
   return (
     <>
-      <div className={styles['container-checkbox']}>
+      {/* <div className={styles['container-checkbox']}>
         <Checkbox
           checked={checked}
           onChange={() => setCheckbox(!checked)}
           size={15}
           label="Hide other pairs"
         />
-      </div>
+      </div> */}
       <div className="mt-md-0 mt-sm-4 mt-4">
         <CustomTabs
           tabs={historyTab}

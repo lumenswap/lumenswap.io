@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart, CrosshairMode } from 'lightweight-charts';
-import moment from 'moment';
 import numeral from 'numeral';
 import styles from './styles.module.scss';
 
@@ -8,7 +7,6 @@ function onVisibleLogicalRangeChange(
   setTimoutTimer,
   timeScale,
   candleSeriesRef,
-  chartData,
   getAggWrapper,
 ) {
   return () => {
@@ -22,11 +20,7 @@ function onVisibleLogicalRangeChange(
       if (logicalRange !== null) {
         const barsInfo = candleSeriesRef.current.barsInLogicalRange(logicalRange);
         if (barsInfo !== null && barsInfo.barsBefore < 10) {
-          if (chartData) {
-            const toEnrichTime = chartData.candle[0].time;
-            const testA = moment.utc(`${toEnrichTime.year}-${toEnrichTime.month}-${toEnrichTime.day}`, 'YYYY-MM-DD');
-            getAggWrapper(testA.valueOf() - 1);
-          }
+          getAggWrapper();
         }
       }
       // eslint-disable-next-line no-param-reassign
@@ -135,7 +129,7 @@ const TradingviewChart = ({
       }
     });
 
-    getAggWrapper(Date.now());
+    getAggWrapper();
   }, []);
 
   useEffect(() => {
@@ -148,7 +142,6 @@ const TradingviewChart = ({
         setTimoutTimer,
         timeScale,
         candleSeriesRef,
-        chartData,
         getAggWrapper,
       );
       timeScale.subscribeVisibleLogicalRangeChange(previousFuncRef.current);
