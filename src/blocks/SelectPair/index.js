@@ -9,6 +9,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import questionLogo from 'assets/images/question.png';
+import { removeCustomPairAction } from 'actions/userCustomPairs';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
 import createPairForDefaultTokens from './createPairForDefaultTokens';
@@ -22,6 +23,7 @@ const SelectPair = ({ setAppSpotPair }) => {
       counter: getAssetDetails(USDC),
     },
     ...createPairForDefaultTokens(),
+    ...customPairs,
   ]).map((item) => {
     const foundBaseToken = defaultTokens
       .find((tok) => isSameAsset(getAssetDetails(tok), item.base));
@@ -69,41 +71,59 @@ const SelectPair = ({ setAppSpotPair }) => {
   }), [JSON.stringify(customPairs)]);
 
   return (
-    <div className={classNames('invisible-scroll', styles.scroll)}>
-      {enrichedPairs.map((item, index) => (
-        <div key={index}>
-          <div
-            className={styles['select-logo']}
-            onClick={() => {
-              setAppSpotPair({
-                base: item.base.details,
-                counter: item.counter.details,
-              });
+    <div style={{ paddingBottom: 50 }}>
+      <div className={classNames('invisible-scroll', styles.scroll)}>
+        {enrichedPairs.map((item, index) => (
+          <div key={index}>
+            <div
+              className={styles['select-logo']}
+              onClick={() => {
+                setAppSpotPair({
+                  base: item.base.details,
+                  counter: item.counter.details,
+                });
 
-              closeModalAction();
-            }}
-          >
-            <img src={item.base.logo} alt="baselogo" />
-            <img src={item.counter.logo} alt="counterlogo" />
-            {item.base.details.getCode()}/{item.counter.details.getCode()}
+                closeModalAction();
+              }}
+            >
+              <img src={item.base.logo} alt="baselogo" />
+              <img src={item.counter.logo} alt="counterlogo" />
+              <span>
+                {item.base.details.getCode()}/{item.counter.details.getCode()}
+              </span>
+              {(item.base.type === 'custom' || item.counter.type === 'custom') && (
+              <span
+                style={{ marginLeft: 4 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeCustomPairAction({
+                    base: item.base.details,
+                    counter: item.counter.details,
+                  });
+                }}
+              >
+                (delete)
+              </span>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
-      <button
-        type="submit"
-        className={styles.submit}
-        onClick={() => {
-          openModalAction({
-            modalProps: { title: 'Add custom pair' },
-            content: <AddCustomPair />,
-          });
-        }}
-      >
-        <span
-          className="icon-plus-circle mr-2"
-        />
-        Add custom pair
-      </button>
+        ))}
+        <button
+          type="submit"
+          className={styles.submit}
+          onClick={() => {
+            openModalAction({
+              modalProps: { title: 'Add custom pair' },
+              content: <AddCustomPair />,
+            });
+          }}
+        >
+          <span
+            className="icon-plus-circle mr-2"
+          />
+          Add custom pair
+        </button>
+      </div>
     </div>
   );
 };

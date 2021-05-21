@@ -10,6 +10,9 @@ import isSamePair from 'helpers/isSamePair';
 import getAssetDetails from 'helpers/getAssetDetails';
 import StellarSDK from 'stellar-sdk';
 import Submitting from 'components/Submitting';
+import { useEffect } from 'react';
+import { addCustomPairAction } from 'actions/userCustomPairs';
+import { closeModalAction } from 'actions/modal';
 import styles from './styles.module.scss';
 
 const AddCustomPair = () => {
@@ -27,7 +30,22 @@ const AddCustomPair = () => {
   });
 
   function onSubmit(data) {
-    console.log(data);
+    let base = getAssetDetails({
+      code: data.baseCode,
+      issuer: data.baseIssuer,
+    });
+    let counter = getAssetDetails({
+      code: data.counterCode,
+      issuer: data.counterIssuer,
+    });
+    if (data.baseNativeCheckbox) {
+      base = StellarSDK.Asset.native();
+    } else if (data.counterNativeCheckbox) {
+      counter = StellarSDK.Asset.native();
+    }
+
+    addCustomPairAction({ base, counter });
+    closeModalAction();
   }
 
   async function customValidator() {
@@ -36,7 +54,6 @@ const AddCustomPair = () => {
       return 'Both side cannot be same';
     }
 
-    console.log(formValues);
     if (!formValues.baseNativeCheckbox && (!formValues.baseCode || !formValues.baseIssuer)) {
       return 'Base Asset is Required';
     }
@@ -93,6 +110,10 @@ const AddCustomPair = () => {
     return true;
   }
 
+  useEffect(() => {
+    trigger('baseCode');
+  }, [watch('baseNativeCheckbox'), watch('counterNativeCheckbox')]);
+
   function extratError() {
     for (const value of Object.values(errors)) {
       if (value.message) {
@@ -144,7 +165,6 @@ const AddCustomPair = () => {
             name="baseNativeCheckbox"
             control={control}
             defaultValue={false}
-            rules={{ validate: customValidator }}
             render={(props) => (
               <Checkbox
                 value={props.value}
@@ -190,7 +210,6 @@ const AddCustomPair = () => {
             name="counterNativeCheckbox"
             control={control}
             defaultValue={false}
-            rules={{ validate: customValidator }}
             render={(props) => (
               <Checkbox
                 value={props.value}

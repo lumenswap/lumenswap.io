@@ -1,5 +1,5 @@
 import actionTypes from 'actions';
-import isSameAsset from 'helpers/isSameAsset';
+import isSamePair from 'helpers/isSamePair';
 
 export default function userCustomPairsReducer(state = [], action) {
   switch (action.type) {
@@ -8,7 +8,7 @@ export default function userCustomPairsReducer(state = [], action) {
     }
 
     case actionTypes.userCustomPairs.REMOVE: {
-      const foundIndex = state.findIndex((item) => isSameAsset(item, action.asset));
+      const foundIndex = state.findIndex((item) => isSamePair(item, action.asset));
       if (foundIndex >= 0) {
         return [
           ...state.slice(0, foundIndex),

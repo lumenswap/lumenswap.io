@@ -11,11 +11,20 @@ const UserCustomTokenTransfer = createTransform(
   { whitelist: ['userCustomTokens'] },
 );
 
+const UserCustomPairTransfer = createTransform(
+  (inbound) => inbound,
+  (outbound) => outbound.map((i) => ({
+    base: getAssetDetails(i.base),
+    counter: getAssetDetails(i.counter),
+  })),
+  { whitelist: ['userCustomPairs'] },
+);
+
 const persistorConfig = {
   key: 'lumneswapAppData',
   storage: persistStorage,
-  whitelist: ['userCustomTokens'],
-  transforms: [UserCustomTokenTransfer],
+  whitelist: ['userCustomTokens', 'userCustomPairs'],
+  transforms: [UserCustomTokenTransfer, UserCustomPairTransfer],
 };
 
 const persistedReducer = persistReducer(persistorConfig, reducers);
