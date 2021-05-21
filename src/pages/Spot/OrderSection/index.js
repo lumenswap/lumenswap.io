@@ -2,9 +2,7 @@ import LeftSideAppLumen from 'components/SpotList/LeftSideAppLumen';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 
-const orderListHeader = ['Price (USDC)', 'Amount (XLM)', 'Total'];
-
-const OrderSection = ({ orderBookData }) => {
+const OrderSection = ({ orderBookData, appSpotPair }) => {
   let total = 0;
 
   if (orderBookData?.asks[0]) {
@@ -12,6 +10,12 @@ const OrderSection = ({ orderBookData }) => {
       .div(2)
       .toFixed(7));
   }
+
+  const orderListHeader = [
+    `Price (${appSpotPair.counter.getCode()})`,
+    `Amount (${appSpotPair.base.getCode()})`,
+    'Total',
+  ];
 
   return (
     <LeftSideAppLumen

@@ -119,8 +119,8 @@ const TradingviewChart = ({
           <>
             {sampleLabel}
             <span className={styles.value}>
-              H: {humany(currentData.high)}{'   '}L: {humany(currentData.low)}{'   '}
-              O: {humany(currentData.open)}{'   '}C: {humany(currentData.close)}
+              H: {humany(currentData?.high)}{'   '}L: {humany(currentData?.low)}{'   '}
+              O: {humany(currentData?.open)}{'   '}C: {humany(currentData?.close)}
             </span>
           </>,
         );

@@ -1,13 +1,13 @@
 import actionTypes from 'actions';
 import isSameAsset from 'helpers/isSameAsset';
 
-export default function userCustomTokensReducer(state = [], action) {
+export default function userCustomPairsReducer(state = [], action) {
   switch (action.type) {
-    case actionTypes.userCustomTokens.ADD: {
+    case actionTypes.userCustomPairs.ADD: {
       return [...state, action.asset];
     }
 
-    case actionTypes.userCustomTokens.REMOVE: {
+    case actionTypes.userCustomPairs.REMOVE: {
       const foundIndex = state.findIndex((item) => isSameAsset(item, action.asset));
       if (foundIndex >= 0) {
         return [

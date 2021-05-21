@@ -17,7 +17,10 @@ const actionTypes = {
   userCustomTokens: {
     ADD: 'userCustomTokens/ADD',
     REMOVE: 'userCustomTokens/REMOVE',
-    SET: 'userCustomTokens/SET',
+  },
+  userCustomPairs: {
+    ADD: 'userCustomPairs/ADD',
+    REMOVE: 'userCustomPairs/REMOVE',
   },
 };
 

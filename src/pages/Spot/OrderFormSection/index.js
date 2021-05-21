@@ -5,10 +5,8 @@ import { useSelector } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { openConnectModal } from 'actions/modal';
 import isSameAsset from 'helpers/isSameAsset';
-import XLM from 'tokens/XLM';
 import getAssetDetails from 'helpers/getAssetDetails';
 import sevenDigit from 'helpers/sevenDigit';
-import USDC from 'tokens/USDC';
 import BN from 'helpers/BN';
 import { useState } from 'react';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
@@ -216,21 +214,21 @@ const InnerForm = ({
   );
 };
 
-const OrderFormSection = () => (
+const OrderFormSection = ({ appSpotPair }) => (
   <div className="row" style={{ margin: '0 -24px' }}>
     <div className="col-md-6 col-sm-12 col-12 px-4">
       <InnerForm
-        baseAsset={getAssetDetails(XLM)}
-        counterAsset={getAssetDetails(USDC)}
-        mainAsset={getAssetDetails(XLM)}
+        baseAsset={getAssetDetails(appSpotPair.base)}
+        counterAsset={getAssetDetails(appSpotPair.counter)}
+        mainAsset={getAssetDetails(appSpotPair.base)}
         type="buy"
       />
     </div>
     <div className="col-md-6 col-sm-12 col-12 px-4 mt-0 mt-md-0 mt-sm-4 mt-4">
       <InnerForm
-        baseAsset={getAssetDetails(XLM)}
-        counterAsset={getAssetDetails(USDC)}
-        mainAsset={getAssetDetails(XLM)}
+        baseAsset={getAssetDetails(appSpotPair.base)}
+        counterAsset={getAssetDetails(appSpotPair.counter)}
+        mainAsset={getAssetDetails(appSpotPair.base)}
         type="sell"
       />
     </div>

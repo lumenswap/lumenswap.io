@@ -2,11 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import DetailList from 'components/DetailList';
-import SelectPair from 'blocks/SelectPair';
-import { openModalAction } from 'actions/modal';
-import usdLogo from 'assets/images/usd-coin-usdc.png';
-import stellarLogo from 'assets/images/stellar.png';
-import { fetchOrderBookAPI, fetchTradeAggregationAPI, fetchTradeAPI } from 'api/stellar';
+import { fetchOrderBookAPI, fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
@@ -15,102 +11,15 @@ import BN from 'helpers/BN';
 import TradingviewChart from 'components/TradingviewChart';
 import sevenDigit from 'helpers/sevenDigit';
 import numeral from 'numeral';
+import minimizeAddress from 'helpers/minimizeAddress';
 import InfoSection from './InfoSection';
 import OrderSection from './OrderSection';
 import TradeSection from './TradeSection';
 import OrderFormSection from './OrderFormSection';
 // import ChartSection from './ChartSection';
 import styles from './styles.module.scss';
-
-const ST_TR_COUNT = 100;
-
-const openDialogElement = (className) => (
-  <div className={styles['container-select']}>
-    <button
-      type="button"
-      className={classNames(styles['select-logo'], className)}
-      onClick={() => {
-        openModalAction({
-          modalProps: { title: 'Select a pair' },
-          content: <SelectPair />,
-        });
-      }}
-    >
-      <img className={styles['first-coin']} src={usdLogo} alt="" />
-      <img className={styles['second-coin']} src={stellarLogo} alt="" />
-      USDC/XLM
-      <span className="icon-angle-down ml-auto" />
-    </button>
-  </div>
-);
-
-function mapStellarAggregationData(oldData, newData) {
-  const candle = newData.reverse().map((item, index) => {
-    let open;
-    if (index === 0) {
-      if (oldData[oldData.length - 1]) {
-        open = oldData[oldData.length - 1].close;
-      } else {
-        open = item.open;
-      }
-    } else if (newData[index - 1]) {
-      open = newData[index - 1].close;
-    }
-
-    return {
-      time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
-      open,
-      close: item.close,
-      high: item.high,
-      low: item.low,
-      avg: item.avg,
-      base_volume: item.base_volume,
-      counter_volume: item.counter_volume,
-    };
-  });
-
-  const line = newData.map((item) => ({
-    time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
-    value: item.avg,
-  }));
-
-  const volume = newData.map((item) => ({
-    time: moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD'),
-    value: parseInt(item.base_volume, 10),
-    color: new BN(item.open).isGreaterThan(item.close) ? '#f5dce6' : '#e8eedc',
-  }));
-
-  let innerOldCandle = [];
-  const lastNewCandle = candle.slice(-1)[0];
-  if (oldData.candle[0] && lastNewCandle) {
-    innerOldCandle = [
-      {
-        ...oldData.candle[0],
-        open: lastNewCandle.close,
-      },
-    ];
-  } else if (oldData.candle[0]) {
-    innerOldCandle = [oldData.candle[0]];
-  }
-
-  return {
-    candle: [...candle, ...innerOldCandle, ...oldData.candle.slice(1)],
-    volume: [...volume, ...oldData.volume],
-    line: [...line, ...oldData.line],
-    emptyNew: candle.length === 0,
-  };
-}
-
-function getTradeAggregation(baseAsset, counterAsset, startTime, endTime, oldData) {
-  return fetchTradeAggregationAPI(baseAsset, counterAsset, {
-    start_time: startTime.valueOf(),
-    end_time: endTime.valueOf(),
-    resolution: 86400000,
-    limit: ST_TR_COUNT + 10,
-    offset: 0,
-    order: 'desc',
-  }).then((res) => mapStellarAggregationData(oldData, res.data._embedded.records));
-}
+import { getTradeAggregation, ST_TR_COUNT } from './utils';
+import OpenDialogElement from './OpenDialogElement';
 
 const Spot = () => {
   const refHeight = useRef(null);
@@ -126,18 +35,28 @@ const Spot = () => {
     { title: '24 Volume (-)', value: '-' },
     { title: '24 Volume (-)', value: '-' },
     {
-      title: '- asset issuer', value: '-', status: 'link', link: '/',
+      title: 'XLM asset issuer',
+      value: 'Stellar Foundation',
+      status: false,
+      link: false,
     },
     {
-      title: '- asset issuer', value: '-', status: 'link', link: '/',
+      title: 'USDC asset issuer',
+      value: minimizeAddress(USDC.issuer),
+      status: 'link',
+      link: `${process.env.REACT_APP_LUMENSCAN_URL}/account/${USDC.issuer}`,
     },
   ]);
   const [pricePair, setPricePair] = useState(null);
   const lastFetchedTimeRef = useRef(null);
   const intervalTradesRef = useRef(null);
   const intervalOrdersRef = useRef(null);
+  const [appSpotPair, setAppSpotPair] = useState({
+    base: getAssetDetails(XLM),
+    counter: getAssetDetails(USDC),
+  });
 
-  function getAggWrapper() {
+  function getAggWrapper(clearMode = false) {
     let startTime;
     let endTime;
     if (lastFetchedTimeRef.current === null) {
@@ -149,12 +68,21 @@ const Spot = () => {
       endTime = moment(lastFetchedTimeRef.current).subtract(1, 'days');
     }
 
+    let innerChartData;
+    if (clearMode) {
+      innerChartData = { candle: [], volume: [], line: [] };
+    } else if (!chartData) {
+      innerChartData = { candle: [], volume: [], line: [] };
+    } else {
+      innerChartData = chartData;
+    }
+
     return getTradeAggregation(
-      getAssetDetails(XLM),
-      getAssetDetails(USDC),
+      appSpotPair.base,
+      appSpotPair.counter,
       startTime,
       endTime,
-      chartData || { candle: [], volume: [], line: [] },
+      innerChartData,
     )
       .then((res) => {
         if (res.emptyNew) {
@@ -176,10 +104,16 @@ const Spot = () => {
               { title: '24 Volume (XLM)', value: numeral(lastData.base_volume).format('0.0a') },
               { title: '24 Volume (USDC)', value: numeral(lastData.counter_volume).format('0.0a') },
               {
-                title: '- asset issuer', value: '-', status: 'link', link: '/',
+                title: `${appSpotPair.base.getCode()} asset issuer`,
+                value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
+                status: appSpotPair.base.getIssuer() ? 'link' : false,
+                link: appSpotPair.base.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.base.getIssuer()}` : false,
               },
               {
-                title: '- asset issuer', value: '-', status: 'link', link: '/',
+                title: `${appSpotPair.counter.getCode()} asset issuer`,
+                value: appSpotPair.counter.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
+                status: appSpotPair.counter.getIssuer() ? 'link' : false,
+                link: appSpotPair.counter.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.counter.getIssuer()}` : false,
               },
             ]);
           }
@@ -197,7 +131,7 @@ const Spot = () => {
   }, [refHeight.current]);
 
   function fetchingTradeApiCallWrapper() {
-    fetchTradeAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
+    fetchTradeAPI(appSpotPair.base, appSpotPair.counter, {
       limit: 35,
       order: 'desc',
     }).then((res) => {
@@ -222,8 +156,8 @@ const Spot = () => {
   }, []);
 
   function fetchingOrderAPICallWrapper() {
-    fetchOrderBookAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
-      limit: 15,
+    fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
+      limit: 16,
     }).then((res) => {
       setOrderBookData(res.data);
       let total = 0;
@@ -248,6 +182,40 @@ const Spot = () => {
     };
   }, []);
 
+  useEffect(() => {
+    lastFetchedTimeRef.current = null;
+    setPreventLoading(false);
+    setChartData({ candle: [], volume: [], line: [] });
+    setDetailData([
+      { title: '24 Change', value: '-', status: 'sell' },
+      { title: '24 High', value: '-' },
+      { title: '24 Low', value: '-' },
+      { title: '24 Volume (XLM)', value: '-' },
+      { title: '24 Volume (USDC)', value: '-' },
+      {
+        title: `${appSpotPair.base.getCode()} asset issuer`,
+        value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
+        status: appSpotPair.base.getIssuer() ? 'link' : false,
+        link: appSpotPair.base.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.base.getIssuer()}` : false,
+      },
+      {
+        title: `${appSpotPair.counter.getCode()} asset issuer`,
+        value: appSpotPair.counter.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
+        status: appSpotPair.counter.getIssuer() ? 'link' : false,
+        link: appSpotPair.counter.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.counter.getIssuer()}` : false,
+      },
+    ]);
+    getAggWrapper(true);
+
+    clearInterval(intervalOrdersRef.current);
+    fetchingOrderAPICallWrapper();
+    intervalOrdersRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
+
+    clearInterval(intervalTradesRef.current);
+    fetchingTradeApiCallWrapper();
+    setInterval(fetchingTradeApiCallWrapper, 10000);
+  }, [appSpotPair.base, appSpotPair.counter]);
+
   return (
     <div className="container-fluid">
       <Header />
@@ -256,15 +224,23 @@ const Spot = () => {
         <div className={classNames('row', styles.row)}>
           <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
             <div className={classNames(styles.card, styles['card-select'])}>
-              {openDialogElement('w-100')}
+              <OpenDialogElement
+                className="w-100"
+                appSpotPair={appSpotPair}
+                setAppSpotPair={setAppSpotPair}
+              />
             </div>
           </div>
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
             <div className={classNames(styles.card, styles['card-detail'])}>
               <div className="d-lg-none d-md-inline d-sm-inline d-inline mb-2">
-                {openDialogElement('pl-0')}
+                <OpenDialogElement
+                  className="pl-0"
+                  appSpotPair={appSpotPair}
+                  setAppSpotPair={setAppSpotPair}
+                />
               </div>
-              <DetailList list={detailData} price={pricePair} />
+              <DetailList list={detailData} price={pricePair} appSpotPair={appSpotPair} />
             </div>
           </div>
         </div>
@@ -272,7 +248,7 @@ const Spot = () => {
           {/* order section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
             <div className={classNames(styles.card, styles['card-left'], 'invisible-scroll')}>
-              <OrderSection orderBookData={orderBookData} />
+              <OrderSection orderBookData={orderBookData} appSpotPair={appSpotPair} />
             </div>
           </div>
           {/* middle section */}
@@ -290,13 +266,13 @@ const Spot = () => {
               className={classNames(styles.card, styles['card-input'], 'mb-1')}
               style={{ height: `calc(100% - ${height + 4}px)` }}
             >
-              <OrderFormSection />
+              <OrderFormSection appSpotPair={appSpotPair} />
             </div>
           </div>
           {/* trade section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
             <div className={classNames(styles.card, styles['card-right'], 'invisible-scroll')}>
-              <TradeSection tradeListData={tradeListData} />
+              <TradeSection tradeListData={tradeListData} appSpotPair={appSpotPair} />
             </div>
           </div>
         </div>
