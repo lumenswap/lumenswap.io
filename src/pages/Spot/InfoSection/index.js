@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import Checkbox from 'components/Checkbox';
 import CustomTabs from 'components/CustomTabs';
 // import ButtonGroup from 'components/ButtonGroup';
@@ -43,27 +43,29 @@ const tableOrderRows = (rows) => rows.map((row, index) => (
     <td>{row.price} {row.counterAsset.getCode()}</td>
     <td>{row.amount} {row.baseAsset.getCode()}</td>
     <td>{row.total} {row.counterAsset.getCode()}</td>
-    <td
-      onClick={async () => {
-        function func() {
-          const address = store.getState().user.detail.address;
-          return generateManageSellTRX(
-            address,
-            row.counterAsset,
-            row.baseAsset,
-            '0',
-            row.price,
-            row.id,
-          );
-        }
+    <td>
+      <span
+        onClick={async () => {
+          function func() {
+            const address = store.getState().user.detail.address;
+            return generateManageSellTRX(
+              address,
+              row.counterAsset,
+              row.baseAsset,
+              '0',
+              row.price,
+              row.id,
+            );
+          }
 
-        showGenerateTrx(func)
-          .then(showSignResponse)
-          .catch(console.error);
-      }}
-      style={{ cursor: 'pointer' }}
-    >
-      Cancel
+          showGenerateTrx(func)
+            .then(showSignResponse)
+            .catch(console.error);
+        }}
+        style={{ cursor: 'pointer' }}
+      >
+        Cancel
+      </span>
     </td>
   </tr>
 ));
@@ -107,56 +109,63 @@ const InfoSection = () => {
   const user = useSelector((state) => state.user);
   const [rowsData, setRowsData] = useState([]);
   const [currentTab, setCurrentTab] = useState('order');
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    if (user.logged) {
-      if (currentTab === 'trade') {
-        fetchTradesOfAccount(user.detail.address, { limit: 200 }).then((res) => {
-          setRowsData(res.data._embedded.records.map((item) => {
-            const time = new Date(item.ledger_close_time);
-            const isSell = (item.base_account === user.detail.address && item.base_is_seller)
+    if (user.logged && !intervalRef.current) {
+      intervalRef.current = setInterval(() => {
+        if (currentTab === 'trade') {
+          fetchTradesOfAccount(user.detail.address, { limit: 200 }).then((res) => {
+            setRowsData(res.data._embedded.records.map((item) => {
+              const time = new Date(item.ledger_close_time);
+              const isSell = (item.base_account === user.detail.address && item.base_is_seller)
             || (item.counter_account === user.detail.address && !item.base_is_seller);
-            const price = new BN(item.price.n).div(item.price.d);
+              const price = new BN(item.price.n).div(item.price.d);
 
-            return {
-              time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-              pair: `${item.base_asset_code || 'XLM'}/${item.counter_asset_code || 'XLM'}`,
-              isSell,
-              price: sevenDigit(price.toFixed(7)),
-              amount: sevenDigit(item.base_amount),
-              counterAsset: item.counter_asset_code || 'XLM',
-              baseAsset: item.base_asset_code || 'XLM',
-              total: sevenDigit(item.counter_amount),
-            };
-          }));
-        });
-      } else if (currentTab === 'order') {
-        fetchOffersOfAccount(user.detail.address, { limit: 200 }).then((res) => {
-          setRowsData(res.data._embedded.records.map((item) => {
-            const time = new Date(item.last_modified_time);
-            const total = new BN(item.price).times(item.amount);
-            const counterAsset = item.buying.asset_code
-              ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
-              : new StellarSDK.Asset.native();
-            const baseAsset = item.selling.asset_code
-              ? new StellarSDK.Asset(item.selling.asset_code, item.selling.asset_issuer)
-              : new StellarSDK.Asset.native();
+              return {
+                time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
+                pair: `${item.base_asset_code || 'XLM'}/${item.counter_asset_code || 'XLM'}`,
+                isSell,
+                price: sevenDigit(price.toFixed(7)),
+                amount: sevenDigit(item.base_amount),
+                counterAsset: item.counter_asset_code || 'XLM',
+                baseAsset: item.base_asset_code || 'XLM',
+                total: sevenDigit(item.counter_amount),
+              };
+            }));
+          });
+        } else if (currentTab === 'order') {
+          fetchOffersOfAccount(user.detail.address, { limit: 200 }).then((res) => {
+            setRowsData(res.data._embedded.records.map((item) => {
+              const time = new Date(item.last_modified_time);
+              const total = new BN(item.price).times(item.amount);
+              const counterAsset = item.buying.asset_code
+                ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
+                : new StellarSDK.Asset.native();
+              const baseAsset = item.selling.asset_code
+                ? new StellarSDK.Asset(item.selling.asset_code, item.selling.asset_issuer)
+                : new StellarSDK.Asset.native();
 
-            return {
-              time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-              pair: `${item.selling.asset_code || 'XLM'}/${item.buying.asset_code || 'XLM'}`,
-              isSell: true,
-              price: sevenDigit(item.price),
-              amount: sevenDigit(item.amount),
-              counterAsset,
-              baseAsset,
-              total: sevenDigit(total.toString()),
-              id: item.id,
-            };
-          }));
-        });
-      }
+              return {
+                time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
+                pair: `${item.selling.asset_code || 'XLM'}/${item.buying.asset_code || 'XLM'}`,
+                isSell: true,
+                price: sevenDigit(item.price),
+                amount: sevenDigit(item.amount),
+                counterAsset,
+                baseAsset,
+                total: sevenDigit(total.toString()),
+                id: item.id,
+              };
+            }));
+          });
+        }
+      }, 2000);
     }
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, [user.logged, currentTab]);
 
   return (

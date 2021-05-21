@@ -134,6 +134,8 @@ const Spot = () => {
   ]);
   const [pricePair, setPricePair] = useState(null);
   const lastFetchedTimeRef = useRef(null);
+  const intervalTradesRef = useRef(null);
+  const intervalOrdersRef = useRef(null);
 
   function getAggWrapper() {
     let startTime;
@@ -194,7 +196,7 @@ const Spot = () => {
     console.warn(height);
   }, [refHeight.current]);
 
-  useEffect(() => {
+  function fetchingTradeApiCallWrapper() {
     fetchTradeAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
       limit: 35,
       order: 'desc',
@@ -206,9 +208,20 @@ const Spot = () => {
         time: item.ledger_close_time,
       })));
     }).catch(console.error);
-  }, []);
+  }
 
   useEffect(() => {
+    if (!intervalTradesRef.current) {
+      fetchingTradeApiCallWrapper();
+      setInterval(fetchingTradeApiCallWrapper, 10000);
+    }
+
+    return () => {
+      clearInterval(intervalTradesRef.current);
+    };
+  }, []);
+
+  function fetchingOrderAPICallWrapper() {
     fetchOrderBookAPI(getAssetDetails(XLM), getAssetDetails(USDC), {
       limit: 15,
     }).then((res) => {
@@ -222,6 +235,17 @@ const Spot = () => {
       }
       setPricePair(total);
     }).catch(console.error);
+  }
+
+  useEffect(() => {
+    if (!intervalOrdersRef.current) {
+      fetchingOrderAPICallWrapper();
+      intervalOrdersRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
+    }
+
+    return () => {
+      clearInterval(intervalOrdersRef.current);
+    };
   }, []);
 
   return (

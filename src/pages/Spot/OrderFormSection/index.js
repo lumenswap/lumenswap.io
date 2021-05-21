@@ -41,7 +41,7 @@ const InnerForm = ({
   const isSell = type === 'sell';
 
   const {
-    handleSubmit, setValue, getValues, control,
+    handleSubmit, setValue, getValues, control, setError,
   } = useForm();
 
   async function onSubmit(data) {
@@ -142,7 +142,8 @@ const InnerForm = ({
           rules={{ required: true }}
           render={(props) => (
             <InputGroup
-              {...props}
+              value={props.value}
+              onChange={props.onChange}
               rightLabel={counterAsset.getCode()}
               leftLabel="Price"
               onChangeInput={onInputChange('price')}
@@ -157,7 +158,8 @@ const InnerForm = ({
           rules={{ required: true }}
           render={(props) => (
             <InputGroup
-              {...props}
+              value={props.value}
+              onChange={props.onChange}
               rightLabel={baseAsset.getCode()}
               leftLabel="Amount"
               onChangeInput={onInputChange('amount')}
@@ -187,7 +189,8 @@ const InnerForm = ({
           }}
           render={(props) => (
             <InputGroup
-              {...props}
+              value={props.value}
+              onChange={props.onChange}
               rightLabel={counterAsset.getCode()}
               leftLabel="Total"
               onChangeInput={onInputChange('total')}
@@ -202,8 +205,9 @@ const InnerForm = ({
         fontWeight={500}
         className={styles.button}
         onClick={(e) => {
+          e.preventDefault();
+          setError('total');
           if (!isLogged) {
-            e.preventDefault();
             openConnectModal();
           }
         }}

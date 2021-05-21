@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 const InputGroup = ({
   type, value, size, height, fontSize, disabled, placeholder,
-  name, input, autoFocus, innerRef, onChange, rightLabel, leftLabel,
+  input, autoFocus, onChange, rightLabel, leftLabel,
   onChangeInput,
 }) => (
   <div
@@ -19,8 +19,6 @@ const InputGroup = ({
       value={value}
       disabled={disabled}
       placeholder={placeholder}
-      name={name}
-      ref={innerRef}
       autoFocus={autoFocus}
       onChange={(e) => {
         e.preventDefault();
