@@ -39,7 +39,7 @@ const InnerForm = ({
   const isSell = type === 'sell';
 
   const {
-    handleSubmit, setValue, getValues, control, setError,
+    handleSubmit, setValue, getValues, control,
   } = useForm();
 
   async function onSubmit(data) {
@@ -70,7 +70,7 @@ const InnerForm = ({
 
     showGenerateTrx(func)
       .then(showSignResponse)
-      .catch(console.error);
+      .catch(console.log);
   }
 
   function onInputChange(field) {
@@ -203,9 +203,8 @@ const InnerForm = ({
         fontWeight={500}
         className={styles.button}
         onClick={(e) => {
-          e.preventDefault();
-          setError('total');
           if (!isLogged) {
+            e.preventDefault();
             openConnectModal();
           }
         }}
