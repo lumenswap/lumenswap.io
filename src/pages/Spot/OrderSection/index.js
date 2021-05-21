@@ -1,4 +1,4 @@
-import SpotList from 'components/SpotList';
+import LeftSideAppLumen from 'components/SpotList/LeftSideAppLumen';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 
@@ -14,13 +14,11 @@ const OrderSection = ({ orderBookData }) => {
   }
 
   return (
-    <SpotList
-      type="order"
+    <LeftSideAppLumen
       headerItem={orderListHeader}
-      items={orderBookData}
-      gapInfo={{
-        total,
-      }}
+      asks={orderBookData?.asks}
+      bids={orderBookData?.bids}
+      info={total}
     />
   );
 };

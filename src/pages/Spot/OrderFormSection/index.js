@@ -11,6 +11,11 @@ import sevenDigit from 'helpers/sevenDigit';
 import USDC from 'tokens/USDC';
 import BN from 'helpers/BN';
 import { useState } from 'react';
+import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
+import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
+import store from 'store';
+import showSignResponse from 'helpers/showSignResponse';
+import showGenerateTrx from 'helpers/showGenerateTrx';
 import styles from '../styles.module.scss';
 
 function showBalance(isLogged, foundBalance) {
@@ -30,15 +35,44 @@ const InnerForm = ({
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
   const userBalance = useSelector((state) => state.userBalance);
-  const foundBalance = userBalance.find((i) => isSameAsset(i.asset, counterAsset))?.balance;
+  const foundBalance = userBalance.find((i) => isSameAsset(i.asset, type === 'sell' ? baseAsset : counterAsset))?.balance;
   const [sliderValue, setSliderValue] = useState(0);
+
+  const isSell = type === 'sell';
 
   const {
     handleSubmit, setValue, getValues, control,
   } = useForm();
 
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit(data) {
+    async function func() {
+      const address = store.getState().user.detail.address;
+      if (type === 'buy') {
+        return generateManageBuyTRX(
+          address,
+          baseAsset,
+          counterAsset,
+          data.amount,
+          data.price,
+          0,
+        );
+      } if (type === 'sell') {
+        return generateManageSellTRX(
+          address,
+          counterAsset,
+          baseAsset,
+          data.amount,
+          data.price,
+          0,
+        );
+      }
+
+      throw new Error('Not supported type');
+    }
+
+    showGenerateTrx(func)
+      .then(showSignResponse)
+      .catch(console.error);
   }
 
   function onInputChange(field) {
@@ -77,8 +111,13 @@ const InnerForm = ({
         const total = purePerc.times(foundBalance);
         const amount = total.div(values.price);
 
-        setValue('amount', amount.toString());
-        setValue('total', total.toString());
+        if (isSell) {
+          setValue('total', amount.toString());
+          setValue('amount', total.toString());
+        } else {
+          setValue('amount', amount.toString());
+          setValue('total', total.toString());
+        }
       }
     }
   }
@@ -135,7 +174,16 @@ const InnerForm = ({
           control={control}
           rules={{
             required: true,
-            validate: (val) => new BN(val).isLessThanOrEqualTo(foundBalance),
+            validate: () => {
+              let toCompare;
+              if (type === 'buy') {
+                toCompare = getValues().total;
+              } else if (type === 'sell') {
+                toCompare = getValues().amount;
+              }
+
+              return new BN(toCompare).isLessThanOrEqualTo(foundBalance);
+            },
           }}
           render={(props) => (
             <InputGroup
@@ -176,8 +224,8 @@ const OrderFormSection = () => (
     </div>
     <div className="col-md-6 col-sm-12 col-12 px-4 mt-0 mt-md-0 mt-sm-4 mt-4">
       <InnerForm
-        baseAsset={getAssetDetails(USDC)}
-        counterAsset={getAssetDetails(XLM)}
+        baseAsset={getAssetDetails(XLM)}
+        counterAsset={getAssetDetails(USDC)}
         mainAsset={getAssetDetails(XLM)}
         type="sell"
       />

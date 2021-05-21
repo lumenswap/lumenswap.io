@@ -5,16 +5,14 @@ import { useEffect, useState } from 'react';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'helpers/fetchMarketPrice';
-import { openModalAction } from 'actions/modal';
-import WaitingContent from 'blocks/WaitingContent';
 import store from 'store';
 import isSameAsset from 'helpers/isSameAsset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
-import TransactionResponse from 'blocks/TransactionResponse';
-import signForThem from 'walletIntegeration/signForThem';
 import { loginTypes } from 'reducers/user';
 import ColorizedPriceImpact from 'pages/Home/ColorizedPriceImpact';
 import appConsts from 'appConsts';
+import showSignResponse from 'helpers/showSignResponse';
+import showGenerateTrx from 'helpers/showGenerateTrx';
 import styles from './styles.module.scss';
 
 const ConfirmSwap = ({ data }) => {
@@ -61,19 +59,10 @@ const ConfirmSwap = ({ data }) => {
   }
 
   async function SwapTheTokens() {
-    openModalAction({
-      modalProps: {
-        hasClose: false,
-      },
-      content: <WaitingContent message="Waiting for Sign" />,
-    });
-
-    const storeData = store.getState();
-    const found = storeData.userBalance.find((i) => isSameAsset(i.asset, data.to.asset.details));
-
-    let trx;
-    try {
-      trx = await generateSwapTRX({
+    function func() {
+      const storeData = store.getState();
+      const found = storeData.userBalance.find((i) => isSameAsset(i.asset, data.to.asset.details));
+      return generateSwapTRX({
         checkout: {
           ...data,
           fromAddress: storeData.user.detail.address,
@@ -81,43 +70,13 @@ const ConfirmSwap = ({ data }) => {
         },
         needToTrust: !found,
       }, storeData.user.loginType === loginTypes.LEDGER_S);
-    } catch (e) {
-      console.error(e);
-      openModalAction({
-        modalProps: {},
-        content: <TransactionResponse
-          message="Failed to generate your swap transaction"
-          status="failed"
-          title="Failed"
-        />,
-      });
     }
 
-    let trxHash;
-    try {
-      trxHash = await signForThem(trx);
-      openModalAction({
-        modalProps: {},
-        content: <TransactionResponse
-          message={trxHash}
-          status="success"
-          title="Success Transaction"
-          btnText="View on Explorer"
-          btnType="link"
-          btnLink={`${process.env.REACT_APP_LUMENSCAN_URL}/txns/${trxHash}`}
-        />,
-      });
-    } catch (e) {
-      console.error(e);
-      openModalAction({
-        modalProps: {},
-        content: <TransactionResponse
-          message={e.message}
-          status="failed"
-          title="Failed"
-        />,
-      });
-    }
+    showGenerateTrx(func)
+      .then(showSignResponse)
+      .catch(console.error);
+
+    // await showSignResponse(trx);
   }
 
   return (

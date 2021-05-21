@@ -41,5 +41,6 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'linebreak-style': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'new-cap': 'off',
   },
 };

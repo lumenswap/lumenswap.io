@@ -6,12 +6,6 @@ import styles from '../styles.module.scss';
 const OrderList = ({
   headerItem, rowItem, isSell,
 }) => (
-// const randomProgress = () => Math.floor(Math.random() * 100) + 1;
-// const isForSell = (status) => status === 'sell';
-// const generateProgressStyle = (status) =>
-// `linear-gradient(to left, ${isForSell(status)
-// ? '#f5dce6' : '#e8eedc'} ${randomProgress()}%, transparent 0%)`;
-
   <div className={styles['table-container']}>
     <div className={classNames(styles.heading, styles['table-row'])}>
       {headerItem.map((header, index) => (
@@ -36,5 +30,4 @@ const OrderList = ({
     </div>
   </div>
 );
-
 export default OrderList;
