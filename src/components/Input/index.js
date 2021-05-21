@@ -17,6 +17,7 @@ const Input = ({
     ref={innerRef}
     autoFocus={autoFocus}
     onChange={onChange}
+    autoComplete="off"
     {...input}
   />
 );

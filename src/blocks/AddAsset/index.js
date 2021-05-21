@@ -95,7 +95,6 @@ const AddAsset = ({ changeToAsset }) => {
             validate: customValidator,
           })}
           autoFocus
-          input={{ autoComplete: 'off ' }}
         />
       </div>
       <div className="form-group mb-0">
@@ -111,7 +110,6 @@ const AddAsset = ({ changeToAsset }) => {
             required: true,
             validate: customValidator,
           })}
-          input={{ autoComplete: 'off ' }}
         />
       </div>
       <Button

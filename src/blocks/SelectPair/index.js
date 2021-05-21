@@ -11,21 +11,7 @@ import USDC from 'tokens/USDC';
 import questionLogo from 'assets/images/question.png';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
-
-function createPairForDefaultTokens() {
-  const result = [];
-
-  for (const token of defaultTokens) {
-    if (!isSameAsset(getAssetDetails(XLM), getAssetDetails(token))) {
-      result.push({
-        base: getAssetDetails(XLM),
-        counter: getAssetDetails(token),
-      });
-    }
-  }
-
-  return result;
-}
+import createPairForDefaultTokens from './createPairForDefaultTokens';
 
 const SelectPair = ({ setAppSpotPair }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
