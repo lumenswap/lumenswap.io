@@ -1,8 +1,41 @@
+import { fetchOrderBookAPI } from 'api/stellar';
 import LeftSideAppLumen from 'components/SpotList/LeftSideAppLumen';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
+import { useEffect, useRef, useState } from 'react';
 
-const OrderSection = ({ orderBookData, appSpotPair }) => {
+const OrderSection = ({ appSpotPair }) => {
+  const [orderBookData, setOrderBookData] = useState(null);
+  const intervalRef = useRef(null);
+
+  function fetchingOrderAPICallWrapper() {
+    fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
+      limit: 16,
+    }).then((res) => {
+      setOrderBookData(res.data);
+    }).catch(console.error);
+  }
+
+  useEffect(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      setOrderBookData(null);
+      fetchingOrderAPICallWrapper();
+      intervalRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
+    }
+  }, [appSpotPair.base, appSpotPair.counter]);
+
+  useEffect(() => {
+    if (!intervalRef.current) {
+      fetchingOrderAPICallWrapper();
+      intervalRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
+    }
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, []);
+
   let total = 0;
 
   if (orderBookData?.asks[0]) {

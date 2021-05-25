@@ -61,12 +61,12 @@ export function mapStellarAggregationData(oldData, newData) {
   };
 }
 
-export function getTradeAggregation(baseAsset, counterAsset, startTime, endTime, oldData) {
+export function getTradeAggregation(baseAsset, counterAsset, startTime, endTime, oldData, limit) {
   return fetchTradeAggregationAPI(baseAsset, counterAsset, {
     start_time: startTime.valueOf(),
     end_time: endTime.valueOf(),
     resolution: 86400000,
-    limit: ST_TR_COUNT + 10,
+    limit,
     offset: 0,
     order: 'desc',
   }).then((res) => mapStellarAggregationData(oldData, res.data._embedded.records));

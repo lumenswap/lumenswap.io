@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart, CrosshairMode } from 'lightweight-charts';
 import numeral from 'numeral';
+import moment from 'moment';
 import styles from './styles.module.scss';
+import { getTradeAggregation, ST_TR_COUNT } from './utils';
 
 function onVisibleLogicalRangeChange(
   setTimoutTimer,
@@ -34,9 +36,7 @@ function humany(number) {
 }
 
 const TradingviewChart = ({
-  chartData,
-  getAggWrapper,
-  isLoadingPrevented,
+  appSpotPair,
 }) => {
   const chartContainerRef = useRef();
   const chart = useRef();
@@ -49,6 +49,59 @@ const TradingviewChart = ({
   const volumeSeriesRef = useRef(null);
   // const lineSeriesRef = useRef(null);
   const previousFuncRef = useRef(null);
+  const lastFetchedTimeRef = useRef(null);
+  const [chartData, setChartData] = useState(null);
+  const [isLoadingPrevented, setPreventLoading] = useState(false);
+
+  function getAggWrapper(clearMode = false) {
+    let startTime;
+    let endTime;
+    if (lastFetchedTimeRef.current === null) {
+      const currentTime = Date.now();
+      startTime = moment(currentTime).startOf('second').subtract(ST_TR_COUNT, 'days');
+      endTime = moment(currentTime).startOf('second').add(1, 'days');
+    } else {
+      startTime = moment(lastFetchedTimeRef.current).subtract(ST_TR_COUNT + 1, 'days');
+      endTime = moment(lastFetchedTimeRef.current).subtract(1, 'days');
+    }
+
+    let innerChartData;
+    if (clearMode) {
+      innerChartData = { candle: [], volume: [], line: [] };
+    } else if (!chartData) {
+      innerChartData = { candle: [], volume: [], line: [] };
+    } else {
+      innerChartData = chartData;
+    }
+
+    return getTradeAggregation(
+      appSpotPair.base,
+      appSpotPair.counter,
+      startTime,
+      endTime,
+      innerChartData,
+      ST_TR_COUNT + 10,
+    )
+      .then((res) => {
+        if (res.emptyNew) {
+          setPreventLoading(true);
+        } else {
+          setChartData(res);
+
+          lastFetchedTimeRef.current = startTime.valueOf();
+        }
+      }).catch(console.error);
+  }
+
+  useEffect(() => {
+    if (lastFetchedTimeRef.current) {
+      lastFetchedTimeRef.current = null;
+      setPreventLoading(false);
+      setChartData({ candle: [], volume: [], line: [] });
+
+      getAggWrapper(true);
+    }
+  }, [appSpotPair.base, appSpotPair.counter]);
 
   useEffect(() => {
     chart.current = createChart(chartContainerRef.current, {

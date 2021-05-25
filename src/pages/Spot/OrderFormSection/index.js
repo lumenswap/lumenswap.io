@@ -130,7 +130,8 @@ const InnerForm = ({
       <div className="d-flex justify-content-between align-items-center mb-2">
         <div className={styles['form-title']}>{type === 'sell' ? 'Sell' : 'Buy'} {mainAsset.getCode()}</div>
         <div className={styles['form-value']}><span className="icon-wallet" />
-          {showBalance(isLogged, foundBalance)}
+          {showBalance(isLogged, foundBalance)}{' '}
+          {isSell ? baseAsset.getCode() : counterAsset.getCode()}
         </div>
       </div>
       <div className="mb-2">
