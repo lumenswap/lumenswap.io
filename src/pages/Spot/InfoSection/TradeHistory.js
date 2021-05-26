@@ -14,15 +14,13 @@ const tableRows = (rows) => rows.map((row, index) => (
         {row.time}
       </div>
     </td>
-    <td>{row.pair}</td>
-    <td className={`color-${row.isSell ? 'sell' : 'buy'}`}>{row.isSell ? 'Sell' : 'Buy'}</td>
+    <td>{row.sellAmount} {row.sellAsset}</td>
+    <td>{row.buyAmount} {row.buyAsset}</td>
     <td>{row.price} {row.counterAsset}</td>
-    <td>{row.amount} {row.baseAsset}</td>
-    <td width="30%">{row.total} {row.counterAsset}</td>
   </tr>
 ));
 
-const tableHeader = ['Date', 'Pair', 'Side', 'Price', 'Amount', 'Total'];
+const tableHeader = ['Date', 'Sold', 'Bought', 'Price'];
 
 export default function TradeHistory() {
   const [rowData, setRowData] = useState([]);
@@ -33,19 +31,33 @@ export default function TradeHistory() {
     fetchTradesOfAccount(userAddress, { limit: 200 }).then((res) => {
       setRowData(res.data._embedded.records.map((item) => {
         const time = new Date(item.ledger_close_time);
-        const isSell = (item.base_account === userAddress && item.base_is_seller)
-            || (item.counter_account === userAddress && !item.base_is_seller);
         const price = new BN(item.price.n).div(item.price.d);
+        let sellAsset;
+        let buyAsset;
+        let sellAmount;
+        let buyAmount;
+        if (item.base_is_seller) {
+          sellAsset = item.base_asset_code || 'XLM';
+          sellAmount = sevenDigit(item.base_amount);
+
+          buyAsset = item.counter_asset_code || 'XLM';
+          buyAmount = sevenDigit(item.counter_amount);
+        } else {
+          sellAsset = item.counter_asset_code || 'XLM';
+          sellAmount = sevenDigit(item.counter_amount);
+
+          buyAsset = item.base_asset_code || 'XLM';
+          buyAmount = sevenDigit(item.base_amount);
+        }
 
         return {
           time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-          pair: `${item.base_asset_code || 'XLM'}/${item.counter_asset_code || 'XLM'}`,
-          isSell,
           price: sevenDigit(price.toFixed(7)),
-          amount: sevenDigit(item.base_amount),
+          sellAsset,
+          buyAsset,
+          sellAmount,
+          buyAmount,
           counterAsset: item.counter_asset_code || 'XLM',
-          baseAsset: item.base_asset_code || 'XLM',
-          total: sevenDigit(item.counter_amount),
         };
       }));
     });

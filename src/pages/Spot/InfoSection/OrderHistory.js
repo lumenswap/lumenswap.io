@@ -19,12 +19,9 @@ const tableRows = (rows) => rows.map((row, index) => (
         {row.time}
       </div>
     </td>
-    <td>{row.pair}</td>
-    {/* <td className={`color-${row.isSell
-    ? 'sell' : 'buy'}`}>{row.isSell ? 'Sell' : 'Buy'}</td> */}
-    <td>{row.price} {row.counterAsset.getCode()}</td>
-    <td>{row.amount} {row.baseAsset.getCode()}</td>
-    <td>{row.total} {row.counterAsset.getCode()}</td>
+    <td>{row.sellAmount} {row.baseAsset.getCode()}</td>
+    <td>{row.buyAmount} {row.counterAsset.getCode()}</td>
+    <td>{row.price} {row.baseAsset.getCode()}</td>
     <td>
       <span
         onClick={async () => {
@@ -52,7 +49,7 @@ const tableRows = (rows) => rows.map((row, index) => (
   </tr>
 ));
 
-const tableHeader = ['Date', 'Pair', 'Price', 'Amount', 'Total', 'Action'];
+const tableHeader = ['Date', 'Sell', 'Buy', 'Price', 'Action'];
 
 export default function OrderHistory() {
   const [rowData, setRowData] = useState([]);
@@ -63,23 +60,21 @@ export default function OrderHistory() {
     fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
       setRowData(res.data._embedded.records.map((item) => {
         const time = new Date(item.last_modified_time);
-        const total = new BN(item.price).times(item.amount);
         const counterAsset = item.buying.asset_code
           ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
           : new StellarSDK.Asset.native();
         const baseAsset = item.selling.asset_code
           ? new StellarSDK.Asset(item.selling.asset_code, item.selling.asset_issuer)
           : new StellarSDK.Asset.native();
+        const buyAmount = new BN(item.price).times(item.amount);
 
         return {
           time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-          pair: `${item.selling.asset_code || 'XLM'}/${item.buying.asset_code || 'XLM'}`,
-          isSell: true,
-          price: sevenDigit(item.price),
-          amount: sevenDigit(item.amount),
+          sellAmount: sevenDigit(item.amount),
+          buyAmount: sevenDigit(buyAmount.toString()),
+          price: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
           counterAsset,
           baseAsset,
-          total: sevenDigit(total.toString()),
           id: item.id,
         };
       }));

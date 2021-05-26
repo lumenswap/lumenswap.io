@@ -77,13 +77,17 @@ const DetailList = ({ appSpotPair }) => {
             title: `${appSpotPair.base.getCode()} asset issuer`,
             value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
             status: appSpotPair.base.getIssuer() ? 'link' : false,
-            link: appSpotPair.base.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.base.getIssuer()}` : false,
+            link: appSpotPair.base.getIssuer()
+              ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.base.getCode()}-${appSpotPair.base.getIssuer()}`
+              : false,
           },
           {
             title: `${appSpotPair.counter.getCode()} asset issuer`,
             value: appSpotPair.counter.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
             status: appSpotPair.counter.getIssuer() ? 'link' : false,
-            link: appSpotPair.counter.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.counter.getIssuer()}` : false,
+            link: appSpotPair.counter.getIssuer()
+              ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.counter.getCode()}-${appSpotPair.counter.getIssuer()}`
+              : false,
           },
         ]);
       } catch (e) {

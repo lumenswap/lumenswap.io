@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import getAssetDetails from 'helpers/getAssetDetails';
@@ -15,20 +15,20 @@ import styles from './styles.module.scss';
 import OpenDialogElement from './OpenDialogElement';
 
 const Spot = () => {
-  // const refHeight = useRef(null);
-  // const [height, setHeight] = useState(0);
+  const refHeight = useRef(null);
+  const [height, setHeight] = useState(0);
   const [appSpotPair, setAppSpotPair] = useState({
     base: getAssetDetails(XLM),
     counter: getAssetDetails(USDC),
   });
 
-  // useEffect(() => {
-  //   if (refHeight.current) {
-  //     console.count('setting height');
-  //     setHeight(refHeight.current.offsetHeight);
-  //   }
-  //   console.warn(height);
-  // }, [refHeight.current]);
+  useEffect(() => {
+    if (refHeight.current) {
+      console.count('setting height');
+      setHeight(refHeight.current.offsetHeight);
+    }
+    console.warn(height);
+  }, [refHeight.current]);
 
   return (
     <div className="container-fluid">
@@ -67,14 +67,14 @@ const Spot = () => {
           </div>
           {/* middle section */}
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
-            <div className={classNames(styles.card, styles['card-chart'], 'mb-1')}>
+            <div className={classNames(styles.card, styles['card-chart'], 'mb-1')} ref={refHeight}>
               <div>
                 <TradingviewChart appSpotPair={appSpotPair} />
               </div>
             </div>
             <div
               className={classNames(styles.card, styles['card-input'], 'mb-1')}
-              // style={{ height: `calc(100% - ${height + 4}px)` }}
+              style={{ height: `calc(100% - ${height + 4}px)` }}
             >
               <OrderFormSection appSpotPair={appSpotPair} />
             </div>

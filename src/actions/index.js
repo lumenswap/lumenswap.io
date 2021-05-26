@@ -22,6 +22,9 @@ const actionTypes = {
     ADD: 'userCustomPairs/ADD',
     REMOVE: 'userCustomPairs/REMOVE',
   },
+  customOrderPrice: {
+    SET: 'customOrderPrice/SET',
+  },
 };
 
 export default actionTypes;
