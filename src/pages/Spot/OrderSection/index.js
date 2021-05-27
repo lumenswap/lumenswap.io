@@ -1,3 +1,4 @@
+import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
 import { fetchOrderBookAPI } from 'api/stellar';
 import LeftSideAppLumen from 'components/SpotList/LeftSideAppLumen';
 import BN from 'helpers/BN';
@@ -9,10 +10,11 @@ const OrderSection = ({ appSpotPair }) => {
   const intervalRef = useRef(null);
 
   function fetchingOrderAPICallWrapper() {
-    fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
+    return fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
       limit: 16,
     }).then((res) => {
       setOrderBookData(res.data);
+      return res.data;
     }).catch(console.error);
   }
 
@@ -20,14 +22,24 @@ const OrderSection = ({ appSpotPair }) => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       setOrderBookData(null);
-      fetchingOrderAPICallWrapper();
+      fetchingOrderAPICallWrapper().then((data) => {
+        setCustomOrderPriceAction({
+          buy: data.asks[0].price,
+          sell: data.bids[0].price,
+        });
+      });
       intervalRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
     }
   }, [appSpotPair.base, appSpotPair.counter]);
 
   useEffect(() => {
     if (!intervalRef.current) {
-      fetchingOrderAPICallWrapper();
+      fetchingOrderAPICallWrapper().then((data) => {
+        setCustomOrderPriceAction({
+          buy: data.asks[0].price,
+          sell: data.bids[0].price,
+        });
+      });
       intervalRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
     }
 

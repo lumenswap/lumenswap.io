@@ -12,6 +12,19 @@
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.table-head {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  transition: all 0.15s ease-in-out;
+}
+
+.table-row:hover {
+  background-color: $LightAthensGray;
 }
 
 .row-item {

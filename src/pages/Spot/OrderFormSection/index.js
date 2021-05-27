@@ -8,7 +8,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import store from 'store';
@@ -29,7 +29,7 @@ function showBalance(isLogged, foundBalance) {
 }
 
 const InnerForm = ({
-  baseAsset, counterAsset, mainAsset, type,
+  baseAsset, counterAsset, mainAsset, type, upperOrderPrice,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
   const userBalance = useSelector((state) => state.userBalance);
@@ -105,20 +105,28 @@ const InnerForm = ({
       const values = getValues();
 
       if (values.price) {
-        const purePerc = new BN(perc).div(100);
-        const total = purePerc.times(foundBalance);
-        const amount = total.div(values.price);
-
         if (isSell) {
-          setValue('total', amount.toString());
-          setValue('amount', total.toString());
+          const purePerc = new BN(perc).div(100);
+          const amount = purePerc.times(foundBalance);
+          const total = amount.times(values.price);
+
+          setValue('amount', amount.toString());
+          setValue('total', total.toString());
         } else {
+          const purePerc = new BN(perc).div(100);
+          const total = purePerc.times(foundBalance);
+          const amount = total.div(values.price);
+
           setValue('amount', amount.toString());
           setValue('total', total.toString());
         }
       }
     }
   }
+
+  useEffect(() => {
+    setValue('price', upperOrderPrice);
+  }, [upperOrderPrice]);
 
   let buttonContent = 'Conent Wallet';
   if (isLogged) {
@@ -214,25 +222,31 @@ const InnerForm = ({
   );
 };
 
-const OrderFormSection = ({ appSpotPair }) => (
-  <div className="row" style={{ margin: '0 -24px' }}>
-    <div className="col-md-6 col-sm-12 col-12 px-4">
-      <InnerForm
-        baseAsset={getAssetDetails(appSpotPair.base)}
-        counterAsset={getAssetDetails(appSpotPair.counter)}
-        mainAsset={getAssetDetails(appSpotPair.base)}
-        type="buy"
-      />
+const OrderFormSection = ({ appSpotPair }) => {
+  const customOrderPrice = useSelector((state) => state.customOrderPrice);
+
+  return (
+    <div className="row" style={{ margin: '0 -24px' }}>
+      <div className="col-md-6 col-sm-12 col-12 px-4">
+        <InnerForm
+          baseAsset={getAssetDetails(appSpotPair.base)}
+          counterAsset={getAssetDetails(appSpotPair.counter)}
+          mainAsset={getAssetDetails(appSpotPair.base)}
+          type="buy"
+          upperOrderPrice={customOrderPrice.buy}
+        />
+      </div>
+      <div className="col-md-6 col-sm-12 col-12 px-4 mt-0 mt-md-0 mt-sm-4 mt-4">
+        <InnerForm
+          baseAsset={getAssetDetails(appSpotPair.base)}
+          counterAsset={getAssetDetails(appSpotPair.counter)}
+          mainAsset={getAssetDetails(appSpotPair.base)}
+          type="sell"
+          upperOrderPrice={customOrderPrice.sell}
+        />
+      </div>
     </div>
-    <div className="col-md-6 col-sm-12 col-12 px-4 mt-0 mt-md-0 mt-sm-4 mt-4">
-      <InnerForm
-        baseAsset={getAssetDetails(appSpotPair.base)}
-        counterAsset={getAssetDetails(appSpotPair.counter)}
-        mainAsset={getAssetDetails(appSpotPair.base)}
-        type="sell"
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 export default OrderFormSection;

@@ -3,75 +3,101 @@ import AddCustomPair from 'blocks/AddCustomPair';
 import { closeModalAction, openModalAction } from 'actions/modal';
 import defaultTokens from 'tokens/defaultTokens';
 import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import XLM from 'tokens/XLM';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import questionLogo from 'assets/images/question.png';
 import { removeCustomPairAction } from 'actions/userCustomPairs';
+import Input from 'components/Input';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
 import createPairForDefaultTokens from './createPairForDefaultTokens';
 
+const createdDefaultPairs = createPairForDefaultTokens();
+
 const SelectPair = ({ setAppSpotPair }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
+  const [searchQuery, setSearchQuery] = useState(null);
 
-  const enrichedPairs = useMemo(() => purePairs([
-    {
-      base: getAssetDetails(XLM),
-      counter: getAssetDetails(USDC),
-    },
-    ...createPairForDefaultTokens(),
-    ...customPairs,
-  ]).map((item) => {
-    const foundBaseToken = defaultTokens
-      .find((tok) => isSameAsset(getAssetDetails(tok), item.base));
-    const foundCounterToken = defaultTokens
-      .find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
+  const enrichedPairs = useMemo(() => {
+    const result = purePairs([
+      {
+        base: getAssetDetails(XLM),
+        counter: getAssetDetails(USDC),
+      },
+      ...createdDefaultPairs,
+      ...customPairs,
+    ]).map((item) => {
+      const foundBaseToken = defaultTokens
+        .find((tok) => isSameAsset(getAssetDetails(tok), item.base));
+      const foundCounterToken = defaultTokens
+        .find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
 
-    let enrichedBaseToken;
-    if (foundBaseToken) {
-      enrichedBaseToken = {
-        details: item.base,
-        // web: foundBaseToken.web,
-        logo: foundBaseToken.logo,
-        type: 'default',
+      let enrichedBaseToken;
+      if (foundBaseToken) {
+        enrichedBaseToken = {
+          details: item.base,
+          // web: foundBaseToken.web,
+          logo: foundBaseToken.logo,
+          type: 'default',
+        };
+      } else {
+        enrichedBaseToken = {
+          details: item.base,
+          // web: minimizeAddress(item.base.getIssuer()),
+          logo: questionLogo,
+          type: 'custom',
+        };
+      }
+
+      let enrichedCounterToken;
+      if (foundCounterToken) {
+        enrichedCounterToken = {
+          details: item.counter,
+          // web: foundCounterToken.web,
+          logo: foundCounterToken.logo,
+          type: 'default',
+        };
+      } else {
+        enrichedCounterToken = {
+          details: item.counter,
+          // web: minimizeAddress(item.counter.getIssuer()),
+          logo: questionLogo,
+          type: 'custom',
+        };
+      }
+
+      return {
+        base: enrichedBaseToken,
+        counter: enrichedCounterToken,
       };
-    } else {
-      enrichedBaseToken = {
-        details: item.base,
-        // web: minimizeAddress(item.base.getIssuer()),
-        logo: questionLogo,
-        type: 'custom',
-      };
+    });
+
+    if (searchQuery && searchQuery !== '') {
+      return result.filter((item) => {
+        const modified = searchQuery.trim().toLowerCase();
+        return item.base.details.getCode().toLowerCase().match(modified)
+        || item.counter.details.getCode().toLowerCase().match(modified);
+      });
     }
 
-    let enrichedCounterToken;
-    if (foundCounterToken) {
-      enrichedCounterToken = {
-        details: item.counter,
-        // web: foundCounterToken.web,
-        logo: foundCounterToken.logo,
-        type: 'default',
-      };
-    } else {
-      enrichedCounterToken = {
-        details: item.counter,
-        // web: minimizeAddress(item.counter.getIssuer()),
-        logo: questionLogo,
-        type: 'custom',
-      };
-    }
-
-    return {
-      base: enrichedBaseToken,
-      counter: enrichedCounterToken,
-    };
-  }), [JSON.stringify(customPairs)]);
+    return result;
+  }, [JSON.stringify(customPairs), searchQuery]);
 
   return (
     <div style={{ paddingBottom: 50 }}>
+      <Input
+        type="text"
+        placeholder="Search asset code"
+        name="search"
+        fontSize={14}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+        }}
+        autoFocus
+      />
       <div className={classNames('invisible-scroll', styles.scroll)}>
         {enrichedPairs.map((item, index) => (
           <div key={index}>

@@ -67,7 +67,7 @@ const DetailList = ({ appSpotPair }) => {
         }
 
         setDetailData([
-          { title: 'Price', value: total },
+          { title: 'Price', value: `${total} ${appSpotPair.counter.getCode()}` },
           { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gt(0) ? 'buy' : 'sell' },
           { title: '24 High', value: numeral(lastData.high).format('0.0[00]a') },
           { title: '24 Low', value: numeral(lastData.low).format('0.0[00]a') },
@@ -75,7 +75,7 @@ const DetailList = ({ appSpotPair }) => {
           { title: '24 Volume (USDC)', value: numeral(lastData.counter_volume).format('0.0a') },
           {
             title: `${appSpotPair.base.getCode()} asset issuer`,
-            value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
+            value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.base.getIssuer()) : 'Stellar Foundation',
             status: appSpotPair.base.getIssuer() ? 'link' : false,
             link: appSpotPair.base.getIssuer()
               ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.base.getCode()}-${appSpotPair.base.getIssuer()}`

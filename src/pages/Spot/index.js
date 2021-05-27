@@ -24,7 +24,6 @@ const Spot = () => {
 
   useEffect(() => {
     if (refHeight.current) {
-      console.count('setting height');
       setHeight(refHeight.current.offsetHeight);
     }
     console.warn(height);
