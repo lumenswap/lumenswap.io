@@ -2,7 +2,7 @@ import Slider, { SliderTooltip } from 'rc-slider';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
-const CustomSlider = ({ title, onChange, upperValue }) => {
+export default function CustomSlider({ title, onChange, upperValue }) {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const CustomSlider = ({ title, onChange, upperValue }) => {
       </SliderTooltip>
     );
   };
+
   return (
     <div className={styles.slider}>
       <p className="mb-0">{title}</p>
@@ -52,6 +53,4 @@ const CustomSlider = ({ title, onChange, upperValue }) => {
       />
     </div>
   );
-};
-
-export default CustomSlider;
+}

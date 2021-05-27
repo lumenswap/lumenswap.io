@@ -32,14 +32,16 @@ const InnerForm = ({
   baseAsset, counterAsset, mainAsset, type, upperOrderPrice,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
-  const userBalance = useSelector((state) => state.userBalance);
-  const foundBalance = userBalance.find((i) => isSameAsset(i.asset, type === 'sell' ? baseAsset : counterAsset))?.balance;
+  const foundBalance = useSelector((state) => state
+    .userBalance
+    .find((i) => isSameAsset(i.asset, type === 'sell' ? baseAsset : counterAsset))
+    ?.balance);
   const [sliderValue, setSliderValue] = useState(0);
 
   const isSell = type === 'sell';
 
   const {
-    handleSubmit, setValue, getValues, control,
+    handleSubmit, setValue, getValues, control, reset,
   } = useForm();
 
   async function onSubmit(data) {
@@ -80,24 +82,56 @@ const InnerForm = ({
       if ((field === 'price' || field === 'amount') && !!values.amount && !!values.price) {
         const res = new BN(values.price).times(values.amount);
 
-        if (isLogged) {
-          const perc = parseInt(new BN(res).div(foundBalance).times(100).toFixed(0), 10);
-          setSliderValue(perc > 100 ? 100 : perc);
+        if (isLogged && foundBalance) {
+          if (!isSell) {
+            const perc = parseInt(new BN(res).div(foundBalance).times(100).toFixed(0), 10);
+            setSliderValue(perc > 100 ? 100 : perc);
+          } else if (field === 'amount') {
+            const perc = parseInt(new BN(values.amount)
+              .div(foundBalance)
+              .times(100)
+              .toFixed(0), 10);
+            setSliderValue(perc > 100 ? 100 : perc);
+          }
         }
 
         setValue('total', res.toString());
       }
 
       if (field === 'total' && !!values.price && !!values.total) {
-        if (isLogged) {
-          const perc = parseInt(new BN(values.total).div(foundBalance).times(100).toFixed(0), 10);
-          setSliderValue(perc > 100 ? 100 : perc);
+        const res = new BN(values.total).div(values.price).toString();
+
+        if (isLogged && foundBalance) {
+          if (!isSell) {
+            const perc = parseInt(new BN(values.total).div(foundBalance).times(100).toFixed(0), 10);
+            setSliderValue(perc > 100 ? 100 : perc);
+          } else {
+            const perc = parseInt(new BN(res)
+              .div(foundBalance)
+              .times(100)
+              .toFixed(0), 10);
+            setSliderValue(perc > 100 ? 100 : perc);
+          }
         }
 
-        const res = new BN(values.total).div(values.price).toString();
         setValue('amount', res);
       }
     };
+  }
+
+  function onPriceInputChange(newPrice) {
+    const values = getValues();
+
+    if (!!values.amount && !!newPrice) {
+      const res = new BN(newPrice).times(values.amount);
+
+      if (isLogged && foundBalance && !isSell) {
+        const perc = parseInt(new BN(res).div(foundBalance).times(100).toFixed(0), 10);
+        setSliderValue(perc > 100 ? 100 : perc);
+      }
+
+      setValue('total', res.toString());
+    }
   }
 
   function onSliderChange(perc) {
@@ -126,7 +160,13 @@ const InnerForm = ({
 
   useEffect(() => {
     setValue('price', upperOrderPrice);
+    onPriceInputChange(upperOrderPrice);
   }, [upperOrderPrice]);
+
+  useEffect(() => {
+    reset();
+    setSliderValue(0);
+  }, [JSON.stringify(baseAsset), JSON.stringify(counterAsset)]);
 
   let buttonContent = 'Conent Wallet';
   if (isLogged) {
@@ -147,6 +187,7 @@ const InnerForm = ({
           name="price"
           control={control}
           rules={{ required: true }}
+          defaultValue=""
           render={(props) => (
             <InputGroup
               value={props.value}
@@ -163,6 +204,7 @@ const InnerForm = ({
           name="amount"
           control={control}
           rules={{ required: true }}
+          defaultValue=""
           render={(props) => (
             <InputGroup
               value={props.value}
@@ -181,6 +223,7 @@ const InnerForm = ({
         <Controller
           name="total"
           control={control}
+          defaultValue=""
           rules={{
             required: true,
             validate: () => {
