@@ -1,4 +1,4 @@
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import LModal from 'pages/LModal';
@@ -26,7 +26,7 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <LModal />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={() => <Redirect to="/swap" />} />
           <Route exact path="/swap" component={Home} />
           <Route exact path="/spot" component={Spot} />
         </BrowserRouter>

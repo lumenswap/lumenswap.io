@@ -61,11 +61,19 @@ export function mapStellarAggregationData(oldData, newData) {
   };
 }
 
-export function getTradeAggregation(baseAsset, counterAsset, startTime, endTime, oldData, limit) {
+export function getTradeAggregation(
+  baseAsset,
+  counterAsset,
+  startTime,
+  endTime,
+  oldData,
+  limit,
+  resolution,
+) {
   return fetchTradeAggregationAPI(baseAsset, counterAsset, {
     start_time: startTime.valueOf(),
     end_time: endTime.valueOf(),
-    resolution: 86400000,
+    resolution,
     limit,
     offset: 0,
     order: 'desc',

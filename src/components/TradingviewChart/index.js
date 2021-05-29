@@ -35,6 +35,19 @@ function humany(number) {
   return numeral(number).format('0.0[00]a');
 }
 
+const fetchingIntervalValues = {
+  day: {
+    resolution: 86400000,
+    per: 'days',
+    key: '1day',
+  },
+  week: {
+    resolution: 604800000,
+    per: 'days',
+    key: '1week',
+  },
+};
+
 const TradingviewChart = ({
   appSpotPair,
 }) => {
@@ -50,6 +63,7 @@ const TradingviewChart = ({
   // const lineSeriesRef = useRef(null);
   const previousFuncRef = useRef(null);
   const lastFetchedTimeRef = useRef(null);
+  const [fetchingInterval, setFetchingInterval] = useState(fetchingIntervalValues.day);
   const [chartData, setChartData] = useState(null);
   const [isLoadingPrevented, setPreventLoading] = useState(false);
 
@@ -58,11 +72,17 @@ const TradingviewChart = ({
     let endTime;
     if (lastFetchedTimeRef.current === null) {
       const currentTime = Date.now();
-      startTime = moment(currentTime).startOf('second').subtract(ST_TR_COUNT, 'days');
-      endTime = moment(currentTime).startOf('second').add(1, 'days');
+      startTime = moment(currentTime)
+        .startOf('second')
+        .subtract(ST_TR_COUNT, fetchingInterval.per);
+      endTime = moment(currentTime)
+        .startOf('second')
+        .add(1, fetchingInterval.per);
     } else {
-      startTime = moment(lastFetchedTimeRef.current).subtract(ST_TR_COUNT + 1, 'days');
-      endTime = moment(lastFetchedTimeRef.current).subtract(1, 'days');
+      startTime = moment(lastFetchedTimeRef.current)
+        .subtract(ST_TR_COUNT + 1, fetchingInterval.per);
+      endTime = moment(lastFetchedTimeRef.current)
+        .subtract(1, fetchingInterval.per);
     }
 
     let innerChartData;
@@ -81,6 +101,7 @@ const TradingviewChart = ({
       endTime,
       innerChartData,
       ST_TR_COUNT + 10,
+      fetchingInterval.resolution,
     )
       .then((res) => {
         if (res.emptyNew) {
@@ -226,10 +247,42 @@ const TradingviewChart = ({
     return () => resizeObserver.current.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (lastFetchedTimeRef.current) {
+      lastFetchedTimeRef.current = null;
+      setPreventLoading(false);
+      setChartData({ candle: [], volume: [], line: [] });
+
+      getAggWrapper(true);
+    }
+  }, [fetchingInterval]);
+
   return (
     <div className={styles.container}>
       <div className={styles.legend}>{legend}</div>
       <div ref={chartContainerRef} className={styles['chart-container']} />
+      <div style={{ display: 'flex', marginBottom: 4 }}>
+        <span
+          className={styles.Rectangle}
+          onClick={() => {
+            if (fetchingInterval.key !== '1day') {
+              setFetchingInterval(fetchingIntervalValues.day);
+            }
+          }}
+        >
+          1 Day
+        </span>
+        <span
+          className={styles.Rectangle}
+          onClick={() => {
+            if (fetchingInterval.key !== '1week') {
+              setFetchingInterval(fetchingIntervalValues.week);
+            }
+          }}
+        >
+          1 Week
+        </span>
+      </div>
     </div>
   );
 };

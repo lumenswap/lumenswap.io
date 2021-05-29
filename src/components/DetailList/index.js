@@ -45,6 +45,7 @@ const DetailList = ({ appSpotPair }) => {
           endTime,
           { candle: [], volume: [], line: [] },
           1,
+          86400000,
         );
 
         const orderData = await fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
