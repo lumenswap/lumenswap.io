@@ -78,8 +78,7 @@ const SelectPair = ({ setAppSpotPair }) => {
     if (searchQuery && searchQuery !== '') {
       return result.filter((item) => {
         const modified = searchQuery.trim().toLowerCase();
-        return item.base.details.getCode().toLowerCase().match(modified)
-        || item.counter.details.getCode().toLowerCase().match(modified);
+        return `${item.base.details.getCode().toLowerCase()}/${item.counter.details.getCode().toLowerCase()}`.match(modified);
       });
     }
 

@@ -4,7 +4,6 @@ import USDC from './USDC';
 import ARS from './ARS';
 import BRL from './BRL';
 import NGNT from './NGNT';
-import CENTUS from './CENTUS';
 import USD from './USD';
 import EURT from './EURT';
 import SLT from './SLT';
@@ -21,7 +20,6 @@ export default [
   ARS,
   BRL,
   NGNT,
-  CENTUS,
   USD,
   EURT,
   SLT,

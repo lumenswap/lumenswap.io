@@ -26,7 +26,7 @@ const TradeSection = ({ appSpotPair }) => {
 
   useEffect(() => {
     if (intervalRef.current) {
-      clearImmediate(intervalRef.current);
+      clearInterval(intervalRef.current);
       setTradeListData(null);
       fetchingTradeApiCallWrapper();
       intervalRef.current = setInterval(fetchingTradeApiCallWrapper, 10000);
