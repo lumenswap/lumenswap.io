@@ -12,8 +12,8 @@ import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 import styles from '../styles.module.scss';
 
-const tableRows = (rows) => rows.map((row, index) => (
-  <tr key={index}>
+const tableRows = (rows) => rows.map((row) => (
+  <tr key={row.id}>
     <td className="color-gray">
       <div className={styles['td-outside']}>
         {row.time}
@@ -41,7 +41,10 @@ const tableRows = (rows) => rows.map((row, index) => (
             .then(showSignResponse)
             .catch(console.error);
         }}
-        style={{ cursor: 'pointer' }}
+        style={{
+          cursor: 'pointer',
+          color: '#0e41f5',
+        }}
       >
         Cancel
       </span>
@@ -51,13 +54,14 @@ const tableRows = (rows) => rows.map((row, index) => (
 
 const tableHeader = ['Date', 'Sell', 'Buy', 'Price', 'Action'];
 
-export default function OrderHistory() {
-  const [rowData, setRowData] = useState([]);
+export default function OrderHistory({ setOrderCounter }) {
+  const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
 
   function loadData() {
     fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
+      setOrderCounter(res.data._embedded.records.length);
       setRowData(res.data._embedded.records.map((item) => {
         const time = new Date(item.last_modified_time);
         const counterAsset = item.buying.asset_code
@@ -78,7 +82,7 @@ export default function OrderHistory() {
           id: item.id,
         };
       }));
-    });
+    }).catch(console.error);
   }
 
   useEffect(() => {
@@ -91,6 +95,18 @@ export default function OrderHistory() {
       clearInterval(intervalRef.current);
     };
   }, []);
+
+  if (rowData === null) {
+    return null;
+  }
+
+  if (rowData.length === 0) {
+    return (
+      <p style={{ textAlign: 'center' }}>
+        You have no open orders
+      </p>
+    );
+  }
 
   return (
     <div className={styles['container-table']}>

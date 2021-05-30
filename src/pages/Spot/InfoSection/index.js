@@ -19,9 +19,9 @@ import TradeHistory from './TradeHistory';
 //     />
 
 export default function InfoSection() {
-  // const [checked, setCheckbox] = useState(false);
+  const [orderCounter, setOrderCounter] = useState(0);
   const historyTab = [
-    { title: 'Open orders', id: 'order' },
+    { title: `Open Orders(${orderCounter})`, id: 'order' },
     { title: 'Trade History', id: 'trade' },
   ];
   const isLogged = useSelector((state) => state.user.logged);
@@ -33,7 +33,7 @@ export default function InfoSection() {
     }
 
     if (currentTab === 'order') {
-      return <OrderHistory />;
+      return <OrderHistory setOrderCounter={setOrderCounter} />;
     }
 
     if (currentTab === 'trade') {

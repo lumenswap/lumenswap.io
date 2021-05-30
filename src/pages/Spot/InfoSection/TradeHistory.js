@@ -23,7 +23,7 @@ const tableRows = (rows) => rows.map((row, index) => (
 const tableHeader = ['Date', 'Sold', 'Bought', 'Price'];
 
 export default function TradeHistory() {
-  const [rowData, setRowData] = useState([]);
+  const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
 
@@ -36,7 +36,7 @@ export default function TradeHistory() {
         let buyAsset;
         let sellAmount;
         let buyAmount;
-        if (item.base_is_seller) {
+        if (item.base_is_seller && item.base_account === userAddress) {
           sellAsset = item.base_asset_code || 'XLM';
           sellAmount = sevenDigit(item.base_amount);
 
@@ -73,6 +73,18 @@ export default function TradeHistory() {
       clearInterval(intervalRef.current);
     };
   }, [userAddress]);
+
+  if (rowData === null) {
+    return null;
+  }
+
+  if (rowData.length === 0) {
+    return (
+      <p style={{ textAlign: 'center' }}>
+        You have no open orders
+      </p>
+    );
+  }
 
   return (
     <div className={styles['container-table']}>

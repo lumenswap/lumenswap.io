@@ -9,6 +9,36 @@ import numeral from 'numeral';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
+async function h24change(baseAsset, counterAsset) {
+  const currentTime = Date.now();
+
+  const currentStartTime = moment(currentTime).startOf('second').subtract(1, 'days');
+  const currentEndTime = moment(currentTime).startOf('second');
+  const currentPrice = (await getTradeAggregation(
+    baseAsset,
+    counterAsset,
+    currentStartTime,
+    currentEndTime,
+    { candle: [], volume: [], line: [] },
+    1,
+    60000,
+  )).candle[0].close;
+
+  const prevStartTime = moment(currentTime).startOf('second').subtract(2, 'days');
+  const prevEndTime = moment(currentTime).startOf('second').subtract(1, 'days');
+  const prevPrice = (await getTradeAggregation(
+    baseAsset,
+    counterAsset,
+    prevStartTime,
+    prevEndTime,
+    { candle: [], volume: [], line: [] },
+    1,
+    60000,
+  )).candle[0].close;
+
+  return (new BN(currentPrice).minus(prevPrice)).div(prevPrice).times(100);
+}
+
 const DetailList = ({ appSpotPair }) => {
   const [detailData, setDetailData] = useState([
     { title: 'Price', value: '-' },
@@ -60,16 +90,11 @@ const DetailList = ({ appSpotPair }) => {
         }
 
         const lastData = tradeData.candle[0];
-        let ch24 = 0;
-        if (lastData) {
-          ch24 = (new BN(lastData.open).minus(lastData.close))
-            .div(lastData.open)
-            .times(-100);
-        }
+        const ch24 = await h24change(appSpotPair.base, appSpotPair.counter);
 
         setDetailData([
           { title: 'Price', value: `${total} ${appSpotPair.counter.getCode()}` },
-          { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gt(0) ? 'buy' : 'sell' },
+          { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gte(0) ? 'buy' : 'sell' },
           { title: '24 High', value: numeral(lastData.high).format('0.0[00]a') },
           { title: '24 Low', value: numeral(lastData.low).format('0.0[00]a') },
           { title: '24 Volume (XLM)', value: numeral(lastData.base_volume).format('0.0a') },
