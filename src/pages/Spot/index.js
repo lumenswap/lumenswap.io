@@ -26,7 +26,6 @@ const Spot = () => {
     if (refHeight.current) {
       setHeight(refHeight.current.offsetHeight);
     }
-    console.warn(height);
   }, [refHeight.current]);
 
   return (

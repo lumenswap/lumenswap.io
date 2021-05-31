@@ -229,6 +229,7 @@ const TradingviewChart = ({
       volumeSeriesRef.current.setData(chartData.volume);
       // lineSeriesRef.current.setData(chartData.line);
     }
+    console.warn(chartData);
   }, [chartData]);
 
   // Resize chart on container resizes.

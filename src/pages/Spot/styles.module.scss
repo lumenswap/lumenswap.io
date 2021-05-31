@@ -17,10 +17,14 @@
 
 .card-left {
   padding: 8px 0 6px 0;
+  position: relative;
+  min-height: 300px;
 }
 
 .card-right {
   padding: 8px 14px 6px 14px;
+  position: relative;
+  min-height: 300px;
 }
 
 .card-detail {
@@ -30,6 +34,7 @@
 .trade-container {
   margin-right: -14px;
   margin-left: -14px;
+  height: 100%;
 }
 
 .card-table {
