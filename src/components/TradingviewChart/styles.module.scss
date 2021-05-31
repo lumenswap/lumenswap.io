@@ -14,6 +14,7 @@
 .legend {
   position: absolute;
   left: 16px;
+  top: 38px;
   font-size: 10px;
   font-weight: 500;
   color: $Manatee;
@@ -24,12 +25,22 @@
   // color: $Rose;
 }
 
+.box-time {
+  display: flex;
+  margin-left: 12px;
+}
+
 .Rectangle {
-  margin-right: 2px;
+  margin-right: 4px;
   padding: 4px 6px;
   border-radius: 2px;
-  background-color: #ecf0f5;
-  border-radius: 4px;
+  color: $RollingStone;
   font-size: 10px;
   cursor: pointer;
+}
+
+.active {
+  font-weight: 500;
+  color: $CodGray;
+  background-color: $CatskillWhite;
 }
