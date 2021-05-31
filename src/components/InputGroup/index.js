@@ -28,8 +28,8 @@ const InputGroup = ({
           onChange(e.target.value);
           onChangeInput(e.target.value);
         } else if (e.target.value === '') {
-          onChange(null);
-          onChangeInput(null);
+          onChange(0);
+          onChangeInput(0);
         }
       }}
       {...input}

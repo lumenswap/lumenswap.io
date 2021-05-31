@@ -20,7 +20,10 @@ const OrderList = ({
     ...i,
     percent: i.total.div(maxNumber).times(100).toFixed(0),
   }));
+
   if (isSell) {
+    forUsingData = forUsingData.sort((a, b) => -1 * new BN(a.price).comparedTo(b.price));
+  } else {
     forUsingData = forUsingData.sort((a, b) => -1 * new BN(a.price).comparedTo(b.price));
   }
 

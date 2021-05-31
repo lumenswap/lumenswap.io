@@ -28,6 +28,10 @@ function showBalance(isLogged, foundBalance) {
   return sevenDigit(foundBalance);
 }
 
+function isNumber(text) {
+  return !(new BN(text).isNaN());
+}
+
 const InnerForm = ({
   baseAsset, counterAsset, mainAsset, type, upperOrderPrice,
 }) => {
@@ -79,7 +83,7 @@ const InnerForm = ({
     return () => {
       const values = getValues();
 
-      if ((field === 'price' || field === 'amount') && !!values.amount && !!values.price) {
+      if ((field === 'price' || field === 'amount') && isNumber(values.amount) && isNumber(values.price)) {
         const res = new BN(values.price).times(values.amount);
 
         if (isLogged && foundBalance) {
@@ -98,7 +102,7 @@ const InnerForm = ({
         setValue('total', res.toString());
       }
 
-      if (field === 'total' && !!values.price && !!values.total) {
+      if (field === 'total' && isNumber(values.price) && isNumber(values.total)) {
         const res = new BN(values.total).div(values.price).toString();
 
         if (isLogged && foundBalance) {

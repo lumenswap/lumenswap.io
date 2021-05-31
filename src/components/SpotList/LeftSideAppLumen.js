@@ -5,8 +5,6 @@ import styles from './styles.module.scss';
 export default function LeftSideAppLumen({
   asks = [], bids = [], info, headerItem,
 }) {
-  const newAsk = asks.slice().reverse();
-
   return (
     <>
       <OrderList

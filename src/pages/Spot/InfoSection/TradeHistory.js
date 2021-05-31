@@ -36,19 +36,25 @@ export default function TradeHistory() {
         let buyAsset;
         let sellAmount;
         let buyAmount;
-        if (item.base_is_seller && item.base_account === userAddress) {
-          sellAsset = item.base_asset_code || 'XLM';
-          sellAmount = sevenDigit(item.base_amount);
+        // if (item.base_is_seller && item.base_account === userAddress) {
+        //   sellAsset = item.base_asset_code || 'XLM';
+        //   sellAmount = sevenDigit(item.base_amount);
 
-          buyAsset = item.counter_asset_code || 'XLM';
-          buyAmount = sevenDigit(item.counter_amount);
-        } else {
-          sellAsset = item.counter_asset_code || 'XLM';
-          sellAmount = sevenDigit(item.counter_amount);
+        //   buyAsset = item.counter_asset_code || 'XLM';
+        //   buyAmount = sevenDigit(item.counter_amount);
+        // } else {
+        //   sellAsset = item.counter_asset_code || 'XLM';
+        //   sellAmount = sevenDigit(item.counter_amount);
 
-          buyAsset = item.base_asset_code || 'XLM';
-          buyAmount = sevenDigit(item.base_amount);
-        }
+        //   buyAsset = item.base_asset_code || 'XLM';
+        //   buyAmount = sevenDigit(item.base_amount);
+        // }
+
+        sellAsset = item.base_asset_code || 'XLM';
+        sellAmount = sevenDigit(item.base_amount);
+
+        buyAsset = item.counter_asset_code || 'XLM';
+        buyAmount = sevenDigit(item.counter_amount);
 
         return {
           time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
