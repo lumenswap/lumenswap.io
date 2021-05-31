@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
 import { createChart, CrosshairMode } from 'lightweight-charts';
 import numeral from 'numeral';
 import moment from 'moment';
@@ -257,32 +258,31 @@ const TradingviewChart = ({
     }
   }, [fetchingInterval]);
 
+  const timeFilter = [
+    { label: '1 Day', value: '1day', duration: 'day' },
+    { label: '1 Week', value: '1week', duration: 'week' },
+  ];
+
   return (
     <div className={styles.container}>
       <div className={styles.legend}>{legend}</div>
-      <div ref={chartContainerRef} className={styles['chart-container']} />
-      <div style={{ display: 'flex', marginBottom: 4 }}>
-        <span
-          className={styles.Rectangle}
-          onClick={() => {
-            if (fetchingInterval.key !== '1day') {
-              setFetchingInterval(fetchingIntervalValues.day);
-            }
-          }}
-        >
-          1 Day
-        </span>
-        <span
-          className={styles.Rectangle}
-          onClick={() => {
-            if (fetchingInterval.key !== '1week') {
-              setFetchingInterval(fetchingIntervalValues.week);
-            }
-          }}
-        >
-          1 Week
-        </span>
+      <div className={styles['box-time']}>
+        {timeFilter.map((time, index) => (
+          <span
+            key={index}
+            className={classNames(styles.Rectangle,
+              (fetchingInterval.key === time.value) && styles.active)}
+            onClick={() => {
+              if (fetchingInterval.key !== time.value) {
+                setFetchingInterval(fetchingIntervalValues[`${time.duration}`]);
+              }
+            }}
+          >
+            {time.label}
+          </span>
+        ))}
       </div>
+      <div ref={chartContainerRef} className={styles['chart-container']} />
     </div>
   );
 };
