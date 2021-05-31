@@ -11,7 +11,7 @@ export default function LeftSideAppLumen({
     <>
       <OrderList
         headerItem={headerItem}
-        rowItem={newAsk}
+        rowItem={asks}
         isSell
       />
       <div className={styles.gap}>
