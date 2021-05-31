@@ -22,7 +22,7 @@ const tableRows = (rows) => rows.map((row, index) => (
 
 const tableHeader = ['Date', 'Sold', 'Bought', 'Price'];
 
-export default function TradeHistory() {
+export default function TradeHistory({setTrade}) {
   const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
@@ -85,6 +85,10 @@ export default function TradeHistory() {
       </p>
     );
   }
+
+  useEffect(() => {
+    setTrade(rowData);
+  }, [rowData]);
 
   return (
     <div className={styles['container-table']}>
