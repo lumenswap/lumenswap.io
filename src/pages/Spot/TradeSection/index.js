@@ -1,8 +1,10 @@
+import BN from 'helpers/BN';
+import { useEffect, useRef, useState } from 'react';
+
 import { fetchTradeAPI } from 'api/stellar';
 import CustomTabs from 'components/CustomTabs';
 import TradeList from 'components/SpotList/TradeList';
-import BN from 'helpers/BN';
-import { useEffect, useRef, useState } from 'react';
+import FetchDataLoading from 'components/FetchDataLoading';
 
 import styles from '../styles.module.scss';
 
@@ -67,7 +69,8 @@ const TradeSection = ({ appSpotPair }) => {
         tabContent={() => null}
       />
       <div className={styles['trade-container']}>
-        <TradeList headerItem={tradeListHeader} rowItems={tradeListData} />
+        {tradeListData === null ? <FetchDataLoading />
+          : <TradeList headerItem={tradeListHeader} rowItems={tradeListData} />}
       </div>
     </>
   );

@@ -172,7 +172,7 @@ const InnerForm = ({
     setSliderValue(0);
   }, [JSON.stringify(baseAsset), JSON.stringify(counterAsset)]);
 
-  let buttonContent = 'Conent Wallet';
+  let buttonContent = 'Connect Wallet';
   if (isLogged) {
     buttonContent = type === 'buy' ? `Buy ${mainAsset.getCode()}` : `Sell ${mainAsset.getCode()}`;
   }

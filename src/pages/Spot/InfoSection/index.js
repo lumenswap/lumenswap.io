@@ -3,6 +3,8 @@ import { useState } from 'react';
 import CustomTabs from 'components/CustomTabs';
 // import ButtonGroup from 'components/ButtonGroup';
 import { useSelector } from 'react-redux';
+import isEmpty from 'helpers/is-empty';
+import FetchDataLoading from 'components/FetchDataLoading';
 import OrderHistory from './OrderHistory';
 import TradeHistory from './TradeHistory';
 
@@ -20,6 +22,8 @@ import TradeHistory from './TradeHistory';
 
 export default function InfoSection() {
   const [orderCounter, setOrderCounter] = useState(0);
+  const [order, setOrder] = useState(null);
+  const [trade, setTrade] = useState(null);
   const historyTab = [
     { title: `Open Orders(${orderCounter})`, id: 'order' },
     { title: 'Trade History', id: 'trade' },
@@ -29,15 +33,19 @@ export default function InfoSection() {
 
   function TabContent() {
     if (!isLogged) {
-      return 'Connect your wallet';
+      return <div style={{ minHeight: '150px' }}>Connect your wallet</div>;
+    }
+
+    if (isEmpty(trade) || isEmpty(order)) {
+      return <div style={{ minHeight: '150px' }}><FetchDataLoading /></div>;
     }
 
     if (currentTab === 'order') {
-      return <OrderHistory setOrderCounter={setOrderCounter} />;
+      return <OrderHistory setOrderCounter={setOrderCounter} setOrder={setOrder} />;
     }
 
     if (currentTab === 'trade') {
-      return <TradeHistory />;
+      return <TradeHistory setTrade={setTrade} />;
     }
 
     return null;

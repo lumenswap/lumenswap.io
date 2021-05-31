@@ -11,6 +11,8 @@ import store from 'store';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 import styles from '../styles.module.scss';
+import isEmpty from '../../../helpers/is-empty';
+import FetchDataLoading from '../../../components/FetchDataLoading';
 
 const tableRows = (rows) => rows.map((row) => (
   <tr key={row.id}>
@@ -54,7 +56,7 @@ const tableRows = (rows) => rows.map((row) => (
 
 const tableHeader = ['Date', 'Sell', 'Buy', 'Price', 'Action'];
 
-export default function OrderHistory({ setOrderCounter }) {
+export default function OrderHistory({ setOrderCounter, setOrder }) {
   const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
@@ -108,12 +110,18 @@ export default function OrderHistory({ setOrderCounter }) {
     );
   }
 
+  useEffect(() => {
+    setOrder(rowData);
+  }, [rowData]);
+
   return (
     <div className={styles['container-table']}>
-      <Table
-        tableRows={tableRows(rowData)}
-        tableHead={tableHeader}
-      />
+      {isEmpty(rowData) ? <FetchDataLoading /> : (
+        <Table
+          tableRows={tableRows(rowData)}
+          tableHead={tableHeader}
+        />
+      )}
     </div>
   );
 }

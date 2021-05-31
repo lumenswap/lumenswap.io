@@ -22,7 +22,7 @@ async function h24change(baseAsset, counterAsset) {
     { candle: [], volume: [], line: [] },
     1,
     60000,
-  )).candle[0].close;
+  )).candle[0]?.close;
 
   const prevStartTime = moment(currentTime).startOf('second').subtract(2, 'days');
   const prevEndTime = moment(currentTime).startOf('second').subtract(1, 'days');
@@ -34,9 +34,13 @@ async function h24change(baseAsset, counterAsset) {
     { candle: [], volume: [], line: [] },
     1,
     60000,
-  )).candle[0].close;
+  )).candle[0]?.close;
 
-  return (new BN(currentPrice).minus(prevPrice)).div(prevPrice).times(100);
+  if (!!currentPrice && !!prevPrice) {
+    return (new BN(currentPrice).minus(prevPrice)).div(prevPrice).times(100);
+  }
+
+  return new BN(0);
 }
 
 const DetailList = ({ appSpotPair }) => {
@@ -89,7 +93,7 @@ const DetailList = ({ appSpotPair }) => {
             .toFixed(7));
         }
 
-        const lastData = tradeData.candle[0];
+        const lastData = tradeData.candle[0] || {};
         const ch24 = await h24change(appSpotPair.base, appSpotPair.counter);
 
         setDetailData([

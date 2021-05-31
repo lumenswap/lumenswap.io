@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import { createChart, CrosshairMode } from 'lightweight-charts';
 import numeral from 'numeral';
 import moment from 'moment';
+import isEmpty from 'helpers/is-empty';
+import FetchDataLoading from 'components/FetchDataLoading';
 import styles from './styles.module.scss';
 import { getTradeAggregation, ST_TR_COUNT } from './utils';
 
@@ -229,6 +231,7 @@ const TradingviewChart = ({
       volumeSeriesRef.current.setData(chartData.volume);
       // lineSeriesRef.current.setData(chartData.line);
     }
+    console.warn(chartData);
   }, [chartData]);
 
   // Resize chart on container resizes.
@@ -264,25 +267,31 @@ const TradingviewChart = ({
   ];
 
   return (
-    <div className={styles.container}>
-      <div className={styles.legend}>{legend}</div>
-      <div className={styles['box-time']}>
-        {timeFilter.map((time, index) => (
-          <span
-            key={index}
-            className={classNames(styles.Rectangle,
-              (fetchingInterval.key === time.value) && styles.active)}
-            onClick={() => {
-              if (fetchingInterval.key !== time.value) {
-                setFetchingInterval(fetchingIntervalValues[`${time.duration}`]);
-              }
-            }}
-          >
-            {time.label}
-          </span>
-        ))}
+    <div className="position-relative">
+      {isEmpty(chartData) && <FetchDataLoading />}
+      <div className={styles.container} style={{ visibility: isEmpty(chartData) ? 'hidden' : 'visible' }}>
+        <div className={styles.legend}>{legend}</div>
+        <div className={styles['box-time']}>
+          {timeFilter.map((time, index) => (
+            <span
+              key={index}
+              className={classNames(styles.Rectangle,
+                (fetchingInterval.key === time.value) && styles.active)}
+              onClick={() => {
+                if (fetchingInterval.key !== time.value) {
+                  setFetchingInterval(fetchingIntervalValues[`${time.duration}`]);
+                }
+              }}
+            >
+              {time.label}
+            </span>
+          ))}
+        </div>
+        <div
+          ref={chartContainerRef}
+          className={styles['chart-container']}
+        />
       </div>
-      <div ref={chartContainerRef} className={styles['chart-container']} />
     </div>
   );
 };
