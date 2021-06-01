@@ -10,9 +10,8 @@ import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import store from 'store';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
+import FetchDataLoading from 'components/FetchDataLoading';
 import styles from '../styles.module.scss';
-import isEmpty from '../../../helpers/is-empty';
-import FetchDataLoading from '../../../components/FetchDataLoading';
 
 const tableRows = (rows) => rows.map((row) => (
   <tr key={row.id}>
@@ -116,7 +115,7 @@ export default function OrderHistory({ setOrderCounter, setOrder }) {
 
   return (
     <div className={styles['container-table']}>
-      {isEmpty(rowData) ? <FetchDataLoading /> : (
+      {rowData === null ? <FetchDataLoading /> : (
         <Table
           tableRows={tableRows(rowData)}
           tableHead={tableHeader}

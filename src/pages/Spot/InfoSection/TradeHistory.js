@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
+import FetchDataLoading from 'components/FetchDataLoading';
 import styles from '../styles.module.scss';
 
 const tableRows = (rows) => rows.map((row, index) => (
@@ -92,10 +93,12 @@ export default function TradeHistory({ setTrade }) {
 
   return (
     <div className={styles['container-table']}>
-      <Table
-        tableRows={tableRows(rowData)}
-        tableHead={tableHeader}
-      />
+      {rowData === null ? <FetchDataLoading /> : (
+        <Table
+          tableRows={tableRows(rowData)}
+          tableHead={tableHeader}
+        />
+      )}
     </div>
   );
 }
