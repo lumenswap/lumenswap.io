@@ -23,7 +23,7 @@ const tableRows = (rows) => rows.map((row, index) => (
 
 const tableHeader = ['Date', 'Sold', 'Bought', 'Price'];
 
-export default function TradeHistory({ setTrade }) {
+export default function TradeHistory() {
   const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
@@ -75,21 +75,13 @@ export default function TradeHistory({ setTrade }) {
     };
   }, [userAddress]);
 
-  if (rowData === null) {
-    return null;
-  }
-
-  if (rowData.length === 0) {
+  if (rowData?.length === 0) {
     return (
       <p style={{ textAlign: 'center' }}>
         You have no open orders
       </p>
     );
   }
-
-  useEffect(() => {
-    setTrade(rowData);
-  }, [rowData]);
 
   return (
     <div className={styles['container-table']}>

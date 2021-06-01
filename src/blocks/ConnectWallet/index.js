@@ -97,7 +97,7 @@ const ConnectWallet = () => {
               <span className="icon-arrow-left" />
             </button>
           ) : (
-            <a href={item.link} target="_blank" rel="noreferrer" className={styles.btnLink} style={{ textDecoration: 'none' }}>
+            <a href={item.link} target="_blank" rel="noreferrer" className={styles.btnLink} style={{ textDecoration: 'none' }} key={index}>
               <div className="d-flex align-items-center">
                 <div className={styles.circle}><img src={item.icon} width={item.icon} alt="icon" /></div>
                 Install {item.text}

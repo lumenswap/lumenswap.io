@@ -55,7 +55,7 @@ const tableRows = (rows) => rows.map((row) => (
 
 const tableHeader = ['Date', 'Sell', 'Buy', 'Price', 'Action'];
 
-export default function OrderHistory({ setOrderCounter, setOrder }) {
+export default function OrderHistory({ setOrderCounter }) {
   const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
@@ -97,15 +97,7 @@ export default function OrderHistory({ setOrderCounter, setOrder }) {
     };
   }, []);
 
-  useEffect(() => {
-    setOrder(rowData);
-  }, [rowData]);
-
-  if (rowData === null) {
-    return null;
-  }
-
-  if (rowData.length === 0) {
+  if (rowData?.length === 0) {
     return (
       <p style={{ textAlign: 'center' }}>
         You have no open orders
