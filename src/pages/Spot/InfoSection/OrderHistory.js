@@ -98,6 +98,10 @@ export default function OrderHistory({ setOrderCounter, setOrder }) {
     };
   }, []);
 
+  useEffect(() => {
+    setOrder(rowData);
+  }, [rowData]);
+
   if (rowData === null) {
     return null;
   }
@@ -109,10 +113,6 @@ export default function OrderHistory({ setOrderCounter, setOrder }) {
       </p>
     );
   }
-
-  useEffect(() => {
-    setOrder(rowData);
-  }, [rowData]);
 
   return (
     <div className={styles['container-table']}>
