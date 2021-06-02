@@ -40,8 +40,8 @@ export default async function generateManageSellTRX(
     StellarSDK.Operation.manageSellOffer({
       selling: sellingAsset,
       buying: buyingAsset,
-      amount: sevenDigit(amount),
-      price: sevenDigit(price),
+      amount: sevenDigit(amount).toString(),
+      price: sevenDigit(price).toString(),
       offerId,
     }),
   )
