@@ -17,7 +17,7 @@ const TradeList = ({
           <div className={classNames(styles['row-item'], styles['trade-header'])} key={index}>{header}</div>
         ))}
       </div>
-      <div className={styles['table-body']}>
+      <div className={classNames(styles['table-body'], styles['table-trade'])}>
         {rowItems.map((row, rowIndex) => (
           <div key={`row-${rowIndex}`}>
             <div className={classNames(row.base_is_seller ? styles.sell : styles.buy)}>

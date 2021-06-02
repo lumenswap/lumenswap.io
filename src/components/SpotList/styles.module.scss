@@ -23,10 +23,6 @@
   transition: all 0.15s ease-in-out;
 }
 
-.table-row:hover {
-  background-color: $LightAthensGray;
-}
-
 .row-item {
   position: relative;
   display: flex;
@@ -84,6 +80,12 @@
 
 .table-body .row-item:first-child {
   justify-content: flex-start;
+}
+
+.table-trade {
+  .table-row:hover {
+    background-color: $LightAthensGray;
+  }
 }
 
 // progress bar

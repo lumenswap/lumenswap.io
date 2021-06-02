@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import OrderHistory from './OrderHistory';
 import TradeHistory from './TradeHistory';
 
+import styles from '../styles.module.scss';
+
 // const buttonGroupItems = [
 //   { label: '1 Day', value: '1' },
 //   { label: '1 Week', value: '7' },
@@ -29,7 +31,7 @@ export default function InfoSection() {
 
   function TabContent() {
     if (!isLogged) {
-      return <div style={{ minHeight: '150px' }}>Connect your wallet</div>;
+      return <div className={styles['centralize-content']}>Connect your wallet</div>;
     }
 
     if (currentTab === 'order') {
@@ -53,7 +55,7 @@ export default function InfoSection() {
           label="Hide other pairs"
         />
       </div> */}
-      <div className="mt-md-0 mt-sm-4 mt-4">
+      <div className="mt-md-0 mt-sm-4 mt-4 h-100">
         <CustomTabs
           tabs={historyTab}
           activeTabId={historyTab[0].id}
