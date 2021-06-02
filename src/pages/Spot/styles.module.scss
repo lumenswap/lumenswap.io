@@ -41,6 +41,15 @@
   padding: 16px 24px 8px 14px;
   position: relative;
   //margin-bottom: 47px;
+  min-height: 200px;
+}
+
+.centralize-content {
+  height: calc(100% - 61px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -18px;
 }
 
 .container-checkbox {
@@ -57,6 +66,7 @@
 .container-table {
   margin-left: 63px;
   margin-top: 12px;
+  position: relative;
 }
 
 .card-select {
