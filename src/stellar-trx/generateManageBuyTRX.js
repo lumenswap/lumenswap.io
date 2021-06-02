@@ -1,4 +1,5 @@
 import isSameAsset from 'helpers/isSameAsset';
+import sevenDigit from 'helpers/sevenDigit';
 import StellarSDK from 'stellar-sdk';
 import store from 'store';
 
@@ -39,8 +40,8 @@ export default async function generateManageBuyTRX(
     StellarSDK.Operation.manageBuyOffer({
       selling: sellingAsset,
       buying: buyingAsset,
-      buyAmount,
-      price,
+      buyAmount: sevenDigit(buyAmount),
+      price: sevenDigit(price),
       offerId,
     }),
   )
