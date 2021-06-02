@@ -49,19 +49,23 @@ const DetailList = ({ appSpotPair }) => {
     { title: '24 Change', value: '-', status: 'buy' },
     { title: '24 High', value: '-' },
     { title: '24 Low', value: '-' },
-    { title: '24 Volume (-)', value: '-' },
-    { title: '24 Volume (-)', value: '-' },
+    { title: `24 Volume (${appSpotPair.base.getCode()})`, value: '-' },
+    { title: `24 Volume (${appSpotPair.counter.getCode()})`, value: '-' },
     {
       title: `${appSpotPair.base.getCode()} asset issuer`,
-      value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
+      value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.base.getIssuer()) : 'Stellar Foundation',
       status: appSpotPair.base.getIssuer() ? 'link' : false,
-      link: appSpotPair.base.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.base.getIssuer()}` : false,
+      link: appSpotPair.base.getIssuer()
+        ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.base.getCode()}-${appSpotPair.base.getIssuer()}`
+        : false,
     },
     {
       title: `${appSpotPair.counter.getCode()} asset issuer`,
       value: appSpotPair.counter.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
       status: appSpotPair.counter.getIssuer() ? 'link' : false,
-      link: appSpotPair.counter.getIssuer() ? `${process.env.REACT_APP_LUMENSCAN_URL}/account/${appSpotPair.counter.getIssuer()}` : false,
+      link: appSpotPair.counter.getIssuer()
+        ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.counter.getCode()}-${appSpotPair.counter.getIssuer()}`
+        : false,
     },
   ]);
 
@@ -101,8 +105,8 @@ const DetailList = ({ appSpotPair }) => {
           { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gte(0) ? 'buy' : 'sell' },
           { title: '24 High', value: numeral(lastData.high).format('0.0[00]a') },
           { title: '24 Low', value: numeral(lastData.low).format('0.0[00]a') },
-          { title: '24 Volume (XLM)', value: numeral(lastData.base_volume).format('0.0a') },
-          { title: '24 Volume (USDC)', value: numeral(lastData.counter_volume).format('0.0a') },
+          { title: `24 Volume (${appSpotPair.base.getCode()})`, value: numeral(lastData.base_volume).format('0.0a') },
+          { title: `24 Volume (${appSpotPair.counter.getCode()})`, value: numeral(lastData.counter_volume).format('0.0a') },
           {
             title: `${appSpotPair.base.getCode()} asset issuer`,
             value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.base.getIssuer()) : 'Stellar Foundation',

@@ -181,14 +181,14 @@ const TradingviewChart = ({
       },
     });
 
-    // // line series
+    // line series
     // lineSeriesRef.current = chart.current.addLineSeries({
     //   color: '#E45BEF',
     //   lineWidth: 1,
     // });
     // lineSeries.setData(lineSeriesData);
 
-    // // legend
+    // legend
     chart.current.subscribeCrosshairMove((param) => {
       if (param.time) {
         const currentData = param.seriesPrices.get(candleSeriesRef.current);

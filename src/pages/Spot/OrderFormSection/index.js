@@ -48,6 +48,10 @@ const InnerForm = ({
     handleSubmit, setValue, getValues, control, reset,
   } = useForm();
 
+  function wrapperSetValue(field, val) {
+    setValue(field, sevenDigit(val));
+  }
+
   async function onSubmit(data) {
     async function func() {
       const address = store.getState().user.detail.address;
@@ -99,7 +103,7 @@ const InnerForm = ({
           }
         }
 
-        setValue('total', res.toString());
+        wrapperSetValue('total', res.toString());
       }
 
       if (field === 'total' && isNumber(values.price) && isNumber(values.total)) {
@@ -118,7 +122,7 @@ const InnerForm = ({
           }
         }
 
-        setValue('amount', res);
+        wrapperSetValue('amount', res);
       }
     };
   }
@@ -134,7 +138,7 @@ const InnerForm = ({
         setSliderValue(perc > 100 ? 100 : perc);
       }
 
-      setValue('total', res.toString());
+      wrapperSetValue('total', res.toString());
     }
   }
 
@@ -148,15 +152,15 @@ const InnerForm = ({
           const amount = purePerc.times(foundBalance);
           const total = amount.times(values.price);
 
-          setValue('amount', amount.toString());
-          setValue('total', total.toString());
+          wrapperSetValue('amount', amount.toString());
+          wrapperSetValue('total', total.toString());
         } else {
           const purePerc = new BN(perc).div(100);
           const total = purePerc.times(foundBalance);
           const amount = total.div(values.price);
 
-          setValue('amount', amount.toString());
-          setValue('total', total.toString());
+          wrapperSetValue('amount', amount.toString());
+          wrapperSetValue('total', total.toString());
         }
       }
     }
