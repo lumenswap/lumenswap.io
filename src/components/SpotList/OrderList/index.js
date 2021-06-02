@@ -8,12 +8,26 @@ function generateProgressStyle(percent, isSell) {
   return `linear-gradient(to left, ${isSell ? '#f5dce6' : '#e8eedc'} ${percent}%, transparent 0%)`;
 }
 
+function calculateAmountAndTotal(isSell, i) {
+  if (isSell) {
+    return {
+      innerAmount: new BN(i.amount),
+      total: new BN(i.amount).times(i.price),
+    };
+  }
+
+  return {
+    innerAmount: new BN(i.amount).div(i.price).toFixed(7),
+    total: new BN(i.amount),
+  };
+}
+
 const OrderList = ({
   headerItem, rowItem, isSell,
 }) => {
   let forUsingData = rowItem.map((i) => ({
     ...i,
-    total: new BN(i.amount).times(i.price),
+    ...calculateAmountAndTotal(isSell, i),
   }));
   const maxNumber = forUsingData.sort((a, b) => -1 * new BN(a.total).comparedTo(b.total))[0]?.total;
   forUsingData = forUsingData.map((i) => ({
@@ -59,7 +73,7 @@ const OrderList = ({
                 }}
               >
                 <div className={styles['row-item']}>{sevenDigit(row.price)}</div>
-                <div className={styles['row-item']}>{sevenDigit(new BN(row.amount).div(row.price).toFixed(7))}</div>
+                <div className={styles['row-item']}>{sevenDigit(row.innerAmount)}</div>
                 <div className={styles['row-item']}>{sevenDigit(row.total.toFixed(7))}</div>
               </div>
             </div>
