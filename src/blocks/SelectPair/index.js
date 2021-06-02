@@ -11,6 +11,7 @@ import USDC from 'tokens/USDC';
 import questionLogo from 'assets/images/question.png';
 import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
+import isSamePair from 'helpers/isSamePair';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
 import createPairForDefaultTokens from './createPairForDefaultTokens';
@@ -69,9 +70,26 @@ const SelectPair = ({ setAppSpotPair }) => {
         };
       }
 
-      return {
+      const richedAssets = {
         base: enrichedBaseToken,
         counter: enrichedCounterToken,
+      };
+
+      if (createdDefaultPairs.find((i) => isSamePair(i, {
+        base: richedAssets.base.details,
+        counter: richedAssets.counter.details,
+      }))) {
+        return richedAssets;
+      }
+      return {
+        base: {
+          ...richedAssets.base,
+          type: 'custom',
+        },
+        counter: {
+          ...richedAssets.counter,
+          type: 'custom',
+        },
       };
     });
 
