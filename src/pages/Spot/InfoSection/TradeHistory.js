@@ -77,8 +77,8 @@ export default function TradeHistory() {
 
   if (rowData?.length === 0) {
     return (
-      <p style={{ textAlign: 'center' }}>
-        You have no open orders
+      <p className={styles['centralize-content']}>
+        You have not trade history
       </p>
     );
   }
