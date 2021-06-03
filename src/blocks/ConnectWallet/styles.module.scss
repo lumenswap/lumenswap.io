@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: 0.2s ease-in;
+  transition: ease-in;
   font-size: 20px;
   color: $CodGray;
   padding: 0 12px;
@@ -25,7 +25,7 @@
   span {
     color: $Waterloo;
     transform: scale(-1, 1);
-    transition: 0.2s ease-in;
+    transition: ease-in;
   }
 
   img {
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: 0.2s ease-in;
+  transition: ease-in;
   font-size: 20px;
   color: $CodGray;
   padding: 0 12px;
@@ -62,7 +62,7 @@
   span {
     color: $Waterloo;
     transform: scale(-1, 1);
-    transition: 0.2s ease-in;
+    transition: ease-in;
   }
 
   img {

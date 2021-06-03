@@ -73,7 +73,7 @@
     background-color: $LightAthensGray;
     border: 1px solid $LightAthensGray;
     margin-left: 6px;
-    transition: 0.2s ease-in;
+    transition: ease-in;
   }
 
   button:global(.active) {
@@ -102,7 +102,7 @@
     background-color: $LightAthensGray;
     color: $RollingStone;
     padding-left: 0;
-    transition: 0.2s ease-in;
+    transition: ease-in;
   }
 }
 
