@@ -1,5 +1,5 @@
 import { ReactComponent as Logo } from 'assets/images/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
@@ -14,8 +14,8 @@ const Header = () => {
     <div className={classNames(styles.layout, 'layout')}>
       <ul className={styles.list}>
         <li><Link to="/"><Logo /></Link></li>
-        <li><Link to="/swap">Swap</Link></li>
-        <li><Link to="/spot">Spot</Link></li>
+        <li><NavLink activeClassName={styles['active-link']} to="/swap">Swap</NavLink></li>
+        <li><NavLink activeClassName={styles['active-link']} to="/spot">Spot</NavLink></li>
         {/* <span className="icon-external" /> */}
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
