@@ -107,7 +107,7 @@ const SelectPair = ({ setAppSpotPair }) => {
     <div style={{ paddingBottom: 50 }}>
       <Input
         type="text"
-        placeholder="Search asset code"
+        placeholder="Search asset pair"
         name="search"
         fontSize={14}
         onChange={(e) => {

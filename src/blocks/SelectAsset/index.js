@@ -82,7 +82,7 @@ const SelectAsset = ({
     <div className={styles.container}>
       <Input
         type="text"
-        placeholder="Search asset code"
+        placeholder="Search asset pair"
         name="search"
         fontSize={14}
         onChange={(e) => {
