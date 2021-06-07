@@ -1,12 +1,7 @@
-import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
 import classNames from 'classnames';
 import BN from 'helpers/BN';
-import sevenDigit from 'helpers/sevenDigit';
+import OrderItem from './OrderItem';
 import styles from '../styles.module.scss';
-
-function generateProgressStyle(percent, isSell) {
-  return `linear-gradient(to left, ${isSell ? '#f5dce6' : '#e8eedc'} ${percent}%, transparent 0%)`;
-}
 
 function calculateAmountAndTotal(isSell, i) {
   if (isSell) {
@@ -55,28 +50,8 @@ const OrderList = ({
       </div>
       <div className={styles['table-body']}>
         {forUsingData.map((row, rowIndex) => (
-          <div
-            key={`row-${rowIndex}`}
-          >
-            <div
-              className={classNames(styles.progress,
-                isSell ? styles.sell : styles.buy)}
-              style={{ background: generateProgressStyle(row.percent, isSell) }}
-            >
-              <div
-                className={styles['table-row']}
-                onClick={() => {
-                  setCustomOrderPriceAction({
-                    sell: row.price,
-                    buy: row.price,
-                  });
-                }}
-              >
-                <div className={styles['row-item']}>{sevenDigit(row.price)}</div>
-                <div className={styles['row-item']}>{sevenDigit(row.innerAmount)}</div>
-                <div className={styles['row-item']}>{sevenDigit(row.total.toFixed(7))}</div>
-              </div>
-            </div>
+          <div key={`row-${rowIndex}`}>
+            <OrderItem row={row} isSell={isSell} />
           </div>
         ))}
       </div>

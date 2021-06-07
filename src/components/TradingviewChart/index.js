@@ -69,6 +69,7 @@ const TradingviewChart = ({
   const [fetchingInterval, setFetchingInterval] = useState(fetchingIntervalValues.day);
   const [chartData, setChartData] = useState(null);
   const [isLoadingPrevented, setPreventLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   function getAggWrapper(clearMode = false) {
     let startTime;
@@ -231,7 +232,6 @@ const TradingviewChart = ({
       volumeSeriesRef.current.setData(chartData.volume);
       // lineSeriesRef.current.setData(chartData.line);
     }
-    console.warn(chartData);
   }, [chartData]);
 
   // Resize chart on container resizes.
@@ -266,10 +266,12 @@ const TradingviewChart = ({
     { label: '1 Week', value: '1week', duration: 'week' },
   ];
 
+  const isLoaded = () => isEmpty(chartData) || isEmpty(chartData.candle);
+
   return (
     <div className="position-relative">
-      {isEmpty(chartData) && <FetchDataLoading />}
-      <div className={styles.container} style={{ visibility: isEmpty(chartData) ? 'hidden' : 'visible' }}>
+      {isLoaded() && <FetchDataLoading />}
+      <div className={styles.container} style={{ visibility: isLoaded() ? 'hidden' : 'visible' }}>
         <div className={styles.legend}>{legend}</div>
         <div className={styles['box-time']}>
           {timeFilter.map((time, index) => (

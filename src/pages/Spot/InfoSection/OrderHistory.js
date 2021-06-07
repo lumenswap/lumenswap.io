@@ -100,7 +100,7 @@ export default function OrderHistory({ setOrderCounter }) {
 
   if (rowData?.length === 0) {
     return (
-      <p style={{ textAlign: 'center' }}>
+      <p className={styles['centralize-content']}>
         You have no open orders
       </p>
     );
