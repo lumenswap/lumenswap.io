@@ -22,7 +22,7 @@ const tableRows = (rows) => rows.map((row) => (
     </td>
     <td>{row.sellAmount} {row.baseAsset.getCode()}</td>
     <td>{row.buyAmount} {row.counterAsset.getCode()}</td>
-    <td>{row.price} {row.counterAsset.getCode()}/{row.otherPrice} {row.baseAsset.getCode()}</td>
+    <td>{row.price} {row.counterAsset.getCode()} / {row.otherPrice} {row.baseAsset.getCode()}</td>
     <td>
       <span
         onClick={async () => {
