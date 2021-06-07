@@ -22,7 +22,7 @@ const tableRows = (rows) => rows.map((row) => (
     </td>
     <td>{row.sellAmount} {row.baseAsset.getCode()}</td>
     <td>{row.buyAmount} {row.counterAsset.getCode()}</td>
-    <td>{row.price} {row.baseAsset.getCode()}</td>
+    <td>{row.price} {row.counterAsset.getCode()}/{row.otherPrice} {row.baseAsset.getCode()}</td>
     <td>
       <span
         onClick={async () => {
@@ -77,7 +77,8 @@ export default function OrderHistory({ setOrderCounter }) {
           time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
           sellAmount: sevenDigit(item.amount),
           buyAmount: sevenDigit(buyAmount.toString()),
-          price: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
+          otherPrice: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
+          price: sevenDigit(item.price),
           counterAsset,
           baseAsset,
           id: item.id,
