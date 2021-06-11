@@ -12,6 +12,7 @@ import TERN from './TERN';
 import USDT from './USDT';
 import BTC from './BTC';
 import ETH from './ETH';
+import USDS from './USDS';
 
 export default [
   XLM,
@@ -26,6 +27,7 @@ export default [
   RMT,
   TERN,
   USDT,
+  USDS,
   BTC,
   ETH,
 ];
