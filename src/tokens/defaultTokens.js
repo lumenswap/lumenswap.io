@@ -13,6 +13,7 @@ import USDT from './USDT';
 import BTC from './BTC';
 import ETH from './ETH';
 import USDS from './USDS';
+import DOGET from './DOGET';
 
 export default [
   XLM,
@@ -30,4 +31,5 @@ export default [
   USDS,
   BTC,
   ETH,
+  DOGET,
 ];
