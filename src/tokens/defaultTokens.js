@@ -14,9 +14,11 @@ import BTC from './BTC';
 import ETH from './ETH';
 import USDS from './USDS';
 import DOGET from './DOGET';
+import LSP from './LSP';
 
 export default [
   XLM,
+  LSP,
   USDC,
   CNY,
   ARS,
