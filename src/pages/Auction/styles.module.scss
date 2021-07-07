@@ -28,9 +28,22 @@
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+}
+
+.card-info {
   display: flex;
   padding: 9px 24px;
   margin-top: 40px;
+}
+
+.card-chart {
+  margin-top: 24px;
+  padding: 21px 0 19px 6px;
+
+  canvas {
+    width: 100% !important;
+    max-height: 450px !important;
+  }
 }
 
 .container-info:not(:last-child) {

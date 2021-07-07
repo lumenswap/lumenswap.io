@@ -1,0 +1,14 @@
+@import "styles/vars";
+
+.label {
+  font-size: 14px;
+  color: $CodGray;
+
+  @media(max-width: $lg) {
+    font-size: 12px;
+  }
+
+  @media(max-width: $md) {
+    font-size: 10px;
+  }
+}

@@ -1,6 +1,8 @@
 import classNames from 'classnames';
+
 import Header from 'components/Header';
 import Button from 'components/Button';
+import LineChart from 'components/LineChart';
 import styles from './styles.module.scss';
 
 const info = [
@@ -34,7 +36,8 @@ const Auction = () => (
           />
         </div>
       </div>
-      <div className={styles.card}>
+      {/* info */}
+      <div className={classNames(styles.card, styles['card-info'])}>
         {info.map((item, index) => (
           <div className={classNames('col-lg-3 col-md-4 col-sm-4 col-4 px-0', styles['container-info'])} key={index}>
             <div className={styles.block}>
@@ -44,6 +47,10 @@ const Auction = () => (
             </div>
           </div>
         ))}
+      </div>
+      {/* chart */}
+      <div className={classNames(styles.card, styles['card-chart'])}>
+        <LineChart />
       </div>
     </div>
   </div>
