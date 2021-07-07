@@ -1,0 +1,72 @@
+@import "styles/vars";
+
+.title {
+  color: $CodGray;
+  font-size: 32px;
+  font-weight: 500;;
+  line-height: 1.19;
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+
+.desc {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $ShuttleGray;
+  margin-bottom: 0;
+}
+
+.btn {
+  width: 138px;
+  height: 48px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  display: flex;
+  padding: 9px 24px;
+  margin-top: 40px;
+}
+
+.container-info:not(:last-child) {
+  border-right: 1px solid $SecondaryAthensGray;
+}
+
+.container-info:not(:first-child) {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.block {
+  display: block;
+  padding: 1px 0;
+}
+
+.title-info {
+  font-size: 14px;
+  color: $RollingStone;
+}
+
+.number-info {
+  font-size: 22px;
+  font-weight: 500;
+  color: $CodGray;
+
+  span {
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+
+.value-info {
+  font-size: 14px;
+  color: $ShuttleGray;
+}
+
+
