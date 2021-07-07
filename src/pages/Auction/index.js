@@ -30,8 +30,7 @@ const Auction = () => (
             variant="primary"
             content="Send Bid"
             className={classNames(styles.btn,
-              'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')
-            }
+              'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')}
           />
         </div>
       </div>
