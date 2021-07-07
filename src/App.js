@@ -7,6 +7,7 @@ import { fetchAccountTokenList } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
 import Home from './pages/Home';
 import Spot from './pages/Spot';
+import Auction from './pages/Auction';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rc-slider/assets/index.css';
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/" component={() => <Redirect to="/swap" />} />
           <Route exact path="/swap" component={Home} />
           <Route exact path="/spot" component={Spot} />
+          <Route exact path="/auction" component={Auction} />
         </BrowserRouter>
       </div>
     </Provider>

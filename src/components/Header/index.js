@@ -16,6 +16,11 @@ const Header = () => {
         <li><Link to="/"><Logo /></Link></li>
         <li><NavLink activeClassName={styles['active-link']} to="/swap">Swap</NavLink></li>
         <li><NavLink activeClassName={styles['active-link']} to="/spot">Spot</NavLink></li>
+        <li>
+          <NavLink activeClassName={styles['active-link']} to="/auction">
+            <span className="d-flex align-items-center"> LSP Auction <span className={styles['active-status']} /></span>
+          </NavLink>
+        </li>
         {/* <span className="icon-external" /> */}
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
