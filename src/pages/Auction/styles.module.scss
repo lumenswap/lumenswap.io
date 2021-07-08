@@ -46,6 +46,11 @@
   }
 }
 
+.card-tabs {
+  margin-top: 24px;
+  padding: 16px 24px 0 24px;
+}
+
 .container-info:not(:last-child) {
   border-right: 1px solid $SecondaryAthensGray;
 }
@@ -80,6 +85,18 @@
 .value-info {
   font-size: 14px;
   color: $ShuttleGray;
+}
+
+.table {
+  margin: 0 -24px;
+
+  th, td {
+    font-size: 16px !important;
+  }
+
+  tbody tr > td:first-child, thead th:first-child {
+    padding-left: 24px;
+  }
 }
 
 

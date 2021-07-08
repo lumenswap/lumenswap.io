@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-const Table = ({ tableHead, tableRows }) => (
-  <div className={classNames(styles['table-scroll'])}>
+const Table = ({ tableHead, tableRows, className }) => (
+  <div className={classNames(styles['table-scroll'], className)}>
     <table className={classNames('table', styles.table)}>
       <thead>
         <tr>

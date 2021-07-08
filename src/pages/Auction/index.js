@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Header from 'components/Header';
 import Button from 'components/Button';
 import LineChart from 'components/LineChart';
+import BidsSection from './BidsSection';
 import styles from './styles.module.scss';
 
 const info = [
@@ -16,7 +17,7 @@ const info = [
 ];
 
 const Auction = () => (
-  <div className="container-fluid">
+  <div className="container-fluid pb-5">
     <Header />
     <div className="layout-inside mt-4 main">
       <h1 className={styles.title}>LSP Auction stats</h1>
@@ -51,6 +52,10 @@ const Auction = () => (
       {/* chart */}
       <div className={classNames(styles.card, styles['card-chart'])}>
         <LineChart />
+      </div>
+      {/* bids */}
+      <div className={classNames(styles.card, styles['card-tabs'])}>
+        <BidsSection />
       </div>
     </div>
   </div>
