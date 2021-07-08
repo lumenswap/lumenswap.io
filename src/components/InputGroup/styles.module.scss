@@ -2,6 +2,45 @@
 
 .input-group {
   border: 1px solid $CatskillWhite;
+  background-color: white;
+  border-radius: 8px;
+  transition: ease-in;
+
+  input {
+    border: none;
+    background-color: transparent;
+    padding-right: 16px;
+    padding-left: 16px;
+    color: $CodGray;
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 8px;
+  }
+
+  input::placeholder {
+    color: $RollingStone;
+  }
+
+  input:focus {
+    box-shadow: none;
+    background-color: white;
+  }
+
+  :global(.input-group-text) {
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid $CatskillWhite;
+    color: $CodGray;
+    font-size: 16px;
+    min-width: 64px;
+    display: flex;
+    justify-content: center;
+    border-radius: 0;
+  }
+}
+
+.input-group-advance {
+  border: 1px solid $CatskillWhite;
   background-color: $AthensGray;
   border-radius: 4px;
   transition: ease-in;
@@ -38,6 +77,6 @@
   }
 }
 
-.input-group:focus-within{
+.input-group-advance:focus-within, .input-group:focus-within {
   border: 1px solid $BlueRibbon;
 }

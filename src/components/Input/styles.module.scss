@@ -1,12 +1,18 @@
 @import 'styles/vars';
 
-.label-primary {
+:global(.label-primary) {
   font-size: 18px;
   color: $CodGray;
   margin-bottom: 8px;
 }
 
-.label-optional {
+:global(.label-secondary) {
+  font-size: 16px;
+  color: $CodGray;
+  margin-bottom: 6px;
+}
+
+:global(.label-optional) {
   font-size: 14px;
   font-weight: normal;
 }
