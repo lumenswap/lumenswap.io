@@ -47,15 +47,17 @@ const Auction = () => {
         </div>
         {/* info */}
         <div className={classNames(styles.card, styles['card-info'])}>
-          {info.map((item, index) => (
-            <div className={classNames('col-lg-3 col-md-4 col-sm-4 col-4 px-0', styles['container-info'])} key={index}>
-              <div className={styles.block}>
-                <div className={styles['title-info']}>{item.title}</div>
-                <div className={styles['number-info']}>{item.number} <span>{item.token}</span></div>
-                <div className={styles['value-info']}>{item.value}</div>
+          <div className="row w-100">
+            {info.map((item, index) => (
+              <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])} key={index}>
+                <div className={styles.block}>
+                  <div className={styles['title-info']}>{item.title}</div>
+                  <div className={styles['number-info']}>{item.number} <span>{item.token}</span></div>
+                  <div className={styles['value-info']}>{item.value}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         {/* chart */}
         <div className={classNames(styles.card, styles['card-chart'])}>

@@ -72,8 +72,8 @@ input[type=number] {
 }
 
 @media (max-width: $md) {
-  .layout-inside {
-    padding-right: 25px;
-    padding-left: 25px;
+  .layout-inside, .layout {
+    padding-right: 0;
+    padding-left: 0;
   }
 }

@@ -99,4 +99,17 @@
   }
 }
 
+@media (max-width: $md) {
+  .container-info {
+    border-right: 1px solid transparent !important;
+    justify-content: flex-start !important;
+    min-height: 90px;
+  }
+
+  .container-info:not(:last-child) {
+    border-bottom: 1px solid $SecondaryAthensGray;
+    margin-bottom: 10px;
+  }
+}
+
 

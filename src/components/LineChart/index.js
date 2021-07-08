@@ -55,7 +55,7 @@ const options = {
 
 const LineChart = () => (
   <div className="row align-items-end">
-    <div className="col-xl-11 col-lg-10 col-md-10 col-sm-9 col-9 pr-0">
+    <div className="col-xl-11 col-lg-10 col-md-10 col-sm-9 col-12 pr-sm-0 pr-3">
       <div className={classNames(styles.label, 'mb-1')}>Amount(LSP)</div>
       <Line
         type="line"
@@ -65,8 +65,8 @@ const LineChart = () => (
         options={options}
       />
     </div>
-    <div className="col-xl-1 ol-lg-2 col-md-2 col-sm-3 col-3 mb-3">
-      <div className={styles.label}>Price(XLM)</div>
+    <div className="col-xl-1 ol-lg-2 col-md-2 col-sm-3 col-12 mb-3 text-sm-left text-right">
+      <div className={classNames(styles.label, 'mr-sm-0 mr-2')}>Price(XLM)</div>
     </div>
   </div>
 );
