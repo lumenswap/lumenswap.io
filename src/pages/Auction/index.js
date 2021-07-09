@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-
 import Header from 'components/Header';
 import Button from 'components/Button';
 import LineChart from 'components/LineChart';
 import ModalDialog from 'components/ModalDialog';
 import SendBid from 'blocks/SendBid';
+import { useSelector } from 'react-redux';
+import { openConnectModal } from 'actions/modal';
 import BidsSection from './BidsSection';
 import styles from './styles.module.scss';
 
@@ -21,6 +22,8 @@ const info = [
 
 const Auction = () => {
   const [show, setShow] = useState(false);
+  const isLogged = useSelector((state) => state.user.logged);
+
   return (
     <div className="container-fluid pb-5">
       <Header />
@@ -38,10 +41,16 @@ const Auction = () => {
               variant="primary"
               content="Send Bid"
               className={classNames(styles.btn, 'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')}
-              onClick={() => setShow(true)}
+              onClick={() => {
+                if (!isLogged) {
+                  openConnectModal();
+                } else {
+                  setShow(true);
+                }
+              }}
             />
             <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid">
-              <SendBid />
+              <SendBid setShow={setShow} />
             </ModalDialog>
           </div>
         </div>
