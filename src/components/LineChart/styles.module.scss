@@ -1,14 +1,26 @@
 @import "styles/vars";
 
-.label {
-  font-size: 14px;
-  color: $CodGray;
-
-  @media(max-width: $lg) {
-    font-size: 12px;
+.echart {
+  :global(.echarts-for-react) {
+    height: 447px !important;
   }
+}
 
-  @media(max-width: $md) {
-    font-size: 10px;
+.tooltip {
+  color: $CodGray;
+  font-size: 13px;
+  font-family: "SofiaPro", sans-serif !important;
+
+  span {
+    color: $BlueRibbon;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: $lg) {
+  .echart {
+    :global(.echarts-for-react) {
+      height: auto !important;
+    }
   }
 }

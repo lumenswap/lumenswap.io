@@ -1,72 +1,120 @@
-import classNames from 'classnames';
-import { Line } from 'react-chartjs-2';
+import ReactECharts from 'echarts-for-react';
 
 import styles from './styles.module.scss';
 
-const data = {
-  labels: ['0.0', '0.01', '0.02', '0.03', '0.04', '0.05', '0.06'],
-  datasets: [{
-    data: [8000, 6000, 5000, 4000, 3000, 2000, 1000],
-    fill: true,
-    borderColor: '#0e41f5',
-    backgroundColor: 'rgba(227, 233, 255, 0.5)',
-    borderWidth: 1,
-    pointBorderWidth: 0,
-    pointHoverRadius: 0,
-    pointHoverBorderWidth: 0,
-  }],
-};
-
 const lineColor = '#e3e9ff';
+const textColor = '#656872';
 
-const options = {
-  responsive: true,
-  interaction: {
-    intersect: false,
-    axis: 'x',
+const convertor = (value) => `${value / 1000}k`;
+
+const tooltipFormatter = (values) => `<div class="${styles.tooltip}">
+    LSP-XLM <br/>
+    BID PRICE: <span>${values[0].value[0]}</span> XLM <br/>
+    VOLUME: <span>${values[0].value[1]}</span> LSP
+  </div>`;
+
+const option = {
+  tooltip: {
+    trigger: 'axis',
+    formatter: (params) => tooltipFormatter(params),
   },
-  plugins: {
-    legend: false,
+  grid: {
+    left: '20px',
+    right: '87px',
+    bottom: '3%',
+    containLabel: true,
   },
-  scales: {
-    x: {
-      grid: {
-        borderColor: lineColor,
+  xAxis: {
+    type: 'value',
+    name: 'Price(XLM)',
+    nameTextStyle: {
+      color: '#1d1d1d',
+      fontSize: '14',
+      fontFamily: '"SofiaPro", sans-serif',
+    },
+    axisLabel: {
+      color: textColor,
+      fontSize: '14',
+      fontFamily: '"SofiaPro", sans-serif',
+    },
+    axisLine: {
+      lineStyle: {
         color: lineColor,
       },
-      title: {
-        display: false,
-      },
     },
-    y: {
-      grid: {
-        borderColor: lineColor,
+    axisTick: {
+      lineStyle: {
         color: lineColor,
       },
-      ticks: {
-        callback(value) {
-          return `${value / 1000}k`;
-        },
+    },
+    splitLine: {
+      lineStyle: {
+        color: lineColor,
       },
     },
   },
-  stepped: true,
+  yAxis: {
+    type: 'value',
+    name: 'Amount(LSP)',
+    interval: 1000,
+    min: 1000,
+    max: 9000,
+    nameTextStyle: {
+      color: '#1d1d1d',
+      fontSize: '14',
+      fontFamily: '"SofiaPro", sans-serif',
+      padding: [0, 0, 10, 0],
+    },
+    axisLabel: {
+      color: textColor,
+      fontSize: '14',
+      fontFamily: '"SofiaPro", sans-serif',
+      formatter: (value) => convertor(value),
+    },
+    axisLine: {
+      lineStyle: {
+        color: lineColor,
+      },
+    },
+    splitLine: {
+      lineStyle: {
+        color: lineColor,
+      },
+    },
+  },
+  series: [
+    {
+      name: 'Step LSP',
+      type: 'line',
+      step: 'start',
+      symbol: 'none',
+      data: [
+        [0.0, 8000], [0.01, 7000], [0.02, 6000], [0.03, 5000],
+        [0.04, 4000], [0.05, 3000], [0.06, 2000], [0.07, 1000],
+        [0.07, 500],
+      ],
+      legendHoverLink: false,
+      areaStyle: {
+        color: '#0E41F3',
+        opacity: 0.09,
+      },
+      lineStyle: {
+        color: '#0e41f5',
+      },
+    },
+  ],
 };
 
 const LineChart = () => (
-  <div className="row align-items-end">
-    <div className="col-xl-11 col-lg-10 col-md-10 col-sm-9 col-12 pr-sm-0 pr-3">
-      <div className={classNames(styles.label, 'mb-1')}>Amount(LSP)</div>
-      <Line
-        type="line"
-        width={100}
-        height={50}
-        data={data}
-        options={options}
-      />
-    </div>
-    <div className="col-xl-1 ol-lg-2 col-md-2 col-sm-3 col-12 mb-3 text-sm-left text-right">
-      <div className={classNames(styles.label, 'mr-sm-0 mr-2')}>Price(XLM)</div>
+  <div className="row">
+    <div className="col-12">
+      <div className={styles.echart}>
+        <ReactECharts
+          option={option}
+          notMerge
+          lazyUpdate
+        />
+      </div>
     </div>
   </div>
 );
