@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+// import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import BN from 'helpers/BN';
 import styles from '../styles.module.scss';
@@ -20,15 +20,10 @@ const InputElement = ({
 
       const number = new BN(e.target.value);
       if (!number.isNaN()) {
-        let toChange = e.target.value;
-        if (toChange[toChange.length - 1] !== '.') {
-          toChange = new BigNumber(toChange).toString();
-        }
-
-        onChange(toChange);
+        onChange(e.target.value);
         onChangeInput(e.target.value);
       } else if (e.target.value === '') {
-        onChange(0);
+        onChange('');
         onChangeInput(0);
       }
     }}

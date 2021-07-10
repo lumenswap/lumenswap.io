@@ -27,7 +27,7 @@ async function goNextAndSave(func, arr) {
       .filter((i) => {
         // return true;
         const price = new BN(i.amount).dividedBy(new BN(i.amount).times(i.price));
-        return price.isGreaterThanOrEqualTo('0.001');
+        return price.isGreaterThanOrEqualTo('0.002');
       })
       .map((i) => ({
         address: i.seller,

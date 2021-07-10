@@ -67,6 +67,11 @@ const Auction = () => {
     totalXLM = numeral(sevenDigit(aggData.totalXLM)).format('0,0.[00000]');
     totalBids = numeral(aggData.totalBids).format('0,0');
     latestPrice = numeral(sevenDigit(aggData.latestBid.lspPrice)).format('0,0.[00000]');
+  } else {
+    totalLSP = '-';
+    totalXLM = '-';
+    totalBids = '-';
+    latestPrice = '-';
   }
 
   return (
