@@ -15,6 +15,7 @@
     "bootstrap": "^4.6.0",
     "chart.js": "^3.4.1",
     "classnames": "^2.2.6",
+    "coingecko-api": "^1.0.10",
     "lightweight-charts": "^3.3.0",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",

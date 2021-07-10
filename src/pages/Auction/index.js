@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import sevenDigit from 'helpers/sevenDigit';
 import numeral from 'numeral';
+import CoinGecko from 'coingecko-api';
+import BN from 'helpers/BN';
 import BidsSection from './BidsSection';
 import styles from './styles.module.scss';
 import aggregateLSPOffer from './aggregation';
@@ -22,7 +24,7 @@ function InfoOfBid({
         <div className={styles.block}>
           <div className={styles['title-info']}>Latest bid price</div>
           <div className={styles['number-info']}>{latestPrice} <span>XLM</span></div>
-          <div className={styles['value-info']}>${xlmPrice}</div>
+          <div className={styles['value-info']}>${numeral(new BN(latestPrice).times(xlmPrice).toString()).format('0,0.[0000]')}</div>
         </div>
       </div>
       <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
@@ -46,11 +48,19 @@ const Auction = () => {
   const [show, setShow] = useState(false);
   const isLogged = useSelector((state) => state.user.logged);
   const [aggData, setAggData] = useState(null);
+  const [xlmPrice, setXlmPrice] = useState(null);
 
   useEffect(() => {
     async function load() {
-      const res = await aggregateLSPOffer();
-      setAggData(res);
+      try {
+        const res = await aggregateLSPOffer();
+        const CoinGeckoClient = new CoinGecko();
+        const coinPrice = await CoinGeckoClient.coins.fetch('stellar');
+        setXlmPrice(coinPrice.data.market_data.current_price.usd);
+        setAggData(res);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     load();
@@ -60,7 +70,6 @@ const Auction = () => {
   let totalLSP = 0;
   let totalXLM = 0;
   let totalBids = 0;
-  const xlmPrice = 0;
 
   if (aggData) {
     totalLSP = numeral(sevenDigit(aggData.totalLSP)).format('0,0.[00000]');
