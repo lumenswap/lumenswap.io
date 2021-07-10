@@ -1,3 +1,4 @@
+// import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import BN from 'helpers/BN';
 import styles from '../styles.module.scss';
@@ -5,7 +6,7 @@ import styles from '../styles.module.scss';
 const InputElement = ({
   type, value, height, fontSize, disabled, placeholder,
   input, autoFocus, onChange,
-  onChangeInput,
+  onChangeInput = () => {},
 }) => (
   <input
     type={type}
@@ -22,7 +23,7 @@ const InputElement = ({
         onChange(e.target.value);
         onChangeInput(e.target.value);
       } else if (e.target.value === '') {
-        onChange(0);
+        onChange('');
         onChangeInput(0);
       }
     }}

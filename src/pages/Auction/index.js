@@ -1,26 +1,88 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames';
-
 import Header from 'components/Header';
 import Button from 'components/Button';
 import LineChart from 'components/LineChart';
 import ModalDialog from 'components/ModalDialog';
 import SendBid from 'blocks/SendBid';
+import { useSelector } from 'react-redux';
+import { openConnectModal } from 'actions/modal';
+import sevenDigit from 'helpers/sevenDigit';
+import numeral from 'numeral';
+import CoinGecko from 'coingecko-api';
+import BN from 'helpers/BN';
 import BidsSection from './BidsSection';
 import styles from './styles.module.scss';
+import aggregateLSPOffer from './aggregation';
 
-const info = [
-  {
-    title: 'Latest bid price', number: '0.001', token: 'XLM', value: '$0.012',
-  },
-  {
-    title: 'Total amount of bids', number: '1,000,000', token: 'LSP', value: '2000 XLM',
-  },
-  { title: 'Total number of bids', number: '1,000,000' },
-];
+function InfoOfBid({
+  latestPrice, totalLSP, totalXLM, totalBids, xlmPrice,
+}) {
+  return (
+    <div className="row w-100">
+      <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
+        <div className={styles.block}>
+          <div className={styles['title-info']}>Latest bid price</div>
+          <div className={styles['number-info']}>{latestPrice} <span>XLM</span></div>
+          <div className={styles['value-info']}>${numeral(new BN(latestPrice).times(xlmPrice).toString()).format('0,0.[0000]')}</div>
+        </div>
+      </div>
+      <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
+        <div className={styles.block}>
+          <div className={styles['title-info']}>Total amount of bids</div>
+          <div className={styles['number-info']}>{totalLSP} <span>LSP</span></div>
+          <div className={styles['value-info']}>{totalXLM} XLM</div>
+        </div>
+      </div>
+      <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
+        <div className={styles.block}>
+          <div className={styles['title-info']}>Total number of bids</div>
+          <div className={styles['number-info']}>{totalBids}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const Auction = () => {
   const [show, setShow] = useState(false);
+  const isLogged = useSelector((state) => state.user.logged);
+  const [aggData, setAggData] = useState(null);
+  const [xlmPrice, setXlmPrice] = useState(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await aggregateLSPOffer();
+        const CoinGeckoClient = new CoinGecko();
+        const coinPrice = await CoinGeckoClient.coins.fetch('stellar');
+        setXlmPrice(coinPrice.data.market_data.current_price.usd);
+        setAggData(res);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    load();
+  }, []);
+
+  let latestPrice = 0;
+  let totalLSP = 0;
+  let totalXLM = 0;
+  let totalBids = 0;
+
+  if (aggData) {
+    totalLSP = numeral(sevenDigit(aggData.totalLSP)).format('0,0.[00000]');
+    totalXLM = numeral(sevenDigit(aggData.totalXLM)).format('0,0.[00000]');
+    totalBids = numeral(aggData.totalBids).format('0,0');
+    latestPrice = numeral(sevenDigit(aggData.latestBid.lspPrice)).format('0,0.[00000]');
+  } else {
+    totalLSP = '-';
+    totalXLM = '-';
+    totalBids = '-';
+    latestPrice = '-';
+  }
+
   return (
     <div className="container-fluid pb-5">
       <Header />
@@ -38,30 +100,32 @@ const Auction = () => {
               variant="primary"
               content="Send Bid"
               className={classNames(styles.btn, 'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')}
-              onClick={() => setShow(true)}
+              onClick={() => {
+                if (!isLogged) {
+                  openConnectModal();
+                } else {
+                  setShow(true);
+                }
+              }}
             />
             <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid">
-              <SendBid />
+              <SendBid setShow={setShow} />
             </ModalDialog>
           </div>
         </div>
         {/* info */}
         <div className={classNames(styles.card, styles['card-info'])}>
-          <div className="row w-100">
-            {info.map((item, index) => (
-              <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])} key={index}>
-                <div className={styles.block}>
-                  <div className={styles['title-info']}>{item.title}</div>
-                  <div className={styles['number-info']}>{item.number} <span>{item.token}</span></div>
-                  <div className={styles['value-info']}>{item.value}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <InfoOfBid
+            totalBids={totalBids}
+            totalLSP={totalLSP}
+            latestPrice={latestPrice}
+            totalXLM={totalXLM}
+            xlmPrice={xlmPrice}
+          />
         </div>
         {/* chart */}
         <div className={classNames(styles.card, styles['card-chart'])}>
-          <LineChart />
+          <LineChart data={aggData} />
         </div>
         {/* bids */}
         <div className={classNames(styles.card, styles['card-tabs'])}>
