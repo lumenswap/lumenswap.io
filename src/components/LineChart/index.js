@@ -28,7 +28,7 @@ const LineChart = ({ data }) => {
       containLabel: true,
     },
     xAxis: {
-      type: 'value',
+      type: 'category',
       name: 'Price(XLM)',
       nameTextStyle: {
         color: '#1d1d1d',
@@ -91,7 +91,7 @@ const LineChart = ({ data }) => {
         type: 'line',
         step: 'start',
         symbol: 'none',
-        data: [],
+        data: CHART_KEYS.map((i) => [i, 0]),
         legendHoverLink: false,
         areaStyle: {
           color: '#0E41F3',
@@ -117,6 +117,7 @@ const LineChart = ({ data }) => {
     );
   }
 
+  // option.series[0].data = CHART_KEYS.map((chartKey) => data[chartKey].toFixed(0));
   option.series[0].data = CHART_KEYS.map((chartKey) => [chartKey, data[chartKey].toFixed(0)]);
 
   return (
