@@ -18,6 +18,20 @@ import styles from '../styles.module.scss';
 import fetchOfferAuction from './offerAuction';
 
 const BidsSection = () => {
+  const [bids, setBids] = useState(null);
+  const isLogged = useSelector((state) => state.user.logged);
+  const user = useSelector((state) => state.user);
+  const [tab, setTab] = useState('latest');
+
+  useEffect(() => {
+    async function load() {
+      const res = await fetchOfferAuction();
+      setBids(res);
+    }
+
+    load();
+  }, []);
+
   const tableHeader = ['Account', 'Date', 'Amount', 'Price', 'Total'];
   const tableRows = (rows) => rows.map((row) => {
     const time = new Date(row.time);
@@ -36,23 +50,10 @@ const BidsSection = () => {
         <td>{numeral(sevenDigit(row.lspAmount.toFixed(7))).format('0,0.[0000000]')} LSP</td>
         <td>{numeral(sevenDigit(row.lspPrice.toFixed(7))).format('0,0.[0000000]')} XLM</td>
         <td>{numeral(sevenDigit(row.xlmAmount.toFixed(7))).format('0,0.[0000000]')} XLM</td>
+        {(tab === 'mine') && <td>cancel</td>}
       </tr>
     );
   });
-
-  const [bids, setBids] = useState(null);
-  const isLogged = useSelector((state) => state.user.logged);
-  const user = useSelector((state) => state.user);
-  const [tab, setTab] = useState('latest');
-
-  useEffect(() => {
-    async function load() {
-      const res = await fetchOfferAuction();
-      setBids(res);
-    }
-
-    load();
-  }, []);
 
   if (!bids) {
     return (
@@ -80,6 +81,7 @@ const BidsSection = () => {
   ];
 
   if (isLogged) {
+    tableHeader.push('Action');
     historyTab = [
       ...historyTab,
       {
