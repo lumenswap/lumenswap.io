@@ -44,55 +44,35 @@ async function goNextAndSave(func, arr) {
   return Promise.resolve(res);
 }
 
+export const CHART_KEYS = ['0', '0.01', '0.02', '0.03', '0.04', '0.05', '0.06', '0.07', '0.08'];
+
 export default async function aggregateLSPOffer() {
   const allData = await goNextAndSave(fetchOffers, []);
 
   const res = {
-    0: new BN(0),
-    0.01: new BN(0),
-    0.02: new BN(0),
-    0.03: new BN(0),
-    0.04: new BN(0),
-    0.05: new BN(0),
-    0.06: new BN(0),
     totalXLM: new BN(0),
     totalLSP: new BN(0),
   };
+
+  for (const chartKey of CHART_KEYS) {
+    res[chartKey] = new BN(0);
+  }
 
   for (const item of allData) {
     res.totalLSP = res.totalLSP.plus(item.lspAmount);
     res.totalXLM = res.totalXLM.plus(item.xlmAmount);
 
-    let key = '0';
-    if (item.lspPrice.isLessThan(0.01)) {
-      key = '0';
-    } else if (item.lspPrice.isLessThan(0.02)) {
-      key = '0.01';
-    } else if (item.lspPrice.isLessThan(0.03)) {
-      key = '0.02';
-    } else if (item.lspPrice.isLessThan(0.04)) {
-      key = '0.03';
-    } else if (item.lspPrice.isLessThan(0.05)) {
-      key = '0.04';
-    } else if (item.lspPrice.isLessThan(0.06)) {
-      key = '0.05';
-    } else {
-      key = '0.06';
-    }
-
-    res[key] = res[key].plus(item.lspAmount);
+    CHART_KEYS.forEach((chartKey) => {
+      if (item.lspPrice.isGreaterThanOrEqualTo(chartKey)) {
+        res[chartKey] = res[chartKey].plus(item.lspAmount);
+      }
+    });
   }
 
   return {
-    0: res[0].toString(),
-    0.01: res['0.01'].toString(),
-    0.02: res['0.02'].toString(),
-    0.03: res['0.03'].toString(),
-    0.04: res['0.04'].toString(),
-    0.05: res['0.05'].toString(),
-    0.06: res['0.06'].toString(),
-    totalXLM: res.totalXLM.toString(),
-    totalLSP: res.totalLSP.toString(),
+    ...res,
+    totalXLM: res.totalXLM,
+    totalLSP: res.totalLSP,
     totalBids: allData.length,
     latestBid: allData[0],
   };

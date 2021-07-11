@@ -62,7 +62,7 @@ const BidsSection = () => {
           display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300,
         }}
       >
-        <Loading size={100} />
+        <Loading size={50} />
       </div>
     );
   }

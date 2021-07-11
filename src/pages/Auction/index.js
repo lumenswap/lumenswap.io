@@ -72,8 +72,8 @@ const Auction = () => {
   let totalBids = 0;
 
   if (aggData) {
-    totalLSP = numeral(sevenDigit(aggData.totalLSP)).format('0,0.[00000]');
-    totalXLM = numeral(sevenDigit(aggData.totalXLM)).format('0,0.[00000]');
+    totalLSP = numeral(sevenDigit(aggData.totalLSP.toString())).format('0,0.[00000]');
+    totalXLM = numeral(sevenDigit(aggData.totalXLM.toString())).format('0,0.[00000]');
     totalBids = numeral(aggData.totalBids).format('0,0');
     latestPrice = numeral(sevenDigit(aggData.latestBid.lspPrice)).format('0,0.[00000]');
   } else {
