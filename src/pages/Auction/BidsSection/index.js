@@ -76,23 +76,28 @@ const BidsSection = () => {
         <td>{numeral(sevenDigit(row.lspPrice.toFixed(7))).format('0,0.[0000000]')} XLM</td>
         <td>{numeral(sevenDigit(row.xlmAmount.toFixed(7))).format('0,0.[0000000]')} XLM</td>
         {(tab === 'mine') && (
-        <td onClick={() => {
-          function func() {
-            const address = store.getState().user.detail.address;
-            return generateManageBuyTRX(
-              address,
-              getAssetDetails(LSP),
-              getAssetDetails(XLM),
-              '0',
-              row.price,
-              row.id,
-            );
-          }
+        <td
+          onClick={() => {
+            function func() {
+              const address = store.getState().user.detail.address;
+              return generateManageBuyTRX(
+                address,
+                getAssetDetails(LSP),
+                getAssetDetails(XLM),
+                '0',
+                row.price,
+                row.id,
+              );
+            }
 
-          showGenerateTrx(func)
-            .then(showSignResponse)
-            .catch(console.error);
-        }}
+            showGenerateTrx(func)
+              .then(showSignResponse)
+              .catch(console.error);
+          }}
+          style={{
+            color: '#db2f2f',
+            cursor: 'pointer',
+          }}
         >
           Cancel
         </td>
