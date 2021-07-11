@@ -187,6 +187,10 @@ const BidsSection = () => {
   }
 
   function renderCondition() {
+    if (tab === 'latest') {
+      return null;
+    }
+
     if (!isLogged) {
       return (
         <div style={{
