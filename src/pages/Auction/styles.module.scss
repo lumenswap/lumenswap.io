@@ -39,6 +39,7 @@
 .card-chart {
   margin-top: 24px;
   padding: 21px 0 19px 6px;
+  overflow: hidden;
 
   canvas {
     width: 100% !important;
