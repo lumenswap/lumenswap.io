@@ -53,6 +53,22 @@
   margin-top: 2px;
 }
 
+.lsp {
+  width: 77px;
+  height: 40px;
+  margin-right: 16px;
+  font-size: 16px;
+  font-weight: bold !important;
+  border-radius: 4px !important;
+  margin-left: auto;
+  background-color: white;
+  border: 1px solid $BlueRibbon;
+  color: $BlueRibbon;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: $sm) {
   .list > li {
     margin-right: 15px;

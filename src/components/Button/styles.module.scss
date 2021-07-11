@@ -44,6 +44,13 @@
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.05);
 }
 
+.button-primary-outline {
+  background-color: white;
+  color: $BlueRibbon;
+  border: 1px solid $BlueRibbon;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.05);
+}
+
 .button-default {
   background-color: transparent;
   border: 1px solid transparent;
@@ -70,7 +77,6 @@
   border: 1px solid $Limeade;
   color: white;
 }
-
 
 .btn:disabled {
   background-color: $CatskillWhite;
