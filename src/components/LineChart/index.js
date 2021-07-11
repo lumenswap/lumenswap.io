@@ -17,6 +17,7 @@ const option = {
   tooltip: {
     trigger: 'axis',
     formatter: (params) => tooltipFormatter(params),
+    shadowColor: 'rgba(134, 146, 164, 0.2)',
   },
   grid: {
     left: '20px',
