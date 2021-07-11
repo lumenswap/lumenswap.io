@@ -14,7 +14,7 @@ export default async function fetchOfferAuction() {
       getAssetDetails(LSP),
     )
     .order('desc')
-    .limit(10)
+    .limit(20)
     .call();
 
   return res.records
