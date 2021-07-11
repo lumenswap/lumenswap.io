@@ -39,18 +39,31 @@ const BidsSection = () => {
 
   useEffect(() => {
     async function load() {
-      const nres = await fetchOffersOfAccount(user.detail.address, { limit: 200 });
-      const refined = nres.data._embedded.records.filter(
-        (i) => {
-          if (i.selling.asset_type !== 'native') {
-            return false;
-          }
+      if (isLogged) {
+        const res = await fetchOffersOfAccount(user.detail.address, { limit: 200 });
+        const refined = res.data._embedded.records.filter(
+          (i) => {
+            if (i.selling.asset_type !== 'native') {
+              return false;
+            }
 
-          const buyAsset = new StellarSDK.Asset(i.buying.asset_code, i.buying.asset_issuer);
-          return isSameAsset(buyAsset, getAssetDetails(LSP));
-        },
-      );
-      setCountBid(refined.length);
+            const buyAsset = new StellarSDK.Asset(i.buying.asset_code, i.buying.asset_issuer);
+            return isSameAsset(buyAsset, getAssetDetails(LSP));
+          },
+        ).map((i) => ({
+          address: i.seller,
+          xlmAmount: new BN(i.amount),
+          lspAmount: new BN(i.amount).times(i.price),
+          lspPrice: new BN(i.amount).dividedBy(new BN(i.amount).times(i.price)),
+          time: i.last_modified_time,
+          price: i.price,
+          id: i.id,
+        }));
+        if (tab === 'mine') {
+          setBids(refined);
+        }
+        setCountBid(refined.length);
+      }
     }
 
     load();
@@ -142,8 +155,8 @@ const BidsSection = () => {
 
   async function onTabChange(newTab) {
     setBids(null);
+    setTab(newTab);
     if (newTab === 'mine' && isLogged) {
-      setTab('mine');
       const res = await fetchOffersOfAccount(user.detail.address, { limit: 200 });
       const refined = res.data._embedded.records.filter(
         (i) => {
@@ -168,7 +181,6 @@ const BidsSection = () => {
     } else if (newTab === 'mine' && !isLogged) {
       setBids([]);
     } else if (newTab === 'latest') {
-      setTab('latest');
       const res = await fetchOfferAuction();
       setBids(res);
     }
