@@ -28,7 +28,6 @@
     border-bottom: 1px solid $CatskillWhite;
   }
 
-
   thead tr > th {
     border-bottom: none !important;
   }
@@ -51,7 +50,9 @@
 }
 
 .table-scroll {
-   overflow-x: scroll;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: $CatskillWhite transparent;
 }
 
 .table-scroll::-webkit-scrollbar-track {
