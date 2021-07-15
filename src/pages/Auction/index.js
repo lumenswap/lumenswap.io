@@ -1,19 +1,22 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import Header from 'components/Header';
-import Button from 'components/Button';
-import LineChart from 'components/LineChart';
-import ModalDialog from 'components/ModalDialog';
-import SendBid from 'blocks/SendBid';
-import { useSelector } from 'react-redux';
-import { openConnectModal } from 'actions/modal';
-import sevenDigit from 'helpers/sevenDigit';
 import numeral from 'numeral';
 import CoinGecko from 'coingecko-api';
+// import { useSelector } from 'react-redux';
+
+import Header from 'components/Header';
+import LineChart from 'components/LineChart';
+import { ReactComponent as AngleRight } from 'assets/images/angle-right.svg';
+// import Button from 'components/Button';
+// import ModalDialog from 'components/ModalDialog';
+// import SendBid from 'blocks/SendBid';
+// import { openConnectModal } from 'actions/modal';
+import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
 import BidsSection from './BidsSection';
-import styles from './styles.module.scss';
 import aggregateLSPOffer from './aggregation';
+
+import styles from './styles.module.scss';
 
 function InfoOfBid({
   latestPrice, totalLSP, totalXLM, totalBids, xlmPrice,
@@ -45,8 +48,8 @@ function InfoOfBid({
 }
 
 const Auction = () => {
-  const [show, setShow] = useState(false);
-  const isLogged = useSelector((state) => state.user.logged);
+  // const [show, setShow] = useState(false);
+  // const isLogged = useSelector((state) => state.user.logged);
   const [aggData, setAggData] = useState(null);
   const [xlmPrice, setXlmPrice] = useState(null);
 
@@ -90,27 +93,29 @@ const Auction = () => {
         <h1 className={styles.title}>LSP Auction stats</h1>
         <div className="row d-flex align-items-start justify-content-between">
           <div className="col-xl-8 col-lg-9 col-md-10 col-sm-12 col-12">
-            <p className={styles.desc}>An online learning portal that will take you from a complete
-              beginner to an expert in blockchain knowledge and cryptocurrency. With a focus on
-              Stellar blockchain, you will learn everything there is to know.
+            <p className={styles.desc}>
+              Welcome to the Lumenswap auction portal. Here you can view statistics of
+              the LSP auction and participate in it.
             </p>
+            <a href="/" className={styles.link}>Learn more<AngleRight /></a>
           </div>
           <div className="col-xl-4 col-lg-3 col-md-2 col-sm-12 col-12">
-            <Button
-              variant="primary"
-              content="Send Bid"
-              className={classNames(styles.btn, 'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')}
-              onClick={() => {
-                if (!isLogged) {
-                  openConnectModal();
-                } else {
-                  setShow(true);
-                }
-              }}
-            />
-            <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid">
-              <SendBid setShow={setShow} />
-            </ModalDialog>
+            {/* <Button */}
+            {/*  variant="primary" */}
+            {/*  content="Send Bid" */}
+            {/*  className={classNames(styles.btn,
+             'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')} */}
+            {/*  onClick={() => { */}
+            {/*    if (!isLogged) { */}
+            {/*      openConnectModal(); */}
+            {/*    } else { */}
+            {/*      setShow(true); */}
+            {/*    } */}
+            {/*  }} */}
+            {/* /> */}
+            {/* <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid"> */}
+            {/*  <SendBid setShow={setShow} /> */}
+            {/* </ModalDialog> */}
           </div>
         </div>
         {/* info */}
