@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import numeral from 'numeral';
 import CoinGecko from 'coingecko-api';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Header from 'components/Header';
 import LineChart from 'components/LineChart';
 import { ReactComponent as AngleRight } from 'assets/images/angle-right.svg';
-// import Button from 'components/Button';
-// import ModalDialog from 'components/ModalDialog';
-// import SendBid from 'blocks/SendBid';
-// import { openConnectModal } from 'actions/modal';
+import Button from 'components/Button';
+import ModalDialog from 'components/ModalDialog';
+import SendBid from 'blocks/SendBid';
+import { openConnectModal } from 'actions/modal';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
 import BidsSection from './BidsSection';
@@ -48,8 +48,8 @@ function InfoOfBid({
 }
 
 const Auction = () => {
-  // const [show, setShow] = useState(false);
-  // const isLogged = useSelector((state) => state.user.logged);
+  const [show, setShow] = useState(false);
+  const isLogged = useSelector((state) => state.user.logged);
   const [aggData, setAggData] = useState(null);
   const [xlmPrice, setXlmPrice] = useState(null);
 
@@ -100,22 +100,21 @@ const Auction = () => {
             <a href="/" className={styles.link}>Learn more<AngleRight /></a>
           </div>
           <div className="col-xl-4 col-lg-3 col-md-2 col-sm-12 col-12">
-            {/* <Button */}
-            {/*  variant="primary" */}
-            {/*  content="Send Bid" */}
-            {/*  className={classNames(styles.btn,
-             'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')} */}
-            {/*  onClick={() => { */}
-            {/*    if (!isLogged) { */}
-            {/*      openConnectModal(); */}
-            {/*    } else { */}
-            {/*      setShow(true); */}
-            {/*    } */}
-            {/*  }} */}
-            {/* /> */}
-            {/* <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid"> */}
-            {/*  <SendBid setShow={setShow} /> */}
-            {/* </ModalDialog> */}
+            <Button
+              variant="primary"
+              content="Send Bid"
+              className={classNames(styles.btn, 'ml-md-auto ml-sm-0 ml-0 mt-md-0 mt-sm-4 mt-4')}
+              onClick={() => {
+                if (!isLogged) {
+                  openConnectModal();
+                } else {
+                  setShow(true);
+                }
+              }}
+            />
+            <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid">
+              <SendBid setShow={setShow} />
+            </ModalDialog>
           </div>
         </div>
         {/* info */}
