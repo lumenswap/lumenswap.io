@@ -90,7 +90,7 @@ const Auction = () => {
     <div className="container-fluid pb-5">
       <Header />
       <div className="layout-inside mt-4 main">
-        <h1 className={styles.title}>LSP Auction stats</h1>
+        <h1 className={styles.title}>LSP Auction</h1>
         <div className="row d-flex align-items-start justify-content-between">
           <div className="col-xl-8 col-lg-9 col-md-10 col-sm-12 col-12">
             <p className={styles.desc}>
