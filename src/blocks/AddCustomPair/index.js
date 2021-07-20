@@ -129,7 +129,7 @@ const AddCustomPair = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group mb-3">
-        <label htmlFor="code" className="label-primary">Base asset code</label>
+        <label htmlFor="code" className="label-secondary">Base asset code</label>
         <Input
           type="text"
           placeholder="USD"
@@ -146,7 +146,7 @@ const AddCustomPair = () => {
         />
       </div>
       <div className="form-group mb-3">
-        <label htmlFor="code" className="label-primary">Base asset issuer</label>
+        <label htmlFor="code" className="label-secondary">Base asset issuer</label>
         <Input
           type="text"
           placeholder="G..."
@@ -177,7 +177,7 @@ const AddCustomPair = () => {
         </div>
       </div>
       <div className="form-group mb-3">
-        <label htmlFor="code" className="label-primary">Counter asset code</label>
+        <label htmlFor="code" className="label-secondary">Counter asset code</label>
         <Input
           type="text"
           placeholder="USD"
@@ -191,7 +191,7 @@ const AddCustomPair = () => {
         />
       </div>
       <div className="form-group mb-3">
-        <label htmlFor="code" className="label-primary">Counter asset issuer</label>
+        <label htmlFor="code" className="label-secondary">Counter asset issuer</label>
         <Input
           type="text"
           placeholder="G..."

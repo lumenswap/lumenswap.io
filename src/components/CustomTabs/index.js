@@ -8,7 +8,7 @@ const CustomTabs = ({
     <Tabs defaultActiveKey={activeTabId} onSelect={onChange}>
       {tabs.map((tab, index) => (
         <Tab eventKey={tab.id} title={tab.title} key={index}>
-          <TabContent />
+          {tab.content ? tab.content : <TabContent />}
         </Tab>
       ))}
     </Tabs>

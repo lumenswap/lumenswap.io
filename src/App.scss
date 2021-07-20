@@ -39,6 +39,11 @@ input[type=number] {
   padding-left: 25px;
 }
 
+.layout-inside {
+  padding-right: 82px;
+  padding-left: 82px;
+}
+
 .color-buy {
   color: $Limeade !important;
 }
@@ -57,4 +62,18 @@ input[type=number] {
 
 .color-gray {
   color: $RollingStone !important;
+}
+
+@media (max-width: $lg) {
+  .layout-inside {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+
+@media (max-width: $md) {
+  .layout-inside, .layout {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }

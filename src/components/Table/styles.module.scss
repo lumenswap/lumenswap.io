@@ -2,6 +2,7 @@
 
 .table {
   margin-bottom: 0 !important;
+  border-collapse: initial;
 
   thead th {
     border: none;
@@ -14,8 +15,8 @@
     padding-left: 0;
   }
 
-  tbody td {
-    border-top: none;
+  tbody tr > td {
+    border-top: 1px solid transparent;
     white-space: nowrap;
     color: $CodGray;
     font-weight: 400;
@@ -23,19 +24,22 @@
     padding: 10px 10px 10px 0;
   }
 
-  tbody tr {
+  tbody tr:not(:last-child) td {
     border-bottom: 1px solid $CatskillWhite;
   }
 
-
-  thead tr th {
+  thead tr > th {
     border-bottom: none !important;
   }
 
-  td a,
-  td a:hover {
+  td a {
     text-decoration: none !important;
-    //color: @PersianBlue;
+    color: $BlueRibbon;
+    transition: ease-in;
+  }
+
+  td a:hover {
+    color: $ToreaBay;
   }
 }
 
@@ -46,7 +50,9 @@
 }
 
 .table-scroll {
-  // overflow-x: scroll;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: $CatskillWhite transparent;
 }
 
 .table-scroll::-webkit-scrollbar-track {
