@@ -94,8 +94,7 @@ const Auction = () => {
         <div className="row d-flex align-items-start justify-content-between">
           <div className="col-xl-8 col-lg-9 col-md-10 col-sm-12 col-12">
             <p className={styles.desc}>
-              Welcome to the Lumenswap auction portal. Here you can view statistics of
-              the LSP auction and participate in it.
+              Welcome to the Lumenswap auction portal. Here you can participate in the LSP auction and view essential information/statistics
             </p>
             <a href="/" className={styles.link}>Learn more<AngleRight /></a>
           </div>
