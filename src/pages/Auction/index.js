@@ -96,7 +96,7 @@ const Auction = () => {
             <p className={styles.desc}>
               Welcome to the Lumenswap auction portal. Here you can participate in the LSP auction and view essential information/statistics
             </p>
-            <a href="https://medium.com/lumenswap/lsp-auction-is-live-73761669a3f" className={styles.link}>Learn more<AngleRight /></a>
+            <a href="https://medium.com/lumenswap/lsp-auction-is-live-73761669a3f" target="_blank" className={styles.link}>Learn more<AngleRight /></a>
           </div>
           <div className="col-xl-4 col-lg-3 col-md-2 col-sm-12 col-12">
             <Button
