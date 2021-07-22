@@ -21,13 +21,25 @@ import styles from './styles.module.scss';
 function InfoOfBid({
   latestPrice, totalLSP, totalXLM, totalBids, xlmPrice,
 }) {
+  console.log(
+    'test',
+    numeral(new BN(latestPrice).times(xlmPrice).toString()).format('0,0.[0000]'),
+    new BN(latestPrice).times(xlmPrice).toString(),
+    xlmPrice,
+    latestPrice,
+  );
+  console.log(
+    'hamintorie',
+    numeral(new BN(1000000).times(xlmPrice).toString()).format('0,0.[0000]'),
+  );
+
   return (
     <div className="row w-100">
       <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
         <div className={styles.block}>
           <div className={styles['title-info']}>Latest bid price</div>
           <div className={styles['number-info']}>{latestPrice} <span>XLM</span></div>
-          <div className={styles['value-info']}>${numeral(new BN(latestPrice).times(xlmPrice).toString()).format('0,0.[0000]')}</div>
+          <div className={styles['value-info']}>${numeral(new BN(latestPrice.replace(',', '')).times(xlmPrice).toString()).format('0,0.[0000]')}</div>
         </div>
       </div>
       <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
@@ -96,7 +108,7 @@ const Auction = () => {
             <p className={styles.desc}>
               Welcome to the Lumenswap auction portal. Here you can participate in the LSP auction and view essential information/statistics
             </p>
-            <a href="https://medium.com/lumenswap/lsp-auction-is-live-73761669a3f" target="_blank" className={styles.link}>Learn more<AngleRight /></a>
+            <a href="https://medium.com/lumenswap/lsp-auction-is-live-73761669a3f" target="_blank" className={styles.link} rel="noreferrer">Learn more<AngleRight /></a>
           </div>
           <div className="col-xl-4 col-lg-3 col-md-2 col-sm-12 col-12">
             <Button
