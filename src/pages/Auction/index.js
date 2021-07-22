@@ -21,18 +21,6 @@ import styles from './styles.module.scss';
 function InfoOfBid({
   latestPrice, totalLSP, totalXLM, totalBids, xlmPrice,
 }) {
-  console.log(
-    'test',
-    numeral(new BN(latestPrice).times(xlmPrice).toString()).format('0,0.[0000]'),
-    new BN(latestPrice).times(xlmPrice).toString(),
-    xlmPrice,
-    latestPrice,
-  );
-  console.log(
-    'hamintorie',
-    numeral(new BN(1000000).times(xlmPrice).toString()).format('0,0.[0000]'),
-  );
-
   return (
     <div className="row w-100">
       <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
