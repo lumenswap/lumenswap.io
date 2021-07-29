@@ -23,11 +23,11 @@ const Header = () => {
         <li><Link to="/"><Logo /></Link></li>
         <li><NavLink activeClassName={styles['active-link']} to="/swap">Swap</NavLink></li>
         <li><NavLink activeClassName={styles['active-link']} to="/spot">Spot</NavLink></li>
-        <li>
+        {/* <li>
           <NavLink activeClassName={styles['active-link']} to="/auction">
             <span className="d-flex align-items-center"> LSP Auction <span className={styles['active-status']} /></span>
           </NavLink>
-        </li>
+        </li> */}
         {/* <span className="icon-external" /> */}
       </ul>
       {isLogged && <div className={styles.lsp}>{numeral(sevenDigit(userLSPBalance?.balance || 0)).format('0,0.[0000000]')} LSP</div>}
