@@ -1,0 +1,164 @@
+@import "styles/vars";
+
+.row {
+  margin-right: -4px;
+  margin-left: -4px;
+
+  :global(.c-col) {
+    padding: 0 2px 4px 2px !important;
+  }
+}
+
+.card {
+  border-radius: 2px;
+  background-color: white;
+  height: 100%;
+}
+
+.card-left {
+  padding: 8px 0 6px 0;
+  position: relative;
+  min-height: 300px;
+}
+
+.card-right {
+  padding: 8px 14px 6px 14px;
+  position: relative;
+  min-height: 300px;
+}
+
+.card-detail {
+  padding: 11px 16px 14px 16px;
+}
+
+.trade-container {
+  margin-right: -14px;
+  margin-left: -14px;
+  height: 100%;
+}
+
+.card-table {
+  padding: 16px 24px 8px 14px;
+  position: relative;
+  //margin-bottom: 47px;
+  min-height: 200px;
+}
+
+.centralize-content {
+  height: calc(100% - 61px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.container-checkbox {
+  position: absolute;
+  top: 16px;
+  right: 29px;
+}
+
+.td-outside {
+  margin-left: -20px;
+  position: absolute;
+}
+
+.container-table {
+  margin-left: 63px;
+  margin-top: 12px;
+  position: relative;
+}
+
+.card-select {
+  background-color: white;
+  display: grid;
+  align-items: center;
+}
+
+.select-logo {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid transparent;
+  height: 100%;
+  padding: 14px;
+  font-size: 18px;
+  font-weight: 500;
+  color: $CodGray;
+  min-width: 179px;
+
+  img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    z-index: 1;
+    margin-top: -1px;
+  }
+
+  .second-coin {
+    margin-right: 10px;
+    margin-left: -10px;
+    z-index: 0;
+  }
+
+  span {
+    font-size: 10px;
+    color: $RollingStone;
+    margin-top: 2px;
+    margin-left: auto;
+  }
+}
+
+.card-chart {
+  padding: 8px 0 0 2px;
+  height: auto;
+}
+
+.card-input {
+  padding: 22px 14px 20px 14px;
+}
+
+.button {
+  height: 34px;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.form-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: $CodGray;
+}
+
+.form-value {
+  font-size: 14px;
+  font-weight: 400;
+  color: $RollingStone;
+  margin-top: 4px;
+
+  span {
+    font-size: 12px;
+    margin-right: 4px;
+  }
+}
+
+@media (max-width: $md) {
+  .td-outside {
+    margin-left: 0;
+    position: initial;
+  }
+
+  .container-table {
+    margin-left: 0;
+  }
+
+  .container-checkbox {
+    left: 14px;
+  }
+
+  .card-left, .card-right {
+    max-height: 275px;
+    overflow-y: scroll;
+  }
+}

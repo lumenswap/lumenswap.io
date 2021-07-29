@@ -1,0 +1,72 @@
+@import 'styles/vars';
+
+.table {
+  margin-bottom: 0 !important;
+  border-collapse: initial;
+
+  thead th {
+    border: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: $Manatee;
+    white-space: nowrap;
+    padding-left: 0;
+  }
+
+  tbody tr > td {
+    border-top: 1px solid transparent;
+    white-space: nowrap;
+    color: $CodGray;
+    font-weight: 400;
+    font-size: 12px;
+    padding: 10px 10px 10px 0;
+  }
+
+  tbody tr:not(:last-child) td {
+    border-bottom: 1px solid $CatskillWhite;
+  }
+
+  thead tr > th {
+    border-bottom: none !important;
+  }
+
+  td a {
+    text-decoration: none !important;
+    color: $BlueRibbon;
+    transition: ease-in;
+  }
+
+  td a:hover {
+    color: $ToreaBay;
+  }
+}
+
+.td-status {
+  display: flex;
+  align-items: center;
+  margin-top: -4.5px;
+}
+
+.table-scroll {
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: $CatskillWhite transparent;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.table-scroll::-webkit-scrollbar {
+  height: 6px;
+  background-color: transparent;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: $CatskillWhite;
+  cursor: pointer;
+}

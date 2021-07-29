@@ -1,0 +1,153 @@
+@import 'fonts';
+@import 'vars';
+
+body {
+  background-color: $AthensGray !important;
+}
+
+.main {
+  font-family: 'SofiaPro', sans-serif !important;
+}
+
+.other {
+  font-family: Roboto, sans-serif !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.invisible-scroll::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+.invisible-scroll {
+  scrollbar-width: none;
+}
+
+.layout {
+  padding-right: 25px;
+  padding-left: 25px;
+}
+
+.layout-inside {
+  padding-right: 82px;
+  padding-left: 82px;
+}
+
+.color-buy {
+  color: $Limeade !important;
+}
+
+.background-buy {
+  background-color: $Limeade;
+}
+
+.color-sell {
+  color: $Rose !important;
+}
+
+.background-sell {
+  background-color: $Rose;
+}
+
+.color-gray {
+  color: $RollingStone !important;
+}
+
+.label-primary {
+  font-size: 18px;
+  color: $CodGray;
+  margin-bottom: 8px;
+}
+
+.label-secondary {
+  font-size: 16px;
+  color: $CodGray;
+  margin-bottom: 6px;
+}
+
+.label-optional {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.modal-body {
+  padding: 0 17px !important;
+}
+
+.modal {
+  text-align: center;
+  padding: 0 !important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal-content {
+  border-radius: 8px;
+}
+
+.tooltip-inner {
+  background-color: white !important;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13) !important;
+  border: none !important;
+  color: $CodGray !important;
+  font-size: 13px;
+}
+
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^='top'] .arrow::before {
+  border-top-color: white;
+  display: none;
+}
+
+.arrow {
+  z-index: -1;
+}
+
+.bs-tooltip-top .arrow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  border: 5px solid white;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: $lg) {
+  .layout-inside {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+
+@media (max-width: $md) {
+  .layout-inside,
+  .layout {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "short_name": "Lumenswap",
+  "name": "Lumenswap is a decentralized swap protocol for the Stellar Network that allows you to convert assets on the network using a friendly, minimal interface.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

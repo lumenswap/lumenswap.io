@@ -1,0 +1,26 @@
+@import "styles/vars";
+
+.echart {
+  :global(.echarts-for-react) {
+    height: 447px !important;
+  }
+}
+
+.tooltip {
+  color: $CodGray;
+  font-size: 13px;
+  font-family: "SofiaPro", sans-serif !important;
+
+  span {
+    color: $BlueRibbon;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: $lg) {
+  .echart {
+    :global(.echarts-for-react) {
+      height: auto !important;
+    }
+  }
+}

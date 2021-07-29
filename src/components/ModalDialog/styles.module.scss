@@ -1,0 +1,31 @@
+@import 'styles/vars';
+
+.header {
+  padding: 21px 17px 24px 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  :global(.icon-arrow-left) {
+    cursor: pointer;
+    color: $Bombay;
+    font-size: 20px;
+  }
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.close {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  color: $Bombay;
+  padding: 0;
+  z-index: 100;
+  outline: none;
+}

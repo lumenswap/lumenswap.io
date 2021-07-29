@@ -1,0 +1,46 @@
+@import "styles/vars";
+
+.col {
+  padding-right: 9px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 10px;
+  color: $Manatee;
+}
+
+.value {
+  font-size: 12px;
+  color: $CodGray;
+}
+
+
+.bold {
+  .title {
+    color: $CodGray;
+    font-size: 16px;
+    margin-top: -3.5px;
+  }
+
+  .value {
+    color: $Manatee;
+    margin-top: -5px;
+  }
+}
+
+.link {
+  text-decoration: none !important;
+  display: flex;
+  margin-top: -1px;
+
+  span {
+    font-size: 17px;
+    margin-top: 2px;
+  }
+}
+
+.link:hover {
+  color: $CodGray;
+}
