@@ -137,29 +137,26 @@ const Home = () => {
     setValue('to', { asset, amount: formValues.to.amount });
   }
 
-  const appLoaded = useSelector((state) => state._persist.rehydrated);
-
-  useEffect(() => {
-    const extracted = router.query.slice(1).split('-');
-    const found = userCustomTokens
-      .find((i) => isSameAsset(i, getAssetDetails({ code: extracted[0], issuer: extracted[1] })));
-    if (router.pathname === '/swap' && router.query && !found && appLoaded) {
-      openModalAction({
-        modalProps: { title: 'Add custom asset' },
-        content: <AddAsset changeToAsset={changeToAsset} />,
-      });
-    } else if (found && appLoaded) {
-      changeToAsset({
-        details: found,
-        web: minimizeAddress(found.getIssuer()),
-        logo: questionLogo,
-      });
-    }
-  }, [
-    router.pathname,
-    router.query,
-    appLoaded,
-  ]);
+  // useEffect(() => {
+  //   const extracted = router.query.slice(1).split('-');
+  //   const found = userCustomTokens
+  //     .find((i) => isSameAsset(i, getAssetDetails({ code: extracted[0], issuer: extracted[1] })));
+  //   if (router.pathname === '/swap' && router.query && !found) {
+  //     openModalAction({
+  //       modalProps: { title: 'Add custom asset' },
+  //       content: <AddAsset changeToAsset={changeToAsset} />,
+  //     });
+  //   } else if (found) {
+  //     changeToAsset({
+  //       details: found,
+  //       web: minimizeAddress(found.getIssuer()),
+  //       logo: questionLogo,
+  //     });
+  //   }
+  // }, [
+  //   router.pathname,
+  //   router.query,
+  // ]);
 
   const showAdvanced = !(new BN(watch('from').amount).isNaN()) && !(new BN(watch('from').amount).isEqualTo(0));
 

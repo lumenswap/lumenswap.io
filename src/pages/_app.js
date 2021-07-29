@@ -5,6 +5,7 @@ import { useRef, useEffect } from 'react';
 import { setUserBalance } from 'actions/userBalance';
 import { fetchAccountTokenList } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
+import { PersistGate } from 'redux-persist/integration/react';
 import LModal from './LModal';
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,8 +37,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Provider store={store}>
-        <LModal />
-        <Component {...pageProps} />
+        <PersistGate loading={<div>loading</div>} persistor={persistor}>
+          <LModal />
+          <Component {...pageProps} />
+        </PersistGate>
       </Provider>
     </>
   );

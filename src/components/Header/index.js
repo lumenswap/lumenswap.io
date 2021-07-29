@@ -1,4 +1,4 @@
-import { ReactComponent as Logo } from 'assets/images/logo.svg';
+import Logo from 'assets/images/logo';
 import Link from 'next/link';
 import classNames from 'classnames';
 import CustomDropdown from 'components/Dropdown';
@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <div className={classNames(styles.layout, 'layout')}>
       <ul className={styles.list}>
-        <li><Link href="/"><Logo /></Link></li>
+        <li><Link href="/"><a><Logo /></a></Link></li>
         {/* <li><NavLink activeClassName={styles['active-link']} to="/swap">Swap</NavLink></li> */}
         <li><Link href="/swap"><a>Swap</a></Link></li>
         {/* <li><NavLink activeClassName={styles['active-link']} to="/spot">Spot</NavLink></li> */}
