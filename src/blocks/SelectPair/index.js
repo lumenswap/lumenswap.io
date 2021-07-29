@@ -48,7 +48,7 @@ const SelectPair = ({ setAppSpotPair }) => {
         enrichedBaseToken = {
           details: item.base,
           // web: minimizeAddress(item.base.getIssuer()),
-          logo: questionLogo,
+          logo: questionLogo.src,
           type: 'custom',
         };
       }
@@ -65,7 +65,7 @@ const SelectPair = ({ setAppSpotPair }) => {
         enrichedCounterToken = {
           details: item.counter,
           // web: minimizeAddress(item.counter.getIssuer()),
-          logo: questionLogo,
+          logo: questionLogo.src,
           type: 'custom',
         };
       }

@@ -49,7 +49,7 @@ const SelectAsset = ({
       return {
         details: item,
         web: minimizeAddress(item.getIssuer()),
-        logo: questionLogo,
+        logo: questionLogo.src,
         balance: foundBalance ? foundBalance.balance : '0',
         type: 'custom',
       };

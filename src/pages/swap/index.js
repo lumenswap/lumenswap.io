@@ -150,7 +150,7 @@ const Home = () => {
   //     changeToAsset({
   //       details: found,
   //       web: minimizeAddress(found.getIssuer()),
-  //       logo: questionLogo,
+  //       logo: questionLogo.src,
   //     });
   //   }
   // }, [
