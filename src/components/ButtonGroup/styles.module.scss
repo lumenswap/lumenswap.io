@@ -1,0 +1,20 @@
+@import "styles/vars";
+
+.button {
+  height: 18px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: $Manatee;
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 2px;
+  padding: 0 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.active{
+  background-color: $CatskillWhite;
+  border: 1px solid $CatskillWhite;
+  color: $CodGray;
+}

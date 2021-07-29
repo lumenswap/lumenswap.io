@@ -1,0 +1,63 @@
+@import "styles/vars";
+
+.icon {
+  height: 40px;
+  width: 40px;
+  margin: -24px auto 0 auto;
+  display: block;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: $CodGray;
+  margin-bottom: 0;
+  margin-top: 16px;
+}
+
+.text {
+  font-size: 14px;
+  color: $RollingStone;
+  word-break: break-all;
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding: 0 12px;
+  min-height: 38px;
+}
+
+.btn {
+  width: 178px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin: 22px auto 32px auto;
+
+  span {
+    font-size: 10px;
+    margin-left: 11px;
+  }
+}
+
+.btnLink {
+  background-color: $BlueRibbon;
+  border: 1px solid $BlueRibbon;
+  color: white;
+  display: flex;
+  border-radius: 8px;
+  box-shadow: 0 9px 40px -4px rgba(15, 48, 168, 0.18);
+  transition: ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 178px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 22px auto 32px auto;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
