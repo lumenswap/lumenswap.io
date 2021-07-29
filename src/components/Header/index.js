@@ -24,7 +24,7 @@ const Header = () => {
         {/* <li><NavLink activeClassName={styles['active-link']} to="/swap">Swap</NavLink></li> */}
         <li><Link href="/swap"><a>Swap</a></Link></li>
         {/* <li><NavLink activeClassName={styles['active-link']} to="/spot">Spot</NavLink></li> */}
-        <li><Link href="/spot"><a>Ppot</a></Link></li>
+        <li><Link href="/spot"><a>Spot</a></Link></li>
         {/* <li>
           <NavLink activeClassName={styles['active-link']} to="/auction">
             <span className="d-flex align-items-center"> LSP Auction <span className={styles['active-status']} /></span>
