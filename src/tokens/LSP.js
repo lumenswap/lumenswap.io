@@ -1,4 +1,4 @@
-import logo from './images/lsp.png';
+import logo from './images/lsp.jpeg';
 
 export default {
   code: 'LSP',
