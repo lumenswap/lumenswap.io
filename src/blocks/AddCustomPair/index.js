@@ -5,7 +5,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { checkAssetAPI } from 'api/stellar';
 import purePairs from 'blocks/SelectPair/purePairs';
 import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
-import store from 'store';
 import isSamePair from 'helpers/isSamePair';
 import getAssetDetails from 'helpers/getAssetDetails';
 import StellarSDK from 'stellar-sdk';
@@ -13,7 +12,7 @@ import Submitting from 'components/Submitting';
 import { useEffect } from 'react';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { closeModalAction } from 'actions/modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 
 const AddCustomPair = () => {
@@ -30,6 +29,7 @@ const AddCustomPair = () => {
     mode: 'onChange',
   });
   const dispatch = useDispatch();
+  const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
   function onSubmit(data) {
     let base = getAssetDetails({
@@ -46,7 +46,7 @@ const AddCustomPair = () => {
       counter = StellarSDK.Asset.native();
     }
 
-    addCustomPairAction({ base, counter });
+    dispatch(addCustomPairAction({ base, counter }));
     dispatch(closeModalAction());
   }
 
@@ -89,7 +89,7 @@ const AddCustomPair = () => {
 
     const pured = purePairs([
       ...createPairForDefaultTokens(),
-      ...store.getState().userCustomPairs,
+      ...userCustomPairs,
     ]);
     let base = getAssetDetails({
       code: formValues.baseCode,

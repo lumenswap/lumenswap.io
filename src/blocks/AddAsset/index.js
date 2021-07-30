@@ -7,7 +7,6 @@ import Submitting from 'components/Submitting';
 import { checkAssetAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import defaultTokens from 'tokens/defaultTokens';
-import store from 'store';
 import isSameAsset from 'helpers/isSameAsset';
 import pureTokens from 'helpers/pureTokens';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
@@ -15,7 +14,7 @@ import { closeModalAction } from 'actions/modal';
 import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 
 const AddAsset = ({ changeToAsset }) => {
@@ -27,10 +26,11 @@ const AddAsset = ({ changeToAsset }) => {
   });
   const router = useRouter();
   const dispatch = useDispatch();
+  const userCustomTokens = useSelector((state) => state.userCustomTokens);
 
   const onSubmit = (data) => {
     const asset = getAssetDetails({ code: data.code, issuer: data.issuer });
-    addCustomTokenAction(asset);
+    dispatch(addCustomTokenAction(asset));
     changeToAsset({
       details: asset,
       web: minimizeAddress(asset.getIssuer()),
@@ -51,7 +51,7 @@ const AddAsset = ({ changeToAsset }) => {
       if (res) {
         const pured = pureTokens([
           ...defaultTokens.map((i) => getAssetDetails(i)),
-          ...store.getState().userCustomTokens,
+          ...userCustomTokens,
         ]);
         const found = pured.find((i) => isSameAsset(getAssetDetails({ issuer, code }), i));
         if (found) {

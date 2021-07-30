@@ -68,7 +68,7 @@ const CustomDropdown = ({ className }) => {
           eventKey={2}
           onClick={() => {
             dispatch(clearUserBalance());
-            logout();
+            dispatch(logout());
           }}
         >
           <span className="icon-shutdown" style={{ fontSize: '13px' }} />Disconnect

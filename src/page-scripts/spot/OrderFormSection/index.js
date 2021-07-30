@@ -11,7 +11,7 @@ import BN from 'helpers/BN';
 import { useEffect, useState } from 'react';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
-import store from 'store';
+import { initializeStore } from 'store';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import styles from '../styles.module.scss';
@@ -55,6 +55,7 @@ const InnerForm = ({
 
   async function onSubmit(data) {
     async function func() {
+      const store = initializeStore();
       const address = store.getState().user.detail.address;
       if (type === 'buy') {
         return generateManageBuyTRX(

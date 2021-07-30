@@ -4,7 +4,7 @@ import Input from 'components/Input';
 import defaultTokens from 'tokens/defaultTokens';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import pureTokens from 'helpers/pureTokens';
 import minimizeAddress from 'helpers/minimizeAddress';
 import XLM from 'tokens/XLM';
@@ -26,6 +26,7 @@ const SelectAsset = ({
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const [searchQuery, setSearchQuery] = useState(null);
   const isLogged = useSelector((state) => state.user.logged);
+  const dispatch = useDispatch();
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([
@@ -104,7 +105,7 @@ const SelectAsset = ({
                     {asset.type === 'custom' && (
                     <span onClick={(e) => {
                       e.stopPropagation();
-                      removeCustomTokenAction(asset.details);
+                      dispatch(removeCustomTokenAction(asset.details));
                     }}
                     >
                       {' '}(delete)

@@ -1,8 +1,9 @@
 import actionTypes from 'actions';
-import store from 'store';
 
-export default () => {
-  store.dispatch({
-    type: actionTypes.user.LOGOUT,
-  });
-};
+export default function logout() {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.user.LOGOUT,
+    });
+  };
+}

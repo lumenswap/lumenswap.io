@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'helpers/fetchMarketPrice';
-import store from 'store';
 import isSameAsset from 'helpers/isSameAsset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import { loginTypes } from 'reducers/user';
@@ -13,6 +12,7 @@ import ColorizedPriceImpact from 'page-scripts/swap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
+import { initializeStore } from 'store';
 import styles from './styles.module.scss';
 
 const ConfirmSwap = ({ data }) => {
@@ -60,6 +60,7 @@ const ConfirmSwap = ({ data }) => {
 
   async function SwapTheTokens() {
     function func() {
+      const store = initializeStore();
       const storeData = store.getState();
       const found = storeData.userBalance.find((i) => isSameAsset(i.asset, data.to.asset.details));
       return generateSwapTRX({

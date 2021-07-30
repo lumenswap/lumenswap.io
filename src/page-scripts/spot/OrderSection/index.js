@@ -4,17 +4,19 @@ import LeftSideAppLumen from 'components/SpotList/LeftSideAppLumen';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-function setCustomOrderPriceInput(data) {
-  setCustomOrderPriceAction({
+function setCustomOrderPriceInput(dispatch, data) {
+  dispatch(setCustomOrderPriceAction({
     buy: data.asks[0]?.price || '',
     sell: data.bids[0]?.price || '',
-  });
+  }));
 }
 
 const OrderSection = ({ appSpotPair }) => {
   const [orderBookData, setOrderBookData] = useState(null);
   const intervalRef = useRef(null);
+  const dispatch = useDispatch();
 
   function fetchingOrderAPICallWrapper() {
     return fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
@@ -30,7 +32,9 @@ const OrderSection = ({ appSpotPair }) => {
       clearInterval(intervalRef.current);
       setOrderBookData(null);
       fetchingOrderAPICallWrapper()
-        .then(setCustomOrderPriceInput);
+        .then((data) => {
+          setCustomOrderPriceInput(dispatch, data);
+        });
       intervalRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
     }
   }, [appSpotPair.base, appSpotPair.counter]);
@@ -38,7 +42,9 @@ const OrderSection = ({ appSpotPair }) => {
   useEffect(() => {
     if (!intervalRef.current) {
       fetchingOrderAPICallWrapper()
-        .then(setCustomOrderPriceInput);
+        .then((data) => {
+          setCustomOrderPriceInput(dispatch, data);
+        });
       intervalRef.current = setInterval(fetchingOrderAPICallWrapper, 10000);
     }
 

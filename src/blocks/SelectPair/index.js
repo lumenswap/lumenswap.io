@@ -140,10 +140,10 @@ const SelectPair = ({ setAppSpotPair }) => {
                 style={{ marginLeft: 4 }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  removeCustomPairAction({
+                  dispatch(removeCustomPairAction({
                     base: item.base.details,
                     counter: item.counter.details,
-                  });
+                  }));
                 }}
               >
                 (delete)

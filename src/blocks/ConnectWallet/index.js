@@ -53,7 +53,7 @@ const ConnectWallet = () => {
       type="button"
       className={styles.btn}
       onClick={() => {
-        openModalAction({
+        dispatch(openModalAction({
           modalProps: {
             back: true,
             backAction: () => {
@@ -61,7 +61,7 @@ const ConnectWallet = () => {
             },
           },
           content: <EnterKey />,
-        });
+        }));
       }}
     >
       <div className="d-flex align-items-center">

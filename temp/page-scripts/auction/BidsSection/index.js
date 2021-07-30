@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import LSP from 'tokens/LSP';
 import StellarSDK from 'stellar-sdk';
 import BN from 'helpers/BN';
-import store from 'store';
+import { initializeStore } from 'store';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
@@ -92,6 +92,7 @@ const BidsSection = () => {
         <td
           onClick={() => {
             function func() {
+              const store = initializeStore();
               const address = store.getState().user.detail.address;
               return generateManageBuyTRX(
                 address,

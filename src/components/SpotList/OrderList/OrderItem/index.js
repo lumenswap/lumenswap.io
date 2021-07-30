@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
+import { useDispatch } from 'react-redux';
 import styles from '../../styles.module.scss';
 
 function generateProgressStyle(percent, isSell) {
@@ -15,6 +16,8 @@ function generateHoverStyle(percent, isSell) {
 
 const OrderItem = ({ row, isSell }) => {
   const [hover, setHover] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <div
       className={classNames(styles.progress, isSell ? styles.sell : styles.buy)}
@@ -28,10 +31,10 @@ const OrderItem = ({ row, isSell }) => {
       <div
         className={styles['table-row']}
         onClick={() => {
-          setCustomOrderPriceAction({
+          dispatch(setCustomOrderPriceAction({
             sell: row.price,
             buy: row.price,
-          });
+          }));
         }}
       >
         <div className={styles['row-item']}>{sevenDigit(row.price)}</div>

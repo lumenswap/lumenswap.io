@@ -26,7 +26,7 @@ const EnterKey = () => {
 
     fetchAccountTokenList(address)
       .then((res) => {
-        userLogin(loginTypes.PV, { address, privateKey: data.privateKey });
+        dispatch(userLogin(loginTypes.PV, { address, privateKey: data.privateKey }));
         dispatch(setUserBalance(res.map(balanceMapper)));
         dispatch(closeModalAction());
       })

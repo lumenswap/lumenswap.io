@@ -41,7 +41,7 @@ const Initializing = ({ loginMethod }) => {
       }
 
       const tokenList = await fetchAccountTokenList(address);
-      userLogin(loginMethod, { address });
+      dispatch(userLogin(loginMethod, { address }));
       dispatch(setUserBalance(tokenList.map(balanceMapper)));
 
       dispatch(closeModalAction());

@@ -1,5 +1,5 @@
 import { loginTypes } from 'reducers/user';
-import store from 'store';
+import { initializeStore } from 'store';
 import signWithAlbedo from './sign/signWithAlbedo';
 import signWithFreighter from './sign/signWithFreighter';
 import signWithLedger from './sign/signWithLedger';
@@ -7,6 +7,7 @@ import signWithPrivateKey from './sign/signWithPrivateKey';
 import signWithRabet from './sign/signWithRabet';
 
 export default function signForThem(trx) {
+  const store = initializeStore();
   const user = store.getState().user;
 
   if (user.loginType === loginTypes.PV) {

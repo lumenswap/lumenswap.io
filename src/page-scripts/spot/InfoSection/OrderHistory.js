@@ -7,10 +7,10 @@ import { useRef, useEffect, useState } from 'react';
 import StellarSDK from 'stellar-sdk';
 import { useSelector } from 'react-redux';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
-import store from 'store';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 import FetchDataLoading from 'components/FetchDataLoading';
+import { initializeStore } from 'store';
 import styles from '../styles.module.scss';
 
 const tableRows = (rows) => rows.map((row) => (
@@ -27,6 +27,7 @@ const tableRows = (rows) => rows.map((row) => (
       <span
         onClick={async () => {
           function func() {
+            const store = initializeStore();
             const address = store.getState().user.detail.address;
             return generateManageSellTRX(
               address,

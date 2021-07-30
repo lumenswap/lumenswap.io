@@ -2,7 +2,7 @@ import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
-import store from 'store';
+import { initializeStore } from 'store';
 import getAssetDetails from 'helpers/getAssetDetails';
 import LSP from 'tokens/LSP';
 import XLM from 'tokens/XLM';
@@ -24,6 +24,7 @@ const SendBid = ({ setShow }) => {
   }, [watch('lsp'), watch('price')]);
 
   async function onSubmit(data) {
+    const store = initializeStore();
     const address = store.getState().user.detail.address;
 
     function func() {

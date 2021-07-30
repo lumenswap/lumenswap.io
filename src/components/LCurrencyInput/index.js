@@ -3,7 +3,6 @@ import CurrencyInput from 'components/CurrencyInput';
 import BN from 'helpers/BN';
 import isSameAsset from 'helpers/isSameAsset';
 import { useSelector } from 'react-redux';
-import store from 'store';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
@@ -18,6 +17,7 @@ export default function LCurrencyInput({
   changeToAsset,
 }) {
   const isLogged = useSelector((state) => state.user.logged);
+  const userBalance = useSelector((state) => state.userBalance);
 
   function setCurrency(asset) {
     onChange({ ...value, asset });
@@ -25,7 +25,6 @@ export default function LCurrencyInput({
   }
 
   function setMaxBalance() {
-    const userBalance = store.getState().userBalance;
     const found = userBalance.find((i) => isSameAsset(i.asset, value.asset.details));
 
     if (found) {

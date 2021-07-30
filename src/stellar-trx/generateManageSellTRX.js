@@ -1,7 +1,7 @@
 import BN from 'helpers/BN';
 import isSameAsset from 'helpers/isSameAsset';
 import StellarSDK from 'stellar-sdk';
-import store from 'store';
+import { initializeStore } from 'store';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
@@ -20,6 +20,7 @@ export default async function generateManageSellTRX(
     networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
+  const store = initializeStore();
   const storeData = store.getState();
   if (!storeData.userBalance.find((i) => isSameAsset(i.asset, buyingAsset))) {
     transaction = transaction.addOperation(
