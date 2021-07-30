@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
-import styles from 'pages/swap/styles.module.scss';
+import styles from './styles.module.scss';
 
 export default function ExchangeRate({ estimatedPrice, control, loading }) {
   const [reverse, setReverse] = useState(true);

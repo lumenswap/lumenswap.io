@@ -29,6 +29,7 @@ module.exports = {
     'prefer-destructuring': 0,
     'import/no-unresolved': 0,
     'import/no-extraneous-dependencies': 0,
+    'import/prefer-default-export': 0,
     'react/no-array-index-key': 0,
     'react/react-in-jsx-scope': 0,
     'react/jsx-filename-extension': 0,

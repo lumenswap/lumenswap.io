@@ -6,7 +6,7 @@ import { setUserBalance } from 'actions/userBalance';
 import { fetchAccountTokenList } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
 import { PersistGate } from 'redux-persist/integration/react';
-import LModal from './LModal';
+import LModal from '../containers/LModal';
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rc-slider/assets/index.css';
