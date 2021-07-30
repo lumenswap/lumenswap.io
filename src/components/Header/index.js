@@ -30,7 +30,7 @@ const Header = () => {
             <span className="d-flex align-items-center"> LSP Auction <span className={styles['active-status']} /></span>
           </NavLink>
         </li> */}
-        <li><Link href="/auction"><a>LSP Auction</a></Link></li>
+        {/* <li><Link href="/auction"><a>LSP Auction</a></Link></li> */}
 
         {/* <span className="icon-external" /> */}
       </ul>
