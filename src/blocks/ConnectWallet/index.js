@@ -9,9 +9,12 @@ import { loginTypes } from 'reducers/user';
 import Initializing from 'blocks/Initializing';
 import validateFreighterPresent from 'walletIntegeration/logins/validateFreighterPresent';
 import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const ConnectWallet = () => {
+  const dispatch = useDispatch();
+
   const items = [
     {
       icon: rabetIcon,
@@ -54,7 +57,7 @@ const ConnectWallet = () => {
           modalProps: {
             back: true,
             backAction: () => {
-              openConnectModal();
+              dispatch(openConnectModal());
             },
           },
           content: <EnterKey />,
@@ -79,15 +82,15 @@ const ConnectWallet = () => {
               className={styles.btn}
               key={index}
               onClick={() => {
-                openModalAction({
+                dispatch(openModalAction({
                   modalProps: {
                     back: true,
                     backAction: () => {
-                      openConnectModal();
+                      dispatch(openConnectModal());
                     },
                   },
                   content: <Initializing loginMethod={item.loginMethod} />,
-                });
+                }));
               }}
             >
               <div className="d-flex align-items-center">

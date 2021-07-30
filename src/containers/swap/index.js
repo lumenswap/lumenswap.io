@@ -13,7 +13,7 @@ import calculateReceiveEstimatedAndPath from 'helpers/calculateReceiveEstimatedA
 import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
 import { openConnectModal, openModalAction } from 'actions/modal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import isSameAsset from 'helpers/isSameAsset';
 import AddAsset from 'blocks/AddAsset';
@@ -21,6 +21,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'page-scripts/swap/SwapButton';
+import Head from 'next/head';
 import styles from './styles.module.scss';
 
 const SwapPage = () => {
@@ -31,6 +32,7 @@ const SwapPage = () => {
   const isLogged = useSelector((state) => state.user.logged);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const {
     handleSubmit, control, setValue, getValues, watch,
@@ -58,14 +60,14 @@ const SwapPage = () => {
 
   const onSubmit = (data) => {
     if (!isLogged) {
-      openConnectModal();
+      dispatch(openConnectModal());
     } else {
-      openModalAction({
+      dispatch(openModalAction({
         modalProps: {
           title: 'Confirm Swap',
         },
         content: <ConfirmSwap data={{ ...data, estimatedPrice, paths }} />,
-      });
+      }));
     }
   };
 
@@ -162,6 +164,9 @@ const SwapPage = () => {
 
   return (
     <div className="container-fluid main">
+      <Head>
+        <title>Lumenswap | Swap</title>
+      </Head>
       <Header />
       <div className="row justify-content-center">
         <div className="col-auto">

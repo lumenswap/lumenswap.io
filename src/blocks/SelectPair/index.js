@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import AddCustomPair from 'blocks/AddCustomPair';
 import { closeModalAction, openModalAction } from 'actions/modal';
 import defaultTokens from 'tokens/defaultTokens';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
 import XLM from 'tokens/XLM';
 import isSameAsset from 'helpers/isSameAsset';
@@ -21,6 +21,7 @@ const createdDefaultPairs = createPairForDefaultTokens();
 const SelectPair = ({ setAppSpotPair }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
   const [searchQuery, setSearchQuery] = useState(null);
+  const dispatch = useDispatch();
 
   const enrichedPairs = useMemo(() => {
     const result = purePairs([
@@ -126,7 +127,7 @@ const SelectPair = ({ setAppSpotPair }) => {
                   counter: item.counter.details,
                 });
 
-                closeModalAction();
+                dispatch(closeModalAction());
               }}
             >
               <img src={item.base.logo} alt="baselogo" />

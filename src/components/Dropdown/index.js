@@ -3,7 +3,7 @@ import { NavDropdown } from 'react-bootstrap';
 import classNames from 'classnames';
 import logout from 'actions/user/logout';
 import { clearUserBalance } from 'actions/userBalance';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
 import rabetIcon from 'assets/images/rabet.svg';
 import privateKeyIcon from 'assets/images/keyword.svg';
@@ -16,6 +16,7 @@ import styles from './styles.module.scss';
 
 const CustomDropdown = ({ className }) => {
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const userAddress = user.detail.address;
   const loginMethod = user.loginType;
@@ -66,7 +67,7 @@ const CustomDropdown = ({ className }) => {
         <NavDropdown.Item
           eventKey={2}
           onClick={() => {
-            clearUserBalance();
+            dispatch(clearUserBalance());
             logout();
           }}
         >

@@ -2,11 +2,14 @@ import { ReactComponent as SuccessIcon } from 'assets/images/success.svg';
 import { ReactComponent as FailIcon } from 'assets/images/fail.svg';
 import Button from 'components/Button';
 import { closeModalAction } from 'actions/modal';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const TransactionResponse = ({
   status, message, title, btnText, onClick, btnType, btnLink,
 }) => {
+  const dispatch = useDispatch();
+
   let icon = null;
   let btnContent = null;
   if (status === 'success') {
@@ -36,7 +39,7 @@ const TransactionResponse = ({
             if (onClick) {
               onClick();
             } else {
-              closeModalAction();
+              dispatch(closeModalAction());
             }
           }}
         />

@@ -15,6 +15,7 @@ import { closeModalAction } from 'actions/modal';
 import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const AddAsset = ({ changeToAsset }) => {
@@ -25,6 +26,7 @@ const AddAsset = ({ changeToAsset }) => {
     mode: 'onChange',
   });
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const onSubmit = (data) => {
     const asset = getAssetDetails({ code: data.code, issuer: data.issuer });
@@ -34,7 +36,7 @@ const AddAsset = ({ changeToAsset }) => {
       web: minimizeAddress(asset.getIssuer()),
       logo: questionLogo.src,
     });
-    closeModalAction();
+    dispatch(closeModalAction());
   };
 
   async function customValidator() {

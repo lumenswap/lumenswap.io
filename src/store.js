@@ -1,10 +1,11 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { useMemo } from 'react';
 import { persistReducer, createTransform } from 'redux-persist';
-// import persistStore from 'redux-persist/es/persistStore';
 import persistStorage from 'redux-persist/lib/storage';
 import reducers from 'reducers';
 import getAssetDetails from 'helpers/getAssetDetails';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunkMiddleware from 'redux-thunk';
 
 let store;
 
@@ -35,6 +36,7 @@ const persistedReducer = persistReducer(persistorConfig, reducers);
 function makeStore() {
   return createStore(
     persistedReducer,
+    composeWithDevTools(applyMiddleware(thunkMiddleware)),
   );
 }
 

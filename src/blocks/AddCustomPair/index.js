@@ -13,6 +13,7 @@ import Submitting from 'components/Submitting';
 import { useEffect } from 'react';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { closeModalAction } from 'actions/modal';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const AddCustomPair = () => {
@@ -28,6 +29,7 @@ const AddCustomPair = () => {
   } = useForm({
     mode: 'onChange',
   });
+  const dispatch = useDispatch();
 
   function onSubmit(data) {
     let base = getAssetDetails({
@@ -45,7 +47,7 @@ const AddCustomPair = () => {
     }
 
     addCustomPairAction({ base, counter });
-    closeModalAction();
+    dispatch(closeModalAction());
   }
 
   async function customValidator() {

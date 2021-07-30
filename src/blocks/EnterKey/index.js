@@ -10,10 +10,12 @@ import userLogin from 'actions/user/login';
 import { loginTypes } from 'reducers/user';
 import { closeModalAction } from 'actions/modal';
 import balanceMapper from 'helpers/balanceMapper';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const EnterKey = () => {
   const [loadingTimer, setLoadingTimer] = useState(false);
+  const dispatch = useDispatch();
   const { register, handleSubmit, formState } = useForm({
     mode: 'onChange',
   });
@@ -25,8 +27,8 @@ const EnterKey = () => {
     fetchAccountTokenList(address)
       .then((res) => {
         userLogin(loginTypes.PV, { address, privateKey: data.privateKey });
-        setUserBalance(res.map(balanceMapper));
-        closeModalAction();
+        dispatch(setUserBalance(res.map(balanceMapper)));
+        dispatch(closeModalAction());
       })
       .catch(console.log)
       .finally(() => {

@@ -1,7 +1,7 @@
 import InputGroup from 'components/InputGroup';
 import CustomSlider from 'components/CustomSlider';
 import Button from 'components/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { openConnectModal } from 'actions/modal';
 import isSameAsset from 'helpers/isSameAsset';
@@ -41,6 +41,7 @@ const InnerForm = ({
     .find((i) => isSameAsset(i.asset, type === 'sell' ? baseAsset : counterAsset))
     ?.balance);
   const [sliderValue, setSliderValue] = useState(0);
+  const dispatch = useDispatch();
 
   const isSell = type === 'sell';
 
@@ -265,7 +266,7 @@ const InnerForm = ({
         onClick={(e) => {
           if (!isLogged) {
             e.preventDefault();
-            openConnectModal();
+            dispatch(openConnectModal());
           }
         }}
       />

@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
       const storeData = store.getState();
       if (storeData.user.logged) {
         fetchAccountTokenList(storeData.user.detail.address).then((res) => {
-          setUserBalance(res.map(balanceMapper));
+          store.dispatch(setUserBalance(res.map(balanceMapper)));
         });
       }
     }, 2000);

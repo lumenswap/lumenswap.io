@@ -15,11 +15,13 @@ import { fetchAccountTokenList } from 'api/stellar';
 import loginWithLedger from 'walletIntegeration/logins/loginWithLedger';
 import loginWithFreighter from 'walletIntegeration/logins/loginWithFreighter';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const Initializing = ({ loginMethod }) => {
   const [connecting, setConnecting] = useState(true);
   const [error, setError] = useState(false);
+  const dispatch = useDispatch();
 
   async function connectWallet() {
     setConnecting(true);
@@ -40,9 +42,9 @@ const Initializing = ({ loginMethod }) => {
 
       const tokenList = await fetchAccountTokenList(address);
       userLogin(loginMethod, { address });
-      setUserBalance(tokenList.map(balanceMapper));
+      dispatch(setUserBalance(tokenList.map(balanceMapper)));
 
-      closeModalAction();
+      dispatch(closeModalAction());
     } catch (e) {
       console.error('error', e);
       setError(true);
