@@ -5,6 +5,7 @@ import questionLogo from 'assets/images/question.png';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import defaultTokens from 'tokens/defaultTokens';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 export default function OpenDialogElement({
@@ -14,6 +15,7 @@ export default function OpenDialogElement({
     .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.base))?.logo || questionLogo;
   const counterTokenLogo = defaultTokens
     .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.counter))?.logo || questionLogo;
+  const dispatch = useDispatch();
 
   return (
     <div className={styles['container-select']}>
@@ -21,12 +23,12 @@ export default function OpenDialogElement({
         type="button"
         className={classNames(styles['select-logo'], className)}
         onClick={() => {
-          openModalAction({
+          dispatch(openModalAction({
             modalProps: { title: 'Select a pair' },
             content: <SelectPair
               setAppSpotPair={setAppSpotPair}
             />,
-          });
+          }));
         }}
       >
         <img className={styles['first-coin']} src={baseTokenLogo} alt="" />
