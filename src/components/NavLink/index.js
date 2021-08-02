@@ -5,15 +5,17 @@ import styles from './styles.module.scss';
 const NavLink = ({
   href, name, className, activeClassName,
 }) => {
-  const router = useRouter();
-  const currentHref = router.asPath;
+  const { asPath } = useRouter();
+  const currentHref = asPath;
   let linkClassName;
-  if (currentHref.indexOf(href) !== -1) {
+  const classNameConditon = currentHref === href
+    ? activeClassName || styles.header_link_active
+    : className || styles.header_link;
+
+  if (currentHref.search(href) !== -1) {
     linkClassName = styles.header_link_active;
   } else {
-    linkClassName = currentHref === href
-      ? activeClassName || styles.header_link_active
-      : className || styles.header_link;
+    linkClassName = classNameConditon;
   }
   return (
     <>
