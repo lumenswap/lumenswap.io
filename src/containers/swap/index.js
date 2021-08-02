@@ -12,6 +12,7 @@ import calculateSendEstimatedAndPath from 'helpers/calculateSendEstimatedAndPath
 import calculateReceiveEstimatedAndPath from 'helpers/calculateReceiveEstimatedAndPath';
 import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
+import defaultTokens from 'tokens/defaultTokens';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -24,9 +25,10 @@ import SwapButton from 'page-scripts/swap/SwapButton';
 import Head from 'next/head';
 import styles from './styles.module.scss';
 
-const SwapPage = () => {
+const SwapPage = ({ tokens }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
   const [paths, setPaths] = useState([]);
   const isLogged = useSelector((state) => state.user.logged);
@@ -58,37 +60,78 @@ const SwapPage = () => {
     },
   });
 
+  useEffect(() => {
+    if (tokens) {
+      const fromToken = tokens.split('-')[0];
+      const toToken = tokens.split('-')[1];
+
+      const tokenCodes = defaultTokens.map((token) => token.code.toLowerCase());
+      if (tokenCodes.includes(fromToken) && tokenCodes.includes(toToken)) {
+        const fromTokenDetails = defaultTokens.find(
+          (token) => token.code.toLowerCase() === fromToken,
+        );
+        const toTokenDetails = defaultTokens.find(
+          (token) => token.code.toLowerCase() === toToken,
+        );
+
+        setValue('to', {
+          amount: null,
+          asset: {
+            logo: toTokenDetails.logo,
+            web: toTokenDetails.web,
+            details: getAssetDetails(toTokenDetails),
+          },
+        });
+
+        setValue('from', {
+          amount: null,
+          asset: {
+            logo: fromTokenDetails.logo,
+            web: fromTokenDetails.web,
+            details: getAssetDetails(fromTokenDetails),
+          },
+        });
+      } else {
+        setError('Invalid Tokens!');
+      }
+    }
+  }, []);
+
   const onSubmit = (data) => {
     if (!isLogged) {
       dispatch(openConnectModal());
     } else {
-      dispatch(openModalAction({
-        modalProps: {
-          title: 'Confirm Swap',
-        },
-        content: <ConfirmSwap data={{ ...data, estimatedPrice, paths }} />,
-      }));
+      dispatch(
+        openModalAction({
+          modalProps: {
+            title: 'Confirm Swap',
+          },
+          content: <ConfirmSwap data={{ ...data, estimatedPrice, paths }} />,
+        }),
+      );
     }
   };
 
   function changeFromInput(amount) {
     const formValues = getValues();
-    if (amount && !(new BN(amount).isEqualTo(0))) {
+    if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
       calculateSendEstimatedAndPath(
         amount,
         formValues.from.asset.details,
         formValues.to.asset.details,
-      ).then((res) => {
-        setEstimatedPrice(res.minAmount);
-        setPaths(res.path);
-        setValue('to', {
-          ...formValues.to,
-          amount: res.minAmount,
+      )
+        .then((res) => {
+          setEstimatedPrice(res.minAmount);
+          setPaths(res.path);
+          setValue('to', {
+            ...formValues.to,
+            amount: res.minAmount,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      }).finally(() => {
-        setLoading(false);
-      });
     }
 
     if (amount === null || new BN(amount).isEqualTo(0)) {
@@ -101,22 +144,24 @@ const SwapPage = () => {
 
   function changeToInput(amount) {
     const formValues = getValues();
-    if (amount && !(new BN(amount).isEqualTo(0))) {
+    if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
       calculateReceiveEstimatedAndPath(
         amount,
         formValues.from.asset.details,
         formValues.to.asset.details,
-      ).then((res) => {
-        setEstimatedPrice(amount);
-        setPaths(res.path.reverse());
-        setValue('from', {
-          ...formValues.from,
-          amount: res.minAmount,
+      )
+        .then((res) => {
+          setEstimatedPrice(amount);
+          setPaths(res.path.reverse());
+          setValue('from', {
+            ...formValues.from,
+            amount: res.minAmount,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      }).finally(() => {
-        setLoading(false);
-      });
     }
 
     if (amount === null || new BN(amount).isEqualTo(0)) {
@@ -129,7 +174,10 @@ const SwapPage = () => {
 
   function swapFromWithTo() {
     const formValues = getValues();
-    setValue('from', { asset: formValues.to.asset, amount: formValues.to.amount });
+    setValue('from', {
+      asset: formValues.to.asset,
+      amount: formValues.to.amount,
+    });
     setValue('to', { asset: formValues.from.asset, amount: '' });
     changeFromInput(formValues.to.amount);
   }
@@ -160,77 +208,101 @@ const SwapPage = () => {
   //   router.query,
   // ]);
 
-  const showAdvanced = !(new BN(watch('from').amount).isNaN()) && !(new BN(watch('from').amount).isEqualTo(0));
+  const showAdvanced = !new BN(watch('from').amount).isNaN()
+    && !new BN(watch('from').amount).isEqualTo(0);
 
   return (
     <div className="container-fluid main">
       <Head>
-        <title>Lumenswap | Swap</title>
+        {tokens ? (
+          <title>
+            Lumenswap | {`${tokens.split('-')[0].toUpperCase()}-${tokens.split('-')[1].toUpperCase()}`}
+          </title>
+        ) : (
+          <title>Lumenswap | Swap</title>
+        )}
       </Head>
       <Header />
       <div className="row justify-content-center">
-        <div className="col-auto">
-          <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.card}>
-              <Controller
-                name="from"
-                control={control}
-                render={(props) => (
-                  <LCurrencyInput
-                    {...props}
-                    showMax
-                    label="From"
-                    onChangeInput={changeFromInput}
-                    originChange={changeFromInput}
-                    getFormValues={getValues}
-                    swapFromWithTo={swapFromWithTo}
-                    changeToAsset={changeToAsset}
-                  />
-                )}
-              />
-              <div className="my-2 text-center">
-                <span className={classNames('icon-arrow-down', styles['icon-arrow-down'])} onClick={swapFromWithTo} />
-              </div>
-              <Controller
-                name="to"
-                control={control}
-                render={(props) => (
-                  <LCurrencyInput
-                    {...props}
-                    label="To (estimated)"
-                    onChangeInput={changeToInput}
-                    originChange={changeFromInput}
-                    getFormValues={getValues}
-                    swapFromWithTo={swapFromWithTo}
-                    changeToAsset={changeToAsset}
-                  />
-                )}
-              />
-              <ExchangeRate control={control} estimatedPrice={estimatedPrice} loading={loading} />
-              <SwapButton control={control} />
-              <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
-                <ConfirmSwap />
-              </ModalDialog>
-            </div>
-            {showAdvanced && (
-              <div className={styles['swap-info']}>
+        {error ? (
+          <div className="col-auto">{error}</div>
+        ) : (
+          <div className="col-auto">
+            <form
+              className={styles.container}
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div className={styles.card}>
                 <Controller
-                  name="priceSpread"
+                  name="from"
                   control={control}
                   render={(props) => (
-                    <LPriceSpreadSection
+                    <LCurrencyInput
                       {...props}
-                      control={control}
-                      estimatedPrice={estimatedPrice}
-                      paths={paths}
-                      upperLoading={loading}
+                      showMax
+                      label="From"
+                      onChangeInput={changeFromInput}
+                      originChange={changeFromInput}
+                      getFormValues={getValues}
+                      swapFromWithTo={swapFromWithTo}
+                      changeToAsset={changeToAsset}
                     />
                   )}
                 />
+                <div className="my-2 text-center">
+                  <span
+                    className={classNames(
+                      'icon-arrow-down',
+                      styles['icon-arrow-down'],
+                    )}
+                    onClick={swapFromWithTo}
+                  />
+                </div>
+                <Controller
+                  name="to"
+                  control={control}
+                  render={(props) => (
+                    <LCurrencyInput
+                      {...props}
+                      label="To (estimated)"
+                      onChangeInput={changeToInput}
+                      originChange={changeFromInput}
+                      getFormValues={getValues}
+                      swapFromWithTo={swapFromWithTo}
+                      changeToAsset={changeToAsset}
+                    />
+                  )}
+                />
+                <ExchangeRate
+                  control={control}
+                  estimatedPrice={estimatedPrice}
+                  loading={loading}
+                />
+                <SwapButton control={control} />
+                <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
+                  <ConfirmSwap />
+                </ModalDialog>
               </div>
-            )}
-          </form>
-        </div>
+              {showAdvanced && (
+                <div className={styles['swap-info']}>
+                  <Controller
+                    name="priceSpread"
+                    control={control}
+                    render={(props) => (
+                      <LPriceSpreadSection
+                        {...props}
+                        control={control}
+                        estimatedPrice={estimatedPrice}
+                        paths={paths}
+                        upperLoading={loading}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );
