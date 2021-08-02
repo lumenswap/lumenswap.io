@@ -6,17 +6,15 @@ const NavLink = ({
   href, name, className, activeClassName,
 }) => {
   const { asPath } = useRouter();
-  const currentHref = asPath;
   let linkClassName;
-  const classNameConditon = currentHref === href
-    ? activeClassName || styles.header_link_active
-    : className || styles.header_link;
-
-  if (currentHref.search(href) !== -1) {
+  if (asPath === href) {
+    linkClassName = activeClassName ?? styles.header_link_active;
+  } else if (asPath.search(href) !== -1) {
     linkClassName = styles.header_link_active;
   } else {
-    linkClassName = classNameConditon;
+    linkClassName = className ?? styles.header_link;
   }
+
   return (
     <>
       <Link href={href}>
