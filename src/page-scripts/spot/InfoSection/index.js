@@ -3,9 +3,9 @@ import { useState } from 'react';
 import CustomTabs from 'components/CustomTabs';
 // import ButtonGroup from 'components/ButtonGroup';
 import { useSelector } from 'react-redux';
+// import CTabs from 'components/CTabs';
 import OrderHistory from './OrderHistory';
 import TradeHistory from './TradeHistory';
-
 import styles from '../styles.module.scss';
 
 // const buttonGroupItems = [
@@ -66,6 +66,14 @@ export default function InfoSection() {
           }}
         />
         <TabContent />
+        {/* <CTabs
+          tabs={historyTab}
+          tabContent={TabContent}
+          onChange={(val) => {
+            setCurrentTab(val);
+          }}
+        />
+        <TabContent /> */}
       </div>
     </>
   );
