@@ -68,9 +68,9 @@ const SelectAsset = ({
 
   function selectAsset(asset) {
     const formValues = getFormValues();
-    if (
-      isSameAsset(formValues.from.asset.details, asset.details)
-      || isSameAsset(formValues.to.asset.details, asset.details)
+    if (formValues.to.asset
+      && (isSameAsset(formValues.from.asset.details, asset.details)
+      || isSameAsset(formValues.to.asset.details, asset.details))
     ) {
       swapFromWithTo();
     } else {
@@ -124,10 +124,10 @@ const SelectAsset = ({
         className={styles.submit}
         onClick={() => {
           setShow(false);
-          openModalAction({
+          dispatch(openModalAction({
             modalProps: { title: 'Add custom asset' },
             content: <AddAsset changeToAsset={changeToAsset} />,
-          });
+          }));
         }}
       >
         <span

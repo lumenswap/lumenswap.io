@@ -35,9 +35,13 @@ const CurrencyInput = ({
       <div className={classNames('input-group', styles['input-group'])}>
         {children}
         <button type="button" className={styles['drop-down']} onClick={() => setShow(true)}>
-          <img src={currentCurrency?.logo} alt="logo" />
-          {currentCurrency?.details?.getCode()}
-          <span className="icon-angle-down" />
+          { currentCurrency === null ? 'select asset' : (
+            <>
+              <img src={currentCurrency?.logo} alt="logo" />
+              {currentCurrency?.details?.getCode()}
+              <span className="icon-angle-down" />
+            </>
+          )}
         </button>
         <ModalDialog show={show} setShow={setShow} title="Select an assets">
           <SelectAsset

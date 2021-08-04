@@ -4,6 +4,7 @@ import CurrencyInput from 'components/CurrencyInput';
 import BN from 'helpers/BN';
 import isSameAsset from 'helpers/isSameAsset';
 import { useSelector } from 'react-redux';
+import getAssetDetails from 'helpers/getAssetDetails';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
@@ -19,6 +20,7 @@ export default function LCurrencyInput({
 }) {
   const isLogged = useSelector((state) => state.user.logged);
   const userBalance = useSelector((state) => state.userBalance);
+  const userCustomTokens = useSelector((state) => state.userCustomTokens);
 
   const router = useRouter();
 
@@ -29,7 +31,16 @@ export default function LCurrencyInput({
     const from = getFormValues().from.asset.details.code;
     const to = getFormValues().to.asset.details.code;
 
-    router.push(`/swap/${from}-${to}`);
+    const isFromCustomToken = userCustomTokens
+      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().from.asset.details));
+
+    const isToCustomToken = userCustomTokens
+      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset.details));
+
+    if (isFromCustomToken || isToCustomToken) router.push('/swap');
+    else {
+      router.push(`/swap/${from}-${to}`);
+    }
   }
 
   function setMaxBalance() {
@@ -66,7 +77,15 @@ export default function LCurrencyInput({
           }
         }}
       />
-      {showMax && isLogged && <Button variant="secondary" content="MAX" fontWeight={500} className={styles.max} onClick={setMaxBalance} />}
+      {showMax && isLogged && (
+        <Button
+          variant="secondary"
+          content="MAX"
+          fontWeight={500}
+          className={styles.max}
+          onClick={setMaxBalance}
+        />
+      )}
     </CurrencyInput>
   );
 }

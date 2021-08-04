@@ -49,76 +49,39 @@ const SwapPage = ({ tokens }) => {
         amount: null,
       },
       to: {
-        asset: {
-          details: getAssetDetails(USDC),
-          logo: USDC.logo,
-          web: USDC.web,
-        },
+        asset: null,
         amount: null,
       },
       priceSpread: '0.1',
     },
   });
 
-  const tokensValid = (tokenString) => tokenString.split('-').length === 2;
-
-  const isNotSame = (queryTokens, formValues) => {
-    if (queryTokens && tokensValid(queryTokens)) {
-      const from = queryTokens.split('-')[0];
-      const to = queryTokens.split('-')[1];
-
-      if (
-        from === formValues.from.asset.details.code
-        || to === formValues.to.asset.details.code
-      ) {
-        return false;
-      }
-      return true;
-    }
-    return false;
-  };
   useEffect(() => {
-    const formValues = getValues();
+    if (tokens) {
+      const formValues = getValues();
 
-    if (tokens && isNotSame(tokens, formValues)) {
-      if (tokensValid(tokens)) {
-        const fromToken = tokens.split('-')[0].toLowerCase();
-        const toToken = tokens.split('-')[1].toLowerCase();
+      setValue('to', {
+        amount: formValues.to.amount,
+        asset: {
+          logo: tokens.to.logo,
+          web: tokens.to.web,
+          details: getAssetDetails(tokens.to),
+        },
+      });
 
-        const tokenCodes = defaultTokens.map((token) => token.code.toLowerCase());
-
-        if (tokenCodes.includes(fromToken) && tokenCodes.includes(toToken)) {
-          const fromTokenDetails = defaultTokens.find(
-            (token) => token.code.toLowerCase() === fromToken,
-          );
-          const toTokenDetails = defaultTokens.find(
-            (token) => token.code.toLowerCase() === toToken,
-          );
-
-          setValue('to', {
-            amount: null,
-            asset: {
-              logo: toTokenDetails.logo,
-              web: toTokenDetails.web,
-              details: getAssetDetails(toTokenDetails),
-            },
-          });
-
-          setValue('from', {
-            amount: null,
-            asset: {
-              logo: fromTokenDetails.logo,
-              web: fromTokenDetails.web,
-              details: getAssetDetails(fromTokenDetails),
-            },
-          });
-        } else {
-          setError('Invalid Tokens!');
-        }
-      } else {
-        setError('Invalid Tokens!');
-      }
+      setValue('from', {
+        amount: formValues.from.amount,
+        asset: {
+          logo: tokens.from.logo,
+          web: tokens.from.web,
+          details: getAssetDetails(tokens.from),
+        },
+      });
     }
+  }, [tokens]);
+
+  useEffect(() => {
+    console.log('hi');
   }, []);
 
   const onSubmit = (data) => {
@@ -204,6 +167,7 @@ const SwapPage = ({ tokens }) => {
     });
     setValue('to', { asset: formValues.from.asset, amount: '' });
     changeFromInput(formValues.to.amount);
+    router.push(`/swap/${formValues.to.asset.details.code}-${formValues.from.asset.details.code}`);
   }
 
   function changeToAsset(asset) {
@@ -238,7 +202,7 @@ const SwapPage = ({ tokens }) => {
   return (
     <div className="container-fluid main">
       <Head>
-        {tokens && tokensValid(tokens) ? (
+        {/* {tokens ? (
           <title>
             Lumenswap |{' '}
             {`${tokens.split('-')[0].toUpperCase()}-${tokens
@@ -247,7 +211,7 @@ const SwapPage = ({ tokens }) => {
           </title>
         ) : (
           <title>Lumenswap | Swap</title>
-        )}
+        )} */}
       </Head>
       <Header />
       <div className="row justify-content-center">
