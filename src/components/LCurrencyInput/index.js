@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Button from 'components/Button';
 import CurrencyInput from 'components/CurrencyInput';
 import BN from 'helpers/BN';
@@ -19,9 +20,16 @@ export default function LCurrencyInput({
   const isLogged = useSelector((state) => state.user.logged);
   const userBalance = useSelector((state) => state.userBalance);
 
+  const router = useRouter();
+
   function setCurrency(asset) {
     onChange({ ...value, asset });
     originChange(getFormValues().from.amount);
+
+    const from = getFormValues().from.asset.details.code;
+    const to = getFormValues().to.asset.details.code;
+
+    router.push(`/swap/${from}-${to}`);
   }
 
   function setMaxBalance() {
