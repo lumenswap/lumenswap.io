@@ -1,12 +1,13 @@
 import { useState } from 'react';
 // import Checkbox from 'components/Checkbox';
-import CustomTabs from 'components/CustomTabs';
+// import CustomTabs from 'components/CustomTabs';
 // import ButtonGroup from 'components/ButtonGroup';
-import { useSelector } from 'react-redux';
-// import CTabs from 'components/CTabs';
-import OrderHistory from './OrderHistory';
-import TradeHistory from './TradeHistory';
-import styles from '../styles.module.scss';
+// import { useSelector } from 'react-redux';
+import CTabs from 'components/CTabs';
+import TabContent from './TabContent';
+// import OrderHistory from './OrderHistory';
+// import TradeHistory from './TradeHistory';
+// import styles from '../styles.module.scss';
 
 // const buttonGroupItems = [
 //   { label: '1 Day', value: '1' },
@@ -26,24 +27,6 @@ export default function InfoSection() {
     { title: `Open Orders(${orderCounter})`, id: 'order' },
     { title: 'Trade History', id: 'trade' },
   ];
-  const isLogged = useSelector((state) => state.user.logged);
-  const [currentTab, setCurrentTab] = useState('order');
-
-  function TabContent() {
-    if (!isLogged) {
-      return <div className={styles['centralize-content']}>Connect your wallet</div>;
-    }
-
-    if (currentTab === 'order') {
-      return <OrderHistory setOrderCounter={setOrderCounter} />;
-    }
-
-    if (currentTab === 'trade') {
-      return <TradeHistory />;
-    }
-
-    return null;
-  }
 
   return (
     <>
@@ -56,7 +39,7 @@ export default function InfoSection() {
         />
       </div> */}
       <div className="mt-md-0 mt-sm-4 mt-4 h-100">
-        <CustomTabs
+        {/* <CustomTabs
           tabs={historyTab}
           activeTabId={historyTab[0].id}
           fontSize={14}
@@ -65,15 +48,13 @@ export default function InfoSection() {
             setCurrentTab(val);
           }}
         />
-        <TabContent />
-        {/* <CTabs
+        <TabContent /> */}
+        <CTabs
           tabs={historyTab}
           tabContent={TabContent}
-          onChange={(val) => {
-            setCurrentTab(val);
-          }}
+          setOrderCounter={setOrderCounter}
+          customTabs={{ example: 1 }}
         />
-        <TabContent /> */}
       </div>
     </>
   );
