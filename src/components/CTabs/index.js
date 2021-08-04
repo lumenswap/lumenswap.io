@@ -3,9 +3,10 @@ import { useState } from 'react';
 import styles from './styles.module.scss';
 
 const CTabs = ({
-  tabs, tabContent: TabContent, onChange = () => {}, setOrderCounter, customTabs,
+  tabs, tabContent: TabContent, onChange = () => {}, setOrderCounter, customTabProps,
 }) => {
   const [currentTab, setCurrentTab] = useState();
+
   return (
     <div
       className={styles.tab}
@@ -25,8 +26,7 @@ const CTabs = ({
       </Tabs>
       <TabContent
         tab={currentTab}
-        setOrderCounter={setOrderCounter}
-        customTabs={customTabs}
+        {...customTabProps}
       />
     </div>
   );

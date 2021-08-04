@@ -3,15 +3,14 @@ import OrderHistory from './OrderHistory';
 import TradeHistory from './TradeHistory';
 import styles from '../styles.module.scss';
 
-function TabContent({ tab, setOrderCounter, customTabs }) {
+const TabContent = (customTabProps, { tab }) => {
   const isLogged = useSelector((state) => state.user.logged);
-
   if (!isLogged) {
     return <div className={styles['centralize-content']}>Connect your wallet</div>;
   }
 
   if (tab === 'order') {
-    return <OrderHistory setOrderCounter={setOrderCounter} />;
+    return <OrderHistory setOrderCounter={customTabProps.setOrderCounter} />;
   }
 
   if (tab === 'trade') {
@@ -19,6 +18,6 @@ function TabContent({ tab, setOrderCounter, customTabs }) {
   }
 
   return null;
-}
+};
 
 export default TabContent;
