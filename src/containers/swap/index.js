@@ -60,37 +60,61 @@ const SwapPage = ({ tokens }) => {
     },
   });
 
+  const tokensValid = (tokenString) => tokenString.split('-').length === 2;
+
+  const isNotSame = (queryTokens, formValues) => {
+    if (queryTokens && tokensValid(queryTokens)) {
+      const from = queryTokens.split('-')[0];
+      const to = queryTokens.split('-')[1];
+
+      if (
+        from === formValues.from.asset.details.code
+        || to === formValues.to.asset.details.code
+      ) {
+        return false;
+      }
+      return true;
+    }
+    return false;
+  };
   useEffect(() => {
-    if (tokens) {
-      const fromToken = tokens.split('-')[0];
-      const toToken = tokens.split('-')[1];
+    const formValues = getValues();
 
-      const tokenCodes = defaultTokens.map((token) => token.code.toLowerCase());
-      if (tokenCodes.includes(fromToken) && tokenCodes.includes(toToken)) {
-        const fromTokenDetails = defaultTokens.find(
-          (token) => token.code.toLowerCase() === fromToken,
-        );
-        const toTokenDetails = defaultTokens.find(
-          (token) => token.code.toLowerCase() === toToken,
-        );
+    if (tokens && isNotSame(tokens, formValues)) {
+      if (tokensValid(tokens)) {
+        const fromToken = tokens.split('-')[0].toLowerCase();
+        const toToken = tokens.split('-')[1].toLowerCase();
 
-        setValue('to', {
-          amount: null,
-          asset: {
-            logo: toTokenDetails.logo,
-            web: toTokenDetails.web,
-            details: getAssetDetails(toTokenDetails),
-          },
-        });
+        const tokenCodes = defaultTokens.map((token) => token.code.toLowerCase());
 
-        setValue('from', {
-          amount: null,
-          asset: {
-            logo: fromTokenDetails.logo,
-            web: fromTokenDetails.web,
-            details: getAssetDetails(fromTokenDetails),
-          },
-        });
+        if (tokenCodes.includes(fromToken) && tokenCodes.includes(toToken)) {
+          const fromTokenDetails = defaultTokens.find(
+            (token) => token.code.toLowerCase() === fromToken,
+          );
+          const toTokenDetails = defaultTokens.find(
+            (token) => token.code.toLowerCase() === toToken,
+          );
+
+          setValue('to', {
+            amount: null,
+            asset: {
+              logo: toTokenDetails.logo,
+              web: toTokenDetails.web,
+              details: getAssetDetails(toTokenDetails),
+            },
+          });
+
+          setValue('from', {
+            amount: null,
+            asset: {
+              logo: fromTokenDetails.logo,
+              web: fromTokenDetails.web,
+              details: getAssetDetails(fromTokenDetails),
+            },
+          });
+        } else {
+          setError('Invalid Tokens!');
+        }
       } else {
         setError('Invalid Tokens!');
       }
@@ -214,9 +238,12 @@ const SwapPage = ({ tokens }) => {
   return (
     <div className="container-fluid main">
       <Head>
-        {tokens ? (
+        {tokens && tokensValid(tokens) ? (
           <title>
-            Lumenswap | {`${tokens.split('-')[0].toUpperCase()}-${tokens.split('-')[1].toUpperCase()}`}
+            Lumenswap |{' '}
+            {`${tokens.split('-')[0].toUpperCase()}-${tokens
+              .split('-')[1]
+              .toUpperCase()}`}
           </title>
         ) : (
           <title>Lumenswap | Swap</title>
