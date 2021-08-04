@@ -202,16 +202,14 @@ const SwapPage = ({ tokens }) => {
   return (
     <div className="container-fluid main">
       <Head>
-        {/* {tokens ? (
+        {tokens ? (
           <title>
-            Lumenswap |{' '}
-            {`${tokens.split('-')[0].toUpperCase()}-${tokens
-              .split('-')[1]
-              .toUpperCase()}`}
+            Lumenswap | Swap {' '}
+            {`${tokens.from.code}-${tokens.to.code}`}
           </title>
         ) : (
           <title>Lumenswap | Swap</title>
-        )} */}
+        )}
       </Head>
       <Header />
       <div className="row justify-content-center">
