@@ -21,7 +21,7 @@ import AddAsset from 'blocks/AddAsset';
 import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import ExchangeRate from 'containers/swap/ExchangeRate';
-import SwapButton from 'page-scripts/swap/SwapButton';
+import SwapButton from 'containers/swap/SwapButton';
 import Head from 'next/head';
 import styles from './styles.module.scss';
 

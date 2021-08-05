@@ -8,7 +8,7 @@ import fetchMarketPrice from 'helpers/fetchMarketPrice';
 import isSameAsset from 'helpers/isSameAsset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import { loginTypes } from 'reducers/user';
-import ColorizedPriceImpact from 'page-scripts/swap/ColorizedPriceImpact';
+import ColorizedPriceImpact from 'containers/swap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';

@@ -1,18 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
+import dynamic from 'next/dynamic';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
-import TradingviewChart from 'components/TradingviewChart';
+// import TradingviewChart from 'components/TradingviewChart';
 import DetailList from 'components/DetailList';
-import InfoSection from 'page-scripts/spot/InfoSection';
-import OrderSection from 'page-scripts/spot/OrderSection';
-import TradeSection from 'page-scripts/spot/TradeSection';
-import OrderFormSection from 'page-scripts/spot/OrderFormSection';
+import InfoSection from 'containers/spot/InfoSection';
+import OrderSection from 'containers/spot/OrderSection';
+import TradeSection from 'containers/spot/TradeSection';
+import OrderFormSection from 'containers/spot/OrderFormSection';
 // import ChartSection from './ChartSection';
-import OpenDialogElement from 'page-scripts/spot/OpenDialogElement';
+import OpenDialogElement from 'containers/spot/OpenDialogElement';
 import styles from './styles.module.scss';
+
+const TradingviewChart = dynamic(() => import('components/TradingviewChart'), {
+  ssr: false,
+});
 
 const Spot = () => {
   const refHeight = useRef(null);
