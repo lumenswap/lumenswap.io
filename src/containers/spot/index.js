@@ -32,10 +32,11 @@ const Spot = () => {
   });
 
   useEffect(() => {
+    console.log(refHeight.current?.offsetHeight);
     if (refHeight.current) {
       setHeight(refHeight.current.offsetHeight);
     }
-  }, [refHeight.current]);
+  }, [refHeight.current?.offsetHeight]);
 
   return (
     <div className="container-fluid">
@@ -82,7 +83,7 @@ const Spot = () => {
             </div>
             <div
               className={classNames(styles.card, styles['card-input'], 'mb-1')}
-              style={{ height: `calc(100% - ${height + 4}px)` }}
+              // style={{ height: `calc(100% - ${height + 4}px)` }}
             >
               <OrderFormSection appSpotPair={appSpotPair} />
             </div>
