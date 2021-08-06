@@ -5,7 +5,7 @@ import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'helpers/fetchMarketPrice';
 import sevenDigit from 'helpers/sevenDigit';
-import ColorizedPriceImpact from 'page-scripts/swap/ColorizedPriceImpact';
+import ColorizedPriceImpact from 'containers/swap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
 import styles from './styles.module.scss';
 
@@ -21,21 +21,22 @@ export default function LPriceSpreadSection({
 
   useEffect(() => {
     setLoading(true);
-
-    fetchMarketPrice(
-      formValues.from.asset.details,
-      formValues.to.asset.details,
-    )
-      .then((counterPrice) => {
-        if (counterPrice) {
-          setMarketPrice(counterPrice);
-        }
-      }).finally(() => setLoading(false));
+    if (formValues.to.asset) {
+      fetchMarketPrice(
+        formValues.from.asset.details,
+        formValues.to.asset.details,
+      )
+        .then((counterPrice) => {
+          if (counterPrice) {
+            setMarketPrice(counterPrice);
+          }
+        }).finally(() => setLoading(false));
+    }
   }, [
     formValues.from.asset.details.getCode(),
     formValues.from.asset.details.getIssuer(),
-    formValues.to.asset.details.getCode(),
-    formValues.to.asset.details.getIssuer(),
+    formValues.to?.asset?.details?.getCode(),
+    formValues.to?.asset?.details?.getIssuer(),
   ]);
 
   const calculatedMin = new BN(estimatedPrice)
@@ -60,7 +61,7 @@ export default function LPriceSpreadSection({
             ? 'Loading'
             : (
               <>
-                {`${sevenDigit(calculatedMin.toString())} ${formValues.to.asset.details.getCode()}`}
+                {`${sevenDigit(calculatedMin.toString())} ${formValues.to?.asset?.details?.getCode()}`}
               </>
             )}
         </div>
@@ -124,7 +125,7 @@ export default function LPriceSpreadSection({
           {[
             formValues.from.asset.details.getCode(),
             ...paths.map((i) => i.asset_code),
-            formValues.to.asset.details.getCode(),
+            formValues.to?.asset?.details?.getCode(),
           ].map((item, index) => (
             <div className={styles['path-container']} key={index}>
               <span>{item?.toUpperCase() || 'XLM'}</span>

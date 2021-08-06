@@ -63,19 +63,19 @@ const Initializing = ({ loginMethod }) => {
   if (loginMethod === loginTypes.ALBEDO) {
     wallet = 'Albedo';
     walletDesc = 'Easy-to-use browser extension wallet';
-    walletIcon = albedoIcon;
+    walletIcon = albedoIcon.src;
   } else if (loginMethod === loginTypes.FREIGHTER) {
     wallet = 'Freighter';
     walletDesc = 'Easy-to-use browser extension wallet';
-    walletIcon = freighterIcon;
+    walletIcon = freighterIcon.src;
   } else if (loginMethod === loginTypes.LEDGER_S) {
     wallet = 'Ledger';
     walletDesc = 'Easy-to-use hardware wallet';
-    walletIcon = ledgerIcon;
+    walletIcon = ledgerIcon.src;
   } else if (loginMethod === loginTypes.RABET) {
     wallet = 'Rabet';
     walletDesc = 'Easy-to-use browser extension wallet';
-    walletIcon = rabetIcon;
+    walletIcon = rabetIcon.src;
   }
 
   return (
