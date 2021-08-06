@@ -68,6 +68,7 @@ const SelectAsset = ({
 
   function selectAsset(asset) {
     const formValues = getFormValues();
+    setShow(false);
     if (formValues.to.asset
       && (isSameAsset(formValues.from.asset.details, asset.details)
       || isSameAsset(formValues.to.asset.details, asset.details))
@@ -76,7 +77,6 @@ const SelectAsset = ({
     } else {
       setCurrency(asset);
     }
-    setShow(false);
   }
 
   return (

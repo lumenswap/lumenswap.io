@@ -29,13 +29,13 @@ export default function LCurrencyInput({
     originChange(getFormValues().from.amount);
 
     const from = getFormValues().from.asset.details.code;
-    const to = getFormValues().to.asset.details.code;
+    const to = getFormValues().to.asset?.details?.code;
 
     const isFromCustomToken = userCustomTokens
-      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().from.asset.details));
+      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().from.asset?.details));
 
     const isToCustomToken = userCustomTokens
-      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset.details));
+      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
 
     if (isFromCustomToken || isToCustomToken) router.push('/swap');
     else {
