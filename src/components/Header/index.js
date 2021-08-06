@@ -10,6 +10,7 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import numeral from 'numeral';
 import sevenDigit from 'helpers/sevenDigit';
+import NavLink from 'components/NavLink';
 import styles from './styles.module.scss';
 
 const Header = () => {
@@ -22,8 +23,8 @@ const Header = () => {
     <div className={classNames(styles.layout, 'layout')}>
       <ul className={styles.list}>
         <li><Link href="/"><a><Logo /></a></Link></li>
-        <li><Link href="/swap"><a>Swap</a></Link></li>
-        <li><Link href="/spot"><a>Spot</a></Link></li>
+        <li><NavLink name="Swap" href="/swap" /></li>
+        <li><NavLink name="Spot" href="/spot" /></li>
       </ul>
       {isLogged && <div className={styles.lsp}>{numeral(sevenDigit(userLSPBalance?.balance || 0)).format('0,0.[0000000]')} LSP</div>}
       {isLogged ? <CustomDropdown height="40px" width="160px" />

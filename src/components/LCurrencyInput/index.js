@@ -51,6 +51,18 @@ export default function LCurrencyInput({
       onChangeInput(found.balance);
     }
   }
+  function onInputChange(e) {
+    e.preventDefault();
+
+    const number = new BN(e.target.value);
+    if (!number.isNaN()) {
+      onChange({ ...value, amount: e.target.value });
+      onChangeInput(e.target.value);
+    } else if (e.target.value === '') {
+      onChange({ ...value, amount: null });
+      onChangeInput(null);
+    }
+  }
 
   return (
     <CurrencyInput
@@ -64,18 +76,7 @@ export default function LCurrencyInput({
       <input
         placeholder="0.0"
         value={value.amount || ''}
-        onChange={(e) => {
-          e.preventDefault();
-
-          const number = new BN(e.target.value);
-          if (!number.isNaN()) {
-            onChange({ ...value, amount: e.target.value });
-            onChangeInput(e.target.value);
-          } else if (e.target.value === '') {
-            onChange({ ...value, amount: null });
-            onChangeInput(null);
-          }
-        }}
+        onChange={onInputChange}
       />
       {showMax && isLogged && (
         <Button
