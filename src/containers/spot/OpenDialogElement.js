@@ -9,12 +9,14 @@ import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 export default function OpenDialogElement({
-  className, appSpotPair, setAppSpotPair,
+  className,
+  appSpotPair,
+  setAppSpotPair,
 }) {
   const baseTokenLogo = defaultTokens
-    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.base))?.logo || questionLogo;
+    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.base))?.logo || questionLogo.src;
   const counterTokenLogo = defaultTokens
-    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.counter))?.logo || questionLogo;
+    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.counter))?.logo || questionLogo.src;
   const dispatch = useDispatch();
 
   return (
@@ -23,12 +25,12 @@ export default function OpenDialogElement({
         type="button"
         className={classNames(styles['select-logo'], className)}
         onClick={() => {
-          dispatch(openModalAction({
-            modalProps: { title: 'Select a pair' },
-            content: <SelectPair
-              setAppSpotPair={setAppSpotPair}
-            />,
-          }));
+          dispatch(
+            openModalAction({
+              modalProps: { title: 'Select a pair' },
+              content: <SelectPair setAppSpotPair={setAppSpotPair} />,
+            }),
+          );
         }}
       >
         <img className={styles['first-coin']} src={baseTokenLogo} alt="" />

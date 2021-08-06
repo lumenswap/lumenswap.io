@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import Header from 'components/Header';
 import LineChart from 'components/LineChart';
-import { ReactComponent as AngleRight } from 'assets/images/angle-right.svg';
+import AngleRight from 'assets/images/angle-right.svg';
 import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import SendBid from 'blocks/SendBid';
@@ -97,7 +97,7 @@ const Auction = () => {
               Welcome to the Lumenswap auction portal.
               Here you can participate in the LSP auction and view essential information/statistics
             </p>
-            <a href="https://medium.com/lumenswap/lsp-auction-is-live-73761669a3f" target="_blank" className={styles.link} rel="noreferrer">Learn more<AngleRight /></a>
+            <a href="https://medium.com/lumenswap/lsp-auction-is-live-73761669a3f" target="_blank" className={styles.link} rel="noreferrer">Learn more<img src={AngleRight.src} /></a>
           </div>
           <div className="col-xl-4 col-lg-3 col-md-2 col-sm-12 col-12">
             <Button

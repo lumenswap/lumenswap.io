@@ -22,15 +22,15 @@ const CustomDropdown = ({ className }) => {
   const loginMethod = user.loginType;
   let walletIcon;
   if (loginMethod === loginTypes.PV) {
-    walletIcon = privateKeyIcon;
+    walletIcon = privateKeyIcon.src;
   } else if (loginMethod === loginTypes.ALBEDO) {
-    walletIcon = albedoIcon;
+    walletIcon = albedoIcon.src;
   } else if (loginMethod === loginTypes.FREIGHTER) {
-    walletIcon = freighterIcon;
+    walletIcon = freighterIcon.src;
   } else if (loginMethod === loginTypes.LEDGER_S) {
-    walletIcon = ledgerIcon;
+    walletIcon = ledgerIcon.src;
   } else if (loginMethod === loginTypes.RABET) {
-    walletIcon = rabetIcon;
+    walletIcon = rabetIcon.src;
   }
 
   return (

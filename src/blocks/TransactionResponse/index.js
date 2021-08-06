@@ -1,5 +1,5 @@
-import { ReactComponent as SuccessIcon } from 'assets/images/success.svg';
-import { ReactComponent as FailIcon } from 'assets/images/fail.svg';
+import SuccessIcon from 'assets/images/success.svg';
+import FailIcon from 'assets/images/fail.svg';
 import Button from 'components/Button';
 import { closeModalAction } from 'actions/modal';
 import { useDispatch } from 'react-redux';
@@ -13,10 +13,10 @@ const TransactionResponse = ({
   let icon = null;
   let btnContent = null;
   if (status === 'success') {
-    icon = <SuccessIcon className={styles.icon} />;
+    icon = <img src={SuccessIcon.src} className={styles.icon} />;
     btnContent = btnText || <>View on explorer<span className="icon-arrow-right" /></>;
   } else {
-    icon = <FailIcon className={styles.icon} />;
+    icon = <img src={FailIcon.src} className={styles.icon} />;
     btnContent = <>Got it</>;
   }
 

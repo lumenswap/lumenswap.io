@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .card {
   border: 1px solid $CatskillWhite;
@@ -6,7 +6,8 @@
   padding: 10px 20px 18px 16px;
 }
 
-.label, .balance {
+.label,
+.balance {
   font-size: 14px;
   line-height: 1.14;
   color: $RollingStone;
@@ -20,7 +21,7 @@
   margin-top: 14px;
   flex-wrap: nowrap;
   display: flex;
-  align-items: center!important;
+  align-items: center !important;
 
   input {
     border: none;
@@ -41,7 +42,6 @@
   input:focus {
     outline: none;
   }
-
 }
 
 .max {
@@ -85,4 +85,21 @@
 
 .drop-down:hover {
   background-color: $AthensGray;
+}
+
+.no-asset-drop-down {
+  background-color: $BlueRibbon;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12px;
+  border: 0;
+  padding: 5px 10px;
+
+  img {
+    margin: 2px 0 1px 6px;
+  }
+}
+
+.no-asset-drop-down:hover {
+  background-color: $ToreaBay;
 }
