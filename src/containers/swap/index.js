@@ -197,7 +197,7 @@ const SwapPage = ({ tokens }) => {
         changeToAsset({
           details: found,
           web: minimizeAddress(found.getIssuer()),
-          logo: questionLogo.src,
+          logo: questionLogo,
         });
       }
     }

@@ -34,7 +34,7 @@ const AddAsset = ({ changeToAsset }) => {
     changeToAsset({
       details: asset,
       web: minimizeAddress(asset.getIssuer()),
-      logo: questionLogo.src,
+      logo: questionLogo,
     });
     dispatch(closeModalAction());
   };

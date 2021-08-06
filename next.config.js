@@ -1,6 +1,7 @@
 const withTM = require('next-transpile-modules')(['redux-persist']);
+const withImages = require('next-images');
 
-module.exports = withTM({
+module.exports = withImages(withTM({
   env: {
     REACT_APP_HORIZON: process.env.REACT_APP_HORIZON,
     REACT_APP_METRIC_SERVER: process.env.REACT_APP_METRIC_SERVER,
@@ -15,4 +16,5 @@ module.exports = withTM({
       },
     ];
   },
-});
+  webpack5: false,
+}));

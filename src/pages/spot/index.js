@@ -1,6 +1,6 @@
 import SpotPage from 'containers/spot';
-import spotServerSideProps from 'containers/spot/props';
+import { spotPageGetServerSideProps } from 'containers/spot/props';
 
 export default SpotPage;
 
-export const getServerSideProps = spotServerSideProps;
+export const getServerSideProps = spotPageGetServerSideProps;

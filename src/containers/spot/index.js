@@ -15,6 +15,10 @@ import OrderFormSection from 'containers/spot/OrderFormSection';
 import OpenDialogElement from 'containers/spot/OpenDialogElement';
 import styles from './styles.module.scss';
 
+const TVChart = dynamic(() => import('../../components/TVChart'), {
+  ssr: false,
+});
+
 const TradingviewChart = dynamic(() => import('components/TradingviewChart'), {
   ssr: false,
 });
@@ -72,7 +76,8 @@ const Spot = () => {
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
             <div className={classNames(styles.card, styles['card-chart'], 'mb-1')} ref={refHeight}>
               <div>
-                <TradingviewChart appSpotPair={appSpotPair} />
+                <TVChart />
+                {/* <TradingviewChart appSpotPair={appSpotPair} /> */}
               </div>
             </div>
             <div

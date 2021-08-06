@@ -1,4 +1,4 @@
-export async function swapPageGetServerSideProps() {
+export async function spotPageGetServerSideProps() {
   return {
     props: {},
   };

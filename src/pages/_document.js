@@ -45,6 +45,8 @@ class MyDocument extends Document {
           <meta name="identifier-URL" content="https://lumenswap.io" />
           <meta name="category" content="Swap" />
           <meta name="distribution" content="Global" />
+          <script src="/static/datafeeds/udf/dist/polyfills.js" />
+          <script src="/static/datafeeds/udf/dist/bundle.js" />
         </Head>
         <body>
           <Main />

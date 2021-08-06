@@ -14,9 +14,9 @@ export default function OpenDialogElement({
   setAppSpotPair,
 }) {
   const baseTokenLogo = defaultTokens
-    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.base))?.logo || questionLogo.src;
+    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.base))?.logo || questionLogo;
   const counterTokenLogo = defaultTokens
-    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.counter))?.logo || questionLogo.src;
+    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.counter))?.logo || questionLogo;
   const dispatch = useDispatch();
 
   return (
