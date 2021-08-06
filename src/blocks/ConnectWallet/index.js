@@ -17,7 +17,7 @@ const ConnectWallet = () => {
 
   const items = [
     {
-      icon: rabetIcon.src,
+      icon: rabetIcon,
       iconSize: '14',
       text: 'Rabet',
       loginMethod: loginTypes.RABET,
@@ -25,7 +25,7 @@ const ConnectWallet = () => {
       link: 'https://rabet.io',
     },
     {
-      icon: freighterIcon.src,
+      icon: freighterIcon,
       iconSize: '16',
       text: 'Freighter',
       loginMethod: loginTypes.FREIGHTER,
@@ -33,14 +33,14 @@ const ConnectWallet = () => {
       link: 'https://www.freighter.app',
     },
     // {
-    //   icon: ledgerIcon.src,
+    //   icon: ledgerIcon,
     //   iconSize: '18',
     //   text: 'Ledger',
     //   loginMethod: loginTypes.LEDGER_S,
     //   validator: () => true,
     // },
     {
-      icon: albedoIcon.src,
+      icon: albedoIcon,
       iconSize: '18',
       text: 'Albedo',
       loginMethod: loginTypes.ALBEDO,
@@ -65,7 +65,7 @@ const ConnectWallet = () => {
       }}
     >
       <div className="d-flex align-items-center">
-        <div className={styles.circle}><img src={privateKeyIcon.src} width={16} alt="icon" /></div>
+        <div className={styles.circle}><img src={privateKeyIcon} width={16} alt="icon" /></div>
         Private Key
       </div>
       <span className="icon-arrow-left" />

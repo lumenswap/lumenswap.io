@@ -12,7 +12,7 @@ function mapStellarAggregationData(data) {
       high: item.high,
       low: item.low,
       avg: item.avg,
-      volume: item.base_volume,
+      volume: parseInt(item.base_volume, 10),
       counter_volume: item.counter_volume,
     };
   });

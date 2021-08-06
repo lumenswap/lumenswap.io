@@ -76,7 +76,7 @@ const Spot = () => {
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
             <div className={classNames(styles.card, styles['card-chart'], 'mb-1')} ref={refHeight}>
               <div>
-                <TVChart />
+                <TVChart appSpotPair={appSpotPair} />
                 {/* <TradingviewChart appSpotPair={appSpotPair} /> */}
               </div>
             </div>

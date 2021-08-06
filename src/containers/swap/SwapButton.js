@@ -15,8 +15,8 @@ export default function SwapButton({ control, customError }) {
   let variant = 'secondary';
   let message = '';
   let disabled = true;
-  if (customError) {
-    message = customError;
+  if (formValues.to.asset === null) {
+    message = 'Select an asset';
     variant = 'secondary';
     disabled = true;
   } else if (!isLogged) {

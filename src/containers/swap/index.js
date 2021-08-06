@@ -159,10 +159,6 @@ const SwapPage = ({ tokens }) => {
     const formValues = getValues();
 
     if (formValues.to.asset === null) {
-      setError('Please Select an asset');
-      setTimeout(() => {
-        setError(null);
-      }, 2000);
       return;
     }
 

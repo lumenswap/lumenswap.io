@@ -5,18 +5,9 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import { widget } from '../../../public/static/charting_library';
 import { tvChartTrageAggregator } from './utils';
 
-const defaultProps = {
-  symbol: 'AAPL',
+const defaultChartProps = {
   containerId: 'tv_chart_container',
-  datafeedUrl: 'https://demo_feed.tradingview.com',
   libraryPath: '/static/charting_library/',
-  chartsStorageUrl: 'https://saveload.tradingview.com',
-  chartsStorageApiVersion: '1.1',
-  clientId: 'tradingview.com',
-  userId: 'public_user_id',
-  fullscreen: false,
-  autosize: true,
-  studiesOverrides: {},
 };
 
 const configurationData = {
@@ -33,86 +24,72 @@ const reso = {
   '1W': 604800000,
 };
 
-const datafeed = {
-  onReady: (callback) => {
-    console.log('[onReady]: Method call');
-    setTimeout(() => callback(configurationData));
-  },
-  resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
-    console.log('[resolveSymbol] called');
-    console.log(symbolName);
-    onSymbolResolvedCallback({
-      ticker: 'XLM/USDC',
-      symbol: 'XLM/USDC',
-      has_intraday: true,
-      supported_resolutions: configurationData.supported_resolutions,
-    });
-  },
-  getBars: async (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
-    const { to, firstDataRequest } = periodParams;
-    console.log('[getBars]: Method call', firstDataRequest);
-
-    const res = await tvChartTrageAggregator(
-      getAssetDetails(XLM),
-      getAssetDetails(USDC),
-      to * 1000,
-      200,
-      reso[resolution],
-    );
-
-    if (res.length === 0) {
-      onHistoryCallback([], { noData: false });
-    } else {
-      onHistoryCallback(res, { noData: false });
-    }
-  },
-
-  subscribeBars: () => {
-    console.log('sub');
-  },
-
-  unsubscribeBars: () => {
-    console.log('unsub');
-  },
-};
-
-export default function TVChart() {
+export default function TVChart({ appSpotPair }) {
   const tvWidget = useRef();
 
   useEffect(() => {
+    const datafeed = {
+      onReady: (callback) => {
+        console.log('[onReady]: Method call');
+        setTimeout(() => callback(configurationData));
+      },
+      resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
+        console.log('[resolveSymbol] called');
+        onSymbolResolvedCallback({
+          ticker: `${appSpotPair.base.getCode()}/${appSpotPair.counter.getCode()}`,
+          symbol: `${appSpotPair.base.getCode()}/${appSpotPair.counter.getCode()}`,
+          has_intraday: true,
+          supported_resolutions: configurationData.supported_resolutions,
+        });
+      },
+      getBars: async (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
+        const { to, firstDataRequest } = periodParams;
+        console.log('[getBars]: Method call', firstDataRequest);
+
+        const res = await tvChartTrageAggregator(
+          getAssetDetails(appSpotPair.base),
+          getAssetDetails(appSpotPair.counter),
+          to * 1000,
+          200,
+          reso[resolution],
+        );
+
+        if (res.length === 0) {
+          onHistoryCallback([], { noData: true });
+        } else {
+          onHistoryCallback(res, { noData: false });
+        }
+      },
+    
+      subscribeBars: () => {
+        console.log('sub');
+      },
+    
+      unsubscribeBars: () => {
+        console.log('unsub');
+      },
+    }
+
     const widgetOptions = {
       symbol: 'XLM/USDC',
       datafeed,
-      container_id: defaultProps.containerId,
-      library_path: defaultProps.libraryPath,
+      container_id: defaultChartProps.containerId,
+      library_path: defaultChartProps.libraryPath,
       autosize: true,
       disabled_features: ['header_symbol_search', 'study_templates'],
     };
 
+    if (tvWidget.current) {
+      tvWidget.current.remove();
+    }
+
     tvWidget.current = new widget(widgetOptions);
-
-    tvWidget.current.onChartReady(() => {
-      tvWidget.current.headerReady().then(() => {
-        const button = tvWidget.current.createButton();
-        button.setAttribute('title', 'Click to show a notification popup');
-        button.classList.add('apply-common-tooltip');
-        button.addEventListener('click', () => tvWidget.current.showNoticeDialog({
-          title: 'Notification',
-          body: 'TradingView Charting Library API works correctly',
-          callback: () => {
-            console.log('Noticed!');
-          },
-        }));
-
-        button.innerHTML = 'Check API';
-      });
-    });
-  }, []);
+  }, [appSpotPair.base, appSpotPair.counter]);
 
   return (
     <div
       style={{ height: 600 }}
-      id={defaultProps.containerId}
+      id={defaultChartProps.containerId}
     />
   );
 }

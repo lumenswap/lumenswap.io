@@ -20,7 +20,10 @@ const CurrencyInput = ({
 }) => {
   const [show, setShow] = useState(false);
   const userBalance = useSelector((state) => state.userBalance);
-  const foundBalance = userBalance.find((item) => isSameAsset(currentCurrency.details, item.asset));
+  let foundBalance = null;
+  if (currentCurrency) {
+    foundBalance = userBalance.find((item) => isSameAsset(currentCurrency.details, item.asset))
+  }
   const isLogged = useSelector((state) => state.user.logged);
 
   return (
@@ -28,7 +31,7 @@ const CurrencyInput = ({
       <div className="d-flex justify-content-between">
         <div className={styles.label}>{label}</div>
         <div className={styles.balance}>
-          {isLogged
+          {(isLogged && currentCurrency)
             ? `Balance: ${
               foundBalance ? sevenDigit(foundBalance.balance) : '0'
             }`
