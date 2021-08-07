@@ -97,6 +97,10 @@ const SwapPage = ({ tokens }) => {
 
   function changeFromInput(amount) {
     const formValues = getValues();
+    if (formValues.to.asset === null) {
+      return;
+    }
+
     if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
       calculateSendEstimatedAndPath(
@@ -127,6 +131,10 @@ const SwapPage = ({ tokens }) => {
 
   function changeToInput(amount) {
     const formValues = getValues();
+    if (formValues.to.asset === null) {
+      return;
+    }
+
     if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
       calculateReceiveEstimatedAndPath(
@@ -203,7 +211,8 @@ const SwapPage = ({ tokens }) => {
   ]);
 
   const showAdvanced = !new BN(watch('from').amount).isNaN()
-    && !new BN(watch('from').amount).isEqualTo(0);
+    && !new BN(watch('from').amount).isEqualTo(0)
+    && watch('to').asset !== null;
 
   return (
     <div className="container-fluid main">

@@ -21,10 +21,14 @@ export default function ExchangeRate({ estimatedPrice, control, loading }) {
 
   const leftSide = !reverse
     ? formValues.from.asset.details.getCode()
-    : formValues.to.asset.details.getCode();
+    : formValues.to.asset?.details?.getCode();
   const rightSide = !reverse
-    ? formValues.to.asset.details.getCode()
+    ? formValues.to.asset?.details?.getCode()
     : formValues.from.asset.details.getCode();
+
+  if (formValues.to.asset === null) {
+    return null;
+  }
 
   return (
     <p className={styles.info}>

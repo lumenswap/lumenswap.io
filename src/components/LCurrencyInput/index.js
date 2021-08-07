@@ -51,6 +51,7 @@ export default function LCurrencyInput({
       onChangeInput(found.balance);
     }
   }
+  
   function onInputChange(e) {
     e.preventDefault();
 
