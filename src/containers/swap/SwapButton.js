@@ -4,7 +4,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import { useWatch } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-export default function SwapButton({ control, customError }) {
+export default function SwapButton({ control }) {
   const isLogged = useSelector((state) => state.user.logged);
   const formValues = useWatch({ control });
   const userBalance = useSelector((state) => state.userBalance);

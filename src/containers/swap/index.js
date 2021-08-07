@@ -24,17 +24,22 @@ import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'containers/swap/SwapButton';
 import Head from 'next/head';
 import styles from './styles.module.scss';
+import { useRef } from 'react';
+import shortid from 'shortid';
+
+const REQ_TIMEOUT_MS = 1000;
 
 const SwapPage = ({ tokens }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
   const [paths, setPaths] = useState([]);
   const isLogged = useSelector((state) => state.user.logged);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const router = useRouter();
   const dispatch = useDispatch();
+  const reqID = useRef();
+  const timeoutRef = useRef();
 
   const {
     handleSubmit, control, setValue, getValues, watch,
@@ -103,22 +108,30 @@ const SwapPage = ({ tokens }) => {
 
     if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
-      calculateSendEstimatedAndPath(
-        amount,
-        formValues.from.asset.details,
-        formValues.to.asset.details,
-      )
-        .then((res) => {
-          setEstimatedPrice(res.minAmount);
-          setPaths(res.path);
-          setValue('to', {
-            ...formValues.to,
-            amount: res.minAmount,
+      reqID.current = shortid();
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        calculateSendEstimatedAndPath(
+          amount,
+          formValues.from.asset.details,
+          formValues.to.asset.details,
+        )
+          .then((res) => {
+            console.log(reqID.current);
+            setEstimatedPrice(res.minAmount);
+            setPaths(res.path);
+            setValue('to', {
+              ...formValues.to,
+              amount: res.minAmount,
+            });
+          })
+          .finally(() => {
+            setLoading(false);
           });
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      }, REQ_TIMEOUT_MS);
     }
 
     if (amount === null || new BN(amount).isEqualTo(0)) {
@@ -137,22 +150,29 @@ const SwapPage = ({ tokens }) => {
 
     if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
-      calculateReceiveEstimatedAndPath(
-        amount,
-        formValues.from.asset.details,
-        formValues.to.asset.details,
-      )
-        .then((res) => {
-          setEstimatedPrice(amount);
-          setPaths(res.path.reverse());
-          setValue('from', {
-            ...formValues.from,
-            amount: res.minAmount,
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      timeoutRef.current = setTimeout(() => {
+        calculateReceiveEstimatedAndPath(
+          amount,
+          formValues.from.asset.details,
+          formValues.to.asset.details,
+        )
+          .then((res) => {
+            setEstimatedPrice(amount);
+            setPaths(res.path.reverse());
+            setValue('from', {
+              ...formValues.from,
+              amount: res.minAmount,
+            });
+          })
+          .finally(() => {
+            setLoading(false);
           });
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      }, REQ_TIMEOUT_MS);
     }
 
     if (amount === null || new BN(amount).isEqualTo(0)) {
@@ -275,7 +295,7 @@ const SwapPage = ({ tokens }) => {
                 estimatedPrice={estimatedPrice}
                 loading={loading}
               />
-              <SwapButton customError={error} control={control} />
+              <SwapButton control={control} />
               <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
                 <ConfirmSwap />
               </ModalDialog>
