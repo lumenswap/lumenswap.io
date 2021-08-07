@@ -25,7 +25,6 @@ import SwapButton from 'containers/swap/SwapButton';
 import Head from 'next/head';
 import styles from './styles.module.scss';
 import { useRef } from 'react';
-import shortid from 'shortid';
 
 const REQ_TIMEOUT_MS = 1000;
 
@@ -108,7 +107,6 @@ const SwapPage = ({ tokens }) => {
 
     if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
-      reqID.current = shortid();
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
