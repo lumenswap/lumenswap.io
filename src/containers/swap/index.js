@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
 import ModalDialog from 'components/ModalDialog';
@@ -7,12 +7,10 @@ import Header from 'components/Header';
 import LCurrencyInput from 'components/LCurrencyInput';
 import XLM from 'tokens/XLM';
 import LPriceSpreadSection from 'components/LPriceSpreadSection';
-import USDC from 'tokens/USDC';
 import calculateSendEstimatedAndPath from 'helpers/calculateSendEstimatedAndPath';
 import calculateReceiveEstimatedAndPath from 'helpers/calculateReceiveEstimatedAndPath';
 import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
-import defaultTokens from 'tokens/defaultTokens';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -24,7 +22,6 @@ import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'containers/swap/SwapButton';
 import Head from 'next/head';
 import styles from './styles.module.scss';
-import { useRef } from 'react';
 
 const REQ_TIMEOUT_MS = 1000;
 
@@ -133,6 +130,10 @@ const SwapPage = ({ tokens }) => {
     }
 
     if (amount === null || new BN(amount).isEqualTo(0)) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
       setValue('to', {
         ...formValues.to,
         amount: '',
@@ -152,7 +153,7 @@ const SwapPage = ({ tokens }) => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-      
+
       timeoutRef.current = setTimeout(() => {
         calculateReceiveEstimatedAndPath(
           amount,
@@ -174,6 +175,10 @@ const SwapPage = ({ tokens }) => {
     }
 
     if (amount === null || new BN(amount).isEqualTo(0)) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
       setValue('from', {
         ...formValues.from,
         amount: '',
