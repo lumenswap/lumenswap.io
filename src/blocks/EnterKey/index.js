@@ -4,7 +4,7 @@ import Input from 'components/Input';
 import Button from 'components/Button';
 import Submitting from 'components/Submitting';
 import getPubFromPv from 'helpers/getPubFromPv';
-import { fetchAccountTokenList } from 'api/stellar';
+import { fetchAccountDetails } from 'api/stellar';
 import { setUserBalance } from 'actions/userBalance';
 import userLogin from 'actions/user/login';
 import { loginTypes } from 'reducers/user';
@@ -24,13 +24,16 @@ const EnterKey = () => {
     setLoadingTimer(true);
     const address = getPubFromPv(data.privateKey);
 
-    fetchAccountTokenList(address)
+    fetchAccountDetails(address)
       .then((res) => {
-        dispatch(userLogin(loginTypes.PV, { address, privateKey: data.privateKey }));
-        dispatch(setUserBalance(res.map(balanceMapper)));
+        dispatch(userLogin(loginTypes.PV, {
+          address,
+          privateKey: data.privateKey,
+          subentry: res.subentry,
+        }));
+        dispatch(setUserBalance(res.balances.map(balanceMapper)));
         dispatch(closeModalAction());
       })
-      .catch(console.log)
       .finally(() => {
         setLoadingTimer(false);
       });
