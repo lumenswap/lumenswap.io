@@ -38,16 +38,17 @@ export default function TVChart({ appSpotPair }) {
           symbol: `${appSpotPair.base.getCode()}/${appSpotPair.counter.getCode()}`,
           has_intraday: true,
           supported_resolutions: configurationData.supported_resolutions,
+          session: '24x7',
         });
       },
       getBars: async (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
-        const { to, firstDataRequest } = periodParams;
-        console.log('[getBars]: Method call', firstDataRequest);
+        const { to, from, firstDataRequest } = periodParams;
+        console.log('[getBars]: Method call', firstDataRequest, from, to);
 
         const res = await tvChartTrageAggregator(
           getAssetDetails(appSpotPair.base),
           getAssetDetails(appSpotPair.counter),
-          to * 1000,
+          Date.now() < to * 1000 ? Date.now() : to * 1000,
           200,
           reso[resolution],
         );
@@ -74,7 +75,14 @@ export default function TVChart({ appSpotPair }) {
       container_id: defaultChartProps.containerId,
       library_path: defaultChartProps.libraryPath,
       autosize: true,
-      disabled_features: ['header_symbol_search', 'study_templates'],
+      disabled_features: [
+        'header_symbol_search',
+        'study_templates',
+        'header_compare',
+        'header_settings',
+        'timeframes_toolbar',
+      ],
+
     };
 
     if (tvWidget.current) {

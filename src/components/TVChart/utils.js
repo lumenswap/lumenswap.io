@@ -1,21 +1,28 @@
 import { fetchTradeAggregationAPI } from 'api/stellar';
 
 function mapStellarAggregationData(data) {
-  return data.reverse().map((item) => {
-    {
-      'a';
+  return data.map((item, index) => {
+    let open;
+    if (data[index + 1]) {
+      open = data[index + 1].close;
+    } else {
+      open = item.open;
     }
+    if (index === 0) {
+      console.log(item, open, index, data[index + 1]);
+    }
+
     return {
       time: parseInt(item.timestamp, 10),
-      open: item.open,
-      close: item.close,
-      high: item.high,
-      low: item.low,
-      avg: item.avg,
+      open: parseFloat(open),
+      close: parseFloat(item.close),
+      high: parseFloat(item.high),
+      low: parseFloat(item.low),
+      avg: parseFloat(item.avg),
       volume: parseInt(item.base_volume, 10),
       counter_volume: item.counter_volume,
     };
-  });
+  }).reverse();
 }
 
 export function tvChartTrageAggregator(
