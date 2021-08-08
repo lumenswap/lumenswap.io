@@ -26,8 +26,8 @@ const tableRows = (rows) => rows.map((row) => (
     <td>
       <span
         onClick={async () => {
+          const store = initializeStore();
           function func() {
-            const store = initializeStore();
             const address = store.getState().user.detail.address;
             return generateManageSellTRX(
               address,
@@ -39,8 +39,8 @@ const tableRows = (rows) => rows.map((row) => (
             );
           }
 
-          showGenerateTrx(func)
-            .then(showSignResponse)
+          showGenerateTrx(func, store.dispatch)
+            .then((trx) => showSignResponse(trx, store.dispatch))
             .catch(console.error);
         }}
         style={{

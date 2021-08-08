@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 const CTabs = ({
   tabs, tabContent: TabContent, onChange = () => {}, customTabProps,
 }) => {
-  const [currentTab, setCurrentTab] = useState();
+  const [currentTab, setCurrentTab] = useState(tabs[0].id);
 
   return (
     <div

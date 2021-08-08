@@ -13,10 +13,10 @@ const TransactionResponse = ({
   let icon = null;
   let btnContent = null;
   if (status === 'success') {
-    icon = <img src={SuccessIcon.src} className={styles.icon} />;
+    icon = <img src={SuccessIcon} className={styles.icon} />;
     btnContent = btnText || <>View on explorer<span className="icon-arrow-right" /></>;
   } else {
-    icon = <img src={FailIcon.src} className={styles.icon} />;
+    icon = <img src={FailIcon} className={styles.icon} />;
     btnContent = <>Got it</>;
   }
 

@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useSelector } from 'react-redux';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
@@ -13,22 +12,14 @@ import InfoSection from 'containers/spot/InfoSection';
 import OrderSection from 'containers/spot/OrderSection';
 import TradeSection from 'containers/spot/TradeSection';
 import OrderFormSection from 'containers/spot/OrderFormSection';
-// import ChartSection from './ChartSection';
 import OpenDialogElement from 'containers/spot/OpenDialogElement';
-import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
   ssr: false,
 });
 
-const TradingviewChart = dynamic(() => import('components/TradingviewChart'), {
-  ssr: false,
-});
-
 const Spot = ({ tokens }) => {
-  const refHeight = useRef(null);
-  const [height, setHeight] = useState(0);
   const [appSpotPair, setAppSpotPair] = useState({
     base: getAssetDetails(XLM),
     counter: getAssetDetails(USDC),
@@ -42,13 +33,6 @@ const Spot = ({ tokens }) => {
       });
     }
   }, [tokens]);
-
-  useEffect(() => {
-    console.log(refHeight.current?.offsetHeight);
-    if (refHeight.current) {
-      setHeight(refHeight.current.offsetHeight);
-    }
-  }, [refHeight.current?.offsetHeight]);
 
   return (
     <div className="container-fluid">
@@ -104,11 +88,9 @@ const Spot = ({ tokens }) => {
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
             <div
               className={classNames(styles.card, styles['card-chart'], 'mb-1')}
-              ref={refHeight}
             >
               <div>
                 <TVChart appSpotPair={appSpotPair} />
-                {/* <TradingviewChart appSpotPair={appSpotPair} /> */}
               </div>
             </div>
             <div

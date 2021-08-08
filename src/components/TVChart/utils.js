@@ -1,7 +1,7 @@
 import { fetchTradeAggregationAPI } from 'api/stellar';
 
 function mapStellarAggregationData(data) {
-  return data.reverse().map((item, index) => {
+  return data.reverse().map((item) => {
     {
       'a';
     }

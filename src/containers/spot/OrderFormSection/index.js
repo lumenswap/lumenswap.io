@@ -80,8 +80,8 @@ const InnerForm = ({
       throw new Error('Not supported type');
     }
 
-    showGenerateTrx(func)
-      .then(showSignResponse)
+    showGenerateTrx(func, dispatch)
+      .then((trx) => showSignResponse(trx, dispatch))
       .catch(console.log);
   }
 
