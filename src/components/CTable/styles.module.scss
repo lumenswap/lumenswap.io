@@ -30,18 +30,18 @@
   .row-item {
     span {
       margin-left: 24px;
+      a {
+        color: inherit;
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
   }
   .row-item:first-child {
     color: $BlueRibbon;
   }
-  .links {
-    margin-left: 24px;
-    color: $BlueRibbon;
-    &:hover {
-      text-decoration: none;
-    }
-  }
+  
 
   
   .row {

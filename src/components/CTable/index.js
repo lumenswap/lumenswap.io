@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 import styles from './styles.module.scss';
 
 const CTable = ({ columns, dataSource, className }) => (
@@ -17,26 +18,16 @@ const CTable = ({ columns, dataSource, className }) => (
       </tr>
 
       {dataSource.map((data) => (
-        <tr className={styles.row} key={data.key}>
+        <tr className={styles.row} key={data.key ?? nanoid(4)}>
           {columns.map((column) => (
             <td
               className={styles['row-item']}
             >
-              {column.title === 'Tx' ? (
-                <a
-                  className={styles.links}
-                  target="_blank"
-                  href={data.Url}
-                  rel="noreferrer"
-                >
-                  {column.render ? column.render(data) : data[column.title]}
-                </a>
-              ) : (
-                <span>
-                  {column.render ? column.render(data) : data[column.title]}
-                </span>
-              )}
-
+              <span>
+                {column.render
+                  ? column.render(data[column.title], data.Url)
+                  : data[column.title]}
+              </span>
             </td>
           ))}
         </tr>
