@@ -3,9 +3,10 @@ import { useStore } from 'store';
 import { persistStore } from 'redux-persist';
 import { useRef, useEffect } from 'react';
 import { setUserBalance } from 'actions/userBalance';
-import { fetchAccountTokenList } from 'api/stellar';
+import { fetchAccountDetails } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
 import { PersistGate } from 'redux-persist/integration/react';
+import updateUserDetail from 'actions/user/updateUserDetail';
 import LModal from '../containers/LModal';
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,9 +24,10 @@ function MyApp({ Component, pageProps }) {
     intervalRef.current = setInterval(() => {
       const storeData = store.getState();
       if (storeData.user.logged) {
-        fetchAccountTokenList(storeData.user.detail.address).then((res) => {
-          store.dispatch(setUserBalance(res.map(balanceMapper)));
-        });
+        fetchAccountDetails(storeData.user.detail.address).then((res) => {
+          store.dispatch(setUserBalance(res.balances.map(balanceMapper)));
+          store.dispatch(updateUserDetail({ subentry: res.subentry }));
+        }).catch(() => { });
       }
     }, 2000);
 

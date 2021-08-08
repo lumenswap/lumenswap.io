@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 const FetchDataLoading = () => (
   <div className={styles.container}>
-    <img src={Bars.src} />
+    <img src={Bars} />
   </div>
 );
 

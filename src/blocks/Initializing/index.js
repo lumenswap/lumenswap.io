@@ -11,7 +11,7 @@ import { closeModalAction } from 'actions/modal';
 import userLogin from 'actions/user/login';
 import { setUserBalance } from 'actions/userBalance';
 import balanceMapper from 'helpers/balanceMapper';
-import { fetchAccountTokenList } from 'api/stellar';
+import { fetchAccountDetails } from 'api/stellar';
 import loginWithLedger from 'walletIntegeration/logins/loginWithLedger';
 import loginWithFreighter from 'walletIntegeration/logins/loginWithFreighter';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
@@ -40,9 +40,9 @@ const Initializing = ({ loginMethod }) => {
         throw new Error('cannot handle login type');
       }
 
-      const tokenList = await fetchAccountTokenList(address);
-      dispatch(userLogin(loginMethod, { address }));
-      dispatch(setUserBalance(tokenList.map(balanceMapper)));
+      const accountDetail = await fetchAccountDetails(address);
+      dispatch(userLogin(loginMethod, { address, subentry: accountDetail.subentry }));
+      dispatch(setUserBalance(accountDetail.balances.map(balanceMapper)));
 
       dispatch(closeModalAction());
     } catch (e) {

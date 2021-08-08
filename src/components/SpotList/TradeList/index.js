@@ -11,7 +11,7 @@ const TradeList = ({
   }
 
   return (
-    <div className={styles['table-container']}>
+    <div className={styles['table-container']} style={{ minHeight: 650 }}>
       <div className={classNames(styles.heading, styles['table-head'])}>
         {headerItem.map((header, index) => (
           <div className={classNames(styles['row-item'], styles['trade-header'])} key={index}>{header}</div>

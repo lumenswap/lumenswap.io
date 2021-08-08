@@ -8,12 +8,15 @@ export function getReceiveEstimatedValueAPI(params) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/paths/strict-receive`, { params }).then((res) => res.data._embedded.records[0]);
 }
 
-export function fetchAccountTokenList(address) {
+export function fetchAccountDetails(address) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${address}`)
-    .then((res) => res.data.balances.map((item) => ({
-      ...item,
-      balance: item.balance,
-    })));
+    .then((res) => ({
+      subentry: res.data.subentry_count,
+      balances: res.data.balances,
+    })).catch(() => ({
+      subentry: 0,
+      balances: [],
+    }));
 }
 
 export function fetchTradeAggregationAPI(baseAsset, counterAsset, params) {

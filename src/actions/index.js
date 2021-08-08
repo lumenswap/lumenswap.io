@@ -2,6 +2,7 @@ const actionTypes = {
   user: {
     LOGIN: 'user/LOGIN',
     LOGOUT: 'user/LOGOUT',
+    UPDATE_DETAIL: 'user/UPDATE_DETAIL',
   },
   tokenList: {
     SET: 'tokenList/SET',

@@ -28,6 +28,16 @@ export default (state = defaultState, action) => {
       return defaultState;
     }
 
+    case actionTypes.user.UPDATE_DETAIL: {
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          ...action.detail,
+        },
+      };
+    }
+
     default: {
       return state;
     }

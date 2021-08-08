@@ -34,7 +34,7 @@ const AddAsset = ({ changeToAsset }) => {
     changeToAsset({
       details: asset,
       web: minimizeAddress(asset.getIssuer()),
-      logo: questionLogo.src,
+      logo: questionLogo,
     });
     dispatch(closeModalAction());
   };
@@ -70,14 +70,14 @@ const AddAsset = ({ changeToAsset }) => {
     return false;
   }
 
-  useEffect(() => {
-    const extracted = router.query.slice(1).split('-');
-    if (router.pathname === '/swap' && router.query) {
-      setValue('code', extracted[0]);
-      setValue('issuer', extracted[1]);
-      trigger();
-    }
-  }, [router.pathname, router.query]);
+  // useEffect(() => {
+  //   const extracted = router.query.slice(1).split('-');
+  //   if (router.pathname === '/swap' && router.query) {
+  //     setValue('code', extracted[0]);
+  //     setValue('issuer', extracted[1]);
+  //     trigger();
+  //   }
+  // }, [router.pathname, router.query]);
 
   const showError = errors?.code?.message || errors?.issuer?.message;
 

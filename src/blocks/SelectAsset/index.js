@@ -50,7 +50,7 @@ const SelectAsset = ({
       return {
         details: item,
         web: minimizeAddress(item.getIssuer()),
-        logo: questionLogo.src,
+        logo: questionLogo,
         balance: foundBalance ? foundBalance.balance : '0',
         type: 'custom',
       };
@@ -68,15 +68,15 @@ const SelectAsset = ({
 
   function selectAsset(asset) {
     const formValues = getFormValues();
-    if (
-      isSameAsset(formValues.from.asset.details, asset.details)
-      || isSameAsset(formValues.to.asset.details, asset.details)
+    setShow(false);
+    if (formValues.to.asset
+      && (isSameAsset(formValues.from.asset.details, asset.details)
+      || isSameAsset(formValues.to.asset.details, asset.details))
     ) {
       swapFromWithTo();
     } else {
       setCurrency(asset);
     }
-    setShow(false);
   }
 
   return (
@@ -124,10 +124,10 @@ const SelectAsset = ({
         className={styles.submit}
         onClick={() => {
           setShow(false);
-          openModalAction({
+          dispatch(openModalAction({
             modalProps: { title: 'Add custom asset' },
             content: <AddAsset changeToAsset={changeToAsset} />,
-          });
+          }));
         }}
       >
         <span

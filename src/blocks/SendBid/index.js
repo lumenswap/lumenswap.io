@@ -12,12 +12,14 @@ import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 import isSameAsset from 'helpers/isSameAsset';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const SendBid = ({ setShow }) => {
   const {
     handleSubmit, control, watch, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     trigger(['lsp', 'price']);
@@ -40,8 +42,8 @@ const SendBid = ({ setShow }) => {
 
     setShow(false);
 
-    showGenerateTrx(func)
-      .then(showSignResponse)
+    showGenerateTrx(func, dispatch)
+      .then((trx) => showSignResponse(trx, dispatch))
       .catch(console.log);
   }
 

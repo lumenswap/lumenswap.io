@@ -8,17 +8,19 @@ import fetchMarketPrice from 'helpers/fetchMarketPrice';
 import isSameAsset from 'helpers/isSameAsset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import { loginTypes } from 'reducers/user';
-import ColorizedPriceImpact from 'page-scripts/swap/ColorizedPriceImpact';
+import ColorizedPriceImpact from 'containers/swap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import { initializeStore } from 'store';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const ConfirmSwap = ({ data }) => {
   const [reverse, setReverse] = useState(true);
   const [marketPrice, setMarketPrice] = useState(0);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -73,8 +75,8 @@ const ConfirmSwap = ({ data }) => {
       }, storeData.user.loginType === loginTypes.LEDGER_S);
     }
 
-    showGenerateTrx(func)
-      .then(showSignResponse)
+    showGenerateTrx(func, dispatch)
+      .then((trx) => showSignResponse(trx, dispatch))
       .catch(console.error);
 
     // await showSignResponse(trx);
