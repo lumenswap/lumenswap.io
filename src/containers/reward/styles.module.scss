@@ -34,3 +34,53 @@
     color: $CodGray;
     margin-bottom: 16px;
 }
+
+
+
+
+.connect-container {
+    margin-top: 56px;
+    width: 287px;
+    height: 196px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.div-icon {
+    width: 68px;
+    height: 68px;
+    background-color: $White;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.connect-text { 
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $CodGray;
+  width: 100%;
+  height: 46px;
+  margin-top: 18px;
+  margin-bottom: 24px;
+  line-height: 130%;
+}
+.connect-btn {
+    width: 135px;
+    height: 40px;
+    border-radius: 8px;
+    outline: 0;
+    border: none;
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    font-weight: 500;
+}
