@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { useSelector } from 'react-redux';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
@@ -13,6 +15,7 @@ import TradeSection from 'containers/spot/TradeSection';
 import OrderFormSection from 'containers/spot/OrderFormSection';
 // import ChartSection from './ChartSection';
 import OpenDialogElement from 'containers/spot/OpenDialogElement';
+import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
@@ -23,13 +26,22 @@ const TradingviewChart = dynamic(() => import('components/TradingviewChart'), {
   ssr: false,
 });
 
-const Spot = () => {
+const Spot = ({ tokens }) => {
   const refHeight = useRef(null);
   const [height, setHeight] = useState(0);
   const [appSpotPair, setAppSpotPair] = useState({
     base: getAssetDetails(XLM),
     counter: getAssetDetails(USDC),
   });
+
+  useEffect(() => {
+    if (tokens) {
+      setAppSpotPair({
+        base: getAssetDetails(tokens.from),
+        counter: getAssetDetails(tokens.to),
+      });
+    }
+  }, [tokens]);
 
   useEffect(() => {
     console.log(refHeight.current?.offsetHeight);
@@ -40,6 +52,15 @@ const Spot = () => {
 
   return (
     <div className="container-fluid">
+      <Head>
+        {tokens ? (
+          <title>
+            Lumenswap | Spot {`${tokens.from.code}-${tokens.to.code}`}
+          </title>
+        ) : (
+          <title>Lumenswap | Spot</title>
+        )}
+      </Head>
       <Header />
       <div className="layout mt-4 other">
         {/* top section */}
@@ -69,13 +90,22 @@ const Spot = () => {
         <div className={classNames('row', styles.row)}>
           {/* order section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-xl-1 order-lg-2 order-sm-2 order-2 c-col">
-            <div className={classNames(styles.card, styles['card-left'], 'invisible-scroll')}>
+            <div
+              className={classNames(
+                styles.card,
+                styles['card-left'],
+                'invisible-scroll',
+              )}
+            >
               <OrderSection appSpotPair={appSpotPair} />
             </div>
           </div>
           {/* middle section */}
           <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 order-xl-2 order-lg-1 order-md-1 order-sm-1 order-1 c-col">
-            <div className={classNames(styles.card, styles['card-chart'], 'mb-1')} ref={refHeight}>
+            <div
+              className={classNames(styles.card, styles['card-chart'], 'mb-1')}
+              ref={refHeight}
+            >
               <div>
                 <TVChart appSpotPair={appSpotPair} />
                 {/* <TradingviewChart appSpotPair={appSpotPair} /> */}
@@ -90,7 +120,13 @@ const Spot = () => {
           </div>
           {/* trade section */}
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 order-3 c-col">
-            <div className={classNames(styles.card, styles['card-right'], 'invisible-scroll')}>
+            <div
+              className={classNames(
+                styles.card,
+                styles['card-right'],
+                'invisible-scroll',
+              )}
+            >
               <TradeSection appSpotPair={appSpotPair} />
             </div>
           </div>

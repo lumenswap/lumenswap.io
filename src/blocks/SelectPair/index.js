@@ -12,6 +12,7 @@ import questionLogo from 'assets/images/question.png';
 import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
 import isSamePair from 'helpers/isSamePair';
+import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
 import createPairForDefaultTokens from './createPairForDefaultTokens';
@@ -22,6 +23,7 @@ const SelectPair = ({ setAppSpotPair }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
   const [searchQuery, setSearchQuery] = useState(null);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const enrichedPairs = useMemo(() => {
     const result = purePairs([
@@ -126,7 +128,12 @@ const SelectPair = ({ setAppSpotPair }) => {
                   base: item.base.details,
                   counter: item.counter.details,
                 });
-
+                const found = customPairs.find(
+                  (pair) => pair.base.code === item.base.details.code
+                    && pair.counter.code === item.counter.details.code,
+                );
+                if (found) router.push('/spot/custom');
+                else router.push(`/spot/${item.base.details.code}-${item.counter.details.code}`);
                 dispatch(closeModalAction());
               }}
             >
@@ -156,10 +163,10 @@ const SelectPair = ({ setAppSpotPair }) => {
           type="submit"
           className={styles.submit}
           onClick={() => {
-            openModalAction({
+            dispatch(openModalAction({
               modalProps: { title: 'Add custom pair' },
               content: <AddCustomPair />,
-            });
+            }));
           }}
         >
           <span
