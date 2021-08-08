@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
@@ -26,15 +27,12 @@ const TradingviewChart = dynamic(() => import('components/TradingviewChart'), {
 });
 
 const Spot = ({ tokens }) => {
-  const router = useRouter();
   const refHeight = useRef(null);
   const [height, setHeight] = useState(0);
   const [appSpotPair, setAppSpotPair] = useState({
     base: getAssetDetails(XLM),
     counter: getAssetDetails(USDC),
   });
-
-  const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
   useEffect(() => {
     if (tokens) {
@@ -54,6 +52,15 @@ const Spot = ({ tokens }) => {
 
   return (
     <div className="container-fluid">
+      <Head>
+        {tokens ? (
+          <title>
+            Lumenswap | Spot {`${tokens.from.code}-${tokens.to.code}`}
+          </title>
+        ) : (
+          <title>Lumenswap | Spot</title>
+        )}
+      </Head>
       <Header />
       <div className="layout mt-4 other">
         {/* top section */}
