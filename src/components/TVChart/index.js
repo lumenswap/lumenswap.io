@@ -1,6 +1,4 @@
 import { useRef, useEffect } from 'react';
-import USDC from 'tokens/USDC';
-import XLM from 'tokens/XLM';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { widget } from '../../../public/static/charting_library';
 import { tvChartTrageAggregator } from './utils';
@@ -60,15 +58,15 @@ export default function TVChart({ appSpotPair }) {
           onHistoryCallback(res, { noData: false });
         }
       },
-    
+
       subscribeBars: () => {
         console.log('sub');
       },
-    
+
       unsubscribeBars: () => {
         console.log('unsub');
       },
-    }
+    };
 
     const widgetOptions = {
       symbol: 'XLM/USDC',
@@ -88,7 +86,7 @@ export default function TVChart({ appSpotPair }) {
 
   return (
     <div
-      style={{ height: 410 }}
+      style={{ height: 405 }}
       id={defaultChartProps.containerId}
     />
   );
