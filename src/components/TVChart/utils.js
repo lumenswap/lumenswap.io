@@ -8,9 +8,6 @@ function mapStellarAggregationData(data) {
     } else {
       open = item.open;
     }
-    if (index === 0) {
-      console.log(item, open, index, data[index + 1]);
-    }
 
     return {
       time: parseInt(item.timestamp, 10),
