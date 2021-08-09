@@ -25,6 +25,7 @@ const Header = () => {
         <li><Link href="/"><a><Logo /></a></Link></li>
         <li><NavLink name="Swap" href="/swap" /></li>
         <li><NavLink name="Spot" href="/spot" /></li>
+        <li><NavLink name="Wallet" href="/wallet" /></li>
       </ul>
       {isLogged && <div className={styles.lsp}>{numeral(sevenDigit(userLSPBalance?.balance || 0)).format('0,0.[0000000]')} LSP</div>}
       {isLogged ? <CustomDropdown height="40px" width="160px" />

@@ -137,6 +137,12 @@ input[type='number'] {
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
 }
 
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: $CodGray;
+}
+
 @media (max-width: $lg) {
   .layout-inside {
     padding-right: 50px;
