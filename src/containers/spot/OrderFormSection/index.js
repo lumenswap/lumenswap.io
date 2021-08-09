@@ -14,6 +14,8 @@ import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import { initializeStore } from 'store';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
+import XLM from 'tokens/XLM';
+import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from '../styles.module.scss';
 
 function showBalance(isLogged, foundBalance) {
@@ -35,15 +37,19 @@ function isNumber(text) {
 const InnerForm = ({
   baseAsset, counterAsset, mainAsset, type, upperOrderPrice,
 }) => {
+  const isSell = type === 'sell';
   const isLogged = useSelector((state) => state.user.logged);
-  const foundBalance = useSelector((state) => state
+  const foundUserAsset = useSelector((state) => state
     .userBalance
-    .find((i) => isSameAsset(i.asset, type === 'sell' ? baseAsset : counterAsset))
-    ?.balance);
+    .find((i) => isSameAsset(i.asset, type === 'sell' ? baseAsset : counterAsset)));
   const [sliderValue, setSliderValue] = useState(0);
+  const userSubentry = useSelector((state) => state.user.detail.subentry);
   const dispatch = useDispatch();
 
-  const isSell = type === 'sell';
+  let foundBalance = foundUserAsset?.balance;
+  if (foundUserAsset && isSameAsset(getAssetDetails(foundUserAsset.asset), getAssetDetails(XLM))) {
+    foundBalance = calculateMaxXLM(foundUserAsset.balance, userSubentry);
+  }
 
   const {
     handleSubmit, setValue, getValues, control, reset,
@@ -188,7 +194,7 @@ const InnerForm = ({
       <div className="d-flex justify-content-between align-items-center mb-2">
         <div className={styles['form-title']}>{type === 'sell' ? 'Sell' : 'Buy'} {mainAsset.getCode()}</div>
         <div className={styles['form-value']}><span className="icon-wallet" />
-          {showBalance(isLogged, foundBalance)}{' '}
+          {showBalance(isLogged, foundUserAsset?.balance)}{' '}
           {isSell ? baseAsset.getCode() : counterAsset.getCode()}
         </div>
       </div>
