@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
@@ -9,10 +9,13 @@ import Table from 'components/Table';
 import sampleLogo from 'assets/images/btc-logo.png';
 import Input from 'components/Input';
 import Checkbox from 'components/Checkbox';
+import ModalDialog from 'components/ModalDialog';
+import SendAsset from 'blocks/SendAsset';
 
 import styles from './styles.module.scss';
 
 const wallet = () => {
+  const [show, setShow] = useState(false);
   const { control, register, handleSubmit } = useForm({
     mode: 'onChange',
   });
@@ -40,7 +43,7 @@ const wallet = () => {
         <div className="d-flex">
           <a href="/" className="mr-5">Swap</a>
           <a href="/" className="mr-5">Trade</a>
-          <a href="/">Send</a>
+          <span className="color-primary cursor-pointer" onClick={() => setShow(true)}>Send</span>
         </div>
       </td>
     </tr>
@@ -102,6 +105,9 @@ const wallet = () => {
           </div>
         </div>
       </div>
+      <ModalDialog show={show} setShow={setShow} title="Send">
+        <SendAsset />
+      </ModalDialog>
     </div>
   );
 };

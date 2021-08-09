@@ -44,6 +44,15 @@ input[type='number'] {
   padding-left: 82px;
 }
 
+.color-primary {
+  color: $BlueRibbon;
+  transition: ease-in;
+
+  &:hover {
+    color: $ToreaBay;
+  }
+}
+
 .color-buy {
   color: $Limeade !important;
 }
@@ -62,6 +71,10 @@ input[type='number'] {
 
 .color-gray {
   color: $RollingStone !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .label-primary {
