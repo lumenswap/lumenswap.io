@@ -1,6 +1,5 @@
 @import "styles/vars";
 
-
 .layout {
   padding-top: 39px;
   padding-bottom: 55px;
@@ -67,4 +66,31 @@
 
 .table::-webkit-scrollbar {
   width: 0;
+}
+
+.input {
+  min-width: 384px;
+
+  input {
+    border-radius: 6px;
+  }
+}
+
+.checkbox {
+  font-size: 14px !important;
+  color: $ShuttleGray !important;
+
+  :global(.checkbox) {
+    border: 1px solid $Mischka;
+  }
+
+  label {
+    color: $ShuttleGray;
+  }
+}
+
+@media (max-width: $md) {
+  .input {
+    min-width: auto;
+  }
 }

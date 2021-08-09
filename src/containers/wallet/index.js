@@ -1,13 +1,22 @@
 import React from 'react';
 import Head from 'next/head';
-import Header from 'components/Header';
 import classNames from 'classnames';
+import { Controller, useForm } from 'react-hook-form';
+
+import Header from 'components/Header';
 import DetailedInfo from 'components/DetailedInfo';
 import Table from 'components/Table';
 import sampleLogo from 'assets/images/btc-logo.png';
+import Input from 'components/Input';
+import Checkbox from 'components/Checkbox';
+
 import styles from './styles.module.scss';
 
 const wallet = () => {
+  const { control, register, handleSubmit } = useForm({
+    mode: 'onChange',
+  });
+
   const details = [
     { title: 'Total balance', xlm: '55,45', value: '45,5' },
     { title: 'Reserved balance', xlm: '12,4', value: '13,4' },
@@ -37,6 +46,8 @@ const wallet = () => {
     </tr>
   ));
 
+  function onSubmit(data) { console.warn(data); }
+
   return (
     <div>
       <Head>
@@ -50,7 +61,44 @@ const wallet = () => {
             <DetailedInfo details={details} />
           </div>
           <div className={classNames(styles.card, styles['card-table'])}>
-            <Table className={styles.table} tableRows={tableRows()} tableHead={tableHeader} />
+            <form className="px-4" onSubmit={handleSubmit(onSubmit)}>
+              <div className="row justify-content-between align-items-center flex-nowrap">
+                <div className="col-auto">
+                  <div className={styles.input}>
+                    <Input
+                      type="text"
+                      name="asset"
+                      id="asset"
+                      innerRef={register}
+                      placeholder="Search assets"
+                      height={40}
+                      fontSize={15}
+                    />
+                  </div>
+                </div>
+                <div className="col-auto pl-0">
+                  <div className={styles.checkbox}>
+                    <Controller
+                      name="checkbox"
+                      control={control}
+                      defaultValue={false}
+                      render={(props) => (
+                        <Checkbox
+                          value={props.value}
+                          onChange={props.onChange}
+                          size={20}
+                          fontSize={14}
+                          label="Hide other pairs"
+                        />
+                      )}
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div className="mt-4">
+              <Table className={styles.table} tableRows={tableRows()} tableHead={tableHeader} />
+            </div>
           </div>
         </div>
       </div>
