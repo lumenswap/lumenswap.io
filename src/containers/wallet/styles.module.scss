@@ -3,6 +3,7 @@
 
 .layout {
   padding-top: 39px;
+  padding-bottom: 55px;
 }
 
 .card {
@@ -14,4 +15,56 @@
 .card-detail {
   padding: 8px 24px;
   margin-top: 20px;
+}
+
+.card-table {
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.table {
+  overflow-y: auto;
+  height: 540px;
+  scrollbar-width: none;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  thead th {
+    background-color: white;
+    position: sticky;
+    top: 0;
+  }
+
+  thead tr > th, tbody tr > td {
+    font-size: 16px;
+  }
+
+  thead tr > th:first-child,
+  tbody tr > td:first-child {
+    padding-left: 24px;
+  }
+
+  tbody tr > td {
+    vertical-align: middle;
+  }
+
+  .td-name {
+    display: flex;
+    flex-direction: column;
+    margin-left: 6px;
+
+    span:last-child {
+      font-size: 14px;
+      font-weight: 300;
+      color: $ShuttleGray;
+      margin-top: -5px;
+    }
+  }
+}
+
+.table::-webkit-scrollbar {
+  width: 0;
 }
