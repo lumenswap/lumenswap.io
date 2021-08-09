@@ -106,7 +106,7 @@ const wallet = () => {
         </div>
       </div>
       <ModalDialog show={show} setShow={setShow} title="Send">
-        <SendAsset />
+        <SendAsset setShow={setShow} />
       </ModalDialog>
     </div>
   );

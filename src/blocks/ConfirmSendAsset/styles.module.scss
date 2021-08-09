@@ -1,0 +1,40 @@
+@import "styles/vars";
+
+.label {
+  font-size: 18px;
+  color: $RollingStone;
+  margin-bottom: 2px;
+}
+
+.asset-name, .asset-web {
+  margin-left: 6px;
+}
+
+.asset-name {
+  font-size: 18px;
+  color: $CodGray;
+}
+
+.asset-web {
+  font-size: 16px;
+  color: $RollingStone;
+}
+
+.hr {
+  border-top: 1px solid $CatskillWhite;
+  margin-top: 11px;
+  margin-bottom: 13px;
+}
+
+.value {
+  font-size: 20px;
+  color: $CodGray;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 24px;
+  font-size: 18px;
+  font-weight: 600;
+}

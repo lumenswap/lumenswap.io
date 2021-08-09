@@ -1,11 +1,16 @@
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
 import Input from 'components/Input';
 import Button from 'components/Button';
 import logoSrc from 'assets/images/btc-logo.png';
+import { openModalAction } from 'actions/modal';
+import ConfirmSendAsset from 'blocks/ConfirmSendAsset';
 
 import styles from './styles.module.scss';
 
-const SendAsset = (props) => {
+const SendAsset = ({ setShow }) => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -14,7 +19,16 @@ const SendAsset = (props) => {
     mode: 'onChange',
   });
 
-  function onSubmit(data) { console.warn(data); }
+  function onSubmit(data) {
+    console.warn(data);
+    setShow(false);
+    dispatch(
+      openModalAction({
+        modalProps: { title: 'Confirm sending' },
+        content: <ConfirmSendAsset />,
+      }),
+    );
+  }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
