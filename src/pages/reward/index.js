@@ -1,3 +1,3 @@
-import Reward from 'containers/reward';
+import RewardPage from 'containers/reward';
 
-export default Reward;
+export default RewardPage;

@@ -18,15 +18,15 @@ const CTable = ({ columns, dataSource, className }) => (
       </tr>
 
       {dataSource.map((data) => (
-        <tr className={styles.row} key={data.key ?? nanoid(4)}>
+        <tr className={styles.row} key={data.key ?? nanoid(6)}>
           {columns.map((column) => (
             <td
               className={styles['row-item']}
             >
               <span>
                 {column.render
-                  ? column.render(data[column.title], data.Url)
-                  : data[column.title]}
+                  ? column.render(data)
+                  : data[column.dataIndex]}
               </span>
             </td>
           ))}

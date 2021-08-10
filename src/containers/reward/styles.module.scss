@@ -1,5 +1,12 @@
 @import 'styles/vars';
 
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .main {
     display: flex;
     flex-direction: column;

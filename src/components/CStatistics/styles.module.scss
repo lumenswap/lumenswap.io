@@ -1,27 +1,21 @@
-@import 'styles/vars';
+@import "styles/vars";
+
 .main {
-    height: 84px;
+    min-height: 84px;
     background-color: $White;
     border-radius: 8px;
     display: flex;
     align-items: center;
 }
-.container-info:not(:last-child) {
-    border-right: 1px solid $SecondaryAthensGray;
-  }
-  .container-info {
+.container {
     height: 66px;
-    width: 351px;
-  }
-  
-  .container-info:first-child {
-    width: 262px;
-  }
-  .container-info:last-child {
     width: auto;
-  }
-  
-  .first-block {
+}
+.container:not(:last-child) {
+    border-right: 1px solid $SecondaryAthensGray;
+}
+
+.block {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -29,15 +23,7 @@
     margin-left: 24px;
     height: 66px;
   }
-  .block {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 1px 0;
-    margin-left: 47px;
-    height: 66px;
-  }
-  
+
   .icons {
     margin-left: 4px;
     margin-top: 3px;
@@ -54,9 +40,9 @@
     letter-spacing: normal;
     display: flex;
     flex-direction: row;
-   
   }
- 
+  
+
   .number-info {
     font-family: SofiaPro;
     font-size: 22px;
@@ -83,33 +69,3 @@
     margin-top: 1px;
     }
   }
-  .number-info-fist-span {
-    margin-left: 5px !important;
-  }
-  
-  
-  .value-info {
-    font-size: 14px;
-    color: $ShuttleGray;
-  }
-
-  @media (max-width: $md) {
-    .container-info {
-      border-right: 1px solid transparent !important;
-      justify-content: flex-start !important;
-      min-height: 90px;
-      background-color: $White;
-      border-radius: 8px;
-    }
-  
-    .container-info:not(:last-child) {
-      border-bottom: 1px solid $SecondaryAthensGray;
-      margin-bottom: 10px;
-    }
-    .first-block {
-      margin-left: 47px;
-    }
-  }
- 
-  
- 
