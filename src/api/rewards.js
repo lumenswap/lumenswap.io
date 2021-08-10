@@ -13,25 +13,25 @@ export function fetchAddressReward(address) {
     },
     lastActivity: [
       {
-        tx: '12412',
+        tx: 'da98db614bf608d8a3f91d02db6008c80c219e1666968e25a52d1118545ba0db',
         date: Date.now() - 1214214,
         type: 'Holder',
         amount: 214124214,
       },
       {
-        tx: '12412',
+        tx: 'da98db614bf608d8a3f91d02db6008c80c219e1666968e25a52d1118545ba0db',
         date: Date.now() - 1214214,
         type: 'Holder',
         amount: 214124214,
       },
       {
-        tx: '12412',
+        tx: 'da98db614bf608d8a3f91d02db6008c80c219e1666968e25a52d1118545ba0db',
         date: Date.now() - 1214214,
         type: 'Holder',
         amount: 214124214,
       },
       {
-        tx: '12412',
+        tx: 'da98db614bf608d8a3f91d02db6008c80c219e1666968e25a52d1118545ba0db',
         date: Date.now() - 1214214,
         type: 'Holder',
         amount: 214124214,

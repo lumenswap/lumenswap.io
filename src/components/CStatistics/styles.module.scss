@@ -9,11 +9,20 @@
 }
 .container {
     height: 66px;
-    width: auto;
+}
+.container:first-child {
+  width: 262px !important;
 }
 .container:not(:last-child) {
     border-right: 1px solid $SecondaryAthensGray;
+    width: 351px;
 }
+.container:not(:first-child) {
+  .block {
+    margin-left: 47px;
+  }
+}
+
 
 .block {
     display: flex;
@@ -67,5 +76,20 @@
     color: $CodGray;
     margin-left: 6px;
     margin-top: 1px;
+    }
+  }
+
+  @media (max-width: $md) {
+    .container.container:not(:first-child) {
+      .block {
+        margin-left: 24px;
+      }
+    }
+  }
+  @media (max-width: $lg) {
+    .container.container:not(:first-child) {
+      .block {
+        margin-left: 24px;
+      }
     }
   }

@@ -13,12 +13,10 @@ export const Info = ({ number, text }) => (
 const CStatistics = ({ blocks }) => (
   <div className={classNames('row w-100', styles.main)}>{blocks.map((block) => (
     <div
-      style={{ width: `${block.width}` }}
       className={classNames('col-lg-auto col-md-4 col-sm-12 col-12 px-0',
         styles.container)}
     >
       <div
-        style={{ marginLeft: `${block.contentMarginLeft}` }}
         className={styles.block}
       >
         <div className={styles['title-info']}>{block.title}
