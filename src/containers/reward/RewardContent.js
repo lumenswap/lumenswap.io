@@ -6,7 +6,7 @@ import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import styles from './styles.module.scss';
 
-const UserData = ({ userData }) => {
+const RewardContent = ({ rewardStats }) => {
   const tableHeaders = [
     {
       title: 'Tx',
@@ -35,25 +35,23 @@ const UserData = ({ userData }) => {
       render: (data) => <span>{numeral(data.amount).format('0,0.[0000]')}</span>,
     },
   ];
-  let statisticBlocks;
-  if (userData === null) {
-    statisticBlocks = null;
-  } else {
+  let statisticBlocks = null;
+  if (rewardStats !== null) {
     statisticBlocks = [
       {
         title: 'Wallet balance',
         tooltip: 'tooltip ',
-        content: <Info text="LSP" number={userData.stats.walletBalance} />,
+        content: <Info text="LSP" number={rewardStats.stats.walletBalance} />,
       },
       {
         title: 'Holder reward earned',
         tooltip: 'tooltip ',
-        content: <Info text="LSP" number={userData.stats.holderReward} />,
+        content: <Info text="LSP" number={rewardStats.stats.holderReward} />,
       },
       {
         title: 'Trade reward earned',
         tooltip: 'tooltip ',
-        content: <Info text="LSP" number={userData.stats.tradeReward} />,
+        content: <Info text="LSP" number={rewardStats.stats.tradeReward} />,
       },
     ];
   }
@@ -64,9 +62,9 @@ const UserData = ({ userData }) => {
         <CStatistics blocks={statisticBlocks} />
       </div>
       <div className={styles['table-title']}>Last activity</div>
-      <CTable columns={tableHeaders} dataSource={userData.lastActivity} />
+      <CTable columns={tableHeaders} dataSource={rewardStats.lastActivity} />
     </div>
   );
 };
 
-export default UserData;
+export default RewardContent;

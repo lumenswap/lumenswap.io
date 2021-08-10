@@ -5,7 +5,7 @@ import { openConnectModal } from 'actions/modal';
 import styles from './styles.module.scss';
 import connectIcon from '../../assets/images/connectIcon.svg';
 
-const Login = () => {
+const NotLoginReward = () => {
   const dispatch = useDispatch();
   return (
     <div className="row justify-content-center">
@@ -32,4 +32,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default NotLoginReward;

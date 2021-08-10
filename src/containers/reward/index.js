@@ -5,26 +5,33 @@ import { useEffect, useState } from 'react';
 import Loading from 'components/Loading';
 import styles from './styles.module.scss';
 import { fetchAddressReward } from '../../api/rewards';
-import UserData from './UserData';
-import Login from './Login';
+import RewardContent from './RewardContent';
+import NotLoginReward from './NotLoginReward';
 
 const RewardPage = () => {
   const isLogged = useSelector((state) => state.user.logged);
   const userAdress = useSelector((state) => state.user.detail.address);
-  const [userData, setUserData] = useState(null);
+  const [rewardStats, setRewardStats] = useState(null);
 
   useEffect(() => {
     function loadingUserData() {
       fetchAddressReward(userAdress)
-        .then((res) => setUserData(res)).catch((err) => console.log(err));
+        .then((res) => setRewardStats(res)).catch((err) => console.log(err));
     }
     if (isLogged) {
       loadingUserData();
     }
   }, [userAdress, isLogged]);
 
-  if (isLogged && userData === null) {
-    return <div className={styles['loading-container']}><Loading size={21} /></div>;
+  if (isLogged && rewardStats === null) {
+    return (
+      <div className="container-fluid">
+        <Header />
+        <div className={styles['loading-container']}>
+          <Loading size={48} />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -38,7 +45,7 @@ const RewardPage = () => {
 
       <div className={styles.main}>
         <div className={styles['page-title']}>Dashboard</div>
-        {isLogged ? <UserData userData={userData} /> : <Login /> }
+        {isLogged ? <RewardContent rewardStats={rewardStats} /> : <NotLoginReward /> }
       </div>
 
     </>
