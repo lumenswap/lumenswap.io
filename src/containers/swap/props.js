@@ -1,4 +1,6 @@
+import isSameAsset from 'helpers/isSameAsset';
 import defaultTokens from 'tokens/defaultTokens';
+import getAssetDetails from 'helpers/getAssetDetails';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 export async function swapPageGetServerSideProps(context) {
@@ -45,6 +47,10 @@ export async function swapPageGetServerSideProps(context) {
           permanent: true,
         },
       };
+    }
+
+    if (isSameAsset(getAssetDetails(fromTokenDetails), getAssetDetails(toTokenDetails))) {
+      return redirectObj;
     }
 
     return {

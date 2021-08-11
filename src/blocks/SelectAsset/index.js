@@ -74,6 +74,8 @@ const SelectAsset = ({
       || isSameAsset(formValues.to.asset.details, asset.details))
     ) {
       swapFromWithTo();
+    } else if (isSameAsset(formValues.from.asset.details, asset.details)) {
+      swapFromWithTo();
     } else {
       setCurrency(asset);
     }

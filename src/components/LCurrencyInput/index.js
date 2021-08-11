@@ -37,7 +37,7 @@ export default function LCurrencyInput({
     const isToCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
 
-    if (isFromCustomToken || isToCustomToken) router.push('/swap');
+    if (isFromCustomToken || isToCustomToken) router.push('/swap/custom');
     else {
       router.push(`/swap/${from}-${to}`);
     }
@@ -51,7 +51,7 @@ export default function LCurrencyInput({
       onChangeInput(found.balance);
     }
   }
-  
+
   function onInputChange(e) {
     e.preventDefault();
 
