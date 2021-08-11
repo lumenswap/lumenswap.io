@@ -119,46 +119,47 @@ const SelectPair = ({ setAppSpotPair }) => {
         autoFocus
       />
       <div className={classNames('invisible-scroll', styles.scroll)}>
-        {enrichedPairs.map((item, index) => (
-          <div key={index}>
-            <div
-              className={styles['select-logo']}
-              onClick={() => {
-                setAppSpotPair({
-                  base: item.base.details,
-                  counter: item.counter.details,
-                });
-                const found = customPairs.find(
-                  (pair) => pair.base.code === item.base.details.code
-                    && pair.counter.code === item.counter.details.code,
-                );
-                if (found) router.push('/spot/custom');
-                else router.push(`/spot/${item.base.details.code}-${item.counter.details.code}`);
-                dispatch(closeModalAction());
-              }}
-            >
-              <img src={item.base.logo} alt="baselogo" />
-              <img src={item.counter.logo} alt="counterlogo" />
-              <span>
-                {item.base.details.getCode()}/{item.counter.details.getCode()}
-              </span>
-              {(item.base.type === 'custom' || item.counter.type === 'custom') && (
-              <span
-                style={{ marginLeft: 4 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  dispatch(removeCustomPairAction({
+        {enrichedPairs.length === 0 ? <p style={{ padding: 16 }}>There is no asset pair</p>
+          : enrichedPairs.map((item, index) => (
+            <div key={index}>
+              <div
+                className={styles['select-logo']}
+                onClick={() => {
+                  setAppSpotPair({
                     base: item.base.details,
                     counter: item.counter.details,
-                  }));
+                  });
+                  const found = customPairs.find(
+                    (pair) => pair.base.code === item.base.details.code
+                    && pair.counter.code === item.counter.details.code,
+                  );
+                  if (found) router.push('/spot/custom');
+                  else router.push(`/spot/${item.base.details.code}-${item.counter.details.code}`);
+                  dispatch(closeModalAction());
                 }}
               >
-                (delete)
-              </span>
-              )}
+                <img src={item.base.logo} alt="baselogo" />
+                <img src={item.counter.logo} alt="counterlogo" />
+                <span>
+                  {item.base.details.getCode()}/{item.counter.details.getCode()}
+                </span>
+                {(item.base.type === 'custom' || item.counter.type === 'custom') && (
+                <span
+                  style={{ marginLeft: 4 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatch(removeCustomPairAction({
+                      base: item.base.details,
+                      counter: item.counter.details,
+                    }));
+                  }}
+                >
+                  (delete)
+                </span>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
         <button
           type="submit"
           className={styles.submit}
