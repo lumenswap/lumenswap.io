@@ -34,7 +34,6 @@ const SwapPage = ({ tokens }) => {
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const router = useRouter();
   const dispatch = useDispatch();
-  const reqID = useRef();
   const timeoutRef = useRef();
 
   const {
@@ -115,7 +114,6 @@ const SwapPage = ({ tokens }) => {
           formValues.to.asset.details,
         )
           .then((res) => {
-            console.log(reqID.current);
             setEstimatedPrice(res.minAmount);
             setPaths(res.path);
             setValue('to', {
