@@ -20,12 +20,12 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'containers/swap/SwapButton';
-import Head from 'next/head';
+import SwapHead from 'containers/swap/SwapHead';
 import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
 
-const SwapPage = ({ tokens }) => {
+const SwapPage = ({ tokens, hostname }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
@@ -246,15 +246,7 @@ const SwapPage = ({ tokens }) => {
 
   return (
     <div className="container-fluid main">
-      <Head>
-        {tokens ? (
-          <title>
-            Lumenswap | Swap {`${tokens.from.code}-${tokens.to.code}`}
-          </title>
-        ) : (
-          <title>Lumenswap | Swap</title>
-        )}
-      </Head>
+      <SwapHead hostname={hostname} tokens={tokens} />
       <Header />
       <div className="row justify-content-center">
         <div className="col-auto">
