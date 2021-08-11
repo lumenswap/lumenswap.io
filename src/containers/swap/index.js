@@ -200,9 +200,18 @@ const SwapPage = ({ tokens }) => {
     setValue('to', { asset: formValues.from.asset, amount: '' });
     changeFromInput(formValues.to.amount);
 
-    router.push(
-      `/swap/${formValues.to.asset.details.code}-${formValues.from.asset.details.code}`,
-    );
+    const isFromCustomToken = userCustomTokens
+      .find((token) => isSameAsset(getAssetDetails(token), getValues().from.asset?.details));
+
+    const isToCustomToken = userCustomTokens
+      .find((token) => isSameAsset(getAssetDetails(token), getValues().to.asset?.details));
+
+    if (isFromCustomToken || isToCustomToken) router.push('/swap/custom');
+    else {
+      router.push(
+        `/swap/${formValues.to.asset.details.code}-${formValues.from.asset.details.code}`,
+      );
+    }
   }
 
   function changeToAsset(asset) {
