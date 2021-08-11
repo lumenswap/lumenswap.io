@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
@@ -13,6 +12,7 @@ import OrderSection from 'containers/spot/OrderSection';
 import TradeSection from 'containers/spot/TradeSection';
 import OrderFormSection from 'containers/spot/OrderFormSection';
 import OpenDialogElement from 'containers/spot/OpenDialogElement';
+import SpotHead from 'containers/spot/SpotHead';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
@@ -25,6 +25,8 @@ const Spot = ({ tokens }) => {
     counter: getAssetDetails(USDC),
   });
 
+  const [price, setPrice] = useState(null);
+
   useEffect(() => {
     if (tokens) {
       setAppSpotPair({
@@ -36,15 +38,7 @@ const Spot = ({ tokens }) => {
 
   return (
     <div className="container-fluid">
-      <Head>
-        {tokens ? (
-          <title>
-            Lumenswap | Spot {`${tokens.from.code}-${tokens.to.code}`}
-          </title>
-        ) : (
-          <title>Lumenswap | Spot</title>
-        )}
-      </Head>
+      <SpotHead tokens={tokens} price={price} setPrice={setPrice} />
       <Header />
       <div className="layout mt-4 other">
         {/* top section */}
@@ -81,7 +75,7 @@ const Spot = ({ tokens }) => {
                 'invisible-scroll',
               )}
             >
-              <OrderSection appSpotPair={appSpotPair} />
+              <OrderSection price={price} setPrice={setPrice} appSpotPair={appSpotPair} />
             </div>
           </div>
           {/* middle section */}

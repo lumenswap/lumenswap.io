@@ -13,7 +13,7 @@ function setCustomOrderPriceInput(dispatch, data) {
   }));
 }
 
-const OrderSection = ({ appSpotPair }) => {
+const OrderSection = ({ appSpotPair, price, setPrice }) => {
   const [orderBookData, setOrderBookData] = useState(null);
   const intervalRef = useRef(null);
   const dispatch = useDispatch();
@@ -26,6 +26,14 @@ const OrderSection = ({ appSpotPair }) => {
       return res.data;
     }).catch(console.error);
   }
+
+  useEffect(() => {
+    if (orderBookData?.asks[0] && orderBookData?.bids[0]) {
+      setPrice(sevenDigit((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
+        .div(2)
+        .toFixed(7)));
+    }
+  }, [orderBookData]);
 
   useEffect(() => {
     if (intervalRef.current) {
@@ -53,14 +61,6 @@ const OrderSection = ({ appSpotPair }) => {
     };
   }, []);
 
-  let total = 0;
-
-  if (orderBookData?.asks[0] && orderBookData?.bids[0]) {
-    total = sevenDigit((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
-      .div(2)
-      .toFixed(7));
-  }
-
   const orderListHeader = [
     `Price (${appSpotPair.counter.getCode()})`,
     `Amount (${appSpotPair.base.getCode()})`,
@@ -72,7 +72,8 @@ const OrderSection = ({ appSpotPair }) => {
       headerItem={orderListHeader}
       asks={orderBookData?.asks}
       bids={orderBookData?.bids}
-      info={total}
+      info={price}
+      setPrice={setPrice}
     />
   );
 };
