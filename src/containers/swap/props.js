@@ -4,12 +4,6 @@ import getAssetDetails from 'helpers/getAssetDetails';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 export async function swapPageGetServerSideProps(context) {
-  const { req } = context;
-  let host;
-  if (req) {
-    host = req.headers.host;
-  }
-
   const redirectObj = {
     redirect: {
       destination: '/swap',
@@ -65,7 +59,6 @@ export async function swapPageGetServerSideProps(context) {
           from: fromTokenDetails,
           to: toTokenDetails,
         },
-        hostname: host,
 
       },
     };
@@ -73,7 +66,6 @@ export async function swapPageGetServerSideProps(context) {
 
   return {
     props: {
-      hostname: host,
     },
   };
 }

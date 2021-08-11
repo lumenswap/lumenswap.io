@@ -25,7 +25,7 @@ import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
 
-const SwapPage = ({ tokens, hostname }) => {
+const SwapPage = ({ tokens }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
@@ -246,7 +246,7 @@ const SwapPage = ({ tokens, hostname }) => {
 
   return (
     <div className="container-fluid main">
-      <SwapHead hostname={hostname} tokens={tokens} />
+      <SwapHead tokens={tokens} />
       <Header />
       <div className="row justify-content-center">
         <div className="col-auto">
