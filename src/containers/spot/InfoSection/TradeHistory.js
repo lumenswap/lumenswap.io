@@ -71,7 +71,7 @@ export default function TradeHistory() {
 
   useEffect(() => {
     if (!intervalRef.current) {
-      intervalRef.current = setInterval(loadData, 5000);
+      intervalRef.current = setInterval(loadData, 2000);
       loadData();
     }
 
