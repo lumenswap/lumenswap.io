@@ -98,7 +98,7 @@ export default function TVChart({ appSpotPair }) {
 
   return (
     <div
-      style={{ height: 405 }}
+      style={{ height: 416 }}
       id={defaultChartProps.containerId}
     />
   );

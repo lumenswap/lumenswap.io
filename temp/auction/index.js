@@ -25,7 +25,7 @@ function InfoOfBid({
     <div className="row w-100">
       <div className={classNames('col-lg-3 col-md-4 col-sm-12 col-12 px-0', styles['container-info'])}>
         <div className={styles.block}>
-          <div className={styles['title-info']}>Latest bid price</div>
+          <div className={styles['title-info']}>Base bid price</div>
           <div className={styles['number-info']}>{latestPrice} <span>XLM</span></div>
           <div className={styles['value-info']}>${numeral(new BN(latestPrice.replace(',', '')).times(xlmPrice).toString()).format('0,0.[0000]')}</div>
         </div>
@@ -121,7 +121,7 @@ const Auction = () => {
           <InfoOfBid
             totalBids={totalBids}
             totalLSP={totalLSP}
-            latestPrice={latestPrice}
+            latestPrice="0.002"
             totalXLM={totalXLM}
             xlmPrice={xlmPrice}
           />

@@ -7,7 +7,7 @@ export default function LeftSideAppLumen({
   asks, bids, info, headerItem,
 }) {
   return (
-    <div style={{ minHeight: 695 }}>
+    <div style={{ minHeight: 705 }}>
       {(asks === undefined || bids === undefined)
         ? (
           <div>

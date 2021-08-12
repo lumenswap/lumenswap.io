@@ -1,29 +1,24 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import numeral from 'numeral';
 
 const SpotHead = ({ tokens, price }) => {
   const router = useRouter();
-
-  let title = (
-    <title>{price} | XLM-USDC | Lumenswap</title>
-  );
+  const formattedPrice = numeral(price).format('0.[00]');
+  let pageTitle = `${formattedPrice} | XLM-USDC | Lumenswap`;
 
   if (tokens) {
-    title = (
-      <title>{price} | {`${tokens.from.code} to ${tokens.to.code}`} | Lumenswap</title>
-    );
+    pageTitle = `${formattedPrice} | ${tokens.from.code} to ${tokens.to.code} | Lumenswap`;
   } else if (router.pathname.split('/').includes('custom')) {
-    title = (
-      <title>{price} | Custom | Lumenswap</title>
-    );
+    pageTitle = `${formattedPrice} | Custom | Lumenswap`;
   }
 
   return (
     <Head>
-      {title}
-      <meta name="description" content={`Exchange ${tokens ? `${tokens.from.code}-${tokens.to.code}` : 'assets'} in Decentralized Exchanged on Stellar | Find All Live Stellar Assets Chart, Graph and Price in Lumenswap.`} />
+      <title>{pageTitle}</title>
+      <meta name="description" content={`Exchange ${tokens ? `${tokens.from.code}-${tokens.to.code}` : 'custom pair'} in Decentralized Exchanged on Stellar | Find All Live Stellar Assets Chart, Graph and Price in Lumenswap.`} />
       <meta name="robots" content="follow, index" />
-      <link rel="canonical" herf={`${process.env.REACT_APP_HOST}/spot${tokens ? `/${tokens.from.code}-${tokens.to.code}` : '/custom'}`} />
+      <link rel="canonical" herf={`${process.env.REACT_APP_HOST}/spot/${tokens ? `${tokens.from.code}-${tokens.to.code}` : 'custom'}`} />
     </Head>
   );
 };

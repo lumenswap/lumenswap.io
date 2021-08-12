@@ -25,7 +25,7 @@ const Spot = ({ tokens }) => {
     counter: getAssetDetails(USDC),
   });
 
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     if (tokens) {
@@ -61,7 +61,7 @@ const Spot = ({ tokens }) => {
                   setAppSpotPair={setAppSpotPair}
                 />
               </div>
-              <DetailList appSpotPair={appSpotPair} />
+              <DetailList appSpotPair={appSpotPair} price={price} />
             </div>
           </div>
         </div>
