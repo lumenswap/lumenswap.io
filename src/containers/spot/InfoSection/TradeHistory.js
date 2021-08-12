@@ -17,7 +17,7 @@ const tableRows = (rows) => rows.map((row, index) => (
     </td>
     <td>{row.sellAmount} {row.sellAsset}</td>
     <td>{row.buyAmount} {row.buyAsset}</td>
-    <td>{row.price} {row.counterAsset}</td>
+    <td>{row.price} {row.pair.counter} / {row.otherPrice} {row.pair.base}</td>
   </tr>
 ));
 
@@ -33,6 +33,7 @@ export default function TradeHistory() {
       setRowData(res.data._embedded.records.map((item) => {
         const time = new Date(item.ledger_close_time);
         const price = new BN(item.price.n).div(item.price.d);
+        const otherPrice = new BN(item.price.d).div(item.price.n);
         let sellAsset;
         let buyAsset;
         let sellAmount;
@@ -54,11 +55,15 @@ export default function TradeHistory() {
         return {
           time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
           price: sevenDigit(price.toFixed(7)),
+          otherPrice: sevenDigit(otherPrice.toFixed(7)),
           sellAsset,
           buyAsset,
           sellAmount,
           buyAmount,
-          counterAsset: item.counter_asset_code || 'XLM',
+          pair: {
+            counter: item.counter_asset_code || 'XLM',
+            base: item.base_asset_code || 'XLM',
+          },
         };
       }));
     });

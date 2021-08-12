@@ -1,45 +1,10 @@
+import { fetchTradeAggregationAPI } from 'api/stellar';
 import classNames from 'classnames';
-import { getTradeAggregation } from 'components/TradingviewChart/utils';
+import numeral from 'numeral';
 import BN from 'helpers/BN';
 import minimizeAddress from 'helpers/minimizeAddress';
-import moment from 'moment';
-import numeral from 'numeral';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-
-async function h24change(baseAsset, counterAsset) {
-  const currentTime = Date.now();
-
-  const currentStartTime = moment(currentTime).startOf('second').subtract(1, 'days');
-  const currentEndTime = moment(currentTime).startOf('second');
-  const currentPrice = (await getTradeAggregation(
-    baseAsset,
-    counterAsset,
-    currentStartTime,
-    currentEndTime,
-    { candle: [], volume: [], line: [] },
-    1,
-    60000,
-  )).candle[0]?.close;
-
-  const prevStartTime = moment(currentTime).startOf('second').subtract(2, 'days');
-  const prevEndTime = moment(currentTime).startOf('second').subtract(1, 'days');
-  const prevPrice = (await getTradeAggregation(
-    baseAsset,
-    counterAsset,
-    prevStartTime,
-    prevEndTime,
-    { candle: [], volume: [], line: [] },
-    1,
-    60000,
-  )).candle[0]?.close;
-
-  if (!!currentPrice && !!prevPrice) {
-    return (new BN(currentPrice).minus(prevPrice)).div(prevPrice).times(100);
-  }
-
-  return new BN(0);
-}
 
 const DetailList = ({ appSpotPair, price }) => {
   const [detailData, setDetailData] = useState([
@@ -69,29 +34,53 @@ const DetailList = ({ appSpotPair, price }) => {
   useEffect(() => {
     async function loadData() {
       try {
-        const currentTime = Date.now();
-        const startTime = moment(currentTime).startOf('second').subtract(2, 'days');
-        const endTime = moment(currentTime).startOf('second').add(1, 'days');
+        const tradeData = await fetchTradeAggregationAPI(appSpotPair.base, appSpotPair.counter, {
+          end_time: Date.now(),
+          resolution: 900000,
+          limit: 96,
+          offset: 0,
+          order: 'desc',
+        });
 
-        const tradeData = await getTradeAggregation(
-          appSpotPair.base,
-          appSpotPair.counter,
-          startTime,
-          endTime,
-          { candle: [], volume: [], line: [] },
-          1,
-          86400000,
-        );
+        const aggregatedData = tradeData.data._embedded.records.reduce((acc, current, index) => {
+          acc.baseVolume = acc.baseVolume.plus(current.base_volume);
+          acc.counterVolume = acc.counterVolume.plus(current.counter_volume);
 
-        const lastData = tradeData.candle[0] || {};
-        const ch24 = await h24change(appSpotPair.base, appSpotPair.counter);
+          if (new BN(current.low).isLessThan(acc.low)) {
+            acc.low = new BN(current.low);
+          }
+
+          if (new BN(current.high).isGreaterThan(acc.high)) {
+            acc.high = new BN(current.high);
+          }
+
+          if (index === 0) {
+            acc.currentPrice = current.close;
+          }
+
+          if (index + 1 === tradeData.data._embedded.records.length) {
+            acc.last24hPrice = current.open;
+          }
+
+          return acc;
+        }, {
+          baseVolume: new BN(0),
+          counterVolume: new BN(0),
+          high: new BN(0),
+          low: new BN(Infinity),
+          currentPrice: new BN(0),
+          last24hPrice: new BN(0),
+        });
+
+        const ch24 = (new BN(aggregatedData.currentPrice).minus(aggregatedData.last24hPrice))
+          .div(aggregatedData.last24hPrice).times(100);
 
         setDetailData([
           { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gte(0) ? 'buy' : 'sell' },
-          { title: '24 High', value: numeral(lastData.high).format('0.0[00]a') },
-          { title: '24 Low', value: numeral(lastData.low).format('0.0[00]a') },
-          { title: `24 Volume (${appSpotPair.base.getCode()})`, value: numeral(lastData.base_volume).format('0.0a') },
-          { title: `24 Volume (${appSpotPair.counter.getCode()})`, value: numeral(lastData.counter_volume).format('0.0a') },
+          { title: '24 High', value: numeral(aggregatedData.high.toString()).format('0.0[00]a') },
+          { title: '24 Low', value: numeral(aggregatedData.low.toString()).format('0.0[00]a') },
+          { title: `24 Volume (${appSpotPair.base.getCode()})`, value: numeral(aggregatedData.baseVolume.toString()).format('0.0a') },
+          { title: `24 Volume (${appSpotPair.counter.getCode()})`, value: numeral(aggregatedData.counterVolume.toString()).format('0.0a') },
           {
             title: `${appSpotPair.base.getCode()} asset issuer`,
             value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.base.getIssuer()) : 'Stellar Foundation',
