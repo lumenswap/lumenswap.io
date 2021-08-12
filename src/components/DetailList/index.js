@@ -36,12 +36,14 @@ const DetailList = ({ appSpotPair, price }) => {
       try {
         const tradeData = await fetchTradeAggregationAPI(appSpotPair.base, appSpotPair.counter, {
           end_time: Date.now(),
+          start_time: Date.now() - (60 * 60 * 24 * 1000),
           resolution: 900000,
           limit: 96,
           offset: 0,
           order: 'desc',
         });
 
+        const firstChunk = tradeData.data._embedded.records[0];
         const aggregatedData = tradeData.data._embedded.records.reduce((acc, current, index) => {
           acc.baseVolume = acc.baseVolume.plus(current.base_volume);
           acc.counterVolume = acc.counterVolume.plus(current.counter_volume);
@@ -66,8 +68,8 @@ const DetailList = ({ appSpotPair, price }) => {
         }, {
           baseVolume: new BN(0),
           counterVolume: new BN(0),
-          high: new BN(0),
-          low: new BN(Infinity),
+          high: new BN(firstChunk ? firstChunk.high : 0),
+          low: new BN(firstChunk ? firstChunk.low : Infinity),
           currentPrice: new BN(0),
           last24hPrice: new BN(0),
         });

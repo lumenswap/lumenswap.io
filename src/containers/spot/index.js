@@ -75,7 +75,11 @@ const Spot = ({ tokens }) => {
                 'invisible-scroll',
               )}
             >
-              <OrderSection price={price} setPrice={setPrice} appSpotPair={appSpotPair} />
+              <OrderSection
+                price={price}
+                setPrice={setPrice}
+                appSpotPair={appSpotPair}
+              />
             </div>
           </div>
           {/* middle section */}

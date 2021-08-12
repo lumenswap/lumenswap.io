@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
   return process.browser ? (
     <>
       <Provider store={store}>
-        <PersistGate loading={<div>loading</div>} persistor={persistor}>
+        <PersistGate loading={null} persistor={persistor}>
           <LModal />
           <Component {...pageProps} />
         </PersistGate>
