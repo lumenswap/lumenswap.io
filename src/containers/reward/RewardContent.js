@@ -7,6 +7,11 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import styles from './styles.module.scss';
 
 const RewardContent = ({ rewardStats }) => {
+  const NoDataMessage = () => (
+    <div className={styles.noDataMessageContainer}>
+      <div className={styles.noDataMessage}>There is no reward activity here</div>
+    </div>
+  );
   const tableHeaders = [
     {
       title: 'Tx',
@@ -62,7 +67,11 @@ const RewardContent = ({ rewardStats }) => {
         <CStatistics blocks={statisticBlocks} />
       </div>
       <div className={styles['table-title']}>Last activity</div>
-      <CTable columns={tableHeaders} dataSource={rewardStats.lastActivity} />
+      <CTable
+        columns={tableHeaders}
+        dataSource={rewardStats.lastActivity}
+        noDataMessage={NoDataMessage}
+      />
     </div>
   );
 };
