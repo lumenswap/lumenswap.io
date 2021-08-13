@@ -20,7 +20,7 @@ export default function OpenDialogElement({
   const dispatch = useDispatch();
 
   return (
-    <div className={styles['container-select']} style={{ marginBottom: 4 }}>
+    <div className={styles['container-select']}>
       <button
         type="button"
         className={classNames(styles['select-logo'], className)}
@@ -35,7 +35,7 @@ export default function OpenDialogElement({
       >
         <img className={styles['first-coin']} src={baseTokenLogo} alt="" />
         <img className={styles['second-coin']} src={counterTokenLogo} alt="" />
-        <h1 style={{ fontSize: '18px', margin: 0 }}>{appSpotPair.base.getCode()}/{appSpotPair.counter.getCode()}</h1>
+        <h1>{appSpotPair.base.getCode()}/{appSpotPair.counter.getCode()}</h1>
         <span className="icon-angle-down ml-auto" />
       </button>
     </div>
