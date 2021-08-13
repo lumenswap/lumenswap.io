@@ -93,6 +93,7 @@ const Spot = ({ tokens }) => {
             </div>
             <div
               className={classNames(styles.card, styles['card-input'])}
+              style={{ height: 'unset' }}
               // style={{ height: `calc(100% - ${height + 4}px)` }}
             >
               <OrderFormSection appSpotPair={appSpotPair} />
