@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Loading from 'components/Loading';
+import { fetchAddressReward } from 'api/rewards';
 import styles from './styles.module.scss';
-import { fetchAddressReward } from '../../api/rewards';
 import RewardContent from './RewardContent';
 import NotLoginReward from './NotLoginReward';
 

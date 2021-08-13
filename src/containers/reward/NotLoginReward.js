@@ -2,8 +2,8 @@ import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 import Button from 'components/Button';
 import { openConnectModal } from 'actions/modal';
+import connectIcon from 'assets/images/connectIcon.svg';
 import styles from './styles.module.scss';
-import connectIcon from '../../assets/images/connectIcon.svg';
 
 const NotLoginReward = () => {
   const dispatch = useDispatch();

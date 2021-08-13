@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import classNames from 'classnames';
 import Tooltips from 'components/Tooltip';
+import questionIcon from 'assets/images/question.svg';
 import styles from './styles.module.scss';
-import questionIcon from '../../assets/images/question.svg';
 
 export const Info = ({ number, text }) => (
   <div className={styles['number-info']}>{number}
