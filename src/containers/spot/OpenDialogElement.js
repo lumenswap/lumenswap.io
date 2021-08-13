@@ -20,7 +20,7 @@ export default function OpenDialogElement({
   const dispatch = useDispatch();
 
   return (
-    <div className={styles['container-select']}>
+    <div className={styles['container-select']} style={{ marginBottom: 4 }}>
       <button
         type="button"
         className={classNames(styles['select-logo'], className)}
