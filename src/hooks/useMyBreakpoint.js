@@ -6,7 +6,13 @@ const BREAKPOINTS = {
 };
 
 function useMyBreakpoint() {
-  return useBreakpoint(BREAKPOINTS, 'mobile');
+  const myBreakpoint = useBreakpoint(BREAKPOINTS, 'mobile');
+
+  const deviceSize = {
+    sm: myBreakpoint.breakpoint === 'sm', md: myBreakpoint.breakpoint === 'md', lg: myBreakpoint.breakpoint === 'lg', mobile: myBreakpoint.breakpoint === 'mobile', xl: myBreakpoint.breakpoint === 'xl',
+  };
+
+  return { ...myBreakpoint, deviceSize };
 }
 
 export default useMyBreakpoint;

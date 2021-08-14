@@ -28,7 +28,7 @@ const Spot = ({ tokens }) => {
 
   const [price, setPrice] = useState(0);
 
-  const { breakpoint } = useBreakPoint();
+  const { deviceSize } = useBreakPoint();
 
   useEffect(() => {
     if (tokens) {
@@ -46,7 +46,7 @@ const Spot = ({ tokens }) => {
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
-          {breakpoint !== 'md' && breakpoint !== 'sm' && breakpoint !== 'mobile'
+          {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile
             ? (
               <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
                 <div className={classNames(styles.card, styles['card-select'])}>
@@ -61,7 +61,7 @@ const Spot = ({ tokens }) => {
 
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
             <div className={classNames(styles.card, styles['card-detail'])}>
-              {breakpoint !== 'xl' && breakpoint !== 'lg' ? (
+              {!deviceSize.xl && !deviceSize.lg ? (
                 <div>
                   <OpenDialogElement
                     className="pl-0"
