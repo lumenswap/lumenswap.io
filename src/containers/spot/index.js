@@ -13,6 +13,7 @@ import TradeSection from 'containers/spot/TradeSection';
 import OrderFormSection from 'containers/spot/OrderFormSection';
 import OpenDialogElement from 'containers/spot/OpenDialogElement';
 import SpotHead from 'containers/spot/SpotHead';
+import useBreakPoint from 'hooks/useMyBreakpoint';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
@@ -26,6 +27,8 @@ const Spot = ({ tokens }) => {
   });
 
   const [price, setPrice] = useState(0);
+
+  const { breakpoint } = useBreakPoint();
 
   useEffect(() => {
     if (tokens) {
@@ -43,24 +46,31 @@ const Spot = ({ tokens }) => {
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
-          <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
-            <div className={classNames(styles.card, styles['card-select'])}>
-              <OpenDialogElement
-                className="w-100"
-                appSpotPair={appSpotPair}
-                setAppSpotPair={setAppSpotPair}
-              />
-            </div>
-          </div>
+          {breakpoint !== 'md' && breakpoint !== 'sm' && breakpoint !== 'mobile'
+            ? (
+              <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
+                <div className={classNames(styles.card, styles['card-select'])}>
+                  <OpenDialogElement
+                    className="w-100"
+                    appSpotPair={appSpotPair}
+                    setAppSpotPair={setAppSpotPair}
+                  />
+                </div>
+              </div>
+            ) : ''}
+
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
             <div className={classNames(styles.card, styles['card-detail'])}>
-              <div className="d-lg-none d-md-inline d-sm-inline d-inline mb-2">
-                <OpenDialogElement
-                  className="pl-0"
-                  appSpotPair={appSpotPair}
-                  setAppSpotPair={setAppSpotPair}
-                />
-              </div>
+              {breakpoint !== 'xl' && breakpoint !== 'lg' ? (
+                <div>
+                  <OpenDialogElement
+                    className="pl-0"
+                    appSpotPair={appSpotPair}
+                    setAppSpotPair={setAppSpotPair}
+                  />
+                </div>
+              ) : ''}
+
               <DetailList appSpotPair={appSpotPair} price={price} />
             </div>
           </div>
