@@ -50,7 +50,7 @@
 }
 
 .table-scroll {
-  overflow-x: scroll;
+  overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: $CatskillWhite transparent;
 }

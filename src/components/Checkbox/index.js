@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const Checkbox = ({
-  className, label, size, onChange, value,
+  className, label, size, fontSize = 12, onChange, value,
 }) => (
-  <label className={styles.label}>
+  <label className={styles.label} style={{ fontSize: `${fontSize}px` }}>
     <div className={classNames(className, styles.container)} style={{ height: `${size}px` }}>
       <input
         type="checkbox"
@@ -16,7 +16,7 @@ const Checkbox = ({
         }}
       />
       <div
-        className={styles.checkbox}
+        className={classNames(styles.checkbox, 'checkbox')}
         style={{ width: `${size}px`, height: `${size}px` }}
       >
         <svg viewBox="0 0 24 24" className={styles.svg} style={{ visibility: value ? 'visible' : 'hidden' }}>
