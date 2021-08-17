@@ -1,0 +1,43 @@
+@import "styles/vars";
+
+.form {
+  :global(.label-optional) {
+    color: $ShuttleGray;
+  }
+}
+
+.input-asset {
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid $CatskillWhite;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.asset-name, .asset-web {
+  margin-left: 6px;
+}
+
+.asset-name {
+  font-size: 18px;
+  color: $CodGray;
+}
+
+.asset-web {
+  font-size: 16px;
+  color: $RollingStone;
+}
+
+.max {
+  font-size: 14px;
+  color: $BlueRibbon;
+  cursor: pointer;
+}
+
+.btn {
+  width: 100%;
+  margin-bottom: 24px;
+  font-size: 18px;
+  font-weight: 600;
+}

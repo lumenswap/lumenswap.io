@@ -22,7 +22,7 @@ const CurrencyInput = ({
   const userBalance = useSelector((state) => state.userBalance);
   let foundBalance = null;
   if (currentCurrency) {
-    foundBalance = userBalance.find((item) => isSameAsset(currentCurrency.details, item.asset))
+    foundBalance = userBalance.find((item) => isSameAsset(currentCurrency.details, item.asset));
   }
   const isLogged = useSelector((state) => state.user.logged);
 

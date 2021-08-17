@@ -31,7 +31,7 @@ export default function TVChart({ appSpotPair }) {
         console.log('[onReady]: Method call');
         setTimeout(() => callback(configurationData));
       },
-      resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
+      resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         console.log('[resolveSymbol] called');
         onSymbolResolvedCallback({
           ticker: `${appSpotPair.base.getCode()}/${appSpotPair.counter.getCode()}`,
@@ -45,18 +45,22 @@ export default function TVChart({ appSpotPair }) {
         const { to, from, firstDataRequest } = periodParams;
         console.log('[getBars]: Method call', firstDataRequest, from, to);
 
-        const res = await tvChartTrageAggregator(
-          getAssetDetails(appSpotPair.base),
-          getAssetDetails(appSpotPair.counter),
-          Date.now() < to * 1000 ? Date.now() : to * 1000,
-          200,
-          reso[resolution],
-        );
+        try {
+          const res = await tvChartTrageAggregator(
+            getAssetDetails(appSpotPair.base),
+            getAssetDetails(appSpotPair.counter),
+            Date.now() < to * 1000 ? Date.now() : to * 1000,
+            200,
+            reso[resolution],
+          );
 
-        if (res.length === 0) {
-          onHistoryCallback([], { noData: true });
-        } else {
-          onHistoryCallback(res, { noData: false });
+          if (res.length === 0) {
+            onHistoryCallback([], { noData: true });
+          } else {
+            onHistoryCallback(res, { noData: false });
+          }
+        } catch (error) {
+          onErrorCallback(error);
         }
       },
 
@@ -94,7 +98,7 @@ export default function TVChart({ appSpotPair }) {
 
   return (
     <div
-      style={{ height: 405 }}
+      style={{ height: 416 }}
       id={defaultChartProps.containerId}
     />
   );

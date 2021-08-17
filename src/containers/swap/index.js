@@ -20,7 +20,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'containers/swap/SwapButton';
-import Head from 'next/head';
+import SwapHead from 'containers/swap/SwapHead';
 import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
@@ -34,7 +34,6 @@ const SwapPage = ({ tokens }) => {
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const router = useRouter();
   const dispatch = useDispatch();
-  const reqID = useRef();
   const timeoutRef = useRef();
 
   const {
@@ -115,7 +114,6 @@ const SwapPage = ({ tokens }) => {
           formValues.to.asset.details,
         )
           .then((res) => {
-            console.log(reqID.current);
             setEstimatedPrice(res.minAmount);
             setPaths(res.path);
             setValue('to', {
@@ -200,9 +198,18 @@ const SwapPage = ({ tokens }) => {
     setValue('to', { asset: formValues.from.asset, amount: '' });
     changeFromInput(formValues.to.amount);
 
-    router.push(
-      `/swap/${formValues.to.asset.details.code}-${formValues.from.asset.details.code}`,
-    );
+    const isFromCustomToken = userCustomTokens
+      .find((token) => isSameAsset(getAssetDetails(token), getValues().from.asset?.details));
+
+    const isToCustomToken = userCustomTokens
+      .find((token) => isSameAsset(getAssetDetails(token), getValues().to.asset?.details));
+
+    if (isFromCustomToken || isToCustomToken) router.push('/swap/custom');
+    else {
+      router.push(
+        `/swap/${formValues.to.asset.details.code}-${formValues.from.asset.details.code}`,
+      );
+    }
   }
 
   function changeToAsset(asset) {
@@ -239,15 +246,7 @@ const SwapPage = ({ tokens }) => {
 
   return (
     <div className="container-fluid main">
-      <Head>
-        {tokens ? (
-          <title>
-            Lumenswap | Swap {`${tokens.from.code}-${tokens.to.code}`}
-          </title>
-        ) : (
-          <title>Lumenswap | Swap</title>
-        )}
-      </Head>
+      <SwapHead tokens={tokens} />
       <Header />
       <div className="row justify-content-center">
         <div className="col-auto">

@@ -5,6 +5,8 @@ import BN from 'helpers/BN';
 import isSameAsset from 'helpers/isSameAsset';
 import { useSelector } from 'react-redux';
 import getAssetDetails from 'helpers/getAssetDetails';
+import XLM from 'tokens/XLM';
+import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
@@ -21,6 +23,7 @@ export default function LCurrencyInput({
   const isLogged = useSelector((state) => state.user.logged);
   const userBalance = useSelector((state) => state.userBalance);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
+  const userSubentry = useSelector((state) => state.user.detail.subentry);
 
   const router = useRouter();
 
@@ -37,7 +40,7 @@ export default function LCurrencyInput({
     const isToCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
 
-    if (isFromCustomToken || isToCustomToken) router.push('/swap');
+    if (isFromCustomToken || isToCustomToken) router.push('/swap/custom');
     else {
       router.push(`/swap/${from}-${to}`);
     }
@@ -47,11 +50,16 @@ export default function LCurrencyInput({
     const found = userBalance.find((i) => isSameAsset(i.asset, value.asset.details));
 
     if (found) {
-      onChange({ ...value, amount: found.balance });
+      let amount = found.balance;
+      if (isSameAsset(getAssetDetails(found.asset), getAssetDetails(XLM))) {
+        amount = calculateMaxXLM(found.balance, userSubentry);
+      }
+
+      onChange({ ...value, amount });
       onChangeInput(found.balance);
     }
   }
-  
+
   function onInputChange(e) {
     e.preventDefault();
 

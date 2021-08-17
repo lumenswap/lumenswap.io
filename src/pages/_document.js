@@ -33,10 +33,6 @@ class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
 
           <meta name="keywords" content="Stellar, Swap, trade, XLM, Lumens, exchange" />
-          <meta
-            name="description"
-            content="Lumenswap is a decentralized swap protocol for the Stellar Network that allows you to convert assets on the network using a friendly, minimal interface."
-          />
           <meta name="subject" content="Lumenswap" />
           <meta name="language" content="EN" />
           <meta name="topic" content="Swap protocol" />

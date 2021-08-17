@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import Header from 'components/Header';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
@@ -13,6 +12,8 @@ import OrderSection from 'containers/spot/OrderSection';
 import TradeSection from 'containers/spot/TradeSection';
 import OrderFormSection from 'containers/spot/OrderFormSection';
 import OpenDialogElement from 'containers/spot/OpenDialogElement';
+import SpotHead from 'containers/spot/SpotHead';
+import useBreakPoint from 'hooks/useMyBreakpoint';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
@@ -25,6 +26,10 @@ const Spot = ({ tokens }) => {
     counter: getAssetDetails(USDC),
   });
 
+  const [price, setPrice] = useState(0);
+
+  const { deviceSize } = useBreakPoint();
+
   useEffect(() => {
     if (tokens) {
       setAppSpotPair({
@@ -36,38 +41,37 @@ const Spot = ({ tokens }) => {
 
   return (
     <div className="container-fluid">
-      <Head>
-        {tokens ? (
-          <title>
-            Lumenswap | Spot {`${tokens.from.code}-${tokens.to.code}`}
-          </title>
-        ) : (
-          <title>Lumenswap | Spot</title>
-        )}
-      </Head>
+      <SpotHead tokens={tokens} price={price} setPrice={setPrice} />
       <Header />
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
-          <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
-            <div className={classNames(styles.card, styles['card-select'])}>
-              <OpenDialogElement
-                className="w-100"
-                appSpotPair={appSpotPair}
-                setAppSpotPair={setAppSpotPair}
-              />
-            </div>
-          </div>
+          {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile
+            ? (
+              <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
+                <div className={classNames(styles.card, styles['card-select'])}>
+                  <OpenDialogElement
+                    className="w-100"
+                    appSpotPair={appSpotPair}
+                    setAppSpotPair={setAppSpotPair}
+                  />
+                </div>
+              </div>
+            ) : ''}
+
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
             <div className={classNames(styles.card, styles['card-detail'])}>
-              <div className="d-lg-none d-md-inline d-sm-inline d-inline mb-2">
-                <OpenDialogElement
-                  className="pl-0"
-                  appSpotPair={appSpotPair}
-                  setAppSpotPair={setAppSpotPair}
-                />
-              </div>
-              <DetailList appSpotPair={appSpotPair} />
+              {!deviceSize.xl && !deviceSize.lg ? (
+                <div>
+                  <OpenDialogElement
+                    className="pl-0"
+                    appSpotPair={appSpotPair}
+                    setAppSpotPair={setAppSpotPair}
+                  />
+                </div>
+              ) : ''}
+
+              <DetailList appSpotPair={appSpotPair} price={price} />
             </div>
           </div>
         </div>
@@ -81,7 +85,11 @@ const Spot = ({ tokens }) => {
                 'invisible-scroll',
               )}
             >
-              <OrderSection appSpotPair={appSpotPair} />
+              <OrderSection
+                price={price}
+                setPrice={setPrice}
+                appSpotPair={appSpotPair}
+              />
             </div>
           </div>
           {/* middle section */}
@@ -94,7 +102,8 @@ const Spot = ({ tokens }) => {
               </div>
             </div>
             <div
-              className={classNames(styles.card, styles['card-input'], 'mb-1')}
+              className={classNames(styles.card, styles['card-input'])}
+              style={{ height: 'unset' }}
               // style={{ height: `calc(100% - ${height + 4}px)` }}
             >
               <OrderFormSection appSpotPair={appSpotPair} />

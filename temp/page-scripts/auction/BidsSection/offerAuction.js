@@ -14,7 +14,7 @@ export default async function fetchOfferAuction() {
       getAssetDetails(LSP),
     )
     .order('desc')
-    .limit(20)
+    .limit(200)
     .call();
 
   return res.records
@@ -25,5 +25,7 @@ export default async function fetchOfferAuction() {
       lspPrice: new BN(i.amount).dividedBy(new BN(i.amount).times(i.price)),
       time: i.last_modified_time,
       id: i.id,
-    }));
+    }))
+    .filter((i) => i.lspPrice.isGreaterThanOrEqualTo(0.002))
+    .slice(0, 25);
 }

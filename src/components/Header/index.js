@@ -5,18 +5,11 @@ import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
-import LSP from 'tokens/LSP';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
-import numeral from 'numeral';
-import sevenDigit from 'helpers/sevenDigit';
 import NavLink from 'components/NavLink';
 import styles from './styles.module.scss';
 
 const Header = () => {
   const isLogged = useSelector((state) => state.user.logged);
-  const userLSPBalance = useSelector((state) => state.userBalance)
-    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(LSP)));
   const dispatch = useDispatch();
 
   return (
@@ -24,9 +17,9 @@ const Header = () => {
       <ul className={styles.list}>
         <li><Link href="/"><a><Logo /></a></Link></li>
         <li><NavLink name="Swap" href="/swap" /></li>
-        <li><NavLink name="Spot" href="/spot" /></li>
+        <li><NavLink name="Spot" mainHref="/spot" href="/spot/XLM-USDC" /></li>
+        <li><NavLink name="Wallet" href="/wallet" /></li>
       </ul>
-      {isLogged && <div className={styles.lsp}>{numeral(sevenDigit(userLSPBalance?.balance || 0)).format('0,0.[0000000]')} LSP</div>}
       {isLogged ? <CustomDropdown height="40px" width="160px" />
         : (
           <Button

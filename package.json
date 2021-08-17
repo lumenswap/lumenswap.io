@@ -52,6 +52,7 @@
     "redux-thunk": "^2.3.0",
     "stellar-sdk": "^8.0.0",
     "trezor-connect": "^8.1.25",
+    "use-breakpoint": "^2.0.1",
     "web-vitals": "^1.1.0"
   }
 }

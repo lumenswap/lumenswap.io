@@ -44,7 +44,7 @@ async function goNextAndSave(func, arr) {
   return Promise.resolve(res);
 }
 
-export const CHART_KEYS = ['0', '0.002', '0.004', '0.006', '0.008', '0.01', '0.02', '0.04'];
+export const CHART_KEYS = ['0', '0.002', '0.003', '0.004', '0.005', '0.006', '0.007', '0.008'];
 
 export default async function aggregateLSPOffer() {
   const allData = await goNextAndSave(fetchOffers, []);

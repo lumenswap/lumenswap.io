@@ -1,8 +1,10 @@
+import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
 import defaultTokens from 'tokens/defaultTokens';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 
 export async function spotPageGetServerSideProps(context) {
+  const createdDefaultPairs = createPairForDefaultTokens();
   const redirectObj = {
     redirect: {
       destination: '/spot/XLM-USDC',
@@ -20,14 +22,20 @@ export async function spotPageGetServerSideProps(context) {
     const fromToken = tokens.split('-')[0];
     const toToken = tokens.split('-')[1];
 
-    const tokenCodes = defaultTokens.map((token) => token.code.toLowerCase());
+    const tokenPairCodes = createdDefaultPairs.map((pair) => {
+      const pairCodes = {
+        base: pair.base.code,
+        counter: pair.counter.code,
+      };
 
-    if (
-      !tokenCodes.includes(fromToken.toLowerCase())
-      || !tokenCodes.includes(toToken.toLowerCase())
-    ) {
-      return redirectObj;
-    }
+      return pairCodes;
+    });
+
+    const found = tokenPairCodes.find(
+      (pair) => pair.base === fromToken && pair.counter === toToken,
+    );
+
+    if (!found) return redirectObj;
 
     const fromTokenDetails = defaultTokens.find(
       (token) => token.code.toLowerCase() === fromToken.toLowerCase(),
@@ -63,8 +71,6 @@ export async function spotPageGetServerSideProps(context) {
 
 export async function customSpotPageGetServerSideProps() {
   return {
-    props: {
-
-    },
+    props: {},
   };
 }

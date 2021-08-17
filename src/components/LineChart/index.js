@@ -1,18 +1,19 @@
 import Loading from 'components/Loading';
 import ReactECharts from 'echarts-for-react';
-import { CHART_KEYS } from 'page-scripts/auction/aggregation';
+import { CHART_KEYS } from 'pages/Auction/aggregation';
+import numeral from 'numeral';
 
 import styles from './styles.module.scss';
 
 const lineColor = '#e3e9ff';
 const textColor = '#656872';
 
-const convertor = (value) => `${value / 1000}k`;
+const convertor = (value) => numeral(value).format('0a');
 
 const tooltipFormatter = (values) => `<div class="${styles.tooltip}">
     LSP-XLM <br/>
     BID PRICE: <span>${values[0].value[0]}</span> XLM <br/>
-    VOLUME: <span>${values[0].value[1]}</span> LSP
+    VOLUME: <span>${numeral(values[0].value[1]).format('0,0')}</span> LSP
   </div>`;
 
 const LineChart = ({ data }) => {
@@ -117,7 +118,6 @@ const LineChart = ({ data }) => {
     );
   }
 
-  // option.series[0].data = CHART_KEYS.map((chartKey) => data[chartKey].toFixed(0));
   option.series[0].data = CHART_KEYS.map((chartKey) => [chartKey, data[chartKey].toFixed(0)]);
 
   return (
