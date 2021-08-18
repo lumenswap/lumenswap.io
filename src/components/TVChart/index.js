@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import getAssetDetails from 'helpers/getAssetDetails';
+import moment from 'moment';
 import { widget } from '../../../public/static/charting_library';
 import { tvChartTrageAggregator } from './utils';
 
@@ -43,13 +44,19 @@ export default function TVChart({ appSpotPair }) {
       },
       getBars: async (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
         const { to, from, firstDataRequest } = periodParams;
-        console.log('[getBars]: Method call', firstDataRequest, from, to);
+
+        let myTo = to;
+        if (Date.now() < to * 1000) {
+          myTo = moment().startOf('second').add(1, 'days').valueOf();
+        }
+
+        console.log('[getBars]: Method call', firstDataRequest, from, to, myTo);
 
         try {
           const res = await tvChartTrageAggregator(
             getAssetDetails(appSpotPair.base),
             getAssetDetails(appSpotPair.counter),
-            Date.now() < to * 1000 ? Date.now() : to * 1000,
+            myTo * 1000,
             200,
             reso[resolution],
           );
