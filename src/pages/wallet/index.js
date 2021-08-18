@@ -1,3 +1,3 @@
-import walletPage from 'containers/wallet';
+import WalletPage from 'containers/wallet';
 
-export default walletPage;
+export default WalletPage;

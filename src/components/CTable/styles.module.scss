@@ -2,22 +2,35 @@
 
 .table-container {
     width: 100%;
-    padding-bottom: 15px;
-    background-color: $White;
-    border-radius: 8px;
+    height: auto;
+    max-height: 552px !important;
     overflow-y: auto;
-    box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+}
+.table-container::-webkit-scrollbar {
+  width: 0;  
+  background: transparent;  
 }
 .table {
     width: 100%;
 }
 .header-table {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: $White;
+    border-radius: 8px;
     height: 47px;
-    width: 66%;
+    width: 100%;
     line-height: 47px;
     font-family: SofiaPro;
     font-size: 16px;
     color: $RollingStone;
+    th:first-child {
+      border-radius: 8px 0px 0px 0px;
+    }
+    th:last-child {
+      border-radius: 0px 8px 0px 0px;
+    }
     span {
         margin-left: 24px;
         font-weight: normal;
@@ -27,28 +40,20 @@
         letter-spacing: normal;
     }
 }
+
+
   
   .row-item {
-    span {
+    section {
       margin-left: 24px;
-      a {
-        color: inherit;
-        &:hover {
-          text-decoration: none;
-        }
-      }
-      span {
-        margin-left: 0;
-      }
+      display: flex;
     }
   }
-  .row-item:first-child {
-    color: $BlueRibbon;
-  }
+  
   
 
   
-  .row {
+  .row:not(:last-child) {
     width: 100%;
     height: 44px;
     border-bottom: 1px solid $CatskillWhite;
@@ -61,5 +66,15 @@
     letter-spacing: normal;
   }
   
-  
+  .row {
+    width: 100%;
+    height: 44px;
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+  }
   

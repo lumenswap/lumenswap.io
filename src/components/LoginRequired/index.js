@@ -5,7 +5,7 @@ import { openConnectModal } from 'actions/modal';
 import connectIcon from 'assets/images/connectIcon.svg';
 import styles from './styles.module.scss';
 
-const NotLoginReward = () => {
+const LoginRequired = ({ text }) => {
   const dispatch = useDispatch();
   return (
     <div className="row justify-content-center">
@@ -15,7 +15,7 @@ const NotLoginReward = () => {
             <Image width="40" height="34" src={connectIcon} alt="icon" />
           </div>
           <div className={styles['connect-text']}>
-            To see the reward statistics, please connect your account.
+            {text}
           </div>
           <Button
             variant="secondary"
@@ -32,4 +32,4 @@ const NotLoginReward = () => {
   );
 };
 
-export default NotLoginReward;
+export default LoginRequired;

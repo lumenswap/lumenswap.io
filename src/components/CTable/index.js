@@ -11,8 +11,9 @@ const CTable = ({
     return <NoDataMessage />;
   }
   return (
-    <div className={styles['table-container']}>
-      <table className={className ?? styles.table}>
+    <div className={className ?? styles['table-container']}>
+      <table className={styles.table}>
+
         <tr className={styles['header-table']}>
           {columns.map((title) => (
             <th
@@ -30,11 +31,11 @@ const CTable = ({
               <td
                 className={styles['row-item']}
               >
-                <span>
+                <section>
                   {column.render
                     ? column.render(data)
                     : data[column.dataIndex]}
-                </span>
+                </section>
               </td>
             ))}
           </tr>

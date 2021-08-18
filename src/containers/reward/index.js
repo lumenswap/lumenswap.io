@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Loading from 'components/Loading';
 import { fetchAddressReward } from 'api/rewards';
+import LoginRequired from 'components/LoginRequired';
 import styles from './styles.module.scss';
 import RewardContent from './RewardContent';
-import NotLoginReward from './NotLoginReward';
 
 const RewardPage = () => {
   const isLogged = useSelector((state) => state.user.logged);
@@ -38,14 +38,15 @@ const RewardPage = () => {
     <>
       <div className="container-fluid">
         <Head>
-          <title>Lumenswap | Reward</title>
+          <title>Reward | Lumenswap</title>
         </Head>
         <Header />
       </div>
 
       <div className={styles.main}>
         <div className={styles['page-title']}>Dashboard</div>
-        {isLogged ? <RewardContent rewardStats={rewardStats} /> : <NotLoginReward /> }
+        {isLogged ? <RewardContent rewardStats={rewardStats} />
+          : <LoginRequired text="To see the reward statistics, please connect your account." /> }
       </div>
 
     </>
