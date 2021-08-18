@@ -1,0 +1,96 @@
+@import "styles/vars";
+
+.main {
+    min-height: 84px;
+    background-color: $White;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+}
+.container {
+    height: 66px;
+}
+.container:first-child {
+  width: 262px !important;
+}
+.container:not(:last-child) {
+    border-right: 1px solid $SecondaryAthensGray;
+    width: 351px;
+}
+.container:not(:first-child) {
+  .block {
+    margin-left: 47px;
+  }
+}
+
+
+.block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1px 0;
+    margin-left: 24px;
+    height: 66px;
+  }
+
+  .icons {
+    margin-left: 4px;
+    margin-top: 3px;
+  }
+  
+  .title-info {
+    font-size: 14px;
+    color: $RollingStone;
+    font-family: SofiaPro;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    display: flex;
+    flex-direction: row;
+  }
+  
+
+  .number-info {
+    font-family: SofiaPro;
+    font-size: 22px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $CodGray;
+    display: flex;
+    flex-direction: row;
+    height: 28px;
+    align-items: center;
+    span {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $CodGray;
+    margin-left: 6px;
+    margin-top: 1px;
+    }
+  }
+
+  @media (max-width: $md) {
+    .container.container:not(:first-child) {
+      .block {
+        margin-left: 24px;
+      }
+    }
+  }
+  @media (max-width: $lg) {
+    .container.container:not(:first-child) {
+      .block {
+        margin-left: 24px;
+      }
+    }
+  }
