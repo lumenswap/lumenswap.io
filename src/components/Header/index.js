@@ -18,7 +18,7 @@ const Header = () => {
         <li><Link href="/"><a><Logo /></a></Link></li>
         <li><NavLink name="Swap" href="/swap" /></li>
         <li><NavLink name="Spot" mainHref="/spot" href="/spot/XLM-USDC" /></li>
-        {/* <li><NavLink name="Wallet" href="/wallet" /></li> */}
+        <li><NavLink name="Wallet" href="/wallet" /></li>
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
         : (
