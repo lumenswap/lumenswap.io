@@ -50,13 +50,22 @@ function OpenOrder() {
       loadData();
     }
   }, [isLogged]);
+  console.log(tableData);
 
   const tableHeaders = [
     {
       title: 'Date',
       dataIndex: 'time',
       key: '1',
-      render: (data) => <div className={styles.date}>{data.date}</div>,
+      render: (data) => {
+        const time = data.time.split(' ');
+        return (
+          <div className={styles.date}>
+            <div className={styles['date-item']}>{time[0]}</div>
+            <div className={styles['date-item']}>{time[2]}</div>
+          </div>
+        );
+      },
     },
     {
       title: 'Sell',
