@@ -54,7 +54,7 @@ function OpenOrder() {
   const tableHeaders = [
     {
       title: 'Date',
-      dataIndex: 'date',
+      dataIndex: 'time',
       key: '1',
       render: (data) => <div className={styles.date}>{data.date}</div>,
     },

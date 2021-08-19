@@ -89,17 +89,20 @@ function WalletData() {
       title: 'Action',
       dataIndex: 'action',
       key: '3',
-      render: (data) => (
-        <div className={styles.actions}>
-          <Link href={`/swap/XLM-${data.asset.code}`}>
-            <a className={styles.link}>Swap</a>
-          </Link>
-          <Link href={`/spot/XLM-${data.asset.code}`}>
-            <a className={styles.link}>Trade</a>
-          </Link>
-          <div onClick={() => { setShow((prev) => !prev); }}>Send</div>
-        </div>
-      ),
+      render: (data) => {
+        const token = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.asset));
+        return (
+          <div className={styles.actions}>
+            <Link href={token ? `/swap/XLM-${data.asset.code}` : '/swap'}>
+              <a className={styles.link}>Swap</a>
+            </Link>
+            <Link href={token ? `/spot/XLM-${data.asset.code}` : '/spot'}>
+              <a className={styles.link}>Trade</a>
+            </Link>
+            <div onClick={() => { setShow((prev) => !prev); }}>Send</div>
+          </div>
+        );
+      },
     },
   ];
   let filteredBalances = userBalances.map((item) => ({

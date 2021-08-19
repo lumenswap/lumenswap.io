@@ -80,11 +80,17 @@
     color: $RollingStone;
     font-family: SofiaPro;
     font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    width: 115px;
+    justify-content: space-between;
+}
+.date-item {
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 .table::-webkit-scrollbar {
     width: 0;  
@@ -92,12 +98,9 @@
   }
 .noDataMessageContainer {
     width: 100%;
-    height: 183px !important;
+    height: 100px !important;
     background-color: $White;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .noDataMessage {
@@ -110,6 +113,7 @@
     letter-spacing: normal;
     text-align: center;
     color: $ShuttleGray;
+    margin-top: 40px;
 }
 .sold {
     display: flex;
@@ -120,8 +124,17 @@
 }
 .loading-container {
     width: 100%;
-    height: 139px !important;
+    height: 140px !important;
     display: flex;
     justify-content: center;
-    align-items: center;
+    div {
+        margin-top: 28px;
+    }
+}
+
+@media (max-width: $md) {
+    .main {
+        margin-right: 15px;
+        margin-left: 15px;
+      }
 }

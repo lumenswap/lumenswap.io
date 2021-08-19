@@ -94,10 +94,10 @@
 
 
 .input {
-  min-width: 384px;
-  width: 384px;
   margin-top: 16px;
   margin-left: 24px;
+  min-width: 384px;
+  width: 384px;
 
   input {
     border-radius: 6px;
@@ -139,6 +139,8 @@
 .asset {
   display: flex;
   flex-direction: row;
+  height: 40px;
+  align-items: center;
 }
 .asset-info {
   font-family: SofiaPro;
@@ -149,8 +151,8 @@
   line-height: normal;
   letter-spacing: normal;
   color: $ShuttleGray;
-  line-height: 120%;
-
+  line-height: 110%;
+  margin-bottom: 3px;
 }
 .asset-div {
   display: flex;
@@ -171,7 +173,6 @@
 .asset-logo {
   width: 32px;
   height: 32px;
-  margin-top: 6px;
 }
 .link {
   text-decoration: none;
@@ -191,6 +192,15 @@
 
 @media (max-width: $md) {
   .input {
+    width: auto;
     min-width: auto;
+    margin-right: 24px;
+  }
+  .main {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+  .search-box {
+    
   }
 }

@@ -32,7 +32,7 @@
     justify-content: space-around;
     padding: 1px 0;
     margin-left: 24px;
-    height: 66px;
+    height: 100%;
   }
 
   .icons {
@@ -82,11 +82,25 @@
   }
 
   @media (max-width: $md) {
-    .container.container:not(:first-child) {
+    .container:not(:first-child) {
       .block {
         margin-left: 24px;
       }
     }
+    .container:not(:last-child) {
+      border-right: none;
+      .block {
+        border-bottom: 1px solid $SecondaryAthensGray;
+        margin-right: 24px;
+      }
+    }
+    .container {
+      height: 100px;
+    }
+  
+      
+    
+    
   }
   @media (max-width: $lg) {
     .container.container:not(:first-child) {
