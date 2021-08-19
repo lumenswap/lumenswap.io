@@ -34,7 +34,7 @@ const CStatistics = ({ blocks }) => (
           </Tooltips>
         </div>
         {block.content}
-        {block.content2 ? block.content2 : ''}
+        {block.subtitle ? block.subtitle : <></>}
       </div>
     </div>
   ))}

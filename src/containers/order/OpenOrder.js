@@ -19,32 +19,33 @@ function OpenOrder() {
   const [tableData, setTableData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useSelector((state) => state.user.logged);
-  function loadData() {
-    fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
-      setTableData(res.data._embedded.records.map((item) => {
-        const time = new Date(item.last_modified_time);
-        const counterAsset = item.buying.asset_code
-          ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
-          : new StellarSDK.Asset.native();
-        const baseAsset = item.selling.asset_code
-          ? new StellarSDK.Asset(item.selling.asset_code, item.selling.asset_issuer)
-          : new StellarSDK.Asset.native();
-        const buyAmount = new BN(item.price).times(item.amount);
 
-        return {
-          time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-          sellAmount: sevenDigit(item.amount),
-          buyAmount: sevenDigit(buyAmount.toString()),
-          otherPrice: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
-          price: sevenDigit(item.price),
-          counterAsset,
-          baseAsset,
-          id: item.id,
-        };
-      }));
-    }).catch(console.error);
-  }
   useEffect(() => {
+    function loadData() {
+      fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
+        setTableData(res.data._embedded.records.map((item) => {
+          const time = new Date(item.last_modified_time);
+          const counterAsset = item.buying.asset_code
+            ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
+            : new StellarSDK.Asset.native();
+          const baseAsset = item.selling.asset_code
+            ? new StellarSDK.Asset(item.selling.asset_code, item.selling.asset_issuer)
+            : new StellarSDK.Asset.native();
+          const buyAmount = new BN(item.price).times(item.amount);
+
+          return {
+            time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
+            sellAmount: sevenDigit(item.amount),
+            buyAmount: sevenDigit(buyAmount.toString()),
+            otherPrice: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
+            price: sevenDigit(item.price),
+            counterAsset,
+            baseAsset,
+            id: item.id,
+          };
+        }));
+      }).catch(console.error);
+    }
     if (isLogged) {
       loadData();
     }

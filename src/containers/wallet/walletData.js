@@ -12,6 +12,7 @@ import { useState } from 'react';
 import SendAsset from 'blocks/SendAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 import questionLogo from '../../assets/images/question.svg';
 
@@ -37,13 +38,13 @@ function WalletData() {
       title: 'Total balance',
       tooltip: 'tooltip ',
       content: <Info text="XLM" number={numeral(5545).format('0,0.[0000]')} />,
-      content2: <div className={styles['info-content']}>${numeral(455).format('0,0.[0000]')}</div>,
+      subtitle: <div className={styles['info-content']}>${numeral(455).format('0,0.[0000]')}</div>,
     },
     {
       title: 'Reserved balance',
       tooltip: 'tooltip ',
       content: <Info text="XLM" number={numeral(124).format('0,0.[0000]')} />,
-      content2: <div className={styles['info-content']}>${numeral(134).format('0,0.[0000]')}</div>,
+      subtitle: <div className={styles['info-content']}>${numeral(134).format('0,0.[0000]')}</div>,
     },
   ];
 
@@ -101,7 +102,7 @@ function WalletData() {
     filteredBalances = filteredBalances.filter((balance) => balance.asset.code.toLowerCase().search(searchQuery.toLocaleLowerCase()) !== -1);
   }
   if (filterZeroBalance) {
-    filteredBalances = filteredBalances.filter((balance) => parseInt(balance.balance) !== 0);
+    filteredBalances = filteredBalances.filter((balance) => !(new BN(balance.balance).isEqualTo('0')));
   }
   return (
     <>
