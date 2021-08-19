@@ -173,6 +173,21 @@
   height: 32px;
   margin-top: 6px;
 }
+.link {
+  text-decoration: none;
+  color: inherit;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
 
 @media (max-width: $md) {
   .input {

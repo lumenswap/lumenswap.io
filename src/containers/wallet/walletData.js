@@ -13,6 +13,7 @@ import SendAsset from 'blocks/SendAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import BN from 'helpers/BN';
+import Link from 'next/link';
 import styles from './styles.module.scss';
 import questionLogo from '../../assets/images/question.svg';
 
@@ -88,18 +89,28 @@ function WalletData() {
       title: 'Action',
       dataIndex: 'action',
       key: '3',
-      render: () => (
+      render: (data) => (
         <div className={styles.actions}>
-          <div>Swap</div> <div>Trade</div>
+          <Link href={`/swap/XLM-${data.asset.code}`}>
+            <a className={styles.link}>Swap</a>
+          </Link>
+          <Link href={`/spot/XLM-${data.asset.code}`}>
+            <a className={styles.link}>Trade</a>
+          </Link>
           <div onClick={() => { setShow((prev) => !prev); }}>Send</div>
         </div>
       ),
     },
   ];
-  let filteredBalances = userBalances;
+  let filteredBalances = userBalances.map((item) => ({
+    ...item,
+    key: `${item.asset.code}:${item.asset.issuer}`,
+  }));
 
   if (searchQuery !== '') {
-    filteredBalances = filteredBalances.filter((balance) => balance.asset.code.toLowerCase().search(searchQuery.toLocaleLowerCase()) !== -1);
+    filteredBalances = filteredBalances
+      .filter((balance) => balance.asset.code.toLowerCase()
+        .search(searchQuery.toLocaleLowerCase()) !== -1);
   }
   if (filterZeroBalance) {
     filteredBalances = filteredBalances.filter((balance) => !(new BN(balance.balance).isEqualTo('0')));
