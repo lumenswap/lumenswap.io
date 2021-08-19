@@ -1,7 +1,7 @@
 import OpenOrder from './OpenOrder';
 import TradeHistory from './TradeHistory';
 
-const OrderTabContent = ({ tab, setOrderCounter }) => {
+const OrderTabContent = ({ tab }) => {
   if (tab === 'order') {
     return <OpenOrder />;
   }

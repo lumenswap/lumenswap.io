@@ -50,7 +50,6 @@ function OpenOrder() {
       loadData();
     }
   }, [isLogged]);
-  console.log(tableData);
 
   const tableHeaders = [
     {
@@ -71,16 +70,19 @@ function OpenOrder() {
       title: 'Sell',
       dataIndex: 'sellAmount',
       key: '2',
+      render: (data) => `${data.sellAmount} ${data.baseAsset.getCode()}`,
     },
     {
       title: 'Buy',
       dataIndex: 'buyAmount',
       key: '3',
+      render: (data) => `${data.buyAmount} ${data.counterAsset.getCode()}`,
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: '4',
+      render: (data) => `${data.price} ${data.counterAsset.getCode()} / ${data.otherPrice} ${data.baseAsset.getCode()}`,
     },
     {
       title: 'Action',
@@ -91,9 +93,11 @@ function OpenOrder() {
       ),
     },
   ];
+
   if (tableData === null) {
     return <div className={styles['loading-container']}><Loading size="48" /></div>;
   }
+
   return (
     <>
       <div style={{ marginLeft: '-24px' }}>

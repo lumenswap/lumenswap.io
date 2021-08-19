@@ -64,7 +64,6 @@ function TradeHistory() {
       loadData();
     }
   }, [isLogged]);
-  console.log(tableData);
 
   const tableHeaders = [
     {
@@ -106,6 +105,7 @@ function TradeHistory() {
       title: 'Price',
       dataIndex: 'price',
       key: '4',
+      render: (data) => `${data.price} ${data.pair.counter} / ${data.otherPrice} ${data.pair.base}`,
     },
 
   ];
