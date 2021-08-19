@@ -95,13 +95,18 @@ function WalletData() {
       ),
     },
   ];
-  let filteredBalances = userBalances;
+  let filteredBalances = userBalances.map((item) => ({
+    ...item,
+    key: `${item.asset.code}:${item.asset.issuer}`,
+  }));
 
   if (searchQuery !== '') {
-    filteredBalances = filteredBalances.filter((balance) => balance.asset.code.toLowerCase().search(searchQuery.toLocaleLowerCase()) !== -1);
+    filteredBalances = filteredBalances
+      .filter((balance) => balance.asset.code.toLowerCase()
+        .search(searchQuery.toLocaleLowerCase()) !== -1);
   }
   if (filterZeroBalance) {
-    filteredBalances = filteredBalances.filter((balance) => parseInt(balance.balance) !== 0);
+    filteredBalances = filteredBalances.filter((balance) => parseInt(balance.balance, 10) !== 0);
   }
   return (
     <>
