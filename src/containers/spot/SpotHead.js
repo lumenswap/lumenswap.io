@@ -7,10 +7,15 @@ const SpotHead = ({ tokens, price }) => {
   const formattedPrice = numeral(price).format('0.[00]');
   let pageTitle = `${formattedPrice} | XLM-USDC | Lumenswap`;
 
+  let pricePiece = '';
+  if (price) {
+    pricePiece = `${formattedPrice} | `;
+  }
+
   if (tokens) {
-    pageTitle = `${formattedPrice} | ${tokens.from.code} to ${tokens.to.code} | Lumenswap`;
+    pageTitle = `${pricePiece}${tokens.from.code} to ${tokens.to.code} | Lumenswap`;
   } else if (router.pathname.split('/').includes('custom')) {
-    pageTitle = `${formattedPrice} | Custom | Lumenswap`;
+    pageTitle = `${pricePiece}Custom | Lumenswap`;
   }
 
   return (

@@ -26,7 +26,7 @@ const Spot = ({ tokens }) => {
     counter: getAssetDetails(USDC),
   });
 
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(null);
 
   const { deviceSize } = useBreakPoint();
 
