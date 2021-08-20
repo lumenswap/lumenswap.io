@@ -102,13 +102,35 @@
   input {
     border-radius: 6px;
   }
+  input::placeholder {
+    font-family: SofiaPro;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
 }
+
 
 .checkbox {
   font-size: 14px !important;
   color: $ShuttleGray !important;
   margin-right: 24px;
-  
+  label {
+    span {
+      font-family: SofiaPro;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 0.71;
+      letter-spacing: normal;
+      color: $ShuttleGray;
+    }
+  }
 
   :global(.checkbox) {
     border: 1px solid $Mischka;
