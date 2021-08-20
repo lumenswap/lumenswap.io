@@ -6,12 +6,13 @@ import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import styles from './styles.module.scss';
 
+const NoDataMessage = () => (
+  <div className={styles.noDataMessageContainer}>
+    <div className={styles.noDataMessage}>There is no reward activity here</div>
+  </div>
+);
+
 const RewardContent = ({ rewardStats }) => {
-  const NoDataMessage = () => (
-    <div className={styles.noDataMessageContainer}>
-      <div className={styles.noDataMessage}>There is no reward activity here</div>
-    </div>
-  );
   const tableHeaders = [
     {
       title: 'Tx',
@@ -22,6 +23,7 @@ const RewardContent = ({ rewardStats }) => {
           href={generateTransactionURL(data.tx)}
           target="_blank"
           rel="noreferrer"
+          style={{ color: '#0e41f5', textDecoration: 'none' }}
         >{minimizeAddress(data.tx)}
         </a>
       ),
@@ -67,11 +69,13 @@ const RewardContent = ({ rewardStats }) => {
         <CStatistics blocks={statisticBlocks} />
       </div>
       <div className={styles['table-title']}>Last activity</div>
-      <CTable
-        columns={tableHeaders}
-        dataSource={rewardStats.lastActivity}
-        noDataMessage={NoDataMessage}
-      />
+      <div className={styles['table-container']}>
+        <CTable
+          columns={tableHeaders}
+          dataSource={rewardStats.lastActivity}
+          noDataMessage={NoDataMessage}
+        />
+      </div>
     </div>
   );
 };

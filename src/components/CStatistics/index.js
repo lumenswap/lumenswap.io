@@ -15,6 +15,7 @@ const CStatistics = ({ blocks }) => (
     <div
       className={classNames('col-lg-auto col-md-4 col-sm-12 col-12 px-0',
         styles.container)}
+      key={block.title}
     >
       <div
         className={styles.block}
@@ -34,6 +35,7 @@ const CStatistics = ({ blocks }) => (
           </Tooltips>
         </div>
         {block.content}
+        {block.subtitle ? block.subtitle : <></>}
       </div>
     </div>
   ))}
