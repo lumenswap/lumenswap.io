@@ -17,7 +17,7 @@ function WalletPage() {
         <Header />
       </div>
       <div className={styles.main}>
-        <div className={styles.title}>Wallet</div>
+        <h1 className={styles.title}>Wallet</h1>
         {isLogged ? <WalletData /> : <LoginRequired text="To see the wallet statistics, please connect your account." />}
       </div>
     </>

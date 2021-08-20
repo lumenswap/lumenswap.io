@@ -28,6 +28,7 @@
 }
 .table {
   overflow-y: auto;
+  scrollbar-width: none;
   height: auto;
   max-height: 578px;
   table {
@@ -113,6 +114,9 @@
     color: $Manatee;
   }
 }
+.send {
+  cursor: pointer;
+}
 
 
 .checkbox {
@@ -156,8 +160,10 @@
   color: $BlueRibbon;
   div {
     cursor: pointer;
+    min-width: 37px;
   }
 }
+
 .asset {
   display: flex;
   flex-direction: row;
@@ -221,8 +227,5 @@
   .main {
     margin-right: 15px;
     margin-left: 15px;
-  }
-  .search-box {
-    
   }
 }

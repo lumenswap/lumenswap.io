@@ -16,14 +16,14 @@ const NoDataMessage = () => (
 );
 
 function OpenOrder() {
-  const [tableData, setTableData] = useState(null);
+  const [openOrderList, setOpenOrderList] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useSelector((state) => state.user.logged);
 
   useEffect(() => {
     function loadData() {
       fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
-        setTableData(res.data._embedded.records.map((item) => {
+        setOpenOrderList(res.data._embedded.records.map((item) => {
           const time = new Date(item.last_modified_time);
           const counterAsset = item.buying.asset_code
             ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
@@ -60,8 +60,8 @@ function OpenOrder() {
         const time = data.time.split(' ');
         return (
           <div className={styles.date}>
-            <div className={styles['date-item']}>{time[0]}</div>
-            <div className={styles['date-item']}>{time[2]}</div>
+            <span className={styles['date-item']}>{time[0]}</span>
+            <span className={styles['date-item']}>{time[2]}</span>
           </div>
         );
       },
@@ -89,13 +89,13 @@ function OpenOrder() {
       dataIndex: 'action',
       key: '5',
       render: () => (
-        <div className={styles.cancel}>Cancel</div>
+        <span className={styles.cancel}>Cancel</span>
       ),
     },
   ];
 
-  if (tableData === null) {
-    return <div className={styles['loading-container']}><Loading size="48" /></div>;
+  if (openOrderList === null) {
+    return <div className={styles['loading-container']}><Loading size={48} /></div>;
   }
 
   return (
@@ -104,7 +104,7 @@ function OpenOrder() {
         <CTable
           className={styles.table}
           columns={tableHeaders}
-          dataSource={tableData}
+          dataSource={openOrderList}
           noDataMessage={NoDataMessage}
         />
       </div>

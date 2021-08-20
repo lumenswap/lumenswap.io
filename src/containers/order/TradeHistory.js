@@ -15,14 +15,14 @@ const NoDataMessage = () => (
 );
 
 function TradeHistory() {
-  const [tableData, setTableData] = useState(null);
+  const [tradeHistoryList, setTradeHistoryList] = useState(null);
   const isLogged = useSelector((state) => state.user.logged);
   const userAddress = useSelector((state) => state.user.detail.address);
 
   useEffect(() => {
     function loadData() {
       fetchTradesOfAccount(userAddress, { limit: 200 }).then((res) => {
-        setTableData(res.data._embedded.records.map((item) => {
+        setTradeHistoryList(res.data._embedded.records.map((item) => {
           const time = new Date(item.ledger_close_time);
           const price = new BN(item.price.n).div(item.price.d);
           const otherPrice = new BN(item.price.d).div(item.price.n);
@@ -74,8 +74,8 @@ function TradeHistory() {
         const time = data.time.split(' ');
         return (
           <div className={styles.date}>
-            <div className={styles['date-item']}>{time[0]}</div>
-            <div className={styles['date-item']}>{time[2]}</div>
+            <span className={styles['date-item']}>{time[0]}</span>
+            <span className={styles['date-item']}>{time[2]}</span>
           </div>
         );
       },
@@ -86,7 +86,8 @@ function TradeHistory() {
       key: '2',
       render: (data) => (
         <div className={styles.sold}>
-          <div className={styles.amount}>{data.sellAmount}</div> <div>{data.sellAsset}</div>
+          <span className={styles.amount}>{data.sellAmount}</span>
+          <span>{data.sellAsset}</span>
         </div>
       ),
     },
@@ -96,8 +97,8 @@ function TradeHistory() {
       key: '3',
       render: (data) => (
         <div className={styles.sold}>
-          <div className={styles.amount}>{data.buyAmount}</div>
-          <div>{data.buyAsset}</div>
+          <span className={styles.amount}>{data.buyAmount}</span>
+          <span>{data.buyAsset}</span>
         </div>
       ),
     },
@@ -110,8 +111,8 @@ function TradeHistory() {
 
   ];
 
-  if (tableData === null) {
-    return <div className={styles['loading-container']}><Loading size="48" /></div>;
+  if (tradeHistoryList === null) {
+    return <div className={styles['loading-container']}><Loading size={48} /></div>;
   }
   return (
     <>
@@ -119,7 +120,7 @@ function TradeHistory() {
         <CTable
           className={styles.table}
           columns={tableHeaders}
-          dataSource={tableData}
+          dataSource={tradeHistoryList}
           noDataMessage={NoDataMessage}
         />
       </div>

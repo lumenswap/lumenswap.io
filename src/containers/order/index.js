@@ -17,8 +17,8 @@ function OrderPage() {
       </div>
       <div className={styles.main}>
         <div className={styles.title}>
-          <div className={styles.order}>Order</div>
-          {isLogged ? <div className={styles['cancel-btn']}>Cancel all open orders</div> : ''}
+          <h1 className={styles.order}>Order</h1>
+          {isLogged ? <span className={styles['cancel-btn']}>Cancel all open orders</span> : ''}
         </div>
         {isLogged ? <OrderData /> : <LoginRequired text="To see the Orders and trades, please connect your account." />}
       </div>

@@ -39,13 +39,13 @@ function WalletData() {
       title: 'Total balance',
       tooltip: 'tooltip ',
       content: <Info text="XLM" number={numeral(5545).format('0,0.[0000]')} />,
-      subtitle: <div className={styles['info-content']}>${numeral(455).format('0,0.[0000]')}</div>,
+      subtitle: <span className={styles['info-content']}>${numeral(455).format('0,0.[0000]')}</span>,
     },
     {
       title: 'Reserved balance',
       tooltip: 'tooltip ',
       content: <Info text="XLM" number={numeral(124).format('0,0.[0000]')} />,
-      subtitle: <div className={styles['info-content']}>${numeral(134).format('0,0.[0000]')}</div>,
+      subtitle: <span className={styles['info-content']}>${numeral(134).format('0,0.[0000]')}</span>,
     },
   ];
 
@@ -72,8 +72,8 @@ function WalletData() {
               <Image src={logoSrc} width="100%" height="100%" />
             </div>
             <div className={styles['asset-div']}>
-              <div className={styles['asset-code']}>{data.asset.code}</div>
-              <div className={styles['asset-info']}>{assetInfo}</div>
+              <span className={styles['asset-code']}>{data.asset.code}</span>
+              <span className={styles['asset-info']}>{assetInfo}</span>
             </div>
           </div>
         );
@@ -83,7 +83,7 @@ function WalletData() {
       title: 'Balance',
       dataIndex: 'balance',
       key: '2',
-      render: (data) => <div>{numeral(data.balance).format('0,0.[0000]')}</div>,
+      render: (data) => <span>{numeral(data.balance).format('0,0.[0000000]')}</span>,
     },
     {
       title: 'Action',
@@ -93,13 +93,21 @@ function WalletData() {
         const token = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.asset));
         return (
           <div className={styles.actions}>
-            <Link href={token ? `/swap/XLM-${data.asset.code}` : '/swap'}>
+            <Link href={token ? `/swap/${data.asset.code}-XLM` : '/swap'}>
               <a className={styles.link}>Swap</a>
             </Link>
-            <Link href={token ? `/spot/XLM-${data.asset.code}` : '/spot'}>
+            <Link href={token ? `/spot/${data.asset.code}-XLM` : '/spot'}>
               <a className={styles.link}>Trade</a>
             </Link>
-            <div onClick={() => { setShow((prev) => !prev); }}>Send</div>
+            {new BN(data.balance).isEqualTo('0')
+              ? <div style={{ cursor: 'auto' }} />
+              : (
+                <span
+                  className={styles.send}
+                  onClick={() => { setShow((prev) => !prev); }}
+                >Send
+                </span>
+              )}
           </div>
         );
       },

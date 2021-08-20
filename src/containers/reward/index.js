@@ -44,7 +44,7 @@ const RewardPage = () => {
       </div>
 
       <div className={styles.main}>
-        <div className={styles['page-title']}>Dashboard</div>
+        <h1 className={styles['page-title']}>Dashboard</h1>
         {isLogged ? <RewardContent rewardStats={rewardStats} />
           : <LoginRequired text="To see the reward statistics, please connect your account." /> }
       </div>

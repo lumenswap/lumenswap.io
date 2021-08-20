@@ -5,6 +5,7 @@
     height: auto;
     max-height: 552px !important;
     overflow-y: auto;
+    scrollbar-width: none;
 }
 .table-container::-webkit-scrollbar {
   width: 0;  
