@@ -38,7 +38,7 @@ const OrderItem = ({ row, isSell }) => {
         }}
       >
         <div className={styles['row-item']}>{sevenDigit(row.price)}</div>
-        <div className={styles['row-item']}>{sevenDigit(new BN(row.amount).div(row.price).toFixed(7))}</div>
+        <div className={styles['row-item']}>{isSell ? sevenDigit(row.amount) : sevenDigit(new BN(row.amount).div(row.price).toFixed(7))}</div>
         <div className={styles['row-item']}>{sevenDigit(row.total.toFixed(7))}</div>
       </div>
     </div>
