@@ -14,7 +14,6 @@ import questionLogo from '../../assets/images/question.svg';
 import styles from './styles.module.scss';
 
 const SendAsset = ({ selectedAsset }) => {
-  const [asset, setAsset] = useState('');
   const {
     handleSubmit,
     formState,
@@ -55,7 +54,26 @@ const SendAsset = ({ selectedAsset }) => {
 
     return 'Send';
   }
-
+  const validateAmount = (value) => {
+    if (value <= 0) {
+      return 'Amount is not valid';
+    } if (value > foundBalance.balance) {
+      return 'You dont have enough amount';
+    }
+    return true;
+  };
+  const validateDestination = (value) => {
+    if (value[0] !== 'G' || value.length !== 56 || value.toUpperCase() !== value) {
+      return 'Destination is not valid';
+    }
+    return true;
+  };
+  const validateMemo = (value) => {
+    if (value?.length > 28) {
+      return 'Memu is not valid';
+    }
+    return true;
+  };
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group mb-3">
@@ -76,16 +94,7 @@ const SendAsset = ({ selectedAsset }) => {
           control={control}
           rules={{
             required: 'Amount is required',
-            validate: (value) => {
-              if (value <= 0) {
-                return 'Amount is not defind';
-              } if (value > foundBalance.balance) {
-                return 'You dont have enough amount';
-              } if (value === foundBalance.balance) {
-                return true;
-              }
-              return true;
-            },
+            validate: (value) => validateAmount(value),
           }}
           render={(props) => (
             <NumberOnlyInput
@@ -107,12 +116,7 @@ const SendAsset = ({ selectedAsset }) => {
           control={control}
           rules={{
             required: 'Destination is required',
-            validate: (value) => {
-              if (value[0] !== 'G' || value.length !== 56 || value.toUpperCase() !== value) {
-                return 'Destination is not defind';
-              }
-              return true;
-            },
+            validate: (value) => validateDestination(value),
           }}
           render={(props) => (
             <Input
@@ -129,14 +133,7 @@ const SendAsset = ({ selectedAsset }) => {
           name="memo"
           control={control}
           rules={{
-            validate: (value) => {
-              if (value) {
-                if (value.length > 28) {
-                  return 'Memu is not defind';
-                }
-              }
-              return true;
-            },
+            validate: (value) => validateMemo(value),
           }}
           render={(props) => (
             <NumberOnlyInput
