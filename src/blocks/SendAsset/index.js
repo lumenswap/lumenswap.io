@@ -94,7 +94,7 @@ const SendAsset = ({ selectedAsset }) => {
           control={control}
           rules={{
             required: 'Amount is required',
-            validate: (value) => validateAmount(value),
+            validate: validateAmount,
           }}
           render={(props) => (
             <NumberOnlyInput
@@ -116,7 +116,7 @@ const SendAsset = ({ selectedAsset }) => {
           control={control}
           rules={{
             required: 'Destination is required',
-            validate: (value) => validateDestination(value),
+            validate: validateDestination,
           }}
           render={(props) => (
             <Input
@@ -133,7 +133,7 @@ const SendAsset = ({ selectedAsset }) => {
           name="memo"
           control={control}
           rules={{
-            validate: (value) => validateMemo(value),
+            validate: validateMemo,
           }}
           render={(props) => (
             <NumberOnlyInput
