@@ -4,8 +4,8 @@ import CTable from 'components/CTable';
 import numeral from 'numeral';
 import defaultTokens from 'tokens/defaultTokens';
 import minimizeAddress from 'helpers/minimizeAddress';
-import { useSelector } from 'react-redux';
-import ModalDialog from 'components/ModalDialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModalAction } from 'actions/modal';
 import Image from 'next/image';
 import CStatistics, { Info } from 'components/CStatistics';
 import { useState } from 'react';
@@ -19,13 +19,13 @@ import questionLogo from '../../assets/images/question.svg';
 
 const NoDataMessage = () => (
   <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no wallet activity here</div>
+    <div className={styles.noDataMessage}>There is no asset</div>
   </div>
 );
 
 function WalletData() {
-  const [show, setShow] = useState(false);
   const userBalances = useSelector((state) => state.userBalance);
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterZeroBalance, setFilterZeroBalance] = useState(false);
   const handleSearch = (e) => {
@@ -104,7 +104,14 @@ function WalletData() {
               : (
                 <span
                   className={styles.send}
-                  onClick={() => { setShow((prev) => !prev); }}
+                  onClick={() => {
+                    dispatch(openModalAction({
+                      modalProps: {
+                        title: 'Send Asset',
+                      },
+                      content: <SendAsset selectedAsset={data.asset} />,
+                    }));
+                  }}
                 >Send
                 </span>
               )}
@@ -163,9 +170,7 @@ function WalletData() {
           noDataMessage={NoDataMessage}
         />
       </div>
-      <ModalDialog show={show} setShow={setShow} title="Send">
-        <SendAsset setShow={setShow} />
-      </ModalDialog>
+
     </>
   );
 }

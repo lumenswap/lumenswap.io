@@ -1,15 +1,16 @@
 import { Tabs, Tab } from 'react-bootstrap';
 import { useState } from 'react';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const CTabs = ({
-  tabs, tabContent: TabContent, onChange = () => {}, customTabProps,
+  tabs, tabContent: TabContent, onChange = () => {}, customTabProps, className,
 }) => {
   const [currentTab, setCurrentTab] = useState(tabs[0].id);
 
   return (
     <div
-      className={styles.tab}
+      className={classNames(styles.tab, className)}
       onSelect={onChange}
       style={{ fontSize: '14px' }}
     >

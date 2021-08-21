@@ -2,7 +2,6 @@ import Header from 'components/Header';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import Loading from 'components/Loading';
 import { fetchAddressReward } from 'api/rewards';
 import LoginRequired from 'components/LoginRequired';
 import styles from './styles.module.scss';
@@ -22,17 +21,6 @@ const RewardPage = () => {
       loadingUserData();
     }
   }, [userAdress, isLogged]);
-
-  if (isLogged && rewardStats === null) {
-    return (
-      <div className="container-fluid">
-        <Header />
-        <div className={styles['loading-container']}>
-          <Loading size={48} />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>

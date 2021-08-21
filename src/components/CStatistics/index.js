@@ -5,7 +5,7 @@ import questionIcon from 'assets/images/question.svg';
 import styles from './styles.module.scss';
 
 export const Info = ({ number, text }) => (
-  <div className={styles['number-info']}>{number}
+  <div className={styles['number-info']}>{number ?? '-'}
     <span>{text}</span>
   </div>
 );
