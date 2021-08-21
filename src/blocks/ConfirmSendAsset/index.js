@@ -26,7 +26,7 @@ const ConfirmSendAsset = ({ data }) => {
       <label className={styles.label}>Destination</label>
       <div className={styles.value}>{minimizeAddress(data.destination)}</div>
       <hr className={styles.hr} />
-      <label className={styles.label}>Memo</label>
+      {data.memo ? <label className={styles.label}>Memo</label> : <></>}
       <div className={styles.value}>{data.memo}</div>
       <Button
         variant="primary"
