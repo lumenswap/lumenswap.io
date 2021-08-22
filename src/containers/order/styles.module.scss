@@ -3,6 +3,23 @@
     margin-left: 82px;
     margin-right: 82px;
 }
+.tabs {
+   
+    nav {
+        height: 49px;
+        a {
+            font-family: SofiaPro;
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.5;
+            letter-spacing: normal;
+            color: $Manatee;
+            margin-top: 12px;
+        }
+    }
+}
 .title {
     margin-top: 29px;
     display: flex;
@@ -73,6 +90,7 @@
     max-height: 593px;
     table {
       width: 100% !important;
+      min-width: 712px;
     tr {
       th {
         border-radius: 0px !important;

@@ -15,6 +15,7 @@ function OrderData() {
             <CTabs
               tabs={tabs}
               tabContent={OrderTabContent}
+              className={styles.tabs}
             />
           </div>
         </div>

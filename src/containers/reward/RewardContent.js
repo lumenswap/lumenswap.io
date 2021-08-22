@@ -4,6 +4,7 @@ import moment from 'moment';
 import numeral from 'numeral';
 import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
+import Loading from 'components/Loading';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -42,26 +43,24 @@ const RewardContent = ({ rewardStats }) => {
       render: (data) => <span>{numeral(data.amount).format('0,0.[0000]')}</span>,
     },
   ];
-  let statisticBlocks = null;
-  if (rewardStats !== null) {
-    statisticBlocks = [
-      {
-        title: 'Wallet balance',
-        tooltip: 'tooltip ',
-        content: <Info text="LSP" number={rewardStats.stats.walletBalance} />,
-      },
-      {
-        title: 'Holder reward earned',
-        tooltip: 'tooltip ',
-        content: <Info text="LSP" number={rewardStats.stats.holderReward} />,
-      },
-      {
-        title: 'Trade reward earned',
-        tooltip: 'tooltip ',
-        content: <Info text="LSP" number={rewardStats.stats.tradeReward} />,
-      },
-    ];
-  }
+
+  const statisticBlocks = [
+    {
+      title: 'Wallet balance',
+      tooltip: 'tooltip ',
+      content: <Info text="LSP" number={rewardStats?.stats.walletBalance} />,
+    },
+    {
+      title: 'Holder reward earned',
+      tooltip: 'tooltip ',
+      content: <Info text="LSP" number={rewardStats?.stats.holderReward} />,
+    },
+    {
+      title: 'Trade reward earned',
+      tooltip: 'tooltip ',
+      content: <Info text="LSP" number={rewardStats?.stats.tradeReward} />,
+    },
+  ];
 
   return (
     <div>
@@ -70,11 +69,17 @@ const RewardContent = ({ rewardStats }) => {
       </div>
       <div className={styles['table-title']}>Last activity</div>
       <div className={styles['table-container']}>
-        <CTable
-          columns={tableHeaders}
-          dataSource={rewardStats.lastActivity}
-          noDataMessage={NoDataMessage}
-        />
+        {rewardStats === null ? (
+          <div className={styles['loading-container']}>
+            <Loading size={48} />
+          </div>
+        ) : (
+          <CTable
+            columns={tableHeaders}
+            dataSource={rewardStats?.lastActivity}
+            noDataMessage={NoDataMessage}
+          />
+        )}
       </div>
     </div>
   );
