@@ -1,0 +1,70 @@
+@import 'styles/vars';
+
+.main {
+    margin-top: 114px;
+    width: 633px;
+    height: 568px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.img {
+    height: 552px;
+    width: 100%;
+}
+
+.error {
+    margin-top: 31px;
+    font-family: SofiaPro;
+    font-size: 32px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 180%;
+    letter-spacing: normal;
+    color: $CodGray;
+    height: 42px;
+}
+.info {
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: $ShuttleGray;
+    width: 295px;
+    height: 48px;
+    margin-top: 15px;
+    line-height: 170%;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+}
+.btn {
+    margin-top: 32px;
+    width: 159px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 30px -4px rgba(15, 48, 168, 0.2);
+    background-color: $BlueRibbon;
+    border-radius: 4px;
+    span {
+        color: $White;
+        font-family: SofiaPro;
+        font-size: 18px;
+        font-weight: 300;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 28px;
+        letter-spacing: normal;
+    }
+}
