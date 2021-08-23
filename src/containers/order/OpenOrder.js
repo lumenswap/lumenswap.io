@@ -1,12 +1,16 @@
 import CTable from 'components/CTable';
 import { fetchOffersOfAccount } from 'api/stellar';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import StellarSDK from 'stellar-sdk';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 import Loading from 'components/Loading';
+import { initializeStore } from 'store';
+import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -15,37 +19,63 @@ const NoDataMessage = () => (
   </div>
 );
 
+function cancelSingleOder(data, loadData, setOpenOrderList) {
+  return async () => {
+    const store = initializeStore();
+    function func() {
+      const address = store.getState().user.detail.address;
+      return generateManageSellTRX(
+        address,
+        data.counterAsset,
+        data.baseAsset,
+        '0',
+        data.price,
+        data.id,
+      );
+    }
+
+    showGenerateTrx(func, store.dispatch)
+      .then((trx) => showSignResponse(trx, store.dispatch))
+      .then(() => {
+        setOpenOrderList(null);
+        loadData();
+      })
+      .catch(console.error);
+  };
+}
+
 function OpenOrder() {
   const [openOrderList, setOpenOrderList] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useSelector((state) => state.user.logged);
 
-  useEffect(() => {
-    function loadData() {
-      fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
-        setOpenOrderList(res.data._embedded.records.map((item) => {
-          const time = new Date(item.last_modified_time);
-          const counterAsset = item.buying.asset_code
-            ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
-            : new StellarSDK.Asset.native();
-          const baseAsset = item.selling.asset_code
-            ? new StellarSDK.Asset(item.selling.asset_code, item.selling.asset_issuer)
-            : new StellarSDK.Asset.native();
-          const buyAmount = new BN(item.price).times(item.amount);
+  const loadData = useCallback(() => {
+    fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
+      setOpenOrderList(res.data._embedded.records.map((item) => {
+        const time = new Date(item.last_modified_time);
+        const counterAsset = item.buying.asset_code
+          ? new StellarSDK.Asset(item.buying.asset_code, item.buying.asset_issuer)
+          : new StellarSDK.Asset.native();
+        const baseAsset = item.selling.asset_code
+          ? new StellarSDK.Asset(item.selling.asset_code, item.selling.asset_issuer)
+          : new StellarSDK.Asset.native();
+        const buyAmount = new BN(item.price).times(item.amount);
 
-          return {
-            time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-            sellAmount: sevenDigit(item.amount),
-            buyAmount: sevenDigit(buyAmount.toString()),
-            otherPrice: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
-            price: sevenDigit(item.price),
-            counterAsset,
-            baseAsset,
-            id: item.id,
-          };
-        }));
-      }).catch(console.error);
-    }
+        return {
+          time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
+          sellAmount: sevenDigit(item.amount),
+          buyAmount: sevenDigit(buyAmount.toString()),
+          otherPrice: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
+          price: sevenDigit(item.price),
+          counterAsset,
+          baseAsset,
+          id: item.id,
+        };
+      }));
+    }).catch(console.error);
+  }, []);
+
+  useEffect(() => {
     if (isLogged) {
       loadData();
     }
@@ -88,8 +118,17 @@ function OpenOrder() {
       title: 'Action',
       dataIndex: 'action',
       key: '5',
-      render: () => (
-        <span className={styles.cancel}>Cancel</span>
+      render: (data) => (
+        <span
+          className={styles.cancel}
+          onClick={cancelSingleOder(data, loadData, setOpenOrderList)}
+          style={{
+            cursor: 'pointer',
+            color: '#0e41f5',
+          }}
+        >
+          Cancel
+        </span>
       ),
     },
   ];
