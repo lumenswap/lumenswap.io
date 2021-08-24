@@ -1,7 +1,7 @@
 import CTable from 'components/CTable';
 import { fetchOffersOfAccount } from 'api/stellar';
 import moment from 'moment';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import StellarSDK from 'stellar-sdk';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
@@ -19,7 +19,7 @@ const NoDataMessage = () => (
   </div>
 );
 
-function cancelSingleOder(data, loadData, setOpenOrderList) {
+function cancelSingleOder(data, setOpenOrderList) {
   return async () => {
     const store = initializeStore();
     function func() {
@@ -38,14 +38,12 @@ function cancelSingleOder(data, loadData, setOpenOrderList) {
       .then((trx) => showSignResponse(trx, store.dispatch))
       .then(() => {
         setOpenOrderList(null);
-        loadData();
       })
       .catch(console.error);
   };
 }
 
-function OpenOrder() {
-  const [openOrderList, setOpenOrderList] = useState(null);
+function OpenOrder({ openOrderList, setOpenOrderList }) {
   const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useSelector((state) => state.user.logged);
 
@@ -76,10 +74,10 @@ function OpenOrder() {
   }, []);
 
   useEffect(() => {
-    if (isLogged) {
+    if (isLogged && openOrderList === null) {
       loadData();
     }
-  }, [isLogged]);
+  }, [isLogged, openOrderList]);
 
   const tableHeaders = [
     {
@@ -121,7 +119,7 @@ function OpenOrder() {
       render: (data) => (
         <span
           className={styles.cancel}
-          onClick={cancelSingleOder(data, loadData, setOpenOrderList)}
+          onClick={cancelSingleOder(data, setOpenOrderList)}
           style={{
             cursor: 'pointer',
             color: '#0e41f5',
