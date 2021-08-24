@@ -6,6 +6,7 @@ import { useState } from 'react';
 import generateBulkCancelOrderTRX from 'stellar-trx/generateBulkCancelOrderTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import orderConnectIcon from '../../assets/images/orderNotConnected.png';
 import OrderData from './OrderData';
 import styles from './styles.module.scss';
 
@@ -64,7 +65,12 @@ function OrderPage() {
             setOpenOrderList={setOpenOrderList}
           />
         )
-          : <LoginRequired text="To see the Orders and trades, please connect your account." />}
+          : (
+            <LoginRequired
+              text="To see the orders and trades, please connect your account"
+              logo={orderConnectIcon}
+            />
+          )}
       </div>
     </>
   );
