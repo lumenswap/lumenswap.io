@@ -1,82 +1,91 @@
 @import 'styles/vars';
 
 .table-container {
-    width: 100%;
-    height: auto;
-    max-height: 552px !important;
-    overflow-y: auto;
-    scrollbar-width: none;
+  width: 100%;
+  height: auto;
+  max-height: 552px !important;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 .table-container::-webkit-scrollbar {
-  width: 0;  
-  background: transparent;  
+  width: 0;
+  background: transparent;
 }
 .table {
-    width: 100%;
-    min-width: 582px;
+  width: 100%;
+  min-width: 582px;
 }
+
+.sort {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: -13px;
+  top: 6px;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.sort_icon {
+  transform: rotate(180deg);
+}
+
 .header-table {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: $White;
-    border-radius: 8px;
-    height: 47px;
-    width: 100%;
-    line-height: 47px;
-    font-family: SofiaPro;
-    font-size: 16px;
-    color: $RollingStone;
-    th:first-child {
-      border-radius: 8px 0px 0px 0px;
-    }
-    th:last-child {
-      border-radius: 0px 8px 0px 0px;
-    }
-    span {
-        margin-left: 24px;
-        font-weight: normal;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: normal;
-        letter-spacing: normal;
-    }
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: $White;
+  border-radius: 8px;
+  height: 47px;
+  width: 100%;
+  line-height: 47px;
+  font-family: SofiaPro;
+  font-size: 16px;
+  color: $RollingStone;
+  th:first-child {
+    border-radius: 8px 0px 0px 0px;
+  }
+  th:last-child {
+    border-radius: 0px 8px 0px 0px;
+  }
+  span {
+    margin-left: 24px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
 }
 
+.row-item {
+  section {
+    margin-left: 24px;
+    display: flex;
+  }
+}
 
-  
-  .row-item {
-    section {
-      margin-left: 24px;
-      display: flex;
-    }
-  }
-  
-  
+.row:not(:last-child) {
+  width: 100%;
+  height: 44px;
+  border-bottom: 1px solid $CatskillWhite;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
 
-  
-  .row:not(:last-child) {
-    width: 100%;
-    height: 44px;
-    border-bottom: 1px solid $CatskillWhite;
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.25;
-    letter-spacing: normal;
-  }
-  
-  .row {
-    width: 100%;
-    height: 44px;
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.25;
-    letter-spacing: normal;
-  }
-  
+.row {
+  width: 100%;
+  height: 44px;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+}

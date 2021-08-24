@@ -21,6 +21,7 @@ const Header = () => {
         <li><NavLink name="Wallet" href="/wallet" /></li>
         <li><NavLink name="Reward" href="/reward" /></li>
         <li><NavLink name="Order" href="/order" /></li>
+        <li><NavLink name="Market" href="/market" /></li>
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
         : (
