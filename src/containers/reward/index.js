@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchAddressReward } from 'api/rewards';
 import LoginRequired from 'components/LoginRequired';
+import rewardConnectIcon from '../../assets/images/rewardNotConnected.png';
 import styles from './styles.module.scss';
 import RewardContent from './RewardContent';
 
@@ -34,7 +35,12 @@ const RewardPage = () => {
       <div className={styles.main}>
         <h1 className={styles['page-title']}>Dashboard</h1>
         {isLogged ? <RewardContent rewardStats={rewardStats} />
-          : <LoginRequired text="To see the reward statistics, please connect your account." /> }
+          : (
+            <LoginRequired
+              logo={rewardConnectIcon}
+              text="To see the reward statistics, please connect your account."
+            />
+          ) }
       </div>
 
     </>
