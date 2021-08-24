@@ -49,6 +49,35 @@
   }
 }
 
+.change_negative {
+  color: #f77f5a;
+}
+
+.change_positive {
+  color: #29b87f;
+}
+
+.input {
+  margin-top: 16px;
+  margin-right: 24px;
+  min-width: 384px;
+  width: 384px;
+
+  input {
+    border-radius: 6px;
+  }
+  input::placeholder {
+    font-family: SofiaPro;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+}
+
 .header {
   height: 49px;
   width: 100%;
