@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
+import ArrowDown from 'assets/images/arrow-down.svg';
+import ArrowDownFill from 'assets/images/arrow-down-fill.svg';
+import Image from 'next/image';
 import styles from './styles.module.scss';
 
 const CTable = ({
@@ -18,9 +21,11 @@ const CTable = ({
   const [sortIndex, setSortIndex] = useState(null);
   const [sortOrder, setSortOrder] = useState('desc');
 
-  const handleSort = (sortFunc) => {
+  const handleSort = (sortFunc, newSortIndex) => {
     dataSource.sort((a, b) => sortFunc(a, b, sortOrder));
     setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc');
+    setSortIndex(newSortIndex);
+    console.log(sortIndex);
   };
 
   return (
@@ -32,11 +37,26 @@ const CTable = ({
               style={title.style ?? { width: `${100 / columns.length}%` }}
               key={title.key}
             >
-              <span style={{ position: 'relative' }}>{title.title} {title.sortFunc && (
-                <span className={styles.sort} onClick={() => handleSort(title.sortFunc)} />
-              )}
+              <span style={{ position: 'relative' }}>
+                {title.title}{' '}
+                {title.sortFunc && (
+                  <span className={styles.sort}>
+                    <Image
+                      src={sortIndex === title.dataIndex && sortOrder === 'asc' ? ArrowDownFill : ArrowDown}
+                      width={8}
+                      height={5}
+                      className={styles.sort_icon}
+                      onClick={() => handleSort(title.sortFunc, title.dataIndex)}
+                    />
+                    <Image
+                      src={sortIndex === title.dataIndex && sortOrder === 'desc' ? ArrowDownFill : ArrowDown}
+                      width={8}
+                      height={5}
+                      onClick={() => handleSort(title.sortFunc, title.dataIndex)}
+                    />
+                  </span>
+                )}
               </span>
-
             </th>
           ))}
         </tr>

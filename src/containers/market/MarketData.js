@@ -1,6 +1,6 @@
 import CTabs from 'components/CTabs';
 import Input from 'components/Input';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styles from './styles.module.scss';
 import MarketTabContent from './MarketTabContent';
 
@@ -10,23 +10,19 @@ function MarketData({ assets }) {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
   };
 
-  const SearchInput = () => (
-    <>
-      <div className={styles.input}>
-        <Input
-          type="text"
-          name="asset"
-          id="asset"
-          placeholder="Search assets"
-          value={searchQuery}
-          autoFocus
-          onChange={handleSearch}
-          height={40}
-          fontSize={15}
-        />
-      </div>
-    </>
-  );
+  const SearchInput = useCallback(() => (
+    <div className={styles.input}>
+      <Input
+        type="text"
+        name="asset"
+        id="asset"
+        placeholder="Search assets"
+        onChange={handleSearch}
+        height={40}
+        fontSize={15}
+      />
+    </div>
+  ), []);
 
   const tabs = [
     { title: 'Known assets', id: 'assets' },

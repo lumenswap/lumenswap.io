@@ -17,27 +17,17 @@
 }
 
 .sort {
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid #999;
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  top: 5px;
-  right: -15px;
+  right: -13px;
+  top: 6px;
+  gap: 2px;
   cursor: pointer;
 }
 
-.sort::after {
-  content: '';
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid #0e41f5;
-  position: absolute;
-  bottom: -12px;
-  right: -5px;
+.sort_icon {
+  transform: rotate(180deg);
 }
 
 .header-table {
