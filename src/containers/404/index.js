@@ -37,9 +37,4 @@ function NotFound() {
   );
 }
 
-export const getInitialProps = async ({ req, res }) => {
-  res.statusCode = 404;
-  return { props: {} };
-};
-
 export default NotFound;
