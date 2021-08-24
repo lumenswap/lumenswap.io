@@ -1,8 +1,33 @@
 import CTabs from 'components/CTabs';
+import Input from 'components/Input';
+import { useState } from 'react';
 import styles from './styles.module.scss';
 import MarketTabContent from './MarketTabContent';
 
 function MarketData({ assets }) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+  };
+
+  const SearchInput = () => (
+    <>
+      <div className={styles.input}>
+        <Input
+          type="text"
+          name="asset"
+          id="asset"
+          placeholder="Search assets"
+          value={searchQuery}
+          autoFocus
+          onChange={handleSearch}
+          height={40}
+          fontSize={15}
+        />
+      </div>
+    </>
+  );
+
   const tabs = [
     { title: 'Known assets', id: 'assets' },
     { title: 'Top Volume Market', id: 'topvolume' },
@@ -15,8 +40,9 @@ function MarketData({ assets }) {
             <CTabs
               tabs={tabs}
               tabContent={MarketTabContent}
-              customTabProps={{ assets }}
-              className={styles.tabs}
+              customTabProps={{ assets, searchQuery }}
+              extraComponent={SearchInput}
+              className={`${styles.tabs}`}
             />
           </div>
         </div>

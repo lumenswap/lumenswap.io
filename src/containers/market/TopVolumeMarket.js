@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import numeral from 'numeral';
 
 import CTable from 'components/CTable';
 import Loading from 'components/Loading';
 import questionLogo from 'assets/images/question.png';
 import defaultTokens from 'tokens/defaultTokens';
 import { getTopVolume } from 'api/market';
+import sevenDigit from 'helpers/sevenDigit';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -13,9 +16,10 @@ const NoDataMessage = () => (
   </div>
 );
 
-function TopVolumeMarket() {
+function TopVolumeMarket({ searchQuery }) {
   const [topVolumeList, setTopVolumeList] = useState(null);
   const [assets, setAssets] = useState(null);
+  const [filteredAssets, setFilteredAssets] = useState(null);
 
   const hashedDefaultTokens = defaultTokens.reduce((acc, cur) => {
     acc[cur.code] = cur;
@@ -65,6 +69,23 @@ function TopVolumeMarket() {
     }
   }, [assets]);
 
+  useEffect(() => {
+    if (searchQuery !== '') {
+      const filtered = topVolumeList.filter(
+        (asset) => asset.pair.base.code
+          .toLowerCase()
+          .search(searchQuery.toLocaleLowerCase()) !== -1
+          || asset.pair.counter.code
+            .toLowerCase()
+            .search(searchQuery.toLocaleLowerCase()) !== -1,
+      );
+
+      setFilteredAssets(filtered);
+    } else {
+      setFilteredAssets(topVolumeList);
+    }
+  }, [searchQuery, topVolumeList]);
+
   const tableHeaders = [
     {
       title: 'Pair',
@@ -72,32 +93,44 @@ function TopVolumeMarket() {
       key: '1',
       render: (data) => (
         <div className={styles.pair}>
-          <img src={data.pair.base.logo} alt="baselogo" />
           <img src={data.pair.counter.logo} alt="counterlogo" />
+          <img src={data.pair.base.logo} alt="baseLogo" />
           <span>
-            {data.pair.base.code}/{data.pair.counter.code}
+            {data.pair.counter.code}/{data.pair.base.code}
           </span>
         </div>
       ),
     },
     {
       title: 'Last Price',
-      dataIndex: 'price',
+      dataIndex: 'lastPrice',
       key: '2',
-      render: (data) => `${data.lastPrice}`,
+      sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
+      render: (data) => `${sevenDigit(data.lastPrice)}`,
     },
     {
       title: '24 change',
       dataIndex: 'change24h',
       key: '3',
-      render: (data) => `${data.change24h}`,
+      sortFunc: (a, b, order) => (order === 'asc' ? a.change24h - b.change24h : b.change24h - a.change24h),
+      render: (data) => (
+        <span
+          className={
+        new BN(data.change24h).isNegative()
+          ? styles.change_negative
+          : styles.change_positive
+      }
+        >
+          {data.change24h}%
+        </span>
+      ),
     },
     {
       title: '24H Volume',
       dataIndex: 'volume24h',
       key: '4',
-      render: (data) => `${data.volume24h}`,
-
+      sortFunc: (a, b, order) => (order === 'asc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
+      render: (data) => `${numeral(data.volume24h).format('0.[0]a')} ${data.pair.base.code}`,
     },
   ];
 
@@ -112,7 +145,7 @@ function TopVolumeMarket() {
           className={styles.table}
           columns={tableHeaders}
           noDataMessage={NoDataMessage}
-          dataSource={topVolumeList}
+          dataSource={filteredAssets}
         />
       </div>
     </>
