@@ -1,11 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Head from 'next/head';
 import styles from './styles.module.scss';
 import NotFoundIcon from '../../assets/images/404.png';
 
 function NotFound() {
   return (
     <div className="container-fluid">
+      <Head>
+        <title>
+          404 - Not Found
+        </title>
+      </Head>
       <div className="row justify-content-center">
         <div className={styles.main}>
           <Image
@@ -30,5 +36,10 @@ function NotFound() {
     </div>
   );
 }
+
+export const getInitialProps = async ({ req, res }) => {
+  res.statusCode = 404;
+  return { props: {} };
+};
 
 export default NotFound;
