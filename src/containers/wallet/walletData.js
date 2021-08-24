@@ -182,15 +182,12 @@ function WalletData() {
 
           </div>
         </div>
-
         <CTable
           columns={tableHeaders}
           dataSource={filteredBalances}
           className={styles.table}
           noDataMessage={NoDataMessage}
         />
-        )
-
       </div>
 
     </>
