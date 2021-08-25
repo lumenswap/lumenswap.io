@@ -70,7 +70,7 @@ function TopVolumeMarket({ searchQuery }) {
   }, [assets]);
 
   useEffect(() => {
-    if (searchQuery !== '') {
+    if (searchQuery !== '' && topVolumeList) {
       const filtered = topVolumeList.filter(
         (asset) => asset.pair.base.code
           .toLowerCase()
@@ -106,7 +106,7 @@ function TopVolumeMarket({ searchQuery }) {
       dataIndex: 'lastPrice',
       key: '2',
       sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
-      render: (data) => `${sevenDigit(data.lastPrice)}`,
+      render: (data) => `${sevenDigit(data.lastPrice)} ${data.pair.base.code}`,
     },
     {
       title: '24 change',
