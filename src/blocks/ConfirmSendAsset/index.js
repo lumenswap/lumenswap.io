@@ -1,16 +1,20 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
 import Button from 'components/Button';
-import { closeModalAction } from 'actions/modal';
 import defaultTokens from 'tokens/defaultTokens';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
+import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
 import questionLogo from '../../assets/images/question.svg';
 import styles from './styles.module.scss';
 
 const ConfirmSendAsset = ({ data }) => {
   const dispatch = useDispatch();
   const foundAsset = defaultTokens.find((i) => isSameAsset(data.selectedAsset, getAssetDetails(i)));
+  const userAddress = useSelector((state) => state.user.detail.address);
+
   return (
     <div>
       <label className={styles.label}>Asset</label>
@@ -33,7 +37,19 @@ const ConfirmSendAsset = ({ data }) => {
         content="Confirm"
         className={styles.btn}
         onClick={() => {
-          dispatch(closeModalAction());
+          function func() {
+            return generatePaymentTRX(
+              userAddress,
+              data.amount,
+              getAssetDetails(data.selectedAsset),
+              data.destination,
+              data.memo,
+            );
+          }
+
+          showGenerateTrx(func, dispatch)
+            .then((trx) => showSignResponse(trx, dispatch))
+            .catch(console.error);
         }}
       />
     </div>
