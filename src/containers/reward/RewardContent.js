@@ -13,27 +13,28 @@ const NoDataMessage = () => (
   </div>
 );
 
-const RewardContent = ({ rewardStats }) => {
+const RewardContent = ({ rewardStats, addressReward }) => {
+  console.log(addressReward?.data);
   const tableHeaders = [
     {
       title: 'Tx',
-      dataIndex: 'tx',
+      dataIndex: 'txHash',
       key: '1',
       render: (data) => (
         <a
-          href={generateTransactionURL(data.tx)}
+          href={generateTransactionURL(data.txHash)}
           target="_blank"
           rel="noreferrer"
           style={{ color: '#0e41f5', textDecoration: 'none' }}
-        >{minimizeAddress(data.tx)}
+        >{minimizeAddress(data.txHash)}
         </a>
       ),
     },
     {
       title: 'Date',
-      dataIndex: 'date',
+      dataIndex: 'txDate',
       key: '2',
-      render: (data) => <span>{moment(data.date).fromNow()}</span>,
+      render: (data) => <span>{moment(data.txDate).fromNow()}</span>,
     },
     { title: 'Type', dataIndex: 'type', key: '3' },
     {
@@ -45,20 +46,20 @@ const RewardContent = ({ rewardStats }) => {
   ];
 
   const statisticBlocks = [
-    {
-      title: 'Wallet balance',
-      tooltip: 'tooltip ',
-      content: <Info text="LSP" number={rewardStats?.stats.walletBalance} />,
-    },
+    // {
+    //   title: 'Wallet balance',
+    //   tooltip: 'tooltip ',
+    //   content: <Info text="LSP" number={rewardStats?.stats?.walletBalance} />,
+    // },
     {
       title: 'Holder reward earned',
       tooltip: 'tooltip ',
-      content: <Info text="LSP" number={rewardStats?.stats.holderReward} />,
+      content: <Info text="LSP" number={rewardStats?.holder?.total} />,
     },
     {
       title: 'Trade reward earned',
       tooltip: 'tooltip ',
-      content: <Info text="LSP" number={rewardStats?.stats.tradeReward} />,
+      content: <Info text="LSP" number={rewardStats?.trader?.total} />,
     },
   ];
 
@@ -76,7 +77,7 @@ const RewardContent = ({ rewardStats }) => {
         ) : (
           <CTable
             columns={tableHeaders}
-            dataSource={rewardStats?.lastActivity}
+            dataSource={addressReward?.data}
             noDataMessage={NoDataMessage}
           />
         )}
