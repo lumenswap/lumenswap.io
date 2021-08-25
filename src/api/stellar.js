@@ -1,4 +1,8 @@
 import axios from 'axios';
+import BN from 'helpers/BN';
+import getAssetDetails from 'helpers/getAssetDetails';
+import USDC from 'tokens/USDC';
+import XLM from 'tokens/XLM';
 
 export function getSendEstimatedValueAPI(params) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/paths/strict-send`, { params }).then((res) => res.data._embedded.records[0]);
@@ -124,4 +128,9 @@ export function checkAssetAPI(assetCode, assetIssuer) {
       return false;
     })
     .catch(() => false);
+}
+
+export function fetchXLMPrice() {
+  return fetchOrderBookAPI(getAssetDetails(XLM), getAssetDetails(USDC), { limit: 1 })
+    .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2));
 }

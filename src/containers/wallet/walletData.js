@@ -8,12 +8,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import Image from 'next/image';
 import CStatistics, { Info } from 'components/CStatistics';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SendAsset from 'blocks/SendAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import BN from 'helpers/BN';
 import Link from 'next/link';
+import XLM from 'tokens/XLM';
+import { fetchXLMPrice } from 'api/stellar';
+import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from './styles.module.scss';
 import questionLogo from '../../assets/images/question.svg';
 
@@ -28,24 +31,40 @@ function WalletData() {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterZeroBalance, setFilterZeroBalance] = useState(false);
+  const [xlmPrice, setXLMPrice] = useState(null);
+
+  const xlmBalance = userBalances.find((i) => isSameAsset(getAssetDetails(XLM), i.asset));
+  const userSubentry = useSelector((state) => state.user.detail.subentry);
+
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
   };
   const handleCheckbox = () => {
     setFilterZeroBalance((prev) => !prev);
   };
+
+  useEffect(() => {
+    fetchXLMPrice().then((res) => {
+      setXLMPrice(res.toFixed(7));
+    });
+  }, []);
+
+  const reservedBalance = new BN(xlmBalance?.balance)
+    .minus(calculateMaxXLM(xlmBalance?.balance, userSubentry))
+    .toFixed(7);
+
   const statisticBlocks = [
     {
       title: 'Total balance',
       tooltip: 'tooltip ',
-      content: <Info text="XLM" number={numeral(5545).format('0,0.[0000]')} />,
-      subtitle: <span className={styles['info-content']}>${numeral(455).format('0,0.[0000]')}</span>,
+      content: <Info text="XLM" number={numeral(xlmBalance?.balance).format('0,0.[0000]')} />,
+      subtitle: <span className={styles['info-content']}>{xlmPrice ? `$${numeral(new BN(xlmPrice).times(xlmBalance?.balance).toFixed(7)).format('0,0.[0000]')}` : '-'}</span>,
     },
     {
       title: 'Reserved balance',
       tooltip: 'tooltip ',
-      content: <Info text="XLM" number={numeral(124).format('0,0.[0000]')} />,
-      subtitle: <span className={styles['info-content']}>${numeral(134).format('0,0.[0000]')}</span>,
+      content: <Info text="XLM" number={numeral(reservedBalance).format('0,0.[0000]')} />,
+      subtitle: <span className={styles['info-content']}>{xlmPrice ? `$${numeral(new BN(xlmPrice).times(reservedBalance).toFixed(7)).format('0,0.[0000]')}` : '-'}</span>,
     },
   ];
 

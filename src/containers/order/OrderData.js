@@ -2,11 +2,12 @@ import CTabs from 'components/CTabs';
 import styles from './styles.module.scss';
 import OrderTabContent from './OrderTabContent';
 
-function OrderData() {
+function OrderData({ setShowCancel, openOrderList, setOpenOrderList }) {
   const tabs = [
     { title: 'Open Order', id: 'order' },
     { title: 'Trade History', id: 'trade' },
   ];
+
   return (
     <>
       <div className={styles['table-container']}>
@@ -15,6 +16,17 @@ function OrderData() {
             <CTabs
               tabs={tabs}
               tabContent={OrderTabContent}
+              customTabProps={{
+                openOrderList,
+                setOpenOrderList,
+              }}
+              onChange={(tab) => {
+                if (tab === 'trade') {
+                  setShowCancel(false);
+                } else {
+                  setShowCancel(true);
+                }
+              }}
               className={styles.tabs}
             />
           </div>
