@@ -6,7 +6,7 @@ import { openModalAction } from 'actions/modal';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function signWithFreighter(trx) {
+export default async function signWithFreighter(trx, dispatch) {
   try {
     const signedXDR = await signTransaction(trx.toXDR());
     const transaction = StellarSDK.TransactionBuilder.fromXDR(
@@ -14,12 +14,12 @@ export default async function signWithFreighter(trx) {
       process.env.REACT_APP_HORIZON,
     );
 
-    openModalAction({
+    dispatch(openModalAction({
       modalProps: {
         hasClose: false,
       },
       content: <WaitingContent message="Sending to network" />,
-    });
+    }));
 
     const result = await server.submitTransaction(transaction);
     return result.hash;

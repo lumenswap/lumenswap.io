@@ -23,6 +23,14 @@ export function fetchAccountDetails(address) {
     }));
 }
 
+export function isActiveAccount(address) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${address}`)
+    .then((res) => ({
+      subentry: res.data.subentry_count,
+      balances: res.data.balances,
+    }));
+}
+
 export function fetchTradeAggregationAPI(baseAsset, counterAsset, params) {
   const assetParam = {};
   if (baseAsset.isNative()) {

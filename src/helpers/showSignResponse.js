@@ -4,7 +4,7 @@ import signForThem from 'walletIntegeration/signForThem';
 
 export default async function showSignResponse(trx, dispatch) {
   try {
-    const trxHash = await signForThem(trx);
+    const trxHash = await signForThem(trx, dispatch);
     dispatch(openModalAction({
       modalProps: {},
       content: <TransactionResponse
