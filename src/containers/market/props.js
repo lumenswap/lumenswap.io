@@ -1,6 +1,6 @@
 import { getKnownAssets } from 'api/market';
 
-export async function marketPageGetServerSideProps(context) {
+export async function marketPageGetServerSideProps() {
   const result = await getKnownAssets();
 
   return {

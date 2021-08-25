@@ -51,9 +51,9 @@ function KnownAssets({ assets, searchQuery }) {
         },
         lastPrice: asset.lastPrice,
         change24h: Number(asset.change24h).toFixed(2),
-        high24h: Number(asset.high24h).toFixed(2),
-        low24h: Number(asset.low24h).toFixed(2),
-        volume24h: Number(asset.volume24h).toFixed(2),
+        high24h: sevenDigit(asset.high24h),
+        low24h: sevenDigit(asset.low24h),
+        volume24h: asset.volume24h,
       };
     });
 
@@ -79,7 +79,7 @@ function KnownAssets({ assets, searchQuery }) {
       title: 'Last Price',
       dataIndex: 'lastPrice',
       key: '2',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
       render: (data) => `${sevenDigit(data.lastPrice)}  ${
         data.pair.counter.code
       }`,
@@ -88,7 +88,7 @@ function KnownAssets({ assets, searchQuery }) {
       title: '24 change',
       dataIndex: 'change24h',
       key: '3',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.change24h - b.change24h : b.change24h - a.change24h),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.change24h - b.change24h : b.change24h - a.change24h),
       render: (data) => (
         <span
           className={
@@ -105,7 +105,7 @@ function KnownAssets({ assets, searchQuery }) {
       title: '24 High',
       dataIndex: 'high24h',
       key: '4',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.high24h - b.high24h : b.high24h - a.high24h),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.high24h - b.high24h : b.high24h - a.high24h),
       render: (data) => `${data.high24h} ${
         data.pair.counter.code
       }`,
@@ -114,7 +114,7 @@ function KnownAssets({ assets, searchQuery }) {
       title: '24 Low',
       dataIndex: 'low24h',
       key: '5',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.low24h - b.low24h : b.low24h - a.low24h),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.low24h - b.low24h : b.low24h - a.low24h),
       render: (data) => `${data.low24h} ${
         data.pair.counter.code
       }`,
@@ -123,7 +123,7 @@ function KnownAssets({ assets, searchQuery }) {
       title: '24H Volume',
       dataIndex: 'volume24h',
       key: '6',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
       render: (data) => `${numeral(data.volume24h).format('0.[0]a')} ${
         data.pair.counter.code
       }`,
