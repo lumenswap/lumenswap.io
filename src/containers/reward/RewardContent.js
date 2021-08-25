@@ -8,6 +8,10 @@ import Loading from 'components/Loading';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchAddressReward, fetchAddressRewardStats } from 'api/rewards';
+import isSameAsset from 'helpers/isSameAsset';
+import getAssetDetails from 'helpers/getAssetDetails';
+import LSP from 'tokens/LSP';
+import sevenDigit from 'helpers/sevenDigit';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -20,6 +24,9 @@ const RewardContent = () => {
   const userAdress = useSelector((state) => state.user.detail.address);
   const [rewardStats, setRewardStats] = useState(null);
   const [addressReward, setAddressReward] = useState(null);
+  const userBalances = useSelector((state) => state.userBalance);
+  const foundLSP = userBalances
+    .find((i) => isSameAsset(getAssetDetails(LSP), getAssetDetails(i.asset)));
 
   useEffect(() => {
     function loadingUserData() {
@@ -67,11 +74,11 @@ const RewardContent = () => {
   ];
 
   const statisticBlocks = [
-    // {
-    //   title: 'Wallet balance',
-    //   tooltip: 'tooltip ',
-    //   content: <Info text="LSP" number={rewardStats?.stats?.walletBalance} />,
-    // },
+    {
+      title: 'Wallet balance',
+      tooltip: 'tooltip ',
+      content: <Info text="LSP" number={sevenDigit(foundLSP ? foundLSP.balance : '0')} />,
+    },
     {
       title: 'Holder reward earned',
       tooltip: 'tooltip ',
