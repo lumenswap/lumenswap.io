@@ -25,7 +25,7 @@ function KnownAssets({ assets, searchQuery }) {
   }, {});
 
   useEffect(() => {
-    const pairedAssets = assets.data.map((asset) => {
+    const pairedAssets = assets?.data.map((asset) => {
       const base = {
         code: asset.baseAssetCode,
         issuer: asset.baseAssetIssuer,
@@ -104,14 +104,14 @@ function KnownAssets({ assets, searchQuery }) {
       dataIndex: 'high24h',
       key: '4',
       sortFunc: (a, b, order) => (order === 'asc' ? a.high24h - b.high24h : b.high24h - a.high24h),
-      render: (data) => `${data.high24h}%`,
+      render: (data) => `${data.high24h}`,
     },
     {
       title: '24 Low',
       dataIndex: 'low24h',
       key: '5',
       sortFunc: (a, b, order) => (order === 'asc' ? a.low24h - b.low24h : b.low24h - a.low24h),
-      render: (data) => `${data.low24h}%`,
+      render: (data) => `${data.low24h}`,
     },
     {
       title: '24H Volume',
