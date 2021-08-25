@@ -67,19 +67,19 @@ const RewardContent = () => {
   ];
 
   const statisticBlocks = [
-    // {
-    //   title: 'Wallet balance',
-    //   tooltip: 'tooltip ',
-    //   content: <Info text="LSP" number={rewardStats?.stats?.walletBalance} />,
-    // },
+    {
+      title: 'Wallet balance',
+      tooltip: 'This shows your wallet’s LSP balance.',
+      content: <Info text="LSP" number={rewardStats?.stats?.walletBalance} />,
+    },
     {
       title: 'Holder reward earned',
-      tooltip: 'tooltip ',
+      tooltip: 'This shows your earned rewards from the holder program.',
       content: <Info text="LSP" number={rewardStats?.holder?.total} />,
     },
     {
       title: 'Trade reward earned',
-      tooltip: 'tooltip ',
+      tooltip: 'This shows your earned rewards from the trader program.',
       content: <Info text="LSP" number={rewardStats?.trader?.total} />,
     },
   ];
