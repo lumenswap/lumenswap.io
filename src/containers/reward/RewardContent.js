@@ -5,6 +5,9 @@ import numeral from 'numeral';
 import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import Loading from 'components/Loading';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { fetchAddressReward, fetchAddressRewardStats } from 'api/rewards';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -13,8 +16,26 @@ const NoDataMessage = () => (
   </div>
 );
 
-const RewardContent = ({ rewardStats, addressReward }) => {
-  console.log(addressReward?.data);
+const RewardContent = () => {
+  const userAdress = useSelector((state) => state.user.detail.address);
+  const [rewardStats, setRewardStats] = useState(null);
+  const [addressReward, setAddressReward] = useState(null);
+
+  useEffect(() => {
+    function loadingUserData() {
+      fetchAddressRewardStats(userAdress)
+        .then((res) => setRewardStats(res.data)).catch((err) => console.log(err));
+    }
+
+    function loadAddressReward() {
+      fetchAddressReward(userAdress)
+        .then((res) => setAddressReward(res.data)).catch((err) => console.log(err));
+    }
+
+    loadingUserData();
+    loadAddressReward();
+  }, [userAdress]);
+
   const tableHeaders = [
     {
       title: 'Tx',
