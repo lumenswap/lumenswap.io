@@ -5,8 +5,10 @@ import defaultTokens from 'tokens/defaultTokens';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
+import generateCreateAccountTRX from 'stellar-trx/generateCreateAccountTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import { isActiveAccount } from 'api/stellar';
 import questionLogo from '../../assets/images/question.svg';
 import styles from './styles.module.scss';
 
@@ -29,15 +31,30 @@ const ConfirmSendAsset = ({ data }) => {
       <hr className={styles.hr} />
       <label className={styles.label}>Destination</label>
       <div className={styles.value}>{minimizeAddress(data.destination)}</div>
-      <hr className={styles.hr} />
-      {data.memo ? <label className={styles.label}>Memo</label> : <></>}
-      <div className={styles.value}>{data.memo}</div>
+      {data.memo && (
+        <>
+          <hr className={styles.hr} />
+          <label className={styles.label}>Memo</label>
+          <div className={styles.value}>{data.memo}</div>
+        </>
+      )}
       <Button
         variant="primary"
         content="Confirm"
         className={styles.btn}
         onClick={() => {
-          function func() {
+          async function func() {
+            try {
+              await isActiveAccount(data.destination);
+            } catch (e) {
+              return generateCreateAccountTRX(
+                userAddress,
+                data.amount,
+                data.destination,
+                data.memo,
+              );
+            }
+
             return generatePaymentTRX(
               userAddress,
               data.amount,

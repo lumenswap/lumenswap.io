@@ -94,11 +94,15 @@ export const operationResultCodes = {
 };
 
 export default function extractErrorText(error) {
-  const { result_codes } = error.response.data.extras;
+  if (error?.response?.data?.extras) {
+    const { result_codes } = error.response.data.extras;
 
-  if (result_codes.transaction && (!result_codes.operations || !result_codes.operations.length)) {
-    return `${transactionResultCodes[result_codes.transaction]}`;
+    if (result_codes.transaction && (!result_codes.operations || !result_codes.operations.length)) {
+      return `${transactionResultCodes[result_codes.transaction]}`;
+    }
+
+    return `${operationResultCodes[result_codes.operations[0]]}`;
   }
 
-  return `${operationResultCodes[result_codes.operations[0]]}`;
+  return error.message;
 }

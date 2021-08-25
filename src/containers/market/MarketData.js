@@ -28,6 +28,7 @@ function MarketData({ assets }) {
     { title: 'Known assets', id: 'assets' },
     { title: 'Top Volume Market', id: 'topvolume' },
   ];
+
   return (
     <>
       <div className={styles['table-container']}>

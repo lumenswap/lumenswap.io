@@ -11,8 +11,9 @@ import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
-import { fetchAccountDetails } from 'api/stellar';
+import { isActiveAccount } from 'api/stellar';
 import BN from 'helpers/BN';
+import StellarSDK from 'stellar-sdk';
 import questionLogo from '../../assets/images/question.svg';
 import styles from './styles.module.scss';
 
@@ -56,6 +57,10 @@ const SendAsset = ({ selectedAsset }) => {
     trigger();
   }, []);
 
+  useEffect(() => {
+    trigger();
+  }, [JSON.stringify(getValues('amount', 'destination'))]);
+
   function generateErrors() {
     for (const error of Object.values(errors)) {
       if (error.message) {
@@ -66,17 +71,25 @@ const SendAsset = ({ selectedAsset }) => {
     return 'Send';
   }
 
-  const validateAmount = (value) => {
-    if (value <= 0) {
+  const validateAmount = async (value) => {
+    if (new BN(value).lte(0)) {
       return 'Amount is not valid';
-    } if (value > foundBalance.balance) {
-      return 'You dont have enough amount';
     }
+
+    if (getAssetDetails(selectedAsset).isNative()
+      && new BN(value).gt(calculateMaxXLM(foundBalance.balance, userSubentry))) {
+      return 'Insufficient balance';
+    }
+
+    if (new BN(value).gt(foundBalance.balance)) {
+      return 'Insufficient balance';
+    }
+
     return true;
   };
 
   const validateDestination = async (value) => {
-    if (value[0] !== 'G' || value.length !== 56 || value.toUpperCase() !== value) {
+    if (!StellarSDK.StrKey.isValidEd25519PublicKey(value)) {
       return 'Destination is not valid';
     }
 
@@ -85,7 +98,7 @@ const SendAsset = ({ selectedAsset }) => {
     }
 
     try {
-      const destinationAddressInfo = await fetchAccountDetails(value);
+      const destinationAddressInfo = await isActiveAccount(value);
       if (getAssetDetails(selectedAsset).isNative()) {
         return true;
       }

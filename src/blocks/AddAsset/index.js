@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import Input from 'components/Input';
@@ -13,18 +13,16 @@ import { addCustomTokenAction } from 'actions/userCustomTokens';
 import { closeModalAction } from 'actions/modal';
 import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 
 const AddAsset = ({ changeToAsset }) => {
   const [loadingTimer, setLoadingTimer] = useState(false);
   const {
-    register, handleSubmit, formState, getValues, errors, trigger, setValue,
+    register, handleSubmit, formState, getValues, errors, trigger,
   } = useForm({
     mode: 'onChange',
   });
-  const router = useRouter();
   const dispatch = useDispatch();
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
 

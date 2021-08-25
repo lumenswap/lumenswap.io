@@ -124,8 +124,8 @@ function KnownAssets({ assets, searchQuery }) {
       dataIndex: 'volume24h',
       key: '6',
       sortFunc: (a, b, order) => (order === 'asc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
-      render: (data) => `$${numeral(data.volume24h).format('0.[0]a')} ${
-        data.pair.base.code
+      render: (data) => `${numeral(data.volume24h).format('0.[0]a')} ${
+        data.pair.counter.code
       }`,
     },
   ];

@@ -6,7 +6,7 @@ import StellarSDK from 'stellar-sdk';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function signWithAlbedo(trx) {
+export default async function signWithAlbedo(trx, dispatch) {
   try {
     const signedXDR = await albedo.tx({
       xdr: trx.toXDR(),
@@ -17,12 +17,12 @@ export default async function signWithAlbedo(trx) {
       process.env.REACT_APP_HORIZON,
     );
 
-    openModalAction({
+    dispatch(openModalAction({
       modalProps: {
         hasClose: false,
       },
       content: <WaitingContent message="Sending to network" />,
-    });
+    }));
 
     const result = await server.submitTransaction(transaction);
     return result.hash;
