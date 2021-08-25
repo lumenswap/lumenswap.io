@@ -20,8 +20,8 @@ const RewardPage = () => {
 
       <div className={styles.main}>
         <h1 className={styles['page-title']}>Dashboard</h1>
-        {isLogged ? <RewardContent  />
-          : <LoginRequired logo={rewardConnectIcon} text="To see the reward statistics, please connect your account." /> }  
+        {isLogged ? <RewardContent />
+          : <LoginRequired logo={rewardConnectIcon} text="To see the reward statistics, please connect your account." /> }
       </div>
 
     </>

@@ -91,7 +91,7 @@ const RewardContent = () => {
       </div>
       <div className={styles['table-title']}>Last activity</div>
       <div className={styles['table-container']}>
-        {rewardStats === null ? (
+        {rewardStats === null || addressReward === null ? (
           <div className={styles['loading-container']}>
             <Loading size={48} />
           </div>
