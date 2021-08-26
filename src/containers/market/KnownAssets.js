@@ -8,6 +8,7 @@ import questionLogo from 'assets/images/question.png';
 import defaultTokens from 'tokens/defaultTokens';
 import sevenDigit from 'helpers/sevenDigit';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -19,8 +20,6 @@ const NoDataMessage = () => (
 function KnownAssets({ assets, searchQuery }) {
   const [knownAssets, setKnownAssets] = useState(null);
   const [filteredAssets, setFilteredAssets] = useState(null);
-
-  const router = useRouter();
 
   const hashedDefaultTokens = defaultTokens.reduce((acc, cur) => {
     acc[cur.code] = cur;
@@ -149,19 +148,18 @@ function KnownAssets({ assets, searchQuery }) {
       </div>
     );
   }
+  const rowLink = (data) => `/spot/${data.pair.base.code}-${data.pair.counter.code}`;
 
   return (
-    <>
-      <div style={{ marginLeft: '-24px' }}>
-        <CTable
-          className={styles.table}
-          columns={tableHeaders}
-          dataSource={filteredAssets}
-          noDataMessage={NoDataMessage}
-          pairSpot
-        />
-      </div>
-    </>
+    <div style={{ marginLeft: '-24px' }}>
+      <CTable
+        className={styles.table}
+        columns={tableHeaders}
+        dataSource={filteredAssets}
+        noDataMessage={NoDataMessage}
+        rowLink={rowLink}
+      />
+    </div>
   );
 }
 
