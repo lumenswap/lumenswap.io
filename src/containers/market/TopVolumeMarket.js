@@ -139,16 +139,14 @@ function TopVolumeMarket({ searchQuery }) {
   }
 
   return (
-    <>
-      <div style={{ marginLeft: '-24px' }}>
-        <CTable
-          className={styles.table}
-          columns={tableHeaders}
-          noDataMessage={NoDataMessage}
-          dataSource={filteredAssets}
-        />
-      </div>
-    </>
+    <div style={{ marginLeft: '-24px' }}>
+      <CTable
+        className={styles.table}
+        columns={tableHeaders}
+        noDataMessage={NoDataMessage}
+        dataSource={filteredAssets}
+      />
+    </div>
   );
 }
 

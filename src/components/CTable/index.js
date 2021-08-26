@@ -3,13 +3,27 @@ import { nanoid } from 'nanoid';
 import ArrowDown from 'assets/images/arrow-down.svg';
 import ArrowDownFill from 'assets/images/arrow-down-fill.svg';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './styles.module.scss';
+
+const TableRow = ({ columns, data }) => (
+  <tr className={styles.row}>
+    {columns.map((column) => (
+      <td className={styles['row-item']}>
+        <section>
+          {column.render ? column.render(data) : data[column.dataIndex]}
+        </section>
+      </td>
+    ))}
+  </tr>
+);
 
 const CTable = ({
   columns,
   dataSource,
   className,
   noDataMessage: NoDataMessage,
+  rowLink,
 }) => {
   if (!dataSource || dataSource === null) {
     return <NoDataMessage />;
@@ -21,7 +35,7 @@ const CTable = ({
   const [sortIndex, setSortIndex] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
 
-  const handleSort = (sortFunc, newSortIndex) => {
+  const handleSort = (newSortIndex) => {
     setSortOrder((prev) => {
       let newSortOrder;
       if (newSortIndex === sortIndex) {
@@ -29,12 +43,12 @@ const CTable = ({
       } else {
         newSortOrder = 'asc';
       }
-
-      dataSource.sort((a, b) => sortFunc(a, b, newSortOrder));
       return newSortOrder;
     });
+
     setSortIndex(newSortIndex);
   };
+  const sortColumn = columns.find((column) => column.dataIndex === sortIndex);
 
   return (
     <div className={className ?? styles['table-container']}>
@@ -57,12 +71,13 @@ const CTable = ({
                       width={8}
                       height={5}
                       className={styles.sort_icon}
-
+                      onClick={() => handleSort(title.dataIndex)}
                     />
                     <Image
                       src={sortIndex === title.dataIndex && sortOrder === 'desc' ? ArrowDownFill : ArrowDown}
                       width={8}
                       height={5}
+                      onClick={() => handleSort(title.dataIndex)}
                     />
                   </span>
                 )}
@@ -71,16 +86,19 @@ const CTable = ({
           ))}
         </tr>
 
-        {dataSource.map((data) => (
-          <tr className={styles.row} key={data.key ?? nanoid(6)}>
-            {columns.map((column) => (
-              <td className={styles['row-item']}>
-                <section>
-                  {column.render ? column.render(data) : data[column.dataIndex]}
-                </section>
-              </td>
-            ))}
-          </tr>
+        {dataSource.sort((a, b) => {
+          if (sortIndex === null) return 0;
+          return sortColumn.sortFunc(a, b, sortOrder);
+        }).map((data) => (
+          rowLink ? (
+            <Link key={data.key ?? nanoid(6)} href={rowLink(data)}>
+              <a className={styles.rowLink}>
+                <TableRow columns={columns} data={data} />
+              </a>
+            </Link>
+          ) : (
+            <TableRow columns={columns} data={data} />
+          )
         ))}
       </table>
     </div>

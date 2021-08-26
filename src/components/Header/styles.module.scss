@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .layout {
   display: flex;
@@ -12,13 +12,21 @@
   list-style: none;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 0;
   padding-left: 0;
+  width: 100%;
+
+  div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
 
   li {
     margin-right: 40px;
   }
-
 }
 
 .btn {

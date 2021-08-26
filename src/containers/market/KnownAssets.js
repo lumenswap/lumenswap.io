@@ -79,10 +79,8 @@ function KnownAssets({ assets, searchQuery }) {
       title: 'Last Price',
       dataIndex: 'lastPrice',
       key: '2',
-      sortFunc: (a, b, order) => (order === 'desc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
-      render: (data) => `${sevenDigit(data.lastPrice)}  ${
-        data.pair.counter.code
-      }`,
+      sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
+      render: (data) => `${sevenDigit(data.lastPrice)}  ${data.pair.counter.code}`,
     },
     {
       title: '24 change',
@@ -105,28 +103,22 @@ function KnownAssets({ assets, searchQuery }) {
       title: '24 High',
       dataIndex: 'high24h',
       key: '4',
-      sortFunc: (a, b, order) => (order === 'desc' ? a.high24h - b.high24h : b.high24h - a.high24h),
-      render: (data) => `${data.high24h} ${
-        data.pair.counter.code
-      }`,
+      sortFunc: (a, b, order) => (order === 'asc' ? a.high24h - b.high24h : b.high24h - a.high24h),
+      render: (data) => `${data.high24h} ${data.pair.counter.code}`,
     },
     {
       title: '24 Low',
       dataIndex: 'low24h',
       key: '5',
-      sortFunc: (a, b, order) => (order === 'desc' ? a.low24h - b.low24h : b.low24h - a.low24h),
-      render: (data) => `${data.low24h} ${
-        data.pair.counter.code
-      }`,
+      sortFunc: (a, b, order) => (order === 'asc' ? a.low24h - b.low24h : b.low24h - a.low24h),
+      render: (data) => `${data.low24h} ${data.pair.counter.code}`,
     },
     {
       title: '24H Volume',
       dataIndex: 'volume24h',
       key: '6',
-      sortFunc: (a, b, order) => (order === 'desc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
-      render: (data) => `${numeral(data.volume24h).format('0.[0]a')} ${
-        data.pair.counter.code
-      }`,
+      sortFunc: (a, b, order) => (order === 'asc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
+      render: (data) => `$${numeral(data.volume24h).format('0.[0]a')} ${data.pair.base.code}`,
     },
   ];
 
@@ -154,18 +146,18 @@ function KnownAssets({ assets, searchQuery }) {
       </div>
     );
   }
+  const rowLink = (data) => `/spot/${data.pair.base.code}-${data.pair.counter.code}`;
 
   return (
-    <>
-      <div style={{ marginLeft: '-24px' }}>
-        <CTable
-          className={styles.table}
-          columns={tableHeaders}
-          dataSource={filteredAssets}
-          noDataMessage={NoDataMessage}
-        />
-      </div>
-    </>
+    <div style={{ marginLeft: '-24px' }}>
+      <CTable
+        className={styles.table}
+        columns={tableHeaders}
+        dataSource={filteredAssets}
+        noDataMessage={NoDataMessage}
+        rowLink={rowLink}
+      />
+    </div>
   );
 }
 
