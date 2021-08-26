@@ -7,8 +7,6 @@ import Loading from 'components/Loading';
 import questionLogo from 'assets/images/question.png';
 import defaultTokens from 'tokens/defaultTokens';
 import sevenDigit from 'helpers/sevenDigit';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -53,9 +51,9 @@ function KnownAssets({ assets, searchQuery }) {
         },
         lastPrice: asset.lastPrice,
         change24h: Number(asset.change24h).toFixed(2),
-        high24h: Number(asset.high24h).toFixed(2),
-        low24h: Number(asset.low24h).toFixed(2),
-        volume24h: Number(asset.volume24h).toFixed(2),
+        high24h: sevenDigit(asset.high24h),
+        low24h: sevenDigit(asset.low24h),
+        volume24h: asset.volume24h,
       };
     });
 
@@ -88,7 +86,7 @@ function KnownAssets({ assets, searchQuery }) {
       title: '24 change',
       dataIndex: 'change24h',
       key: '3',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.change24h - b.change24h : b.change24h - a.change24h),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.change24h - b.change24h : b.change24h - a.change24h),
       render: (data) => (
         <span
           className={

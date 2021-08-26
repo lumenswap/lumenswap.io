@@ -33,13 +33,21 @@ const CTable = ({
   }
 
   const [sortIndex, setSortIndex] = useState(null);
-  const [sortOrder, setSortOrder] = useState('desc');
+  const [sortOrder, setSortOrder] = useState('asc');
 
   const handleSort = (newSortIndex) => {
-    setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc');
+    setSortOrder((prev) => {
+      let newSortOrder;
+      if (newSortIndex === sortIndex) {
+        newSortOrder = prev === 'asc' ? 'desc' : 'asc';
+      } else {
+        newSortOrder = 'asc';
+      }
+      return newSortOrder;
+    });
+
     setSortIndex(newSortIndex);
   };
-
   const sortColumn = columns.find((column) => column.dataIndex === sortIndex);
 
   return (
@@ -54,7 +62,10 @@ const CTable = ({
               <span style={{ position: 'relative' }}>
                 {title.title}{' '}
                 {title.sortFunc && (
-                  <span className={styles.sort}>
+                  <span
+                    className={styles.sort}
+                    onClick={() => handleSort(title.sortFunc, title.dataIndex)}
+                  >
                     <Image
                       src={sortIndex === title.dataIndex && sortOrder === 'asc' ? ArrowDownFill : ArrowDown}
                       width={8}

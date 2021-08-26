@@ -6,28 +6,28 @@ import signWithLedger from './sign/signWithLedger';
 import signWithPrivateKey from './sign/signWithPrivateKey';
 import signWithRabet from './sign/signWithRabet';
 
-export default function signForThem(trx) {
+export default function signForThem(trx, dispatch) {
   const store = initializeStore();
   const user = store.getState().user;
 
   if (user.loginType === loginTypes.PV) {
-    return signWithPrivateKey(trx, user.detail.privateKey);
+    return signWithPrivateKey(trx, user.detail.privateKey, dispatch);
   }
 
   if (user.loginType === loginTypes.ALBEDO) {
-    return signWithAlbedo(trx);
+    return signWithAlbedo(trx, dispatch);
   }
 
   if (user.loginType === loginTypes.LEDGER_S) {
-    return signWithLedger(trx, user.detail.address);
+    return signWithLedger(trx, user.detail.address, dispatch);
   }
 
   if (user.loginType === loginTypes.FREIGHTER) {
-    return signWithFreighter(trx);
+    return signWithFreighter(trx, dispatch);
   }
 
   if (user.loginType === loginTypes.RABET) {
-    return signWithRabet(trx);
+    return signWithRabet(trx, dispatch);
   }
 
   throw new Error('cannot handle login type');

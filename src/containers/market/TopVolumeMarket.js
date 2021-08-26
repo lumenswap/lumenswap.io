@@ -105,14 +105,14 @@ function TopVolumeMarket({ searchQuery }) {
       title: 'Last Price',
       dataIndex: 'lastPrice',
       key: '2',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
       render: (data) => `${sevenDigit(data.lastPrice)} ${data.pair.base.code}`,
     },
     {
       title: '24 change',
       dataIndex: 'change24h',
       key: '3',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.change24h - b.change24h : b.change24h - a.change24h),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.change24h - b.change24h : b.change24h - a.change24h),
       render: (data) => (
         <span
           className={
@@ -129,7 +129,7 @@ function TopVolumeMarket({ searchQuery }) {
       title: '24H Volume',
       dataIndex: 'volume24h',
       key: '4',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
+      sortFunc: (a, b, order) => (order === 'desc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
       render: (data) => `${numeral(data.volume24h).format('0.[0]a')} ${data.pair.base.code}`,
     },
   ];

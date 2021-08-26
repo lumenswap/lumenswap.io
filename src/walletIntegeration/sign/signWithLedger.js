@@ -7,7 +7,7 @@ import { openModalAction } from 'actions/modal';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function signWithLedger(trx, publicKey) {
+export default async function signWithLedger(trx, publicKey, dispatch) {
   try {
     const transport = await Transport.create();
     const str = new Str(transport);
@@ -24,12 +24,12 @@ export default async function signWithLedger(trx, publicKey) {
     });
     trx.signatures.push(decorated);
 
-    openModalAction({
+    dispatch(openModalAction({
       modalProps: {
         hasClose: false,
       },
       content: <WaitingContent message="Sending to network" />,
-    });
+    }));
 
     const result = await server.submitTransaction(trx);
     return result.hash;
