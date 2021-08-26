@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import ArrowDown from 'assets/images/arrow-down.svg';
 import ArrowDownFill from 'assets/images/arrow-down-fill.svg';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './styles.module.scss';
 
 const CTable = ({
@@ -10,6 +11,7 @@ const CTable = ({
   dataSource,
   className,
   noDataMessage: NoDataMessage,
+  pairSpot,
 }) => {
   if (!dataSource || dataSource === null) {
     return <NoDataMessage />;
@@ -62,15 +64,30 @@ const CTable = ({
         </tr>
 
         {dataSource.map((data) => (
-          <tr className={styles.row} key={data.key ?? nanoid(6)}>
-            {columns.map((column) => (
-              <td className={styles['row-item']}>
-                <section>
-                  {column.render ? column.render(data) : data[column.dataIndex]}
-                </section>
-              </td>
-            ))}
-          </tr>
+          pairSpot ? (
+            <Link className={styles.row} key={data.key ?? nanoid(6)} href={`/spot/${data.pair.base.code}-${data.pair.counter.code}`} passHref>
+              <tr className={styles.row}>
+                {columns.map((column) => (
+                  <td className={styles['row-item']}>
+                    <section>
+                      {column.render ? column.render(data) : data[column.dataIndex]}
+                    </section>
+                  </td>
+                ))}
+              </tr>
+            </Link>
+          ) : (
+            <tr className={styles.row}>
+              {columns.map((column) => (
+                <td className={styles['row-item']}>
+                  <section>
+                    {column.render ? column.render(data) : data[column.dataIndex]}
+                  </section>
+                </td>
+              ))}
+            </tr>
+          )
+
         ))}
       </table>
     </div>

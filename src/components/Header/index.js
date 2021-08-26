@@ -16,12 +16,12 @@ const Header = () => {
     <div className={classNames(styles.layout, 'layout')}>
       <ul className={styles.list}>
         <li><Link href="/"><a><Logo /></a></Link></li>
+        <li><NavLink name="Market" href="/market" /></li>
         <li><NavLink name="Swap" href="/swap" /></li>
         <li><NavLink name="Spot" mainHref="/spot" href="/spot/XLM-USDC" /></li>
-        <li><NavLink name="Wallet" href="/wallet" /></li>
-        <li><NavLink name="Reward" href="/reward" /></li>
-        <li><NavLink name="Order" href="/order" /></li>
-        <li><NavLink name="Market" href="/market" /></li>
+        {isLogged && <li><NavLink name="Reward" href="/reward" /></li>}
+        {isLogged && <li><NavLink name="Wallet" href="/wallet" /></li>}
+        {isLogged && <li><NavLink name="Order" href="/order" /></li>}
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
         : (

@@ -7,6 +7,7 @@ import Loading from 'components/Loading';
 import questionLogo from 'assets/images/question.png';
 import defaultTokens from 'tokens/defaultTokens';
 import sevenDigit from 'helpers/sevenDigit';
+import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -18,6 +19,8 @@ const NoDataMessage = () => (
 function KnownAssets({ assets, searchQuery }) {
   const [knownAssets, setKnownAssets] = useState(null);
   const [filteredAssets, setFilteredAssets] = useState(null);
+
+  const router = useRouter();
 
   const hashedDefaultTokens = defaultTokens.reduce((acc, cur) => {
     acc[cur.code] = cur;
@@ -80,9 +83,7 @@ function KnownAssets({ assets, searchQuery }) {
       dataIndex: 'lastPrice',
       key: '2',
       sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
-      render: (data) => `${sevenDigit(data.lastPrice)}  ${
-        data.pair.counter.code
-      }`,
+      render: (data) => `${sevenDigit(data.lastPrice)}  ${data.pair.counter.code}`,
     },
     {
       title: '24 change',
@@ -106,27 +107,21 @@ function KnownAssets({ assets, searchQuery }) {
       dataIndex: 'high24h',
       key: '4',
       sortFunc: (a, b, order) => (order === 'asc' ? a.high24h - b.high24h : b.high24h - a.high24h),
-      render: (data) => `${data.high24h} ${
-        data.pair.counter.code
-      }`,
+      render: (data) => `${data.high24h} ${data.pair.counter.code}`,
     },
     {
       title: '24 Low',
       dataIndex: 'low24h',
       key: '5',
       sortFunc: (a, b, order) => (order === 'asc' ? a.low24h - b.low24h : b.low24h - a.low24h),
-      render: (data) => `${data.low24h} ${
-        data.pair.counter.code
-      }`,
+      render: (data) => `${data.low24h} ${data.pair.counter.code}`,
     },
     {
       title: '24H Volume',
       dataIndex: 'volume24h',
       key: '6',
       sortFunc: (a, b, order) => (order === 'asc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
-      render: (data) => `$${numeral(data.volume24h).format('0.[0]a')} ${
-        data.pair.base.code
-      }`,
+      render: (data) => `$${numeral(data.volume24h).format('0.[0]a')} ${data.pair.base.code}`,
     },
   ];
 
@@ -163,6 +158,7 @@ function KnownAssets({ assets, searchQuery }) {
           columns={tableHeaders}
           dataSource={filteredAssets}
           noDataMessage={NoDataMessage}
+          pairSpot
         />
       </div>
     </>

@@ -146,6 +146,7 @@ function TopVolumeMarket({ searchQuery }) {
           columns={tableHeaders}
           noDataMessage={NoDataMessage}
           dataSource={filteredAssets}
+          pairSpot
         />
       </div>
     </>

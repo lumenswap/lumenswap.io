@@ -28,6 +28,11 @@ const NoDataMessage = () => (
 
 function WalletData() {
   const userBalances = useSelector((state) => state.userBalance);
+  const hashedUserBalance = userBalances.reduce((acc, value) => {
+    acc[value.asset.code] = value;
+    return acc;
+  }, {});
+  const [allBalances, setAllBalances] = useState(null);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterZeroBalance, setFilterZeroBalance] = useState(false);
@@ -35,6 +40,45 @@ function WalletData() {
 
   const xlmBalance = userBalances.find((i) => isSameAsset(getAssetDetails(XLM), i.asset));
   const userSubentry = useSelector((state) => state.user.detail.subentry);
+
+  const [filteredBalances, setFilteredBalances] = useState(null);
+
+  useEffect(() => {
+    if (userBalances.length > 0) {
+      const allBalancesExceptUserBalance = defaultTokens.filter(
+        (token) => !hashedUserBalance[token.code] && token,
+      );
+      const mappedBalances = allBalancesExceptUserBalance.map((token) => ({
+        asset: getAssetDetails(token),
+        balance: 0,
+      }));
+      const unsortedAllBalances = [...userBalances, ...mappedBalances];
+
+      unsortedAllBalances.sort((a, b) => a.asset.code - b.asset.code);
+
+      setAllBalances(unsortedAllBalances);
+    }
+  }, [userBalances]);
+
+  useEffect(() => {
+    if (allBalances) {
+      setFilteredBalances(allBalances.map((item) => ({
+        ...item,
+        key: `${item.asset.code}:${item.asset.issuer}`,
+      })));
+      setFilteredBalances(allBalances.filter(
+        (balance) => balance.asset.code
+          .toLowerCase()
+          .search(searchQuery.toLocaleLowerCase()) !== -1,
+      ));
+
+      if (filterZeroBalance) {
+        setFilteredBalances(allBalances.filter(
+          (balance) => !new BN(balance.balance).isEqualTo('0'),
+        ));
+      }
+    }
+  }, [allBalances, searchQuery, filterZeroBalance]);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
@@ -57,14 +101,40 @@ function WalletData() {
     {
       title: 'Total balance',
       tooltip: 'tooltip ',
-      content: <Info text="XLM" number={numeral(xlmBalance?.balance).format('0,0.[0000]')} />,
-      subtitle: <span className={styles['info-content']}>{xlmPrice ? `$${numeral(new BN(xlmPrice).times(xlmBalance?.balance).toFixed(7)).format('0,0.[0000]')}` : '-'}</span>,
+      content: (
+        <Info
+          text="XLM"
+          number={numeral(xlmBalance?.balance).format('0,0.[0000]')}
+        />
+      ),
+      subtitle: (
+        <span className={styles['info-content']}>
+          {xlmPrice
+            ? `$${numeral(
+              new BN(xlmPrice).times(xlmBalance?.balance).toFixed(7),
+            ).format('0,0.[0000]')}`
+            : '-'}
+        </span>
+      ),
     },
     {
       title: 'Reserved balance',
       tooltip: 'tooltip ',
-      content: <Info text="XLM" number={numeral(reservedBalance).format('0,0.[0000]')} />,
-      subtitle: <span className={styles['info-content']}>{xlmPrice ? `$${numeral(new BN(xlmPrice).times(reservedBalance).toFixed(7)).format('0,0.[0000]')}` : '-'}</span>,
+      content: (
+        <Info
+          text="XLM"
+          number={numeral(reservedBalance).format('0,0.[0000]')}
+        />
+      ),
+      subtitle: (
+        <span className={styles['info-content']}>
+          {xlmPrice
+            ? `$${numeral(
+              new BN(xlmPrice).times(reservedBalance).toFixed(7),
+            ).format('0,0.[0000]')}`
+            : '-'}
+        </span>
+      ),
     },
   ];
 
@@ -102,7 +172,10 @@ function WalletData() {
       title: 'Balance',
       dataIndex: 'balance',
       key: '2',
-      render: (data) => <span>{numeral(data.balance).format('0,0.[0000000]')}</span>,
+      sortFunc: (a, b, order) => (order === 'asc' ? a.balance - b.balance : b.balance - a.balance),
+      render: (data) => (
+        <span>{numeral(data.balance).format('0,0.[0000000]')}</span>
+      ),
     },
     {
       title: 'Action',
@@ -118,40 +191,31 @@ function WalletData() {
             <Link href={token ? `/spot/${data.asset.code}-XLM` : '/spot'}>
               <a className={styles.link}>Trade</a>
             </Link>
-            {new BN(data.balance).isEqualTo('0')
-              ? <div style={{ cursor: 'auto' }} />
-              : (
-                <span
-                  className={styles.send}
-                  onClick={() => {
-                    dispatch(openModalAction({
+            {new BN(data.balance).isEqualTo('0') ? (
+              <div style={{ cursor: 'auto' }} />
+            ) : (
+              <span
+                className={styles.send}
+                onClick={() => {
+                  dispatch(
+                    openModalAction({
                       modalProps: {
                         title: 'Send Asset',
                       },
                       content: <SendAsset selectedAsset={data.asset} />,
-                    }));
-                  }}
-                >Send
-                </span>
-              )}
+                    }),
+                  );
+                }}
+              >
+                Send
+              </span>
+            )}
           </div>
         );
       },
     },
   ];
-  let filteredBalances = userBalances.map((item) => ({
-    ...item,
-    key: `${item.asset.code}:${item.asset.issuer}`,
-  }));
 
-  if (searchQuery !== '') {
-    filteredBalances = filteredBalances
-      .filter((balance) => balance.asset.code.toLowerCase()
-        .search(searchQuery.toLocaleLowerCase()) !== -1);
-  }
-  if (filterZeroBalance) {
-    filteredBalances = filteredBalances.filter((balance) => !(new BN(balance.balance).isEqualTo('0')));
-  }
   return (
     <>
       <div className={styles.info}>
@@ -171,7 +235,6 @@ function WalletData() {
             />
           </div>
           <div className={styles.checkbox}>
-
             <Checkbox
               value={filterZeroBalance}
               onChange={handleCheckbox}
@@ -179,7 +242,6 @@ function WalletData() {
               fontSize={14}
               label="Hide zero balances"
             />
-
           </div>
         </div>
         <CTable
@@ -189,7 +251,6 @@ function WalletData() {
           noDataMessage={NoDataMessage}
         />
       </div>
-
     </>
   );
 }
