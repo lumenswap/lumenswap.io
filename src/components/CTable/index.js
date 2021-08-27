@@ -64,20 +64,18 @@ const CTable = ({
                 {title.sortFunc && (
                   <span
                     className={styles.sort}
-                    onClick={() => handleSort(title.sortFunc, title.dataIndex)}
+                    onClick={() => handleSort(title.dataIndex)}
                   >
                     <Image
                       src={sortIndex === title.dataIndex && sortOrder === 'asc' ? ArrowDownFill : ArrowDown}
                       width={8}
                       height={5}
                       className={styles.sort_icon}
-                      onClick={() => handleSort(title.dataIndex)}
                     />
                     <Image
                       src={sortIndex === title.dataIndex && sortOrder === 'desc' ? ArrowDownFill : ArrowDown}
                       width={8}
                       height={5}
-                      onClick={() => handleSort(title.dataIndex)}
                     />
                   </span>
                 )}

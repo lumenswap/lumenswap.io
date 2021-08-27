@@ -57,7 +57,12 @@ function KnownAssets({ assets, searchQuery }) {
       };
     });
 
-    setKnownAssets(pairedAssets);
+    const sortedAssets = pairedAssets.sort((a, b) => {
+      if (b.pair.counter.code.toLowerCase() === 'usdc') return 1;
+      return -1;
+    });
+
+    setKnownAssets(sortedAssets);
   }, [assets]);
 
   const tableHeaders = [
