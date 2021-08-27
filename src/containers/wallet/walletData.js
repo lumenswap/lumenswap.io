@@ -54,7 +54,7 @@ function WalletData() {
       }));
       const unsortedAllBalances = [...userBalances, ...mappedBalances];
 
-      unsortedAllBalances.sort((a, b) => a.asset.code - b.asset.code);
+      unsortedAllBalances.sort((a, b) => b.balance - a.balance);
 
       setAllBalances(unsortedAllBalances);
     }
