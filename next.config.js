@@ -9,14 +9,14 @@ module.exports = withImages(withTM({
     REACT_APP_HOST: process.env.REACT_APP_HOST,
     REACT_APP_LUMEN_API: process.env.REACT_APP_LUMEN_API,
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/swap',
-        permanent: true,
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: '/',
+  //       destination: '/swap',
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
   webpack5: false,
 }));
