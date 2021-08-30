@@ -25,10 +25,17 @@ const port = process.env.PORT || 3000;
 
 app.prepare().then(() => {
   createServer((req, res) => {
-    // Be sure to pass `true` as the second argument to `url.parse`.
-    // This tells it to parse the query portion of the URL.
     const parsedUrl = parse(req.url, true);
-    handle(req, res, parsedUrl);
+    const { pathname, query } = parsedUrl;
+    const subdomain = req.headers.host?.split('.')[0];
+
+    if (subdomain === 'obm') {
+      app.render(req, res, `/obm${pathname}`, query);
+    } else if (subdomain === 'reward') {
+      app.render(req, res, `/reward${pathname}`, query);
+    } else {
+      handle(req, res, parsedUrl);
+    }
   }).listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
