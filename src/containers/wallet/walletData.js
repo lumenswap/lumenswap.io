@@ -2,6 +2,7 @@ import Checkbox from 'components/Checkbox';
 import Input from 'components/Input';
 import CTable from 'components/CTable';
 import numeral from 'numeral';
+import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { useSelector, useDispatch } from 'react-redux';
@@ -185,10 +186,10 @@ function WalletData() {
         const token = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.asset));
         return (
           <div className={styles.actions}>
-            <Link href={token ? `/swap/${data.asset.code}-XLM` : '/swap'}>
+            <Link href={token ? urlMaker.swap.tokens(data.asset.code, 'XLM') : urlMaker.swap.root()}>
               <a className={styles.link}>Swap</a>
             </Link>
-            <Link href={token ? `/spot/${data.asset.code}-XLM` : '/spot'}>
+            <Link href={token ? urlMaker.spot.tokens(data.asset.code, 'XLM') : urlMaker.spot.root()}>
               <a className={styles.link}>Trade</a>
             </Link>
             {new BN(data.balance).isEqualTo('0') ? (

@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import Header from 'components/Header';
+import ObmHeader from 'components/ObmHeader';
 import LoginRequired from 'components/LoginRequired';
 import { useSelector } from 'react-redux';
 import walletNotConnectedIcon from '../../assets/images/walletNotConnected.png';
@@ -15,7 +15,7 @@ function WalletPage() {
         <Head>
           <title>Wallet | Lumenswap</title>
         </Head>
-        <Header />
+        <ObmHeader />
       </div>
       <div className={styles.main}>
         <h1 className={styles.title}>Wallet</h1>

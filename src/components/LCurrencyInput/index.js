@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import getAssetDetails from 'helpers/getAssetDetails';
 import XLM from 'tokens/XLM';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
+import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
@@ -40,9 +41,11 @@ export default function LCurrencyInput({
     const isToCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
 
-    if (isFromCustomToken || isToCustomToken) router.push('/swap/custom');
+    if (isFromCustomToken || isToCustomToken) router.push(urlMaker.swap.custom());
     else {
-      router.push(`/swap/${from}-${to}`);
+      router.push(
+        urlMaker.swap.tokens(from, to),
+      );
     }
   }
 

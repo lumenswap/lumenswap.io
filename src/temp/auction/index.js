@@ -4,7 +4,7 @@ import numeral from 'numeral';
 import CoinGecko from 'coingecko-api';
 import { useSelector } from 'react-redux';
 
-import Header from 'components/Header';
+import ObmHeader from 'components/ObmHeader';
 import LineChart from 'components/LineChart';
 import AngleRight from 'assets/images/angle-right.svg';
 import Button from 'components/Button';
@@ -88,7 +88,7 @@ const Auction = () => {
 
   return (
     <div className="container-fluid pb-5">
-      <Header />
+      <ObmHeader />
       <div className="layout-inside mt-4 main">
         <h1 className={styles.title}>LSP Auction</h1>
         <div className="row d-flex align-items-start justify-content-between">

@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
+import urlMaker from 'helpers/urlMaker';
 import { Controller, useForm } from 'react-hook-form';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'blocks/ConfirmSwap';
-import Header from 'components/Header';
+import ObmHeader from 'components/ObmHeader';
 import LCurrencyInput from 'components/LCurrencyInput';
 import XLM from 'tokens/XLM';
 import LPriceSpreadSection from 'components/LPriceSpreadSection';
@@ -204,10 +205,10 @@ const SwapPage = ({ tokens }) => {
     const isToCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getValues().to.asset?.details));
 
-    if (isFromCustomToken || isToCustomToken) router.push('/swap/custom');
+    if (isFromCustomToken || isToCustomToken) router.push(urlMaker.swap.custom());
     else {
       router.push(
-        `/swap/${formValues.to.asset.details.code}-${formValues.from.asset.details.code}`,
+        urlMaker.swap.tokens(formValues.to.asset.details.code, formValues.from.asset.details.code),
       );
     }
   }
@@ -222,7 +223,7 @@ const SwapPage = ({ tokens }) => {
       const extracted = router.query.custom.split('-');
       const found = userCustomTokens
         .find((i) => isSameAsset(i, getAssetDetails({ code: extracted[0], issuer: extracted[1] })));
-      if (router.pathname === '/swap' && router.query && !found) {
+      if (router.pathname === urlMaker.swap.root() && router.query && !found) {
         dispatch(openModalAction({
           modalProps: { title: 'Add custom asset' },
           content: <AddAsset changeToAsset={changeToAsset} />,
@@ -247,7 +248,7 @@ const SwapPage = ({ tokens }) => {
   return (
     <div className="container-fluid main">
       <SwapHead tokens={tokens} />
-      <Header />
+      <ObmHeader />
       <div className="row justify-content-center">
         <div className="col-auto">
           <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>

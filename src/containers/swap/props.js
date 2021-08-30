@@ -1,12 +1,13 @@
 import isSameAsset from 'helpers/isSameAsset';
 import defaultTokens from 'tokens/defaultTokens';
 import getAssetDetails from 'helpers/getAssetDetails';
+import urlMaker from 'helpers/urlMaker';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 export async function swapPageGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: '/swap',
+      destination: urlMaker.swap.root(),
       permanent: true,
     },
   };
@@ -43,7 +44,7 @@ export async function swapPageGetServerSideProps(context) {
     ) {
       return {
         redirect: {
-          destination: `/swap/${fromToken.toUpperCase()}-${toToken.toUpperCase()}`,
+          destination: urlMaker.swap.tokens(fromToken.toUpperCase(), toToken.toUpperCase()),
           permanent: true,
         },
       };

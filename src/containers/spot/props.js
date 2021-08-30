@@ -1,4 +1,5 @@
 import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
+import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
@@ -7,7 +8,7 @@ export async function spotPageGetServerSideProps(context) {
   const createdDefaultPairs = createPairForDefaultTokens();
   const redirectObj = {
     redirect: {
-      destination: '/spot/XLM-USDC',
+      destination: urlMaker.spot.tokens('XLM', 'USDC'),
       permanent: true,
     },
   };
@@ -50,7 +51,7 @@ export async function spotPageGetServerSideProps(context) {
     ) {
       return {
         redirect: {
-          destination: `/spot/${fromToken.toUpperCase()}-${toToken.toUpperCase()}`,
+          destination: urlMaker.spot.tokens(fromToken.toUpperCase(), toToken.toUpperCase()),
           permanent: true,
         },
       };
