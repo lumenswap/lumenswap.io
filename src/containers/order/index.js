@@ -1,4 +1,4 @@
-import Header from 'components/Header';
+import ObmHeader from 'components/ObmHeader';
 import Head from 'next/head';
 import LoginRequired from 'components/LoginRequired';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,7 +44,7 @@ function OrderPage() {
         <Head>
           <title>Order | Lumenswap</title>
         </Head>
-        <Header />
+        <ObmHeader />
       </div>
       <div className={styles.main}>
         <div className={styles.title}>

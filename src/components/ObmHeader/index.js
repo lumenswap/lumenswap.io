@@ -1,5 +1,6 @@
 import Logo from 'assets/images/logo';
 import Link from 'next/link';
+import urlMaker from 'helpers/urlMaker';
 import classNames from 'classnames';
 import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
@@ -8,7 +9,7 @@ import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
 import styles from './styles.module.scss';
 
-const Header = () => {
+const ObmHeader = () => {
   const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
 
@@ -16,15 +17,20 @@ const Header = () => {
     <div className={classNames(styles.layout, 'layout')}>
       <ul className={styles.list}>
         <div>
-          <li><Link href="/"><a><Logo /></a></Link></li>
-          <li><NavLink name="Market" href="/market" /></li>
-          <li><NavLink name="Swap" href="/swap" /></li>
-          <li><NavLink name="Spot" mainHref="/spot" href="/spot/XLM-USDC" /></li>
-          <li><NavLink name="Reward" href="/reward" /></li>
+          <li><Link href={urlMaker.root()}><a><Logo /></a></Link></li>
+          <li><NavLink name="Market" href={urlMaker.market.root()} /></li>
+          <li><NavLink name="Swap" href={urlMaker.swap.root()} /></li>
+          <li><NavLink
+            name="Spot"
+            mainHref={urlMaker.spot.root()}
+            href={urlMaker.spot.tokens('XLM', 'USDC')}
+          />
+          </li>
+          <li><NavLink name="Reward" href={urlMaker.reward.root()} /></li>
         </div>
         <div className={styles.right_list}>
-          {isLogged && <li><NavLink name="Wallet" href="/wallet" /></li>}
-          {isLogged && <li><NavLink name="Order" href="/order" /></li>}
+          {isLogged && <li><NavLink name="Wallet" href={urlMaker.wallet.root()} /></li>}
+          {isLogged && <li><NavLink name="Order" href={urlMaker.order.root()} /></li>}
         </div>
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
@@ -43,4 +49,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default ObmHeader;

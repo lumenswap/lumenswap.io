@@ -1,0 +1,75 @@
+@import 'styles/vars';
+
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 36px;
+  font-family: 'SofiaPro';
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+  padding-left: 0;
+  width: 100%;
+
+  div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  li {
+    margin-right: 40px;
+  }
+}
+
+.btn {
+  width: 135px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.active-status {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $Shamrock;
+  margin-left: 4px;
+  margin-top: 2px;
+}
+
+.lsp {
+  min-width: 77px;
+  padding: 14px;
+  height: 40px;
+  margin-right: 16px;
+  font-size: 16px;
+  font-weight: bold !important;
+  border-radius: 4px !important;
+  margin-left: auto;
+  background-color: white;
+  border: 1px solid $BlueRibbon;
+  color: $BlueRibbon;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: $sm) {
+  .list > li {
+    margin-right: 15px;
+  }
+
+  .layout {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

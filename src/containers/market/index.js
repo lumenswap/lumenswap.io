@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import Header from 'components/Header';
+import ObmHeader from 'components/ObmHeader';
 import MarketData from './MarketData';
 import styles from './styles.module.scss';
 
@@ -10,7 +10,7 @@ const MarketPage = ({ assets }) => (
       <Head>
         <title>Market | Lumenswap</title>
       </Head>
-      <Header />
+      <ObmHeader />
     </div>
     <div className={styles.main}>
       <div className={styles.title}>

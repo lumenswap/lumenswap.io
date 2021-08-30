@@ -13,6 +13,7 @@ import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
 import isSamePair from 'helpers/isSamePair';
 import { useRouter } from 'next/router';
+import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
 import createPairForDefaultTokens from './createPairForDefaultTokens';
@@ -133,8 +134,12 @@ const SelectPair = ({ setAppSpotPair }) => {
                     (pair) => pair.base.code === item.base.details.code
                     && pair.counter.code === item.counter.details.code,
                   );
-                  if (found) router.push('/spot/custom');
-                  else router.push(`/spot/${item.base.details.code}-${item.counter.details.code}`);
+                  if (found) router.push(urlMaker.spot.custom());
+                  else {
+                    router.push(
+                      urlMaker.spot.tokens(item.base.details.code, item.counter.details.code),
+                    );
+                  }
                   dispatch(closeModalAction());
                 }}
               >

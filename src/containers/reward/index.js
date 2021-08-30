@@ -1,4 +1,4 @@
-import Header from 'components/Header';
+import RewardHeader from 'components/RewardHeader';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import LoginRequired from 'components/LoginRequired';
@@ -15,7 +15,7 @@ const RewardPage = () => {
         <Head>
           <title>Reward | Lumenswap</title>
         </Head>
-        <Header />
+        <RewardHeader />
       </div>
 
       <div className={styles.main}>

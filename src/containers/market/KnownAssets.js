@@ -7,6 +7,7 @@ import Loading from 'components/Loading';
 import questionLogo from 'assets/images/question.png';
 import defaultTokens from 'tokens/defaultTokens';
 import sevenDigit from 'helpers/sevenDigit';
+import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -151,7 +152,7 @@ function KnownAssets({ assets, searchQuery }) {
       </div>
     );
   }
-  const rowLink = (data) => `/spot/${data.pair.base.code}-${data.pair.counter.code}`;
+  const rowLink = (data) => urlMaker.spot.tokens(data.pair.base.code, data.pair.counter.code);
 
   return (
     <div style={{ marginLeft: '-24px' }}>

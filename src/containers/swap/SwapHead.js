@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import React from 'react';
+import urlMaker from 'helpers/urlMaker';
 
 const SwapHead = ({ tokens }) => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const SwapHead = ({ tokens }) => {
       <title>{headTitle}</title>
       <meta name="description" content={`Swapping ${tokens ? `${tokens.from.code}-${tokens.to.code}` : 'assets'} | Decentralized Exchanged on Stellar | Find All Live Stellar Assets Chart, Graph and Prices in Lumenswas`} />
       <meta name="robots" content="follow, index" />
-      <link rel="canonical" herf={`${process.env.REACT_APP_HOST}/swap${pathname}`} />
+      <link rel="canonical" herf={`${process.env.REACT_APP_HOST}${urlMaker.swap.root()}${pathname}`} />
     </Head>
   );
 };

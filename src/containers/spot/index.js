@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import Header from 'components/Header';
+import ObmHeader from 'components/ObmHeader';
 import dynamic from 'next/dynamic';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
@@ -42,7 +42,7 @@ const Spot = ({ tokens }) => {
   return (
     <div className="container-fluid">
       <SpotHead tokens={tokens} price={price} setPrice={setPrice} />
-      <Header />
+      <ObmHeader />
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
