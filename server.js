@@ -29,7 +29,7 @@ app.prepare().then(() => {
     const { pathname, query } = parsedUrl;
     const subdomain = req.headers.host?.split('.')[0];
 
-    if (subdomain === 'obm') {
+    if (subdomain === 'demo-obm') {
       app.render(req, res, `/obm${pathname}`, query);
     } else if (subdomain === 'reward') {
       app.render(req, res, `/reward${pathname}`, query);
