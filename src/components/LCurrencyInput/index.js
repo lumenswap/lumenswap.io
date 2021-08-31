@@ -41,8 +41,20 @@ export default function LCurrencyInput({
     const isToCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
 
-    if (isFromCustomToken || isToCustomToken) router.push(urlMaker.swap.custom());
-    else {
+    if (isFromCustomToken && !isToCustomToken) {
+      const toAsset = { ...getFormValues().to.asset.details };
+      toAsset.isDefault = true;
+      console.log(toAsset);
+      router.push(urlMaker.swap.custom(isFromCustomToken, toAsset));
+    } else if (isToCustomToken && !isFromCustomToken) {
+      const fromAsset = { ...getFormValues().from.asset.details };
+      fromAsset.isDefault = true;
+      console.log(fromAsset);
+      router.push(urlMaker.swap.custom(fromAsset, isToCustomToken));
+    } else if (isFromCustomToken && isToCustomToken) {
+      console.log(isToCustomToken, isToCustomToken);
+      router.push(urlMaker.swap.custom(isFromCustomToken, isToCustomToken));
+    } else {
       router.push(
         urlMaker.swap.tokens(from, to),
       );

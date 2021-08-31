@@ -3,12 +3,16 @@ const urlMaker = {
   swap: {
     root: () => '/obm/swap',
     tokens: (tokenA, tokenB) => `/obm/swap/${tokenA}-${tokenB}`,
-    custom: () => '/obm/swap/custom',
+    custom: (assetA, assetB) => `/obm/swap/${assetA.code}${
+      assetA.isDefault ? '' : `-${assetA.issuer}`
+    }/${assetB.code}${assetB.isDefault ? '' : `-${assetB.issuer}`}`,
   },
   spot: {
     root: () => '/obm/spot',
     tokens: (tokenA, tokenB) => `/obm/spot/${tokenA}-${tokenB}`,
-    custom: () => '/obm/spot/custom',
+    custom: (assetA, assetB) => `/obm/spot/${assetA.code}${
+      assetA.isDefault ? '' : `-${assetA.issuer}`
+    }/${assetB.code}${assetB.isDefault ? '' : `-${assetB.issuer}`}`,
   },
   market: {
     root: () => '/obm/market',
@@ -22,7 +26,6 @@ const urlMaker = {
   order: {
     root: () => '/obm/order',
   },
-
 };
 
 export default urlMaker;

@@ -22,11 +22,13 @@ import questionLogo from 'assets/images/question.png';
 import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'containers/swap/SwapButton';
 import SwapHead from 'containers/swap/SwapHead';
+import { addCustomTokenAction } from 'actions/userCustomTokens';
+import { checkAssetAPI } from 'api/stellar';
 import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
 
-const SwapPage = ({ tokens }) => {
+const SwapPage = ({ tokens, custom }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
@@ -204,11 +206,19 @@ const SwapPage = ({ tokens }) => {
 
     const isToCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getValues().to.asset?.details));
-
-    if (isFromCustomToken || isToCustomToken) router.push(urlMaker.swap.custom());
-    else {
+    if (isFromCustomToken && !isToCustomToken) {
+      const toAsset = { ...getValues().to.asset.details };
+      toAsset.isDefault = true;
+      router.push(urlMaker.swap.custom(isFromCustomToken, toAsset));
+    } else if (isToCustomToken && !isFromCustomToken) {
+      const fromAsset = { ...getValues().from.asset.details };
+      fromAsset.isDefault = true;
+      router.push(urlMaker.swap.custom(fromAsset, isToCustomToken));
+    } else if (isFromCustomToken && isToCustomToken) {
+      router.push(urlMaker.swap.custom(isFromCustomToken, isToCustomToken));
+    } else {
       router.push(
-        urlMaker.swap.tokens(formValues.to.asset.details.code, formValues.from.asset.details.code),
+        urlMaker.swap.tokens(formValues.from.asset.details.code, formValues.to.asset.details.code),
       );
     }
   }
@@ -218,28 +228,104 @@ const SwapPage = ({ tokens }) => {
     setValue('to', { asset, amount: formValues.to.amount });
   }
 
+  function changeFromAsset(asset) {
+    const formValues = getValues();
+    setValue('from', { asset, amount: formValues.to.amount });
+  }
+
   useEffect(() => {
-    if (!tokens && router.query.custom) {
-      const extracted = router.query.custom.split('-');
-      const found = userCustomTokens
-        .find((i) => isSameAsset(i, getAssetDetails({ code: extracted[0], issuer: extracted[1] })));
-      if (router.pathname === urlMaker.swap.root() && router.query && !found) {
-        dispatch(openModalAction({
-          modalProps: { title: 'Add custom asset' },
-          content: <AddAsset changeToAsset={changeToAsset} />,
-        }));
-      } else if (found) {
+    async function check() {
+      if (custom) {
+        let checkedAssetStatus;
+        if (custom.from.isDefault) {
+          checkedAssetStatus = await Promise.all([
+            checkAssetAPI(custom.to.code, custom.to.issuer),
+          ]);
+        } else if (custom.to.isDefault) {
+          checkedAssetStatus = await Promise.all([
+            checkAssetAPI(custom.from.code, custom.from.issuer),
+          ]);
+        } else {
+          checkedAssetStatus = await Promise.all([
+            checkAssetAPI(custom.from.code, custom.from.issuer),
+            checkAssetAPI(custom.to.code, custom.to.issuer),
+          ]);
+        }
+
+        if (!checkedAssetStatus.every((i) => i)) {
+          router.push(urlMaker.swap.root());
+          return;
+        }
+        const from = getAssetDetails({
+          code: custom.from.code,
+          issuer: custom.from.issuer,
+        });
+
+        const to = getAssetDetails({
+          code: custom.to.code,
+          issuer: custom.to.issuer,
+        });
+
+        if (!custom.from.isDefault) {
+          const foundFrom = userCustomTokens.find((i) => isSameAsset(
+            i,
+            from,
+          ));
+
+          if (!foundFrom) {
+            dispatch(addCustomTokenAction(from));
+          }
+        }
+
+        changeFromAsset({
+          details: from,
+          web: minimizeAddress(from.getIssuer()),
+          logo: custom.from.isDefault ? custom.from.logo : questionLogo,
+        });
+
+        if (!custom.to.isDefault) {
+          const foundTo = userCustomTokens.find((i) => isSameAsset(
+            i,
+            to,
+          ));
+          if (!foundTo) {
+            dispatch(addCustomTokenAction(to));
+          }
+        }
         changeToAsset({
-          details: found,
-          web: minimizeAddress(found.getIssuer()),
-          logo: questionLogo,
+          details: to,
+          web: minimizeAddress(to.getIssuer()),
+          logo: custom.to.isDefault ? custom.to.logo : questionLogo,
         });
       }
     }
-  }, [
-    router.pathname,
-    router.query,
-  ]);
+
+    check();
+  }, [custom]);
+
+  // useEffect(() => {
+  //   if (!tokens && router.query.custom) {
+  //     const extracted = router.query.custom.split('-');
+  //     const found = userCustomTokens.find((i) => isSameAsset(
+  //       i,
+  //       getAssetDetails({ code: extracted[0], issuer: extracted[1] }),
+  //     ));
+  //     if (router.pathname === urlMaker.swap.root() && router.query && !found) {
+  //       dispatch(
+  //         openModalAction({
+  //           modalProps: { title: 'Add custom asset' },
+  //           content: <AddAsset changeToAsset={changeToAsset} />,
+  //         }),
+  //       );
+  //     } else if (found) {
+  //       changeToAsset({
+  //         details: found,
+  //         web: minimizeAddress(found.getIssuer()),
+  //         logo: questionLogo,
+  //       });
+  //     }
+  //   }
+  // }, [router.pathname, router.query]);
 
   const showAdvanced = !new BN(watch('from').amount).isNaN()
     && !new BN(watch('from').amount).isEqualTo(0)

@@ -35,10 +35,8 @@ const SelectPair = ({ setAppSpotPair }) => {
       ...createdDefaultPairs,
       ...customPairs,
     ]).map((item) => {
-      const foundBaseToken = defaultTokens
-        .find((tok) => isSameAsset(getAssetDetails(tok), item.base));
-      const foundCounterToken = defaultTokens
-        .find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
+      const foundBaseToken = defaultTokens.find((tok) => isSameAsset(getAssetDetails(tok), item.base));
+      const foundCounterToken = defaultTokens.find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
 
       let enrichedBaseToken;
       if (foundBaseToken) {
@@ -79,10 +77,12 @@ const SelectPair = ({ setAppSpotPair }) => {
         counter: enrichedCounterToken,
       };
 
-      if (createdDefaultPairs.find((i) => isSamePair(i, {
-        base: richedAssets.base.details,
-        counter: richedAssets.counter.details,
-      }))) {
+      if (
+        createdDefaultPairs.find((i) => isSamePair(i, {
+          base: richedAssets.base.details,
+          counter: richedAssets.counter.details,
+        }))
+      ) {
         return richedAssets;
       }
       return {
@@ -100,7 +100,11 @@ const SelectPair = ({ setAppSpotPair }) => {
     if (searchQuery && searchQuery !== '') {
       return result.filter((item) => {
         const modified = searchQuery.trim().toLowerCase();
-        return `${item.base.details.getCode().toLowerCase()}/${item.counter.details.getCode().toLowerCase()}`.match(modified);
+        return `${item.base.details
+          .getCode()
+          .toLowerCase()}/${item.counter.details
+          .getCode()
+          .toLowerCase()}`.match(modified);
       });
     }
 
@@ -120,8 +124,10 @@ const SelectPair = ({ setAppSpotPair }) => {
         autoFocus
       />
       <div className={classNames('invisible-scroll', styles.scroll)}>
-        {enrichedPairs.length === 0 ? <p style={{ padding: 16 }}>There is no asset pair</p>
-          : enrichedPairs.map((item, index) => (
+        {enrichedPairs.length === 0 ? (
+          <p style={{ padding: 16 }}>There is no asset pair</p>
+        ) : (
+          enrichedPairs.map((item, index) => (
             <div key={index}>
               <div
                 className={styles['select-logo']}
@@ -132,12 +138,21 @@ const SelectPair = ({ setAppSpotPair }) => {
                   });
                   const found = customPairs.find(
                     (pair) => pair.base.code === item.base.details.code
-                    && pair.counter.code === item.counter.details.code,
+                      && pair.counter.code === item.counter.details.code,
                   );
-                  if (found) router.push(urlMaker.spot.custom());
-                  else {
+                  if (found) {
                     router.push(
-                      urlMaker.spot.tokens(item.base.details.code, item.counter.details.code),
+                      urlMaker.spot.custom(
+                        item.base.details,
+                        item.counter.details,
+                      ),
+                    );
+                  } else {
+                    router.push(
+                      urlMaker.spot.tokens(
+                        item.base.details.code,
+                        item.counter.details.code,
+                      ),
                     );
                   }
                   dispatch(closeModalAction());
@@ -148,36 +163,40 @@ const SelectPair = ({ setAppSpotPair }) => {
                 <span>
                   {item.base.details.getCode()}/{item.counter.details.getCode()}
                 </span>
-                {(item.base.type === 'custom' || item.counter.type === 'custom') && (
-                <span
-                  style={{ marginLeft: 4 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatch(removeCustomPairAction({
-                      base: item.base.details,
-                      counter: item.counter.details,
-                    }));
-                  }}
-                >
-                  (delete)
-                </span>
+                {(item.base.type === 'custom'
+                  || item.counter.type === 'custom') && (
+                  <span
+                    style={{ marginLeft: 4 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(
+                        removeCustomPairAction({
+                          base: item.base.details,
+                          counter: item.counter.details,
+                        }),
+                      );
+                    }}
+                  >
+                    (delete)
+                  </span>
                 )}
               </div>
             </div>
-          ))}
+          ))
+        )}
         <button
           type="submit"
           className={styles.submit}
           onClick={() => {
-            dispatch(openModalAction({
-              modalProps: { title: 'Add custom pair' },
-              content: <AddCustomPair />,
-            }));
+            dispatch(
+              openModalAction({
+                modalProps: { title: 'Add custom pair' },
+                content: <AddCustomPair />,
+              }),
+            );
           }}
         >
-          <span
-            className="icon-plus-circle mr-2"
-          />
+          <span className="icon-plus-circle mr-2" />
           Add custom pair
         </button>
       </div>
