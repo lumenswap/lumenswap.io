@@ -333,7 +333,7 @@ const SwapPage = ({ tokens, custom }) => {
 
   return (
     <div className="container-fluid main">
-      <SwapHead tokens={tokens} />
+      <SwapHead custom={custom} tokens={tokens} />
       <ObmHeader />
       <div className="row justify-content-center">
         <div className="col-auto">

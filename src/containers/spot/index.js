@@ -107,7 +107,7 @@ const Spot = ({ tokens, custom }) => {
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
-          {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile ? (
+          {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile && (
             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
               <div className={classNames(styles.card, styles['card-select'])}>
                 <OpenDialogElement
@@ -117,8 +117,6 @@ const Spot = ({ tokens, custom }) => {
                 />
               </div>
             </div>
-          ) : (
-            ''
           )}
 
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
