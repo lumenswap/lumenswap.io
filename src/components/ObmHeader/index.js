@@ -26,7 +26,7 @@ const ObmHeader = () => {
             href={urlMaker.spot.tokens('XLM', 'USDC')}
           />
           </li>
-          <li><NavLink name="Reward" href={urlMaker.reward.root()} /></li>
+          {isLogged && <li><NavLink name="Reward" href={urlMaker.reward.root()} /></li>}
         </div>
         <div className={styles.right_list}>
           {isLogged && <li><NavLink name="Wallet" href={urlMaker.wallet.root()} /></li>}
