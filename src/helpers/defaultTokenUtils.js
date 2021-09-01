@@ -6,7 +6,7 @@ export default function isDefaultToken(token) {
 }
 
 export const isDefaultCode = (tokenCode) => defaultTokens
-  .some((defaultToken) => defaultToken.code === tokenCode);
+  .some((defaultToken) => defaultToken.code.toLowerCase() === tokenCode.toLowerCase());
 
 export const extractTokenFromCode = (tokenCode) => defaultTokens
-  .find((defaultToken) => defaultToken.code === tokenCode);
+  .find((defaultToken) => defaultToken.code.toLowerCase() === tokenCode.toLowerCase());

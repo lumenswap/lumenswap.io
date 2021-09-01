@@ -3,6 +3,7 @@ import defaultTokens from 'tokens/defaultTokens';
 import getAssetDetails from 'helpers/getAssetDetails';
 import urlMaker from 'helpers/urlMaker';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
+import { checkAssetValidation } from 'api/tokens';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 const customTokenValidation = (tokenString) => {
@@ -11,6 +12,13 @@ const customTokenValidation = (tokenString) => {
     return {
       result: true,
       token: extractTokenFromCode(extracted[0]),
+    };
+  }
+  if (isDefaultCode(extracted[0])) {
+    return {
+      result: true,
+      token: extractTokenFromCode(extracted[0]),
+      redirect: true,
     };
   }
   return {
@@ -52,21 +60,6 @@ export async function swapPageGetServerSideProps(context) {
     );
 
     if (
-      fromToken.toUpperCase() !== fromToken
-      || toToken.toUpperCase() !== toToken
-    ) {
-      return {
-        redirect: {
-          destination: urlMaker.swap.tokens(
-            fromToken.toUpperCase(),
-            toToken.toUpperCase(),
-          ),
-          permanent: true,
-        },
-      };
-    }
-
-    if (
       isSameAsset(
         getAssetDetails(fromTokenDetails),
         getAssetDetails(toTokenDetails),
@@ -76,11 +69,18 @@ export async function swapPageGetServerSideProps(context) {
     }
 
     return {
-      props: {
-        tokens: {
-          from: fromTokenDetails,
-          to: toTokenDetails,
-        },
+      redirect: {
+        destination: urlMaker.swap.custom(
+          {
+            ...fromTokenDetails,
+            isDefault: true,
+          },
+          {
+            ...toTokenDetails,
+            isDefault: true,
+          },
+        ),
+        permanent: true,
       },
     };
   }
@@ -104,11 +104,53 @@ export async function swapCustomTokenGetServerSideProps(context) {
       return redirectObj;
     }
 
-    const fromCode = fromResult.token ? fromResult.token.code : context.query.tokens.split('-')[0];
-    const fromIssuer = fromResult.token ? fromResult.token.issuer : context.query.tokens.split('-')[1];
+    if (fromResult.redirect || toResult.redirect) {
+      const customFromCode = context.query.tokens.split('-')[0];
+      const customFromIssuer = context.query.tokens.split('-')[1];
+      const customToCode = context.query.customTokens.split('-')[0];
+      const customToIssuer = context.query.customTokens.split('-')[1];
 
-    const toCode = toResult.token ? toResult.token.code : context.query.customTokens.split('-')[0];
-    const toIssuer = toResult.token ? toResult.token.issuer : context.query.customTokens.split('-')[1];
+      return {
+        redirect: {
+          destination: urlMaker.swap.hard(
+            `${fromResult.token ? fromResult.token.code : customFromCode}${
+              !fromResult.token ? `-${customFromIssuer}` : ''
+            }/${toResult.token ? toResult.token.code : customToCode}${
+              !toResult.token ? `-${customToIssuer}` : ''
+            }`,
+          ),
+          // or just redirect to root. need confirmation on this.
+        },
+      };
+    }
+
+    const fromCode = fromResult.token
+      ? fromResult.token.code
+      : context.query.tokens.split('-')[0];
+    const fromIssuer = fromResult.token
+      ? fromResult.token.issuer
+      : context.query.tokens.split('-')[1];
+
+    const toCode = toResult.token
+      ? toResult.token.code
+      : context.query.customTokens.split('-')[0];
+    const toIssuer = toResult.token
+      ? toResult.token.issuer
+      : context.query.customTokens.split('-')[1];
+
+    if (
+      fromCode.toUpperCase() !== context.query.tokens.split('-')[0]
+      || toCode.toUpperCase() !== context.query.customTokens.split('-')[0]
+    ) {
+      return {
+        redirect: {
+          destination: urlMaker.swap.custom(
+            { code: fromCode.toUpperCase() },
+            { code: toCode.toUpperCase() },
+          ),
+        },
+      };
+    }
 
     try {
       const from = getAssetDetails({
@@ -123,26 +165,59 @@ export async function swapCustomTokenGetServerSideProps(context) {
         code: toCode,
         issuer: toIssuer,
         type: toCode === 'XLM' ? 'native' : null,
-
       });
       to.logo = toResult.token && toResult.token.logo;
+
+      const fromAsset = JSON.parse(
+        JSON.stringify({
+          ...from,
+          isDefault: isDefaultCode(from.code),
+        }),
+      );
+
+      const toAsset = JSON.parse(
+        JSON.stringify({
+          ...to,
+          isDefault: isDefaultCode(to.code),
+        }),
+      );
+
+      let checkedAssetStatus;
+      if (fromAsset.isDefault && !toAsset.isDefault) {
+        checkedAssetStatus = await Promise.all([
+          checkAssetValidation(toAsset.code, toAsset.issuer),
+        ]);
+      } else if (toAsset.isDefault && !fromAsset.isDefault) {
+        checkedAssetStatus = await Promise.all([
+          checkAssetValidation(fromAsset.code, fromAsset.issuer),
+        ]);
+      } else if (!toAsset.isDefault && !fromAsset.isDefault) {
+        checkedAssetStatus = await Promise.all([
+          checkAssetValidation(fromAsset.code, fromAsset.issuer),
+          checkAssetValidation(toAsset.code, toAsset.issuer),
+        ]);
+      } else {
+        checkedAssetStatus = [true, true];
+      }
+
+      if (!checkedAssetStatus.every((i) => i)) {
+        return {
+          redirect: {
+            destination: urlMaker.swap.tokens('XLM', 'USDC'),
+          },
+        };
+      }
 
       return {
         props: {
           custom: {
-            from: JSON.parse(JSON.stringify({
-              ...from,
-              isDefault: isDefaultCode(from.code),
-            })),
-            to: JSON.parse(JSON.stringify({
-              ...to,
-              isDefault: isDefaultCode(to.code),
-            })),
+            from: fromAsset,
+            to: toAsset,
           },
         },
       };
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
       return redirectObj;
     }
   }

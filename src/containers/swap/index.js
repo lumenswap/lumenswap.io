@@ -23,12 +23,11 @@ import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'containers/swap/SwapButton';
 import SwapHead from 'containers/swap/SwapHead';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
-import { checkAssetAPI } from 'api/stellar';
 import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
 
-const SwapPage = ({ tokens, custom }) => {
+const SwapPage = ({ custom }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
@@ -59,29 +58,29 @@ const SwapPage = ({ tokens, custom }) => {
     },
   });
 
-  useEffect(() => {
-    if (tokens) {
-      const formValues = getValues();
+  // useEffect(() => {
+  //   if (tokens) {
+  //     const formValues = getValues();
 
-      setValue('to', {
-        amount: formValues.to.amount,
-        asset: {
-          logo: tokens.to.logo,
-          web: tokens.to.web,
-          details: getAssetDetails(tokens.to),
-        },
-      });
+  //     setValue('to', {
+  //       amount: formValues.to.amount,
+  //       asset: {
+  //         logo: tokens.to.logo,
+  //         web: tokens.to.web,
+  //         details: getAssetDetails(tokens.to),
+  //       },
+  //     });
 
-      setValue('from', {
-        amount: formValues.from.amount,
-        asset: {
-          logo: tokens.from.logo,
-          web: tokens.from.web,
-          details: getAssetDetails(tokens.from),
-        },
-      });
-    }
-  }, [tokens]);
+  //     setValue('from', {
+  //       amount: formValues.from.amount,
+  //       asset: {
+  //         logo: tokens.from.logo,
+  //         web: tokens.from.web,
+  //         details: getAssetDetails(tokens.from),
+  //       },
+  //     });
+  //   }
+  // }, [tokens]);
 
   const onSubmit = (data) => {
     if (!isLogged) {
@@ -218,7 +217,7 @@ const SwapPage = ({ tokens, custom }) => {
       router.push(urlMaker.swap.custom(isFromCustomToken, isToCustomToken));
     } else {
       router.push(
-        urlMaker.swap.tokens(formValues.from.asset.details.code, formValues.to.asset.details.code),
+        urlMaker.swap.tokens(formValues.to.asset.details.code, formValues.from.asset.details.code),
       );
     }
   }
@@ -236,26 +235,6 @@ const SwapPage = ({ tokens, custom }) => {
   useEffect(() => {
     async function check() {
       if (custom) {
-        let checkedAssetStatus;
-        if (custom.from.isDefault) {
-          checkedAssetStatus = await Promise.all([
-            checkAssetAPI(custom.to.code, custom.to.issuer),
-          ]);
-        } else if (custom.to.isDefault) {
-          checkedAssetStatus = await Promise.all([
-            checkAssetAPI(custom.from.code, custom.from.issuer),
-          ]);
-        } else {
-          checkedAssetStatus = await Promise.all([
-            checkAssetAPI(custom.from.code, custom.from.issuer),
-            checkAssetAPI(custom.to.code, custom.to.issuer),
-          ]);
-        }
-
-        if (!checkedAssetStatus.every((i) => i)) {
-          router.push(urlMaker.swap.root());
-          return;
-        }
         const from = getAssetDetails({
           code: custom.from.code,
           issuer: custom.from.issuer,
@@ -333,7 +312,7 @@ const SwapPage = ({ tokens, custom }) => {
 
   return (
     <div className="container-fluid main">
-      <SwapHead custom={custom} tokens={tokens} />
+      <SwapHead custom={custom} />
       <ObmHeader />
       <div className="row justify-content-center">
         <div className="col-auto">

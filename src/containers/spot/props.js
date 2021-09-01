@@ -3,6 +3,8 @@ import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import getAssetDetails from 'helpers/getAssetDetails';
+import { checkAssetValidation } from 'api/tokens';
+import isSameAsset from 'helpers/isSameAsset';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 const customTokenValidation = (tokenString) => {
@@ -11,6 +13,13 @@ const customTokenValidation = (tokenString) => {
     return {
       result: true,
       token: extractTokenFromCode(extracted[0]),
+    };
+  }
+  if (isDefaultCode(extracted[0])) {
+    return {
+      result: true,
+      token: extractTokenFromCode(extracted[0]),
+      redirect: true,
     };
   }
   return {
@@ -59,37 +68,40 @@ export async function spotPageGetServerSideProps(context) {
     );
 
     if (
-      fromToken.toUpperCase() !== fromToken
-      || toToken.toUpperCase() !== toToken
+      isSameAsset(
+        getAssetDetails(fromTokenDetails),
+        getAssetDetails(toTokenDetails),
+      )
     ) {
-      return {
-        redirect: {
-          destination: urlMaker.spot.tokens(
-            fromToken.toUpperCase(),
-            toToken.toUpperCase(),
-          ),
-          permanent: true,
-        },
-      };
+      return redirectObj;
     }
 
     return {
-      props: {
-        tokens: {
-          from: fromTokenDetails,
-          to: toTokenDetails,
-        },
+      redirect: {
+        destination: urlMaker.spot.custom(
+          {
+            ...fromTokenDetails,
+            isDefault: true,
+          },
+          {
+            ...toTokenDetails,
+            isDefault: true,
+          },
+        ),
+        permanent: true,
       },
     };
   }
 
-  return redirectObj;
+  return {
+    props: {},
+  };
 }
 
 export async function customSpotPageGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: urlMaker.spot.root(),
+      destination: urlMaker.spot.tokens('XLM', 'USDC'),
     },
   };
   if (context.query.tokens && context.query.customCounterToken) {
@@ -98,6 +110,25 @@ export async function customSpotPageGetServerSideProps(context) {
 
     if (!fromResult.result || !toResult.result) {
       return redirectObj;
+    }
+
+    if (fromResult.redirect || toResult.redirect) {
+      const customFromCode = context.query.tokens.split('-')[0];
+      const customFromIssuer = context.query.tokens.split('-')[1];
+      const customToCode = context.query.customCounterToken.split('-')[0];
+      const customToIssuer = context.query.customCounterToken.split('-')[1];
+
+      return {
+        redirect: {
+          destination: urlMaker.spot.hard(
+            `${fromResult.token ? fromResult.token.code : customFromCode}${
+              !fromResult.token ? `-${customFromIssuer}` : ''
+            }/${toResult.token ? toResult.token.code : customToCode}${
+              !toResult.token ? `-${customToIssuer}` : ''
+            }`,
+          ),
+        },
+      };
     }
 
     const fromCode = fromResult.token ? fromResult.token.code : context.query.tokens.split('-')[0];
@@ -123,17 +154,43 @@ export async function customSpotPageGetServerSideProps(context) {
       });
       to.logo = toResult.token && toResult.token.logo;
 
+      const base = JSON.parse(JSON.stringify({
+        ...from,
+        isDefault: isDefaultCode(from.code),
+      }));
+
+      const counter = JSON.parse(JSON.stringify({
+        ...to,
+        isDefault: isDefaultCode(to.code),
+      }));
+
+      let checkedAssetStatus;
+      if (base.isDefault && !counter.isDefault) {
+        checkedAssetStatus = await Promise.all([
+          checkAssetValidation(counter.code, counter.issuer),
+        ]);
+      } else if (counter.isDefault && !base.isDefault) {
+        checkedAssetStatus = await Promise.all([
+          checkAssetValidation(base.code, base.issuer),
+        ]);
+      } else if (!base.isDefault && !counter.isDefault) {
+        checkedAssetStatus = await Promise.all([
+          checkAssetValidation(base.code, base.issuer),
+          checkAssetValidation(counter.code, counter.issuer),
+        ]);
+      } else {
+        checkedAssetStatus = [true, true];
+      }
+
+      if (!checkedAssetStatus.every((i) => i)) {
+        return redirectObj;
+      }
+
       return {
         props: {
           custom: {
-            base: JSON.parse(JSON.stringify({
-              ...from,
-              isDefault: isDefaultCode(from.code),
-            })),
-            counter: JSON.parse(JSON.stringify({
-              ...to,
-              isDefault: isDefaultCode(to.code),
-            })),
+            base,
+            counter,
           },
         },
       };

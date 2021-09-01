@@ -16,9 +16,7 @@ import SpotHead from 'containers/spot/SpotHead';
 import useBreakPoint from 'hooks/useMyBreakpoint';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkAssetAPI } from 'api/stellar';
 import { useRouter } from 'next/router';
-import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
@@ -26,7 +24,6 @@ const TVChart = dynamic(() => import('../../components/TVChart'), {
 });
 
 const Spot = ({ tokens, custom }) => {
-  const router = useRouter();
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
@@ -51,26 +48,6 @@ const Spot = ({ tokens, custom }) => {
   useEffect(() => {
     async function check() {
       if (custom) {
-        let checkedAssetStatus;
-        if (custom.base.isDefault) {
-          checkedAssetStatus = await Promise.all([
-            checkAssetAPI(custom.counter.code, custom.counter.issuer),
-          ]);
-        } else if (custom.counter.isDefault) {
-          checkedAssetStatus = await Promise.all([
-            checkAssetAPI(custom.base.code, custom.base.issuer),
-          ]);
-        } else {
-          checkedAssetStatus = await Promise.all([
-            checkAssetAPI(custom.base.code, custom.base.issuer),
-            checkAssetAPI(custom.counter.code, custom.counter.issuer),
-          ]);
-        }
-
-        if (!checkedAssetStatus.every((i) => i)) {
-          router.push(urlMaker.spot.root());
-          return;
-        }
         setAppSpotPair({
           base: getAssetDetails(custom.base),
           counter: getAssetDetails(custom.counter),

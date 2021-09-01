@@ -4,15 +4,17 @@ const urlMaker = {
     root: () => '/obm/swap',
     tokens: (tokenA, tokenB) => `/obm/swap/${tokenA}-${tokenB}`,
     custom: (assetA, assetB) => `/obm/swap/${assetA.code}${
-      assetA.isDefault ? '' : `-${assetA.issuer}`
-    }/${assetB.code}${assetB.isDefault ? '' : `-${assetB.issuer}`}`,
+      !assetA.issuer ? '' : `-${assetA.issuer}`
+    }/${assetB.code}${!assetB.issuer ? '' : `-${assetB.issuer}`}`,
+    hard: (url) => `/obm/swap/${url}`,
   },
   spot: {
     root: () => '/obm/spot',
     tokens: (tokenA, tokenB) => `/obm/spot/${tokenA}-${tokenB}`,
     custom: (assetA, assetB) => `/obm/spot/${assetA.code}${
-      assetA.isDefault ? '' : `-${assetA.issuer}`
-    }/${assetB.code}${assetB.isDefault ? '' : `-${assetB.issuer}`}`,
+      !assetA.issuer ? '' : `-${assetA.issuer}`
+    }/${assetB.code}${!assetB.issuer ? '' : `-${assetB.issuer}`}`,
+    hard: (url) => `/obm/spot/${url}`,
   },
   market: {
     root: () => '/obm/market',
