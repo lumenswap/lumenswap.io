@@ -100,8 +100,8 @@ function WalletData() {
 
   const statisticBlocks = [
     {
-      title: 'Total balance',
-      tooltip: 'tooltip ',
+      title: 'XLM balance',
+      tooltip: 'This shows your XLM balance',
       content: (
         <Info
           text="XLM"
@@ -120,7 +120,7 @@ function WalletData() {
     },
     {
       title: 'Reserved balance',
-      tooltip: 'tooltip ',
+      tooltip: 'This shows your reserved balance, which includes your active offers and trust lines',
       content: (
         <Info
           text="XLM"
@@ -193,7 +193,7 @@ function WalletData() {
               <a className={styles.link}>Trade</a>
             </Link>
             {new BN(data.balance).isEqualTo('0') ? (
-              <div style={{ cursor: 'auto' }} />
+              <div className={styles['disabled-send']}>Send</div>
             ) : (
               <span
                 className={styles.send}

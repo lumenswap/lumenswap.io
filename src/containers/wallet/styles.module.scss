@@ -117,6 +117,10 @@
 .send {
   cursor: pointer;
 }
+.disabled-send {
+  cursor: not-allowed !important;
+  color: $Bombay;
+}
 
 
 .checkbox {
