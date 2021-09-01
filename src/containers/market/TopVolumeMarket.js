@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
   <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}> There is no data to display</div>
+    <div className={styles.noDataMessage}>There is no asset</div>
   </div>
 );
 
@@ -72,12 +72,11 @@ function TopVolumeMarket({ searchQuery }) {
   useEffect(() => {
     if (searchQuery !== '' && topVolumeList) {
       const filtered = topVolumeList.filter(
-        (asset) => asset.pair.base.code
-          .toLowerCase()
-          .search(searchQuery.toLocaleLowerCase()) !== -1
-          || asset.pair.counter.code
-            .toLowerCase()
-            .search(searchQuery.toLocaleLowerCase()) !== -1,
+        (asset) => {
+          let value = `${asset.pair.counter.code}/${asset.pair.base.code}`;
+          value = value.toLowerCase().search(searchQuery.toLowerCase()) !== -1;
+          return value;
+        },
       );
 
       setFilteredAssets(filtered);
