@@ -1,3 +1,5 @@
+import StellarSDK from 'stellar-sdk';
+
 import isSameAsset from 'helpers/isSameAsset';
 import defaultTokens from 'tokens/defaultTokens';
 import getAssetDetails from 'helpers/getAssetDetails';
@@ -12,9 +14,13 @@ const customTokenValidation = (tokenString) => {
     return {
       result: true,
       token: extractTokenFromCode(extracted[0]),
+      isDefault: true,
     };
   }
-  if (isDefaultCode(extracted[0])) {
+  if (
+    isDefaultCode(extracted[0])
+    && extracted[1] === extractTokenFromCode(extracted[0]).issuer
+  ) {
     return {
       result: true,
       token: extractTokenFromCode(extracted[0]),
@@ -100,6 +106,9 @@ export async function swapCustomTokenGetServerSideProps(context) {
     const fromResult = customTokenValidation(context.query.tokens);
     const toResult = customTokenValidation(context.query.customTokens);
 
+    const queryFromIssuer = context.query.tokens.split('-')[1];
+    const queryToIssuer = context.query.customTokens.split('-')[1];
+
     if (!fromResult.result || !toResult.result) {
       return redirectObj;
     }
@@ -119,7 +128,6 @@ export async function swapCustomTokenGetServerSideProps(context) {
               !toResult.token ? `-${customToIssuer}` : ''
             }`,
           ),
-          // or just redirect to root. need confirmation on this.
         },
       };
     }
@@ -142,6 +150,27 @@ export async function swapCustomTokenGetServerSideProps(context) {
       fromCode.toUpperCase() !== context.query.tokens.split('-')[0]
       || toCode.toUpperCase() !== context.query.customTokens.split('-')[0]
     ) {
+      if (
+        (queryFromIssuer
+          && queryFromIssuer.toUpperCase() !== queryFromIssuer)
+        || (queryToIssuer && queryToIssuer.toUpperCase() !== queryToIssuer)
+      ) {
+        const checkedFromIssuer = fromResult.isDefault
+          ? null
+          : fromIssuer.toUpperCase();
+        const checkedToIssuer = toResult.isDefault
+          ? null
+          : toIssuer.toUpperCase();
+        return {
+          redirect: {
+            destination: urlMaker.swap.custom(
+              { code: fromCode.toUpperCase(), issuer: checkedFromIssuer },
+              { code: toCode.toUpperCase(), issuer: checkedToIssuer },
+            ),
+          },
+        };
+      }
+
       return {
         redirect: {
           destination: urlMaker.swap.custom(
@@ -153,6 +182,14 @@ export async function swapCustomTokenGetServerSideProps(context) {
     }
 
     try {
+      if (queryFromIssuer) {
+        if (!StellarSDK.StrKey.isValidEd25519PublicKey(queryFromIssuer)) { return redirectObj; }
+      }
+
+      if (queryToIssuer) {
+        if (!StellarSDK.StrKey.isValidEd25519PublicKey(queryToIssuer)) { return redirectObj; }
+      }
+
       const from = getAssetDetails({
         code: fromCode,
         issuer: fromIssuer,
@@ -166,7 +203,12 @@ export async function swapCustomTokenGetServerSideProps(context) {
         issuer: toIssuer,
         type: toCode === 'XLM' ? 'native' : null,
       });
+
       to.logo = toResult.token && toResult.token.logo;
+
+      if (isSameAsset(from, to)) {
+        return redirectObj;
+      }
 
       const fromAsset = JSON.parse(
         JSON.stringify({

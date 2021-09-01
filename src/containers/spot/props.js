@@ -1,3 +1,5 @@
+import StellarSDK from 'stellar-sdk';
+
 import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
 import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
@@ -13,9 +15,13 @@ const customTokenValidation = (tokenString) => {
     return {
       result: true,
       token: extractTokenFromCode(extracted[0]),
+      isDefault: true,
     };
   }
-  if (isDefaultCode(extracted[0])) {
+  if (
+    isDefaultCode(extracted[0])
+    && extracted[1] === extractTokenFromCode(extracted[0]).issuer
+  ) {
     return {
       result: true,
       token: extractTokenFromCode(extracted[0]),
@@ -108,6 +114,9 @@ export async function customSpotPageGetServerSideProps(context) {
     const fromResult = customTokenValidation(context.query.tokens);
     const toResult = customTokenValidation(context.query.customCounterToken);
 
+    const queryFromIssuer = context.query.tokens.split('-')[1];
+    const queryToIssuer = context.query.customCounterToken.split('-')[1];
+
     if (!fromResult.result || !toResult.result) {
       return redirectObj;
     }
@@ -131,13 +140,65 @@ export async function customSpotPageGetServerSideProps(context) {
       };
     }
 
-    const fromCode = fromResult.token ? fromResult.token.code : context.query.tokens.split('-')[0];
-    const fromIssuer = fromResult.token ? fromResult.token.issuer : context.query.tokens.split('-')[1];
+    const fromCode = fromResult.token
+      ? fromResult.token.code
+      : context.query.tokens.split('-')[0];
+    const fromIssuer = fromResult.token
+      ? fromResult.token.issuer
+      : context.query.tokens.split('-')[1];
 
-    const toCode = toResult.token ? toResult.token.code : context.query.customCounterToken.split('-')[0];
-    const toIssuer = toResult.token ? toResult.token.issuer : context.query.customCounterToken.split('-')[1];
+    const toCode = toResult.token
+      ? toResult.token.code
+      : context.query.customCounterToken.split('-')[0];
+    const toIssuer = toResult.token
+      ? toResult.token.issuer
+      : context.query.customCounterToken.split('-')[1];
+
+    if (
+      fromCode.toUpperCase() !== context.query.tokens.split('-')[0]
+      || toCode.toUpperCase() !== context.query.customCounterToken.split('-')[0]
+    ) {
+      if (
+        (queryFromIssuer
+          && queryFromIssuer.toUpperCase() !== queryFromIssuer)
+        || (queryToIssuer && queryToIssuer.toUpperCase() !== queryToIssuer)
+      ) {
+        const checkedFromIssuer = fromResult.isDefault
+          ? null
+          : fromIssuer.toUpperCase();
+        const checkedToIssuer = toResult.isDefault
+          ? null
+          : toIssuer.toUpperCase();
+
+        return {
+          redirect: {
+            destination: urlMaker.swap.custom(
+              { code: fromCode.toUpperCase(), issuer: checkedFromIssuer },
+              { code: toCode.toUpperCase(), issuer: checkedToIssuer },
+            ),
+          },
+        };
+      }
+
+      return {
+        redirect: {
+          destination: urlMaker.swap.custom(
+            { code: fromCode.toUpperCase() },
+            { code: toCode.toUpperCase() },
+          ),
+        },
+      };
+    }
 
     try {
+      if (queryFromIssuer) {
+        if (!StellarSDK.StrKey.isValidEd25519PublicKey(queryFromIssuer)) { return redirectObj; }
+      }
+
+      if (queryToIssuer) {
+        if (!StellarSDK.StrKey.isValidEd25519PublicKey(queryToIssuer)) { return redirectObj; }
+      }
+
       const from = getAssetDetails({
         code: fromCode,
         issuer: fromIssuer,
@@ -150,19 +211,26 @@ export async function customSpotPageGetServerSideProps(context) {
         code: toCode,
         issuer: toIssuer,
         type: toCode === 'XLM' ? 'native' : null,
-
       });
       to.logo = toResult.token && toResult.token.logo;
 
-      const base = JSON.parse(JSON.stringify({
-        ...from,
-        isDefault: isDefaultCode(from.code),
-      }));
+      if (isSameAsset(from, to)) {
+        return redirectObj;
+      }
 
-      const counter = JSON.parse(JSON.stringify({
-        ...to,
-        isDefault: isDefaultCode(to.code),
-      }));
+      const base = JSON.parse(
+        JSON.stringify({
+          ...from,
+          isDefault: isDefaultCode(from.code),
+        }),
+      );
+
+      const counter = JSON.parse(
+        JSON.stringify({
+          ...to,
+          isDefault: isDefaultCode(to.code),
+        }),
+      );
 
       let checkedAssetStatus;
       if (base.isDefault && !counter.isDefault) {
@@ -195,7 +263,6 @@ export async function customSpotPageGetServerSideProps(context) {
         },
       };
     } catch (error) {
-      console.log(error.message);
       return redirectObj;
     }
   }
