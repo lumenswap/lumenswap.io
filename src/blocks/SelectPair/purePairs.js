@@ -1,6 +1,7 @@
 export default function purePairs(list) {
   const seen = {};
 
+  console.log(list);
   return list.filter((item) => {
     const basePart = `${item.base.getAssetType()}_${item.base.getCode()}_${item.base.getIssuer()}`;
     const counterPart = `${item.counter.getAssetType()}_${item.counter.getCode()}_${item.counter.getIssuer()}`;

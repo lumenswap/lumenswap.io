@@ -151,7 +151,11 @@ function KnownAssets({ assets, searchQuery }) {
       </div>
     );
   }
-  const rowLink = (data) => urlMaker.spot.tokens(data.pair.base.code, data.pair.counter.code);
+  const rowLink = (data) => {
+    const assetA = { code: data.pair.base.code };
+    const assetB = { code: data.pair.counter.code };
+    return urlMaker.spot.custom(assetA, assetB);
+  };
 
   return (
     <div style={{ marginLeft: '-24px' }}>

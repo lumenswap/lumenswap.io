@@ -14,13 +14,19 @@ import OrderFormSection from 'containers/spot/OrderFormSection';
 import OpenDialogElement from 'containers/spot/OpenDialogElement';
 import SpotHead from 'containers/spot/SpotHead';
 import useBreakPoint from 'hooks/useMyBreakpoint';
+import { addCustomPairAction } from 'actions/userCustomPairs';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
   ssr: false,
 });
 
-const Spot = ({ tokens }) => {
+const Spot = ({ tokens, custom }) => {
+  const dispatch = useDispatch();
+  const userCustomPairs = useSelector((state) => state.userCustomPairs);
+
   const [appSpotPair, setAppSpotPair] = useState({
     base: getAssetDetails(XLM),
     counter: getAssetDetails(USDC),
@@ -39,25 +45,56 @@ const Spot = ({ tokens }) => {
     }
   }, [tokens]);
 
+  useEffect(() => {
+    async function check() {
+      if (custom) {
+        setAppSpotPair({
+          base: getAssetDetails(custom.base),
+          counter: getAssetDetails(custom.counter),
+        });
+
+        const found = userCustomPairs.find(
+          (pair) => pair.base.code === custom.base.code
+            && pair.counter.code === custom.counter.code
+            && pair.base.issuer === custom.base.issuer
+            && pair.counter.issuer === custom.counter.issuer,
+        );
+        if (!found) {
+          dispatch(
+            addCustomPairAction({
+              base: getAssetDetails(custom.base),
+              counter: getAssetDetails(custom.counter),
+            }),
+          );
+        }
+      }
+    }
+    check();
+  }, [custom]);
+
   return (
     <div className="container-fluid">
-      <SpotHead tokens={tokens} price={price} setPrice={setPrice} />
+      <SpotHead
+        custom={custom}
+        tokens={tokens}
+        price={price}
+        setPrice={setPrice}
+      />
       <ObmHeader />
       <div className="layout mt-4 other">
         {/* top section */}
         <div className={classNames('row', styles.row)}>
-          {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile
-            ? (
-              <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
-                <div className={classNames(styles.card, styles['card-select'])}>
-                  <OpenDialogElement
-                    className="w-100"
-                    appSpotPair={appSpotPair}
-                    setAppSpotPair={setAppSpotPair}
-                  />
-                </div>
+          {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile && (
+            <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
+              <div className={classNames(styles.card, styles['card-select'])}>
+                <OpenDialogElement
+                  className="w-100"
+                  appSpotPair={appSpotPair}
+                  setAppSpotPair={setAppSpotPair}
+                />
               </div>
-            ) : ''}
+            </div>
+          )}
 
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
             <div className={classNames(styles.card, styles['card-detail'])}>
@@ -69,7 +106,9 @@ const Spot = ({ tokens }) => {
                     setAppSpotPair={setAppSpotPair}
                   />
                 </div>
-              ) : ''}
+              ) : (
+                ''
+              )}
 
               <DetailList appSpotPair={appSpotPair} price={price} />
             </div>

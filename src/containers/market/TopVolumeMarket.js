@@ -8,6 +8,7 @@ import defaultTokens from 'tokens/defaultTokens';
 import { getTopVolume } from 'api/market';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
+import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -48,10 +49,14 @@ function TopVolumeMarket({ searchQuery }) {
           logo: questionLogo,
         };
         if (hashedDefaultTokens[asset.baseAssetCode]) {
-          if (base.logo) base.logo = hashedDefaultTokens[asset.baseAssetCode].logo;
+          if (base.logo) {
+            base.logo = hashedDefaultTokens[asset.baseAssetCode].logo;
+          }
         }
         if (hashedDefaultTokens[asset.counterAssetCode]) {
-          if (counter.logo) counter.logo = hashedDefaultTokens[asset.counterAssetCode].logo;
+          if (counter.logo) {
+            counter.logo = hashedDefaultTokens[asset.counterAssetCode].logo;
+          }
         }
 
         return {
@@ -104,21 +109,25 @@ function TopVolumeMarket({ searchQuery }) {
       title: 'Last Price',
       dataIndex: 'lastPrice',
       key: '2',
-      sortFunc: (a, b, order) => (order === 'desc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
+      sortFunc: (a, b, order) => (order === 'desc'
+        ? a.lastPrice - b.lastPrice
+        : b.lastPrice - a.lastPrice),
       render: (data) => `${sevenDigit(data.lastPrice)} ${data.pair.base.code}`,
     },
     {
       title: '24 change',
       dataIndex: 'change24h',
       key: '3',
-      sortFunc: (a, b, order) => (order === 'desc' ? a.change24h - b.change24h : b.change24h - a.change24h),
+      sortFunc: (a, b, order) => (order === 'desc'
+        ? a.change24h - b.change24h
+        : b.change24h - a.change24h),
       render: (data) => (
         <span
           className={
-        new BN(data.change24h).isNegative()
-          ? styles.change_negative
-          : styles.change_positive
-      }
+            new BN(data.change24h).isNegative()
+              ? styles.change_negative
+              : styles.change_positive
+          }
         >
           {data.change24h}%
         </span>
@@ -128,14 +137,22 @@ function TopVolumeMarket({ searchQuery }) {
       title: '24H Volume',
       dataIndex: 'volume24h',
       key: '4',
-      sortFunc: (a, b, order) => (order === 'desc' ? a.volume24h - b.volume24h : b.volume24h - a.volume24h),
+      sortFunc: (a, b, order) => (order === 'desc'
+        ? a.volume24h - b.volume24h
+        : b.volume24h - a.volume24h),
       render: (data) => `${numeral(data.volume24h).format('0.[0]a')} ${data.pair.base.code}`,
     },
   ];
 
   if (!assets) {
-    return <div className={styles['loading-container']}><Loading size={48} /></div>;
+    return (
+      <div className={styles['loading-container']}>
+        <Loading size={48} />
+      </div>
+    );
   }
+
+  const rowLink = (data) => urlMaker.spot.custom(data.pair.base, data.pair.counter);
 
   return (
     <div style={{ marginLeft: '-24px' }}>
@@ -144,6 +161,7 @@ function TopVolumeMarket({ searchQuery }) {
         columns={tableHeaders}
         noDataMessage={NoDataMessage}
         dataSource={filteredAssets}
+        rowLink={rowLink}
       />
     </div>
   );
