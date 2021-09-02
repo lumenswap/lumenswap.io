@@ -18,11 +18,29 @@ const SwapHead = ({ custom }) => {
   return (
     <Head>
       <title>{headTitle}</title>
-      <meta name="description" content={`Swapping ${custom ? `${custom.from.code}-${custom.to.code}` : 'assets'} | Decentralized Exchanged on Stellar | Find All Live Stellar Assets Chart, Graph and Prices in Lumenswas`} />
+      <meta
+        name="description"
+        content={`Swapping ${
+          custom ? `${custom.from.code}-${custom.to.code}` : 'assets'
+        } | Decentralized Exchanged on Stellar | Find All Live Stellar Assets Chart, Graph and Prices in Lumenswas`}
+      />
       <meta name="robots" content="follow, index" />
-      {custom
-        ? <link rel="canonical" herf={`${process.env.REACT_APP_HOST}${urlMaker.swap.custom(custom.from, custom.to)}`} />
-        : <link rel="canonical" herf={`${process.env.REACT_APP_HOST}${urlMaker.swap.root()}`} />}
+      {custom ? (
+        <link
+          rel="canonical"
+          herf={`${process.env.REACT_APP_HOST}${urlMaker.swap.custom(
+            custom.from.code,
+            custom.from.issuer === 'native' ? null : custom.from.issuer,
+            custom.to.code,
+            custom.to.issuer === 'native' ? null : custom.to.issuer,
+          )}`}
+        />
+      ) : (
+        <link
+          rel="canonical"
+          herf={`${process.env.REACT_APP_HOST}${urlMaker.swap.root()}`}
+        />
+      )}
     </Head>
   );
 };

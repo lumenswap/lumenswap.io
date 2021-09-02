@@ -31,7 +31,13 @@ const SpotHead = ({ price, custom }) => {
       <link
         rel="canonical"
         herf={`${process.env.REACT_APP_HOST}${
-          custom && urlMaker.spot.custom(custom.base.code, custom.counter.code)
+          custom
+          && urlMaker.spot.custom(
+            custom.base.code,
+            custom.base.issuer,
+            custom.counter.code,
+            custom.counter.issuer,
+          )
         } `}
       />
     </Head>

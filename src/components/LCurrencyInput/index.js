@@ -32,9 +32,6 @@ export default function LCurrencyInput({
     onChange({ ...value, asset });
     originChange(getFormValues().from.amount);
 
-    const from = getFormValues().from.asset.details.code;
-    const to = getFormValues().to.asset?.details?.code;
-
     const isFromCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getFormValues().from.asset?.details));
 
@@ -44,16 +41,46 @@ export default function LCurrencyInput({
     if (isFromCustomToken && !isToCustomToken) {
       const toAsset = { ...getFormValues().to.asset.details };
       toAsset.isDefault = true;
-      router.push(urlMaker.swap.custom(isFromCustomToken, toAsset));
+      router.push(
+        urlMaker.swap.custom(
+          isFromCustomToken.code,
+          isFromCustomToken.issuer === 'native'
+            ? null
+            : isFromCustomToken.issuer,
+          toAsset.code,
+          toAsset.issuer === 'native' ? null : toAsset.issuer,
+        ),
+      );
     } else if (isToCustomToken && !isFromCustomToken) {
       const fromAsset = { ...getFormValues().from.asset.details };
       fromAsset.isDefault = true;
-      router.push(urlMaker.swap.custom(fromAsset, isToCustomToken));
+      router.push(
+        urlMaker.swap.custom(
+          fromAsset.code,
+          fromAsset.issuer === 'native' ? null : fromAsset.issuer,
+          isToCustomToken.code,
+          isToCustomToken.issuer === 'native' ? null : isToCustomToken.issuer,
+        ),
+      );
     } else if (isFromCustomToken && isToCustomToken) {
-      router.push(urlMaker.swap.custom(isFromCustomToken, isToCustomToken));
+      router.push(
+        urlMaker.swap.custom(
+          isFromCustomToken.code,
+          isFromCustomToken.issuer === 'native'
+            ? null
+            : isFromCustomToken.issuer,
+          isToCustomToken.code,
+          isToCustomToken.issuer === 'native' ? null : isFromCustomToken.issuer,
+        ),
+      );
     } else {
       router.push(
-        urlMaker.swap.tokens(from, to),
+        urlMaker.swap.custom(
+          getFormValues().to.asset.details.code,
+          null,
+          getFormValues().from.asset.details.code,
+          null,
+        ),
       );
     }
   }

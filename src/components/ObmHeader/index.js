@@ -23,7 +23,7 @@ const ObmHeader = () => {
           <li><NavLink
             name="Spot"
             mainHref={urlMaker.spot.root()}
-            href={urlMaker.spot.tokens('XLM', 'USDC')}
+            href={urlMaker.spot.custom('XLM', null, 'USDC', null)}
           />
           </li>
           <li><NavLink name="Reward" href={urlMaker.reward.root()} /></li>

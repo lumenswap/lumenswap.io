@@ -186,10 +186,10 @@ function WalletData() {
         const token = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.asset));
         return (
           <div className={styles.actions}>
-            <Link href={token ? urlMaker.swap.tokens(data.asset.code, 'XLM') : urlMaker.swap.root()}>
+            <Link href={token ? urlMaker.swap.custom(data.asset.code, data.asset.issuer, 'XLM', null) : urlMaker.swap.root()}>
               <a className={styles.link}>Swap</a>
             </Link>
-            <Link href={token ? urlMaker.spot.tokens(data.asset.code, 'XLM') : urlMaker.spot.root()}>
+            <Link href={token ? urlMaker.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null) : urlMaker.spot.root()}>
               <a className={styles.link}>Trade</a>
             </Link>
             {new BN(data.balance).isEqualTo('0') ? (

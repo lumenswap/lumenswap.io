@@ -143,15 +143,19 @@ const SelectPair = ({ setAppSpotPair }) => {
                   if (found) {
                     router.push(
                       urlMaker.spot.custom(
-                        item.base.details,
-                        item.counter.details,
+                        item.base.details.code,
+                        item.base.details.issuer,
+                        item.counter.details.code,
+                        item.counter.issuer,
                       ),
                     );
                   } else {
                     router.push(
-                      urlMaker.spot.tokens(
+                      urlMaker.spot.custom(
                         item.base.details.code,
+                        item.base.details.issuer,
                         item.counter.details.code,
+                        item.counter.details.issuer,
                       ),
                     );
                   }
