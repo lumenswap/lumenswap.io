@@ -136,42 +136,24 @@ export async function swapCustomTokenGetServerSideProps(context) {
     }
 
     if (
-      fromResult.code?.toUpperCase() !== fromResult?.code
-      || toResult.code?.toUpperCase() !== toResult?.code
-      || fromResult.issuer?.toUpperCase() !== fromResult?.issuer
-      || toResult.issuer?.toUpperCase() !== toResult?.issuer
-    ) {
-      if (
-        (queryFromIssuer
+      (queryFromIssuer
           && queryFromIssuer.toUpperCase() !== queryFromIssuer)
         || (queryToIssuer && queryToIssuer.toUpperCase() !== queryToIssuer)
-      ) {
-        const checkedFromIssuer = !fromResult.issuer
-          ? null
-          : fromResult.issuer.toUpperCase();
-        const checkedToIssuer = !toResult.issuer
-          ? null
-          : toResult.issuer.toUpperCase();
-
-        return {
-          redirect: {
-            destination: urlMaker.swap.custom(
-              fromResult.code.toUpperCase(),
-              checkedFromIssuer,
-              toResult.code.toUpperCase(),
-              checkedToIssuer,
-            ),
-          },
-        };
-      }
+    ) {
+      const checkedFromIssuer = !fromResult.issuer
+        ? null
+        : fromResult.issuer.toUpperCase();
+      const checkedToIssuer = !toResult.issuer
+        ? null
+        : toResult.issuer.toUpperCase();
 
       return {
         redirect: {
           destination: urlMaker.swap.custom(
-            fromResult.code?.toUpperCase(),
-            fromResult.issuer?.toUpperCase(),
-            toResult.code?.toUpperCase(),
-            toResult.issuer?.toUpperCase(),
+            fromResult.code,
+            checkedFromIssuer,
+            toResult.code,
+            checkedToIssuer,
           ),
         },
       };
@@ -179,15 +161,10 @@ export async function swapCustomTokenGetServerSideProps(context) {
 
     try {
       if (
-        fromResult.issuer
-        && !StellarSDK.StrKey.isValidEd25519PublicKey(fromResult.issuer)
-      ) {
-        return redirectObj;
-      }
-
-      if (
-        toResult.issuer
-        && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer)
+        (fromResult.issuer
+          && !StellarSDK.StrKey.isValidEd25519PublicKey(fromResult.issuer))
+        || (toResult.issuer
+          && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer))
       ) {
         return redirectObj;
       }
@@ -202,6 +179,10 @@ export async function swapCustomTokenGetServerSideProps(context) {
         isDefault: !toResult.issuer,
       };
 
+      if (fromAsset.code === toAsset.code && fromAsset.issuer === toAsset.issuer) {
+        return redirectObj;
+      }
+
       let checkedAssetStatus = [true];
       const reqs = [];
 
@@ -210,7 +191,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
       }
 
       if (!toAsset.isDefault) {
-        reqs.push(checkAssetValidation(fromAsset.code, fromAsset.issuer));
+        reqs.push(checkAssetValidation(toAsset.code, toAsset.issuer));
       }
 
       if (reqs.length > 1) {
@@ -218,11 +199,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
       }
 
       if (!checkedAssetStatus.every((i) => i)) {
-        return {
-          redirect: {
-            destination: urlMaker.swap.custom('XLM', null, 'USDC', null),
-          },
-        };
+        return redirectObj;
       }
 
       return {

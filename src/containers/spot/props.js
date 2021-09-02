@@ -128,12 +128,10 @@ export async function customSpotPageGetServerSideProps(context) {
     const queryToIssuer = context.query.customCounterToken.split('-')[1];
 
     if (!fromResult || !toResult) {
-      console.log('1');
       return redirectObj;
     }
 
     if (fromResult.redirect || toResult.redirect) {
-      console.log('2');
       return {
         redirect: {
           destination: urlMaker.spot.custom(
@@ -147,43 +145,24 @@ export async function customSpotPageGetServerSideProps(context) {
     }
 
     if (
-      fromResult.code?.toUpperCase() !== fromResult?.code
-      || toResult.code?.toUpperCase() !== toResult?.code
-      || fromResult.issuer?.toUpperCase() !== fromResult?.issuer
-      || toResult.issuer?.toUpperCase() !== toResult?.issuer
-    ) {
-      if (
-        (queryFromIssuer
+      (queryFromIssuer
           && queryFromIssuer.toUpperCase() !== queryFromIssuer)
         || (queryToIssuer && queryToIssuer.toUpperCase() !== queryToIssuer)
-      ) {
-        const checkedFromIssuer = !fromResult.issuer
-          ? null
-          : fromResult.issuer.toUpperCase();
-        const checkedToIssuer = !toResult.issuer
-          ? null
-          : toResult.issuer.toUpperCase();
+    ) {
+      const checkedFromIssuer = !fromResult.issuer
+        ? null
+        : fromResult.issuer.toUpperCase();
+      const checkedToIssuer = !toResult.issuer
+        ? null
+        : toResult.issuer.toUpperCase();
 
-        console.log('3');
-        return {
-          redirect: {
-            destination: urlMaker.spot.custom(
-              fromResult.code.toUpperCase(),
-              checkedFromIssuer,
-              toResult.code.toUpperCase(),
-              checkedToIssuer,
-            ),
-          },
-        };
-      }
-      console.log('4');
       return {
         redirect: {
           destination: urlMaker.spot.custom(
-            fromResult.code?.toUpperCase(),
-            fromResult.issuer?.toUpperCase(),
-            toResult.code?.toUpperCase(),
-            toResult.issuer?.toUpperCase(),
+            fromResult.code,
+            checkedFromIssuer,
+            toResult.code,
+            checkedToIssuer,
           ),
         },
       };
@@ -194,7 +173,6 @@ export async function customSpotPageGetServerSideProps(context) {
         fromResult.issuer
         && !StellarSDK.StrKey.isValidEd25519PublicKey(fromResult.issuer)
       ) {
-        console.log('5');
         return redirectObj;
       }
 
@@ -202,7 +180,6 @@ export async function customSpotPageGetServerSideProps(context) {
         toResult.issuer
         && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer)
       ) {
-        console.log('6');
         return redirectObj;
       }
 
@@ -216,6 +193,10 @@ export async function customSpotPageGetServerSideProps(context) {
         isDefault: !toResult.issuer,
       };
 
+      if (fromAsset.code === toAsset.code && fromAsset.issuer === toAsset.issuer) {
+        return redirectObj;
+      }
+
       let checkedAssetStatus = [true];
       const reqs = [];
 
@@ -224,7 +205,7 @@ export async function customSpotPageGetServerSideProps(context) {
       }
 
       if (!toAsset.isDefault) {
-        reqs.push(checkAssetValidation(fromAsset.code, fromAsset.issuer));
+        reqs.push(checkAssetValidation(toAsset.code, toAsset.issuer));
       }
 
       if (reqs.length > 1) {
@@ -232,12 +213,7 @@ export async function customSpotPageGetServerSideProps(context) {
       }
 
       if (!checkedAssetStatus.every((i) => i)) {
-        console.log('7');
-        return {
-          redirect: {
-            destination: urlMaker.spot.custom('XLM', null, 'USDC', null),
-          },
-        };
+        return redirectObj;
       }
 
       return {
@@ -249,12 +225,8 @@ export async function customSpotPageGetServerSideProps(context) {
         },
       };
     } catch (error) {
-      console.log('8');
       return redirectObj;
     }
   }
-
-  console.log('9');
-
   return redirectObj;
 }
