@@ -13,7 +13,7 @@ module.exports = withImages(withTM({
     return [
       {
         source: '/',
-        destination: '/obm/swap',
+        destination: '/swap',
         permanent: true,
       },
     ];

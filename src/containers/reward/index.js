@@ -1,7 +1,7 @@
-import RewardHeader from 'components/RewardHeader';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import LoginRequired from 'components/LoginRequired';
+import ObmHeader from 'components/ObmHeader';
 import rewardConnectIcon from '../../assets/images/rewardNotConnected.png';
 import styles from './styles.module.scss';
 import RewardContent from './RewardContent';
@@ -15,7 +15,7 @@ const RewardPage = () => {
         <Head>
           <title>Reward | Lumenswap</title>
         </Head>
-        <RewardHeader />
+        <ObmHeader />
       </div>
 
       <div className={styles.main}>
