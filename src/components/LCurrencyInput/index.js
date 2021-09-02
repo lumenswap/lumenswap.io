@@ -76,9 +76,9 @@ export default function LCurrencyInput({
     } else {
       router.push(
         urlMaker.swap.custom(
-          getFormValues().to.asset.details.code,
-          null,
           getFormValues().from.asset.details.code,
+          null,
+          getFormValues().to.asset.details.code,
           null,
         ),
       );
