@@ -35,8 +35,10 @@ const SelectPair = ({ setAppSpotPair }) => {
       ...createdDefaultPairs,
       ...customPairs,
     ]).map((item) => {
-      const foundBaseToken = defaultTokens.find((tok) => isSameAsset(getAssetDetails(tok), item.base));
-      const foundCounterToken = defaultTokens.find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
+      const foundBaseToken = defaultTokens
+        .find((tok) => isSameAsset(getAssetDetails(tok), item.base));
+      const foundCounterToken = defaultTokens
+        .find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
 
       let enrichedBaseToken;
       if (foundBaseToken) {
@@ -143,15 +145,19 @@ const SelectPair = ({ setAppSpotPair }) => {
                   if (found) {
                     router.push(
                       urlMaker.spot.custom(
-                        item.base.details,
-                        item.counter.details,
+                        item.base.details.code,
+                        item.base.details.issuer,
+                        item.counter.details.code,
+                        item.counter.details.issuer,
                       ),
                     );
                   } else {
                     router.push(
-                      urlMaker.spot.tokens(
+                      urlMaker.spot.custom(
                         item.base.details.code,
+                        item.base.details.issuer,
                         item.counter.details.code,
+                        item.counter.details.issuer,
                       ),
                     );
                   }

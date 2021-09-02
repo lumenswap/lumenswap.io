@@ -16,12 +16,15 @@ import SpotHead from 'containers/spot/SpotHead';
 import useBreakPoint from 'hooks/useMyBreakpoint';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
+import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
 import styles from './styles.module.scss';
 
 const TVChart = dynamic(() => import('../../components/TVChart'), {
   ssr: false,
 });
+
+const createdDefaultPairs = createPairForDefaultTokens();
 
 const Spot = ({ tokens, custom }) => {
   const dispatch = useDispatch();
@@ -48,24 +51,49 @@ const Spot = ({ tokens, custom }) => {
   useEffect(() => {
     async function check() {
       if (custom) {
-        setAppSpotPair({
-          base: getAssetDetails(custom.base),
-          counter: getAssetDetails(custom.counter),
+        let base = getAssetDetails({
+          code: custom.base.code,
+          issuer: custom.base.issuer,
         });
 
-        const found = userCustomPairs.find(
-          (pair) => pair.base.code === custom.base.code
-            && pair.counter.code === custom.counter.code
-            && pair.base.issuer === custom.base.issuer
-            && pair.counter.issuer === custom.counter.issuer,
-        );
-        if (!found) {
-          dispatch(
-            addCustomPairAction({
-              base: getAssetDetails(custom.base),
-              counter: getAssetDetails(custom.counter),
-            }),
+        if (custom.base.isDefault) {
+          base = getAssetDetails(extractTokenFromCode(custom.base.code));
+        }
+
+        let counter = getAssetDetails({
+          code: custom.counter.code,
+          issuer: custom.counter.issuer,
+        });
+
+        if (custom.counter.isDefault) {
+          counter = getAssetDetails(extractTokenFromCode(custom.counter.code));
+        }
+
+        setAppSpotPair({
+          base: getAssetDetails(base),
+          counter: getAssetDetails(counter),
+        });
+
+        const defaultFoundPair = createdDefaultPairs.find((pair) => pair.base.code === base.code
+        && pair.counter.code === counter.code
+        && pair.base.issuer === base.issuer
+        && pair.counter.issuer === counter.issuer);
+
+        if (!defaultFoundPair) {
+          const found = userCustomPairs.find(
+            (pair) => pair.base.code === base.code
+              && pair.counter.code === counter.code
+              && pair.base.issuer === base.issuer
+              && pair.counter.issuer === counter.issuer,
           );
+          if (!found) {
+            dispatch(
+              addCustomPairAction({
+                base: getAssetDetails(base),
+                counter: getAssetDetails(counter),
+              }),
+            );
+          }
         }
       }
     }

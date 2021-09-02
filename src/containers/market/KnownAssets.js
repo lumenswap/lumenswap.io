@@ -151,12 +151,13 @@ function KnownAssets({ assets, searchQuery }) {
       </div>
     );
   }
-  const rowLink = (data) => {
-    const assetA = { code: data.pair.base.code };
-    const assetB = { code: data.pair.counter.code };
-    return urlMaker.spot.custom(assetA, assetB);
-  };
 
+  const rowLink = (data) => urlMaker.spot.custom(
+    data.pair.base.code,
+    null,
+    data.pair.counter.code,
+    null,
+  );
   return (
     <div style={{ marginLeft: '-24px' }}>
       <CTable

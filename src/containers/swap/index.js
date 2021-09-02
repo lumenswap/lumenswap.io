@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import classNames from 'classnames';
 import urlMaker from 'helpers/urlMaker';
 import { Controller, useForm } from 'react-hook-form';
@@ -16,13 +16,12 @@ import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import isSameAsset from 'helpers/isSameAsset';
-import AddAsset from 'blocks/AddAsset';
-import minimizeAddress from 'helpers/minimizeAddress';
-import questionLogo from 'assets/images/question.png';
+
 import ExchangeRate from 'containers/swap/ExchangeRate';
 import SwapButton from 'containers/swap/SwapButton';
 import SwapHead from 'containers/swap/SwapHead';
-import { addCustomTokenAction } from 'actions/userCustomTokens';
+import useUrl from 'containers/swap/useUrl';
+import { changeToAsset } from 'containers/swap/swapHelpers';
 import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
@@ -57,30 +56,6 @@ const SwapPage = ({ custom }) => {
       priceSpread: '0.1',
     },
   });
-
-  // useEffect(() => {
-  //   if (tokens) {
-  //     const formValues = getValues();
-
-  //     setValue('to', {
-  //       amount: formValues.to.amount,
-  //       asset: {
-  //         logo: tokens.to.logo,
-  //         web: tokens.to.web,
-  //         details: getAssetDetails(tokens.to),
-  //       },
-  //     });
-
-  //     setValue('from', {
-  //       amount: formValues.from.amount,
-  //       asset: {
-  //         logo: tokens.from.logo,
-  //         web: tokens.from.web,
-  //         details: getAssetDetails(tokens.from),
-  //       },
-  //     });
-  //   }
-  // }, [tokens]);
 
   const onSubmit = (data) => {
     if (!isLogged) {
@@ -205,106 +180,55 @@ const SwapPage = ({ custom }) => {
 
     const isToCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getValues().to.asset?.details));
+
     if (isFromCustomToken && !isToCustomToken) {
       const toAsset = { ...getValues().to.asset.details };
       toAsset.isDefault = true;
-      router.push(urlMaker.swap.custom(isFromCustomToken, toAsset));
+      router.push(
+        urlMaker.swap.custom(
+          isFromCustomToken.code,
+          isFromCustomToken.issuer === 'native'
+            ? null
+            : isFromCustomToken.issuer,
+          toAsset.code,
+          toAsset.issuer === 'native' ? null : toAsset.issuer,
+        ),
+      );
     } else if (isToCustomToken && !isFromCustomToken) {
       const fromAsset = { ...getValues().from.asset.details };
       fromAsset.isDefault = true;
-      router.push(urlMaker.swap.custom(fromAsset, isToCustomToken));
+      router.push(
+        urlMaker.swap.custom(
+          fromAsset.code,
+          fromAsset.issuer === 'native' ? null : fromAsset.issuer,
+          isToCustomToken.code,
+          isToCustomToken.issuer === 'native' ? null : isToCustomToken.issuer,
+        ),
+      );
     } else if (isFromCustomToken && isToCustomToken) {
-      router.push(urlMaker.swap.custom(isFromCustomToken, isToCustomToken));
+      router.push(
+        urlMaker.swap.custom(
+          isFromCustomToken.code,
+          isFromCustomToken.issuer === 'native'
+            ? null
+            : isFromCustomToken.issuer,
+          isToCustomToken.code,
+          isToCustomToken.issuer === 'native' ? null : isFromCustomToken.issuer,
+        ),
+      );
     } else {
       router.push(
-        urlMaker.swap.tokens(formValues.to.asset.details.code, formValues.from.asset.details.code),
+        urlMaker.swap.custom(
+          formValues.to.asset.details.code,
+          null,
+          formValues.from.asset.details.code,
+          null,
+        ),
       );
     }
   }
 
-  function changeToAsset(asset) {
-    const formValues = getValues();
-    setValue('to', { asset, amount: formValues.to.amount });
-  }
-
-  function changeFromAsset(asset) {
-    const formValues = getValues();
-    setValue('from', { asset, amount: formValues.to.amount });
-  }
-
-  useEffect(() => {
-    async function check() {
-      if (custom) {
-        const from = getAssetDetails({
-          code: custom.from.code,
-          issuer: custom.from.issuer,
-        });
-
-        const to = getAssetDetails({
-          code: custom.to.code,
-          issuer: custom.to.issuer,
-        });
-
-        if (!custom.from.isDefault) {
-          const foundFrom = userCustomTokens.find((i) => isSameAsset(
-            i,
-            from,
-          ));
-
-          if (!foundFrom) {
-            dispatch(addCustomTokenAction(from));
-          }
-        }
-
-        changeFromAsset({
-          details: from,
-          web: minimizeAddress(from.getIssuer()),
-          logo: custom.from.isDefault ? custom.from.logo : questionLogo,
-        });
-
-        if (!custom.to.isDefault) {
-          const foundTo = userCustomTokens.find((i) => isSameAsset(
-            i,
-            to,
-          ));
-          if (!foundTo) {
-            dispatch(addCustomTokenAction(to));
-          }
-        }
-        changeToAsset({
-          details: to,
-          web: minimizeAddress(to.getIssuer()),
-          logo: custom.to.isDefault ? custom.to.logo : questionLogo,
-        });
-      }
-    }
-
-    check();
-  }, [custom]);
-
-  // useEffect(() => {
-  //   if (!tokens && router.query.custom) {
-  //     const extracted = router.query.custom.split('-');
-  //     const found = userCustomTokens.find((i) => isSameAsset(
-  //       i,
-  //       getAssetDetails({ code: extracted[0], issuer: extracted[1] }),
-  //     ));
-  //     if (router.pathname === urlMaker.swap.root() && router.query && !found) {
-  //       dispatch(
-  //         openModalAction({
-  //           modalProps: { title: 'Add custom asset' },
-  //           content: <AddAsset changeToAsset={changeToAsset} />,
-  //         }),
-  //       );
-  //     } else if (found) {
-  //       changeToAsset({
-  //         details: found,
-  //         web: minimizeAddress(found.getIssuer()),
-  //         logo: questionLogo,
-  //       });
-  //     }
-  //   }
-  // }, [router.pathname, router.query]);
+  useUrl(custom, setValue, getValues, [custom]);
 
   const showAdvanced = !new BN(watch('from').amount).isNaN()
     && !new BN(watch('from').amount).isEqualTo(0)
@@ -330,7 +254,7 @@ const SwapPage = ({ custom }) => {
                     originChange={changeFromInput}
                     getFormValues={getValues}
                     swapFromWithTo={swapFromWithTo}
-                    changeToAsset={changeToAsset}
+                    changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
                   />
                 )}
               />
@@ -354,7 +278,7 @@ const SwapPage = ({ custom }) => {
                     originChange={changeFromInput}
                     getFormValues={getValues}
                     swapFromWithTo={swapFromWithTo}
-                    changeToAsset={changeToAsset}
+                    changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
                   />
                 )}
               />

@@ -9,6 +9,8 @@ import { getTopVolume } from 'api/market';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
 import urlMaker from 'helpers/urlMaker';
+import isDefaultToken from 'helpers/defaultTokenUtils';
+import getAssetDetails from 'helpers/getAssetDetails';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -152,7 +154,17 @@ function TopVolumeMarket({ searchQuery }) {
     );
   }
 
-  const rowLink = (data) => urlMaker.spot.custom(data.pair.base, data.pair.counter);
+  const rowLink = (data) => {
+    const assetA = getAssetDetails(data.pair.base);
+    const assetB = getAssetDetails(data.pair.counter);
+
+    return urlMaker.spot.custom(
+      assetB.code,
+      assetB.issuer,
+      assetA.code,
+      assetA.issuer,
+    );
+  };
 
   return (
     <div style={{ marginLeft: '-24px' }}>

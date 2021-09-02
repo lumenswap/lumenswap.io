@@ -11,32 +11,46 @@ import isSameAsset from 'helpers/isSameAsset';
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 const customTokenValidation = (tokenString) => {
   const extracted = tokenString.split('-');
+
+  if (extracted.length > 2) return null;
+
   if (extracted.length === 1 && isDefaultCode(extracted[0])) {
     return {
-      result: true,
-      token: extractTokenFromCode(extracted[0]),
-      isDefault: true,
+      code: extracted[0],
     };
   }
-  if (
-    isDefaultCode(extracted[0])
-    && extracted[1] === extractTokenFromCode(extracted[0]).issuer
-  ) {
+  if (isDefaultCode(extracted[0])) {
+    const token = extractTokenFromCode(extracted[0]);
+    const defaultIssuer = token.issuer;
+
+    if (defaultIssuer === extracted[1]) {
+      return {
+        code: extracted[0],
+        issuer: null,
+        redirect: true,
+      };
+    }
+
     return {
-      result: true,
-      token: extractTokenFromCode(extracted[0]),
-      redirect: true,
+      code: extracted[0],
+      issuer: extracted[1],
     };
   }
-  return {
-    result: tokenString.split('-').length === 2,
-  };
+
+  if (tokenString.split('-').length === 2) {
+    return {
+      code: extracted[0],
+      issuer: extracted[1],
+    };
+  }
+
+  return null;
 };
 export async function spotPageGetServerSideProps(context) {
   const createdDefaultPairs = createPairForDefaultTokens();
   const redirectObj = {
     redirect: {
-      destination: urlMaker.spot.tokens('XLM', 'USDC'),
+      destination: urlMaker.spot.custom('XLM', null, 'USDC', null),
       permanent: true,
     },
   };
@@ -85,14 +99,10 @@ export async function spotPageGetServerSideProps(context) {
     return {
       redirect: {
         destination: urlMaker.spot.custom(
-          {
-            ...fromTokenDetails,
-            isDefault: true,
-          },
-          {
-            ...toTokenDetails,
-            isDefault: true,
-          },
+          fromTokenDetails.code,
+          null,
+          toTokenDetails.code,
+          null,
         ),
         permanent: true,
       },
@@ -107,7 +117,7 @@ export async function spotPageGetServerSideProps(context) {
 export async function customSpotPageGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: urlMaker.spot.tokens('XLM', 'USDC'),
+      destination: urlMaker.spot.root(),
     },
   };
   if (context.query.tokens && context.query.customCounterToken) {
@@ -117,137 +127,89 @@ export async function customSpotPageGetServerSideProps(context) {
     const queryFromIssuer = context.query.tokens.split('-')[1];
     const queryToIssuer = context.query.customCounterToken.split('-')[1];
 
-    if (!fromResult.result || !toResult.result) {
+    if (!fromResult || !toResult) {
       return redirectObj;
     }
 
     if (fromResult.redirect || toResult.redirect) {
-      const customFromCode = context.query.tokens.split('-')[0];
-      const customFromIssuer = context.query.tokens.split('-')[1];
-      const customToCode = context.query.customCounterToken.split('-')[0];
-      const customToIssuer = context.query.customCounterToken.split('-')[1];
-
       return {
         redirect: {
-          destination: urlMaker.spot.hard(
-            `${fromResult.token ? fromResult.token.code : customFromCode}${
-              !fromResult.token ? `-${customFromIssuer}` : ''
-            }/${toResult.token ? toResult.token.code : customToCode}${
-              !toResult.token ? `-${customToIssuer}` : ''
-            }`,
+          destination: urlMaker.spot.custom(
+            fromResult.code,
+            fromResult.issuer,
+            toResult.code,
+            toResult.issuer,
           ),
         },
       };
     }
 
-    const fromCode = fromResult.token
-      ? fromResult.token.code
-      : context.query.tokens.split('-')[0];
-    const fromIssuer = fromResult.token
-      ? fromResult.token.issuer
-      : context.query.tokens.split('-')[1];
-
-    const toCode = toResult.token
-      ? toResult.token.code
-      : context.query.customCounterToken.split('-')[0];
-    const toIssuer = toResult.token
-      ? toResult.token.issuer
-      : context.query.customCounterToken.split('-')[1];
-
     if (
-      fromCode.toUpperCase() !== context.query.tokens.split('-')[0]
-      || toCode.toUpperCase() !== context.query.customCounterToken.split('-')[0]
-    ) {
-      if (
-        (queryFromIssuer
+      (queryFromIssuer
           && queryFromIssuer.toUpperCase() !== queryFromIssuer)
         || (queryToIssuer && queryToIssuer.toUpperCase() !== queryToIssuer)
-      ) {
-        const checkedFromIssuer = fromResult.isDefault
-          ? null
-          : fromIssuer.toUpperCase();
-        const checkedToIssuer = toResult.isDefault
-          ? null
-          : toIssuer.toUpperCase();
-
-        return {
-          redirect: {
-            destination: urlMaker.swap.custom(
-              { code: fromCode.toUpperCase(), issuer: checkedFromIssuer },
-              { code: toCode.toUpperCase(), issuer: checkedToIssuer },
-            ),
-          },
-        };
-      }
+    ) {
+      const checkedFromIssuer = !fromResult.issuer
+        ? null
+        : fromResult.issuer.toUpperCase();
+      const checkedToIssuer = !toResult.issuer
+        ? null
+        : toResult.issuer.toUpperCase();
 
       return {
         redirect: {
-          destination: urlMaker.swap.custom(
-            { code: fromCode.toUpperCase() },
-            { code: toCode.toUpperCase() },
+          destination: urlMaker.spot.custom(
+            fromResult.code,
+            checkedFromIssuer,
+            toResult.code,
+            checkedToIssuer,
           ),
         },
       };
     }
 
     try {
-      if (queryFromIssuer) {
-        if (!StellarSDK.StrKey.isValidEd25519PublicKey(queryFromIssuer)) { return redirectObj; }
-      }
-
-      if (queryToIssuer) {
-        if (!StellarSDK.StrKey.isValidEd25519PublicKey(queryToIssuer)) { return redirectObj; }
-      }
-
-      const from = getAssetDetails({
-        code: fromCode,
-        issuer: fromIssuer,
-        type: fromCode === 'XLM' ? 'native' : null,
-      });
-
-      from.logo = fromResult.token && fromResult.token.logo;
-
-      const to = getAssetDetails({
-        code: toCode,
-        issuer: toIssuer,
-        type: toCode === 'XLM' ? 'native' : null,
-      });
-      to.logo = toResult.token && toResult.token.logo;
-
-      if (isSameAsset(from, to)) {
+      if (
+        fromResult.issuer
+        && !StellarSDK.StrKey.isValidEd25519PublicKey(fromResult.issuer)
+      ) {
         return redirectObj;
       }
 
-      const base = JSON.parse(
-        JSON.stringify({
-          ...from,
-          isDefault: isDefaultCode(from.code),
-        }),
-      );
+      if (
+        toResult.issuer
+        && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer)
+      ) {
+        return redirectObj;
+      }
 
-      const counter = JSON.parse(
-        JSON.stringify({
-          ...to,
-          isDefault: isDefaultCode(to.code),
-        }),
-      );
+      const fromAsset = {
+        ...fromResult,
+        isDefault: !fromResult.issuer,
+      };
 
-      let checkedAssetStatus;
-      if (base.isDefault && !counter.isDefault) {
-        checkedAssetStatus = await Promise.all([
-          checkAssetValidation(counter.code, counter.issuer),
-        ]);
-      } else if (counter.isDefault && !base.isDefault) {
-        checkedAssetStatus = await Promise.all([
-          checkAssetValidation(base.code, base.issuer),
-        ]);
-      } else if (!base.isDefault && !counter.isDefault) {
-        checkedAssetStatus = await Promise.all([
-          checkAssetValidation(base.code, base.issuer),
-          checkAssetValidation(counter.code, counter.issuer),
-        ]);
-      } else {
-        checkedAssetStatus = [true, true];
+      const toAsset = {
+        ...toResult,
+        isDefault: !toResult.issuer,
+      };
+
+      if (fromAsset.code === toAsset.code && fromAsset.issuer === toAsset.issuer) {
+        return redirectObj;
+      }
+
+      let checkedAssetStatus = [true];
+      const reqs = [];
+
+      if (!fromAsset.isDefault) {
+        reqs.push(checkAssetValidation(fromAsset.code, fromAsset.issuer));
+      }
+
+      if (!toAsset.isDefault) {
+        reqs.push(checkAssetValidation(toAsset.code, toAsset.issuer));
+      }
+
+      if (reqs.length > 1) {
+        checkedAssetStatus = await Promise.all(reqs);
       }
 
       if (!checkedAssetStatus.every((i) => i)) {
@@ -257,8 +219,8 @@ export async function customSpotPageGetServerSideProps(context) {
       return {
         props: {
           custom: {
-            base,
-            counter,
+            base: fromAsset,
+            counter: toAsset,
           },
         },
       };
@@ -266,6 +228,5 @@ export async function customSpotPageGetServerSideProps(context) {
       return redirectObj;
     }
   }
-
   return redirectObj;
 }
