@@ -187,7 +187,7 @@ function WalletData() {
           <Link href={urlMaker.swap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
             <a className={styles.link}>Swap</a>
           </Link>
-          <Link href={urlMaker.spot.custom('XLM', null, data.asset.code, data.asset.issuer)}>
+          <Link href={urlMaker.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null)}>
             <a className={styles.link}>Trade</a>
           </Link>
           {new BN(data.balance).isEqualTo('0') ? (
