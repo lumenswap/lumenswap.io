@@ -82,7 +82,7 @@ const RewardContent = () => {
     {
       title: 'Wallet balance',
       tooltip: 'This shows your wallet’s LSP balance.',
-      content: <Info text="LSP" number={rewardAmountHumanize(foundLSP ? foundLSP.balance : '0')} />,
+      content: <Info text="LSP" number={sevenDigit(foundLSP ? foundLSP.balance : '0')} />,
     },
     {
       title: 'Holder reward earned',
