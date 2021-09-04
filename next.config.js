@@ -13,7 +13,7 @@ module.exports = withImages(withTM({
     return [
       {
         source: '/',
-        destination: '/swap',
+        destination: '/market',
         permanent: true,
       },
     ];

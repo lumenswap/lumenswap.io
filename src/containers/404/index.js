@@ -24,7 +24,7 @@ function NotFound() {
           <p className={styles.text}>
             The page you are looking for isn’t found! we suggest you back to home
           </p>
-          <a href="/" className={classNames(styles.link, styles.btn)}>Back to home</a>
+          <a href="https://lumenswap.io" className={classNames(styles.link, styles.btn)}>Back to home</a>
         </div>
       </div>
     </>

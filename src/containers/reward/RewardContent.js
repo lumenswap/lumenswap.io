@@ -12,6 +12,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import LSP from 'tokens/LSP';
 import sevenDigit from 'helpers/sevenDigit';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -19,6 +20,10 @@ const NoDataMessage = () => (
     <div className={styles.noDataMessage}>There is no reward activity here</div>
   </div>
 );
+
+function rewardAmountHumanize(amount) {
+  return numeral(sevenDigit(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0');
+}
 
 const RewardContent = () => {
   const userAdress = useSelector((state) => state.user.detail.address);
@@ -62,14 +67,14 @@ const RewardContent = () => {
       title: 'Date',
       dataIndex: 'txDate',
       key: '2',
-      render: (data) => <span>{moment(data.txDate).fromNow()}</span>,
+      render: (data) => <span>{moment(data.txDate * 1000).fromNow()}</span>,
     },
     { title: 'Type', dataIndex: 'type', key: '3' },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '4',
-      render: (data) => <span>{numeral(data.amount).format('0,0.[0000]')}</span>,
+      render: (data) => <span>{rewardAmountHumanize(data.amount)}</span>,
     },
   ];
 
@@ -77,17 +82,17 @@ const RewardContent = () => {
     {
       title: 'Wallet balance',
       tooltip: 'This shows your wallet’s LSP balance.',
-      content: <Info text="LSP" number={sevenDigit(foundLSP ? foundLSP.balance : '0')} />,
+      content: <Info text="LSP" number={rewardAmountHumanize(foundLSP ? foundLSP.balance : '0')} />,
     },
     {
       title: 'Holder reward earned',
       tooltip: 'This shows your earned rewards from the holder program.',
-      content: <Info text="LSP" number={rewardStats?.holder?.total} />,
+      content: <Info text="LSP" number={rewardAmountHumanize(rewardStats?.holder?.total)} />,
     },
     {
       title: 'Trade reward earned',
       tooltip: 'This shows your earned rewards from the trader program.',
-      content: <Info text="LSP" number={rewardStats?.trader?.total} />,
+      content: <Info text="LSP" number={rewardAmountHumanize(rewardStats?.trader?.total)} />,
     },
   ];
 

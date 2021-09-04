@@ -182,38 +182,35 @@ function WalletData() {
       title: 'Action',
       dataIndex: 'action',
       key: '3',
-      render: (data) => {
-        const token = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.asset));
-        return (
-          <div className={styles.actions}>
-            <Link href={token ? urlMaker.swap.custom(data.asset.code, data.asset.issuer, 'XLM', null) : urlMaker.swap.root()}>
-              <a className={styles.link}>Swap</a>
-            </Link>
-            <Link href={token ? urlMaker.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null) : urlMaker.spot.root()}>
-              <a className={styles.link}>Trade</a>
-            </Link>
-            {new BN(data.balance).isEqualTo('0') ? (
-              <div className={styles['disabled-send']}>Send</div>
-            ) : (
-              <span
-                className={styles.send}
-                onClick={() => {
-                  dispatch(
-                    openModalAction({
-                      modalProps: {
-                        title: 'Send Asset',
-                      },
-                      content: <SendAsset selectedAsset={data.asset} />,
-                    }),
-                  );
-                }}
-              >
-                Send
-              </span>
-            )}
-          </div>
-        );
-      },
+      render: (data) => (
+        <div className={styles.actions}>
+          <Link href={urlMaker.swap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
+            <a className={styles.link}>Swap</a>
+          </Link>
+          <Link href={urlMaker.spot.custom('XLM', null, data.asset.code, data.asset.issuer)}>
+            <a className={styles.link}>Trade</a>
+          </Link>
+          {new BN(data.balance).isEqualTo('0') ? (
+            <div className={styles['disabled-send']}>Send</div>
+          ) : (
+            <span
+              className={styles.send}
+              onClick={() => {
+                dispatch(
+                  openModalAction({
+                    modalProps: {
+                      title: 'Send Asset',
+                    },
+                    content: <SendAsset selectedAsset={data.asset} />,
+                  }),
+                );
+              }}
+            >
+              Send
+            </span>
+          )}
+        </div>
+      ),
     },
   ];
 
