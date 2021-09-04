@@ -1,9 +1,7 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-
 import Lusi from 'assets/images/lusi';
 import Spaceship from 'assets/images/spaceship';
-
 import styles from './styles.module.scss';
 
 function NotFound() {

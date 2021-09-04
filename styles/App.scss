@@ -170,3 +170,10 @@ input[type='number'] {
     padding-left: 0;
   }
 }
+
+@media (max-width: $md) {
+  .modal-backdrop {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
