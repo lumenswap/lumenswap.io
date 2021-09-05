@@ -64,6 +64,18 @@
   align-items: center;
 }
 
+@media (max-width: $xl) {
+  .list > li {
+    margin-right: 30px;
+  }
+}
+
+@media (max-width: $lg) {
+  .list > li {
+    margin-right: 25px;
+  }
+}
+
 @media (max-width: $sm) {
   .list > li {
     margin-right: 15px;
