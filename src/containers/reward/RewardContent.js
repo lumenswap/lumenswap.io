@@ -22,7 +22,7 @@ const NoDataMessage = () => (
 );
 
 function rewardAmountHumanize(amount) {
-  return numeral(sevenDigit(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0');
+  return numeral(sevenDigit(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0.0');
 }
 
 const RewardContent = () => {
@@ -82,7 +82,7 @@ const RewardContent = () => {
     {
       title: 'Wallet balance',
       tooltip: 'This shows your wallet’s LSP balance.',
-      content: <Info text="LSP" number={sevenDigit(foundLSP ? foundLSP.balance : '0')} />,
+      content: <Info text="LSP" number={numeral(sevenDigit(foundLSP ? foundLSP.balance : '0')).format('0,0.0')} />,
     },
     {
       title: 'Holder reward earned',
