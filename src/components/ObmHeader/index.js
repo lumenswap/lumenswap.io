@@ -30,60 +30,53 @@ const ObmHeader = () => {
     );
 
   const menus = {
-    right: [{
-      name: 'Wallet', href: urlMaker.wallet.root(), public: false, position: 'right',
-    },
-    {
-      name: 'Order', href: urlMaker.order.root(), public: false, position: 'right',
-    }],
-    left: [{
-      name: 'Market', href: urlMaker.market.root(), public: true, position: 'left',
-    },
-    {
-      name: 'Swap', href: urlMaker.swap.root(), public: true, position: 'left',
-    },
-    {
-      name: 'Spot', href: urlMaker.spot.custom('XLM', null, 'USDC', null), mainHref: urlMaker.spot.root(), public: true, position: 'left',
-    },
-    {
-      name: 'Reward', href: urlMaker.reward.root(), public: false, position: 'left',
-    }],
+    right: [
+      { name: 'Wallet', href: urlMaker.wallet.root(), public: false },
+      { name: 'Order', href: urlMaker.order.root(), public: false },
+    ],
+    left: [
+      { name: 'Market', href: urlMaker.market.root(), public: true },
+      { name: 'Swap', href: urlMaker.swap.root(), public: true },
+      {
+        name: 'Spot',
+        href: urlMaker.spot.custom('XLM', null, 'USDC', null),
+        mainHref: urlMaker.spot.root(),
+        public: true,
+      },
+      { name: 'Reward', href: urlMaker.reward.root(), public: false },
+    ],
   };
 
+  const mobileMenu = [...menus.left, ...menus.right];
+
   return (
-    <div>
-      <div className={classNames(styles.layout, 'layout')}>
-        <div className="d-md-flex d-sm-none d-none w-100">
-          <ul className={styles.list}>
-            <div>
-              <li>{logoLink}</li>
-              {menus.left.map((menu, index) => (
-                <div key={index}>
-                  <li className={menu.public || isLogged ? 'd-block' : 'd-none'}>
-                    <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
-                  </li>
-                </div>
-              ))}
-            </div>
-            <div className={styles.right_list}>
-              {menus.right.map((menu, index) => (
-                <div key={index}>
-                  <li className={menu.public || isLogged ? 'd-block' : 'd-none'}>
-                    <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
-                  </li>
-                </div>
-              ))}
-            </div>
-          </ul>
-          <div>{btnConnect}</div>
-        </div>
+    <div className={classNames(styles.layout, 'layout')}>
+      <div className="d-md-flex d-sm-none d-none w-100">
+        <ul className={styles.list}>
+          <div>
+            <li>{logoLink}</li>
+            {menus.left.map((menu, index) => (menu.public || isLogged) && (
+              <li key={index}>
+                <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+              </li>
+            ))}
+          </div>
+          <div className={styles.right_list}>
+            {menus.right.map((menu, index) => (menu.public || isLogged) && (
+              <li key={index}>
+                <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+              </li>
+            ))}
+          </div>
+        </ul>
+        {btnConnect}
       </div>
-      <div className="d-md-none d-sm-block d-block">
+      <div className="d-md-none d-sm-block d-block w-100">
         <div className="d-flex align-items-center justify-content-end">
           <div className="mr-3">{btnConnect}</div>
           <div>{logoLink}</div>
         </div>
-        <MobileMenu />
+        <MobileMenu menus={mobileMenu} isLogged={isLogged} />
       </div>
     </div>
   );
