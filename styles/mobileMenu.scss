@@ -1,0 +1,63 @@
+@import "vars";
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  left: 16px;
+  top: 43px;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  display: none;
+}
+
+/* Sidebar wrapper styles */
+.bm-menu-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  box-shadow: 4px 1px 14px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: white;
+  padding: 32px 20px;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: $ShuttleGray;
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.bm-item > li {
+  margin-bottom: 32px;
+}
+
+.bm-item > li a {
+  font-size: 18px;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
