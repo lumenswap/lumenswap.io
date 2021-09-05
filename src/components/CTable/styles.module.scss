@@ -48,6 +48,8 @@
   th:last-child {
     border-radius: 0px 8px 0px 0px;
   }
+  
+
   span {
     margin-left: 24px;
     font-weight: normal;
@@ -63,6 +65,9 @@
     margin-left: 24px;
     display: flex;
   }
+}
+.row-item:last-child {
+  padding-right: 24px;
 }
 
 .rowLink {

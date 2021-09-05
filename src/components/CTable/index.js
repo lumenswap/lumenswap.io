@@ -56,7 +56,7 @@ const CTable = ({
         <tr className={styles['header-table']}>
           {columns.map((title) => (
             <th
-              style={title.style ?? { width: `${100 / columns.length}%` }}
+              style={title.style ?? { width: `${100 / columns.length}%`, minWidth: '150px' }}
               key={title.key}
             >
               <span style={{ position: 'relative' }}>
