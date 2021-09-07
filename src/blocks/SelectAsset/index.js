@@ -21,6 +21,8 @@ const SelectAsset = ({
   getFormValues,
   swapFromWithTo,
   changeToAsset,
+  currentFrom,
+  currentTo,
 }) => {
   const userBalance = useSelector((state) => state.userBalance);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
@@ -64,14 +66,19 @@ const SelectAsset = ({
     }
 
     return result;
-  }, [JSON.stringify(userBalance), JSON.stringify(userCustomTokens), searchQuery]);
+  }, [
+    JSON.stringify(userBalance),
+    JSON.stringify(userCustomTokens),
+    searchQuery,
+  ]);
 
   function selectAsset(asset) {
     const formValues = getFormValues();
     setShow(false);
-    if (formValues.to.asset
+    if (
+      formValues.to.asset
       && (isSameAsset(formValues.from.asset.details, asset.details)
-      || isSameAsset(formValues.to.asset.details, asset.details))
+        || isSameAsset(formValues.to.asset.details, asset.details))
     ) {
       swapFromWithTo();
     } else if (isSameAsset(formValues.from.asset.details, asset.details)) {
@@ -94,47 +101,68 @@ const SelectAsset = ({
         autoFocus
       />
       <div className={classNames('invisible-scroll', styles.scroll)}>
-        {enrichedTokens.length === 0
-          ? <p style={{ padding: 16 }}>There is no asset</p>
-          : enrichedTokens.map((asset) => (
-            <div className={styles.box} key={`${asset.details.getCode()}-${asset.details.getIssuer()}`} onClick={() => selectAsset(asset)}>
+        {enrichedTokens.length === 0 ? (
+          <p style={{ padding: 16 }}>There is no asset</p>
+        ) : (
+          enrichedTokens.map((asset) => (
+            <div
+              className={styles.box}
+              key={`${asset.details.getCode()}-${asset.details.getIssuer()}`}
+              onClick={() => selectAsset(asset)}
+            >
               <div className="d-flex align-items-center">
-                {asset.logo ? <img src={asset.logo} alt="logo" width={22} height={22} />
-                  : <div className={styles.circle}><span className="icon-question-circle" /></div>}
+                {asset.logo ? (
+                  <img src={asset.logo} alt="logo" width={22} height={22} />
+                ) : (
+                  <div className={styles.circle}>
+                    <span className="icon-question-circle" />
+                  </div>
+                )}
                 <div className={styles.info}>
                   <h6 className={styles.text}>
                     {asset.details.getCode()}
                     {asset.type === 'custom' && (
-                    <span onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch(removeCustomTokenAction(asset.details));
-                    }}
-                    >
-                      {' '}(delete)
-                    </span>
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(removeCustomTokenAction(asset.details));
+                        }}
+                      >
+                        {' '}
+                        (delete)
+                      </span>
                     )}
                   </h6>
                   <p className={styles.desc}>{asset.web}</p>
                 </div>
               </div>
-              <div className={styles.text}>{isLogged && sevenDigit(asset.balance)}</div>
+              <div className={styles.text}>
+                {isLogged && sevenDigit(asset.balance)}
+              </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
       <button
         type="submit"
         className={styles.submit}
         onClick={() => {
           setShow(false);
-          dispatch(openModalAction({
-            modalProps: { title: 'Add custom asset' },
-            content: <AddAsset changeToAsset={changeToAsset} />,
-          }));
+          dispatch(
+            openModalAction({
+              modalProps: { title: 'Add custom asset' },
+              content: (
+                <AddAsset
+                  currentFrom={currentFrom}
+                  currentTo={currentTo}
+                  changeToAsset={changeToAsset}
+                />
+              ),
+            }),
+          );
         }}
       >
-        <span
-          className="icon-plus-circle mr-2"
-        />
+        <span className="icon-plus-circle mr-2" />
         Add custom asset
       </button>
     </div>
