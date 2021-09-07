@@ -24,7 +24,7 @@ export default async function generateBulkCancelOrderTRX(address, orders) {
   }
 
   transaction = transaction
-    .setTimeout(30)
+    .setTimeout(90)
     .build();
 
   return transaction;

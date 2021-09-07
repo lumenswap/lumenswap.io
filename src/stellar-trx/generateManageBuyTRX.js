@@ -46,7 +46,7 @@ export default async function generateManageBuyTRX(
       offerId,
     }),
   )
-    .setTimeout(30)
+    .setTimeout(90)
     .build();
 
   return transaction;

@@ -38,7 +38,7 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
         path,
       }),
     )
-    .setTimeout(30)
+    .setTimeout(90)
     .build();
 
   return transaction;

@@ -29,7 +29,7 @@ export default async function generateManageSellTRX(
     transaction = transaction.addMemo(StellarSDK.Memo.text(memo));
   }
 
-  transaction = transaction.setTimeout(30).build();
+  transaction = transaction.setTimeout(90).build();
 
   return transaction;
 }
