@@ -9,17 +9,25 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import defaultTokens from 'tokens/defaultTokens';
 import isSameAsset from 'helpers/isSameAsset';
 import pureTokens from 'helpers/pureTokens';
+import urlMaker from 'helpers/urlMaker';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
 import { closeModalAction } from 'actions/modal';
 import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
-const AddAsset = ({ changeToAsset }) => {
+const AddAsset = ({ changeToAsset, currentFrom, currentTo }) => {
+  const router = useRouter();
   const [loadingTimer, setLoadingTimer] = useState(false);
   const {
-    register, handleSubmit, formState, getValues, errors, trigger,
+    register,
+    handleSubmit,
+    formState,
+    getValues,
+    errors,
+    trigger,
   } = useForm({
     mode: 'onChange',
   });
@@ -29,11 +37,23 @@ const AddAsset = ({ changeToAsset }) => {
   const onSubmit = (data) => {
     const asset = getAssetDetails({ code: data.code, issuer: data.issuer });
     dispatch(addCustomTokenAction(asset));
+
+    console.log(asset);
     changeToAsset({
       details: asset,
       web: minimizeAddress(asset.getIssuer()),
       logo: questionLogo,
     });
+
+    router.push(
+      urlMaker.swap.custom(
+        currentFrom?.details?.code,
+        currentFrom?.issuer,
+        asset.code,
+        asset.issuer,
+      ),
+    );
+
     dispatch(closeModalAction());
   };
 
@@ -82,7 +102,9 @@ const AddAsset = ({ changeToAsset }) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group mb-3">
-        <label htmlFor="code" className="label-primary">Asset code</label>
+        <label htmlFor="code" className="label-primary">
+          Asset code
+        </label>
         <Input
           type="text"
           placeholder="USD"
@@ -98,7 +120,9 @@ const AddAsset = ({ changeToAsset }) => {
         />
       </div>
       <div className="form-group mb-0">
-        <label htmlFor="issuer" className="label-primary">Asset issuer</label>
+        <label htmlFor="issuer" className="label-primary">
+          Asset issuer
+        </label>
         <Input
           type="text"
           className="form-control primary-input"
@@ -121,11 +145,11 @@ const AddAsset = ({ changeToAsset }) => {
         disabled={!formState.isValid || loadingTimer}
         onClick={() => {}}
         content={
-            loadingTimer ? (
-              <Submitting loadingSize={21} />
-            ) : (
-              showError || 'Add asset'
-            )
+          loadingTimer ? (
+            <Submitting loadingSize={21} />
+          ) : (
+            showError || 'Add asset'
+          )
         }
       />
     </form>

@@ -69,6 +69,8 @@ const CurrencyInput = ({
             setShow={setShow}
             setCurrency={setCurrency}
             changeToAsset={changeToAsset}
+            currentFrom={getFormValues()?.from?.asset}
+            currentTo={getFormValues()?.to?.asset}
           />
         </ModalDialog>
       </div>
