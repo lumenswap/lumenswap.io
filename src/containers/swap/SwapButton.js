@@ -21,7 +21,7 @@ export default function SwapButton({ control }) {
   }
 
   let variant = 'secondary';
-  let message = '';
+  let message = '-';
   let disabled = true;
   if (!isLogged) {
     message = 'Connect Wallet';
