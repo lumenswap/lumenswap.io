@@ -181,6 +181,9 @@
     z-index: 0;
   }
 }
+.input {
+  min-width: auto;
+}
 
 @media (max-width: $md) {
   .main {
