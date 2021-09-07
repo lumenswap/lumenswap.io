@@ -74,6 +74,14 @@ const SwapPage = ({ custom }) => {
 
   function changeFromInput(amount) {
     const formValues = getValues();
+    setValue('from', {
+      ...formValues.from,
+      amount,
+    });
+    setValue('to', {
+      ...formValues.to,
+      amount: 0,
+    });
     if (formValues.to.asset === null) {
       return;
     }
@@ -93,6 +101,10 @@ const SwapPage = ({ custom }) => {
           .then((res) => {
             setEstimatedPrice(res.minAmount);
             setPaths(res.path);
+            setValue('from', {
+              ...formValues.from,
+              amount,
+            });
             setValue('to', {
               ...formValues.to,
               amount: res.minAmount,
@@ -170,10 +182,10 @@ const SwapPage = ({ custom }) => {
 
     setValue('from', {
       asset: formValues.to.asset,
-      amount: formValues.to.amount,
+      amount: '',
     });
-    setValue('to', { asset: formValues.from.asset, amount: '' });
-    changeFromInput(formValues.to.amount);
+    setValue('to', { asset: formValues.from.asset, amount: formValues.from.amount });
+    changeToInput(formValues.from.amount);
 
     const isFromCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getValues().from.asset?.details));
