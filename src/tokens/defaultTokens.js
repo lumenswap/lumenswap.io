@@ -15,6 +15,8 @@ import ETH from './ETH';
 import USDS from './USDS';
 import DOGET from './DOGET';
 import LSP from './LSP';
+import SHX from './SHX';
+import ANSR from './ANSR';
 
 export default [
   XLM,
@@ -34,4 +36,6 @@ export default [
   BTC,
   ETH,
   DOGET,
+  SHX,
+  ANSR,
 ];

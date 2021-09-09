@@ -20,6 +20,7 @@ function MarketData({ assets }) {
         onChange={handleSearch}
         height={40}
         fontSize={15}
+        className={styles.input}
       />
     </div>
   ), []);
