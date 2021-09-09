@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import Error from 'containers/404';
 import classNames from 'classnames';
 import urlMaker from 'helpers/urlMaker';
 import { Controller, useForm } from 'react-hook-form';
@@ -26,7 +27,7 @@ import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
 
-const SwapPage = ({ custom }) => {
+const SwapPage = ({ custom, errorCode }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
@@ -248,82 +249,86 @@ const SwapPage = ({ custom }) => {
 
   return (
     <div className="container-fluid main">
-      <SwapHead custom={custom} />
-      <ObmHeader />
-      <div className="row justify-content-center">
-        <div className="col-auto">
-          <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.card}>
-              <Controller
-                name="from"
-                control={control}
-                render={(props) => (
-                  <LCurrencyInput
-                    {...props}
-                    showMax
-                    label="From"
-                    onChangeInput={changeFromInput}
-                    originChange={changeFromInput}
-                    getFormValues={getValues}
-                    swapFromWithTo={swapFromWithTo}
-                    changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
+      {errorCode === 404 ? <Error /> : (
+        <>
+          <SwapHead custom={custom} />
+          <ObmHeader />
+          <div className="row justify-content-center">
+            <div className="col-auto">
+              <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+                <div className={styles.card}>
+                  <Controller
+                    name="from"
+                    control={control}
+                    render={(props) => (
+                      <LCurrencyInput
+                        {...props}
+                        showMax
+                        label="From"
+                        onChangeInput={changeFromInput}
+                        originChange={changeFromInput}
+                        getFormValues={getValues}
+                        swapFromWithTo={swapFromWithTo}
+                        changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
+                      />
+                    )}
                   />
-                )}
-              />
-              <div className="my-2 text-center">
-                <span
-                  className={classNames(
-                    'icon-arrow-down',
-                    styles['icon-arrow-down'],
-                  )}
-                  onClick={swapFromWithTo}
-                />
-              </div>
-              <Controller
-                name="to"
-                control={control}
-                render={(props) => (
-                  <LCurrencyInput
-                    {...props}
-                    label="To (estimated)"
-                    onChangeInput={changeToInput}
-                    originChange={changeFromInput}
-                    getFormValues={getValues}
-                    swapFromWithTo={swapFromWithTo}
-                    changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
-                  />
-                )}
-              />
-              <ExchangeRate
-                control={control}
-                estimatedPrice={estimatedPrice}
-                loading={loading}
-              />
-              <SwapButton control={control} />
-              <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
-                <ConfirmSwap />
-              </ModalDialog>
-            </div>
-            {showAdvanced && (
-              <div className={styles['swap-info']}>
-                <Controller
-                  name="priceSpread"
-                  control={control}
-                  render={(props) => (
-                    <LPriceSpreadSection
-                      {...props}
-                      control={control}
-                      estimatedPrice={estimatedPrice}
-                      paths={paths}
-                      upperLoading={loading}
+                  <div className="my-2 text-center">
+                    <span
+                      className={classNames(
+                        'icon-arrow-down',
+                        styles['icon-arrow-down'],
+                      )}
+                      onClick={swapFromWithTo}
                     />
-                  )}
-                />
-              </div>
-            )}
-          </form>
-        </div>
-      </div>
+                  </div>
+                  <Controller
+                    name="to"
+                    control={control}
+                    render={(props) => (
+                      <LCurrencyInput
+                        {...props}
+                        label="To (estimated)"
+                        onChangeInput={changeToInput}
+                        originChange={changeFromInput}
+                        getFormValues={getValues}
+                        swapFromWithTo={swapFromWithTo}
+                        changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
+                      />
+                    )}
+                  />
+                  <ExchangeRate
+                    control={control}
+                    estimatedPrice={estimatedPrice}
+                    loading={loading}
+                  />
+                  <SwapButton control={control} />
+                  <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
+                    <ConfirmSwap />
+                  </ModalDialog>
+                </div>
+                {showAdvanced && (
+                <div className={styles['swap-info']}>
+                  <Controller
+                    name="priceSpread"
+                    control={control}
+                    render={(props) => (
+                      <LPriceSpreadSection
+                        {...props}
+                        control={control}
+                        estimatedPrice={estimatedPrice}
+                        paths={paths}
+                        upperLoading={loading}
+                      />
+                    )}
+                  />
+                </div>
+                )}
+              </form>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
