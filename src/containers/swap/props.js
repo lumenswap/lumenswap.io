@@ -111,6 +111,13 @@ export async function swapCustomTokenGetServerSideProps(context) {
       destination: urlMaker.swap.root(),
     },
   };
+
+  const redirectObj404 = {
+    redirect: {
+      destination: '/404',
+    },
+  };
+
   if (context.query.tokens && context.query.customTokens) {
     const fromResult = customTokenValidation(context.query.tokens);
     const toResult = customTokenValidation(context.query.customTokens);
@@ -119,7 +126,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
     const queryToIssuer = context.query.customTokens.split('-')[1];
 
     if (!fromResult || !toResult) {
-      return redirectObj;
+      return redirectObj404;
     }
 
     if (fromResult.redirect || toResult.redirect) {
@@ -166,7 +173,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
         || (toResult.issuer
           && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer))
       ) {
-        return redirectObj;
+        return redirectObj404;
       }
 
       const fromAsset = {
@@ -199,7 +206,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
       }
 
       if (!checkedAssetStatus.every((i) => i)) {
-        return redirectObj;
+        return redirectObj404;
       }
 
       return {

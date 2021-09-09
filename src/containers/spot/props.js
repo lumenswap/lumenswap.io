@@ -120,6 +120,11 @@ export async function customSpotPageGetServerSideProps(context) {
       destination: urlMaker.spot.root(),
     },
   };
+  const redirectObj404 = {
+    redirect: {
+      destination: '/404',
+    },
+  };
   if (context.query.tokens && context.query.customCounterToken) {
     const fromResult = customTokenValidation(context.query.tokens);
     const toResult = customTokenValidation(context.query.customCounterToken);
@@ -128,7 +133,7 @@ export async function customSpotPageGetServerSideProps(context) {
     const queryToIssuer = context.query.customCounterToken.split('-')[1];
 
     if (!fromResult || !toResult) {
-      return redirectObj;
+      return redirectObj404;
     }
 
     if (fromResult.redirect || toResult.redirect) {
@@ -170,17 +175,12 @@ export async function customSpotPageGetServerSideProps(context) {
 
     try {
       if (
-        fromResult.issuer
-        && !StellarSDK.StrKey.isValidEd25519PublicKey(fromResult.issuer)
+        (fromResult.issuer
+          && !StellarSDK.StrKey.isValidEd25519PublicKey(fromResult.issuer))
+        || (toResult.issuer
+          && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer))
       ) {
-        return redirectObj;
-      }
-
-      if (
-        toResult.issuer
-        && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer)
-      ) {
-        return redirectObj;
+        return redirectObj404;
       }
 
       const fromAsset = {
@@ -213,7 +213,7 @@ export async function customSpotPageGetServerSideProps(context) {
       }
 
       if (!checkedAssetStatus.every((i) => i)) {
-        return redirectObj;
+        return redirectObj404;
       }
 
       return {
