@@ -8,6 +8,50 @@
   margin: 0 auto;
 }
 
+.tooltip {
+  color: $White;
+  display: flex;
+  flex-direction: column;
+  height: 68px;
+  width: 190px;
+  justify-content: space-between;
+  section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    span {
+      height: 16px;
+      font-family: Roboto;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.14;
+      letter-spacing: normal;
+      white-space: nowrap;
+      width: auto;
+    }
+  }
+}
+.tooltip-container {
+  height: 97px;
+  min-width: 206px;
+  width: auto;
+  background-color: $DarkGray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .25rem;
+  box-shadow: 0 3px 12px 0 rgba(134, 146, 164, 0.11);
+}
+.avg-icon {
+  margin-right: 2px;
+}
+.avg-info {
+  display: flex;
+  flex-direction: row;
+  height: 16px;
+}
 .table-row {
   display: flex;
   flex-flow: row nowrap;

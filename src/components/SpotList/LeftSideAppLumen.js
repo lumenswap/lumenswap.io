@@ -31,7 +31,7 @@ export default function LeftSideAppLumen({
               {/* <span className={styles.price}>{gapInfo.price}</span> */}
             </div>
             <OrderList
-              headerItem={[]}
+              headerItem={headerItem}
               rowItem={bids}
               isSell={false}
             />

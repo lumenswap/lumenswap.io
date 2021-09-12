@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import BN from 'helpers/BN';
+import { useState } from 'react';
 import OrderItem from './OrderItem';
 import styles from '../styles.module.scss';
 
@@ -24,6 +25,9 @@ const OrderList = ({
     ...i,
     ...calculateAmountAndTotal(isSell, i),
   }));
+  const [hoveredItems,
+    setHoveredItems] = useState([]);
+
   const maxNumber = forUsingData.sort((a, b) => -1 * new BN(a.total).comparedTo(b.total))[0]?.total;
   forUsingData = forUsingData.map((i) => ({
     ...i,
@@ -38,6 +42,7 @@ const OrderList = ({
 
   return (
     <div className={styles['table-container']}>
+      {isSell && (
       <div className={classNames(styles.heading, styles['table-head'])} style={{ cursor: 'default' }}>
         {headerItem.map((header, index) => (
           <div
@@ -48,12 +53,45 @@ const OrderList = ({
           </div>
         ))}
       </div>
+      )}
       <div className={styles['table-body']}>
-        {forUsingData.map((row, rowIndex) => (
-          <div key={`row-${rowIndex}`}>
-            <OrderItem row={row} isSell={isSell} />
-          </div>
-        ))}
+        {forUsingData.map((row, rowIndex) => {
+          let hover;
+          if (hoveredItems.findIndex((i) => i === rowIndex + 1) !== -1) {
+            hover = true;
+          }
+
+          return (
+            <div
+              onMouseOver={() => {
+                const indexes = [];
+                const fillIndexes = () => {
+                  if (isSell) {
+                    return rowItem.map(
+                      (data, index) => indexes.push(index),
+                    ).slice(rowIndex, rowItem.length);
+                  }
+                  return rowItem.map((data, index) => indexes.push(index)).slice(0, rowIndex + 1);
+                };
+                setHoveredItems(fillIndexes());
+              }}
+              onMouseLeave={() => {
+                setHoveredItems([]);
+              }}
+              key={`row-${rowIndex}`}
+            >
+              <OrderItem
+                SumValues={isSell
+                  ? forUsingData.slice(rowIndex, rowItem.length)
+                  : forUsingData.slice(0, rowIndex + 1)}
+                assets={headerItem}
+                row={row}
+                isSell={isSell}
+                hover={hover}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

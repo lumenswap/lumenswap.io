@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Tooltips from 'components/Tooltip';
+import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import styles from './styles.module.scss';
 
 const SwapInfo = ({
@@ -16,19 +16,19 @@ const SwapInfo = ({
     <div className={styles.card}>
       <div className={styles.container}>
         <div className={styles.label}>Minimum received
-          <Tooltips id="minimum" text="helooo1"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="minimum" text={<PrimaryTooltip text="helooo1" />}><span className="icon-question-circle" /></Tooltips>
         </div>
         <div className={styles.info}>{minimum}</div>
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Price spread
-          <Tooltips id="price" text="helooo2"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="price" text={<PrimaryTooltip text="helooo2" />}><span className="icon-question-circle" /></Tooltips>
         </div>
         <div className={styles.info}>{price}</div>
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Slippage tolerance
-          <Tooltips id="tolerance" text="helooo3"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="tolerance" text={<PrimaryTooltip text="helooo3" />}><span className="icon-question-circle" /></Tooltips>
         </div>
         <div className={styles['button-group']}>
           {tolerance.slice(0, tolerance.length + 1).map((item, index) => (
@@ -52,7 +52,7 @@ const SwapInfo = ({
       </div>
       <div className={styles.container}>
         <div className={styles.label}>Path
-          <Tooltips id="path" text="helooo4"><span className="icon-question-circle" /></Tooltips>
+          <Tooltips id="path" text={<PrimaryTooltip text="helooo4" />}><span className="icon-question-circle" /></Tooltips>
         </div>
         <div className={styles.path}>
           {path.map((item, index) => (

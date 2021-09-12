@@ -1,8 +1,12 @@
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import styles from './styles.module.scss';
 
+export function PrimaryTooltip({ text }) {
+  return <div className={styles['tooltip-message']}>{text}</div>;
+}
+
 const Tooltips = ({
-  placement = 'top', id, text, children,
+  placement = placement || 'top', id, text, children,
 }) => (
   <OverlayTrigger
     key={placement}
