@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import BN from 'helpers/BN';
 import { useState } from 'react';
+import numeral from 'numeral';
+import sevenDigit from 'helpers/sevenDigit';
 import OrderItem from './OrderItem';
 import styles from '../styles.module.scss';
 
@@ -19,14 +21,15 @@ function calculateAmountAndTotal(isSell, i) {
 }
 
 const OrderList = ({
-  headerItem, rowItem, isSell,
+  headerItem, rowItem, isSell, appSpotPair,
 }) => {
+  const [tooltipData, setTooltipData] = useState([]);
+  const [hoveredIndex, setHoveredIndex] = useState();
+
   let forUsingData = rowItem.map((i) => ({
     ...i,
     ...calculateAmountAndTotal(isSell, i),
   }));
-  const [hoveredItems,
-    setHoveredItems] = useState([]);
 
   const maxNumber = forUsingData.sort((a, b) => -1 * new BN(a.total).comparedTo(b.total))[0]?.total;
   forUsingData = forUsingData.map((i) => ({
@@ -40,9 +43,52 @@ const OrderList = ({
     forUsingData = forUsingData.sort((a, b) => -1 * new BN(a.price).comparedTo(b.price));
   }
 
+  const handeMouseHover = (rowIndex) => {
+    let filteredRows = forUsingData.slice(0, rowIndex + 1);
+
+    if (isSell) {
+      filteredRows = forUsingData.slice(rowIndex);
+    }
+    let avg = 0;
+    let sum = 0;
+    let total = 0;
+    for (const item of filteredRows) {
+      avg = new BN(avg).plus(item.price);
+      if (isSell) {
+        sum = new BN(sum).plus(item.amount);
+      } else {
+        sum = new BN(sum).plus(item.amount).div(item.price);
+      }
+      total = new BN(total).plus(item.total);
+    }
+    setTooltipData({
+      avg: numeral(sevenDigit(new BN(avg).dividedBy(filteredRows.length))).format('0,0.[0000]'),
+      sum: numeral(sevenDigit(sum.toFixed(7))).format('0.00a'),
+      total: numeral(sevenDigit(total.toFixed(7))).format('0.00a'),
+    });
+    setHoveredIndex(rowIndex);
+  };
+
+  const handleMouseLeave = () => {
+    setTooltipData([]);
+    setHoveredIndex();
+  };
+
+  const handleOrderItemHover = (rowIndex) => {
+    let hover;
+    if (isSell) {
+      if (rowIndex >= hoveredIndex) {
+        hover = true;
+      }
+    } else if (rowIndex <= hoveredIndex) {
+      hover = true;
+    }
+    return hover;
+  };
+
   return (
     <div className={styles['table-container']}>
-      {isSell && (
+
       <div className={classNames(styles.heading, styles['table-head'])} style={{ cursor: 'default' }}>
         {headerItem.map((header, index) => (
           <div
@@ -53,45 +99,23 @@ const OrderList = ({
           </div>
         ))}
       </div>
-      )}
-      <div className={styles['table-body']}>
-        {forUsingData.map((row, rowIndex) => {
-          let hover;
-          if (hoveredItems.findIndex((i) => i === rowIndex + 1) !== -1) {
-            hover = true;
-          }
 
-          return (
-            <div
-              onMouseOver={() => {
-                const indexes = [];
-                const fillIndexes = () => {
-                  if (isSell) {
-                    return rowItem.map(
-                      (data, index) => indexes.push(index),
-                    ).slice(rowIndex, rowItem.length);
-                  }
-                  return rowItem.map((data, index) => indexes.push(index)).slice(0, rowIndex + 1);
-                };
-                setHoveredItems(fillIndexes());
-              }}
-              onMouseLeave={() => {
-                setHoveredItems([]);
-              }}
-              key={`row-${rowIndex}`}
-            >
-              <OrderItem
-                SumValues={isSell
-                  ? forUsingData.slice(rowIndex, rowItem.length)
-                  : forUsingData.slice(0, rowIndex + 1)}
-                assets={headerItem}
-                row={row}
-                isSell={isSell}
-                hover={hover}
-              />
-            </div>
-          );
-        })}
+      <div className={styles['table-body']}>
+        {forUsingData.map((row, rowIndex) => (
+          <div
+            onMouseOver={() => { handeMouseHover(rowIndex); }}
+            onMouseLeave={handleMouseLeave}
+            key={`row-${rowIndex}`}
+          >
+            <OrderItem
+              tooltipData={tooltipData}
+              row={row}
+              isSell={isSell}
+              hover={handleOrderItemHover(rowIndex)}
+              appSpotPair={appSpotPair}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
