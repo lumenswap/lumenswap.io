@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import Error from 'containers/404';
 import classNames from 'classnames';
 import urlMaker from 'helpers/urlMaker';
 import { Controller, useForm } from 'react-hook-form';
@@ -26,7 +27,7 @@ import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
 
-const SwapPage = ({ custom }) => {
+const SwapPage = ({ custom, errorCode }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
@@ -246,6 +247,10 @@ const SwapPage = ({ custom }) => {
     && !new BN(watch('from').amount).isEqualTo(0)
     && watch('to').asset !== null;
 
+  if (errorCode === 404) {
+    return <Error />;
+  }
+
   return (
     <div className="container-fluid main">
       <SwapHead custom={custom} />
@@ -305,21 +310,21 @@ const SwapPage = ({ custom }) => {
               </ModalDialog>
             </div>
             {showAdvanced && (
-              <div className={styles['swap-info']}>
-                <Controller
-                  name="priceSpread"
-                  control={control}
-                  render={(props) => (
-                    <LPriceSpreadSection
-                      {...props}
-                      control={control}
-                      estimatedPrice={estimatedPrice}
-                      paths={paths}
-                      upperLoading={loading}
-                    />
-                  )}
-                />
-              </div>
+            <div className={styles['swap-info']}>
+              <Controller
+                name="priceSpread"
+                control={control}
+                render={(props) => (
+                  <LPriceSpreadSection
+                    {...props}
+                    control={control}
+                    estimatedPrice={estimatedPrice}
+                    paths={paths}
+                    upperLoading={loading}
+                  />
+                )}
+              />
+            </div>
             )}
           </form>
         </div>

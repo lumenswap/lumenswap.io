@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Error from 'containers/404';
 import classNames from 'classnames';
 import ObmHeader from 'components/ObmHeader';
 import dynamic from 'next/dynamic';
@@ -26,7 +27,7 @@ const TVChart = dynamic(() => import('../../components/TVChart'), {
 
 const createdDefaultPairs = createPairForDefaultTokens();
 
-const Spot = ({ tokens, custom }) => {
+const Spot = ({ tokens, custom, errorCode }) => {
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
@@ -100,6 +101,10 @@ const Spot = ({ tokens, custom }) => {
     check();
   }, [custom]);
 
+  if (errorCode === 404) {
+    return <Error />;
+  }
+
   return (
     <div className="container-fluid">
       <SpotHead
@@ -113,15 +118,15 @@ const Spot = ({ tokens, custom }) => {
         {/* top section */}
         <div className={classNames('row', styles.row)}>
           {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile && (
-            <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
-              <div className={classNames(styles.card, styles['card-select'])}>
-                <OpenDialogElement
-                  className="w-100"
-                  appSpotPair={appSpotPair}
-                  setAppSpotPair={setAppSpotPair}
-                />
-              </div>
+          <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
+            <div className={classNames(styles.card, styles['card-select'])}>
+              <OpenDialogElement
+                className="w-100"
+                appSpotPair={appSpotPair}
+                setAppSpotPair={setAppSpotPair}
+              />
             </div>
+          </div>
           )}
 
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
@@ -171,7 +176,6 @@ const Spot = ({ tokens, custom }) => {
             <div
               className={classNames(styles.card, styles['card-input'])}
               style={{ height: 'unset' }}
-              // style={{ height: `calc(100% - ${height + 4}px)` }}
             >
               <OrderFormSection appSpotPair={appSpotPair} />
             </div>
