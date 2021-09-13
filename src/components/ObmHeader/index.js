@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
 import MobileMenu from 'components/MobileMenu';
+import useOptimizely from 'hooks/useOptimizely';
 import styles from './styles.module.scss';
 
 const ObmHeader = () => {
   const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
+  const enabled = useOptimizely('amm');
 
   const logoLink = <Link href={urlMaker.root()}><a><Logo /></a></Link>;
   const btnConnect = isLogged ? <CustomDropdown height="40px" width="160px" />
@@ -46,6 +48,10 @@ const ObmHeader = () => {
       { name: 'Reward', href: urlMaker.reward.root(), public: false },
     ],
   };
+
+  if (enabled) {
+    menus.left.push({ name: 'AMM', href: '#', public: true });
+  }
 
   const mobileMenu = [...menus.left, ...menus.right];
 
