@@ -112,9 +112,11 @@ export async function swapCustomTokenGetServerSideProps(context) {
     },
   };
 
-  const notFoundError = {
-    props: { errorCode: 404, message: 'Invalid ' },
-
+  const notFoundError = () => {
+    context.res.statusCode = 404;
+    return {
+      props: { errorCode: 404, message: 'Invalid ' },
+    };
   };
 
   if (context.query.tokens && context.query.customTokens) {
@@ -125,7 +127,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
     const queryToIssuer = context.query.customTokens.split('-')[1];
 
     if (!fromResult || !toResult) {
-      return notFoundError;
+      return notFoundError();
     }
 
     if (fromResult.redirect || toResult.redirect) {
@@ -172,7 +174,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
         || (toResult.issuer
           && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer))
       ) {
-        return notFoundError;
+        return notFoundError();
       }
 
       const fromAsset = {
@@ -205,7 +207,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
       }
 
       if (!checkedAssetStatus.every((i) => i)) {
-        return notFoundError;
+        return notFoundError();
       }
 
       return {
