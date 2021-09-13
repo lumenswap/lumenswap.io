@@ -247,88 +247,88 @@ const SwapPage = ({ custom, errorCode }) => {
     && !new BN(watch('from').amount).isEqualTo(0)
     && watch('to').asset !== null;
 
+  if (errorCode === 404) {
+    return <Error />;
+  }
+
   return (
     <div className="container-fluid main">
-      {errorCode === 404 ? <Error /> : (
-        <>
-          <SwapHead custom={custom} />
-          <ObmHeader />
-          <div className="row justify-content-center">
-            <div className="col-auto">
-              <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-                <div className={styles.card}>
-                  <Controller
-                    name="from"
-                    control={control}
-                    render={(props) => (
-                      <LCurrencyInput
-                        {...props}
-                        showMax
-                        label="From"
-                        onChangeInput={changeFromInput}
-                        originChange={changeFromInput}
-                        getFormValues={getValues}
-                        swapFromWithTo={swapFromWithTo}
-                        changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
-                      />
-                    )}
+      <SwapHead custom={custom} />
+      <ObmHeader />
+      <div className="row justify-content-center">
+        <div className="col-auto">
+          <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.card}>
+              <Controller
+                name="from"
+                control={control}
+                render={(props) => (
+                  <LCurrencyInput
+                    {...props}
+                    showMax
+                    label="From"
+                    onChangeInput={changeFromInput}
+                    originChange={changeFromInput}
+                    getFormValues={getValues}
+                    swapFromWithTo={swapFromWithTo}
+                    changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
                   />
-                  <div className="my-2 text-center">
-                    <span
-                      className={classNames(
-                        'icon-arrow-down',
-                        styles['icon-arrow-down'],
-                      )}
-                      onClick={swapFromWithTo}
-                    />
-                  </div>
-                  <Controller
-                    name="to"
-                    control={control}
-                    render={(props) => (
-                      <LCurrencyInput
-                        {...props}
-                        label="To (estimated)"
-                        onChangeInput={changeToInput}
-                        originChange={changeFromInput}
-                        getFormValues={getValues}
-                        swapFromWithTo={swapFromWithTo}
-                        changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
-                      />
-                    )}
+                )}
+              />
+              <div className="my-2 text-center">
+                <span
+                  className={classNames(
+                    'icon-arrow-down',
+                    styles['icon-arrow-down'],
+                  )}
+                  onClick={swapFromWithTo}
+                />
+              </div>
+              <Controller
+                name="to"
+                control={control}
+                render={(props) => (
+                  <LCurrencyInput
+                    {...props}
+                    label="To (estimated)"
+                    onChangeInput={changeToInput}
+                    originChange={changeFromInput}
+                    getFormValues={getValues}
+                    swapFromWithTo={swapFromWithTo}
+                    changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
                   />
-                  <ExchangeRate
+                )}
+              />
+              <ExchangeRate
+                control={control}
+                estimatedPrice={estimatedPrice}
+                loading={loading}
+              />
+              <SwapButton control={control} />
+              <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
+                <ConfirmSwap />
+              </ModalDialog>
+            </div>
+            {showAdvanced && (
+            <div className={styles['swap-info']}>
+              <Controller
+                name="priceSpread"
+                control={control}
+                render={(props) => (
+                  <LPriceSpreadSection
+                    {...props}
                     control={control}
                     estimatedPrice={estimatedPrice}
-                    loading={loading}
+                    paths={paths}
+                    upperLoading={loading}
                   />
-                  <SwapButton control={control} />
-                  <ModalDialog show={show} setShow={setShow} title="Confirm Swap">
-                    <ConfirmSwap />
-                  </ModalDialog>
-                </div>
-                {showAdvanced && (
-                <div className={styles['swap-info']}>
-                  <Controller
-                    name="priceSpread"
-                    control={control}
-                    render={(props) => (
-                      <LPriceSpreadSection
-                        {...props}
-                        control={control}
-                        estimatedPrice={estimatedPrice}
-                        paths={paths}
-                        upperLoading={loading}
-                      />
-                    )}
-                  />
-                </div>
                 )}
-              </form>
+              />
             </div>
-          </div>
-        </>
-      )}
+            )}
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
