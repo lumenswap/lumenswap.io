@@ -1,0 +1,43 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 84px;
+}
+
+.label {
+  font-size: 20px;
+  font-weight: 600;
+  color: $CodGray;
+}
+
+.btn {
+  width: 124px;
+  height: 40px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.table {
+  margin-top: 12px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  padding-top: 12px;
+}
+
+.table tbody > tr td,
+.table thead > tr th {
+  font-size: 16px;
+  font-weight: normal;
+  padding-left: 23px;
+  padding-right: 23px;
+}
+
+.table tbody > tr td {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.pair {
+  margin-left: 6px;
+}

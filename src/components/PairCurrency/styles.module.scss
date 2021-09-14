@@ -1,0 +1,18 @@
+
+.images {
+  display: flex;
+  align-items: center;
+
+  .container{
+    display: flex;
+    align-items: center;
+  }
+
+  .container:first-child {
+    z-index: 1;
+  }
+
+  .container:last-child {
+    z-index: 0;
+  }
+}
