@@ -36,7 +36,7 @@ function WalletData() {
   const [allBalances, setAllBalances] = useState(null);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterZeroBalance, setFilterZeroBalance] = useState(false);
+  const [filterZeroBalance, setFilterZeroBalance] = useState(true);
   const [xlmPrice, setXLMPrice] = useState(null);
 
   const xlmBalance = userBalances.find((i) => isSameAsset(getAssetDetails(XLM), i.asset));

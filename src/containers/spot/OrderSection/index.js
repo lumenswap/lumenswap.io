@@ -74,6 +74,7 @@ const OrderSection = ({ appSpotPair, price, setPrice }) => {
       bids={orderBookData?.bids}
       info={price}
       setPrice={setPrice}
+      appSpotPair={appSpotPair}
     />
   );
 };

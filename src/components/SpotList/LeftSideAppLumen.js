@@ -4,7 +4,7 @@ import FetchDataLoading from 'components/FetchDataLoading';
 import styles from './styles.module.scss';
 
 export default function LeftSideAppLumen({
-  asks, bids, info, headerItem,
+  asks, bids, info, headerItem, appSpotPair,
 }) {
   return (
     <div style={{ minHeight: 705 }}>
@@ -15,6 +15,7 @@ export default function LeftSideAppLumen({
               headerItem={headerItem}
               rowItem={[]}
               isSell={false}
+              appSpotPair={appSpotPair}
             />
             <FetchDataLoading />
           </div>
@@ -25,6 +26,7 @@ export default function LeftSideAppLumen({
               headerItem={headerItem}
               rowItem={asks}
               isSell
+              appSpotPair={appSpotPair}
             />
             <div className={styles.gap}>
               <span className={classNames(styles.total)}>{info}</span>
@@ -34,6 +36,7 @@ export default function LeftSideAppLumen({
               headerItem={[]}
               rowItem={bids}
               isSell={false}
+              appSpotPair={appSpotPair}
             />
           </div>
         )}
