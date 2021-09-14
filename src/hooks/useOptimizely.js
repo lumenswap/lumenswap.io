@@ -1,16 +1,5 @@
-import optimizely from '@optimizely/optimizely-sdk';
 import { useState } from 'react';
-
-optimizely.setLogLevel('ERROR');
-optimizely.setLogger(optimizely.logging.createLogger());
-
-if (process.env.APP_ENV === 'production') {
-  optimizely.setLogger(null);
-}
-
-const optimizelyClient = optimizely.createInstance({
-  sdkKey: process.env.REACT_APP_OPTIMIZELY_SDK_KEY,
-});
+import optimizelyClient from 'helpers/optimizely';
 
 export default function useOptimizely(featureFlag) {
   const [enabled, setEnabled] = useState(false);
