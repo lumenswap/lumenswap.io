@@ -150,6 +150,21 @@ input[type='number'] {
   transform: rotate(-45deg);
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
 }
+.bs-tooltip-auto[x-placement^=right] .arrow::before, .bs-tooltip-right .arrow::before {
+  right: 0;
+  border-width: .4rem .4rem .4rem 0;
+  border-right-color: $DarkGray !important;
+}
+.tooltip-inner {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+.tooltip.show {
+  opacity: 1 !important;
+}
 
 .title {
   font-size: 24px;

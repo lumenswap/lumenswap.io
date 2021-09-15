@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import classNames from 'classnames';
-import Tooltips from 'components/Tooltip';
+import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import questionIcon from 'assets/images/question.svg';
+
 import styles from './styles.module.scss';
 
 export const Info = ({ number, text }) => (
@@ -21,7 +22,7 @@ const CStatistics = ({ blocks }) => (
         className={styles.block}
       >
         <div className={styles['title-info']}>{block.title}
-          <Tooltips id="statistics" text={block.tooltip}>
+          <Tooltips id="statistics" text={<PrimaryTooltip text={block.tooltip} />}>
             <div
               className={styles.icons}
             >

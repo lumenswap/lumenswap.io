@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Button from 'components/Button';
-import Tooltips from 'components/Tooltip';
+import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import { useEffect, useState } from 'react';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
@@ -14,6 +14,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import { initializeStore } from 'store';
 import { useDispatch } from 'react-redux';
+
 import styles from './styles.module.scss';
 
 const ConfirmSwap = ({ data }) => {
@@ -108,13 +109,13 @@ const ConfirmSwap = ({ data }) => {
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Minimum received
-            <Tooltips id="minimum" text={appConsts.tooltip.min}><span className="icon-question-circle" /></Tooltips>
+            <Tooltips id="minimum" text={<PrimaryTooltip text={appConsts.tooltip.min} />}><span className="icon-question-circle" /></Tooltips>
           </div>
           <div className={classNames(styles.value)}>{loading ? 'Loading' : sevenDigit(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Price impact
-            <Tooltips id="impact" text={appConsts.tooltip.priceImpact}><span className="icon-question-circle" /></Tooltips>
+            <Tooltips id="impact" text={<PrimaryTooltip text={appConsts.tooltip.priceImpact} />}><span className="icon-question-circle" /></Tooltips>
           </div>
           <div className={styles.value}><ColorizedPriceImpact impact={finalPriceImpact} /></div>
         </div>
