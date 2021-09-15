@@ -265,6 +265,7 @@ const SwapPage = ({ custom, errorCode }) => {
                 render={(props) => (
                   <LCurrencyInput
                     {...props}
+                    ref={null}
                     showMax
                     label="From"
                     onChangeInput={changeFromInput}
@@ -290,6 +291,7 @@ const SwapPage = ({ custom, errorCode }) => {
                 render={(props) => (
                   <LCurrencyInput
                     {...props}
+                    ref={null}
                     label="To (estimated)"
                     onChangeInput={changeToInput}
                     originChange={changeFromInput}
@@ -317,6 +319,7 @@ const SwapPage = ({ custom, errorCode }) => {
                 render={(props) => (
                   <LPriceSpreadSection
                     {...props}
+                    ref={null}
                     control={control}
                     estimatedPrice={estimatedPrice}
                     paths={paths}
