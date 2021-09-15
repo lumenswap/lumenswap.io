@@ -11,7 +11,7 @@ const InputElement = ({
   <input
     type={type}
     className={classNames(styles.input, 'form-control')}
-    value={value}
+    value={value || ''}
     disabled={disabled}
     placeholder={placeholder}
     autoFocus={autoFocus}
