@@ -15,6 +15,7 @@ import { fetchAccountDetails } from 'api/stellar';
 import loginWithLedger from 'walletIntegeration/logins/loginWithLedger';
 import loginWithFreighter from 'walletIntegeration/logins/loginWithFreighter';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
+import loginWithXbull from 'walletIntegeration/logins/loginWithXbull';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
@@ -36,6 +37,8 @@ const Initializing = ({ loginMethod }) => {
         address = await loginWithFreighter();
       } else if (loginMethod === loginTypes.RABET) {
         address = await loginWithRabet();
+      } else if (loginMethod === loginTypes.XBULL) {
+        address = await loginWithXbull();
       } else {
         throw new Error('cannot handle login type');
       }
@@ -76,6 +79,10 @@ const Initializing = ({ loginMethod }) => {
     wallet = 'Rabet';
     walletDesc = 'Easy-to-use browser extension wallet';
     walletIcon = rabetIcon;
+  } else if (loginMethod === loginTypes.XBULL) {
+    wallet = 'Xbull';
+    walletDesc = 'Easy-to-use browser extension wallet';
+    walletIcon = albedoIcon;
   }
 
   return (
