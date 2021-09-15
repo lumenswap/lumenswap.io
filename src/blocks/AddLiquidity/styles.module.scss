@@ -1,0 +1,61 @@
+@import "styles/vars";
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $CodGray;
+  margin-bottom: 10px;
+}
+
+.select {
+  width: 154px;
+  height: 38px;
+  border: 1px solid $CatskillWhite;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 17px 0 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: $CodGray;
+
+  :global(.icon-angle-down) {
+    font-size: 10px;
+  }
+}
+
+.hr {
+  margin: 22px -17px 11px;
+  border-top: 1px solid $CatskillWhite;
+}
+
+.box {
+  text-align: center;
+  margin-top: 14px;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: solid 1px $CatskillWhite;
+  background-color: $AthensGray;
+}
+
+.box-title {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+  color: $Manatee;
+}
+
+.box-value {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $CodGray;
+}
+
+.btn {
+  width: 100%;
+  font-size: 18px;
+  margin-top: 24px;
+}
