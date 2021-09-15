@@ -7,7 +7,7 @@ const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
 export default async function signWithXbull(trx, dispatch) {
   try {
-    const signedTrx = await global.xBullSDK.signXDR(trx);
+    const signedTrx = await global.xBullSDK.signXDR(trx.toXDR());
     const transaction = StellarSDK.TransactionBuilder.fromXDR(
       signedTrx.xdr,
       process.env.REACT_APP_HORIZON,
