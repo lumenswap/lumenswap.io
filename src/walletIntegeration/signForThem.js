@@ -5,6 +5,7 @@ import signWithFreighter from './sign/signWithFreighter';
 import signWithLedger from './sign/signWithLedger';
 import signWithPrivateKey from './sign/signWithPrivateKey';
 import signWithRabet from './sign/signWithRabet';
+import signWithXbull from './sign/signWithXbull';
 
 export default function signForThem(trx, dispatch) {
   const store = initializeStore();
@@ -28,6 +29,10 @@ export default function signForThem(trx, dispatch) {
 
   if (user.loginType === loginTypes.RABET) {
     return signWithRabet(trx, dispatch);
+  }
+
+  if (user.loginType === loginTypes.XBULL) {
+    return signWithXbull(trx, dispatch);
   }
 
   throw new Error('cannot handle login type');
