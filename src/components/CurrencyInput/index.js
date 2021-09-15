@@ -78,9 +78,4 @@ const CurrencyInput = ({
   );
 };
 
-CurrencyInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  currentCurrency: PropTypes.object.isRequired,
-};
-
 export default CurrencyInput;
