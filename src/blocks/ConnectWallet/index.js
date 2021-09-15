@@ -53,7 +53,7 @@ const ConnectWallet = () => {
       text: 'Xbull',
       loginMethod: loginTypes.XBULL,
       link: 'https://xbull.app',
-      validator: () => !validateXbullPresent(),
+      validator: validateXbullPresent,
     },
   ];
 
