@@ -9,7 +9,7 @@ export default async function signWithXbull(trx, dispatch) {
   try {
     const signedTrx = await global.xBullSDK.signXDR(trx.toXDR());
     const transaction = StellarSDK.TransactionBuilder.fromXDR(
-      signedTrx.xdr,
+      signedTrx,
       process.env.REACT_APP_HORIZON,
     );
 

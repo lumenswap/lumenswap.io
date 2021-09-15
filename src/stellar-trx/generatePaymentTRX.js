@@ -1,5 +1,6 @@
 import BN from 'helpers/BN';
 import StellarSDK from 'stellar-sdk';
+import transactionConsts from './consts';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
@@ -13,7 +14,7 @@ export default async function generateManageSellTRX(
   const account = await server.loadAccount(address);
 
   let transaction = new StellarSDK.TransactionBuilder(account, {
-    fee: 100000,
+    fee: transactionConsts.FEE,
     networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
@@ -29,7 +30,7 @@ export default async function generateManageSellTRX(
     transaction = transaction.addMemo(StellarSDK.Memo.text(memo));
   }
 
-  transaction = transaction.setTimeout(90).build();
+  transaction = transaction.setTimeout(transactionConsts.TIMEOUT).build();
 
   return transaction;
 }
