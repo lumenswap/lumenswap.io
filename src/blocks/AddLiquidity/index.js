@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
 
 import btcLogo from 'assets/images/btc-logo.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
@@ -17,17 +18,25 @@ const setLabel = (name, src) => (
 
 const AddLiquidity = (props) => {
   const [show, setShow] = useState(false);
+  const { register, handleSubmit } = useForm({
+    mode: 'onChange',
+  });
+
+  const onSubmit = (data) => {
+    console.warn(data);
+  };
+
   return (
     <div className="pb-4">
       <h6 className={styles.label}>Select pair</h6>
       <div className="d-flex justify-content-between">
         <div className={styles.select}>
           {setLabel('BTC', btcLogo)}
-          <sapn className="icon-angle-down" />
+          <span className="icon-angle-down" />
         </div>
         <div className={styles.select}>
           {setLabel('USD', usdLogo)}
-          <sapn className="icon-angle-down" />
+          <span className="icon-angle-down" />
         </div>
       </div>
 
@@ -39,25 +48,32 @@ const AddLiquidity = (props) => {
       <hr className={styles.hr} />
 
       <h6 className={styles.label}>Add liquidity</h6>
-      <LiquidityInput
-        balance="12 LSP"
-        value={15}
-        currency="USD"
-        currencySrc={usdLogo}
-      />
-      <LiquidityInput
-        balance="12 LSP"
-        value={6}
-        currency="BTC"
-        currencySrc={btcLogo}
-        className="mt-3"
-      />
-      <Button
-        variant="primary"
-        content="Add Liquidity"
-        fontWeight={500}
-        className={styles.btn}
-      />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <LiquidityInput
+          balance="12 LSP"
+          value={15}
+          currency="USD"
+          currencySrc={usdLogo}
+          innerRef={register}
+          name="one"
+        />
+        <LiquidityInput
+          balance="12 LSP"
+          value={6}
+          currency="BTC"
+          currencySrc={btcLogo}
+          className="mt-3"
+          innerRef={register}
+          name="two"
+        />
+        <Button
+          htmlType="submit"
+          variant="primary"
+          content="Add Liquidity"
+          fontWeight={500}
+          className={styles.btn}
+        />
+      </form>
     </div>
   );
 };

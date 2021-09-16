@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const LiquidityInput = ({
-  balance, currency, currencySrc, value, className,
+  balance, currency, currencySrc, value, className, name, innerRef,
 }) => (
   <div className={classNames(styles.box, className)}>
     <div className={styles.amount}>
@@ -18,7 +18,9 @@ const LiquidityInput = ({
           className={styles.input}
           placeholder="0.0"
           type="text"
-          value={value}
+          defaultValue={value}
+          name={name}
+          ref={innerRef}
         />
       </div>
       <div className="col-auto pl-0">
@@ -31,8 +33,17 @@ const LiquidityInput = ({
   </div>
 );
 
-LiquidityInput.propTypes = {
+LiquidityInput.defaultProps = {
+  className: '',
+};
 
+LiquidityInput.propTypes = {
+  balance: PropTypes.string.isRequired,
+  currency: PropTypes.string.isRequired,
+  currencySrc: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  className: PropTypes.string,
+  innerRef: PropTypes.any.isRequired,
 };
 
 export default LiquidityInput;
