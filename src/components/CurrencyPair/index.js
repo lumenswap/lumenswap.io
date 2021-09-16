@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import styles from './styles.module.scss';
 
-const PairCurrency = ({ size, source }) => {
+const CurrencyPair = ({ size, source }) => {
   const margin = size / 3;
   const imagesSize = (size * 2) - margin;
   return (
@@ -27,9 +27,9 @@ const PairCurrency = ({ size, source }) => {
   );
 };
 
-PairCurrency.propTypes = {
+CurrencyPair.propTypes = {
   size: PropTypes.number.isRequired,
   source: PropTypes.array.isRequired,
 };
 
-export default PairCurrency;
+export default CurrencyPair;

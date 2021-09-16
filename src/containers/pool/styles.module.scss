@@ -8,6 +8,7 @@
   font-size: 20px;
   font-weight: 600;
   color: $CodGray;
+  margin-bottom: 0;
 }
 
 .btn {
@@ -31,6 +32,10 @@
   font-weight: normal;
   padding-left: 23px;
   padding-right: 23px;
+}
+
+.table tbody > tr {
+ cursor: pointer;
 }
 
 .table tbody > tr td {

@@ -44,6 +44,12 @@
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.05);
 }
 
+.button-basic {
+  background-color: white;
+  color: $ShuttleGray;
+  border: 1px solid $CatskillWhite;
+}
+
 .button-primary-outline {
   background-color: white;
   color: $BlueRibbon;
