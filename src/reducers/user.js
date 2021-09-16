@@ -10,8 +10,9 @@ export const loginTypes = {
   ALBEDO: 'albedo_link',
   LEDGER_S: 'LEDGER_S',
   TREZOR: 'TREZOR',
-  FREIGHTER: ' FREIGHTER',
+  FREIGHTER: 'FREIGHTER',
   RABET: 'RABET',
+  XBULL: 'XBULL',
 };
 
 export default (state = defaultState, action) => {

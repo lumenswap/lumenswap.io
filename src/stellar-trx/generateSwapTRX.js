@@ -1,6 +1,7 @@
 import StellarSDK from 'stellar-sdk';
 import getAssetDetails from 'helpers/getAssetDetails';
 import BN from 'helpers/BN';
+import transactionConsts from './consts';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
@@ -12,7 +13,7 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
   // const fee = await server.fetchBaseFee();
 
   let transaction = new StellarSDK.TransactionBuilder(account, {
-    fee: 100000,
+    fee: transactionConsts.FEE,
     networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
@@ -38,7 +39,7 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
         path,
       }),
     )
-    .setTimeout(90)
+    .setTimeout(transactionConsts.TIMEOUT)
     .build();
 
   return transaction;

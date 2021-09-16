@@ -9,6 +9,7 @@ import { loginTypes } from 'reducers/user';
 import Initializing from 'blocks/Initializing';
 import validateFreighterPresent from 'walletIntegeration/logins/validateFreighterPresent';
 import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent';
+import validateXbullPresent from 'walletIntegeration/logins/validateXbullPresent';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
@@ -45,6 +46,14 @@ const ConnectWallet = () => {
       text: 'Albedo',
       loginMethod: loginTypes.ALBEDO,
       validator: () => true,
+    },
+    {
+      icon: albedoIcon,
+      iconSize: '18',
+      text: 'Xbull',
+      loginMethod: loginTypes.XBULL,
+      link: 'https://xbull.app',
+      validator: validateXbullPresent,
     },
   ];
 

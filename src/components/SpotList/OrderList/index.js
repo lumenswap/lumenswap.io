@@ -43,7 +43,7 @@ const OrderList = ({
     forUsingData = forUsingData.sort((a, b) => -1 * new BN(a.price).comparedTo(b.price));
   }
 
-  const handeMouseHover = (rowIndex) => {
+  const handleMouseHover = (rowIndex) => {
     let filteredRows = forUsingData.slice(0, rowIndex + 1);
 
     if (isSell) {
@@ -103,7 +103,7 @@ const OrderList = ({
       <div className={styles['table-body']}>
         {forUsingData.map((row, rowIndex) => (
           <div
-            onMouseOver={() => { handeMouseHover(rowIndex); }}
+            onMouseOver={() => { handleMouseHover(rowIndex); }}
             onMouseLeave={handleMouseLeave}
             key={`row-${rowIndex}`}
           >
