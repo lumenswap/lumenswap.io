@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import classNames from 'classnames';
+import dynamic from 'next/dynamic';
 
 import ObmHeader from 'components/ObmHeader';
 import ArrowRight from 'assets/images/arrowRight';
@@ -11,10 +12,14 @@ import Button from 'components/Button';
 
 import styles from './postDetail.module.scss';
 
+const LiquidityChart = dynamic(() => import('../../components/LiquidityChart'), {
+  ssr: false,
+});
+
 const poolDetail = () => {
   const router = useRouter();
   const tokens = router.query.token;
-  console.warn(router.query);
+
   return (
     <div className="container-fluid">
       <Head>
@@ -34,6 +39,7 @@ const poolDetail = () => {
                   <CurrencyPair size={26} source={[btcLogo, usdLogo]} />
                   <div className="ml-2">{tokens && `${tokens[0]}/${tokens[1]}`}</div>
                 </h1>
+                <div className={classNames(styles.card, styles['card-chart'])}><LiquidityChart /></div>
               </div>
               <div className="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column">
                 <div className="d-flex justify-content-between">
