@@ -10,18 +10,21 @@ import usdLogo from 'assets/images/usd-coin-usdc.png';
 import CurrencyPair from 'components/CurrencyPair';
 import Button from 'components/Button';
 
-import styles from './postDetail.module.scss';
+import styles from './styles.module.scss';
 
-const LiquidityChart = dynamic(() => import('../../components/LiquidityChart'), {
+const LiquidityChart = dynamic(() => import('../../../components/LiquidityChart'), {
   ssr: false,
 });
 
-const poolDetail = () => {
+const index = () => {
   const router = useRouter();
   const tokens = router.query.token;
 
+  const grid1 = 'col-xl-7 col-lg-6 col-md-6 col-sm-12 col-12';
+  const grid2 = 'col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column';
+
   return (
-    <div className="container-fluid">
+    <div className="container-fluid pb-5">
       <Head>
         <title>{tokens && `${tokens[0]}/${tokens[1]}`} | Lumenswap</title>
       </Head>
@@ -29,8 +32,8 @@ const poolDetail = () => {
       <div className={classNames('layout main', styles.main)}>
         <div className="row justify-content-center">
           <div className="col-xl-7 col-lg-11 col-md-12 col-sm-12 col-12">
-            <div className="row">
-              <div className="col-xl-7 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div className="row align-items-center">
+              <div className={grid1}>
                 <h1 className={styles.label}>
                   Pool
                   <div className="mx-2">
@@ -39,10 +42,9 @@ const poolDetail = () => {
                   <CurrencyPair size={26} source={[btcLogo, usdLogo]} />
                   <div className="ml-2">{tokens && `${tokens[0]}/${tokens[1]}`}</div>
                 </h1>
-                <div className={classNames(styles.card, styles['card-chart'])}><LiquidityChart /></div>
               </div>
-              <div className="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column">
-                <div className="d-flex justify-content-between">
+              <div className={grid2}>
+                <div className="d-flex justify-content-between mt-lg-0 mt-md-4 mt-sm-4 mt-4">
                   <Button
                     variant="primary"
                     content="Increase Liquidity"
@@ -54,6 +56,13 @@ const poolDetail = () => {
                     className={styles['btn-basic']}
                   />
                 </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className={grid1}>
+                <div className={classNames(styles.card, styles['card-chart'])}><LiquidityChart /></div>
+              </div>
+              <div className={grid2}>
                 <div className={classNames(styles.card, styles['card-liquidity'])}>
                   <div className={styles['card-section']}>
                     <div className={styles['card-title']}>Liquidity</div>
@@ -90,4 +99,4 @@ const poolDetail = () => {
   );
 };
 
-export default poolDetail;
+export default index;

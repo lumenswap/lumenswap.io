@@ -1,3 +1,3 @@
-import PoolDetail from 'containers/pool/poolDetail';
+import PoolDetail from 'containers/pool/detail';
 
 export default PoolDetail;

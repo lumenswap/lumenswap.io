@@ -1,3 +1,4 @@
+@import "styles/vars";
 
 .container {
   position: relative;
@@ -9,7 +10,25 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 10px;
-  top: 10px;
+  left: 6px;
+  top: 5px;
   z-index: 10;
+}
+
+.price {
+  font-size: 18px;
+  line-height: 1.56;
+  color: $CodGray;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  color: $ShuttleGray;
+}
+
+.chart {
+  width: 100%;
+  height: 100%;
 }

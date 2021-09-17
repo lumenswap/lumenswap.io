@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
 import { data } from './data';
 
@@ -7,19 +7,25 @@ import styles from './styles.module.scss';
 const width = 600;
 const height = 300;
 
+const timeConverter = (timestamp) => {
+  const a = new Date(timestamp * 1000);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const year = a.getFullYear();
+  const month = months[a.getMonth()];
+  const date = a.getDate();
+  return `${date} ${month} ${year}`;
+};
+
 const LiquidityChart = () => {
   const [info, setInfo] = useState({});
   const chartRef = useRef(null);
+
   useEffect(() => {
     const chart = createChart(chartRef.current, {
       width: chartRef.current.clientWidth,
       height: chartRef.current.clientHeight,
       rightPriceScale: {
-        scaleMargins: {
-          top: 0.35,
-          bottom: 0.2,
-        },
-        borderVisible: false,
+        visible: false,
       },
       timeScale: {
         borderVisible: false,
@@ -46,18 +52,32 @@ const LiquidityChart = () => {
           labelVisible: false,
         },
       },
+      layout: {
+        textColor: '#656872',
+      },
     });
+
+    let timerID;
+    document.body.onresize = () => {
+      if (timerID) clearTimeout(timerID);
+      timerID = setTimeout(() => {
+        chart.resize(chartRef.current.clientWidth, chartRef.current.clientHeight);
+      }, 200);
+    };
+
     const areaSeries = chart.addAreaSeries({
-      topColor: 'rgba(19, 68, 193, 0.4)',
-      bottomColor: 'rgba(0, 120, 255, 0.0)',
-      lineColor: 'rgba(19, 40, 153, 1.0)',
+      topColor: '#CFD9FF',
+      bottomColor: '#fff',
+      lineColor: '#0e41f5',
       lineWidth: 3,
     });
     areaSeries.setData(data);
 
     function setLastBarText() {
-      const dateStr = `${data[data.length - 1].time.year} - ${data[data.length - 1].time.month} - ${data[data.length - 1].time.day}`;
-      setInfo({ price: data[data.length - 1].value, date: dateStr });
+      setInfo({
+        price: data[data.length - 1].value,
+        date: timeConverter(data[data.length - 1].time),
+      });
     }
 
     setLastBarText();
@@ -66,9 +86,11 @@ const LiquidityChart = () => {
       if (param === undefined || param.time === undefined || param.point.x < 0 || param.point.x > width || param.point.y < 0 || param.point.y > height) {
         setLastBarText();
       } else {
-        const dateStr = `${param.time.year} - ${param.time.month} - ${param.time.day}`;
         const price = param.seriesPrices.get(areaSeries);
-        setInfo({ price: (Math.round(price * 100) / 100).toFixed(2), date: dateStr });
+        setInfo({
+          price: (Math.round(price * 100) / 100).toFixed(2),
+          date: timeConverter(param.time),
+        });
       }
     });
   }, []);
@@ -76,10 +98,10 @@ const LiquidityChart = () => {
   return (
     <div className={styles.container}>
       <div className={styles.data}>
-        <div>{info && info.price}</div>
-        <div>{info && info.date}</div>
+        <div className={styles.price}>${info && info.price}</div>
+        <div className={styles.date}>{info && info.date}</div>
       </div>
-      <div ref={chartRef} className="h-100 w-100" />
+      <div ref={chartRef} className={styles.chart} />
     </div>
   );
 };
