@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
 
-import btcLogo from 'assets/images/btc-logo.png';
-import usdLogo from 'assets/images/usd-coin-usdc.png';
-import Button from 'components/Button';
-import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
+import LiquidityInput from 'components/LiquidityInput';
+import usdLogo from 'assets/images/usd-coin-usdc.png';
+import btcLogo from 'assets/images/btc-logo.png';
+import Button from 'components/Button';
 
 import styles from './styles.module.scss';
 
-const setLabel = (name, src) => (
-  <div className="d-flex align-items-center">
-    <Image src={src} width={20} height={20} alt={name} />
-    <span className="ml-2">{name}</span>
-  </div>
-);
-
-const AddLiquidity = (props) => {
-  const [show, setShow] = useState(false);
+const IncreaseLiquidity = (props) => {
   const { register, handleSubmit } = useForm({
     mode: 'onChange',
   });
@@ -34,23 +25,29 @@ const AddLiquidity = (props) => {
 
   return (
     <div className="pb-4">
-      <h6 className={styles.label}>Select pair</h6>
-      <div className="d-flex justify-content-between">
-        <div className={styles.select} onClick={() => setShow(true)}>
-          {setLabel('BTC', btcLogo)}
-          <span className="icon-angle-down" />
+      <h6 className={styles.label}>Inpool</h6>
+
+      <div className={styles.inpool}>
+        <div className={styles.pair}>
+          <div className={styles['pair-img']}><Image src={btcLogo} width={20} height={20} /></div>
+          <div>BTC</div>
         </div>
-        <div className={styles.select} onClick={() => setShow(true)}>
-          {setLabel('USD', usdLogo)}
-          <span className="icon-angle-down" />
+        <div>12</div>
+      </div>
+
+      <div className={styles.inpool}>
+        <div className={styles.pair}>
+          <div className={styles['pair-img']}><Image src={usdLogo} width={20} height={20} /></div>
+          <div>USD</div>
         </div>
+        <div>5</div>
       </div>
 
       <div className={styles.current}><AMMCurrentPrice pairs={currentCurrency} /></div>
 
       <hr className={styles.hr} />
 
-      <h6 className={styles.label}>Add liquidity</h6>
+      <h6 className={styles.label}>Increase liquidity</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
         <LiquidityInput
           balance="12 LSP"
@@ -72,7 +69,7 @@ const AddLiquidity = (props) => {
         <Button
           htmlType="submit"
           variant="primary"
-          content="Add Liquidity"
+          content="Increase liquidity"
           fontWeight={500}
           className={styles.btn}
         />
@@ -81,4 +78,4 @@ const AddLiquidity = (props) => {
   );
 };
 
-export default AddLiquidity;
+export default IncreaseLiquidity;

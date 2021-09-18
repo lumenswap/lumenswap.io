@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import classNames from 'classnames';
@@ -9,6 +10,8 @@ import btcLogo from 'assets/images/btc-logo.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
 import CurrencyPair from 'components/CurrencyPair';
 import Button from 'components/Button';
+import ModalDialog from 'components/ModalDialog';
+import IncreaseLiquidity from 'blocks/IncreaseLiquidity';
 
 import styles from './styles.module.scss';
 
@@ -17,6 +20,7 @@ const LiquidityChart = dynamic(() => import('../../../components/LiquidityChart'
 });
 
 const index = () => {
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const tokens = router.query.token;
 
@@ -49,12 +53,23 @@ const index = () => {
                     variant="primary"
                     content="Increase Liquidity"
                     className={styles['btn-primary']}
+                    onClick={() => setShowModal(true)}
                   />
                   <Button
                     variant="basic"
                     content="Remove Liquidity"
                     className={styles['btn-basic']}
                   />
+                  {showModal && (
+                  <ModalDialog
+                    show={showModal}
+                    setShow={setShowModal}
+                    title="Increase Liquidity"
+                    className="main"
+                  >
+                    <IncreaseLiquidity />
+                  </ModalDialog>
+                  ) }
                 </div>
               </div>
             </div>
