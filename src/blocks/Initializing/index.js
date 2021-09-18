@@ -81,7 +81,7 @@ const Initializing = ({ loginMethod }) => {
     walletDesc = 'Easy-to-use browser extension wallet';
     walletIcon = rabetIcon;
   } else if (loginMethod === loginTypes.XBULL) {
-    wallet = 'Xbull';
+    wallet = 'xBull';
     walletDesc = 'Easy-to-use browser extension wallet';
     walletIcon = xbullIcon;
   }

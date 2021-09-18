@@ -51,7 +51,7 @@ const ConnectWallet = () => {
     {
       icon: xbullIcon,
       iconSize: '18',
-      text: 'Xbull',
+      text: 'xBull',
       loginMethod: loginTypes.XBULL,
       link: 'https://xbull.app',
       validator: validateXbullPresent,
