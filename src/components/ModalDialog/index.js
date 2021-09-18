@@ -6,7 +6,11 @@ import styles from './styles.module.scss';
 const ModalDialog = ({
   children, title, show, setShow, width = 360, back, backAction, hasClose = true, className,
 }) => {
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    if (hasClose) {
+      setShow(false);
+    }
+  };
 
   return (
     <Modal show={show} onHide={handleClose}>
