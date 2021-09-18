@@ -4,6 +4,7 @@ import Loading from 'components/Loading';
 import { loginTypes } from 'reducers/user';
 import rabetIcon from 'assets/images/rabet.svg';
 import albedoIcon from 'assets/images/albedo.svg';
+import xbullIcon from 'assets/images/xbull.webp';
 import ledgerIcon from 'assets/images/ledger.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import loginWithAlbedo from 'walletIntegeration/logins/loginWithAlbedo';
@@ -82,7 +83,7 @@ const Initializing = ({ loginMethod }) => {
   } else if (loginMethod === loginTypes.XBULL) {
     wallet = 'Xbull';
     walletDesc = 'Easy-to-use browser extension wallet';
-    walletIcon = albedoIcon;
+    walletIcon = xbullIcon;
   }
 
   return (

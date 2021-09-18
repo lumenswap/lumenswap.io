@@ -8,6 +8,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import rabetIcon from 'assets/images/rabet.svg';
 import privateKeyIcon from 'assets/images/keyword.svg';
 import albedoIcon from 'assets/images/albedo.svg';
+import xbullIcon from 'assets/images/xbull.webp';
 import ledgerIcon from 'assets/images/ledger.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import { loginTypes } from 'reducers/user';
@@ -31,6 +32,8 @@ const CustomDropdown = ({ className }) => {
     walletIcon = ledgerIcon.src;
   } else if (loginMethod === loginTypes.RABET) {
     walletIcon = rabetIcon.src;
+  } else if (loginMethod === loginTypes.XBULL) {
+    walletIcon = xbullIcon.src;
   }
 
   return (
