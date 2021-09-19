@@ -53,13 +53,15 @@ const VolumeChart = () => {
       },
     });
 
-    let timerID;
-    document.body.onresize = () => {
-      if (timerID) clearTimeout(timerID);
-      timerID = setTimeout(() => {
-        chart.resize(chartRef.current.clientWidth, chartRef.current.clientHeight);
-      }, 200);
-    };
+    if(chartRef) {
+      let timerID;
+      document.body.onresize = () => {
+        if (timerID) clearTimeout(timerID);
+        timerID = setTimeout(() => {
+          chart.resize(chartRef.current.clientWidth, chartRef.current.clientHeight);
+        }, 200);
+      };
+    }
 
     const volumeSeries = chart.addHistogramSeries({
       priceFormat: {
