@@ -8,12 +8,13 @@
   font-size: 20px;
   font-weight: 500;
   color: $CodGray;
-  margin-top: 2px;
   margin-bottom: 0;
   display: flex;
+  margin-top: 30px;
 
   &-bold {
     font-weight: 600;
+    margin-top: 2px;
   }
 }
 
@@ -29,5 +30,43 @@
     padding: 5px 8px 0 10px;
     min-height: 200px;
     overflow: hidden;
+  }
+
+  &-table {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+}
+
+.pair {
+  margin-left: 6px;
+}
+
+.table tr {
+  height: 50px !important;
+}
+
+.table {
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: auto;
+}
+
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.form {
+  margin-right: 16px;
+  margin-left: 16px;
+
+  input {
+    border-radius: 6px !important;
   }
 }
