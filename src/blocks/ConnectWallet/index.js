@@ -1,6 +1,7 @@
 import rabetIcon from 'assets/images/rabet.svg';
 import privateKeyIcon from 'assets/images/keyword.svg';
 import albedoIcon from 'assets/images/albedo.svg';
+import xbullIcon from 'assets/images/xbull.webp';
 // import ledgerIcon from 'assets/images/ledger.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import { openConnectModal, openModalAction } from 'actions/modal';
@@ -48,9 +49,9 @@ const ConnectWallet = () => {
       validator: () => true,
     },
     {
-      icon: albedoIcon,
+      icon: xbullIcon,
       iconSize: '18',
-      text: 'Xbull',
+      text: 'xBull',
       loginMethod: loginTypes.XBULL,
       link: 'https://xbull.app',
       validator: validateXbullPresent,
