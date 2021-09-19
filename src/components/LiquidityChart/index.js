@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
+
+import ChartInfo from 'components/ChartInfo';
 import { data } from './data';
 
 import styles from './styles.module.scss';
@@ -16,7 +18,7 @@ const timeConverter = (timestamp) => {
   return `${date} ${month} ${year}`;
 };
 
-const LiquidityChart = () => {
+const LiquidityChart = ({ style }) => {
   const [info, setInfo] = useState({});
   const chartRef = useRef(null);
 
@@ -57,6 +59,16 @@ const LiquidityChart = () => {
       },
     });
 
+    chart.applyOptions({
+      handleScroll: {
+        mouseWheel: false,
+        pressedMouseMove: false,
+      },
+      priceScale: {
+        autoScale: true,
+      },
+    });
+
     let timerID;
     document.body.onresize = () => {
       if (timerID) clearTimeout(timerID);
@@ -67,9 +79,13 @@ const LiquidityChart = () => {
 
     const areaSeries = chart.addAreaSeries({
       topColor: '#CFD9FF',
-      bottomColor: '#fff',
+      bottomColor: 'rgba(207, 217, 255, 0.15',
       lineColor: '#0e41f5',
       lineWidth: 3,
+      scaleMargins: {
+        top: 0,
+        bottom: 0,
+      },
     });
     areaSeries.setData(data);
 
@@ -97,11 +113,8 @@ const LiquidityChart = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.data}>
-        <div className={styles.price}>${info && info.price}</div>
-        <div className={styles.date}>{info && info.date}</div>
-      </div>
-      <div ref={chartRef} className={styles.chart} />
+      {info && <ChartInfo value={`$${info.price}`} time={info.date} />}
+      <div ref={chartRef} className={styles.chart} style={style} />
     </div>
   );
 };
