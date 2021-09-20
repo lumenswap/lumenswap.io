@@ -12,6 +12,31 @@ trigger:
     - push
 
 steps:
+  - name: "default"
+    commands:
+      - echo default
+
+---
+kind: pipeline
+type: exec
+name: demo-obm
+
+clone:
+  depth: 1
+
+concurrency:
+  limit: 1
+
+trigger:
+  branches:
+    - main
+  event:
+    - promote
+  target:
+    include:
+      - demo-obm
+
+steps:
   - name: "build"
     commands:
       - docker build -t lumenswap-front:${DRONE_COMMIT_SHA:0:7} .
@@ -45,10 +70,14 @@ steps:
     depends_on:
       - build
       - Package
+
 ---
 kind: pipeline
 type: exec
-name: deploy-production
+name: demo-reward
+
+clone:
+  depth: 1
 
 concurrency:
   limit: 1
@@ -59,13 +88,27 @@ trigger:
   event:
     - promote
   target:
-    - production
-
-clone:
-  disable: true
+    include:
+      - demo-reward
 
 steps:
-  - name: deploy-production
+  - name: "build"
+    commands:
+      - echo build reward
+
+  - name: "Package"
+    environment:
+      MANIFEST_PATH:
+        from_secret: MANIFEST_PATH
+      PACKAGE_PATH:
+        from_secret: PACKAGE_PATH
+    commands:
+      - echo package
+
+    depends_on:
+      - build
+
+  - name: deploy-demo
     environment:
       PACKAGE_PATH:
         from_secret: PACKAGE_PATH
@@ -73,5 +116,8 @@ steps:
         from_secret: CONFIG_PATH
 
     commands:
-      - export KUBECONFIG=$CONFIG_PATH/kube_config
-      - helm upgrade lumenswap-front $PACKAGE_PATH/lumenswap-front/lumenswap-front-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-prod --wait --atomic --install
+      - echo deploy reward
+
+    depends_on:
+      - build
+      - Package
