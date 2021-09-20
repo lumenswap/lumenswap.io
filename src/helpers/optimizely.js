@@ -3,7 +3,7 @@ import optimizelySDK from '@optimizely/optimizely-sdk';
 optimizelySDK.setLogLevel('ERROR');
 optimizelySDK.setLogger(optimizelySDK.logging.createLogger());
 
-if (process.env.APP_ENV === 'production') {
+if (process.env.REACT_APP_PRODUCT_ENV === 'production') {
   optimizelySDK.setLogger(null);
 }
 

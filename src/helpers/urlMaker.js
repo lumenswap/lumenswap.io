@@ -1,10 +1,21 @@
+const rootUrl = {
+  obm: '/obm',
+  reward: '/reward',
+};
+
+if (process.env.REACT_APP_MODE === 'OBM') {
+  rootUrl.obm = '';
+} else if (process.env.REACT_APP_MODE === 'REWARD') {
+  rootUrl.reward = '';
+}
+
 const urlMaker = {
   root: () => '/',
   swap: {
-    root: () => '/swap',
-    tokens: (tokenA, tokenB) => `/swap/${tokenA}-${tokenB}`,
+    root: () => `${rootUrl.obm}/swap`,
+    tokens: (tokenA, tokenB) => `${rootUrl.obm}/swap/${tokenA}-${tokenB}`,
     custom: (assetACode, assetAIssuer, assetBCode, assetBIssuer) => {
-      const rootPath = '/swap/';
+      const rootPath = `${rootUrl.obm}/swap/`;
       const partA = `${[assetACode, assetAIssuer].filter((i) => i).join('-')}`;
       const partB = `${[assetBCode, assetBIssuer].filter((i) => i).join('-')}`;
 
@@ -12,10 +23,10 @@ const urlMaker = {
     },
   },
   spot: {
-    root: () => '/spot',
-    tokens: (tokenA, tokenB) => `/spot/${tokenA}-${tokenB}`,
+    root: () => `${rootUrl.obm}/spot`,
+    tokens: (tokenA, tokenB) => `${rootUrl.obm}/spot/${tokenA}-${tokenB}`,
     custom: (assetACode, assetAIssuer, assetBCode, assetBIssuer) => {
-      const rootPath = '/spot/';
+      const rootPath = `${rootUrl.obm}/spot/`;
       const partA = `${[assetACode, assetAIssuer].filter((i) => i).join('-')}`;
       const partB = `${[assetBCode, assetBIssuer].filter((i) => i).join('-')}`;
 
@@ -23,16 +34,16 @@ const urlMaker = {
     },
   },
   market: {
-    root: () => '/market',
+    root: () => `${rootUrl.obm}/market`,
   },
   reward: {
-    root: () => '/reward',
+    root: () => `${rootUrl.reward}/reward`,
   },
   wallet: {
-    root: () => '/wallet',
+    root: () => `${rootUrl.obm}/wallet`,
   },
   order: {
-    root: () => '/order',
+    root: () => `${rootUrl.obm}/order`,
   },
 };
 
