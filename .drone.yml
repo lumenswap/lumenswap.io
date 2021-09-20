@@ -2,6 +2,9 @@ kind: pipeline
 type: exec
 name: default
 
+clone:
+  depth: 1
+
 concurrency:
   limit: 1
 
@@ -12,35 +15,9 @@ trigger:
     - push
 
 steps:
-  - name: "default"
-    commands:
-      - echo default
-
----
-kind: pipeline
-type: exec
-name: demo-obm
-
-clone:
-  depth: 1
-
-concurrency:
-  limit: 1
-
-trigger:
-  branches:
-    - main
-  event:
-    - promote
-  target:
-    include:
-      - demo-obm
-
-steps:
   - name: "build"
     commands:
       - docker build -t lumenswap-front:${DRONE_COMMIT_SHA:0:7} .
-
   - name: "Package"
     environment:
       MANIFEST_PATH:
@@ -48,76 +25,19 @@ steps:
       PACKAGE_PATH:
         from_secret: PACKAGE_PATH
     commands:
-      - helm package --app-version ${DRONE_COMMIT_SHA:0:7}  $MANIFEST_PATH/lumenswap-front -d $PACKAGE_PATH/lumenswap-front
-      - mv $PACKAGE_PATH/lumenswap-front/lumenswap-front-0.1.0.tgz $PACKAGE_PATH/lumenswap-front/lumenswap-front-${DRONE_COMMIT_SHA:0:7}.tgz
-
       - helm package --app-version ${DRONE_COMMIT_SHA:0:7}  $MANIFEST_PATH/lumenswap-demo -d $PACKAGE_PATH/lumenswap-demo
       - mv $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-0.1.0.tgz $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-${DRONE_COMMIT_SHA:0:7}.tgz
     depends_on:
       - build
-
   - name: deploy-demo
     environment:
       PACKAGE_PATH:
         from_secret: PACKAGE_PATH
       CONFIG_PATH:
         from_secret: CONFIG_PATH
-
     commands:
       - export KUBECONFIG=$CONFIG_PATH/kube_config
       - helm upgrade lumenswap-demo $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-${DRONE_COMMIT_SHA:0:7}.tgz --namespace lumenswap-demo --wait --atomic --install
-
-    depends_on:
-      - build
-      - Package
-
----
-kind: pipeline
-type: exec
-name: demo-reward
-
-clone:
-  depth: 1
-
-concurrency:
-  limit: 1
-
-trigger:
-  branches:
-    - main
-  event:
-    - promote
-  target:
-    include:
-      - demo-reward
-
-steps:
-  - name: "build"
-    commands:
-      - echo build reward
-
-  - name: "Package"
-    environment:
-      MANIFEST_PATH:
-        from_secret: MANIFEST_PATH
-      PACKAGE_PATH:
-        from_secret: PACKAGE_PATH
-    commands:
-      - echo package
-
-    depends_on:
-      - build
-
-  - name: deploy-demo
-    environment:
-      PACKAGE_PATH:
-        from_secret: PACKAGE_PATH
-      CONFIG_PATH:
-        from_secret: CONFIG_PATH
-
-    commands:
-      - echo deploy reward
-
     depends_on:
       - build
       - Package
