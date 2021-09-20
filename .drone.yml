@@ -11,8 +11,6 @@ concurrency:
 trigger:
   branches:
     - main
-  event:
-    - push
 
 steps:
   - name: "build"
