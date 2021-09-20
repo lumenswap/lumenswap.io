@@ -45,26 +45,33 @@ steps:
     depends_on:
       - build
       - Package
-# ---
-# kind: pipeline
-# type: exec
-# name: deploy-production
+---
+kind: pipeline
+type: exec
+name: deploy-production
 
-# concurrency:
-#   limit: 1
+concurrency:
+  limit: 1
 
-# trigger:
-#   branches:
-#     - main
-#   event:
-#     - promote
-#   target:
-#     - production
+trigger:
+  branches:
+    - main
+  event:
+    - promote
+  target:
+    - production
 
-# clone:
-#   disable: true
+clone:
+  disable: true
 
-# steps:
-#   - name: deploy-production
-#     commands:
-#       - echo helm upgrade production
+steps:
+  - name: deploy-production
+    environment:
+      PACKAGE_PATH:
+        from_secret: PACKAGE_PATH
+      CONFIG_PATH:
+        from_secret: CONFIG_PATH
+
+    commands:
+      - export KUBECONFIG=$CONFIG_PATH/kube_config
+      - helm upgrade lumenswap-front $PACKAGE_PATH/lumenswap-front/lumenswap-front-$CI_COMMIT_SHORT_SHA.tgz --namespace lumenswap-prod --wait --atomic --install
