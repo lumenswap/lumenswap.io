@@ -1,24 +1,36 @@
-import { useState } from 'react';
 import Head from 'next/head';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 import ObmHeader from 'components/ObmHeader';
 import Button from 'components/Button';
 import Table from 'components/Table';
 import CurrencyPair from 'components/CurrencyPair';
-import ModalDialog from 'components/ModalDialog';
 import btcLogo from 'assets/images/btc-logo.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
 import AddLiquidity from 'blocks/AddLiquidity';
+import { openModalAction } from 'actions/modal';
 
-import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
 const tableHeader = ['Pool', 'Amount'];
 
 const PoolPage = () => {
   const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    dispatch(
+      openModalAction({
+        modalProps: {
+          title: 'Add Liquidity',
+          className: 'main',
+        },
+        content: <AddLiquidity />,
+      }),
+    );
+  };
 
   const tableRows = () => [0, 1, 2, 3, 4, 5, 6, 7, 8].map((row) => (
     <tr key={row} onClick={() => router.push('pool/XLM/USDC')}>
@@ -47,18 +59,8 @@ const PoolPage = () => {
                 variant="primary"
                 content="Add Liquidity"
                 className={styles.btn}
-                onClick={() => setShowModal(true)}
+                onClick={openModal}
               />
-              {showModal && (
-                <ModalDialog
-                  show={showModal}
-                  setShow={setShowModal}
-                  title="Add Liquidity"
-                  className="main"
-                >
-                  <AddLiquidity />
-                </ModalDialog>
-              )}
             </div>
             <Table
               tableRows={tableRows()}

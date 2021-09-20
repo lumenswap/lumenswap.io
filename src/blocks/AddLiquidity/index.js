@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 import btcLogo from 'assets/images/btc-logo.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
+import { closeModalAction, openModalAction } from 'actions/modal';
+import ConfirmLiquidity from 'blocks/ConfirmLiquidity';
 
 import styles from './styles.module.scss';
 
@@ -17,14 +20,25 @@ const setLabel = (name, src) => (
   </div>
 );
 
-const AddLiquidity = (props) => {
+const AddLiquidity = () => {
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm({
     mode: 'onChange',
   });
 
   const onSubmit = (data) => {
-    console.warn(data);
+    // console.warn(data);
+    dispatch(closeModalAction());
+    dispatch(
+      openModalAction({
+        modalProps: {
+          title: 'Add Liquidity',
+          className: 'main',
+        },
+        content: <ConfirmLiquidity />,
+      }),
+    );
   };
 
   const currentCurrency = {
