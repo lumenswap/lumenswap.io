@@ -1,0 +1,91 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 76px;
+}
+
+.label {
+  font-size: 20px;
+  font-weight: 600;
+  color: $CodGray;
+  margin-top: 2px;
+  margin-bottom: 23px;
+  display: flex;
+
+  svg {
+    width: 18px;
+  }
+
+  &-bold {
+    font-weight: 500;
+    margin-top: 13px;
+    margin-bottom: 0;
+  }
+}
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+  margin-bottom: 17px;
+
+  &-title {
+    font-size: 16px;
+    line-height: 1.5;
+    color: $ShuttleGray;
+  }
+
+  &-value {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.42;
+    color: $CodGray;
+  }
+
+  &-pairs {
+    display: flex;
+
+    .pair {
+      width: 50%;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.56;
+      color: $CodGray;
+      padding: 13px 0;
+    }
+
+    .pair:first-child {
+      border-right: 1px solid $CatskillWhite;
+    }
+  }
+
+  &-section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 15px 0;
+  }
+
+  &-section:not(:last-child) {
+    border-bottom: 1px solid $CatskillWhite;
+  }
+}
+
+.card-tvl {
+  .card-section {
+    padding-top: 12px;
+    padding-bottom: 16px;
+  }
+}
+
+.card-swap {
+  margin-top: 12px;
+}
+
+.empty {
+  font-size: 18px;
+  line-height: 1.56;
+  color: $ShuttleGray;
+  text-align: center;
+  padding: 81px 10px;
+}
