@@ -7,6 +7,8 @@ environment:
     from_secret: MANIFEST_PATH
   PACKAGE_PATH:
     from_secret: PACKAGE_PATH
+  CONFIG_PATH:
+    from_secret: CONFIG_PATH
 
 concurrency:
   limit: 1
@@ -28,15 +30,15 @@ steps:
       # - helm package --app-version ${DRONE_COMMIT_SHA:0:7}  $MANIFEST_PATH/lumenswap-front -d $PACKAGE_PATH/lumenswap-front
       # - mv $PACKAGE_PATH/lumenswap-front/lumenswap-front-0.1.0.tgz $PACKAGE_PATH/lumenswap-front/lumenswap-front-${DRONE_COMMIT_SHA:0:7}.tgz
 
-      - helm package --app-version ${DRONE_COMMIT_SHA:0:7}  $MANIFEST_PATH/lumenswap-demo -d $PACKAGE_PATH/lumenswap-demo
-      - mv $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-0.1.0.tgz $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-${DRONE_COMMIT_SHA:0:7}.tgz
+      - helm package --app-version ${DRONE_COMMIT_SHA:0:7}  ${MANIFEST_PATH}/lumenswap-demo -d ${PACKAGE_PATH}/lumenswap-demo
+      - mv ${PACKAGE_PATH}/lumenswap-demo/lumenswap-demo-0.1.0.tgz ${PACKAGE_PATH}/lumenswap-demo/lumenswap-demo-${DRONE_COMMIT_SHA:0:7}.tgz
     depends_on:
       - build
 
   - name: deploy-demo
     commands:
-      - export KUBECONFIG=$CONFIG_PATH/kube_config
-      - helm upgrade lumenswap-demo $PACKAGE_PATH/lumenswap-demo/lumenswap-demo-${DRONE_COMMIT_SHA:0:7}.tgz --namespace lumenswap-demo --wait --atomic --install
+      - export KUBECONFIG=${CONFIG_PATH}/kube_config
+      - helm upgrade lumenswap-demo ${PACKAGE_PATH}/lumenswap-demo/lumenswap-demo-${DRONE_COMMIT_SHA:0:7}.tgz --namespace lumenswap-demo --wait --atomic --install
 
     depends_on:
       - build
