@@ -53,7 +53,7 @@ const VolumeChart = () => {
       },
     });
 
-    if(chartRef) {
+    if (chartRef.current) {
       let timerID;
       document.body.onresize = () => {
         if (timerID) clearTimeout(timerID);
