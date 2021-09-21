@@ -64,6 +64,13 @@ const Stats = () => {
     },
   );
 
+  const rowLink = (data) => {
+    const assetA = data.pair.base.code;
+    const assetB = data.pair.counter.code;
+
+    return `stats/${assetA}/${assetB}`;
+  };
+
   return (
     <div className="container-fluid pb-5">
       <Head>
@@ -108,6 +115,7 @@ const Stats = () => {
                 className={styles.table}
                 columns={tableHeaders}
                 dataSource={data}
+                rowLink={rowLink}
               />
             </div>
           </div>
