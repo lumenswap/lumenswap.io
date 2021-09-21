@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import dynamic from 'next/dynamic';
 
 import ObmHeader from 'components/ObmHeader';
 import CurrencyPair from 'components/CurrencyPair';
@@ -8,16 +7,10 @@ import btcLogo from 'assets/images/btc-logo.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
 import CTable from 'components/CTable';
 import Input from 'components/Input';
+import LiquidityChart from 'components/LiquidityChart';
+import VolumeChart from 'components/VolumeChart';
 
 import styles from './styles.module.scss';
-
-const LiquidityChart = dynamic(() => import('../../components/LiquidityChart'), {
-  ssr: false,
-});
-
-const VolumeChart = dynamic(() => import('../../components/VolumeChart'), {
-  ssr: false,
-});
 
 const Stats = () => {
   const tableHeaders = [
