@@ -12,6 +12,7 @@ import TVLChart from 'components/TVLChart';
 import ButtonGroup from 'components/ButtonGroup';
 import VolumeChart from 'components/VolumeChart';
 import Table from 'components/Table';
+// import NoData from 'components/NoData';
 
 import styles from './styles.module.scss';
 
@@ -97,7 +98,7 @@ const StatsDetails = () => {
             </div>
             <h2 className={classNames(styles.label, styles['label-bold'])}>Swap</h2>
             <div className={classNames(styles.card, styles['card-swap'])}>
-              {/* <div className={styles.empty}>There is no swap</div> */}
+              {/* <NoData message="There is no swap" /> */}
               <Table
                 tableRows={Array(10).fill(tableRow)}
                 tableHead={tableHeader}
