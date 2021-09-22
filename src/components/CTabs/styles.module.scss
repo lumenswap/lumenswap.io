@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .tab {
   :global(.nav-tabs) {
@@ -37,5 +37,35 @@
 
   :global(.tab-pane) {
     padding-top: 12px;
+  }
+}
+
+.minimal {
+  :global(.nav-tabs) {
+    border-bottom: 0;
+    margin-bottom: 8px;
+  }
+
+  :global(.nav-item) {
+    color: $RollingStone;
+    background-color: transparent;
+  }
+
+  :global(.nav-item) {
+    margin-left: 10px;
+  }
+
+  :global(.nav-link) {
+    padding: 4px 4px;
+    font-size: 10px;
+    border: 0;
+    border-radius: 2px;
+  }
+
+  :global(.nav-link.active) {
+    background-color: transparent !important;
+    border: 0.5px solid #aeb1b7;
+    color: $CodGray;
+    font-weight: bold;
   }
 }
