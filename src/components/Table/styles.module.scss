@@ -62,6 +62,7 @@
 
 .table-scroll::-webkit-scrollbar {
   height: 6px;
+  width: 0;
   background-color: transparent;
 }
 
@@ -70,3 +71,20 @@
   background-color: $CatskillWhite;
   cursor: pointer;
 }
+
+.vertical-scroll {
+  overflow: auto;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+}
+
+.vertical-scroll thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+}
+

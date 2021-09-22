@@ -11,11 +11,14 @@ import usdLogo from 'assets/images/usd-coin-usdc.png';
 import TVLChart from 'components/TVLChart';
 import ButtonGroup from 'components/ButtonGroup';
 import VolumeChart from 'components/VolumeChart';
+import Table from 'components/Table';
 
 import styles from './styles.module.scss';
 
 const grid1 = 'col-xl-7 col-lg-6 col-md-6 col-sm-12 col-12';
 const grid2 = 'col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column';
+
+const tableHeader = ['TX', 'Info', 'Time'];
 
 const StatsDetails = () => {
   const router = useRouter();
@@ -28,6 +31,16 @@ const StatsDetails = () => {
     }
     return <VolumeChart />;
   };
+
+  const tableRow = (
+    <tr>
+      <td><a href="/">Gi9nf8ie…k5Tnd5s3</a></td>
+      <td className={styles['td-pair']}>
+        <div className="d-flex align-items-center">100 USDC<ArrowRight />5 XLM</div>
+      </td>
+      <td>1 min ago</td>
+    </tr>
+  );
 
   return (
     <div className="container-fluid pb-5">
@@ -84,7 +97,13 @@ const StatsDetails = () => {
             </div>
             <h2 className={classNames(styles.label, styles['label-bold'])}>Swap</h2>
             <div className={classNames(styles.card, styles['card-swap'])}>
-              <div className={styles.empty}>There is no swap</div>
+              {/* <div className={styles.empty}>There is no swap</div> */}
+              <Table
+                tableRows={Array(10).fill(tableRow)}
+                tableHead={tableHeader}
+                className={styles.table}
+                verticalScrollHeight={355}
+              />
             </div>
           </div>
         </div>

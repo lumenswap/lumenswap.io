@@ -115,6 +115,26 @@
   }
 }
 
+.table {
+  background: white;
+  border-radius: 4px;
+}
+
+.table tbody > tr td,
+.table thead > tr th {
+  font-size: 16px !important;
+  font-weight: normal;
+  padding: 0 24px !important;
+  height: 50px;
+  vertical-align: middle;
+}
+
+
+.td-pair svg {
+  width: 14px;
+  margin: 1px 6px 0 6px;
+}
+
 .empty {
   font-size: 18px;
   line-height: 1.56;

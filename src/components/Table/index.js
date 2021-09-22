@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-const Table = ({ tableHead, tableRows, className }) => (
-  <div className={classNames(styles['table-scroll'], className)}>
+const Table = ({
+  tableHead, tableRows, className, verticalScrollHeight,
+}) => (
+  <div
+    className={classNames(styles['table-scroll'], className,
+      verticalScrollHeight && styles['vertical-scroll'])}
+    style={verticalScrollHeight && { height: `${verticalScrollHeight}px` }}
+  >
     <table className={classNames('table', styles.table)}>
       <thead>
         <tr>
