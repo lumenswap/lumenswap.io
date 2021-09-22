@@ -20,7 +20,7 @@ const DepthChart = ({ appSpotPair }) => {
 
   if (data === null) {
     return (
-      <div className="d-flex align-items-center justify-content-center p-5">
+      <div style={{ height: 416 }} className="d-flex align-items-center justify-content-center p-5">
         <Loading size={50} />
       </div>
     );
