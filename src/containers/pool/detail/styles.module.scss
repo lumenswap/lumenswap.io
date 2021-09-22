@@ -30,22 +30,49 @@
   margin-left: 8px;
 }
 
+.btn-secondary {
+  width: 100%;
+  height: 32px;
+  border-radius: 4px;
+}
+
 .card {
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   background-color: white;
-}
 
-.card-liquidity {
-  margin-top: 14px;
-  padding-top: 10px;
+  &-liquidity {
+    margin-top: 14px;
+    padding-top: 10px;
 
-  .pair {
-    padding: 13px 0;
+    .pair {
+      padding: 13px 0;
+    }
+  }
+
+  &-fee {
+    margin-top: 16.5px;
+    padding: 10px 0 14px 0;
+
+    .pair {
+      margin-top: 12px;
+      margin-bottom: 14px;
+      padding: 4px 0;
+    }
+  }
+
+  &-chart {
+    margin-top: 15px;
+    padding: 5px 8px 0 10px;
+    height: calc(100% - 15px);
+
+    canvas, :global(.echarts-for-react) {
+      height: 340px !important;
+    }
   }
 }
 
-.card-section {
+.box-section {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -53,20 +80,20 @@
   padding-bottom: 15px;
 }
 
-.card-title {
+.box-title {
   font-size: 16px;
   line-height: 1.5;
   color: $ShuttleGray;
 }
 
-.card-value {
+.box-value {
   font-size: 24px;
   font-weight: 600;
   line-height: 1.42;
   color: $CodGray;
 }
 
-.card-pairs {
+.box-pairs {
   display: flex;
 
   .pair:first-child {
@@ -74,41 +101,15 @@
   }
 }
 
+.box-btn {
+  padding: 0 14px;
+}
+
+
 .pair {
   width: 50%;
   text-align: center;
   font-size: 18px;
   line-height: 1.56;
   color: $CodGray;
-}
-
-.card-fee {
-  margin-top: 16.5px;
-  padding: 10px 0 14px 0;
-
-  .pair {
-    margin-top: 12px;
-    margin-bottom: 14px;
-    padding: 4px 0;
-  }
-}
-
-.card-btn {
-  padding: 0 14px;
-}
-
-.btn-secondary {
-  width: 100%;
-  height: 32px;
-  border-radius: 4px;
-}
-
-.card-chart {
-  margin-top: 15px;
-  padding: 5px 8px 0 10px;
-  height: calc(100% - 15px);
-
-   canvas, :global(.echarts-for-react) {
-    height: 340px !important;
-  }
 }

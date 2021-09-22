@@ -75,25 +75,25 @@ const index = () => {
               </div>
               <div className={grid2}>
                 <div className={classNames(styles.card, styles['card-liquidity'])}>
-                  <div className={styles['card-section']}>
-                    <div className={styles['card-title']}>Liquidity</div>
-                    <div className={styles['card-value']}>$500</div>
+                  <div className={styles['box-section']}>
+                    <div className={styles['box-title']}>Liquidity</div>
+                    <div className={styles['box-value']}>$500</div>
                   </div>
-                  <div className={styles['card-pairs']}>
+                  <div className={styles['box-pairs']}>
                     <div className={styles.pair}>10 USDC</div>
                     <div className={styles.pair}>100 XLM</div>
                   </div>
                 </div>
                 <div className={classNames(styles.card, styles['card-fee'])}>
-                  <div className={styles['card-section']}>
-                    <div className={styles['card-title']}>Unclaimed fee’s</div>
-                    <div className={styles['card-value']}>$10</div>
+                  <div className={styles['box-section']}>
+                    <div className={styles['box-title']}>Unclaimed fee’s</div>
+                    <div className={styles['box-value']}>$10</div>
                   </div>
-                  <div className={styles['card-pairs']}>
+                  <div className={styles['box-pairs']}>
                     <div className={styles.pair}>1 USDC</div>
                     <div className={styles.pair}>2.33 XLM</div>
                   </div>
-                  <div className={styles['card-btn']}>
+                  <div className={styles['box-btn']}>
                     <Button
                       variant="secondary"
                       content="Claim fee’s"

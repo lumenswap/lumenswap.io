@@ -29,66 +29,66 @@
   background-color: white;
   margin-bottom: 17px;
 
-  &-title {
-    font-size: 16px;
-    line-height: 1.5;
-    color: $ShuttleGray;
-  }
 
-  &-value {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.42;
-    color: $CodGray;
-  }
+  &-chart {
+    padding: 5px 8px 0 10px;
 
-  &-pairs {
-    display: flex;
-
-    .pair {
-      width: 50%;
-      text-align: center;
-      font-size: 18px;
-      line-height: 1.56;
-      color: $CodGray;
-      padding: 13px 0;
-    }
-
-    .pair:first-child {
-      border-right: 1px solid $CatskillWhite;
+    canvas, :global(.echarts-for-react) {
+      height: 330px !important;
     }
   }
 
-  &-section {
-    display: flex;
-    flex-direction: column;
+  &-tvl {
+    .box-section {
+      padding-top: 12px;
+      padding-bottom: 16px;
+    }
+  }
+
+  &-swap {
+    margin-top: 12px;
+  }
+}
+
+.box-title {
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ShuttleGray;
+}
+
+.box-value {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.42;
+  color: $CodGray;
+}
+
+.box-pairs {
+  display: flex;
+
+  .pair {
+    width: 50%;
     text-align: center;
-    padding: 15px 0;
+    font-size: 18px;
+    line-height: 1.56;
+    color: $CodGray;
+    padding: 13px 0;
   }
 
-  &-section:not(:last-child) {
-    border-bottom: 1px solid $CatskillWhite;
-  }
-}
-
-.card-tvl {
-  .card-section {
-    padding-top: 12px;
-    padding-bottom: 16px;
+  .pair:first-child {
+    border-right: 1px solid $CatskillWhite;
   }
 }
 
-.card-swap {
-  margin-top: 12px;
+.box-section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 15px 0;
 }
 
-.card-chart {
-  padding: 5px 8px 0 10px;
-
-
-  canvas, :global(.echarts-for-react) {
-    height: 330px !important;
-  }
+.box-section:not(:last-child) {
+  border-bottom: 1px solid $CatskillWhite;
 }
 
 .button-group {
@@ -118,17 +118,16 @@
 .table {
   background: white;
   border-radius: 4px;
-}
 
-.table tbody > tr td,
-.table thead > tr th {
-  font-size: 16px !important;
-  font-weight: normal;
-  padding: 0 24px !important;
-  height: 50px;
-  vertical-align: middle;
+  tbody > tr td,
+  thead > tr th {
+    font-size: 16px !important;
+    font-weight: normal;
+    padding: 0 24px !important;
+    height: 50px;
+    vertical-align: middle;
+  }
 }
-
 
 .td-pair svg {
   width: 14px;

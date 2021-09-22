@@ -75,23 +75,23 @@ const StatsDetails = () => {
               </div>
               <div className={grid2}>
                 <div className={classNames(styles.card, styles['card-tvl'])}>
-                  <div className={styles['card-section']}>
-                    <div className={styles['card-title']}>TVL</div>
-                    <div className={styles['card-value']}>$500</div>
+                  <div className={styles['box-section']}>
+                    <div className={styles['box-title']}>TVL</div>
+                    <div className={styles['box-value']}>$500</div>
                   </div>
-                  <div className={styles['card-pairs']}>
+                  <div className={styles['box-pairs']}>
                     <div className={styles.pair}>10 USDC</div>
                     <div className={styles.pair}>100 XLM</div>
                   </div>
                 </div>
                 <div className={classNames(styles.card, styles['card-fee'])}>
-                  <div className={styles['card-section']}>
-                    <div className={styles['card-title']}>Volume 24h</div>
-                    <div className={styles['card-value']}>$10</div>
+                  <div className={styles['box-section']}>
+                    <div className={styles['box-title']}>Volume 24h</div>
+                    <div className={styles['box-value']}>$10</div>
                   </div>
-                  <div className={styles['card-section']}>
-                    <div className={styles['card-title']}>24 Fee</div>
-                    <div className={styles['card-value']}>$10</div>
+                  <div className={styles['box-section']}>
+                    <div className={styles['box-title']}>24 Fee</div>
+                    <div className={styles['box-value']}>$10</div>
                   </div>
                 </div>
               </div>
