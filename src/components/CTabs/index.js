@@ -9,15 +9,17 @@ const CTabs = ({
   onChange = () => {},
   customTabProps,
   className,
+  minimal,
+  style,
   extraComponent: ExtraComponent,
 }) => {
   const [currentTab, setCurrentTab] = useState(tabs[0].id);
 
   return (
     <div
-      className={classNames(styles.tab, className)}
+      className={classNames(minimal ? styles.minimal : styles.tab, className)}
       onSelect={onChange}
-      style={{ fontSize: '14px' }}
+      style={{ fontSize: '14px', ...style }}
     >
       <div style={{ margin: 0 }} className="row justify-content-between">
         <Tabs

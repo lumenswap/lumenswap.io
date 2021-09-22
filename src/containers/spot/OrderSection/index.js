@@ -20,7 +20,7 @@ const OrderSection = ({ appSpotPair, price, setPrice }) => {
 
   function fetchingOrderAPICallWrapper() {
     return fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
-      limit: 16,
+      limit: 17,
     }).then((res) => {
       setOrderBookData(res.data);
       return res.data;

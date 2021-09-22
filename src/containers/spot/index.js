@@ -9,6 +9,7 @@ import XLM from 'tokens/XLM';
 // import TradingviewChart from 'components/TradingviewChart';
 import DetailList from 'components/DetailList';
 import InfoSection from 'containers/spot/InfoSection';
+import CTabs from 'components/CTabs';
 import OrderSection from 'containers/spot/OrderSection';
 import TradeSection from 'containers/spot/TradeSection';
 import OrderFormSection from 'containers/spot/OrderFormSection';
@@ -19,11 +20,8 @@ import { addCustomPairAction } from 'actions/userCustomPairs';
 import { useDispatch, useSelector } from 'react-redux';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
+import ChartTab from './ChartTab';
 import styles from './styles.module.scss';
-
-const TVChart = dynamic(() => import('../../components/TVChart'), {
-  ssr: false,
-});
 
 const createdDefaultPairs = createPairForDefaultTokens();
 
@@ -39,6 +37,11 @@ const Spot = ({ tokens, custom, errorCode }) => {
   const [price, setPrice] = useState(null);
 
   const { deviceSize } = useBreakPoint();
+
+  const tabs = [
+    { title: 'TradingView', id: 'tvChart' },
+    { title: 'Depth', id: 'depthChart' },
+  ];
 
   useEffect(() => {
     if (tokens) {
@@ -170,7 +173,12 @@ const Spot = ({ tokens, custom, errorCode }) => {
               className={classNames(styles.card, styles['card-chart'], 'mb-1')}
             >
               <div>
-                <TVChart appSpotPair={appSpotPair} />
+                <CTabs
+                  tabs={tabs}
+                  tabContent={ChartTab}
+                  customTabProps={{ appSpotPair }}
+                  minimal
+                />
               </div>
             </div>
             <div
