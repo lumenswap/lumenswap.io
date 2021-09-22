@@ -27,7 +27,7 @@ const VolumeChart = () => {
       trigger: 'axis',
       alwaysShowContent: true,
       showContent: true,
-      position: [10, 0],
+      position: [5, 0],
       formatter(params) {
         const param = params[0];
         const info = { value: param.value, time: moment(param.axisValue).format('MMM Do YY') };

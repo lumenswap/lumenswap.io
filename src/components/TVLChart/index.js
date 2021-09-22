@@ -7,7 +7,7 @@ import fakeDataChart from 'helpers/fakeDataChart';
 
 import styles from './styles.module.scss';
 
-const LiquidityChart = () => {
+const TVLChart = () => {
   const { data, date } = fakeDataChart;
   const [label, setLabel] = useState({});
 
@@ -27,7 +27,7 @@ const LiquidityChart = () => {
       trigger: 'axis',
       alwaysShowContent: true,
       showContent: true,
-      position: [10, 0],
+      position: [5, 0],
       formatter(params) {
         const param = params[0];
         const info = { value: param.value, time: moment(param.axisValue).format('MMM Do YY') };
@@ -105,4 +105,4 @@ const LiquidityChart = () => {
   );
 };
 
-export default LiquidityChart;
+export default TVLChart;

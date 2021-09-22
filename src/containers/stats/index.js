@@ -7,7 +7,7 @@ import btcLogo from 'assets/images/btc-logo.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
 import CTable from 'components/CTable';
 import Input from 'components/Input';
-import LiquidityChart from 'components/LiquidityChart';
+import TVLChart from 'components/TVLChart';
 import VolumeChart from 'components/VolumeChart';
 
 import styles from './styles.module.scss';
@@ -79,7 +79,7 @@ const Stats = () => {
             <div className="row">
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className={classNames(styles.card, styles['card-chart'])}>
-                  <LiquidityChart style={{ marginTop: '-4px' }} />
+                  <TVLChart style={{ marginTop: '-4px' }} />
                 </div>
               </div>
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">

@@ -18,7 +18,7 @@ const ButtonGroup = ({ buttons, activeIndex, setValue }) => {
           key={i}
           name={button.label}
           onClick={(event) => handleClick(event, i)}
-          className={classNames(styles.button, (i === clickedId) && styles.active)}
+          className={classNames(styles.button, (i === clickedId) && styles.active, (i === clickedId) && 'active')}
         >
           {button.label}
         </button>

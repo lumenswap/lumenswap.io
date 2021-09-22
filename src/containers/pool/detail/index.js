@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import classNames from 'classnames';
-import dynamic from 'next/dynamic';
 
 import ObmHeader from 'components/ObmHeader';
 import ArrowRight from 'assets/images/arrowRight';
@@ -12,12 +11,9 @@ import CurrencyPair from 'components/CurrencyPair';
 import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import IncreaseLiquidity from 'blocks/IncreaseLiquidity';
+import TVLChart from 'components/TVLChart';
 
 import styles from './styles.module.scss';
-
-const LiquidityChart = dynamic(() => import('../../../components/LiquidityChart'), {
-  ssr: false,
-});
 
 const index = () => {
   const [showModal, setShowModal] = useState(false);
@@ -75,7 +71,7 @@ const index = () => {
             </div>
             <div className="row">
               <div className={grid1}>
-                <div className={classNames(styles.card, styles['card-chart'])}><LiquidityChart /></div>
+                <div className={classNames(styles.card, styles['card-chart'])}><TVLChart /></div>
               </div>
               <div className={grid2}>
                 <div className={classNames(styles.card, styles['card-liquidity'])}>

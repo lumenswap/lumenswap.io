@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
@@ -8,9 +8,11 @@ import ArrowRight from 'assets/images/arrowRight';
 import CurrencyPair from 'components/CurrencyPair';
 import btcLogo from 'assets/images/btc-logo.png';
 import usdLogo from 'assets/images/usd-coin-usdc.png';
+import TVLChart from 'components/TVLChart';
+import ButtonGroup from 'components/ButtonGroup';
+import VolumeChart from 'components/VolumeChart';
 
 import styles from './styles.module.scss';
-import Button from '../../../components/Button';
 
 const grid1 = 'col-xl-7 col-lg-6 col-md-6 col-sm-12 col-12';
 const grid2 = 'col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column';
@@ -18,6 +20,14 @@ const grid2 = 'col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column';
 const StatsDetails = () => {
   const router = useRouter();
   const tokens = router.query.token;
+  const [activeButton, setActiveButton] = useState('');
+
+  const setActiveChart = () => {
+    if (activeButton === 'tvl') {
+      return <TVLChart />;
+    }
+    return <VolumeChart />;
+  };
 
   return (
     <div className="container-fluid pb-5">
@@ -29,7 +39,7 @@ const StatsDetails = () => {
         <div className="row justify-content-center">
           <div className="col-xl-7 col-lg-11 col-md-12 col-sm-12 col-12">
             <h1 className={styles.label}>
-              Pool
+              Stats
               <div className="mx-2">
                 <ArrowRight />
               </div>
@@ -37,8 +47,17 @@ const StatsDetails = () => {
               <div className="ml-2">{tokens && `${tokens[0]}/${tokens[1]}`}</div>
             </h1>
             <div className="row">
-              <div className={grid1}>
-                grid one
+              <div className={classNames(grid1, 'position-relative')}>
+                <div className={styles['button-group']}>
+                  <ButtonGroup
+                    buttons={[{ value: 'volume', label: 'Volume' }, { value: 'tvl', label: 'TVL' }]}
+                    activeIndex={0}
+                    setValue={setActiveButton}
+                  />
+                </div>
+                <div className={classNames(styles.card, styles['card-chart'])}>
+                  {setActiveChart()}
+                </div>
               </div>
               <div className={grid2}>
                 <div className={classNames(styles.card, styles['card-tvl'])}>
