@@ -31,7 +31,7 @@ const VolumeChart = () => {
       formatter(params) {
         const param = params[0];
         const info = { value: param.value, time: moment(param.axisValue).format('MMM Do YY') };
-        console.warn(info);
+        // console.warn(info);
         return `<div><div class="chart-first-info">$${info.value}</div> <div class="chart-second-info">${info.time}</div></div>`;
       },
       className: 'echart-tooltip',
