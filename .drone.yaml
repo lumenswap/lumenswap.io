@@ -12,8 +12,10 @@ trigger:
   branches:
     - main
     - separate-app
-  # event:
-  #   - push
+  event:
+    - push
+  ref:
+    - refs/heads/separate-app
 
 steps:
   - name: "build"
@@ -62,6 +64,8 @@ trigger:
     - promote
   target:
     - production
+  ref:
+    - refs/heads/separate-app
 
 steps:
   - name: "build"
