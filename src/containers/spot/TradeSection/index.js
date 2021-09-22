@@ -14,7 +14,7 @@ const TradeSection = ({ appSpotPair }) => {
 
   function fetchingTradeApiCallWrapper() {
     fetchTradeAPI(appSpotPair.base, appSpotPair.counter, {
-      limit: 35,
+      limit: 37,
       order: 'desc',
     }).then((res) => {
       setTradeListData(res.data._embedded.records.map((item) => ({
