@@ -49,5 +49,5 @@ export default (res) => {
     return calculateAmount(acc, amount, i);
   }, []);
 
-  return { xAxisSteps, bids, asks };
+  return { xAxisSteps, bids: bids.reverse(), asks };
 };

@@ -34,7 +34,7 @@ export default (data) => ({
       emphasis: {
         focus: 'series',
       },
-      data: data?.bids.reverse().concat(Array.from({ length: data?.asks.length }).fill(null)),
+      data: data?.bids.concat(Array.from({ length: data?.asks.length }).fill(null)),
     },
     {
       name: 'Asks',
