@@ -34,6 +34,12 @@ const urlMaker = {
   order: {
     root: () => '/order',
   },
+  pool: {
+    root: () => '/pool',
+  },
+  stats: {
+    root: () => '/stats',
+  },
 };
 
 export default urlMaker;
