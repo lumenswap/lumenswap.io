@@ -12,14 +12,5 @@ module.exports = withImages(withTM({
     REACT_APP_MODE: process.env.REACT_APP_MODE,
     REACT_APP_PRODUCT_ENV: process.env.REACT_APP_PRODUCT_ENV,
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/swap',
-        permanent: true,
-      },
-    ];
-  },
   webpack5: false,
 }));
