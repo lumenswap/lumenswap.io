@@ -1,9 +1,11 @@
 FROM node:14.16.0-slim AS main
-WORKDIR /app
-COPY . /app
 ENV PORT=8080
-RUN rm .eslintrc.js
+
+COPY package.json package-lock.json /app/
+WORKDIR /app
 RUN npm ci
+COPY . /app
+RUN rm .eslintrc.js
 
 FROM main as demo
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
