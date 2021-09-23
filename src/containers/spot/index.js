@@ -2,11 +2,9 @@ import { useState, useEffect } from 'react';
 import Error from 'containers/404';
 import classNames from 'classnames';
 import ObmHeader from 'components/ObmHeader';
-import dynamic from 'next/dynamic';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
-// import TradingviewChart from 'components/TradingviewChart';
 import DetailList from 'components/DetailList';
 import InfoSection from 'containers/spot/InfoSection';
 import CTabs from 'components/CTabs';
@@ -25,14 +23,27 @@ import styles from './styles.module.scss';
 
 const createdDefaultPairs = createPairForDefaultTokens();
 
+function getInitialPair(pair) {
+  if (pair) {
+    return {
+      base: pair.base.issuer
+        ? getAssetDetails(pair.base)
+        : getAssetDetails(extractTokenFromCode(pair.base.code)),
+      counter: pair.counter.issuer
+        ? getAssetDetails(pair.counter)
+        : getAssetDetails(extractTokenFromCode(pair.counter.code)),
+    };
+  }
+  return { base: XLM, counter: USDC };
+}
+
 const Spot = ({ tokens, custom, errorCode }) => {
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
-  const [appSpotPair, setAppSpotPair] = useState({
-    base: getAssetDetails(XLM),
-    counter: getAssetDetails(USDC),
-  });
+  const initialAsset = getInitialPair(custom);
+
+  const [appSpotPair, setAppSpotPair] = useState(initialAsset);
 
   const [price, setPrice] = useState(null);
 
@@ -78,10 +89,12 @@ const Spot = ({ tokens, custom, errorCode }) => {
           counter: getAssetDetails(counter),
         });
 
-        const defaultFoundPair = createdDefaultPairs.find((pair) => pair.base.code === base.code
-        && pair.counter.code === counter.code
-        && pair.base.issuer === base.issuer
-        && pair.counter.issuer === counter.issuer);
+        const defaultFoundPair = createdDefaultPairs.find(
+          (pair) => pair.base.code === base.code
+            && pair.counter.code === counter.code
+            && pair.base.issuer === base.issuer
+            && pair.counter.issuer === counter.issuer,
+        );
 
         if (!defaultFoundPair) {
           const found = userCustomPairs.find(
@@ -121,15 +134,15 @@ const Spot = ({ tokens, custom, errorCode }) => {
         {/* top section */}
         <div className={classNames('row', styles.row)}>
           {!deviceSize.md && !deviceSize.sm && !deviceSize.mobile && (
-          <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
-            <div className={classNames(styles.card, styles['card-select'])}>
-              <OpenDialogElement
-                className="w-100"
-                appSpotPair={appSpotPair}
-                setAppSpotPair={setAppSpotPair}
-              />
+            <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
+              <div className={classNames(styles.card, styles['card-select'])}>
+                <OpenDialogElement
+                  className="w-100"
+                  appSpotPair={appSpotPair}
+                  setAppSpotPair={setAppSpotPair}
+                />
+              </div>
             </div>
-          </div>
           )}
 
           <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 c-col">
