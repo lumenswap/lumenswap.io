@@ -121,7 +121,11 @@ const DetailList = ({ appSpotPair, price }) => {
 
   return (
     <div className="row">
-      {[{ title: 'Price', value: `${price || '-'} ${price ? appSpotPair.counter.getCode() : ''}` },
+      {[
+        {
+          title: 'Price',
+          value: `${price || price === 0 ? price : '-'} ${price || price === 0 ? appSpotPair.counter.getCode() : ''}`,
+        },
         ...detailData,
       ].map((item, index) => (
         <div
