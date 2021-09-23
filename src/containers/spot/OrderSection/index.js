@@ -29,11 +29,16 @@ const OrderSection = ({ appSpotPair, price, setPrice }) => {
 
   useEffect(() => {
     if (orderBookData?.asks[0] && orderBookData?.bids[0]) {
+      console.log(sevenDigit((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
+        .div(2)
+        .toFixed(7)));
       setPrice(sevenDigit((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
         .div(2)
         .toFixed(7)));
+    } else {
+      setPrice(null);
     }
-  }, [orderBookData]);
+  }, [orderBookData, appSpotPair.base, appSpotPair.counter]);
 
   useEffect(() => {
     if (intervalRef.current) {
