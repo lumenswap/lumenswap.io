@@ -9,15 +9,8 @@ module.exports = withImages(withTM({
     REACT_APP_HOST: process.env.REACT_APP_HOST,
     REACT_APP_LUMEN_API: process.env.REACT_APP_LUMEN_API,
     REACT_APP_OPTIMIZELY_SDK_KEY: process.env.REACT_APP_OPTIMIZELY_SDK_KEY,
-  },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/swap',
-        permanent: true,
-      },
-    ];
+    REACT_APP_MODE: process.env.REACT_APP_MODE,
+    REACT_APP_PRODUCT_ENV: process.env.REACT_APP_PRODUCT_ENV,
   },
   webpack5: false,
 }));
