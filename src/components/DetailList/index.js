@@ -78,7 +78,7 @@ const DetailList = ({ appSpotPair, price }) => {
           .div(aggregatedData.last24hPrice).times(100);
 
         setDetailData([
-          { title: '24 Change', value: `${ch24.toFixed(2)}%`, status: ch24.gte(0) ? 'buy' : 'sell' },
+          { title: '24 Change', value: `${Number.isNaN(+ch24.toFixed(2)) ? '0.0%' : `${ch24.toFixed(2)}%`} `, status: ch24.gte(0) ? 'buy' : 'sell' },
           { title: '24 High', value: numeral(aggregatedData.high.toString()).format('0.0[00]a') },
           { title: '24 Low', value: numeral(aggregatedData.low.toString()).format('0.0[00]a') },
           { title: `24 Volume (${appSpotPair.base.getCode()})`, value: numeral(aggregatedData.baseVolume.toString()).format('0.0a') },
@@ -121,7 +121,7 @@ const DetailList = ({ appSpotPair, price }) => {
 
   return (
     <div className="row">
-      {[{ title: 'Price', value: `${price} ${appSpotPair.counter.getCode()}` },
+      {[{ title: 'Price', value: `${price || '-'} ${price ? appSpotPair.counter.getCode() : ''}` },
         ...detailData,
       ].map((item, index) => (
         <div
