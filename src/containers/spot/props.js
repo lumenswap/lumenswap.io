@@ -109,9 +109,7 @@ export async function spotPageGetServerSideProps(context) {
     };
   }
 
-  return {
-    props: {},
-  };
+  return redirectObj;
 }
 
 export async function customSpotPageGetServerSideProps(context) {
