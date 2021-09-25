@@ -29,7 +29,7 @@ export default (res) => {
   }));
   const mappedBids = res.data.bids.map((bid) => ({
     ...bid,
-    ...calculateAmountAndTotal(true, bid),
+    ...calculateAmountAndTotal(false, bid),
   }));
   const sortedMappedAsks = mappedAsks.sort((a, b) => 1 * new BN(a.price).comparedTo(b.price));
   const sortedMappedBids = mappedBids.sort((a, b) => -1 * new BN(a.price).comparedTo(b.price));
@@ -37,7 +37,7 @@ export default (res) => {
   const askPricesOnly = sortedMappedAsks.map((item) => item.price);
   const bidPricesOnly = sortedMappedBids.map((item) => item.price);
 
-  const xAxisSteps = [...bidPricesOnly, ...askPricesOnly];
+  const xAxisSteps = [...(bidPricesOnly.reverse()), ...askPricesOnly];
 
   const bids = sortedMappedBids.reduce((acc, cur, i) => {
     const amount = new BN(cur.amount).div(cur.price);
