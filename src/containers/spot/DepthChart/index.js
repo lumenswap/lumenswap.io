@@ -11,7 +11,7 @@ const DepthChart = ({ appSpotPair }) => {
 
   useEffect(() => {
     setData(null);
-    fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, { limit: 25 }).then((res) => {
+    fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, { limit: 200 }).then((res) => {
       setData(aggregateData(res));
     });
   }, [appSpotPair]);
