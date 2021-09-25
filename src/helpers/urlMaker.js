@@ -45,6 +45,12 @@ const urlMaker = {
   order: {
     root: () => `${rootUrl.obm}/order`,
   },
+  pool: {
+    root: () => '/pool',
+  },
+  stats: {
+    root: () => '/stats',
+  },
 };
 
 export default urlMaker;

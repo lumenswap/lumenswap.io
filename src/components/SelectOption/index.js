@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const SelectOption = ({
-  items, height, width, setValue,
+  items, height, width, setValue, className,
 }) => {
   const [selected, setSelected] = useState(items[0]);
 
@@ -26,6 +27,7 @@ const SelectOption = ({
         isSearchable
         backspaceRemovesValue={false}
         onChange={(e) => onChangeNetwork(e)}
+        className={className}
         styles={{
           ...styles,
           control: (base, state) => ({
@@ -47,6 +49,7 @@ SelectOption.defaultProps = {
   width: '100%',
   height: 'auto',
   setValue: () => {},
+  className: '',
 };
 
 SelectOption.propTypes = {
@@ -54,6 +57,7 @@ SelectOption.propTypes = {
   height: PropTypes.any,
   width: PropTypes.any,
   setValue: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default SelectOption;

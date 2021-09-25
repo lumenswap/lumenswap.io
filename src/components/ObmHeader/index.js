@@ -44,6 +44,8 @@ const ObmHeader = () => {
         public: true,
       },
       { name: 'Reward', href: urlMaker.reward.root(), public: false },
+      { name: 'Pool', href: urlMaker.pool.root(), public: true },
+      { name: 'Stats', href: urlMaker.stats.root(), public: true },
     ],
   };
 

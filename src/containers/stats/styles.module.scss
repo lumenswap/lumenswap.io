@@ -1,0 +1,73 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 76px;
+}
+
+.label {
+  font-size: 20px;
+  font-weight: 500;
+  color: $CodGray;
+  margin-bottom: 0;
+  display: flex;
+  margin-top: 30px;
+
+  &-bold {
+    font-weight: 600;
+    margin-top: 2px;
+  }
+}
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+
+  &-chart {
+    margin-top: 15px;
+    padding: 5px 8px 0 10px;
+
+    canvas, :global(.echarts-for-react) {
+      height: 200px !important;
+    }
+  }
+
+  &-table {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+}
+
+.pair {
+  margin-left: 6px;
+}
+
+.table tr {
+  height: 50px !important;
+  vertical-align: middle;
+}
+
+.table {
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: auto;
+}
+
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.form {
+  margin-right: 16px;
+  margin-left: 16px;
+
+  input {
+    border-radius: 6px !important;
+  }
+}
