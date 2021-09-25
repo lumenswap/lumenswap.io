@@ -1,12 +1,15 @@
 const rootUrl = {
   obm: '/obm',
   reward: '/reward',
+  amm: '/amm',
 };
 
 if (process.env.REACT_APP_MODE === 'OBM') {
   rootUrl.obm = '';
 } else if (process.env.REACT_APP_MODE === 'REWARD') {
   rootUrl.reward = '';
+} else if (process.env.REACT_APP_MODE === 'AMM') {
+  rootUrl.amm = '';
 }
 
 const urlMaker = {
@@ -46,10 +49,10 @@ const urlMaker = {
     root: () => `${rootUrl.obm}/order`,
   },
   pool: {
-    root: () => '/pool',
+    root: () => `${rootUrl.amm}/pool`,
   },
   stats: {
-    root: () => '/stats',
+    root: () => `${rootUrl.amm}/stats`,
   },
 };
 
