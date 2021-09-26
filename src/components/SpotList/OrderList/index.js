@@ -57,7 +57,7 @@ const OrderList = ({
       if (isSell) {
         sum = new BN(sum).plus(item.amount);
       } else {
-        sum = new BN(sum).plus(item.amount).div(item.price);
+        sum = new BN(sum).plus(item.innerAmount);
       }
       total = new BN(total).plus(item.total);
     }
