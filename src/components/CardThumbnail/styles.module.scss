@@ -1,0 +1,37 @@
+@import "styles/vars";
+
+.card {
+  padding: 10px 6px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+}
+
+.title {
+  font-size: 14px;
+  line-height: 1.43;
+  color: $ShuttleGray
+}
+
+.img {
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+  position: relative;
+  margin: 8px 0;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 500;
+  color: $CodGray;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  svg {
+    width: 12px;
+    height: auto;
+    margin-right: 4px;
+  }
+}
