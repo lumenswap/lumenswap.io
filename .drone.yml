@@ -9,11 +9,13 @@ concurrency:
   limit: 1
 
 trigger:
-  branches:
+  branch:
     - main
-    - separate-app
+    - master
   event:
     - push
+  ref:
+    - refs/heads/master
 
 steps:
   - name: "build"
@@ -55,13 +57,15 @@ concurrency:
   limit: 1
 
 trigger:
-  branches:
+  branch:
     - main
-    - separate-app
+    - master
   event:
     - promote
   target:
     - production
+  ref:
+    - refs/heads/master
 
 steps:
   - name: "build"
