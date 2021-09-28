@@ -40,7 +40,7 @@ const urlMaker = {
     root: () => `${rootUrl.obm}/market`,
   },
   reward: {
-    root: () => `${rootUrl.reward}/reward`,
+    root: () => `${rootUrl.reward}/`,
   },
   wallet: {
     root: () => `${rootUrl.obm}/wallet`,
