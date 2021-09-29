@@ -7,7 +7,7 @@ import Logo from 'assets/images/logo';
 import styles from './styles.module.scss';
 
 const CardThumbnail = ({
-  name, imgSrc, price,
+  name, imgSrc, price, onClick,
 }) => {
   const divRef = useRef(null);
   const [dimensions, setDimensions] = useState({ size: 180 });
@@ -28,7 +28,12 @@ const CardThumbnail = ({
   }, []);
 
   return (
-    <div className={styles.card} ref={divRef}>
+    <div
+      className={styles.card}
+      ref={divRef}
+      onClick={onClick}
+      style={onClick && { cursor: 'pointer' }}
+    >
       <div className={styles.title}>#{name}</div>
       <div className={styles.img}>
         <Image src={imgSrc} width={dimensions.size} height={dimensions.size} />
@@ -41,10 +46,15 @@ const CardThumbnail = ({
   );
 };
 
+CardThumbnail.defaultProps = {
+  onClick: null,
+};
+
 CardThumbnail.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.any.isRequired,
   imgSrc: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default CardThumbnail;

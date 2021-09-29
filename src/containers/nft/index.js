@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
 import ObmHeader from 'components/ObmHeader';
 import CardThumbnail from 'components/CardThumbnail';
@@ -45,6 +46,8 @@ const dropdownItems = [
 
 const nft = () => {
   const [select, setSelect] = useState(dropdownItems[0]);
+  const router = useRouter();
+
   return (
     <div className="container-fluid">
       <Head>
@@ -73,7 +76,7 @@ const nft = () => {
                     name={item.name}
                     imgSrc={item.img}
                     price={item.price}
-                    index={index}
+                    onClick={() => { router.push(`nft/${item.id}`); }}
                   />
                 </div>
               ))}
