@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import classNames from 'classnames';
@@ -10,11 +10,14 @@ import Button from 'components/Button';
 import BasicList from 'components/BasicList';
 import CTabs from 'components/CTabs';
 import Table from 'components/Table';
+import ModalDialog from 'components/ModalDialog';
+import SetNFTPrice from 'blocks/SetNFTPrice';
 import imgSrc from 'assets/images/nft-sample-2.png';
 
 import styles from './styles.module.scss';
 
 const NFTDetail = () => {
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
   const nftInfo = [
@@ -92,7 +95,19 @@ const NFTDetail = () => {
                 content="Place an offer"
                 fontWeight={500}
                 className={styles.btn}
+                onClick={() => setShowModal(true)}
               />
+              {showModal
+              && (
+              <ModalDialog
+                show={showModal}
+                setShow={setShowModal}
+                title="Set a price"
+                className="main"
+              >
+                <SetNFTPrice />
+              </ModalDialog>
+              )}
             </div>
 
             <div className={classNames('row', styles.row)}>
