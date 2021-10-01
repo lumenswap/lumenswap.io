@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import classNames from 'classnames';
-
+import isSameAsset from 'helpers/isSameAsset';
+import getAssetDetails from 'helpers/getAssetDetails';
+import defaultTokens from 'tokens/defaultTokens';
 import ObmHeader from 'components/ObmHeader';
 import ArrowRight from 'assets/images/arrowRight';
 import btcLogo from 'assets/images/btc-logo.png';
@@ -15,18 +16,17 @@ import TVLChart from 'components/TVLChart';
 
 import styles from './styles.module.scss';
 
-const index = () => {
+const index = ({ tokens }) => {
   const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
-  const tokens = router.query.token;
-
+  const tokenA = defaultTokens.find((token) => token.code === tokens.tokenA);
+  const tokenB = defaultTokens.find((token) => token.code === tokens.tokenB);
   const grid1 = 'col-xl-7 col-lg-6 col-md-6 col-sm-12 col-12';
   const grid2 = 'col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column';
 
   return (
     <div className="container-fluid pb-5">
       <Head>
-        <title>{tokens && `${tokens[0]}/${tokens[1]}`} | Lumenswap</title>
+        <title>{tokens && `${tokens.tokenA}/${tokens.tokenB}`} | Lumenswap</title>
       </Head>
       <ObmHeader />
       <div className={classNames('layout main', styles.main)}>
@@ -39,8 +39,8 @@ const index = () => {
                   <div className="mx-2">
                     <ArrowRight />
                   </div>
-                  <CurrencyPair size={26} source={[btcLogo, usdLogo]} />
-                  <div className="ml-2">{tokens && `${tokens[0]}/${tokens[1]}`}</div>
+                  <CurrencyPair size={26} source={[tokenA.logo, tokenB.logo]} />
+                  <div className="ml-2">{tokens && `${tokens.tokenA}/${tokens.tokenB}`}</div>
                 </h1>
               </div>
               <div className={grid2}>
@@ -109,5 +109,13 @@ const index = () => {
     </div>
   );
 };
+
+export async function getServerSideProps({ params }) {
+  return {
+    props: {
+      tokens: params,
+    },
+  };
+}
 
 export default index;

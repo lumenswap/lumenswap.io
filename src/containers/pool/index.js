@@ -1,24 +1,21 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import ObmHeader from 'components/ObmHeader';
 import Button from 'components/Button';
-import Table from 'components/Table';
-import CurrencyPair from 'components/CurrencyPair';
-import btcLogo from 'assets/images/btc-logo.png';
-import usdLogo from 'assets/images/usd-coin-usdc.png';
 import AddLiquidity from 'blocks/AddLiquidity';
+import fetchPools from 'helpers/poolsAPI';
 import { openModalAction } from 'actions/modal';
+import Loading from 'components/Loading';
+import { useEffect, useState } from 'react';
+import PoolData from './poolData';
 
 import styles from './styles.module.scss';
 
-const tableHeader = ['Pool', 'Amount'];
-
 const PoolPage = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
+  const [userPools, setUserPools] = useState(null);
+  const userAdress = useSelector((state) => state.user.detail.address);
 
   const openModal = () => {
     dispatch(
@@ -32,17 +29,11 @@ const PoolPage = () => {
     );
   };
 
-  const tableRows = () => [0, 1, 2, 3, 4, 5, 6, 7, 8].map((row) => (
-    <tr key={row} onClick={() => router.push('pool/XLM/USDC')}>
-      <td width="50%">
-        <div className="d-flex">
-          <CurrencyPair size={22} source={[btcLogo, usdLogo]} />
-          <span className={styles.pair}>XLM/USDC</span>
-        </div>
-      </td>
-      <td>1000 USDC/ 200 XLM</td>
-    </tr>
-  ));
+  useEffect(() => {
+    fetchPools(userAdress).then((data) => {
+      setUserPools(data.map((pool) => ({ ...pool, key: pool.token1.code })));
+    });
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -62,11 +53,13 @@ const PoolPage = () => {
                 onClick={openModal}
               />
             </div>
-            <Table
-              tableRows={tableRows()}
-              tableHead={tableHeader}
-              className={styles.table}
-            />
+            {!userPools
+              ? (
+                <div className={styles['loading-container']}>
+                  <Loading size={48} />
+                </div>
+              )
+              : <PoolData userPools={userPools} />}
           </div>
         </div>
       </div>

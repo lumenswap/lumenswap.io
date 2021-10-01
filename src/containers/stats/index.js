@@ -1,68 +1,78 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-
+import fetchStats from 'helpers/statsApi';
 import ObmHeader from 'components/ObmHeader';
 import CurrencyPair from 'components/CurrencyPair';
-import btcLogo from 'assets/images/btc-logo.png';
-import usdLogo from 'assets/images/usd-coin-usdc.png';
+import numeral from 'numeral';
 import CTable from 'components/CTable';
 import Input from 'components/Input';
 import TVLChart from 'components/TVLChart';
 import VolumeChart from 'components/VolumeChart';
-
+import isSameAsset from 'helpers/isSameAsset';
+import defaultTokens from 'tokens/defaultTokens';
+import getAssetDetails from 'helpers/getAssetDetails';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 
+function NoDataMessage() {
+  return <div className={styles['no-data-message-container']}><span>There is no pools</span></div>;
+}
+
 const Stats = () => {
+  const [userStats, setUserStats] = useState(null);
+  const userAdress = useSelector((state) => state.user.detail.address);
   const tableHeaders = [
     {
       title: 'Pool',
       dataIndex: 'pool',
       key: '1',
-      render: (data) => (
-        <div className="d-flex">
-          <CurrencyPair size={20} source={[btcLogo, usdLogo]} />
-          <span className={styles.pair}>{data.pair.base.code}/{data.pair.counter.code}</span>
-        </div>
-      ),
+      render: (data) => {
+        const asset1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token1));
+        const asset2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token2));
+        return (
+          <div className="d-flex">
+            <CurrencyPair size={20} source={[asset1.logo, asset2.logo]} />
+            <span className={styles.pair}>{data.token1.code}/{data.token2.code}</span>
+          </div>
+        );
+      },
+
     },
     {
       title: 'TVL',
       dataIndex: 'tvl',
       key: '2',
       sortFunc: () => {},
-      render: (data) => data.tvl,
+      render: (data) => <span>${numeral(data.balance).format('0,0')}</span>,
     },
     {
       title: 'Volume 24h',
       dataIndex: 'volume24',
       key: '3',
       sortFunc: () => {},
-      render: (data) => data.volume24h,
+      render: (data) => data.volumePerDay,
     },
     {
       title: 'Volume 7d',
       dataIndex: 'volume7',
       key: '4',
       sortFunc: () => {},
-      render: (data) => data.volume7d,
+      render: (data) => data.volumePerWeek,
     },
   ];
 
-  const data = Array(6).fill(
-    {
-      pair: { base: { code: 'BTC', logo: btcLogo }, counter: { code: 'USD', logo: usdLogo } },
-      tvl: '$100',
-      volume24h: '$12',
-      volume7d: '$7',
-    },
-  );
+  const rowLink = (data) => urlMaker.stats.tokens(data.token1.code, data.token2.code);
 
-  const rowLink = (data) => {
-    const assetA = data.pair.base.code;
-    const assetB = data.pair.counter.code;
-
-    return `stats/${assetA}/${assetB}`;
-  };
+  useEffect(() => {
+    fetchStats(userAdress).then((data) => {
+      setUserStats(data.map((item) => ({
+        ...item,
+        key: item.token1.code,
+      })));
+    });
+  }, []);
 
   return (
     <div className="container-fluid pb-5">
@@ -107,8 +117,9 @@ const Stats = () => {
               <CTable
                 className={styles.table}
                 columns={tableHeaders}
-                dataSource={data}
+                dataSource={userStats}
                 rowLink={rowLink}
+                noDataMessage={NoDataMessage}
               />
             </div>
           </div>
