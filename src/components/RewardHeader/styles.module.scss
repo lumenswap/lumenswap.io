@@ -63,6 +63,27 @@
   justify-content: center;
   align-items: center;
 }
+.out-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $Manatee;
+  &:hover {
+    text-decoration: none;
+    color: $Manatee;
+  }
+  div {
+    margin-left: 2px;
+    margin-bottom: 2px;
+  }
+}
 
 @media (max-width: $sm) {
   .list > li {
