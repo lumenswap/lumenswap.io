@@ -4,9 +4,11 @@ import urlMaker from 'helpers/urlMaker';
 import classNames from 'classnames';
 import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
+import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
+import arrowIcon from '../../../public/images/arrow-down.svg';
 import styles from './styles.module.scss';
 
 const RewardHeader = () => {
@@ -19,6 +21,17 @@ const RewardHeader = () => {
         <div>
           <li><Link href={urlMaker.root()}><a><Logo /></a></Link></li>
           <li><NavLink name="Dashboard" href={urlMaker.reward.root()} /></li>
+          <li>
+            <a
+              className={styles['out-link']}
+              target="_blank"
+              href="https://medium.com/lumenswap/lumenswap-ecosystem-reward-25f1ddd61ab7"
+              rel="noreferrer"
+            >
+              How to get rewards
+              <div><Image src={arrowIcon} width={12} height={12} /></div>
+            </a>
+          </li>
         </div>
       </ul>
       {isLogged ? <CustomDropdown height="40px" width="160px" />
