@@ -105,7 +105,7 @@ const NFTDetail = () => {
                 title="Set a price"
                 className="main"
               >
-                <SetNFTPrice />
+                <SetNFTPrice mode="set" />
               </ModalDialog>
               )}
             </div>
