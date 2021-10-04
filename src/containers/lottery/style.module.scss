@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 .main {
   margin-left: 297px;
   margin-right: 297px;
@@ -29,6 +29,51 @@
   line-height: normal;
   letter-spacing: normal;
   color: $CodGray;
+}
+
+.table {
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: auto;
+  max-height: 593px;
+  table {
+    width: 100% !important;
+    min-width: 712px;
+    tr {
+      th {
+        border-radius: 0px !important;
+      }
+    }
+    a {
+      height: 52px !important;
+      tr {
+        td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.noDataMessage {
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  margin-top: 40px;
 }
 
 @media (max-width: $md) {
