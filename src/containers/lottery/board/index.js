@@ -1,7 +1,7 @@
 import Loading from 'components/Loading';
 import LotteryHead from 'containers/lottery/LotteryHead';
 import { useEffect, useState } from 'react';
-import LotteryHeader from '../components/LotteryHeader';
+import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 import RoundData from './RoundData';
 
