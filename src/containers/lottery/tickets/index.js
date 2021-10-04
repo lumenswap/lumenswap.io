@@ -1,7 +1,10 @@
 import Loading from 'components/Loading';
 import CTable from 'components/CTable';
+import TableDropDown from 'components/TableDropDown';
 import LotteryHead from 'containers/lottery/LotteryHead';
 import { useEffect, useState } from 'react';
+import Input from 'components/Input';
+import classNames from 'classnames';
 import tableHeaders from './tableHeaders';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
@@ -14,9 +17,15 @@ const NoDataMessage = () => (
 
 const index = () => {
   const [loading, setLoading] = useState(true);
+  const [tickets, setTickets] = useState(null);
+  const [rounds, setRounds] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
+      const fetchedTickets = await new Promise((resolve) => setTimeout(() => {
+        resolve([1, 2, 3, 4, 5]);
+      }, 1500));
+
       const fetchedRounds = await new Promise((resolve) => setTimeout(() => {
         resolve([
           { title: 'Round #1', status: 'Live', image: 'tesla.jpg' },
@@ -25,6 +34,8 @@ const index = () => {
       }, 1500));
 
       setLoading(false);
+      setRounds(fetchedRounds);
+      setTickets(fetchedTickets);
     }
 
     fetchData();
@@ -50,15 +61,32 @@ const index = () => {
         <LotteryHeader />
       </div>
       <div className={styles.main}>
-        <div className={styles.title}>
+        <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
           <h1 className={styles.board}>My Tickets</h1>
+          <TableDropDown placeHolder="All tickets" items={rounds?.map((round) => round.title)} />
         </div>
-        <CTable
-          className={styles.table}
-          columns={tableHeaders}
-          dataSource={[1, 2, 3, 4, 5]}
-          noDataMessage={NoDataMessage}
-        />
+        <div className={styles.tableContainer}>
+          <div className={styles.inputContainer}>
+            <div className={styles.input}>
+              <Input
+                name="ticketID"
+                id="ticketID"
+                type="text"
+                placeholder="Enter your ticket ID"
+                onChange={() => {}}
+                height={40}
+                fontSize={15}
+                className={styles.input}
+              />
+            </div>
+          </div>
+          <CTable
+            className={styles.table}
+            columns={tableHeaders}
+            dataSource={tickets}
+            noDataMessage={NoDataMessage}
+          />
+        </div>
       </div>
     </>
   );

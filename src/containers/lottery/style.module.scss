@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 .main {
   margin-left: 297px;
   margin-right: 297px;
@@ -31,11 +31,51 @@
   color: $CodGray;
 }
 
+.tableContainer {
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  border-radius: 4px;
+  background: white;
+}
+
+.ticketId {
+  color: $BlueRibbon;
+}
+
+.input {
+  margin-top: 16px;
+  margin-right: 24px;
+  min-width: 292px;
+  width: 292px;
+  border-radius: 4px;
+
+  input {
+    border-radius: 6px;
+  }
+  input::placeholder {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+}
+
+.inputContainer {
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .table {
   overflow-y: auto;
   scrollbar-width: none;
   height: auto;
   max-height: 593px;
+  border-radius: 4px;
   table {
     width: 100% !important;
     min-width: 712px;
@@ -74,6 +114,14 @@
   text-align: center;
   color: $ShuttleGray;
   margin-top: 40px;
+  padding-bottom: 40px;
+}
+
+@media (max-width: $xl) {
+  .main {
+    margin-right: 100px;
+    margin-left: 100px;
+  }
 }
 
 @media (max-width: $md) {
@@ -83,8 +131,10 @@
   }
 }
 
-@media (max-width: 363px) {
+@media (max-width: $sm) {
   .input {
-    margin-top: 62px;
+    min-width: auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
