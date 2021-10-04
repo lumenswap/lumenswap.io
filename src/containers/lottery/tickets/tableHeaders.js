@@ -1,5 +1,7 @@
 import styles from '../style.module.scss';
 
+const truncateText = (text) => (text.length > 10 ? `${text.slice(0, 6)}...${text.slice(-6)}` : text);
+
 export default [
   {
     title: 'Ticket ID',
@@ -7,7 +9,7 @@ export default [
     key: '1',
     render: (data) => (
       <div className={styles.ticketId}>
-        test
+        {truncateText('123456789101112131415161718')}
       </div>
     ),
   },
@@ -16,7 +18,7 @@ export default [
     dataIndex: 'round',
     key: '2',
     render: (data) => (
-      <div className={styles.tableText}>
+      <div>
         #1
       </div>
     ),
@@ -26,7 +28,7 @@ export default [
     dataIndex: 'date',
     key: '3',
     render: (data) => (
-      <div className={styles.tableText}>
+      <div>
         1 month ago
       </div>
     ),
