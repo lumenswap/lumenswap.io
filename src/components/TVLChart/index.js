@@ -7,7 +7,7 @@ import fakeDataChart from 'helpers/fakeDataChart';
 
 import styles from './styles.module.scss';
 
-const TVLChart = () => {
+const TVLChart = ({ showLabel = true }) => {
   const { data, date } = fakeDataChart;
   const [label, setLabel] = useState({});
 
@@ -29,10 +29,13 @@ const TVLChart = () => {
       showContent: true,
       position: [5, 0],
       formatter(params) {
-        const param = params[0];
-        const info = { value: param.value, time: moment(param.axisValue).format('MMM Do YY') };
-        // console.warn(info);
-        return `<div><div class="chart-first-info">$${info.value}</div> <div class="chart-second-info">${info.time}</div></div>`;
+        if (showLabel) {
+          const param = params[0];
+          const info = { value: param.value, time: moment(param.axisValue).format('MMM Do YY') };
+          // console.warn(info);
+          return `<div><div class="chart-first-info">$${info.value}</div> <div class="chart-second-info">${info.time}</div></div>`;
+        }
+        return null;
       },
       className: 'echart-tooltip',
     },
@@ -92,10 +95,13 @@ const TVLChart = () => {
 
   return (
     <div className={styles.echart}>
+      {showLabel
+      && (
       <div className={styles.default}>
         <div className="chart-first-info">${label.value}</div>
         <div className="chart-second-info">{label.time}</div>
       </div>
+      )}
       <ReactECharts
         option={option}
         notMerge

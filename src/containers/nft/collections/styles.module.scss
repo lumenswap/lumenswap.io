@@ -1,0 +1,23 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 76px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.row {
+  margin-right: -12px !important;
+  margin-left: -12px !important;
+}
+
+.col {
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}
