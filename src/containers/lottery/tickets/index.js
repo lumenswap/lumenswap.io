@@ -12,7 +12,7 @@ import styles from '../style.module.scss';
 
 const NoDataMessage = () => (
   <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>You have no Ticketes.</div>
+    <div className={styles.noDataMessage}>You have no ticket</div>
   </div>
 );
 
@@ -44,19 +44,6 @@ const index = () => {
     fetchData();
   }, []);
 
-  if (loading) {
-    return (
-      <>
-        <div className="container-fluid">
-          <LotteryHead title="My Tickets" />
-          <LotteryHeader />
-        </div>
-        <div className={styles.loadingContainer}>
-          <Loading size={50} />
-        </div>
-      </>
-    );
-  }
   return (
     <>
       <div className="container-fluid">
@@ -69,6 +56,8 @@ const index = () => {
           <TableDropDown onChange={() => {}} placeHolder="All tickets" items={rounds?.map((round) => round.title)} />
         </div>
         <div className={styles.tableContainer}>
+          {!loading
+          && (
           <div className={styles.inputContainer}>
             <div className={styles.input}>
               <Input
@@ -83,17 +72,26 @@ const index = () => {
               />
             </div>
           </div>
+          )}
           <CTable
             className={styles.table}
             columns={tableHeaders}
             dataSource={tickets}
             noDataMessage={NoDataMessage}
+            loading={loading}
           />
         </div>
 
+        {!loading
+        && (
         <div style={{ marginTop: 24 }} className="d-flex">
-          <Pagination pages={pages} currentPage={page} onPageClick={(newPage) => setPage(newPage)} />
+          <Pagination
+            pages={pages}
+            currentPage={page}
+            onPageClick={(newPage) => setPage(newPage)}
+          />
         </div>
+        )}
       </div>
     </>
   );
