@@ -2,6 +2,7 @@ import Loading from 'components/Loading';
 import CTable from 'components/CTable';
 import TableDropDown from 'components/TableDropDown';
 import LotteryHead from 'containers/lottery/LotteryHead';
+import Pagination from 'components/Pagination';
 import { useEffect, useState } from 'react';
 import Input from 'components/Input';
 import classNames from 'classnames';
@@ -19,6 +20,8 @@ const index = () => {
   const [loading, setLoading] = useState(true);
   const [tickets, setTickets] = useState(null);
   const [rounds, setRounds] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(10);
 
   useEffect(() => {
     async function fetchData() {
@@ -63,7 +66,7 @@ const index = () => {
       <div className={styles.main}>
         <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
           <h1 className={styles.board}>My Tickets</h1>
-          <TableDropDown placeHolder="All tickets" items={rounds?.map((round) => round.title)} />
+          <TableDropDown onChange={() => {}} placeHolder="All tickets" items={rounds?.map((round) => round.title)} />
         </div>
         <div className={styles.tableContainer}>
           <div className={styles.inputContainer}>
@@ -86,6 +89,10 @@ const index = () => {
             dataSource={tickets}
             noDataMessage={NoDataMessage}
           />
+        </div>
+
+        <div style={{ marginTop: 24 }} className="d-flex">
+          <Pagination pages={pages} currentPage={page} onPageClick={(newPage) => setPage(newPage)} />
         </div>
       </div>
     </>
