@@ -1,4 +1,3 @@
-import Loading from 'components/Loading';
 import CTable from 'components/CTable';
 import TableDropDown from 'components/TableDropDown';
 import LotteryHead from 'containers/lottery/LotteryHead';
