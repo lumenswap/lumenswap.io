@@ -7,7 +7,7 @@ const index = ({ pages, currentPage, onPageClick }) => {
   const paginationArray = Array.from({ length: pages });
   return (
     <div className={styles['pagination-container']}>
-      <button type="button" onClick={() => onPageClick(currentPage - 1)}>
+      <button disabled={currentPage <= 1} type="button" onClick={() => onPageClick(currentPage - 1)}>
         <Image
           className={classNames(styles.arrowLeft, currentPage <= 1 && styles.disabled)}
           src={ArrowPagination}
