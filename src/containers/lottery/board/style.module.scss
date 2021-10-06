@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .roundsList {
   display: grid;
@@ -27,42 +27,6 @@
   padding: 10px 16px;
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  font-family: SofiaPro;
-  font-size: 12px;
-  font-weight: normal;
-  font-stretch: normal;
-  border-radius: 4px;
-  padding: 1px 6px;
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    margin-right: 3px;
-  }
-
-  &.live {
-    color: $BlueRibbon;
-    background-color: #e3e9ff;
-
-    .dot {
-      background-color: $BlueRibbon;
-    }
-  }
-
-  &.ended {
-    color: $Manatee;
-    background: $CatskillWhite;
-
-    .dot {
-      background-color: $Manatee;
-    }
-  }
 }
 
 @media (max-width: $md) {

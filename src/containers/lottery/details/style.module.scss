@@ -1,0 +1,59 @@
+@import "styles/vars";
+
+.roundImage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 67px 0;
+  justify-content: center;
+}
+
+.roundItem {
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+}
+
+.round-info {
+  .box-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: $CodGray;
+  }
+
+  .info-title {
+    font-size: 16px;
+    color: $ShuttleGray;
+    font-family: SofiaPro;
+  }
+
+  & > div {
+    padding: 18px 14px;
+    border-radius: 4px;
+    background: white;
+  }
+
+  .winner-info {
+    margin-top: 24px;
+    padding: 30px 50px;
+    text-align: center;
+
+    p:first-child {
+      color: $CodGray;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    p {
+      color: $ShuttleGray;
+    }
+
+    div {
+      font-size: 24px;
+      font-weight: 600;
+      color: $CodGray;
+    }
+  }
+}
