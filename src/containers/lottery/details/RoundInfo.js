@@ -1,4 +1,7 @@
 import classNames from 'classnames';
+import Image from 'next/image';
+import ArrowIcon from 'assets/images/arrow-right-icon.png';
+import QuestionIcon from 'assets/images/question-icon.png';
 import styles from './style.module.scss';
 
 const RoundInfo = ({ round }) => (
@@ -7,14 +10,29 @@ const RoundInfo = ({ round }) => (
       <p className={styles['box-title']}>Round Info</p>
       <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
         <span className={styles['info-title']}>Period</span>
-        <span>1 Sep 2021 to 1 Oct 2021</span>
+        <span>1 Sep 2021
+          <span style={{ marginLeft: 6, marginRight: 6 }}>
+            <Image src={ArrowIcon} width={12} height={12} />
+          </span>
+          1 Oct 2021
+        </span>
       </div>
       <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
-        <span className={styles['info-title']}>Ticket</span>
+        <span className={styles['info-title']}>
+          Ticket
+          <span style={{ marginLeft: 2, height: 18 }}>
+            <Image src={QuestionIcon} width={16} height={16} />
+          </span>
+        </span>
         <span>10,000</span>
       </div>
       <div style={{ marginBottom: 5 }} className="d-flex justify-content-between">
-        <span className={styles['info-title']}>Participants</span>
+        <span className={styles['info-title']}>
+          Participants
+          <span style={{ marginLeft: 2, height: 18 }}>
+            <Image src={QuestionIcon} width={16} height={16} />
+          </span>
+        </span>
         <span>500</span>
       </div>
     </div>
