@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import Loading from 'components/Loading';
 import LotteryHead from 'containers/lottery/LotteryHead';
 import Button from 'components/Button';
-import { useEffect, useState } from 'react';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
+import BoardData from './BoardData';
 import RoundPrize from './RoundPrize';
 import RoundInfo from './RoundInfo';
 import LotteryHeader from '../LotteryHeader';
@@ -28,6 +29,11 @@ const index = () => {
         resolve([1, 2, 3, 4, 5]);
       }, 1500));
 
+      const fetchedParticipants = await new Promise((resolve) => setTimeout(() => {
+        resolve([1, 2, 3, 4, 5]);
+      }, 1500));
+
+      setParticipants(fetchedParticipants);
       setTickets(fetchedTickets);
       setRound(fetchedRound);
       setLoading(false);
@@ -76,7 +82,9 @@ const index = () => {
             <RoundInfo round={round} />
           </div>
         </div>
-        <div className="row mx-0 " />
+        <div style={{ marginTop: 24, marginBottom: 55 }} className={styles['table-container']}>
+          <BoardData participants={participants} tickets={tickets} loading={loading} />
+        </div>
       </div>
     </>
   );
