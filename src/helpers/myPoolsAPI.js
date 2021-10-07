@@ -10,7 +10,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -21,7 +22,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -32,7 +34,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -43,7 +46,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -54,7 +58,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -65,7 +70,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -76,7 +82,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -87,7 +94,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -98,7 +106,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -109,7 +118,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -120,7 +130,8 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
   },
   {
     token1: getAssetDetails({
@@ -131,15 +142,41 @@ const api = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     }),
-    balance: 12400,
+    balance1: 10,
+    balance2: 12400,
+  },
+  {
+    token1: getAssetDetails({
+      code: 'XLM',
+      issuer: 'GDSTRSHXHGJ7ZIVRBXEYE5Q74XUVCUSEKEBR7UCHEUUEK72N7I7KJ6JH',
+    }),
+    token2: getAssetDetails({
+      code: 'LSP',
+      issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
+    }),
+    balance1: 10,
+    balance2: 12400,
+  },
+  {
+    token1: getAssetDetails({
+      code: 'XLM',
+      issuer: 'GDSTRSHXHGJ7ZIVRBXEYE5Q74XUVCUSEKEBR7UCHEUUEK72N7I7KJ6JH',
+    }),
+    token2: getAssetDetails({
+      code: 'LSP',
+      issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
+    }),
+    balance1: 10,
+    balance2: 12400,
   },
 ];
 
-function getPools() {
+function getmyPools() {
   return api;
 }
-function fetchPools(userAddress) {
-  return new Promise((reslove) => setTimeout(reslove, 3000)).then(() => getPools());
+
+function fetchMyPools(userAddress) {
+  return new Promise((reslove) => setTimeout(reslove, 3000)).then(() => getmyPools());
 }
 
-export default fetchPools;
+export default fetchMyPools;

@@ -40,9 +40,32 @@
   font-size: 18px;
   margin-top: 24px;
 }
-.footer-inputs-container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
+
+.inpool {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    height: 28px;
+    align-items: center;
+    margin-bottom: 10px;
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    color: $CodGray;
+    div {
+        display: flex;
+        flex-direction: row;
+        div:first-child {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            margin-top: 3px;
+        }
+    }
+    
 }

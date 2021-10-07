@@ -11,8 +11,8 @@ export const Info = ({ number, text }) => (
   </div>
 );
 
-const CStatistics = ({ blocks }) => (
-  <div className={classNames('row w-100', styles.main)}>{blocks.map((block) => (
+const CStatistics = ({ blocks, className }) => (
+  <div className={classNames('row w-100', styles.main, className)}>{blocks.map((block) => (
     <div
       className={classNames('col-lg-auto col-md-4 col-sm-12 col-12 px-0',
         styles.container)}
@@ -22,6 +22,7 @@ const CStatistics = ({ blocks }) => (
         className={styles.block}
       >
         <div className={styles['title-info']}>{block.title}
+          {block.tooltip && (
           <Tooltips id="statistics" text={<PrimaryTooltip text={block.tooltip} />}>
             <div
               className={styles.icons}
@@ -34,6 +35,7 @@ const CStatistics = ({ blocks }) => (
               />
             </div>
           </Tooltips>
+          )}
         </div>
         {block.content}
         {block.subtitle ? block.subtitle : <></>}

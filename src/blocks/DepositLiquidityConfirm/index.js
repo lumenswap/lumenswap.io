@@ -13,7 +13,7 @@ const currentCurrency = {
   pair2: { value: '1', currency: 'BTC' },
 };
 
-const ConfirmLiquidity = ({ data }) => {
+const DepositLiquidityConfirm = ({ data }) => {
   const dispatch = useDispatch();
   return (
     <div className="pb-4">
@@ -46,4 +46,4 @@ const ConfirmLiquidity = ({ data }) => {
   );
 };
 
-export default ConfirmLiquidity;
+export default DepositLiquidityConfirm;

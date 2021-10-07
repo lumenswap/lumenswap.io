@@ -56,6 +56,9 @@ const urlMaker = {
     root: () => `${rootUrl.amm}/stats`,
     tokens: (tokenA, tokenB) => `${rootUrl.amm}/stats/${tokenA}/${tokenB}`,
   },
+  myPool: {
+    root: () => `${rootUrl.amm}/my-pool`,
+  },
 };
 
 export default urlMaker;

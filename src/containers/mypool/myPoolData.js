@@ -1,55 +1,61 @@
-import defaultTokens from 'tokens/defaultTokens';
+import CTable from 'components/CTable';
 import isSameAsset from 'helpers/isSameAsset';
-import CurrencyPair from 'components/CurrencyPair';
+import defaultTokens from 'tokens/defaultTokens';
 import getAssetDetails from 'helpers/getAssetDetails';
+import CurrencyPair from 'components/CurrencyPair';
 import numeral from 'numeral';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
-import DepositLiquidity from 'blocks/DepositLiquidity';
 import WithdrawLiquidity from 'blocks/WithdrawLiquidity';
-import CTable from 'components/CTable';
-import urlMaker from 'helpers/urlMaker';
+import DepositLiquidity from 'blocks/DepositLiquidity';
 import questionLogo from '../../../public/images/question.png';
 import styles from './styles.module.scss';
 
-function NoDataMessage() {
-  return <div className={styles['empty-table-container']}><span>You have no pool</span></div>;
-}
+const NoDataMessage = () => <div className={styles['no-data-message-container']}><span>You have no pool</span></div>;
 
-function PoolData({ userPools }) {
-  const userBalance = useSelector((state) => state.userBalance);
+function MyPoolData({ userPools }) {
   const dispatch = useDispatch();
-  const tableHeader = [
-    {
-      title: 'Pool',
-      dataIndex: 'pool',
-      key: '1',
-      render: (data) => {
-        const asset1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token1));
-        const asset2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token2));
+  const userBalance = useSelector((state) => state.userBalance);
 
+  const tableHeaders = [
+    {
+      title: 'Asset',
+      dataIndex: 'asset',
+      key: 1,
+      render: (data) => {
+        const token1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token1));
+        const token2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token2));
         return (
-          <div className={styles.pairs}>
+          <div className={styles.tokens}>
             <CurrencyPair
               size={22}
-              source={[asset1?.logo ?? questionLogo, asset2?.logo ?? questionLogo]}
+              source={[token1?.logo ?? questionLogo, token2?.logo ?? questionLogo]}
             />
-            <span>{`${asset1?.code ?? data.token1.code}/${asset2?.code ?? data.token2.code}`}</span>
+            <span>{token1?.code ?? data.token1.code}/{token2?.code ?? data.token2.code}</span>
           </div>
         );
-      }
-      ,
+      },
     },
     {
-      title: 'TVL',
-      dataIndex: 'tvl',
-      key: '2',
-      render: (data) => <span className={styles.balance}>${numeral(data.balance).format('0,0')}</span>,
+      title: 'Balance',
+      dataIndex: 'balance1',
+      key: 2,
+      render: (data) => (
+        <span>
+          {numeral(data.balance1).format('0,0')}{data.token1.code}/{numeral(data.balance1 / 5).format('0,0')}{data.token2.code}
+        </span>
+      ),
+    },
+    {
+      title: 'Balance(USD)',
+      dataIndex: 'balance2',
+      key: 3,
+      render: (data) => <span>${numeral(data.balance2).format('0,0')}</span>,
     },
     {
       title: 'Action',
       dataIndex: 'action',
-      key: 3,
+      key: 4,
       render: (data) => {
         const token1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token1));
         const token2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token2));
@@ -91,8 +97,7 @@ function PoolData({ userPools }) {
           ?? 0,
           };
         }
-        const handleDeposit = (e) => {
-          e.preventDefault();
+        const handleDeposit = () => {
           dispatch(
             openModalAction({
               modalProps: {
@@ -106,8 +111,7 @@ function PoolData({ userPools }) {
             }),
           );
         };
-        const handleWithdraw = (e) => {
-          e.preventDefault();
+        const handleWithdraw = () => {
           dispatch(
             openModalAction({
               modalProps: {
@@ -130,19 +134,16 @@ function PoolData({ userPools }) {
       },
     },
   ];
-  const rowLink = (data) => urlMaker.pool.tokens(data.token1.code, data.token2.code);
-
   return (
-    <div className={styles['table-container']}>
+    <div>
       <CTable
-        columns={tableHeader}
-        dataSource={userPools}
-        noDataMessage={NoDataMessage}
         className={styles.table}
-        rowLink={rowLink}
+        dataSource={userPools}
+        columns={tableHeaders}
+        noDataMessage={NoDataMessage}
       />
     </div>
   );
 }
 
-export default PoolData;
+export default MyPoolData;
