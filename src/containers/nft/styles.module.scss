@@ -1,0 +1,53 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 76px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.filter {
+  :global(.select__control) {
+    width: 174px;
+    height: 40px;
+    border: solid 1px $CatskillWhite;
+    border-radius: 4px;
+
+    :global(.select__value-container) {
+      padding: 0 14px;
+    }
+  }
+
+  :global(.select__control):hover {
+    border: solid 1px $CatskillWhite;
+  }
+
+  :global(.select__value-container),
+  :global(.select__option) {
+    font-size: 14px;
+    font-weight: normal;
+    padding: 8px 14px;
+  }
+
+  :global(.select__menu-list) {
+    border-radius: 4px;
+    box-shadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
+    padding: 10px 0;
+  }
+}
+
+.row {
+  margin-right: -12px !important;
+  margin-left: -12px !important;
+}
+
+.col {
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}

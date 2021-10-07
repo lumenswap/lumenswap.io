@@ -4,10 +4,12 @@ import urlMaker from 'helpers/urlMaker';
 import classNames from 'classnames';
 import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
+import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
 import Image from 'next/image';
+import arrowIcon from '../../../public/images/arrow-down.svg';
 import styles from './styles.module.scss';
 import arrowIcon from '../../../public/images/arrow-down.svg';
 

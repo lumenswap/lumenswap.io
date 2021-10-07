@@ -17,6 +17,7 @@ import DOGET from './DOGET';
 import LSP from './LSP';
 import SHX from './SHX';
 import ANSR from './ANSR';
+import PEN from './PEN';
 
 export default [
   XLM,
@@ -38,4 +39,5 @@ export default [
   DOGET,
   SHX,
   ANSR,
+  PEN,
 ];

@@ -1,0 +1,46 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 63px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.card {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+.table {
+  background: white;
+  border-radius: 4px;
+
+  tbody > tr td,
+  thead > tr th {
+    font-size: 16px !important;
+    font-weight: normal;
+    padding: 0 24px !important;
+    vertical-align: middle;
+  }
+
+  tbody > tr td {
+    height: 53px;
+  }
+}
+
+.td-gray {
+  color: $ShuttleGray !important;
+}
+
+.cancel {
+  cursor: pointer;
+  color: $BlueRibbon;
+}
