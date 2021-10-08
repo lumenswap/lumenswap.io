@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { openConnectModal } from 'actions/modal';
 import classNames from 'classnames';
 import Loading from 'components/Loading';
 import LotteryHead from 'containers/lottery/LotteryHead';
 import Button from 'components/Button';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
+import { useDispatch, useSelector } from 'react-redux';
 import BoardData from './BoardData';
 import RoundPrize from './RoundPrize';
 import RoundInfo from './RoundInfo';
@@ -16,6 +18,15 @@ const index = () => {
   const [round, setRound] = useState(null);
   const [tickets, setTickets] = useState(null);
   const [participants, setParticipants] = useState(null);
+
+  const isLogged = useSelector((state) => state.user.logged);
+  const dispatch = useDispatch();
+
+  function handleBuyTicket() {
+    if (!isLogged) {
+      dispatch(openConnectModal());
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -72,7 +83,7 @@ const index = () => {
               {round.title}
             </span>
           </h1>
-          <Button htmlType="button" content="Buy Ticket" variant="primary" className={styles.button} />
+          <Button onClick={handleBuyTicket} htmlType="button" content="Buy Ticket" variant="primary" className={styles.button} />
         </div>
         <div className="row mx-0 mt-3">
           <div style={{ paddingLeft: 0 }} className="col-12 col-md-6">
