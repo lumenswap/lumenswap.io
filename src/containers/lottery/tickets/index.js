@@ -5,6 +5,8 @@ import Pagination from 'components/Pagination';
 import { useEffect, useState } from 'react';
 import Input from 'components/Input';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import tableHeaders from './tableHeaders';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
@@ -21,6 +23,14 @@ const index = () => {
   const [rounds, setRounds] = useState(null);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(10);
+  const isLogged = useSelector((state) => state.user.logged);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLogged) {
+      router.push('/lottery');
+    }
+  }, [isLogged]);
 
   useEffect(() => {
     async function fetchData() {
