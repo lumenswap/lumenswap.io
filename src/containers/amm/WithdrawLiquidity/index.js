@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
+import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { closeModalAction, openModalAction } from 'actions/modal';
-import DepositLiquidityConfirm from 'blocks/DepositLiquidityConfirm';
-import BN from 'helpers/BN';
-import AMMPriceInput from 'components/AMMPriceInput';
+import WithdrawLiquidityConfirm from 'containers/amm/WithdrawLiquidityConfirm';
 import styles from './styles.module.scss';
 
 function Inpool({ token }) {
@@ -23,7 +22,7 @@ function Inpool({ token }) {
   );
 }
 
-function DepositLiquidity({ tokenA, tokenB }) {
+function WithdrawLiquidity({ tokenA, tokenB }) {
   const dispatch = useDispatch();
   const {
     handleSubmit,
@@ -34,32 +33,28 @@ function DepositLiquidity({ tokenA, tokenB }) {
     getValues,
   } = useForm({
     mode: 'onChange',
-    defaultValues: {
-      asset1MaxPrice: 1,
-      asset1MinPrice: 0,
-    },
   });
   const onSubmit = (data) => {
     const confirmData = {
       tokenA: {
         logo: tokenA.logo,
         code: tokenA.code,
-        balance: data.AmountTokenA,
+        balance: data.amountTokenA,
       },
       tokenB: {
         logo: tokenB.logo,
         code: tokenB.code,
-        balance: data.AmountTokenB,
+        balance: data.amountTokenB,
       },
     };
     dispatch(closeModalAction());
     dispatch(
       openModalAction({
         modalProps: {
-          title: 'Deposit Liquidity Confirm',
+          title: 'Withdraw Liquidity Confirm',
           className: 'main',
         },
-        content: <DepositLiquidityConfirm
+        content: <WithdrawLiquidityConfirm
           data={confirmData}
         />,
       }),
@@ -81,7 +76,7 @@ function DepositLiquidity({ tokenA, tokenB }) {
         return error.message;
       }
     }
-    return 'Deposit';
+    return 'Withdraw';
   }
 
   const inpoolData = [
@@ -97,41 +92,21 @@ function DepositLiquidity({ tokenA, tokenB }) {
     },
   ];
 
-  const validateAmountTokenA = (value) => {
+  const validateAmountA = (value) => {
+    if (new BN(0).gt(value)) {
+      return 'Amount is not valid';
+    }
     if (new BN(value).gt(tokenA.balance)) {
       return 'Insufficient balance';
     }
+    return true;
+  };
+  const validateAmountB = (value) => {
     if (new BN(0).gt(value)) {
       return 'Amount is not valid';
     }
-    return true;
-  };
-  const validateAmountTokenB = (value) => {
     if (new BN(value).gt(tokenB.balance)) {
       return 'Insufficient balance';
-    }
-    if (new BN(0).gt(value)) {
-      return 'Amount is not valid';
-    }
-    return true;
-  };
-
-  const validateMinPrice = (value) => {
-    if (new BN(0).gt(value)) {
-      return 'Max price is not valid';
-    }
-    if (new BN(value).gt(getValues('asset1MaxPrice')) || value === getValues('asset1MaxPrice')) {
-      return 'Max price should be bigger';
-    }
-    return true;
-  };
-
-  const validateMaxPrice = (value) => {
-    if (new BN(0).gt(value)) {
-      return 'Max price is not valid';
-    }
-    if (new BN(getValues('asset1MaxPrice')).gt(value) || value === getValues('asset1MinPrice')) {
-      return 'Max price should be bigger';
     }
     return true;
   };
@@ -149,14 +124,14 @@ function DepositLiquidity({ tokenA, tokenB }) {
 
       <hr className={styles.hr} />
 
-      <h6 className={styles.label}>Deposit Liquidity</h6>
+      <h6 className={styles.label}>Withdraw Liquidity</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="AmountTokenA"
+          name="amountTokenA"
           control={control}
           rules={{
             required: 'Amount is required',
-            validate: validateAmountTokenA,
+            validate: validateAmountA,
           }}
           render={(props) => (
             <LiquidityInput
@@ -169,11 +144,11 @@ function DepositLiquidity({ tokenA, tokenB }) {
           )}
         />
         <Controller
-          name="AmountTokenB"
+          name="amountTokenB"
           control={control}
           rules={{
             required: 'Amount is required',
-            validate: validateAmountTokenB,
+            validate: validateAmountB,
           }}
           render={(props) => (
             <LiquidityInput
@@ -187,40 +162,6 @@ function DepositLiquidity({ tokenA, tokenB }) {
           )}
         />
 
-        <div className={styles['footer-inputs-container']}>
-          <Controller
-            name="asset1MinPrice"
-            control={control}
-            rules={{
-              validate: validateMinPrice,
-            }}
-            render={(props) => (
-              <AMMPriceInput
-                onChange={props.onChange}
-                value={props.value}
-                defaultValue={0}
-                token={tokenA}
-                type="Min"
-              />
-            )}
-          />
-          <Controller
-            name="asset1MaxPrice"
-            control={control}
-            rules={{
-              validate: validateMaxPrice,
-            }}
-            render={(props) => (
-              <AMMPriceInput
-                onChange={props.onChange}
-                value={props.value}
-                defaultValue={1}
-                token={tokenA}
-                type="Max"
-              />
-            )}
-          />
-        </div>
         <Button
           htmlType="submit"
           variant="primary"
@@ -234,4 +175,4 @@ function DepositLiquidity({ tokenA, tokenB }) {
   );
 }
 
-export default DepositLiquidity;
+export default WithdrawLiquidity;

@@ -1,30 +1,28 @@
 import BN from 'helpers/BN';
-import { useRef } from 'react';
 import styles from './styles.module.scss';
 
 function AMMPriceInput({
   value, onChange, placeholder, defaultValue, token, type,
 }) {
-  const inputValue = useRef();
   const handleInputChange = (e) => {
     e.preventDefault();
     const number = new BN(e.target.value);
     if (!number.isNaN()) {
-      onChange(e.target.value);
+      onChange(parseInt(e.target.value, 10));
     } else if (e.target.value === '') {
       onChange('');
     }
   };
   const handleDecreaseValue = () => {
-    if (inputValue.current.value && inputValue.current.value > 0) {
-      onChange(parseInt(inputValue.current.value, 10) - 1);
+    if (parseInt(value, 10) > 0) {
+      onChange(parseInt(value, 10) - 1);
     }
   };
   const handleIncreaseValue = () => {
-    if (inputValue.current.value) {
-      onChange(parseInt(inputValue.current.value, 10) + 1);
-    } else {
+    if (!parseInt(value, 10)) {
       onChange(0 + 1);
+    } else if (parseInt(value, 10)) {
+      onChange(parseInt(value, 10) + 1);
     }
   };
 
@@ -45,7 +43,6 @@ function AMMPriceInput({
           placeholder={placeholder}
           className={styles.input}
           defaultValue={defaultValue}
-          ref={inputValue}
         />
         <div className={styles['btns-container']}>
           <div className={styles.btns} onClick={handleIncreaseValue}>

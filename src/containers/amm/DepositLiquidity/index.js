@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { closeModalAction, openModalAction } from 'actions/modal';
-import WithdrawLiquidityConfirm from 'blocks/WithdrawLiquidityConfirm';
+import DepositLiquidityConfirm from 'containers/amm/DepositLiquidityConfirm';
+import BN from 'helpers/BN';
+import AMMPriceInput from 'containers/amm/AMMPriceInput';
 import styles from './styles.module.scss';
 
 function Inpool({ token }) {
@@ -22,7 +23,7 @@ function Inpool({ token }) {
   );
 }
 
-function WithdrawLiquidity({ tokenA, tokenB }) {
+function DepositLiquidity({ tokenA, tokenB }) {
   const dispatch = useDispatch();
   const {
     handleSubmit,
@@ -33,28 +34,32 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
     getValues,
   } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      maxPrice: 1,
+      minPrice: 0,
+    },
   });
   const onSubmit = (data) => {
     const confirmData = {
       tokenA: {
         logo: tokenA.logo,
         code: tokenA.code,
-        balance: data.AmountTokenA,
+        balance: data.amountTokenA,
       },
       tokenB: {
         logo: tokenB.logo,
         code: tokenB.code,
-        balance: data.AmountTokenB,
+        balance: data.amountTokenB,
       },
     };
     dispatch(closeModalAction());
     dispatch(
       openModalAction({
         modalProps: {
-          title: 'Withdraw Liquidity Confirm',
+          title: 'Deposit Liquidity Confirm',
           className: 'main',
         },
-        content: <WithdrawLiquidityConfirm
+        content: <DepositLiquidityConfirm
           data={confirmData}
         />,
       }),
@@ -69,14 +74,14 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
   }, []);
   useEffect(() => {
     trigger();
-  }, [JSON.stringify(getValues('AmountTokenA', 'AmountTokenB'))]);
+  }, [JSON.stringify(getValues())]);
   function errorGenerator() {
     for (const error of Object.values(errors)) {
       if (error.message) {
         return error.message;
       }
     }
-    return 'Withdraw';
+    return 'Deposit';
   }
 
   const inpoolData = [
@@ -92,21 +97,41 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
     },
   ];
 
-  const validateAmountA = (value) => {
-    if (new BN(0).gt(value)) {
-      return 'Amount is not valid';
-    }
+  const validateAmountTokenA = (value) => {
     if (new BN(value).gt(tokenA.balance)) {
       return 'Insufficient balance';
     }
-    return true;
-  };
-  const validateAmountB = (value) => {
     if (new BN(0).gt(value)) {
       return 'Amount is not valid';
     }
+    return true;
+  };
+  const validateAmountTokenB = (value) => {
     if (new BN(value).gt(tokenB.balance)) {
       return 'Insufficient balance';
+    }
+    if (new BN(0).gt(value)) {
+      return 'Amount is not valid';
+    }
+    return true;
+  };
+
+  const validateMinPrice = (value) => {
+    if (new BN(0).gt(value)) {
+      return 'Max price is not valid';
+    }
+    if (new BN(value).gt(getValues('maxPrice')) || value === getValues('maxPrice')) {
+      return 'Max price should be bigger';
+    }
+    return true;
+  };
+
+  const validateMaxPrice = (value) => {
+    if (new BN(0).gt(value)) {
+      return 'Max price is not valid';
+    }
+    if (new BN(getValues('minPrice')).gt(value) || value === getValues('minPrice')) {
+      return 'Max price should be bigger';
     }
     return true;
   };
@@ -124,14 +149,14 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
 
       <hr className={styles.hr} />
 
-      <h6 className={styles.label}>Withdraw Liquidity</h6>
+      <h6 className={styles.label}>Deposit Liquidity</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="AmountTokenA"
+          name="amountTokenA"
           control={control}
           rules={{
             required: 'Amount is required',
-            validate: validateAmountA,
+            validate: validateAmountTokenA,
           }}
           render={(props) => (
             <LiquidityInput
@@ -144,11 +169,11 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
           )}
         />
         <Controller
-          name="AmountTokenB"
+          name="amountTokenB"
           control={control}
           rules={{
             required: 'Amount is required',
-            validate: validateAmountB,
+            validate: validateAmountTokenB,
           }}
           render={(props) => (
             <LiquidityInput
@@ -162,6 +187,42 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
           )}
         />
 
+        <div className={styles['footer-inputs-container']}>
+          <Controller
+            name="minPrice"
+            control={control}
+            rules={{
+              required: 'Min price is required',
+              validate: validateMinPrice,
+            }}
+            render={(props) => (
+              <AMMPriceInput
+                onChange={props.onChange}
+                value={props.value}
+                defaultValue={0}
+                token={tokenA}
+                type="Min"
+              />
+            )}
+          />
+          <Controller
+            name="maxPrice"
+            control={control}
+            rules={{
+              required: 'Max price is required',
+              validate: validateMaxPrice,
+            }}
+            render={(props) => (
+              <AMMPriceInput
+                onChange={props.onChange}
+                value={props.value}
+                defaultValue={1}
+                token={tokenA}
+                type="Max"
+              />
+            )}
+          />
+        </div>
         <Button
           htmlType="submit"
           variant="primary"
@@ -175,4 +236,4 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
   );
 }
 
-export default WithdrawLiquidity;
+export default DepositLiquidity;

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import AMMHeader from 'components/AMMHeader';
 import Button from 'components/Button';
-import AddLiquidity from 'blocks/AddLiquidity';
+import AddLiquidity from 'containers/amm/AddLiquidity';
 import { openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -10,6 +10,11 @@ import fetchMyPools from 'helpers/myPoolsAPI';
 import Loading from 'components/Loading';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
+import XLM from 'tokens/XLM';
+import LSP from 'tokens/LSP';
+import numeral from 'numeral';
+import getAssetDetails from 'helpers/getAssetDetails';
+import isSameAsset from 'helpers/isSameAsset';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
@@ -19,14 +24,48 @@ function MyPoolPage() {
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
   const dispatch = useDispatch();
+  const userBalance = useSelector((state) => state.userBalance);
+
+  const defaultTokensData = {
+    tokenA: {
+      ...XLM,
+      balance:
+      numeral(userBalance.find((balance) => isSameAsset(
+        balance.asset, getAssetDetails(XLM),
+      ))?.balance).format('0,0.[0000000]')
+        ?? 0,
+    },
+    tokenB: {
+      ...LSP,
+      balance:
+      numeral(userBalance.find((balance) => isSameAsset(
+        balance.asset, getAssetDetails(LSP),
+      ))?.balance).format('0,0.[0000000]')
+       ?? 0,
+    },
+  };
 
   let tokens = {
-    tokenA: null,
-    tokenB: null,
+    tokenA: { details: { ...defaultTokensData.tokenA }, ...defaultTokensData.tokenA },
+    tokenB: { details: { ...defaultTokensData.tokenB }, ...defaultTokensData.tokenB },
   };
   const handleSelectAsset = (selectedToken, tokenData) => {
     if (selectedToken === 'tokenA') {
-      tokens = { ...tokens, tokenA: tokenData };
+      if (tokenData?.details?.code === tokens?.tokenB?.details?.code) {
+        const prevToken = tokens.tokenA;
+        tokens = {
+          tokenA: tokenData,
+          tokenB: prevToken,
+        };
+      } else {
+        tokens = { ...tokens, tokenA: tokenData };
+      }
+    } else if (tokenData?.details?.code === tokens?.tokenA?.details?.code) {
+      const prevToken = tokens.tokenB;
+      tokens = {
+        tokenA: prevToken,
+        tokenB: tokenData,
+      };
     } else {
       tokens = { ...tokens, tokenB: tokenData };
     }
@@ -52,15 +91,16 @@ function MyPoolPage() {
           title: 'New pool',
           className: 'main',
         },
-        content: <AddLiquidity selectAsset={handleSelectAsset} />,
+        content: <AddLiquidity
+          tokenA={tokens.tokenA}
+          tokenB={tokens.tokenB}
+          selectAsset={handleSelectAsset}
+        />,
       }),
     );
   };
 
   useEffect(() => {
-    if (!isLogged) {
-      router.push(urlMaker.pool.root());
-    }
     fetchMyPools(userAddress).then((poolData) => {
       setUserPools(poolData.map((pool, index) => ({
         ...pool,
@@ -68,9 +108,11 @@ function MyPoolPage() {
       })));
     });
   }, []);
-  if (!isLogged) {
-    return <></>;
-  }
+  useEffect(() => {
+    if (!isLogged) {
+      router.push(urlMaker.pool.root());
+    }
+  }, [isLogged]);
   return (
     <div className="container-fluid">
       <Head>

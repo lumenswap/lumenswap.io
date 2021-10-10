@@ -9,17 +9,15 @@ import pureTokens from 'helpers/pureTokens';
 import minimizeAddress from 'helpers/minimizeAddress';
 import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
-import sevenDigit from 'helpers/sevenDigit';
+import CAddCustomToken from 'components/CAddCustomToken';
 import { openModalAction, closeModalAction } from 'actions/modal';
-import { removeCustomTokenAction } from 'actions/userCustomTokens';
-import CAddToken from '../CAddToken';
+import TokenItem from './TokenItem';
 import styles from './styles.module.scss';
 
 const CSelectToken = ({ onTokenSelect }) => {
   const userBalance = useSelector((state) => state.userBalance);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const [searchQuery, setSearchQuery] = useState(null);
-  const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
 
   const enrichedTokens = useMemo(() => {
@@ -68,6 +66,26 @@ const CSelectToken = ({ onTokenSelect }) => {
     dispatch(closeModalAction());
     onTokenSelect(asset);
   }
+  const handleAddCustomAsset = () => {
+    dispatch(
+      openModalAction({
+        modalProps: { title: 'Add custom asset' },
+        content: (
+          <CAddCustomToken onAddToken={() => {
+            dispatch(
+              openModalAction({
+                modalProps: { title: 'Select asset' },
+                content: (
+                  <CSelectToken onTokenSelect={onTokenSelect} />
+                ),
+              }),
+            );
+          }}
+          />
+        ),
+      }),
+    );
+  };
 
   return (
     <div className={styles.container}>
@@ -85,58 +103,19 @@ const CSelectToken = ({ onTokenSelect }) => {
         {enrichedTokens.length === 0 ? (
           <p style={{ padding: 16 }}>There is no asset</p>
         ) : (
-          enrichedTokens.map((asset) => (
-            <div
-              className={styles.box}
-              key={`${asset.details.getCode()}-${asset.details.getIssuer()}`}
-              onClick={() => selectAsset(asset)}
-            >
-              <div className="d-flex align-items-center">
-                {asset.logo ? (
-                  <img src={asset.logo} alt="logo" width={22} height={22} />
-                ) : (
-                  <div className={styles.circle}>
-                    <span className="icon-question-circle" />
-                  </div>
-                )}
-                <div className={styles.info}>
-                  <h6 className={styles.text}>
-                    {asset.details.getCode()}
-                    {asset.type === 'custom' && (
-                      <span
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          dispatch(removeCustomTokenAction(asset.details));
-                        }}
-                      >
-                        {' '}
-                        (delete)
-                      </span>
-                    )}
-                  </h6>
-                  <p className={styles.desc}>{asset.web}</p>
-                </div>
-              </div>
-              <div className={styles.text}>
-                {isLogged && sevenDigit(asset.balance)}
-              </div>
-            </div>
+          enrichedTokens.map((asset, index) => (
+            <TokenItem
+              key={index}
+              selectAsset={selectAsset}
+              asset={asset}
+            />
           ))
         )}
       </div>
       <button
         type="submit"
         className={styles.submit}
-        onClick={() => {
-          dispatch(
-            openModalAction({
-              modalProps: { title: 'Add custom asset' },
-              content: (
-                <CAddToken onAddToken={onTokenSelect} />
-              ),
-            }),
-          );
-        }}
+        onClick={handleAddCustomAsset}
       >
         <span className="icon-plus-circle mr-2" />
         Add custom asset

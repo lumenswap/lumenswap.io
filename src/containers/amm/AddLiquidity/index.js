@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import CSelectToken from 'components/CSelectToken';
-import defaultTokens from 'tokens/defaultTokens';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
@@ -12,8 +11,10 @@ import { closeModalAction, openModalAction } from 'actions/modal';
 import isSameAsset from 'helpers/isSameAsset';
 import ConfirmLiquidity from 'blocks/ConfirmLiquidity';
 import numeral from 'numeral';
-import AMMPriceInput from 'components/AMMPriceInput';
+import AMMPriceInput from 'containers/amm/AMMPriceInput';
 import getAssetDetails from 'helpers/getAssetDetails';
+import XLM from 'tokens/XLM';
+import LSP from 'tokens/LSP';
 import styles from './styles.module.scss';
 
 const setLabel = (name, src) => (
@@ -26,22 +27,20 @@ const setLabel = (name, src) => (
 const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
   const userBalance = useSelector((state) => state.userBalance);
 
-  const xlm = defaultTokens.find((i) => i.code === 'XLM');
-  const lsp = defaultTokens.find((i) => i.code === 'LSP');
   const defaultTokensData = {
     tokenA: {
-      ...xlm,
+      ...XLM,
       balance:
       numeral(userBalance.find((balance) => isSameAsset(
-        balance.asset, getAssetDetails(xlm),
+        balance.asset, getAssetDetails(XLM),
       ))?.balance).format('0,0.[0000000]')
         ?? 0,
     },
     tokenB: {
-      ...lsp,
+      ...getAssetDetails(LSP),
       balance:
       numeral(userBalance.find((balance) => isSameAsset(
-        balance.asset, getAssetDetails(lsp),
+        balance.asset, getAssetDetails(LSP),
       ))?.balance).format('0,0.[0000000]')
        ?? 0,
     },
@@ -66,24 +65,23 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      asset1MaxPrice: 1,
-      asset1MinPrice: 0,
+      maxPrice: 1,
+      minPrice: 0,
     },
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(closeModalAction());
     const confirmData = {
       tokenA: {
         logo: mainTokenA.logo,
         code: mainTokenA.code,
-        balance: data.AmountTokenA,
+        balance: data.amountTokenA,
       },
       tokenB: {
         logo: mainTokenB.logo,
         code: mainTokenB.code,
-        balance: data.AmountTokenB,
+        balance: data.amountTokenB,
       },
     };
     dispatch(closeModalAction());
@@ -106,9 +104,6 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
   };
   useEffect(() => {
     trigger();
-  }, []);
-  useEffect(() => {
-    trigger();
   }, [JSON.stringify(getValues())]);
 
   function errorGenerator() {
@@ -127,7 +122,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
     dispatch(
       openModalAction({
         modalProps: {
-          title: 'New pool',
+          title: 'Select asset',
           className: 'main',
         },
         content: <CSelectToken onTokenSelect={onTokenSelect} />,
@@ -157,7 +152,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
     if (value < 0) {
       return 'Min price is not valid';
     }
-    if (new BN(value).gt(getValues('asset1MaxPrice')) || value === getValues('asset1MaxPrice')) {
+    if (new BN(value).gt(getValues('maxPrice')) || value === getValues('maxPrice')) {
       return 'Max price should be bigger';
     }
     return true;
@@ -167,7 +162,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
     if (value < 0) {
       return 'Max price is not valid';
     }
-    if (new BN(getValues('asset1MaxPrice')).gt(value) || value === getValues('asset1MinPrice')) {
+    if (new BN(getValues('minPrice')).gt(value) || value === getValues('minPrice')) {
       return 'Max price should be bigger';
     }
     return true;
@@ -194,7 +189,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
       <h6 className={styles.label}>Deposit liquidity</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="AmountTokenA"
+          name="amountTokenA"
           control={control}
           rules={{
             required: 'Amount is required',
@@ -211,7 +206,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
           )}
         />
         <Controller
-          name="AmountTokenB"
+          name="amountTokenB"
           control={control}
           rules={{
             required: 'Amount is required',
@@ -230,9 +225,10 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
         />
         <div className={styles['footer-inputs-container']}>
           <Controller
-            name="asset1MinPrice"
+            name="minPrice"
             control={control}
             rules={{
+              required: 'Min price is required',
               validate: validateMinPrice,
             }}
             render={(props) => (
@@ -246,9 +242,10 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
             )}
           />
           <Controller
-            name="asset1MaxPrice"
+            name="maxPrice"
             control={control}
             rules={{
+              required: 'Max price is required',
               validate: validateMaxPrice,
             }}
             render={(props) => (

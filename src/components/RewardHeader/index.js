@@ -8,10 +8,8 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
-import Image from 'next/image';
 import arrowIcon from '../../../public/images/arrow-down.svg';
 import styles from './styles.module.scss';
-import arrowIcon from '../../../public/images/arrow-down.svg';
 
 const RewardHeader = () => {
   const isLogged = useSelector((state) => state.user.logged);

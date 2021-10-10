@@ -1,11 +1,8 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AMMHeader from 'components/AMMHeader';
-import Button from 'components/Button';
-import AddLiquidity from 'blocks/AddLiquidity';
 import fetchPools from 'helpers/poolsAPI';
-import { openModalAction } from 'actions/modal';
 import Loading from 'components/Loading';
 import { useEffect, useState } from 'react';
 import PoolData from './poolData';
@@ -13,21 +10,8 @@ import PoolData from './poolData';
 import styles from './styles.module.scss';
 
 const PoolPage = () => {
-  const dispatch = useDispatch();
   const [userPools, setUserPools] = useState(null);
   const userAdress = useSelector((state) => state.user.detail.address);
-
-  const openModal = () => {
-    dispatch(
-      openModalAction({
-        modalProps: {
-          title: 'Add Liquidity',
-          className: 'main',
-        },
-        content: <AddLiquidity />,
-      }),
-    );
-  };
 
   useEffect(() => {
     fetchPools(userAdress).then((data) => {

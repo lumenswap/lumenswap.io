@@ -1,5 +1,6 @@
-import PoolDetail, { getServerSideProps as customServerSideProps } from 'containers/pool/detail';
+import PoolDetail from 'containers/amm/pool/detail';
+import { PoolDetailPageGetServerSideProps } from 'containers/amm/pool/detail/props';
 
 export default PoolDetail;
 
-export const getServerSideProps = customServerSideProps;
+export const getServerSideProps = PoolDetailPageGetServerSideProps;

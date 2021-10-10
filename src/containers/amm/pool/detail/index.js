@@ -14,9 +14,9 @@ import fetchPoolDetails from 'helpers/poolDetailsAPI';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import Image from 'next/image';
-import iconRightLogo from '../../../../public/images/arrow-right-icon.png';
-import iconRefresh from '../../../../public/images/icon-refresh.png';
-import questionLogo from '../../../../public/images/question.png';
+import iconRightLogo from '../../../../../public/images/arrow-right-icon.png';
+import iconRefresh from '../../../../../public/images/icon-refresh.png';
+import questionLogo from '../../../../../public/images/question.png';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -25,7 +25,7 @@ const NoDataMessage = () => (
   </div>
 );
 
-const index = ({ tokens }) => {
+const Details = ({ tokens }) => {
   const [data, setData] = useState(null);
   const tokenA = defaultTokens.find((token) => token.code === tokens.tokenA);
   const tokenB = defaultTokens.find((token) => token.code === tokens.tokenB);
@@ -171,12 +171,4 @@ const index = ({ tokens }) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
-  return {
-    props: {
-      tokens: params,
-    },
-  };
-}
-
-export default index;
+export default Details;

@@ -10,12 +10,11 @@ import defaultTokens from 'tokens/defaultTokens';
 import isSameAsset from 'helpers/isSameAsset';
 import pureTokens from 'helpers/pureTokens';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
-import { closeModalAction, openModalAction } from 'actions/modal';
+import { closeModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import CSelectToken from '../CSelectToken';
 import styles from './styles.module.scss';
 
-const CAddToken = ({ onAddToken }) => {
+const CAddCustomToken = ({ onAddToken }) => {
   const [loadingTimer, setLoadingTimer] = useState(false);
   const {
     register,
@@ -33,17 +32,8 @@ const CAddToken = ({ onAddToken }) => {
   const onSubmit = (data) => {
     const asset = getAssetDetails({ code: data.code, issuer: data.issuer });
     dispatch(addCustomTokenAction(asset));
-
-    onAddToken();
     dispatch(closeModalAction());
-    dispatch(
-      openModalAction({
-        modalProps: { title: 'Add custom asset' },
-        content: (
-          <CSelectToken onTokenSelect={onAddToken} />
-        ),
-      }),
-    );
+    onAddToken();
   };
 
   async function customValidator() {
@@ -136,4 +126,4 @@ const CAddToken = ({ onAddToken }) => {
   );
 };
 
-export default CAddToken;
+export default CAddCustomToken;
