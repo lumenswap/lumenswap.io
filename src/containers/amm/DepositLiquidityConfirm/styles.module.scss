@@ -1,0 +1,33 @@
+@import "styles/vars";
+
+.inpool {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.56;
+  letter-spacing: normal;
+  color: $CodGray;
+  margin-top: 15px;
+}
+
+.pair {
+  display: flex;
+  align-items: center;
+
+  &-img {
+    height: 20px;
+    margin-right: 6px;
+  }
+}
+
+.current {
+  margin-top: 24px;
+}
+
+.btn {
+  width: 100%;
+  font-size: 18px;
+  margin-top: 24px;
+}

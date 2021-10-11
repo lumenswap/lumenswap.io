@@ -8,8 +8,8 @@ import styles from './styles.module.scss';
 
 const TableRow = ({ columns, data }) => (
   <tr className={styles.row}>
-    {columns.map((column) => (
-      <td className={styles['row-item']}>
+    {columns.map((column, index) => (
+      <td key={index} className={styles['row-item']}>
         <section>
           {column.render ? column.render(data) : data[column.dataIndex]}
         </section>
@@ -95,7 +95,12 @@ const CTable = ({
               </a>
             </Link>
           ) : (
-            <TableRow columns={columns} data={data} />
+            <TableRow
+              rowKey={data.key ?? nanoid(6)}
+              key={data.key ?? nanoid(6)}
+              columns={columns}
+              data={data}
+            />
           )
         ))}
       </table>

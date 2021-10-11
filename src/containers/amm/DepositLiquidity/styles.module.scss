@@ -1,0 +1,78 @@
+@import "styles/vars";
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $CodGray;
+  margin-bottom: 10px;
+}
+
+.select {
+  width: 154px;
+  height: 38px;
+  border: 1px solid $CatskillWhite;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 17px 0 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: $CodGray;
+
+  :global(.icon-angle-down) {
+    font-size: 10px;
+  }
+}
+
+.hr {
+  margin: 22px -17px 11px;
+  border-top: 1px solid $CatskillWhite;
+}
+
+.current {
+  margin-top: 14px;
+}
+
+.btn {
+  width: 100%;
+  font-size: 18px;
+  margin-top: 24px;
+}
+
+.inpool {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    height: 28px;
+    align-items: center;
+    margin-bottom: 10px;
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    color: $CodGray;
+    div {
+        display: flex;
+        flex-direction: row;
+        div:first-child {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            margin-top: 3px;
+        }
+    }
+    
+}
+
+.footer-inputs-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}

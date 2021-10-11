@@ -1,3 +1,3 @@
-import PoolPage from 'containers/pool';
+import PoolPage from 'containers/amm/pool';
 
 export default PoolPage;
