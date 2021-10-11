@@ -3,10 +3,13 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const NumberOnlyInput = ({
-  value, onChange, placeholder, className,
+  value, onChange, placeholder, className, onlyInt,
 }) => {
   const handleInputChange = (e) => {
     e.preventDefault();
+    if (onlyInt && e.target.value.includes('.')) {
+      onChange('');
+    }
     const number = new BN(e.target.value);
     if (!number.isNaN()) {
       onChange(e.target.value);
