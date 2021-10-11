@@ -9,12 +9,12 @@ import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { closeModalAction, openModalAction } from 'actions/modal';
 import isSameAsset from 'helpers/isSameAsset';
-import ConfirmLiquidity from 'blocks/ConfirmLiquidity';
 import numeral from 'numeral';
 import AMMPriceInput from 'containers/amm/AMMPriceInput';
 import getAssetDetails from 'helpers/getAssetDetails';
 import XLM from 'tokens/XLM';
 import LSP from 'tokens/LSP';
+import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
 
 const setLabel = (name, src) => (
