@@ -31,7 +31,7 @@ const ObmHeader = () => {
 
   const menus = {
     left: [
-      { name: 'Board', href: urlMaker.lottery.board(), public: true },
+      { name: 'Board', href: urlMaker.lottery.root(), public: true },
       { name: 'My Tickets', href: urlMaker.lottery.tickets(), public: false },
       {
         name: 'Learn about lottery',

@@ -59,7 +59,6 @@ const urlMaker = {
   },
   lottery: {
     root: () => `${rootUrl.lottery}/`,
-    board: () => `${rootUrl.lottery}/board`,
     singleRound: (round) => `${rootUrl.lottery}/board/${round}`,
     tickets: () => `${rootUrl.lottery}/tickets`,
     learn: () => `${rootUrl.lottery}/learnmore`,
