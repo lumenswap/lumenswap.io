@@ -9,7 +9,7 @@ export default [
     key: '1',
     render: (data) => (
       <div className={styles.ticketId}>
-        {truncateText('123456789101112131415161718')}
+        {truncateText(data.address)}
       </div>
     ),
   },
@@ -19,7 +19,7 @@ export default [
     key: '2',
     render: (data) => (
       <div>
-        300
+        {data.ticketCount}
       </div>
     ),
   },

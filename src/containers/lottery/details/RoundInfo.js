@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import numeral from 'numeral';
 import Image from 'next/image';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import QuestionIcon from 'assets/images/question-icon.png';
@@ -24,7 +25,7 @@ const RoundInfo = ({ round }) => (
             <Image src={QuestionIcon} width={16} height={16} />
           </span>
         </span>
-        <span>10,000</span>
+        <span>{numeral(round.ticketCount).format('0,0')}</span>
       </div>
       <div style={{ marginBottom: 5 }} className="d-flex justify-content-between">
         <span className={styles['info-title']}>
@@ -33,7 +34,7 @@ const RoundInfo = ({ round }) => (
             <Image src={QuestionIcon} width={16} height={16} />
           </span>
         </span>
-        <span>500</span>
+        <span>{numeral(round.participantCount).format('0,0')}</span>
       </div>
     </div>
     <div className={classNames('col-12 d-flex flex-column mt-auto', styles['winner-info'])}>

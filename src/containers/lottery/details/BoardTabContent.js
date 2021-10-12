@@ -1,7 +1,7 @@
 import Tickets from './Tickets';
 import Participants from './Participants';
 
-const MarketTabContent = ({
+const BoardTabContent = ({
   tab, tickets, searchQuery, participants,
 }) => {
   if (tab === 'tickets') {
@@ -15,4 +15,4 @@ const MarketTabContent = ({
   return null;
 };
 
-export default MarketTabContent;
+export default BoardTabContent;

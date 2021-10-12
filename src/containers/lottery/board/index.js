@@ -1,6 +1,7 @@
 import Loading from 'components/Loading';
 import LotteryHead from 'containers/lottery/LotteryHead';
 import { useEffect, useState } from 'react';
+import { getAllRounds } from 'api/lottery';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 import RoundData from './RoundData';
@@ -11,14 +12,9 @@ const index = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedRounds = await new Promise((resolve) => setTimeout(() => {
-        resolve([
-          { title: 'Round #1', status: 'Live', image: 'tesla.jpg' },
-          { title: 'Round #1', status: 'Ended', image: 'tesla.jpg' },
-        ]);
-      }, 1500));
+      const fetchedRounds = await getAllRounds();
 
-      setRounds(fetchedRounds);
+      setRounds(fetchedRounds.data);
       setLoading(false);
     }
 

@@ -8,6 +8,8 @@ import Button from 'components/Button';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginTypes } from 'reducers/user';
+import { getSingleRound, getRoundParticipants, getAllRoundTickets } from 'api/lottery';
+import { useRouter } from 'next/router';
 import BuyTicketSingle from './BuyTicketSingle';
 import BuyTicketPrivateKey from './BuyTicketPrivateKey';
 import BoardData from './BoardData';
@@ -22,9 +24,12 @@ const index = () => {
   const [tickets, setTickets] = useState(null);
   const [participants, setParticipants] = useState(null);
 
+  const router = useRouter();
   const isLogged = useSelector((state) => state.user.logged);
   const loginType = useSelector((state) => state.user.loginType);
   const dispatch = useDispatch();
+
+  const roundNumber = router.query.round;
 
   function handleBuyTicket() {
     if (!isLogged) {
@@ -52,26 +57,19 @@ const index = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedRound = await new Promise((resolve) => setTimeout(() => {
-        resolve({ title: 'Round #1', status: 'Live', image: 'tesla.jpg' });
-      }, 1500));
+      const fetchedRound = await getSingleRound(roundNumber);
 
-      const fetchedTickets = await new Promise((resolve) => setTimeout(() => {
-        resolve([1, 2, 3, 4, 5]);
-      }, 1500));
+      const fetchedTickets = await getAllRoundTickets(roundNumber);
+      const fetchedParticipants = await getRoundParticipants(roundNumber);
 
-      const fetchedParticipants = await new Promise((resolve) => setTimeout(() => {
-        resolve([1, 2, 3, 4, 5]);
-      }, 1500));
-
-      setParticipants(fetchedParticipants);
-      setTickets(fetchedTickets);
-      setRound(fetchedRound);
+      setParticipants(fetchedParticipants.data);
+      setTickets(fetchedTickets.data);
+      setRound(fetchedRound.data);
       setLoading(false);
     }
 
-    fetchData();
-  }, []);
+    if (roundNumber) fetchData();
+  }, [roundNumber]);
 
   if (loading) {
     return (
@@ -114,7 +112,7 @@ const index = () => {
             <RoundPrize round={round} />
           </div>
           <div style={{ paddingLeft: 30 }} className="col-12 col-md-6">
-            <RoundInfo round={round} />
+            <RoundInfo round={round} participants={participants} tickets={tickets} />
           </div>
         </div>
         <div

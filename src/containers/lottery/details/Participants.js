@@ -1,5 +1,4 @@
 import CTable from 'components/CTable';
-import Loading from 'components/Loading';
 import tableHeaders from './participantsTableHeaders';
 import styles from '../style.module.scss';
 
@@ -9,16 +8,25 @@ const NoDataMessage = () => (
   </div>
 );
 
-const Participants = ({ participants, searchQuery, loading }) => (
-  <div style={{ background: 'white', marginLeft: -24, marginTop: 15 }}>
-    <CTable
-      className={styles.table}
-      columns={tableHeaders}
-      dataSource={participants}
-      noDataMessage={NoDataMessage}
-      loading={loading}
-    />
-  </div>
-);
+const Participants = ({ participants, searchQuery, loading }) => {
+  let searchedParticipants = participants;
+  if (searchQuery && searchQuery.length > 0) {
+    searchedParticipants = participants
+      .filter((participant) => participant.address.toLowerCase()
+        .includes(searchQuery.toLowerCase()));
+  }
+
+  return (
+    <div style={{ background: 'white', marginLeft: -24, marginTop: 15 }}>
+      <CTable
+        className={styles.table}
+        columns={tableHeaders}
+        dataSource={searchedParticipants}
+        noDataMessage={NoDataMessage}
+        loading={loading}
+      />
+    </div>
+  );
+};
 
 export default Participants;
