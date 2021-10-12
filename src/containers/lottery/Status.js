@@ -10,7 +10,7 @@ const Status = ({ round, gift }) => (
       style={{ marginLeft: 10 }}
       className={classNames(
         styles.status,
-        round.status === 'Live' ? styles.live : styles.ended,
+        round.status.toLowerCase() === 'live' ? styles.live : styles.ended,
       )}
     >
       <span className={styles.dot} />
