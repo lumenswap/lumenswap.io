@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import ArrowPagination from 'assets/images/arrow-pagination.svg';
+import { generateRange } from './helpers';
 import styles from './style.module.scss';
 
 const index = ({ pages, currentPage, onPageClick }) => {
-  const paginationArray = Array.from({ length: pages });
+  const paginationArray = generateRange(pages, currentPage);
   return (
     <div className={styles['pagination-container']}>
       <button disabled={currentPage <= 1} type="button" onClick={() => onPageClick(currentPage - 1)}>
@@ -17,26 +18,17 @@ const index = ({ pages, currentPage, onPageClick }) => {
         />
       </button>
       <div className={styles['pagination-items']}>
-        {currentPage >= 2
-        && <div className={styles['pagination-item']} onClick={() => onPageClick(1)}>1</div>}
-        {currentPage > 2 && (
-          <>
-            <div className={styles['pagination-spread']}>...</div>
-          </>
-        )}
-        {paginationArray.map((page, i) => (
+        {paginationArray.range.map((page) => (
           <div
-            onClick={() => onPageClick(i + 1)}
+            onClick={!page.label ? () => onPageClick(page) : undefined}
             className={classNames(
-              styles['pagination-item'],
-              currentPage === i + 1 && styles.active,
+              styles[`pagination-${page.label ? 'spread' : 'item'}`],
+              currentPage === page && styles.active,
             )}
           >
-            {i + 1}
+            {page.label || page}
           </div>
-        )).slice(currentPage - 1, currentPage + 2)}
-        {pages - currentPage > 3 && <div className={styles['pagination-spread']}>...</div>}
-        {pages - currentPage >= 3 && <div onClick={() => onPageClick(pages)} className={styles['pagination-item']}>{pages}</div>}
+        ))}
       </div>
       <button type="button" disabled={currentPage >= pages} onClick={() => onPageClick(currentPage + 1)}>
         <Image
