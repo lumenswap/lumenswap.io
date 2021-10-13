@@ -4,6 +4,7 @@ import ArrowDown from 'assets/images/arrow-down.svg';
 import ArrowDownFill from 'assets/images/arrow-down-fill.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import Loading from 'components/Loading';
 import styles from './styles.module.scss';
 
 const TableRow = ({ columns, data }) => (
@@ -24,7 +25,16 @@ const CTable = ({
   className,
   noDataMessage: NoDataMessage,
   rowLink,
+  loading,
 }) => {
+  if (loading) {
+    return (
+      <div style={{ padding: '70px 0' }} className="d-flex align-items-center justify-content-center">
+        <Loading size={50} />
+      </div>
+    );
+  }
+
   if (!dataSource || dataSource === null) {
     return <NoDataMessage />;
   }

@@ -1,0 +1,156 @@
+@import 'styles/vars';
+
+.roundImage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 67px 0;
+  justify-content: center;
+}
+
+.buy-ticket {
+  padding-bottom: 24px;
+  .cost {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 3px 36px 3px;
+  }
+  .ticket-input {
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    div {
+      border: 1px solid #ecf0f5;
+      border-left: 0;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 10px 12px;
+      height: 48px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 8px;
+      height: 48px;
+      border: solid 1px #ecf0f5;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      outline: none;
+    }
+  }
+}
+
+.ticket-icon {
+  width: 64px;
+  height: 64px;
+  background: $Zumthor;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  margin-top: -5px;
+}
+
+.single-ticket-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+.purchased-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+
+  .bold {
+    font-weight: bold;
+    color: black;
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  p {
+    color: $ShuttleGray;
+    margin: 0 50px;
+    text-align: center;
+    font-weight: normal;
+    margin-bottom: 38px;
+  }
+}
+
+.text-normal {
+  font-family: SofiaPro;
+  font-weight: normal;
+  font-size: 18px;
+  color: $CodGray;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.roundItem {
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+}
+
+.ctab {
+  background: white;
+  padding: 14px 24px;
+}
+
+.input {
+  width: 292px;
+}
+
+.round-info {
+  .box-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: $CodGray;
+  }
+
+  .info-title {
+    font-size: 16px;
+    color: $ShuttleGray;
+    font-family: SofiaPro;
+    display: flex;
+    align-items: center;
+  }
+
+  & > div {
+    padding: 18px 14px;
+    border-radius: 4px;
+    background: white;
+  }
+
+  .winner-info {
+    margin-top: 24px;
+    padding: 30px 50px;
+    text-align: center;
+
+    p:first-child {
+      color: $CodGray;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    p {
+      color: $ShuttleGray;
+    }
+
+    div {
+      font-size: 24px;
+      font-weight: 600;
+      color: $CodGray;
+    }
+  }
+}

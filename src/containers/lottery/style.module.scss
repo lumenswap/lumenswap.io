@@ -1,0 +1,184 @@
+@import "styles/vars";
+.main {
+  margin-left: 20.625%;
+  margin-right: 20.625%;
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.title {
+  margin-top: 29px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 31px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  font-family: SofiaPro;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  border-radius: 4px;
+  padding: 1px 6px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 3px;
+  }
+
+  &.live {
+    color: $BlueRibbon;
+    background-color: #e3e9ff;
+
+    .dot {
+      background-color: $BlueRibbon;
+    }
+  }
+
+  &.ended {
+    color: $Manatee;
+    background: $CatskillWhite;
+
+    .dot {
+      background-color: $Manatee;
+    }
+  }
+}
+
+.board {
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $CodGray;
+}
+
+.tableContainer {
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  border-radius: 4px;
+  background: white;
+}
+
+.ticketId {
+  color: $BlueRibbon;
+}
+
+.input {
+  margin-top: 16px;
+  margin-right: 24px;
+  min-width: 292px;
+  width: 292px;
+  border-radius: 4px;
+
+  input {
+    border-radius: 6px;
+  }
+  input::placeholder {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+}
+
+.inputContainer {
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.table {
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: auto;
+  max-height: 593px;
+  border-radius: 4px;
+  table {
+    width: 100% !important;
+    min-width: 712px;
+    tr {
+      th {
+        border-radius: 0px !important;
+      }
+    }
+    a {
+      height: 52px !important;
+      tr {
+        td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.button {
+  border-radius: 4px;
+  padding: 12px 32px;
+  height: 40px;
+}
+
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.noDataMessage {
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+
+@media (max-width: $xl) {
+  .main {
+    margin-right: 100px;
+    margin-left: 100px;
+  }
+}
+
+@media (max-width: $md) {
+  .main {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+}
+
+@media (max-width: $sm) {
+  .input {
+    min-width: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

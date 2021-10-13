@@ -1,0 +1,69 @@
+@import "styles/vars";
+
+.pagination-container {
+  margin-left: auto;
+  display: flex;
+
+  button {
+    border: 0;
+    border-radius: 4px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: #fff;
+
+    .arrowLeft {
+      transform: rotateZ(180deg);
+    }
+
+    .disabled {
+      filter: brightness(0);
+      opacity: 0.5;
+    }
+  }
+}
+
+.pagination-items {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 4px 7px;
+  border-left: $CatskillWhite 1px solid;
+  border-right: $CatskillWhite 1px solid;
+  gap: 5px;
+}
+
+.pagination-item {
+  color: $ShuttleGray;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: SofiaPro;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination-spread {
+  color: $ShuttleGray;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: SofiaPro;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.pagination-item:hover,
+.pagination-item.active {
+  background: $Zumthor;
+  color: $BlueRibbon;
+}

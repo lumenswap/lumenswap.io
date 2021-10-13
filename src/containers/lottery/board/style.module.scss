@@ -1,0 +1,36 @@
+@import "styles/vars";
+
+.roundsList {
+  display: grid;
+  grid-template-columns: 0fr 0fr;
+  gap: 24px;
+  margin: 32px 0;
+}
+
+.title {
+  font-family: SofiaPro;
+  font-size: 16px;
+  color: $CodGray;
+}
+
+.roundImage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.roundItem {
+  width: 410px;
+  height: 223px;
+  background-color: white;
+  padding: 10px 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+}
+
+@media (max-width: $md) {
+  .roundsList {
+    grid-template-columns: 1fr;
+  }
+}

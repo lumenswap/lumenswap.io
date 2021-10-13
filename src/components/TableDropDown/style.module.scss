@@ -1,0 +1,43 @@
+@import "styles/vars";
+
+.dropdown-container {
+  background: white;
+  width: 144px;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  justify-content: space-between;
+  font-family: SofiaPro;
+  font-size: 14px;
+  border: solid 1px #ecf0f5;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown-content {
+  z-index: 10;
+  transition: 0.2s all ease-in-out;
+  opacity: 0;
+  position: absolute;
+  background: white;
+  padding: 14px;
+  width: 144px;
+  border-radius: 4px;
+  left: 0;
+  top: 0;
+  box-shadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
+
+  &.active {
+    top: 50px;
+    opacity: 1;
+  }
+}
+
+.dropdown-icon {
+  user-select: none;
+}
+
+.dropdown-item:not(:last-child) {
+  margin-bottom: 16px;
+}
