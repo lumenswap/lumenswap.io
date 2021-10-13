@@ -11,12 +11,12 @@ import NavLink from 'components/NavLink';
 import MobileMenu from 'components/MobileMenu';
 import styles from './styles.module.scss';
 
-const ObmHeader = () => {
+const LotteryHeader = () => {
   const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
 
   const logoLink = <Link href={urlMaker.root()}><a><Logo /></a></Link>;
-  const btnConnect = isLogged ? <CustomDropdown height="40px" width="160px" />
+  const BtnConnect = isLogged ? <CustomDropdown height="40px" width="160px" />
     : (
       <Button
         variant="secondary"
@@ -56,11 +56,11 @@ const ObmHeader = () => {
             ))}
           </div>
         </ul>
-        {btnConnect}
+        {BtnConnect}
       </div>
       <div className="d-md-none d-sm-block d-block w-100">
         <div className="d-flex align-items-center justify-content-end">
-          <div className="mr-3">{btnConnect}</div>
+          <div className="mr-3">{BtnConnect}</div>
           <div>{logoLink}</div>
         </div>
         <MobileMenu menus={mobileMenu} isLogged={isLogged} />
@@ -69,4 +69,4 @@ const ObmHeader = () => {
   );
 };
 
-export default ObmHeader;
+export default LotteryHeader;

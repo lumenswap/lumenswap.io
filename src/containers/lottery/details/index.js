@@ -18,7 +18,7 @@ import RoundInfo from './RoundInfo';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 
-const index = () => {
+const RoundDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [round, setRound] = useState(null);
   const [tickets, setTickets] = useState(null);
@@ -130,4 +130,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default RoundDetailsPage;

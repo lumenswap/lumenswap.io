@@ -8,7 +8,7 @@ const NumberOnlyInput = ({
   const handleInputChange = (e) => {
     e.preventDefault();
     if (onlyInt && e.target.value.includes('.')) {
-      onChange('');
+      onChange(e.target.value.slice(0, e.target.value.slice - 1));
     }
     const number = new BN(e.target.value);
     if (!number.isNaN()) {

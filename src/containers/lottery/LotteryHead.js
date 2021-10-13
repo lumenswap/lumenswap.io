@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-const SpotHead = ({ title }) => (
+const LotteryHead = ({ title }) => (
   <Head>
     <title>{title}</title>
     <link
@@ -10,4 +10,4 @@ const SpotHead = ({ title }) => (
   </Head>
 );
 
-export default SpotHead;
+export default LotteryHead;

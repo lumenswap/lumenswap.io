@@ -20,7 +20,7 @@ const index = ({ pages, currentPage, onPageClick }) => {
       <div className={styles['pagination-items']}>
         {paginationArray.range.map((page) => (
           <div
-            onClick={!page.label ? () => onPageClick(page) : undefined}
+            onClick={!page.label ? () => onPageClick(page) : () => {}}
             className={classNames(
               styles[`pagination-${page.label ? 'spread' : 'item'}`],
               currentPage === page && styles.active,
