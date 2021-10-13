@@ -13,7 +13,7 @@ const index = () => {
   useEffect(() => {
     async function fetchData() {
       const fetchedRounds = await getAllRounds();
-
+      console.log(fetchedRounds);
       setRounds(fetchedRounds.data);
       setLoading(false);
     }
