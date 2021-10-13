@@ -11,7 +11,7 @@ FROM main as demo
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
 ENV REACT_APP_LUMENSCAN_URL=https://lumenscan.io
 ENV REACT_APP_HOST=https://app.lumenswap.io
-ENV REACT_APP_LUMEN_API=https://api.lumenswap.io
+ENV REACT_APP_LUMEN_API=https://demo-api.lumenswap.io
 ENV REACT_APP_ENV=production
 
 RUN npm run build
