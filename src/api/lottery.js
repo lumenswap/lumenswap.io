@@ -17,5 +17,5 @@ export function getSingleRound(number) {
 }
 
 export function getMyTickets(address, roundNumber, page = 1) {
-  return axios.get(`${process.env.REACT_APP_LUMEN_API}/lottery/ticket/user`, { params: { page, address, round: roundNumber } });
+  return axios.get(`${process.env.REACT_APP_LUMEN_API}/lottery/ticket`, { params: { page, address, round: roundNumber } });
 }
