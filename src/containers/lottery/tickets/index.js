@@ -1,7 +1,7 @@
 import CTable from 'components/CTable';
 import TableDropDown from 'components/TableDropDown';
 import LotteryHead from 'containers/lottery/LotteryHead';
-import Pagination from 'components/Pagination';
+import CPagination from 'components/CPagination';
 import { useEffect, useState } from 'react';
 import Input from 'components/Input';
 import classNames from 'classnames';
@@ -118,7 +118,7 @@ const index = () => {
         {!loading
         && (
         <div style={{ marginTop: 24 }} className="d-flex">
-          <Pagination
+          <CPagination
             pages={pages}
             currentPage={page}
             onPageClick={(newPage) => {

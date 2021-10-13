@@ -8,8 +8,7 @@ import Button from 'components/Button';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginTypes } from 'reducers/user';
-import { getSingleRound, getRoundParticipants, getAllRoundTickets } from 'api/lottery';
-import { useRouter } from 'next/router';
+import { getRoundParticipants, getAllRoundTickets } from 'api/lottery';
 import BuyTicketSingle from './BuyTicketSingle';
 import BuyTicketPrivateKey from './BuyTicketPrivateKey';
 import BoardData from './BoardData';
@@ -18,18 +17,15 @@ import RoundInfo from './RoundInfo';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 
-const RoundDetailsPage = () => {
+const RoundDetailsPage = ({ fetchedRound }) => {
   const [loading, setLoading] = useState(true);
   const [round, setRound] = useState(null);
   const [tickets, setTickets] = useState(null);
   const [participants, setParticipants] = useState(null);
 
-  const router = useRouter();
   const isLogged = useSelector((state) => state.user.logged);
   const loginType = useSelector((state) => state.user.loginType);
   const dispatch = useDispatch();
-
-  const roundNumber = router.query.round;
 
   function handleBuyTicket() {
     if (!isLogged) {
@@ -56,20 +52,21 @@ const RoundDetailsPage = () => {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const fetchedRound = await getSingleRound(roundNumber);
+    setRound(fetchedRound);
+  }, [fetchedRound]);
 
-      const fetchedTickets = await getAllRoundTickets(roundNumber);
-      const fetchedParticipants = await getRoundParticipants(roundNumber);
+  useEffect(() => {
+    async function fetchData() {
+      const fetchedTickets = await getAllRoundTickets(round.number);
+      const fetchedParticipants = await getRoundParticipants(round.number);
 
       setParticipants(fetchedParticipants.data);
       setTickets(fetchedTickets.data);
-      setRound(fetchedRound.data);
       setLoading(false);
     }
 
-    if (roundNumber) fetchData();
-  }, [roundNumber]);
+    if (round) fetchData();
+  }, [round]);
 
   if (loading) {
     return (
@@ -97,7 +94,7 @@ const RoundDetailsPage = () => {
             <span style={{ marginLeft: 12, marginTop: 3 }}>
               <Image src={ArrowIcon} width={18} height={18} />
             </span>
-            <span style={{ marginLeft: 12 }}>{round.title}</span>
+            <span style={{ marginLeft: 12 }}>Round #{round?.number}</span>
           </h1>
           <Button
             onClick={handleBuyTicket}

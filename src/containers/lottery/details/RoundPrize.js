@@ -8,7 +8,7 @@ const RoundPrize = ({ round }) => (
       <Status round={round} />
     </div>
     <div className={styles.roundImage}>
-      <Image src={`/images/${round.image}`} width={410} height={246} objectFit="contain" />
+      <Image src={`/images/${round?.prizeImage || 'tesla.jpg'}`} width={410} height={246} objectFit="contain" />
     </div>
   </div>
 );
