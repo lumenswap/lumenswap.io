@@ -20,7 +20,7 @@ trigger:
 steps:
   - name: "build"
     commands:
-      - docker build --target demo -t lumenswap-front:${DRONE_COMMIT_SHA:0:7} .
+      - docker build -f dockerfiles/demo -t lumenswap-front:${DRONE_COMMIT_SHA:0:7} .
   - name: "Package"
     environment:
       MANIFEST_PATH:
@@ -70,7 +70,7 @@ trigger:
 steps:
   - name: "build"
     commands:
-      - docker build --target $product -t lumenswap-front-$product:${DRONE_COMMIT_SHA:0:7} .
+      - docker build -f dockerfiles/$product -t lumenswap-front-$product:${DRONE_COMMIT_SHA:0:7} .
   - name: "Package"
     environment:
       MANIFEST_PATH:
