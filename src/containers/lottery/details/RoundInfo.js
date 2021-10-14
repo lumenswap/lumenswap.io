@@ -41,7 +41,7 @@ const RoundInfo = ({ round }) => (
     <div className={classNames('col-12 d-flex flex-column mt-auto', styles['winner-info'])}>
       <p style={{ margin: 4 }}>Winner Info</p>
       <p>The winner will be determined in this Ledger Number:</p>
-      <div>123456789</div>
+      <div>{round?.endLedger}</div>
     </div>
   </div>
 );
