@@ -1,3 +1,4 @@
+import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
 import moment from 'moment';
 import styles from '../style.module.scss';
 
@@ -9,9 +10,9 @@ export default [
     dataIndex: 'ticketId',
     key: '1',
     render: (data) => (
-      <div className={styles.ticketId}>
+      <a href={generateTransactionURL(data.transactionId)} target="_blank" rel="noreferrer" className={styles.ticketId}>
         {truncateText(data.transactionId)}
-      </div>
+      </a>
     ),
   },
   {
@@ -19,9 +20,9 @@ export default [
     dataIndex: 'address',
     key: '2',
     render: (data) => (
-      <div className={styles.ticketId}>
+      <a href={generateAddressURL(data.address)} target="_blank" rel="noreferrer" className={styles.ticketId}>
         {truncateText(data.address)}
-      </div>
+      </a>
     ),
   },
   {

@@ -1,3 +1,4 @@
+import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import styles from '../style.module.scss';
 
 const truncateText = (text) => (text.length > 10 ? `${text.slice(0, 6)}...${text.slice(-6)}` : text);
@@ -8,9 +9,9 @@ export default [
     dataIndex: 'address',
     key: '1',
     render: (data) => (
-      <div className={styles.ticketId}>
+      <a href={generateTransactionURL(data.address)} target="_blank" rel="noreferrer" className={styles.ticketId}>
         {truncateText(data.address)}
-      </div>
+      </a>
     ),
   },
   {
