@@ -3,6 +3,7 @@ import numeral from 'numeral';
 import Image from 'next/image';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import QuestionIcon from 'assets/images/question-icon.png';
+import moment from 'moment';
 import styles from './style.module.scss';
 
 const RoundInfo = ({ round }) => (
@@ -11,11 +12,11 @@ const RoundInfo = ({ round }) => (
       <p className={styles['box-title']}>Round Info</p>
       <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
         <span className={styles['info-title']}>Period</span>
-        <span>1 Sep 2021
+        <span>{moment(round.startDate).format('D MMM Y')}
           <span style={{ marginLeft: 6, marginRight: 6 }}>
             <Image src={ArrowIcon} width={12} height={12} />
           </span>
-          1 Oct 2021
+          {round.endLedger} ledger
         </span>
       </div>
       <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
