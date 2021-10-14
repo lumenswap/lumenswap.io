@@ -7,6 +7,7 @@ import { fetchAccountDetails } from 'api/stellar';
 import balanceMapper from 'helpers/balanceMapper';
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
+import ServerSideLoading from 'components/ServerSideLoading';
 import LModal from '../containers/LModal';
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -40,15 +41,19 @@ function MyApp({ Component, pageProps }) {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <LModal />
-          <Component {...pageProps} />
+          <ServerSideLoading>
+            <LModal />
+            <Component {...pageProps} />
+          </ServerSideLoading>
         </PersistGate>
       </Provider>
     </>
   ) : (
     <Provider store={store}>
-      <LModal />
-      <Component {...pageProps} />
+      <ServerSideLoading>
+        <LModal />
+        <Component {...pageProps} />
+      </ServerSideLoading>
     </Provider>
   );
 }

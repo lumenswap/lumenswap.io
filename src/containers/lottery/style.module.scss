@@ -161,6 +161,10 @@
   padding-bottom: 40px;
 }
 
+.round-info {
+  padding-left: 30px;
+}
+
 @media (max-width: $xl) {
   .main {
     margin-right: 100px;
@@ -169,6 +173,16 @@
 }
 
 @media (max-width: $md) {
+  .title {
+    height: initial;
+    align-items: baseline;
+  }
+
+  .round-info {
+    padding-left: 14px;
+    margin-top: 20px;
+  }
+
   .main {
     margin-right: 15px;
     margin-left: 15px;

@@ -1,7 +1,9 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .roundImage {
   width: 100%;
+  box-sizing: border-box;
+  height: 206px;
   display: flex;
   align-items: center;
   margin: 67px 0;
@@ -133,8 +135,9 @@
   }
 
   .winner-info {
-    margin-top: 24px;
-    padding: 30px 50px;
+    margin-top: 24px !important;
+    height: 173px;
+    padding: 20px 50px;
     text-align: center;
 
     p:first-child {
@@ -151,6 +154,14 @@
       font-size: 24px;
       font-weight: 600;
       color: $CodGray;
+    }
+  }
+}
+
+@media (max-width: $md) {
+  .tabs {
+    nav {
+      margin-bottom: 20px;
     }
   }
 }
