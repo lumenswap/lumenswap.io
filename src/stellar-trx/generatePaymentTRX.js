@@ -4,7 +4,7 @@ import transactionConsts from './consts';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function generateManageSellTRX(
+export default async function generatePaymentTRX(
   address,
   amount,
   asset,

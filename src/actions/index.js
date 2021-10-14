@@ -10,6 +10,7 @@ const actionTypes = {
   modal: {
     OPEN: 'connectModal/OPEN',
     CLOSE: 'connectModal/CLOSE',
+    UPDATE_PROPS: 'connectModal/UPDATE_PROPS',
   },
   userBalance: {
     SET: 'userBalance/SET',

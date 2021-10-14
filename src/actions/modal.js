@@ -19,6 +19,15 @@ export function closeModalAction() {
   };
 }
 
+export function updateModalProps(props) {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.modal.UPDATE_PROPS,
+      props,
+    });
+  };
+}
+
 export function openConnectModal() {
   return (dispatch) => {
     openModalAction({

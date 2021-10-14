@@ -15,6 +15,14 @@ export default function modalReducer(state = defaultState, action) {
         ...state,
         open: false,
       };
+    case actionTypes.modal.UPDATE_PROPS:
+      return {
+        ...state,
+        modalProps: {
+          ...state.modalProps,
+          ...action.props,
+        },
+      };
     default:
       return state;
   }
