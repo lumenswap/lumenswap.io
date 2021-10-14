@@ -4,7 +4,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import styles from './style.module.scss';
 
-const index = ({
+const TableDropDown = ({
   placeHolder, items, onChange, itemKey, itemText,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,4 +20,4 @@ const index = ({
   );
 };
 
-export default index;
+export default TableDropDown;

@@ -19,7 +19,7 @@ const NoDataMessage = () => (
   </div>
 );
 
-const index = () => {
+const MyTicketsPage = () => {
   const [loading, setLoading] = useState(true);
   const [tickets, setTickets] = useState(null);
   const [rounds, setRounds] = useState(null);
@@ -133,4 +133,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default MyTicketsPage;
