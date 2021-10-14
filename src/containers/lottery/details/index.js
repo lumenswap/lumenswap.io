@@ -88,7 +88,7 @@ const RoundDetailsPage = ({ fetchedRound }) => {
         <LotteryHeader />
       </div>
       <div className={styles.main}>
-        <div className={styles.title}>
+        <div className={classNames(styles.title, 'flex-column flex-md-row')}>
           <h1 className={classNames(styles.board, 'd-flex align-items-center')}>
             Board
             <span style={{ marginLeft: 12, marginTop: 3 }}>
@@ -109,7 +109,7 @@ const RoundDetailsPage = ({ fetchedRound }) => {
           <div style={{ paddingLeft: 0 }} className="col-12 col-md-6">
             <RoundPrize round={round} />
           </div>
-          <div style={{ paddingLeft: 30 }} className="col-12 col-md-6">
+          <div className={classNames(styles['round-info'], 'col-12 col-md-6')}>
             <RoundInfo round={round} participants={participants} tickets={tickets} />
           </div>
         </div>
