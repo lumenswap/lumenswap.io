@@ -6,7 +6,7 @@ import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 import RoundData from './RoundData';
 
-const index = () => {
+const BoardsPage = () => {
   const [loading, setLoading] = useState(true);
   const [rounds, setRounds] = useState(null);
 
@@ -49,4 +49,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default BoardsPage;
