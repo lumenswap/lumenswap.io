@@ -13,4 +13,7 @@ module.exports = withImages(withTM({
     REACT_APP_PRODUCT_ENV: process.env.REACT_APP_PRODUCT_ENV,
   },
   webpack5: false,
+  images: {
+    domains: ['cdn.lumenswap.io'],
+  },
 }));
