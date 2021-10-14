@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import numeral from 'numeral';
 import BN from 'helpers/BN';
@@ -12,7 +12,7 @@ import { openModalAction } from 'actions/modal';
 import styles from './style.module.scss';
 import Purchased from './Purchased';
 
-const BuyTicketPrivateKey = ({ modalLoading, setModalLoading }) => {
+const BuyTicketPrivateKey = () => {
   const {
     control,
     watch,
