@@ -9,7 +9,7 @@ const RoundItem = ({ round }) => (
       <Status round={round} gift />
     </div>
     <div className={styles.roundImage}>
-      <Image src={`/images/${round?.prizeImage || 'tesla.jpg'}`} width={330} height={180} objectFit="contain" />
+      <Image src={`/${round?.prizeImage || 'tesla.jpg'}`} width={330} height={180} objectFit="contain" />
     </div>
   </div>
 );
