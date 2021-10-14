@@ -99,6 +99,7 @@ const RoundDetailsPage = ({ fetchedRound }) => {
           <Button
             onClick={handleBuyTicket}
             htmlType="button"
+            disabled={round?.status.toLowerCase() !== 'live'}
             content="Buy Ticket"
             variant="primary"
             className={styles.button}
