@@ -57,12 +57,15 @@ const RoundDetailsPage = ({ fetchedRound }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedTickets = await getAllRoundTickets(round.number);
-      const fetchedParticipants = await getRoundParticipants(round.number);
-
-      setParticipants(fetchedParticipants.data);
-      setTickets(fetchedTickets.data);
-      setLoading(false);
+      try {
+        const fetchedTickets = await getAllRoundTickets(round.number);
+        const fetchedParticipants = await getRoundParticipants(round.number);
+        setParticipants(fetchedParticipants.data);
+        setTickets(fetchedTickets.data);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     if (round) fetchData();
