@@ -21,6 +21,8 @@ CMD ["npm", "run", "start"]
 FROM main as obm
 RUN rm -r ./src/pages/reward
 RUN rm -r ./src/pages/amm
+RUN rm -r ./src/pages/nft
+RUN rm -r ./src/pages/lottery
 RUN mv ./src/pages/obm/* ./src/pages
 RUN rm -r ./src/pages/obm
 
@@ -39,6 +41,7 @@ FROM main as reward
 RUN rm -r ./src/pages/obm
 RUN rm -r ./src/pages/amm
 RUN rm -r ./src/pages/lottery
+RUN rm -r ./src/pages/nft
 RUN mv ./src/pages/reward/* ./src/pages
 RUN rm -r ./src/pages/reward
 
@@ -57,6 +60,7 @@ FROM main as amm
 RUN rm -r ./src/pages/obm
 RUN rm -r ./src/pages/reward
 RUN rm -r ./src/pages/lottery
+RUN rm -r ./src/pages/nft
 RUN mv ./src/pages/amm/* ./src/pages
 RUN rm -r ./src/pages/amm
 
@@ -75,6 +79,7 @@ FROM main as lottery
 RUN rm -r ./src/pages/obm
 RUN rm -r ./src/pages/reward
 RUN rm -r ./src/pages/amm
+RUN rm -r ./src/pages/nft
 RUN mv ./src/pages/lottery/* ./src/pages
 RUN rm -r ./src/pages/lottery
 
