@@ -2,14 +2,14 @@ import Tickets from './Tickets';
 import Participants from './Participants';
 
 const BoardTabContent = ({
-  tab, tickets, searchQuery, participants,
+  tab, searchQuery, round,
 }) => {
   if (tab === 'tickets') {
-    return <Tickets tickets={tickets} searchQuery={searchQuery} />;
+    return <Tickets round={round} searchQuery={searchQuery} />;
   }
 
   if (tab === 'participants') {
-    return <Participants participants={participants} searchQuery={searchQuery} />;
+    return <Participants round={round} searchQuery={searchQuery} />;
   }
 
   return null;

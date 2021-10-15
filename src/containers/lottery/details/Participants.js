@@ -1,4 +1,6 @@
 import CTable from 'components/CTable';
+import { getRoundParticipants } from 'api/lottery';
+import { useEffect, useRef, useState } from 'react';
 import tableHeaders from './participantsTableHeaders';
 import styles from '../style.module.scss';
 
@@ -8,13 +10,40 @@ const NoDataMessage = () => (
   </div>
 );
 
-const Participants = ({ participants, searchQuery, loading }) => {
-  let searchedParticipants = participants;
-  if (searchQuery && searchQuery.length > 0) {
-    searchedParticipants = participants
-      .filter((participant) => participant.address.toLowerCase()
-        .includes(searchQuery.toLowerCase()));
-  }
+const Participants = ({ searchQuery, round }) => {
+  const [searchedParticipants, setSearchedParticipants] = useState(null);
+
+  const timeOutRef = useRef(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const fetchedParticipants = await getRoundParticipants(
+          round.number, { searchAddress: searchQuery },
+        );
+        setSearchedParticipants(fetchedParticipants.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      clearTimeout(timeOutRef.current);
+      timeOutRef.current = setTimeout(async () => {
+        setSearchedParticipants(null);
+        const fetchedParticipants = await getRoundParticipants(
+          round.number, { searchAddress: searchQuery },
+        );
+        setSearchedParticipants(fetchedParticipants.data);
+      }, 700);
+    }
+
+    fetchData();
+  }, [searchQuery]);
 
   return (
     <div style={{ background: 'white', marginLeft: -24, marginTop: 15 }}>
@@ -23,7 +52,7 @@ const Participants = ({ participants, searchQuery, loading }) => {
         columns={tableHeaders}
         dataSource={searchedParticipants}
         noDataMessage={NoDataMessage}
-        loading={loading}
+        loading={searchedParticipants === null}
       />
     </div>
   );

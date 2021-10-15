@@ -4,10 +4,20 @@ import { useCallback, useState } from 'react';
 import styles from './style.module.scss';
 import BoardTabContent from './BoardTabContent';
 
-function BoardData({ tickets, loading, participants }) {
+function BoardData({ round }) {
   const [searchQuery, setSearchQuery] = useState('');
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+  };
+
+  let inputPlaceHolder = 'Enter your ticket Id';
+
+  const handleTabChange = (tab) => {
+    if (tab === 'tickets') {
+      inputPlaceHolder = 'Enter your ticket Id';
+    } else {
+      inputPlaceHolder = 'Enter your address';
+    }
   };
 
   const SearchInput = useCallback(() => (
@@ -16,9 +26,9 @@ function BoardData({ tickets, loading, participants }) {
         type="text"
         name="address"
         id="address"
-        placeholder="Enter your address"
+        placeholder={inputPlaceHolder}
         onChange={handleSearch}
-        height={32}
+        height={38}
         fontSize={14}
         className={styles.input}
       />
@@ -38,8 +48,9 @@ function BoardData({ tickets, loading, participants }) {
             <CTabs
               tabs={tabs}
               tabContent={BoardTabContent}
+              onChange={handleTabChange}
               customTabProps={{
-                tickets, searchQuery, loading, participants,
+                searchQuery, round,
               }}
               extraComponent={SearchInput}
               className={`${styles.tabs}`}
