@@ -31,7 +31,7 @@ const Tickets = ({
     }
 
     fetchData();
-  }, []);
+  }, [searchQuery]);
 
   return (
     <div style={{ background: 'white', marginLeft: -24, marginTop: 15 }}>
