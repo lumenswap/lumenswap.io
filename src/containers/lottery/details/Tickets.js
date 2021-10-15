@@ -36,7 +36,7 @@ const Tickets = ({
       timeOutRef.current = setTimeout(async () => {
         setSearchedTickets(null);
         const result = await searchTikcets(
-          { searchTransactionId: searchQuery },
+          { searchTransactionId: searchQuery, limit: 10 },
           round.number,
         );
         setSearchedTickets(result.data.data);

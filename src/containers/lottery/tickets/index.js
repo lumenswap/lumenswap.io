@@ -70,7 +70,7 @@ const MyTicketsPage = () => {
       setSearchedTickets(null);
       await new Promise((reslove) => setTimeout(reslove, 3000));
       const result = await searchTikcets(
-        { searchTransactionId: e.target.value.toLowerCase(), address },
+        { searchTransactionId: e.target.value.toLowerCase(), address, limit: 10 },
         selectedRound.number,
       );
       setPage(result.data.currentPage);

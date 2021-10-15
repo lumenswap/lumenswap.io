@@ -19,7 +19,7 @@ const Participants = ({ searchQuery, round }) => {
     async function fetchData() {
       try {
         const fetchedParticipants = await getRoundParticipants(
-          round.number, { searchAddress: searchQuery },
+          round.number, { searchAddress: searchQuery, limit: 10 },
         );
         setSearchedParticipants(fetchedParticipants.data);
       } catch (err) {
@@ -36,7 +36,7 @@ const Participants = ({ searchQuery, round }) => {
       timeOutRef.current = setTimeout(async () => {
         setSearchedParticipants(null);
         const fetchedParticipants = await getRoundParticipants(
-          round.number, { searchAddress: searchQuery },
+          round.number, { searchAddress: searchQuery, limit: 10 },
         );
         setSearchedParticipants(fetchedParticipants.data);
       }, 700);
