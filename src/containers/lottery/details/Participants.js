@@ -27,7 +27,9 @@ const Participants = ({ searchQuery, round }) => {
       }
     }
 
-    fetchData();
+    if (searchQuery === null || searchQuery === '') {
+      fetchData();
+    }
   }, []);
 
   useEffect(() => {
@@ -42,7 +44,9 @@ const Participants = ({ searchQuery, round }) => {
       }, 700);
     }
 
-    fetchData();
+    if (searchQuery !== null && searchQuery !== '') {
+      fetchData();
+    }
   }, [searchQuery]);
 
   return (

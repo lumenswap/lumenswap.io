@@ -27,7 +27,9 @@ const Tickets = ({
       }
     }
 
-    fetchData();
+    if (searchQuery === null || searchQuery === '') {
+      fetchData();
+    }
   }, []);
 
   useEffect(() => {
@@ -43,7 +45,9 @@ const Tickets = ({
       }, 700);
     }
 
-    fetchData();
+    if (searchQuery !== null && searchQuery !== '') {
+      fetchData();
+    }
   }, [searchQuery]);
 
   return (
