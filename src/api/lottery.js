@@ -4,10 +4,6 @@ export function getAllRounds() {
   return axios.get(`${process.env.REACT_APP_LUMEN_API}/lottery/round`);
 }
 
-export function getAllRoundTickets(roundNumber, limit = 10) {
-  return axios.get(`${process.env.REACT_APP_LUMEN_API}/lottery/round/${roundNumber}/tickets`, { params: { limit } });
-}
-
 export function getRoundParticipants(roundNumber, query) {
   return axios.get(`${process.env.REACT_APP_LUMEN_API}/lottery/round/${roundNumber}/participants`, { params: { ...query } });
 }
@@ -24,13 +20,10 @@ export function getMyTickets(address, roundNumber, page = 1, limit = 10) {
   });
 }
 
-export function searchTikcets(query, roundNumber) {
+export function searchTikcets(query) {
   return axios
     .get(`${process.env.REACT_APP_LUMEN_API}/lottery/ticket`,
       {
-        params: {
-          round: roundNumber,
-          ...query,
-        },
+        params: query,
       });
 }

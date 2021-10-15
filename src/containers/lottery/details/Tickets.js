@@ -1,6 +1,6 @@
 import CTable from 'components/CTable';
-import { getAllRoundTickets, searchTikcets } from 'api/lottery';
-import { useEffect, useRef, useState } from 'react';
+import { searchTikcets } from 'api/lottery';
+import { useEffect, useState } from 'react';
 import tableHeaders from './ticketTableHeaders';
 import styles from '../style.module.scss';
 
@@ -15,40 +15,23 @@ const Tickets = ({
 }) => {
   const [searchedTickets, setSearchedTickets] = useState(null);
 
-  const timeOutRef = useRef(null);
-
   useEffect(() => {
     async function fetchData() {
       try {
-        const fetchedTickets = await getAllRoundTickets(round.number);
+        const query = { limit: 10, round: round.number };
+        if (searchQuery !== null && searchQuery !== '') {
+          query.ticket = searchQuery;
+        }
+
+        const fetchedTickets = await searchTikcets(query);
         setSearchedTickets(fetchedTickets.data.data);
       } catch (err) {
         console.log(err);
       }
     }
 
-    if (searchQuery === null || searchQuery === '') {
-      fetchData();
-    }
+    fetchData();
   }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      clearTimeout(timeOutRef.current);
-      timeOutRef.current = setTimeout(async () => {
-        setSearchedTickets(null);
-        const result = await searchTikcets(
-          { searchTransactionId: searchQuery, limit: 10 },
-          round.number,
-        );
-        setSearchedTickets(result.data.data);
-      }, 700);
-    }
-
-    if (searchQuery !== null && searchQuery !== '') {
-      fetchData();
-    }
-  }, [searchQuery]);
 
   return (
     <div style={{ background: 'white', marginLeft: -24, marginTop: 15 }}>

@@ -1,13 +1,18 @@
 import CTabs from 'components/CTabs';
 import Input from 'components/Input';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styles from './style.module.scss';
 import BoardTabContent from './BoardTabContent';
 
 function BoardData({ round }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const timeoutRef = useRef(null);
+
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+    }, 700);
   };
 
   let inputPlaceHolder = 'Enter your ticket Id';
