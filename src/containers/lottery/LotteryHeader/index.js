@@ -31,12 +31,17 @@ const LotteryHeader = () => {
 
   const menus = {
     left: [
-      { name: 'Board', href: urlMaker.lottery.root(), public: true },
-      { name: 'My Tickets', href: urlMaker.lottery.tickets(), public: false },
+      {
+        name: 'Board', href: urlMaker.lottery.root(), public: true, exact: true,
+      },
+      {
+        name: 'My Tickets', href: urlMaker.lottery.tickets(), public: false, exact: false,
+      },
       {
         name: 'Learn about lottery',
         href: urlMaker.lottery.learn(),
         public: true,
+        exact: false,
       },
     ],
   };
@@ -51,7 +56,12 @@ const LotteryHeader = () => {
             <li>{logoLink}</li>
             {menus.left.map((menu, index) => (menu.public || isLogged) && (
               <li key={index}>
-                <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+                <NavLink
+                  name={menu.name}
+                  href={menu.href}
+                  mainHref={menu.mainHref}
+                  exact={menu.exact}
+                />
               </li>
             ))}
           </div>
