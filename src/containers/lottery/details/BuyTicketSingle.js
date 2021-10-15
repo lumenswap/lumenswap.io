@@ -16,7 +16,7 @@ const BuyTicketSingle = () => {
   const userAddress = useSelector((state) => state.user.detail.address);
   const userBalances = useSelector((state) => state.userBalance);
   const lspBalance = userBalances.find((i) => isSameAsset(getAssetDetails(LSP), i.asset));
-  let buttonContent = 'Buy';
+  let buttonContent = 'Confirm';
   let buttonDisabled = false;
 
   if (!lspBalance || new BN(1).gt(lspBalance.balance)) {

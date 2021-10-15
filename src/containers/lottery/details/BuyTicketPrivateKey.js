@@ -50,7 +50,7 @@ const BuyTicketPrivateKey = () => {
         return error.message;
       }
     }
-    return 'Send';
+    return 'Buy';
   }
 
   async function handleSend(data) {

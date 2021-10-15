@@ -1,6 +1,7 @@
 import Logo from 'assets/images/logo';
 import Link from 'next/link';
 import urlMaker from 'helpers/urlMaker';
+import Image from 'next/image';
 import classNames from 'classnames';
 
 import CustomDropdown from 'components/Dropdown';
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
 import MobileMenu from 'components/MobileMenu';
+import ArrowHeader from 'assets/images/arrow-header.svg';
 import styles from './styles.module.scss';
 
 const LotteryHeader = () => {
@@ -52,6 +54,11 @@ const LotteryHeader = () => {
             {menus.left.map((menu, index) => (menu.public || isLogged) && (
               <li key={index}>
                 <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+                {index === 2 && (
+                  <span>
+                    <Image src={ArrowHeader} width={15} height={16} />
+                  </span>
+                )}
               </li>
             ))}
           </div>

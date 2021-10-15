@@ -5,7 +5,7 @@ export const roundInfoGetServerSideProps = async (context) => {
     const round = await getSingleRound(context.query.round);
     return {
       props: {
-        fetchedRound: round.data,
+        round: round.data,
       },
     };
   } catch (error) {
