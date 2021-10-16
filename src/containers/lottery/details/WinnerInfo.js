@@ -31,7 +31,9 @@ const WinnerInfo = ({ round }) => (
           </span>
         </Tooltips>
       </span>
-      <span className={styles.ticketId}>{minimizeAddress(round.Winner.ticketId, 8)}</span>
+      <a style={{ textDecoration: 'none' }} href={generateTransactionURL(round.Winner.ticketId)} target="_blank" rel="noreferrer" className={styles.ticketId}>
+        {minimizeAddress(round.Winner.ticketId, 8)}
+      </a>
     </div>
     <div style={{ marginBottom: 5 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
