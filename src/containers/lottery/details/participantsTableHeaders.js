@@ -1,4 +1,4 @@
-import { generateTransactionURL } from 'helpers/explorerURLGenerator';
+import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import styles from '../style.module.scss';
 
@@ -8,7 +8,7 @@ export default [
     dataIndex: 'address',
     key: '1',
     render: (data) => (
-      <a style={{ textDecoration: 'none' }} href={generateTransactionURL(data.address)} target="_blank" rel="noreferrer" className={styles.ticketId}>
+      <a style={{ textDecoration: 'none' }} href={generateAddressURL(data.address)} target="_blank" rel="noreferrer" className={styles.ticketId}>
         {minimizeAddress(data.address)}
       </a>
     ),
