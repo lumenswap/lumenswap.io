@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .dropdown-container {
   background: white;
@@ -19,6 +19,7 @@
   z-index: 10;
   transition: 0.2s all ease-in-out;
   opacity: 0;
+  visibility: hidden;
   position: absolute;
   background: white;
   padding: 14px;
@@ -29,6 +30,7 @@
   box-shadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
 
   &.active {
+    visibility: visible;
     top: 50px;
     opacity: 1;
   }

@@ -1,0 +1,21 @@
+@import 'styles/vars';
+
+.lsp {
+  margin: 0;
+  min-width: 77px;
+  width: auto;
+  padding: 14px 18px;
+  height: 36px;
+  white-space: nowrap;
+  margin-right: 16px;
+  font-size: 16px;
+  font-weight: bold !important;
+  border-radius: 4px !important;
+  margin-left: auto;
+  background-color: white;
+  border: 1px solid $BlueRibbon;
+  color: $BlueRibbon;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
