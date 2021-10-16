@@ -24,7 +24,7 @@ const RoundInfo = ({ round }) => {
               <Image src={ArrowIcon} width={12} height={12} />
             </span>
             <span className="d-inline-flex align-items-center">
-              {endPeriod ? moment(round.endDate).format('D MMM Y') : round.endLedger}
+              {endPeriod ? moment(round.endDate).format('D MMM Y') : `${round.endLedger} Ledger`}
               <span
                 className="icon-arrow-repeat"
                 style={{ cursor: 'pointer', marginLeft: 3, color: '#8d8f9a' }}
