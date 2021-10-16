@@ -16,9 +16,10 @@ const Participants = ({ searchQuery, round }) => {
   useEffect(() => {
     async function fetchData() {
       try {
+        setSearchedParticipants(null);
         const query = { limit: 10 };
         if (searchQuery !== null && searchQuery !== '') {
-          query.address = searchQuery;
+          query.address = searchQuery.toUpperCase();
         }
 
         const fetchedParticipants = await getRoundParticipants(
