@@ -31,7 +31,7 @@ const RoundDetailsPage = ({ round }) => {
       dispatch(
         openModalAction({
           content: <BuyTicketPrivateKey />,
-          modalProps: { title: 'Buy ticket' },
+          modalProps: { title: 'Buy tickets' },
         }),
       );
       return;

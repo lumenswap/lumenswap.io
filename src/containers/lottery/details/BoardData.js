@@ -33,7 +33,7 @@ function BoardData({ round }) {
         id="address"
         placeholder={inputPlaceHolder}
         onChange={handleSearch}
-        height={38}
+        height={40}
         fontSize={14}
         className={styles.input}
       />
