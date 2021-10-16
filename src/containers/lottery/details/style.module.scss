@@ -4,7 +4,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
+  width: 97.4%;
   height: 100%;
   z-index: 2;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000);
@@ -49,6 +49,7 @@
 .ticketId {
   display: flex;
   align-items: center;
+  font-family: SofiaPro;
   color: $BlueRibbon;
 }
 
@@ -197,6 +198,12 @@
       color: $CodGray;
     }
   }
+}
+
+.gift-icon {
+  position: absolute;
+  left: 0;
+  top: -45px;
 }
 
 .participants-row {
