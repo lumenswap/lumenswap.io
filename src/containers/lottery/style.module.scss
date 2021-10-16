@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 .main {
   margin-left: 20.625%;
   margin-right: 20.625%;
@@ -176,6 +176,10 @@
 }
 
 @media (max-width: $md) {
+  .round-prize {
+    padding-right: 0 !important;
+  }
+
   .title {
     height: initial;
     align-items: baseline;

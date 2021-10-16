@@ -75,7 +75,7 @@ const RoundDetailsPage = ({ round }) => {
           )}
         </div>
         <div className="row mx-0 mt-3">
-          <div style={{ paddingLeft: 0 }} className="col-12 col-md-6">
+          <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-md-6')}>
             <RoundPrize round={round} />
           </div>
           <div className={classNames(styles['round-info'], 'col-12 col-md-6')}>

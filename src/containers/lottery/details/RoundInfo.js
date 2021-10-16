@@ -44,7 +44,7 @@ const RoundInfo = ({ round }) => {
           </span>
           <span>{numeral(round.ticketCount).format('0,0')}</span>
         </div>
-        <div style={{ marginBottom: -15 }} className="d-flex justify-content-between">
+        <div className={classNames(styles['participants-row'], 'd-flex justify-content-between')}>
           <span className={styles['info-title']}>
             Participants
             <Tooltips placement="top" id="participants" text={<PrimaryTooltip text={toolTipContent.tooltip.ticket} />}>
