@@ -11,7 +11,7 @@ import toolTipContent from './toolTipContent';
 import styles from './style.module.scss';
 
 const RoundInfo = ({ round }) => {
-  const [endPeriod, setEndPeriod] = useState(false);
+  const [endPeriod, setEndPeriod] = useState(true);
 
   return (
     <div style={{ height: '100%' }} className={classNames('row', styles['round-info'])}>
