@@ -7,7 +7,7 @@ import Input from 'components/Input';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { getAllRounds, getMyTickets, searchTikcets } from 'api/lottery';
+import { getAllRounds, searchTikcets } from 'api/lottery';
 import urlMaker from 'helpers/urlMaker';
 import tableHeaders from './tableHeaders';
 import LotteryHeader from '../LotteryHeader';
@@ -22,7 +22,7 @@ const NoDataMessage = () => (
 const MyTicketsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [rounds, setRounds] = useState(null);
-  const [selectedRound, setSelectedRound] = useState(null);
+  const [selectedRound, setSelectedRound] = useState({ value: null, text: 'All Tickets' });
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(10);
   const [searchedTickets, setSearchedTickets] = useState(null);
@@ -33,57 +33,57 @@ const MyTicketsPage = () => {
   const loading = searchedTickets === null;
 
   useEffect(() => {
-    async function fetchInitialData() {
-      const fetchedRounds = await getAllRounds();
-      const fetchedTickets = await getMyTickets(address, fetchedRounds.data[0].number, page);
-
-      setPages(fetchedTickets.data.totalPages);
-      setPage(fetchedTickets.data.currentPage);
-      setSelectedRound(fetchedRounds.data[0]);
-      setRounds(fetchedRounds.data);
-      setSearchedTickets(fetchedTickets.data.data);
-    }
-
-    if (address) fetchInitialData();
-    else router.push(urlMaker.lottery.root());
+    if (!isLogged) router.push(urlMaker.lottery.root());
   }, []);
 
-  async function fetchData() {
-    setSearchedTickets(null);
-    const fetchedTickets = await getMyTickets(address, selectedRound.number, page);
-    setSearchedTickets(fetchedTickets.data.data);
-    setPages(fetchedTickets.data.totalPages);
-    setPage(fetchedTickets.data.currentPage);
-  }
+  useEffect(() => {
+    async function fetchInitialData() {
+      if (isLogged) {
+        setSearchedTickets(null);
+        const query = { address, page, limit: 10 };
+
+        if (selectedRound && selectedRound?.value) query.round = selectedRound.value;
+        if (searchQuery) query.ticket = searchQuery;
+
+        const fetchedTickets = await searchTikcets(query);
+
+        setPages(fetchedTickets.data.totalPages);
+        setPage(fetchedTickets.data.currentPage);
+        setSearchedTickets(fetchedTickets.data.data);
+      }
+    }
+
+    fetchInitialData();
+  }, [selectedRound, searchQuery, page]);
+
+  useEffect(() => {
+    async function fetchRounds() {
+      const fetchedRounds = await getAllRounds();
+
+      const dropDownItems = fetchedRounds.data.map((round) => ({
+        value: round.number,
+        text: `Round #${round.number}`,
+      }));
+      setRounds([{ text: 'All Tickets', value: null }, ...dropDownItems]);
+    }
+
+    fetchRounds();
+  }, []);
 
   async function handleSelectRound(round) {
-    if (round !== selectedRound) {
+    if (round.value !== selectedRound.value) {
       setSelectedRound(round);
-      fetchData();
+      // setPage(null);
+      // setPages(null);
     }
   }
 
   async function handleSearch(e) {
     clearTimeout(timeOutRef.current);
-    setSearchQuery(e.target.value);
     timeOutRef.current = setTimeout(async () => {
-      setSearchedTickets(null);
-      await new Promise((reslove) => setTimeout(reslove, 3000));
-      const result = await searchTikcets(
-        { searchTransactionId: e.target.value.toLowerCase(), address, limit: 10 },
-        selectedRound.number,
-      );
-      setPage(result.data.currentPage);
-      setPages(result.data.totalPages);
-      setSearchedTickets(result.data.data);
+      setSearchQuery(e.target.value);
     }, 700);
   }
-
-  useEffect(() => {
-    if (!isLogged) {
-      router.push(urlMaker.lottery.root());
-    }
-  }, [isLogged]);
 
   return (
     <>
@@ -94,16 +94,13 @@ const MyTicketsPage = () => {
       <div className={styles.main}>
         <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
           <h1 className={styles.board}>My Tickets</h1>
-          <TableDropDown onChange={handleSelectRound} placeHolder="All tickets" items={rounds} itemKey="number" itemText="Round #" />
+          <TableDropDown defaultOption={selectedRound} onChange={handleSelectRound} items={rounds} placeholder="All Tickets" />
         </div>
         <div className={styles.tableContainer}>
           <div className={styles.inputContainer}>
             <div className={styles.input}>
               <Input
-                name="ticketID"
-                id="ticketID"
                 type="text"
-                value={searchQuery}
                 placeholder="Enter your ticket ID"
                 onChange={handleSearch}
                 height={40}
@@ -129,7 +126,6 @@ const MyTicketsPage = () => {
             currentPage={page}
             onPageClick={(newPage) => {
               setPage(newPage);
-              fetchData();
             }}
           />
         </div>

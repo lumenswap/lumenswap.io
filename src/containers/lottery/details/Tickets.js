@@ -18,6 +18,7 @@ const Tickets = ({
   useEffect(() => {
     async function fetchData() {
       try {
+        setSearchedTickets(null);
         const query = { limit: 10, round: round.number };
         if (searchQuery !== null && searchQuery !== '') {
           query.ticket = searchQuery;

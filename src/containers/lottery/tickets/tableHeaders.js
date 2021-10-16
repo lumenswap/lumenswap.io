@@ -20,7 +20,7 @@ export default [
     key: '2',
     render: (data) => (
       <div>
-        #{data.roundNumber}
+        #{data.Round?.number}
       </div>
     ),
   },

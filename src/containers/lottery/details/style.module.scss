@@ -1,6 +1,42 @@
-@import "styles/vars";
+@import 'styles/vars';
+
+.description-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 97.4%;
+  height: 100%;
+  z-index: 2;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  justify-content: flex-end;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  p {
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    font-family: SofiaPro;
+    font-size: 16px;
+    color: #fff;
+    font-weight: normal;
+    margin-bottom: -150px;
+  }
+}
+
+.description-overlay:hover {
+  opacity: 1;
+
+  p {
+    opacity: 1;
+    margin-bottom: 0;
+  }
+}
 
 .roundImage {
+  position: relative;
   width: 100%;
   box-sizing: border-box;
   height: 206px;
@@ -13,6 +49,7 @@
 .ticketId {
   display: flex;
   align-items: center;
+  font-family: SofiaPro;
   color: $BlueRibbon;
 }
 
@@ -120,6 +157,7 @@
 }
 
 .round-info {
+  font-family: SofiaPro;
   .box-title {
     font-size: 16px;
     font-weight: 600;
@@ -163,7 +201,25 @@
   }
 }
 
+.gift-icon {
+  position: absolute;
+  left: 0;
+  top: -45px;
+}
+
+.participants-row {
+  margin-bottom: -15px;
+}
+
 @media (max-width: $md) {
+  .participants-row {
+    margin-bottom: 0;
+  }
+
+  .winner-info {
+    margin-top: 15px !important;
+  }
+
   .tabs {
     nav {
       margin-bottom: 20px;

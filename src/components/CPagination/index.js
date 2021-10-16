@@ -40,6 +40,7 @@ const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
         {paginationArray.map((page) => (
           <div
             onClick={() => onPaginationClick(page)}
+            key={page}
             className={classNames(
               styles[`pagination-${page.label ? 'spread' : 'item'}`],
               initCurrentPage === page && styles.active,

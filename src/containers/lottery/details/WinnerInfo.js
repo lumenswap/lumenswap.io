@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import minimizeAddress from 'helpers/minimizeAddress';
+import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
 import QuestionIcon from 'assets/images/question-icon.png';
 import toolTipContent from './toolTipContent';
 import styles from './style.module.scss';
 
 const WinnerInfo = ({ round }) => (
-  <div className="col-12 d-flex flex-column">
+  <div className="col-12 px-0 d-flex flex-column">
     <p className={styles['box-title']}>Winner Info</p>
     <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
@@ -17,7 +18,9 @@ const WinnerInfo = ({ round }) => (
           </span>
         </Tooltips>
       </span>
-      <span className={styles.ticketId}>{minimizeAddress(round.winner.address)}</span>
+      <a style={{ textDecoration: 'none' }} href={generateAddressURL(round.Winner.address)} target="_blank" rel="noreferrer" className={styles.ticketId}>
+        {minimizeAddress(round.Winner.address)}
+      </a>
     </div>
     <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
@@ -28,7 +31,9 @@ const WinnerInfo = ({ round }) => (
           </span>
         </Tooltips>
       </span>
-      <span className={styles.ticketId}>{minimizeAddress(round.winner.transactionId, 8)}</span>
+      <a style={{ textDecoration: 'none' }} href={generateTransactionURL(round.Winner.ticketId)} target="_blank" rel="noreferrer" className={styles.ticketId}>
+        {minimizeAddress(round.Winner.ticketId, 8)}
+      </a>
     </div>
     <div style={{ marginBottom: 5 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
@@ -39,7 +44,9 @@ const WinnerInfo = ({ round }) => (
           </span>
         </Tooltips>
       </span>
-      <span className={styles.ticketId}>{minimizeAddress(round.winner.priceTx, 8)}</span>
+      <a style={{ textDecoration: 'none' }} href={generateTransactionURL(round.Winner.transactionId)} target="_blank" rel="noreferrer" className={styles.ticketId}>
+        {minimizeAddress(round.Winner.transactionId, 8)}
+      </a>
     </div>
   </div>
 );

@@ -18,7 +18,7 @@ const CTabs = ({
   return (
     <div
       className={classNames(minimal ? styles.minimal : styles.tab, className)}
-      onSelect={onChange}
+      // onSelect={onChange}
       style={{ fontSize: '14px', ...style }}
     >
       <div style={{ margin: 0 }} className="row justify-content-between">
