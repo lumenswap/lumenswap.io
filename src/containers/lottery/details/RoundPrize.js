@@ -1,11 +1,15 @@
 import Image from 'next/image';
+import GiftIcon from 'assets/images/gift.svg';
 import Status from '../Status';
 import styles from './style.module.scss';
 
 const RoundPrize = ({ round }) => (
   <div className={styles.roundItem}>
     <div className={styles['description-overlay']}>
-      <p>
+      <p className="position-relative">
+        <span className={styles['gift-icon']}>
+          <Image src={GiftIcon} width={30} height={32} />
+        </span>
         {round?.prizeDescription}
       </p>
     </div>
