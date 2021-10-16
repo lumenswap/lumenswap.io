@@ -6,17 +6,16 @@ import BoardTabContent from './BoardTabContent';
 
 function BoardData({ round }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [inputPlaceHolder, setInputPlaceHolder] = useState('Enter your ticket Id');
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
   };
 
-  let inputPlaceHolder = 'Enter your ticket Id';
-
   const handleTabChange = (tab) => {
     if (tab === 'tickets') {
-      inputPlaceHolder = 'Enter your ticket Id';
+      setInputPlaceHolder('Enter your ticket Id');
     } else {
-      inputPlaceHolder = 'Enter your address';
+      setInputPlaceHolder('Enter your address');
     }
   };
 
