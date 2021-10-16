@@ -6,7 +6,7 @@ import toolTipContent from './toolTipContent';
 import styles from './style.module.scss';
 
 const WinnerInfo = ({ round }) => (
-  <div className="col-12 d-flex flex-column">
+  <div className="col-12 px-0 d-flex flex-column">
     <p className={styles['box-title']}>Winner Info</p>
     <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
@@ -17,7 +17,7 @@ const WinnerInfo = ({ round }) => (
           </span>
         </Tooltips>
       </span>
-      <span className={styles.ticketId}>{minimizeAddress(round.winner.address)}</span>
+      <span className={styles.ticketId}>{minimizeAddress(round.Winner.address)}</span>
     </div>
     <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
@@ -28,7 +28,7 @@ const WinnerInfo = ({ round }) => (
           </span>
         </Tooltips>
       </span>
-      <span className={styles.ticketId}>{minimizeAddress(round.winner.transactionId, 8)}</span>
+      <span className={styles.ticketId}>{minimizeAddress(round.Winner.transactionId, 8)}</span>
     </div>
     <div style={{ marginBottom: 5 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
@@ -39,7 +39,7 @@ const WinnerInfo = ({ round }) => (
           </span>
         </Tooltips>
       </span>
-      <span className={styles.ticketId}>{minimizeAddress(round.winner.priceTx, 8)}</span>
+      <span className={styles.ticketId}>{minimizeAddress(round.Winner.priceTx, 8)}</span>
     </div>
   </div>
 );
