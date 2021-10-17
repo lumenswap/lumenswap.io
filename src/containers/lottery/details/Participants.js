@@ -6,7 +6,7 @@ import styles from '../style.module.scss';
 
 const NoDataMessage = () => (
   <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There are no participants</div>
+    <div className={styles.noDataMessage}>There is no address</div>
   </div>
 );
 

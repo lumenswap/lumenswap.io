@@ -6,6 +6,7 @@ import BoardTabContent from './BoardTabContent';
 
 function BoardData({ round, onTabChange }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [inputPlaceHolder, setInputPlaceHolder] = useState('Enter your ticket Id');
   const timeoutRef = useRef(null);
 
   const handleSearch = (e) => {
@@ -15,14 +16,13 @@ function BoardData({ round, onTabChange }) {
     }, 700);
   };
 
-  let inputPlaceHolder = 'Enter your ticket Id';
-
   const handleTabChange = (tab) => {
+    setSearchQuery(null);
     onTabChange(tab);
     if (tab === 'tickets') {
-      inputPlaceHolder = 'Enter your ticket Id';
+      setInputPlaceHolder('Enter your ticket Id');
     } else {
-      inputPlaceHolder = 'Enter your address';
+      setInputPlaceHolder('Enter your address');
     }
   };
 
@@ -30,8 +30,6 @@ function BoardData({ round, onTabChange }) {
     <div className={styles.input}>
       <Input
         type="text"
-        name="address"
-        id="address"
         placeholder={inputPlaceHolder}
         onChange={handleSearch}
         height={40}
@@ -39,7 +37,7 @@ function BoardData({ round, onTabChange }) {
         className={styles.input}
       />
     </div>
-  ), []);
+  ), [inputPlaceHolder]);
 
   const tabs = [
     { title: 'Tickets', id: 'tickets' },
