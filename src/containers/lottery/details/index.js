@@ -83,7 +83,7 @@ const RoundDetailsPage = ({ round }) => {
           </div>
         </div>
         <div
-          style={{ marginTop: 24, marginBottom: 55 }}
+          style={{ marginTop: 24, marginBottom: 55, boxShadow: '0 2px 20px 0 rgba(134, 146, 164, 0.08)' }}
           className={styles['table-container']}
         >
           <BoardData round={round} />

@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 .main {
   margin-left: 20.625%;
   margin-right: 20.625%;
@@ -66,6 +66,9 @@
   line-height: normal;
   letter-spacing: normal;
   color: $CodGray;
+}
+
+.table-container {
 }
 
 .tableContainer {
