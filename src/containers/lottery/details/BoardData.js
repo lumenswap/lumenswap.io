@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from 'react';
 import styles from './style.module.scss';
 import BoardTabContent from './BoardTabContent';
 
-function BoardData({ round }) {
+function BoardData({ round, onTabChange }) {
   const [searchQuery, setSearchQuery] = useState('');
   const timeoutRef = useRef(null);
 
@@ -18,6 +18,7 @@ function BoardData({ round }) {
   let inputPlaceHolder = 'Enter your ticket Id';
 
   const handleTabChange = (tab) => {
+    onTabChange(tab);
     if (tab === 'tickets') {
       inputPlaceHolder = 'Enter your ticket Id';
     } else {
@@ -47,7 +48,7 @@ function BoardData({ round }) {
 
   return (
     <>
-      <div className={styles['table-container']}>
+      <div style={{ boxShadow: '0 2px 20px 0 rgba(134, 146, 164, 0.08)' }} className={styles['table-container']}>
         <div className={styles.header}>
           <div className={styles.ctab}>
             <CTabs
