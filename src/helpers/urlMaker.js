@@ -67,6 +67,8 @@ const urlMaker = {
     singleRound: (round) => `${rootUrl.lottery}/round/${round}`,
     tickets: () => `${rootUrl.lottery}/tickets`,
     learn: () => `${rootUrl.lottery}/learnmore`,
+    allTickets: (round) => `${rootUrl.lottery}/round/${round}/tickets`,
+    allParticipants: (round) => `${rootUrl.lottery}/round/${round}/participants`,
   },
 };
 

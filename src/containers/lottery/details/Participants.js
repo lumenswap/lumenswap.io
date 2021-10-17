@@ -25,7 +25,7 @@ const Participants = ({ searchQuery, round }) => {
         const fetchedParticipants = await getRoundParticipants(
           round.number, query,
         );
-        setSearchedParticipants(fetchedParticipants.data);
+        setSearchedParticipants(fetchedParticipants.data.data);
       } catch (err) {
         console.log(err);
       }

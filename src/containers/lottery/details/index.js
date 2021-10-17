@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import classNames from 'classnames';
@@ -17,9 +18,21 @@ import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 
 const RoundDetailsPage = ({ round }) => {
+  const [tab, setTab] = useState('tickets');
   const isLogged = useSelector((state) => state.user.logged);
   const loginType = useSelector((state) => state.user.loginType);
   const dispatch = useDispatch();
+
+  function onTabChange(newTab) {
+    setTab(newTab);
+  }
+
+  function generateLink() {
+    if (tab === 'tickets') {
+      return urlMaker.lottery.allTickets(round.number);
+    }
+    return urlMaker.lottery.allParticipants(round.number);
+  }
 
   function handleBuyTicket() {
     if (!isLogged) {
@@ -83,10 +96,19 @@ const RoundDetailsPage = ({ round }) => {
           </div>
         </div>
         <div
-          style={{ marginTop: 24, marginBottom: 55, boxShadow: '0 2px 20px 0 rgba(134, 146, 164, 0.08)' }}
+          style={{ marginTop: 24, marginBottom: 55 }}
           className={styles['table-container']}
         >
-          <BoardData round={round} />
+          <BoardData onTabChange={onTabChange} round={round} />
+          <Link href={generateLink()} passHref>
+            <a style={{ textDecoration: 'none' }} className={styles['address-link']}>
+              {tab === 'tickets' ? 'See all tickets' : 'See all addresses'}
+              <span>
+                <Image src={ArrowIcon} width={16} height={16} />
+              </span>
+            </a>
+          </Link>
+
         </div>
       </div>
     </>
