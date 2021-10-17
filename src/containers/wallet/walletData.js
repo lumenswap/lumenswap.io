@@ -42,8 +42,6 @@ function WalletData() {
   const xlmBalance = userBalances.find((i) => isSameAsset(getAssetDetails(XLM), i.asset));
   const userSubentry = useSelector((state) => state.user.detail.subentry);
 
-  const [filteredBalances, setFilteredBalances] = useState(null);
-
   useEffect(() => {
     if (userBalances.length > 0) {
       const allBalancesExceptUserBalance = defaultTokens.filter(
@@ -60,26 +58,6 @@ function WalletData() {
       setAllBalances(unsortedAllBalances);
     }
   }, [userBalances]);
-
-  useEffect(() => {
-    if (allBalances) {
-      setFilteredBalances(allBalances.map((item) => ({
-        ...item,
-        key: `${item.asset.code}:${item.asset.issuer}`,
-      })));
-      setFilteredBalances(allBalances.filter(
-        (balance) => balance.asset.code
-          .toLowerCase()
-          .search(searchQuery.toLocaleLowerCase()) !== -1,
-      ));
-
-      if (filterZeroBalance) {
-        setFilteredBalances(allBalances.filter(
-          (balance) => !new BN(balance.balance).isEqualTo('0'),
-        ));
-      }
-    }
-  }, [allBalances, searchQuery, filterZeroBalance]);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
@@ -213,6 +191,29 @@ function WalletData() {
       ),
     },
   ];
+
+  let filteredBalances = allBalances?.map((item) => ({
+    ...item,
+    key: `${item.asset.code}:${item.asset.issuer}`,
+  }));
+  if (filterZeroBalance) {
+    filteredBalances = filteredBalances?.filter(
+      (balance) => !new BN(balance.balance).isEqualTo('0'),
+    ).map((item) => ({
+      ...item,
+      key: `${item.asset.code}:${item.asset.issuer}`,
+    }));
+  }
+  if (searchQuery) {
+    filteredBalances = filteredBalances?.filter(
+      (balance) => balance.asset.code
+        .toLowerCase()
+        .search(searchQuery.toLocaleLowerCase()) !== -1,
+    ).map((item) => ({
+      ...item,
+      key: `${item.asset.code}:${item.asset.issuer}`,
+    }));
+  }
 
   return (
     <>
