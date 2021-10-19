@@ -37,7 +37,7 @@ const RoundInfo = ({ round }) => {
         <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
           <span className={styles['info-title']}>
             Ticket
-            <Tooltips placement="top" id="ticket" text={<PrimaryTooltip text={toolTipContent.tooltip.ticket} />}>
+            <Tooltips placement="top" id="ticket" text={<PrimaryTooltip text={toolTipContent.ticket} />}>
               <span style={{ marginLeft: 2, height: 18 }}>
                 <Image src={QuestionIcon} width={16} height={16} />
               </span>
@@ -48,7 +48,7 @@ const RoundInfo = ({ round }) => {
         <div className={classNames(styles['participants-row'], 'd-flex justify-content-between')}>
           <span className={styles['info-title']}>
             Participants
-            <Tooltips placement="top" id="participants" text={<PrimaryTooltip text={toolTipContent.tooltip.ticket} />}>
+            <Tooltips placement="top" id="participants" text={<PrimaryTooltip text={toolTipContent.participant} />}>
               <span style={{ marginLeft: 2, height: 18 }}>
                 <Image src={QuestionIcon} width={16} height={16} />
               </span>

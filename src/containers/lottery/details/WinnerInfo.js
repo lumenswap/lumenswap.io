@@ -12,7 +12,7 @@ const WinnerInfo = ({ round }) => (
     <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
         Address
-        <Tooltips placement="top" id="price" text={<PrimaryTooltip text={toolTipContent.tooltip.ticket} />}>
+        <Tooltips placement="top" id="price" text={<PrimaryTooltip text={toolTipContent.winnerAddress} />}>
           <span style={{ marginLeft: 2, height: 18 }}>
             <Image src={QuestionIcon} width={16} height={16} />
           </span>
@@ -25,7 +25,7 @@ const WinnerInfo = ({ round }) => (
     <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
         Ticket ID
-        <Tooltips placement="top" id="ticket" text={<PrimaryTooltip text={toolTipContent.tooltip.ticket} />}>
+        <Tooltips placement="top" id="ticket" text={<PrimaryTooltip text={toolTipContent.winnerTicket} />}>
           <span style={{ marginLeft: 2, height: 18 }}>
             <Image src={QuestionIcon} width={16} height={16} />
           </span>
@@ -38,7 +38,7 @@ const WinnerInfo = ({ round }) => (
     <div style={{ marginBottom: 5 }} className="d-flex justify-content-between">
       <span className={styles['info-title']}>
         Price Tx
-        <Tooltips placement="top" id="participants" text={<PrimaryTooltip text={toolTipContent.tooltip.ticket} />}>
+        <Tooltips placement="top" id="participants" text={<PrimaryTooltip text={toolTipContent.winnerTransaction} />}>
           <span style={{ marginLeft: 2, height: 18 }}>
             <Image src={QuestionIcon} width={16} height={16} />
           </span>
