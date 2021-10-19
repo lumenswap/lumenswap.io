@@ -11,6 +11,20 @@ const RoundPrize = ({ round }) => (
           <Image src={GiftIcon} width={30} height={32} />
         </span>
         {round?.prizeDescription}
+        {round.status === 'Live' && (
+          <>
+            {' '}The cost of buying a ticket is 1 LSP and the winner will be selected{' '}
+            at the {round.endLedger} Ledger,{' '}
+            <a
+              style={{ textDecoration: 'none', color: 'white' }}
+              href="https://google.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read this article to learn more about this round.
+            </a>
+          </>
+        )}
       </p>
     </div>
     <div className="d-flex justify-content-end align-items-center">
