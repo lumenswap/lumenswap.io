@@ -1,10 +1,9 @@
 import CTable from 'components/CTable';
-import LotteryHead from 'containers/lottery/LotteryHead';
+import Head from 'next/head';
 import CPagination from 'components/CPagination';
 import { useEffect, useState, useRef } from 'react';
 import Input from 'components/Input';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
 import { searchTikcets } from 'api/lottery';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,39 +19,37 @@ const NoDataMessage = () => (
   </div>
 );
 
-const AllTicketsPage = () => {
+const AllTicketsPage = ({ round }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(10);
   const [searchedTickets, setSearchedTickets] = useState(null);
-  const router = useRouter();
   const timeOutRef = useRef(null);
   const loading = searchedTickets === null;
 
   useEffect(() => {
     async function fetchInitialData() {
-      if (router.query.round) {
-        setSearchedTickets(null);
-        const query = {
-          page, limit: 20, round: router.query.round,
-        };
+      setSearchedTickets(null);
+      const query = {
+        page, limit: 20, round: round.number,
+      };
 
-        if (searchQuery) query.ticket = searchQuery.toLowerCase();
+      if (searchQuery) query.ticket = searchQuery.toLowerCase();
 
-        const fetchedTickets = await searchTikcets(query);
+      const fetchedTickets = await searchTikcets(query);
 
-        setPages(fetchedTickets.data.totalPages);
-        setPage(fetchedTickets.data.currentPage);
-        setSearchedTickets(fetchedTickets.data.data);
-      }
+      setPages(fetchedTickets.data.totalPages);
+      setPage(fetchedTickets.data.currentPage);
+      setSearchedTickets(fetchedTickets.data.data);
     }
 
     fetchInitialData();
-  }, [searchQuery, page, router.query]);
+  }, [searchQuery, page]);
 
   async function handleSearch(e) {
     clearTimeout(timeOutRef.current);
     timeOutRef.current = setTimeout(async () => {
+      setPage(1);
       setSearchQuery(e.target.value);
     }, 700);
   }
@@ -60,7 +57,13 @@ const AllTicketsPage = () => {
   return (
     <>
       <div className="container-fluid">
-        <LotteryHead title="Tickets" />
+        <Head>
+          <title>Round {round.number} Tickets | Lumenswap</title>
+          <link
+            rel="canonical"
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.allTickets(round.number)}`}
+          />
+        </Head>
         <LotteryHeader />
       </div>
       <div className={styles.main}>
@@ -74,9 +77,9 @@ const AllTicketsPage = () => {
             <span style={{ marginLeft: 12, marginTop: 3 }}>
               <Image src={ArrowIcon} width={18} height={18} />
             </span>
-            <Link href={urlMaker.lottery.singleRound(router.query.round)} passHref>
+            <Link href={urlMaker.lottery.singleRound(round.number)} passHref>
               <a style={{ color: 'black', textDecoration: 'none', marginLeft: 12 }}>
-                Round #{router.query.round}
+                Round #{round.number}
               </a>
             </Link>
             <span style={{ marginLeft: 12, marginTop: 3 }}>

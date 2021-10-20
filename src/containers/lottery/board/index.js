@@ -1,7 +1,8 @@
 import Loading from 'components/Loading';
-import LotteryHead from 'containers/lottery/LotteryHead';
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { getAllRounds } from 'api/lottery';
+import urlMaker from 'helpers/urlMaker';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 import RoundData from './RoundData';
@@ -24,7 +25,13 @@ const BoardsPage = () => {
     return (
       <>
         <div className="container-fluid">
-          <LotteryHead title="Board" />
+          <Head>
+            <title>Lottery Board | Lumenswap</title>
+            <link
+              rel="canonical"
+              herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.root()}`}
+            />
+          </Head>
           <LotteryHeader />
         </div>
         <div className={styles.loadingContainer}>
@@ -33,10 +40,17 @@ const BoardsPage = () => {
       </>
     );
   }
+
   return (
     <>
       <div className="container-fluid">
-        <LotteryHead title="Board" />
+        <Head>
+          <title>Lottery Board | Lumenswap</title>
+          <link
+            rel="canonical"
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.root()}`}
+          />
+        </Head>
         <LotteryHeader />
       </div>
       <div className={styles.main}>

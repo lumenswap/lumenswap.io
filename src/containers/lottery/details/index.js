@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import classNames from 'classnames';
-import LotteryHead from 'containers/lottery/LotteryHead';
+import Head from 'next/head';
 import Button from 'components/Button';
 import Link from 'next/link';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
@@ -61,7 +61,13 @@ const RoundDetailsPage = ({ round }) => {
   return (
     <>
       <div className="container-fluid">
-        <LotteryHead title="Board" />
+        <Head>
+          <title>Round {round.number} | Lumenswap</title>
+          <link
+            rel="canonical"
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.singleRound(round.number)}`}
+          />
+        </Head>
         <LotteryHeader />
       </div>
       <div className={styles.main}>
