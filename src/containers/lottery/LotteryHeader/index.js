@@ -67,7 +67,7 @@ const LotteryHeader = () => {
                 href="https://medium.com/lumenswap/lumenswap-ecosystem-reward-25f1ddd61ab7"
                 rel="noreferrer"
               >
-                How to get rewards
+                Learn about lottory
                 <div><Image src={ArrowHeader} width={12} height={12} /></div>
               </a>
             </li>
