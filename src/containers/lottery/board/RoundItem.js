@@ -1,4 +1,4 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import Status from '../Status';
 import styles from './style.module.scss';
 
@@ -9,7 +9,7 @@ const RoundItem = ({ round }) => (
       <Status round={round} gift />
     </div>
     <div className={styles.roundImage}>
-      {round?.prizeImage && <Image src={round?.prizeImage} width={330} height={180} objectFit="contain" />}
+      {round?.prizeImage && <img src={round?.prizeImage} style={{ width: 330, height: 180, objectFit: 'contain' }} />}
     </div>
   </div>
 );
