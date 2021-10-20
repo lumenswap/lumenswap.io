@@ -64,7 +64,7 @@ const LotteryHeader = () => {
               <a
                 className={styles['out-link']}
                 target="_blank"
-                href="https://medium.com/lumenswap/lumenswap-ecosystem-reward-25f1ddd61ab7"
+                href="https://medium.com/lumenswap/sixth-milestone-lottery-128e33d0aaa2"
                 rel="noreferrer"
               >
                 Learn about lottory
