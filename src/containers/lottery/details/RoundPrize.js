@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import GiftIcon from 'assets/images/gift.svg';
+import moment from 'moment';
 import Status from '../Status';
 import styles from './style.module.scss';
 
@@ -10,7 +11,9 @@ const RoundPrize = ({ round }) => (
         <span className={styles['gift-icon']}>
           <Image src={GiftIcon} width={30} height={32} />
         </span>
-        {round?.prizeDescription}
+        {round.status === 'Live'
+          ? round?.prizeDescription
+          : `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}`}
         {round.status === 'Live' && (
           <>
             {' '}The cost of buying a ticket is 1 LSP and the winner will be selected{' '}
