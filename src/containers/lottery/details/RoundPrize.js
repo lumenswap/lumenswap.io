@@ -12,8 +12,8 @@ const RoundPrize = ({ round }) => (
           <Image src={GiftIcon} width={30} height={32} />
         </span>
         {round.status === 'Not started'
-          ? round?.prizeDescription
-          : `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}.`}
+          ? `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}.`
+          : round?.prizeDescription}
         {round.status === 'Live' && (
           <>
             {' '}The cost of buying a ticket is 1 LSP and the winner will be selected{' '}
