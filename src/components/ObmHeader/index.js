@@ -2,7 +2,6 @@ import Logo from 'assets/images/logo';
 import Link from 'next/link';
 import urlMaker from 'helpers/urlMaker';
 import classNames from 'classnames';
-
 import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';

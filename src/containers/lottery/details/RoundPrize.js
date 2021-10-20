@@ -11,16 +11,16 @@ const RoundPrize = ({ round }) => (
         <span className={styles['gift-icon']}>
           <Image src={GiftIcon} width={30} height={32} />
         </span>
-        {round.status === 'Live'
+        {round.status === 'Not started'
           ? round?.prizeDescription
-          : `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}`}
+          : `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}.`}
         {round.status === 'Live' && (
           <>
             {' '}The cost of buying a ticket is 1 LSP and the winner will be selected{' '}
             at the {round.endLedger} Ledger,{' '}
             <a
               style={{ textDecoration: 'none', color: 'white' }}
-              href="https://google.com"
+              href="https://medium.com/lumenswap/sixth-milestone-lottery-128e33d0aaa2"
               target="_blank"
               rel="noreferrer"
             >
