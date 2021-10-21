@@ -20,7 +20,7 @@ const RoundInfo = ({ round }) => {
         <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
           <span className={styles['info-title']}>Period</span>
           <span>
-            {endPeriod ? `~${moment.utc(round.startDate).format('D MMM Y')}` : `${round.startLedger + 1} Ledger`}
+            {endPeriod ? `~${moment.utc(round.startDate).format('D MMM Y')}` : `${parseInt(round.startLedger, 10) + 1} Ledger`}
             <span style={{ marginLeft: 6, marginRight: 6 }}>
               <Image src={ArrowIcon} width={12} height={12} />
             </span>
