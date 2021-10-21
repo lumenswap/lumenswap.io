@@ -200,14 +200,26 @@
   padding-bottom: 40px;
 }
 
-.round-info {
-  padding-left: 30px;
+@media (min-width: $lg) {
+  .round-info {
+    padding-left: 30px;
+  }
 }
 
 @media (max-width: $xl) {
   .main {
     margin-right: 100px;
     margin-left: 100px;
+  }
+}
+
+@media (max-width: $lg) {
+  .round-prize {
+    padding-right: 0;
+  }
+
+  .round-info {
+    margin-top: 20px;
   }
 }
 

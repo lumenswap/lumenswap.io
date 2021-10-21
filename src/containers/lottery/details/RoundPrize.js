@@ -34,7 +34,7 @@ const RoundPrize = ({ round }) => (
       <Status round={round} />
     </div>
     <div className={styles.roundImage}>
-      {round?.prizeImage && <img src={round?.prizeImage} style={{ width: 410, height: 246, objectFit: 'contain' }} />}
+      {round?.prizeImage && <img src={round?.prizeImage} style={{ width: '100%', height: 246, objectFit: 'contain' }} />}
     </div>
   </div>
 );

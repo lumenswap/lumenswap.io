@@ -94,10 +94,10 @@ const RoundDetailsPage = ({ round }) => {
           )}
         </div>
         <div className="row mx-0 mt-3">
-          <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-md-6')}>
+          <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-lg-6')}>
             <RoundPrize round={round} />
           </div>
-          <div className={classNames(styles['round-info'], 'col-12 col-md-6')}>
+          <div className={classNames(styles['round-info'], 'col-12 col-lg-6')}>
             <RoundInfo round={round} />
           </div>
         </div>
