@@ -20,7 +20,7 @@ const RoundPrize = ({ round }) => (
             at the {round.endLedger} Ledger,{' '}
             <a
               style={{ textDecoration: 'none', color: 'white' }}
-              href="https://medium.com/lumenswap/sixth-milestone-lottery-128e33d0aaa2"
+              href="https://medium.com/lumenswap/round-1-of-the-lottery-is-now-live-11c7160d307f"
               target="_blank"
               rel="noreferrer"
             >
