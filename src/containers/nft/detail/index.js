@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import classNames from 'classnames';
-import Link from 'next/link';
 import NFTHeader from 'components/NFTHeader';
 import Button from 'components/Button';
 import CTabs from 'components/CTabs';
@@ -11,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import SetNFTPrice from 'blocks/SetNFTPrice';
 import minimizeAddress from 'helpers/minimizeAddress';
 import InfoBox from 'components/InfoBox';
-import urlMaker from 'helpers/urlMaker';
 import {
   generateAddressURL,
   twitterUrlMaker,

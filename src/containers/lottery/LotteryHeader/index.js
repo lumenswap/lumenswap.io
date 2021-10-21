@@ -3,7 +3,6 @@ import Link from 'next/link';
 import urlMaker from 'helpers/urlMaker';
 import Image from 'next/image';
 import classNames from 'classnames';
-
 import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,12 +39,6 @@ const LotteryHeader = () => {
       {
         name: 'My Tickets', href: urlMaker.lottery.tickets(), public: false, exact: false,
       },
-      {
-        name: 'Learn about lottery',
-        href: urlMaker.lottery.learn(),
-        public: true,
-        exact: false,
-      },
     ],
   };
 
@@ -65,13 +58,19 @@ const LotteryHeader = () => {
                   mainHref={menu.mainHref}
                   exact={menu.exact}
                 />
-                {index === 2 && (
-                <span>
-                  <Image src={ArrowHeader} width={15} height={16} />
-                </span>
-                )}
               </li>
             ))}
+            <li>
+              <a
+                className={styles['out-link']}
+                target="_blank"
+                href="https://medium.com/lumenswap/sixth-milestone-lottery-128e33d0aaa2"
+                rel="noreferrer"
+              >
+                Learn about lottory
+                <div><Image src={ArrowHeader} width={12} height={12} /></div>
+              </a>
+            </li>
           </div>
         </ul>
         <LSPBox />

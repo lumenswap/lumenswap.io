@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import classNames from 'classnames';
-import LotteryHead from 'containers/lottery/LotteryHead';
+import Head from 'next/head';
 import Button from 'components/Button';
 import Link from 'next/link';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
@@ -72,7 +72,13 @@ const RoundDetailsPage = ({ round }) => {
   return (
     <>
       <div className="container-fluid">
-        <LotteryHead title="Board" />
+        <Head>
+          <title>Round {round.number} | Lumenswap</title>
+          <link
+            rel="canonical"
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.singleRound(round.number)}`}
+          />
+        </Head>
         <LotteryHeader />
       </div>
       <div className={styles.main}>
@@ -89,10 +95,10 @@ const RoundDetailsPage = ({ round }) => {
           )}
         </div>
         <div className="row mx-0 mt-3">
-          <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-md-6')}>
+          <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-lg-6')}>
             <RoundPrize round={round} />
           </div>
-          <div className={classNames(styles['round-info'], 'col-12 col-md-6')}>
+          <div className={classNames(styles['round-info'], 'col-12 col-lg-6')}>
             <RoundInfo round={round} />
           </div>
         </div>

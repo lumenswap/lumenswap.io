@@ -1,6 +1,6 @@
 import CTable from 'components/CTable';
 import TableDropDown from 'components/TableDropDown';
-import LotteryHead from 'containers/lottery/LotteryHead';
+import Head from 'next/head';
 import CPagination from 'components/CPagination';
 import { useEffect, useState, useRef } from 'react';
 import Input from 'components/Input';
@@ -88,7 +88,13 @@ const MyTicketsPage = () => {
   return (
     <>
       <div className="container-fluid">
-        <LotteryHead title="My Tickets" />
+        <Head>
+          <title>My Tickets | Lumenswap</title>
+          <link
+            rel="canonical"
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.tickets()}`}
+          />
+        </Head>
         <LotteryHeader />
       </div>
       <div className={styles.main}>

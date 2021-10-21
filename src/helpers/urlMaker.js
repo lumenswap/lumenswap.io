@@ -64,7 +64,7 @@ const urlMaker = {
     root: () => `${rootUrl.amm}/my-pool`,
   },
   lottery: {
-    root: () => `${rootUrl.lottery}`,
+    root: () => `${rootUrl.lottery === '' ? '/' : rootUrl.lottery}`,
     singleRound: (round) => `${rootUrl.lottery}/round/${round}`,
     tickets: () => `${rootUrl.lottery}/tickets`,
     learn: () => `${rootUrl.lottery}/learnmore`,
