@@ -1,41 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
-
-import ObmHeader from 'components/ObmHeader';
-import CardThumbnail from 'components/CardThumbnail';
-import imgSrc from 'assets/images/nft-sample.png';
+import Loading from 'components/Loading';
+import NFTHeader from 'components/NFTHeader';
 import SelectOption from 'components/SelectOption';
-
+import fetchAllLusi from 'helpers/AllLusiAPI';
+import AllLuciData from './allLusiData';
 import styles from './styles.module.scss';
 
-const items = [
-  {
-    name: 'Lusi-1', price: '3,100', img: imgSrc, id: '1',
-  },
-  {
-    name: 'Lusi-2', price: '3,100', img: imgSrc, id: '2',
-  },
-  {
-    name: 'Lusi-3', price: '3,100', img: imgSrc, id: '3',
-  },
-  {
-    name: 'Lusi-4', price: '3,100', img: imgSrc, id: '4',
-  },
-  {
-    name: 'Lusi-5', price: '3,100', img: imgSrc, id: '5',
-  },
-  {
-    name: 'Lusi-6', price: '3,100', img: imgSrc, id: '6',
-  },
-  {
-    name: 'Lusi-7', price: '3,100', img: imgSrc, id: '7',
-  },
-  {
-    name: 'Lusi-8', price: '3,100', img: imgSrc, id: '8',
-  },
-];
+const PageTemplate = ({ children }) => (
+  <div className="container-fluid">
+    <Head>
+      <title>NFT | Lumenswap</title>
+    </Head>
+    <NFTHeader />
+    {children}
+  </div>
+);
 
 const dropdownItems = [
   { value: '1', label: 'Price: Low to High' },
@@ -46,14 +27,42 @@ const dropdownItems = [
 
 const nft = () => {
   const [select, setSelect] = useState(dropdownItems[0]);
-  const router = useRouter();
+  const [allLusi, setAllLusi] = useState(null);
+
+  console.log(select);
+  useEffect(() => {
+    fetchAllLusi().then((data) => {
+      setAllLusi(data);
+    });
+  }, []);
+
+  let filteredLusi = allLusi;
+
+  if (!allLusi) {
+    return (
+      <PageTemplate>
+        <div className={styles['loading-container']}>
+          <Loading size={48} />
+        </div>
+      </PageTemplate>
+    );
+  }
+
+  if (select.value === '1') {
+    filteredLusi = filteredLusi.sort((a, b) => a.price - b.price);
+  }
+  if (select.value === '2') {
+    filteredLusi = filteredLusi.sort((a, b) => b.price - a.price);
+  }
+  if (select.value === '3') {
+    filteredLusi = filteredLusi.sort((a, b) => a.id - b.id);
+  }
+  if (select.value === '4') {
+    filteredLusi = filteredLusi.sort((a, b) => b.id - a.id);
+  }
 
   return (
-    <div className="container-fluid">
-      <Head>
-        <title>NFT | Lumenswap</title>
-      </Head>
-      <ObmHeader />
+    <PageTemplate>
       <div className={classNames('layout main', styles.main)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
@@ -66,25 +75,11 @@ const nft = () => {
                 isSearchable={false}
               />
             </div>
-            <div className={classNames('row', styles.row)}>
-              {items.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={classNames('col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 mt-4', styles.col)}
-                >
-                  <CardThumbnail
-                    name={item.name}
-                    imgSrc={item.img}
-                    price={item.price}
-                    onClick={() => { router.push(`nft/${item.id}`); }}
-                  />
-                </div>
-              ))}
-            </div>
+            <AllLuciData allLusi={filteredLusi} />
           </div>
         </div>
       </div>
-    </div>
+    </PageTemplate>
   );
 };
 

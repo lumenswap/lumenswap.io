@@ -9,6 +9,7 @@ import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginTypes } from 'reducers/user';
 import urlMaker from 'helpers/urlMaker';
+import BreadCrump from 'components/BreadCrumb';
 import BuyTicketSingle from './BuyTicketSingle';
 import BuyTicketPrivateKey from './BuyTicketPrivateKey';
 import BoardData from './BoardData';
@@ -58,6 +59,16 @@ const RoundDetailsPage = ({ round }) => {
     );
   }
 
+  const breadCrumpData = {
+    item1:
+  <Link href={urlMaker.lottery.root()} passHref>
+    <a style={{ color: 'inherit', textDecoration: 'none' }}>
+      Board
+    </a>
+  </Link>,
+    item2: <span style={{ marginLeft: 12 }}>Round #{round?.number}</span>,
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -66,17 +77,7 @@ const RoundDetailsPage = ({ round }) => {
       </div>
       <div className={styles.main}>
         <div className={classNames(styles.title, 'flex-column flex-md-row')}>
-          <h1 className={classNames(styles.board, 'd-flex align-items-center')}>
-            <Link href={urlMaker.lottery.root()} passHref>
-              <a style={{ color: 'black', textDecoration: 'none' }}>
-                Board
-              </a>
-            </Link>
-            <span style={{ marginLeft: 12, marginTop: 3 }}>
-              <Image src={ArrowIcon} width={18} height={18} />
-            </span>
-            <span style={{ marginLeft: 12 }}>Round #{round?.number}</span>
-          </h1>
+          <BreadCrump data={breadCrumpData} />
           {round?.status.toLowerCase() === 'live' && (
             <Button
               onClick={handleBuyTicket}

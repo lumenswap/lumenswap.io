@@ -4,17 +4,7 @@
   margin-top: 76px;
 }
 
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.5;
-  color: $CodGray;
-  margin-bottom: 0;
 
-  svg {
-    margin: 0 12px;
-  }
-}
 
 .btn {
   width: 135px;
@@ -54,27 +44,95 @@
 }
 
 .tabs {
-  margin-left: 24px;
 
-  nav a {
+  nav {
+    a:first-child {
+      margin-left: 24px;
+    }
+    a {
+      font-size: 16px;
+    }
+  }
+}
+
+.address {
+  a {
+    font-family: SofiaPro;
     font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $BlueRibbon;
+    text-decoration: none;
+  }
+}
+
+
+.infos {
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $CodGray;
+  a {
+    text-decoration: none;
+    color: $BlueRibbon;
+  }
+}
+.first-info-box {
+  margin-bottom: 24px;
+}
+
+.no-data-container {
+  width: 100%;
+  height: 139px;
+  display: flex;
+  justify-content: center;
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  span {
+    margin-top: 30px;
+  }
+}
+.loading-container {
+  width: 100%;
+  height: 139px;
+  display: flex;
+  justify-content: center;
+  div {
+    margin-top: 30px;
   }
 }
 
 .table {
-  background: white;
-  border-radius: 4px;
-  margin: 14px 0 0 -24px;
-
-  tbody > tr td,
-  thead > tr th {
-    font-size: 16px !important;
-    font-weight: normal;
-    padding: 0 24px !important;
-    vertical-align: middle;
+  max-height: 361px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  th {
+    color: $Manatee;
+    padding-top: 15px;
   }
-
-  tbody > tr td {
-    height: 53px;
+  tr:first-child {
+    height: 30px !important;
+    line-height: 30px !important;
   }
+  tr:not(:first-child) {
+    height: 53px !important;
+  }
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
 }

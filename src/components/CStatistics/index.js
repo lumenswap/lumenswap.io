@@ -5,8 +5,8 @@ import questionIcon from 'assets/images/question.svg';
 
 import styles from './styles.module.scss';
 
-export const Info = ({ number, text }) => (
-  <div className={styles['number-info']}>{number ?? '-'}
+export const Info = ({ number, text, className }) => (
+  <div className={classNames(styles['number-info'], className)}>{number ?? '-'}
     <span>{text}</span>
   </div>
 );
