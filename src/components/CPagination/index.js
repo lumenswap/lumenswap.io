@@ -18,9 +18,17 @@ const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
         onPageClick(page);
       }
     } else if (page.fnc === 'goback') {
-      setCurrentPage((prev) => prev - 3);
+      if (currentPage - 3 < 1) {
+        setCurrentPage(1);
+      } else {
+        setCurrentPage((prev) => prev - 3);
+      }
     } else if (page.fnc === 'gonext') {
-      setCurrentPage((prev) => prev + 3);
+      if (currentPage + 3 > pages) {
+        setCurrentPage(pages);
+      } else {
+        setCurrentPage((prev) => prev + 3);
+      }
     }
   }
 
@@ -37,10 +45,10 @@ const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
         />
       </button>
       <div className={styles['pagination-items']}>
-        {paginationArray.map((page) => (
+        {paginationArray.map((page, i) => (
           <div
             onClick={() => onPaginationClick(page)}
-            key={page}
+            key={i}
             className={classNames(
               styles[`pagination-${page.label ? 'spread' : 'item'}`],
               initCurrentPage === page && styles.active,
