@@ -31,7 +31,7 @@ const AllParticipantPage = ({ round }) => {
     async function fetchInitialData() {
       setSearchedParticipants(null);
       const query = {
-        page, limit: 1, round: round.number,
+        page, limit: 20, round: round.number,
       };
 
       if (searchQuery) query.address = searchQuery.toUpperCase();
