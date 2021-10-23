@@ -67,7 +67,7 @@ const LotteryHeader = () => {
                 href="https://medium.com/lumenswap/sixth-milestone-lottery-128e33d0aaa2"
                 rel="noreferrer"
               >
-                Learn about lottory
+                Learn about lottery
                 <div><Image src={ArrowHeader} width={12} height={12} /></div>
               </a>
             </li>
