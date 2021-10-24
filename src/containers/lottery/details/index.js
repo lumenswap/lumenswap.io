@@ -87,7 +87,7 @@ const RoundDetailsPage = ({ round }) => {
             <Button
               onClick={handleBuyTicket}
               htmlType="button"
-              content="Buy Ticket"
+              content={loginType === loginTypes.PV ? 'Buy Tickets' : 'Buy Ticket'}
               variant="primary"
               className={styles.button}
             />
