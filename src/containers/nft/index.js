@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import Loading from 'components/Loading';
 import NFTHeader from 'components/NFTHeader';
 import SelectOption from 'components/SelectOption';
-import fetchAllLusi from 'helpers/AllLusiAPI';
+import fetchAllLusi from 'api/AllLusiAPI';
 import AllLuciData from './allLusiData';
 import styles from './styles.module.scss';
 
-const PageTemplate = ({ children }) => (
+const Container = ({ children }) => (
   <div className="container-fluid">
     <Head>
       <title>NFT | Lumenswap</title>
@@ -25,7 +25,7 @@ const dropdownItems = [
   { value: '4', label: 'Number: 107 to 1' },
 ];
 
-const nft = () => {
+const NftPage = () => {
   const [select, setSelect] = useState(dropdownItems[0]);
   const [allLusi, setAllLusi] = useState(null);
 
@@ -40,11 +40,11 @@ const nft = () => {
 
   if (!allLusi) {
     return (
-      <PageTemplate>
+      <Container>
         <div className={styles['loading-container']}>
           <Loading size={48} />
         </div>
-      </PageTemplate>
+      </Container>
     );
   }
 
@@ -62,7 +62,7 @@ const nft = () => {
   }
 
   return (
-    <PageTemplate>
+    <Container>
       <div className={classNames('layout main', styles.main)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
@@ -79,8 +79,8 @@ const nft = () => {
           </div>
         </div>
       </div>
-    </PageTemplate>
+    </Container>
   );
 };
 
-export default nft;
+export default NftPage;

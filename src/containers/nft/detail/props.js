@@ -1,4 +1,4 @@
-import fetchNFTDetails from 'helpers/nftDetailsAPI';
+import fetchNFTDetails from 'api/nftDetailsAPI';
 
 export const nftDetailsPageGetServerSideProps = async ({ params }) => {
   const id = params.id;

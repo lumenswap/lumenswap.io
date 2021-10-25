@@ -59,15 +59,15 @@ const RoundDetailsPage = ({ round }) => {
     );
   }
 
-  const breadCrumpData = {
-    item1:
-  <Link href={urlMaker.lottery.root()} passHref>
-    <a style={{ color: 'inherit', textDecoration: 'none' }}>
-      Board
-    </a>
-  </Link>,
-    item2: <span style={{ marginLeft: 12 }}>Round #{round?.number}</span>,
-  };
+  const breadCrumpData = [
+    {
+      title: 'Board',
+      link: urlMaker.lottery.root(),
+    },
+    {
+      title: `Round #${round?.number}`,
+    },
+  ];
 
   return (
     <>
@@ -98,7 +98,7 @@ const RoundDetailsPage = ({ round }) => {
           <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-lg-6')}>
             <RoundPrize round={round} />
           </div>
-          <div className={classNames(styles['round-info'], 'col-12 col-lg-6')}>
+          <div className={classNames(styles['round-info'], 'col-12 col-lg-6 pr-0')}>
             <RoundInfo round={round} />
           </div>
         </div>

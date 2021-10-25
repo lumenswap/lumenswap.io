@@ -1,21 +1,16 @@
 import CTable from 'components/CTable';
-import Loading from 'components/Loading';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
-import fetchNFTOffers from 'helpers/nftOffersAPI';
+import fetchNFTOffers from 'api/nftOffersAPI';
 import moment from 'moment';
 import numeral from 'numeral';
 import { useState, useEffect } from 'react';
+import LoadingWithContainer from './LoadingWithContainer';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
   <div className={styles['no-data-container']}>
     <span>There is no asset offer</span>
-  </div>
-);
-const CustomLoading = () => (
-  <div className={styles['loading-container']}>
-    <Loading size={48} />
   </div>
 );
 
@@ -60,7 +55,7 @@ function OffersData({ id }) {
           dataSource={offersData}
           className={styles.table}
         />
-      ) : <CustomLoading />}
+      ) : <LoadingWithContainer />}
 
     </div>
   );

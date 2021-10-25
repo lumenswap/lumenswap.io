@@ -1,17 +1,11 @@
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
-import fetchNFTTrades from 'helpers/nftTradesAPI';
+import fetchNFTTrades from 'api/nftTradesAPI';
 import numeral from 'numeral';
 import { useState, useEffect } from 'react';
-import Loading from 'components/Loading';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
+import LoadingWithContainer from './LoadingWithContainer';
 import styles from './styles.module.scss';
-
-const CustomLoading = () => (
-  <div className={styles['loading-container']}>
-    <Loading size={48} />
-  </div>
-);
 
 const NoDataMessage = () => (
   <div className={styles['no-data-container']}>
@@ -64,7 +58,7 @@ function TradesData({ id }) {
           dataSource={tradesData}
           className={styles.table}
         />
-      ) : <CustomLoading />}
+      ) : <LoadingWithContainer />}
 
     </div>
   );

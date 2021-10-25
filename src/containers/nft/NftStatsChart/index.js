@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import styles from './styles.module.scss';
 
-const TVLChart = ({ showLabel = true, data, date }) => {
+const NftStatsChart = ({ showLabel = true, data, date }) => {
   const [label, setLabel] = useState({});
 
   useEffect(() => {
@@ -108,4 +108,4 @@ const TVLChart = ({ showLabel = true, data, date }) => {
   );
 };
 
-export default TVLChart;
+export default NftStatsChart;

@@ -1,4 +1,4 @@
-import fakeDataChart from './fakeDataChart';
+import fakeDataChart from '../helpers/fakeDataChart';
 
 const { data, date } = fakeDataChart;
 const stats = {

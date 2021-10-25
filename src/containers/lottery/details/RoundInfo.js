@@ -1,35 +1,37 @@
 import numeral from 'numeral';
-import classNames from 'classnames';
 import Image from 'next/image';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import moment from 'moment';
 import { useState } from 'react';
 import InfoBox from 'components/InfoBox';
-import WinnerInfo from './WinnerInfo';
+import minimizeAddress from 'helpers/minimizeAddress';
+import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
 import styles from './style.module.scss';
 
 const RoundInfo = ({ round }) => {
   const [endPeriod, setEndPeriod] = useState(true);
 
+  const PeriodInfo = (info) => (
+    <span className={styles.infos}>
+      {endPeriod ? moment(info.startDate).format('D MMM Y') : `${info.startLedger} Ledger`}
+      <span style={{ marginLeft: 6, marginRight: 6 }}>
+        <Image src={ArrowIcon} width={12} height={12} />
+      </span>
+      <span className="d-inline-flex align-items-center">
+        {endPeriod ? moment(info.endDate).format('D MMM Y') : `${info.endLedger} Ledger`}
+        <span
+          className="icon-arrow-repeat"
+          style={{ cursor: 'pointer', marginLeft: 3, color: '#8d8f9a' }}
+          onClick={() => setEndPeriod(!endPeriod)}
+        />
+      </span>
+    </span>
+  );
+
   const roundInfo = [
     {
       title: 'Period',
-      render: (info) => (
-        <span className={styles.infos}>
-          {endPeriod ? moment(info.startDate).format('D MMM Y') : `${info.startLedger} Ledger`}
-          <span style={{ marginLeft: 6, marginRight: 6 }}>
-            <Image src={ArrowIcon} width={12} height={12} />
-          </span>
-          <span className="d-inline-flex align-items-center">
-            {endPeriod ? moment(info.endDate).format('D MMM Y') : `${info.endLedger} Ledger`}
-            <span
-              className="icon-arrow-repeat"
-              style={{ cursor: 'pointer', marginLeft: 3, color: '#8d8f9a' }}
-              onClick={() => setEndPeriod(!endPeriod)}
-            />
-          </span>
-        </span>
-      ),
+      render: PeriodInfo,
     },
     {
       title: 'Ticket',
@@ -47,6 +49,33 @@ const RoundInfo = ({ round }) => {
     },
   ];
 
+  const winnerInfo = [
+    {
+      title: 'Address',
+      tooltip: 'This shows winner address.',
+      externalLink: {
+        title: `${minimizeAddress(round?.Winner?.address)}`,
+        url: generateAddressURL(round?.Winner?.address),
+      },
+    },
+    {
+      title: 'Ticket ID',
+      tooltip: 'This shows ticket id with which the winner has won the lottery.',
+      externalLink: {
+        title: `${minimizeAddress(round?.Winner?.ticketId, 8)}`,
+        url: generateTransactionURL(round?.Winner?.ticketId),
+      },
+    },
+    {
+      title: 'Price Tx',
+      tooltip: 'This shows the transaction hash in which the winner has received the prize.',
+      externalLink: {
+        title: `${minimizeAddress(round?.Winner?.transactionId, 8)}`,
+        url: generateTransactionURL(round?.Winner?.transactionId),
+      },
+    },
+  ];
+
   return (
     <div>
       <InfoBox
@@ -57,9 +86,11 @@ const RoundInfo = ({ round }) => {
       />
       {round.winner
         ? (
-          <div style={{ padding: '15px 14px' }} className={classNames('col-12 d-flex flex-column mt-auto')}>
-            <WinnerInfo round={round} />
-          </div>
+          <InfoBox
+            data={round}
+            rows={winnerInfo}
+            title="Winner Info"
+          />
         ) : (
           <div className={styles['winner-info-about']}>
             <div className={styles['winner-info-about-items']}>

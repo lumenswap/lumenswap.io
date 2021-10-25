@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import SetNFTPrice from 'blocks/SetNFTPrice';
+import PlaceNFTOrder from 'containers/nft/PlaceNFTOrder';
 import minimizeAddress from 'helpers/minimizeAddress';
 import InfoBox from 'components/InfoBox';
 import {
@@ -35,55 +35,44 @@ const NFTDetail = ({ id, data }) => {
     {
       title: 'Asset',
       tooltip: 'tooltip',
-      render: (info) => (
-        <span className={styles.infos}>
-          <a
-            href={assetGenerator(data.asset.code, data.asset.issuer)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {info.asset}
-          </a>
-        </span>
-      ),
+      externalLink: {
+        title: `${data.nftInfo.asset}`,
+        url: assetGenerator(data.asset.code, data.asset.issuer),
+      },
     },
     {
       title: 'IPFs hash',
       tooltip: 'tooltip',
-      render: (info) => (
-        <span className={styles.infos}>
-          <a href={ipfsHashGenerator(info.hash)} target="_blank" rel="noreferrer">{minimizeAddress(info.hash)}</a>
-        </span>
-      ),
+      externalLink: {
+        title: `${minimizeAddress(data.nftInfo.hash)}`,
+        url: ipfsHashGenerator(data.nftInfo.hash),
+      },
     },
   ];
   const ownerInfo = [
     {
       title: 'Address',
       tooltip: 'tooltip',
-      render: (info) => (
-        <span className={styles.infos}>
-          <a href={generateAddressURL(info.address)} target="_blank" rel="noreferrer">{minimizeAddress(info.address)}</a>
-        </span>
-      ),
+      externalLink: {
+        title: `${minimizeAddress(data.ownerInfo.address)}`,
+        url: generateAddressURL(data.ownerInfo.address),
+      },
     },
     {
       title: 'Twitter',
       tooltip: 'tooltip',
-      render: (info) => (
-        <span className={styles.infos}>
-          <a href={twitterUrlMaker(info.twitter)} target="_blank" rel="noreferrer">{`@${info.twitter}`}</a>
-        </span>
-      ),
+      externalLink: {
+        title: `@${data.ownerInfo.twitter}`,
+        url: twitterUrlMaker(data.ownerInfo.twitter),
+      },
     },
     {
       title: 'Telegram',
       tooltip: 'tooltip',
-      render: (info) => (
-        <span className={styles.infos}>
-          <a href={telegramUrlMaker(info.telegram)} target="_blank" rel="noreferrer">{`@${info.telegram}`}</a>
-        </span>
-      ),
+      externalLink: {
+        title: `@${data.ownerInfo.telegram}`,
+        url: telegramUrlMaker(data.ownerInfo.telegram),
+      },
     },
   ];
 
@@ -91,17 +80,21 @@ const NFTDetail = ({ id, data }) => {
     { title: 'Offers', id: 'offer' },
     { title: 'Trades', id: 'trade' },
   ];
-  const breadCrumpData = {
-    item1: 'My lusi',
-    item2: `Lusi #${id}`,
-  };
+  const breadCrumpData = [
+    {
+      title: 'My lusi',
+    },
+    {
+      title: `Lusi #${id}`,
+    },
+  ];
 
   const handlePlaceOffer = () => {
     if (isLogged) {
       dispatch(
         openModalAction({
           modalProps: { title: 'Set a price' },
-          content: <SetNFTPrice />,
+          content: <PlaceNFTOrder />,
         }),
       );
     } else {

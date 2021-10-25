@@ -2,14 +2,14 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import numeral from 'numeral';
 import NFTHeader from 'components/NFTHeader';
-import TVLChart from 'components/TVLChart';
+import NftStatsChart from 'containers/nft/NftStatsChart';
 import CStatistics, { Info } from 'components/CStatistics';
-import fetchNFTStats from 'helpers/nftStatsAPI';
+import fetchNFTStats from 'api/nftStatsAPI';
 import { useState, useEffect } from 'react';
 import Loading from 'components/Loading';
 import styles from './styles.module.scss';
 
-const PageTemplate = ({ children }) => (
+const Container = ({ children }) => (
   <div className="container-fluid">
     <Head>
       <title>NFT Stats | Lumenswap</title>
@@ -46,16 +46,16 @@ const NFTStats = () => {
 
   if (!statsData) {
     return (
-      <PageTemplate>
+      <Container>
         <div className={styles['loading-container']}>
           <Loading size={48} />
         </div>
-      </PageTemplate>
+      </Container>
     );
   }
 
   return (
-    <PageTemplate>
+    <Container>
       <div className={classNames('layout main', styles.main)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
@@ -67,7 +67,7 @@ const NFTStats = () => {
               <div>Volume</div>
               <div className="row flex-nowrap mt-5 align-items-end">
                 <div className="col">
-                  <TVLChart
+                  <NftStatsChart
                     data={statsData?.chart.data}
                     date={statsData?.chart.date}
                     showLabel={false}
@@ -83,7 +83,7 @@ const NFTStats = () => {
           </div>
         </div>
       </div>
-    </PageTemplate>
+    </Container>
   );
 };
 

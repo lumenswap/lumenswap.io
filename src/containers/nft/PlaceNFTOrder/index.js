@@ -10,7 +10,7 @@ import Button from 'components/Button';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-const SetNFTPrice = () => {
+const PlaceNFTOrder = () => {
   const dispatch = useDispatch();
   const userLSPBalance = useSelector((state) => state.userBalance)
     .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(LSP)));
@@ -31,7 +31,7 @@ const SetNFTPrice = () => {
       return 'Price is not valid';
     }
     if (new BN(price).gt(parseInt(userLSPBalance.balance, 10))) {
-      return 'Insufficient Price';
+      return 'Insufficient LSP';
     }
     return true;
   };
@@ -81,4 +81,4 @@ const SetNFTPrice = () => {
   );
 };
 
-export default SetNFTPrice;
+export default PlaceNFTOrder;

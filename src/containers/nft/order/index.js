@@ -7,7 +7,7 @@ import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import numeral from 'numeral';
 import { useState, useEffect } from 'react';
-import fetchNFTOrders from 'helpers/nftOrdersAPI';
+import fetchNFTOrders from 'api/nftOrdersAPI';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
