@@ -9,11 +9,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
 import MobileMenu from 'components/MobileMenu';
+import CalimLusiBtn from 'containers/nft/CalimLusiBtn';
+import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
-const NFTHeader = () => {
+const NFTHeader = (props) => {
   const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
+  const { asPath } = useRouter();
 
   const logoLink = <Link href={urlMaker.root()}><a><Logo /></a></Link>;
   const btnConnect = isLogged ? <CustomDropdown height="40px" width="160px" />
@@ -88,6 +91,7 @@ const NFTHeader = () => {
             ))}
           </div>
         </ul>
+        {(isLogged && asPath === urlMaker.nft.root()) && <CalimLusiBtn img={props.img} />}
         {isLogged && <LSPBox />}
         {btnConnect}
       </div>

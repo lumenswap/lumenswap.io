@@ -34,5 +34,11 @@ function getAllLusi() {
 function fetchAllLusi() {
   return new Promise((reslove) => setTimeout(reslove, 1000)).then(() => getAllLusi());
 }
+function getRewardLusi() {
+  return lusis[3];
+}
+export function fetchUserRewardLusi(userAddress) {
+  return new Promise((reslove) => setTimeout(reslove, 1000)).then(() => getRewardLusi());
+}
 
 export default fetchAllLusi;

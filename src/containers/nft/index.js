@@ -6,6 +6,7 @@ import NFTHeader from 'components/NFTHeader';
 import SelectOption from 'components/SelectOption';
 import fetchAllLusi from 'api/AllLusiAPI';
 import AllLuciData from './allLusiData';
+
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
