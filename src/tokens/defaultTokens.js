@@ -18,7 +18,6 @@ import LSP from './LSP';
 import SHX from './SHX';
 import ANSR from './ANSR';
 import PEN from './PEN';
-import NICE from './NICE';
 
 export default [
   XLM,
@@ -41,5 +40,4 @@ export default [
   SHX,
   ANSR,
   PEN,
-  NICE,
 ];
