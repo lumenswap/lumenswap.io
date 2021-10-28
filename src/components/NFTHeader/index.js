@@ -1,108 +1,44 @@
-import Logo from 'assets/images/logo';
-import Link from 'next/link';
-import urlMaker from 'helpers/urlMaker';
-import classNames from 'classnames';
-import LSPBox from 'components/LSPBox';
-import CustomDropdown from 'components/Dropdown';
-import Button from 'components/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { openConnectModal } from 'actions/modal';
-import NavLink from 'components/NavLink';
-import MobileMenu from 'components/MobileMenu';
-import CalimLusiBtn from 'containers/nft/CalimLusiBtn';
 import { useRouter } from 'next/router';
-import styles from './styles.module.scss';
+import LumenSwapHeader from 'components/LumenSwapHeader';
+import urlMaker from 'helpers/urlMaker';
+import CalimLusiBtn from 'containers/nft/CalimLusiBtn';
+import { useSelector } from 'react-redux';
 
-const NFTHeader = (props) => {
+const NFTHeader = () => {
   const isLogged = useSelector((state) => state.user.logged);
-  const dispatch = useDispatch();
   const { asPath } = useRouter();
-
-  const logoLink = <Link href={urlMaker.root()}><a><Logo /></a></Link>;
-  const btnConnect = isLogged ? <CustomDropdown height="40px" width="160px" />
-    : (
-      <Button
-        variant="secondary"
-        content="Connect Wallet"
-        fontWeight={500}
-        className={styles.btn}
-        onClick={() => {
-          dispatch(openConnectModal());
-        }}
-      />
-    );
-
-  const menus = {
-    left: [
-      {
-        name: "All Lusi's",
-        href: urlMaker.nft.root(),
-        public: true,
-        disableMainHref: true,
-      },
-      {
-        name: 'My Lusi',
-        href: urlMaker.nft.myLusi(),
-        public: false,
-      },
-      {
-        name: 'Orders',
-        href: urlMaker.nft.orders(),
-        public: false,
-      },
-      {
-        name: 'Stats',
-        href: urlMaker.nft.stats(),
-        public: true,
-      },
-    ],
-    right: [],
-  };
-
-  const mobileMenu = [...menus.left, ...menus.right];
+  const leftSideLinks = [
+    {
+      name: "All Lusi's",
+      link: urlMaker.nft.root(),
+      disableMainHref: true,
+    },
+    {
+      name: 'My Lusi',
+      link: urlMaker.nft.myLusi(),
+      restricted: true,
+    },
+    {
+      name: 'Orders',
+      link: urlMaker.nft.orders(),
+      restricted: true,
+    },
+    {
+      name: 'Stats',
+      link: urlMaker.nft.stats(),
+    },
+  ];
+  const extraRightComponent = [];
+  if (isLogged && asPath === urlMaker.nft.root()) {
+    extraRightComponent.push(CalimLusiBtn);
+  }
 
   return (
-    <div className={classNames(styles.layout, 'layout')}>
-      <div className="d-md-flex d-sm-none d-none w-100">
-        <ul className={styles.list}>
-          <div>
-            <li>{logoLink}</li>
-            {menus.left.map((menu, index) => (menu.public || isLogged) && (
-              <li key={index}>
-                <NavLink
-                  name={menu.name}
-                  href={menu.href}
-                  mainHref={menu.mainHref}
-                  disableMainHref={menu.disableMainHref}
-                />
-              </li>
-            ))}
-          </div>
-          <div>
-            {menus.right.map((menu, index) => (menu.public || isLogged) && (
-              <li key={index}>
-                <NavLink
-                  name={menu.name}
-                  href={menu.href}
-                  mainHref={menu.mainHref}
-                  disableMainHref={menu.disableMainHref}
-                />
-              </li>
-            ))}
-          </div>
-        </ul>
-        {(isLogged && asPath === urlMaker.nft.root()) && <CalimLusiBtn img={props.img} />}
-        {isLogged && <LSPBox />}
-        {btnConnect}
-      </div>
-      <div className="d-md-none d-sm-block d-block w-100">
-        <div className="d-flex align-items-center justify-content-end">
-          <div className="mr-3">{btnConnect}</div>
-          <div>{logoLink}</div>
-        </div>
-        <MobileMenu menus={mobileMenu} isLogged={isLogged} />
-      </div>
-    </div>
+    <LumenSwapHeader
+      showLSP
+      leftSide={leftSideLinks}
+      extraRightComponent={extraRightComponent}
+    />
   );
 };
 

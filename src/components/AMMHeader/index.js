@@ -33,13 +33,12 @@ const AMMHeader = () => {
     left: [
       {
         name: 'Pool',
-        href: urlMaker.pool.root(),
-        public: true,
+        link: urlMaker.pool.root(),
         mainHref: urlMaker.pool.root(),
       },
     ],
     right: [
-      { name: 'My Pool', href: urlMaker.myPool.root(), public: false },
+      { name: 'My Pool', link: urlMaker.myPool.root(), restricted: true },
     ],
   };
 
@@ -51,16 +50,16 @@ const AMMHeader = () => {
         <ul className={styles.list}>
           <div>
             <li>{logoLink}</li>
-            {menus.left.map((menu, index) => (menu.public || isLogged) && (
+            {menus.left.map((menu, index) => (!menu.restricted || isLogged) && (
               <li key={index}>
-                <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+                <NavLink name={menu.name} href={menu.link} mainHref={menu.mainHref} />
               </li>
             ))}
           </div>
           <div>
-            {menus.right.map((menu, index) => (menu.public || isLogged) && (
+            {menus.right.map((menu, index) => (!menu.restricted || isLogged) && (
               <li key={index}>
-                <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+                <NavLink name={menu.name} href={menu.link} mainHref={menu.mainHref} />
               </li>
             ))}
           </div>
