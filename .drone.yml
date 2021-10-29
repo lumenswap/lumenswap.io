@@ -98,38 +98,38 @@ steps:
 
 
 
----
-kind: pipeline
-type: exec
-name: production
+# ---
+# kind: pipeline
+# type: exec
+# name: production
 
-clone:
-  disable: true
+# clone:
+#   disable: true
 
-concurrency:
-  limit: 1
+# concurrency:
+#   limit: 1
 
-trigger:
-  branch:
-    - main
-    - master
-  event:
-    - rollback
-  target:
-    - production
-  ref:
-    - refs/heads/master
+# trigger:
+#   branch:
+#     - main
+#     - master
+#   event:
+#     - rollback
+#   target:
+#     - production
+#   ref:
+#     - refs/heads/master
 
-steps:
-  - name: rollback
-    environment:  
-      CONFIG_PATH:
-        from_secret: CONFIG_PATH
-    commands:
-      - export KUBECONFIG=$CONFIG_PATH/kube_config
-      - helm rollback lumenswap-demo -n lumenswap-demo $(helm history lumenswap-demo -n lumenswap-demo | grep $tag | awk '{print $1}') --wait --dry-run
-    depends_on:
-      - build
-      - Package
+# steps:
+#   - name: rollback
+#     environment:  
+#       CONFIG_PATH:
+#         from_secret: CONFIG_PATH
+#     commands:
+#       - export KUBECONFIG=$CONFIG_PATH/kube_config
+#       - helm rollback lumenswap-demo -n lumenswap-demo $(helm history lumenswap-demo -n lumenswap-demo | grep $tag | awk '{print $1}') --wait --dry-run
+#     depends_on:
+#       - build
+#       - Package
 
 
