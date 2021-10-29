@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .roundsList {
   display: grid;
@@ -32,5 +32,11 @@
 @media (max-width: $md) {
   .roundsList {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: $sm) {
+  .roundItem {
+    width: 95%;
   }
 }
