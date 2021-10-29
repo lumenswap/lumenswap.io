@@ -62,6 +62,7 @@ trigger:
     - master
   event:
     - promote
+    - rollback
   target:
     - production
   ref:
@@ -71,12 +72,20 @@ steps:
   - name: "build"
     commands:
       - docker build -f dockerfiles/$product -t lumenswap-front-$product:${DRONE_COMMIT_SHA:0:7} .
+    when:
+      event:
+        - promote
+
   - name: "Package"
     environment:
       MANIFEST_PATH:
         from_secret: MANIFEST_PATH
       PACKAGE_PATH:
         from_secret: PACKAGE_PATH
+    when:
+      event:
+        - promote   
+
     commands:
       - helm package --app-version ${DRONE_COMMIT_SHA:0:7}  $MANIFEST_PATH/lumenswap-front-$product -d $PACKAGE_PATH/lumenswap-front-$product
       - mv $PACKAGE_PATH/lumenswap-front-$product/lumenswap-front-$product-0.1.0.tgz $PACKAGE_PATH/lumenswap-front-$product/lumenswap-front-$product-${DRONE_COMMIT_SHA:0:7}.tgz
@@ -89,6 +98,10 @@ steps:
         from_secret: PACKAGE_PATH
       CONFIG_PATH:
         from_secret: CONFIG_PATH
+    when:
+      event:
+        - promote   
+
     commands:
       - export KUBECONFIG=$CONFIG_PATH/kube_config
       - helm upgrade lumenswap-front-$product $PACKAGE_PATH/lumenswap-front-$product/lumenswap-front-$product-${DRONE_COMMIT_SHA:0:7}.tgz --namespace lumenswap-prod --wait --atomic --install
@@ -96,40 +109,15 @@ steps:
       - build
       - Package
 
-
-
-# ---
-# kind: pipeline
-# type: exec
-# name: production
-
-# clone:
-#   disable: true
-
-# concurrency:
-#   limit: 1
-
-# trigger:
-#   branch:
-#     - main
-#     - master
-#   event:
-#     - rollback
-#   target:
-#     - production
-#   ref:
-#     - refs/heads/master
-
-# steps:
-#   - name: rollback
-#     environment:  
-#       CONFIG_PATH:
-#         from_secret: CONFIG_PATH
-#     commands:
-#       - export KUBECONFIG=$CONFIG_PATH/kube_config
-#       - helm rollback lumenswap-demo -n lumenswap-demo $(helm history lumenswap-demo -n lumenswap-demo | grep $tag | awk '{print $1}') --wait --dry-run
-#     depends_on:
-#       - build
-#       - Package
+  - name: rollback
+    environment:  
+      CONFIG_PATH:
+        from_secret: CONFIG_PATH
+    when:
+      event:
+        - rollback        
+    commands:
+      - export KUBECONFIG=$CONFIG_PATH/kube_config
+      - helm rollback lumenswap-demo -n lumenswap-demo $(helm history lumenswap-demo -n lumenswap-demo | grep $tag | awk '{print $1}') --wait --dry-run
 
 
