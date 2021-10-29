@@ -118,6 +118,6 @@ steps:
         - rollback        
     commands:
       - export KUBECONFIG=$CONFIG_PATH/kube_config
-      - helm rollback lumenswap-demo -n lumenswap-demo $(helm history lumenswap-demo -n lumenswap-demo | grep $tag | awk '{print $1}') --wait
+      - helm rollback lumenswap-front-$product -n lumenswap-prod $(helm history lumenswap-front-$product -n lumenswap-prod | grep $tag | awk '{print $1}') --wait
 
 
