@@ -9,7 +9,7 @@ import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginTypes } from 'reducers/user';
 import urlMaker from 'helpers/urlMaker';
-import BreadCrump from 'components/BreadCrumb';
+import Breadcrumb from 'components/BreadCrumb';
 import BuyTicketSingle from './BuyTicketSingle';
 import BuyTicketPrivateKey from './BuyTicketPrivateKey';
 import BoardData from './BoardData';
@@ -59,13 +59,13 @@ const RoundDetailsPage = ({ round }) => {
     );
   }
 
-  const breadCrumpData = [
+  const breadCrumbData = [
     {
-      title: 'Board',
-      link: urlMaker.lottery.root(),
+      name: 'Board',
+      url: urlMaker.lottery.root(),
     },
     {
-      title: `Round #${round?.number}`,
+      name: `Round #${round?.number}`,
     },
   ];
 
@@ -83,7 +83,7 @@ const RoundDetailsPage = ({ round }) => {
       </div>
       <div className={styles.main}>
         <div className={classNames(styles.title, 'flex-column flex-md-row')}>
-          <BreadCrump data={breadCrumpData} />
+          <Breadcrumb data={breadCrumbData} />
           {round?.status.toLowerCase() === 'live' && (
             <Button
               onClick={handleBuyTicket}

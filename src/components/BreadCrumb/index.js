@@ -3,22 +3,22 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import styles from './styles.module.scss';
 
-function BreadCrump({ data, className }) {
+function Breadcrumb({ data, className }) {
   return (
     <h1 className={classNames(styles.main, className)}>
       {data.map((item, index) => (
-        <div>{item.link ? (
-          <Link href={item.link}>
+        <div>{item.url ? (
+          <Link href={item.url}>
             <a>
-              {item.title}
+              {item.name}
             </a>
           </Link>
         )
-          : item.title} {index < data.length - 1 && <Arrow />}
+          : item.name} {index < data.length - 1 && <Arrow />}
         </div>
       ))}
     </h1>
   );
 }
 
-export default BreadCrump;
+export default Breadcrumb;

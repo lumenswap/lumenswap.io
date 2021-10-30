@@ -3,16 +3,17 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserRewardLusi } from 'api/AllLusiAPI';
 import { openModalAction } from 'actions/modal';
+import useLoggedInfo from 'hooks/useUserLoggedInfo';
 import questionLogo from '../../../../public/images/question.png';
-import CalimLusiModal from '../CalimLusiModal';
+import ClaimLusiModal from '../ClaimLusiModal';
 
 import styles from './styles.module.scss';
 
-function CalimLusiBtn() {
+function ClaimLusiBtn() {
   const [rewardLusi, setRewardLusi] = useState(null);
 
   const userAdress = useSelector((state) => state.user.detail.address);
-  const isLogged = useSelector((state) => state.user.logged);
+  const isLogged = useLoggedInfo();
 
   useEffect(() => {
     if (isLogged) {
@@ -27,7 +28,7 @@ function CalimLusiBtn() {
       dispatch(
         openModalAction({
           modalProps: { title: `You won #${rewardLusi.name}` },
-          content: <CalimLusiModal lusi={rewardLusi} />,
+          content: <ClaimLusiModal lusi={rewardLusi} />,
         }),
       );
     }
@@ -38,10 +39,10 @@ function CalimLusiBtn() {
         <div className={styles.logo}>
           <Image src={rewardLusi?.img ?? questionLogo} width={28} height={28} />
         </div>
-        <span>Calim my lusi</span>
+        <span>Claim my lusi</span>
       </div>
     </div>
   );
 }
 
-export default CalimLusiBtn;
+export default ClaimLusiBtn;

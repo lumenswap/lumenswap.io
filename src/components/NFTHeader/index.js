@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import LumenSwapHeader from 'components/LumenSwapHeader';
 import urlMaker from 'helpers/urlMaker';
-import CalimLusiBtn from 'containers/nft/CalimLusiBtn';
-import { useSelector } from 'react-redux';
+import ClaimLusiBtn from 'containers/nft/ClaimLusiBtn';
+import useLoggedInfo from 'hooks/useUserLoggedInfo';
 
 const NFTHeader = () => {
-  const isLogged = useSelector((state) => state.user.logged);
+  const isLogged = useLoggedInfo();
   const { asPath } = useRouter();
   const leftSideLinks = [
     {
@@ -30,7 +30,7 @@ const NFTHeader = () => {
   ];
   const extraRightComponent = [];
   if (isLogged && asPath === urlMaker.nft.root()) {
-    extraRightComponent.push(CalimLusiBtn);
+    extraRightComponent.push(ClaimLusiBtn);
   }
 
   return (

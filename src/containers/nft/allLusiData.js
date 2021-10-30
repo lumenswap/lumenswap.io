@@ -3,7 +3,7 @@ import urlMaker from 'helpers/urlMaker';
 import CardThumbnail from './CardThumbnail';
 import styles from './styles.module.scss';
 
-function AllLuciData({ allLusi }) {
+function AllLusiData({ allLusi }) {
   return (
     <div className={classNames('row', styles.row)}>
       {allLusi?.map((item) => (
@@ -23,4 +23,4 @@ function AllLuciData({ allLusi }) {
   );
 }
 
-export default AllLuciData;
+export default AllLusiData;

@@ -6,8 +6,9 @@ import NFTHeader from 'components/NFTHeader';
 import Button from 'components/Button';
 import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PlaceNFTOrder from 'containers/nft/PlaceNFTOrder';
+import useLoggedInfo from 'hooks/useUserLoggedInfo';
 import minimizeAddress from 'helpers/minimizeAddress';
 import InfoBox from 'components/InfoBox';
 import {
@@ -18,13 +19,13 @@ import {
   ipfsHashGenerator,
 } from 'helpers/explorerURLGenerator';
 import numeral from 'numeral';
-import BreadCrump from 'components/BreadCrumb';
+import Breadcrumb from 'components/BreadCrumb';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import styles from './styles.module.scss';
 
 const NFTDetail = ({ id, data }) => {
   const dispatch = useDispatch();
-  const isLogged = useSelector((state) => state.user.logged);
+  const isLogged = useLoggedInfo();
 
   const nftInfo = [
     {
@@ -80,12 +81,12 @@ const NFTDetail = ({ id, data }) => {
     { title: 'Offers', id: 'offer' },
     { title: 'Trades', id: 'trade' },
   ];
-  const breadCrumpData = [
+  const breadCrumbData = [
     {
-      title: 'My lusi',
+      name: 'My lusi',
     },
     {
-      title: `Lusi #${id}`,
+      name: `Lusi #${id}`,
     },
   ];
 
@@ -113,7 +114,7 @@ const NFTDetail = ({ id, data }) => {
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
 
             <div className="d-flex justify-content-between align-items-center">
-              <BreadCrump data={breadCrumpData} />
+              <Breadcrumb data={breadCrumbData} />
               <Button
                 variant="primary"
                 content="Place an offer"

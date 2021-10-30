@@ -7,10 +7,8 @@ import CustomDropdown from 'components/Dropdown';
 import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
-import NavLink from 'components/NavLink';
 import MobileMenu from 'components/MobileMenu';
-import Image from 'next/image';
-import arrowHeaderIcon from '../../assets/images/arrow-header.svg';
+import SideBarLink from './SideBarLink';
 import styles from './styles.module.scss';
 
 const LumenSwapHeader = ({
@@ -19,8 +17,8 @@ const LumenSwapHeader = ({
   const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
 
-  const logoLink = <Link href={urlMaker.root()}><a><Logo /></a></Link>;
-  const btnConnect = isLogged ? <CustomDropdown height="40px" width="160px" />
+  const LogoLink = <Link href={urlMaker.root()}><a><Logo /></a></Link>;
+  const BtnConnect = isLogged ? <CustomDropdown height="40px" width="160px" />
     : (
       <Button
         variant="secondary"
@@ -45,68 +43,26 @@ const LumenSwapHeader = ({
       <div className="d-md-flex d-sm-none d-none w-100">
         <ul className={styles.list}>
           <div>
-            <li>{logoLink}</li>
+            <li>{LogoLink}</li>
             {extraLeftComponent?.map((Component) => <Component />)}
             {leftSide?.map((menu, index) => (!menu.restricted || isLogged) && (
-            <li key={index}>
-              {!menu.external ? (
-
-                <NavLink
-                  name={menu.name}
-                  href={menu.link}
-                  mainHref={menu.mainHref}
-                  disableMainHref={menu.disableMainHref}
-                />
-
-              )
-                : (
-                  <a
-                    className={styles['out-link']}
-                    target="_blank"
-                    href={menu.link}
-                    rel="noreferrer"
-                  >
-                    {menu.name}
-                    <div><Image src={arrowHeaderIcon} width={12} height={12} /></div>
-                  </a>
-                ) }
-            </li>
+            <SideBarLink key={index} link={menu} />
             ))}
           </div>
           <div>
             {rightSide?.map((menu, index) => (!menu.restricted || isLogged) && (
-            <li key={index}>
-              {!menu.external ? (
-                <NavLink
-                  name={menu.name}
-                  href={menu.link}
-                  mainHref={menu.mainHref}
-                  disableMainHref={menu.disableMainHref}
-                />
-              )
-                : (
-                  <a
-                    className={styles['out-link']}
-                    target="_blank"
-                    href={menu.link}
-                    rel="noreferrer"
-                  >
-                    {menu.name}
-                    <div><Image src={arrowHeaderIcon} width={12} height={12} /></div>
-                  </a>
-                ) }
-            </li>
+            <SideBarLink key={index} link={menu} />
             ))}
           </div>
         </ul>
         {extraRightComponent?.map((Component) => <Component />)}
         {(isLogged && showLSP) && <LSPBox />}
-        {btnConnect}
+        {BtnConnect}
       </div>
       <div className="d-md-none d-sm-block d-block w-100">
         <div className="d-flex align-items-center justify-content-end">
-          <div className="mr-3">{btnConnect}</div>
-          <div>{logoLink}</div>
+          <div className="mr-3">{BtnConnect}</div>
+          <div>{LogoLink}</div>
         </div>
         <MobileMenu menus={mobileMenu} isLogged={isLogged} />
       </div>

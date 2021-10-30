@@ -5,7 +5,7 @@ import Loading from 'components/Loading';
 import NFTHeader from 'components/NFTHeader';
 import SelectOption from 'components/SelectOption';
 import fetchAllLusi from 'api/AllLusiAPI';
-import AllLuciData from './allLusiData';
+import AllLusiData from './allLusiData';
 
 import styles from './styles.module.scss';
 
@@ -76,7 +76,7 @@ const NftPage = () => {
                 isSearchable={false}
               />
             </div>
-            <AllLuciData allLusi={filteredLusi} />
+            <AllLusiData allLusi={filteredLusi} />
           </div>
         </div>
       </div>

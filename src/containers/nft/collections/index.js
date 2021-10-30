@@ -8,9 +8,10 @@ import urlMaker from 'helpers/urlMaker';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import useLoggedInfo from 'hooks/useUserLoggedInfo';
 import styles from './styles.module.scss';
 
-const PageTemplate = ({ children }) => (
+const Container = ({ children }) => (
   <div className="container-fluid">
     <Head>
       <title>NFT Collections | Lumenswap</title>
@@ -24,7 +25,7 @@ const NFTCollections = () => {
   const [myLusi, setMyLusi] = useState(null);
   const userAdress = useSelector((state) => state.user.detail.address);
 
-  const isLogged = useSelector((state) => state.user.logged);
+  const isLogged = useLoggedInfo();
 
   const router = useRouter();
 
@@ -40,15 +41,15 @@ const NFTCollections = () => {
 
   if (!myLusi) {
     return (
-      <PageTemplate>
+      <Container>
         <div className={styles['loading-container']}>
           <Loading size={48} />
         </div>
-      </PageTemplate>
+      </Container>
     );
   }
   return (
-    <PageTemplate>
+    <Container>
       <div className={classNames('layout main', styles.main)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
@@ -73,7 +74,7 @@ const NFTCollections = () => {
           </div>
         </div>
       </div>
-    </PageTemplate>
+    </Container>
   );
 };
 

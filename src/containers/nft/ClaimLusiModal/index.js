@@ -4,10 +4,10 @@ import Button from 'components/Button';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 
-const CalimLusiModal = ({ lusi }) => {
+const ClaimLusiModal = ({ lusi }) => {
   const dispatch = useDispatch();
 
-  const handleCalim = () => {
+  const handleClaim = () => {
     dispatch(closeModalAction());
   };
 
@@ -23,14 +23,14 @@ const CalimLusiModal = ({ lusi }) => {
         />
       </div>
       <Button
-        onClick={handleCalim}
+        onClick={handleClaim}
         htmlType="submit"
         variant="primary"
-        content="Calim"
+        content="Claim"
         className={styles.btn}
       />
     </div>
   );
 };
 
-export default CalimLusiModal;
+export default ClaimLusiModal;

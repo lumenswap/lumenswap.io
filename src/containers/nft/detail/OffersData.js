@@ -5,7 +5,7 @@ import fetchNFTOffers from 'api/nftOffersAPI';
 import moment from 'moment';
 import numeral from 'numeral';
 import { useState, useEffect } from 'react';
-import LoadingWithContainer from './LoadingWithContainer';
+import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -48,15 +48,14 @@ function OffersData({ id }) {
   }, []);
   return (
     <div>
-      {offersData ? (
-        <CTable
-          columns={tableHeaders}
-          noDataMessage={NoDataMessage}
-          dataSource={offersData}
-          className={styles.table}
-        />
-      ) : <LoadingWithContainer />}
-
+      <CTable
+        columns={tableHeaders}
+        noDataMessage={NoDataMessage}
+        dataSource={offersData}
+        className={styles.table}
+        loading={!offersData}
+        customLoading={LoadingWithContainer}
+      />
     </div>
   );
 }

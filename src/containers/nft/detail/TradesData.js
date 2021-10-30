@@ -4,7 +4,7 @@ import fetchNFTTrades from 'api/nftTradesAPI';
 import numeral from 'numeral';
 import { useState, useEffect } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
-import LoadingWithContainer from './LoadingWithContainer';
+import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -51,15 +51,14 @@ function TradesData({ id }) {
   }, []);
   return (
     <div>
-      {tradesData ? (
-        <CTable
-          columns={tableHeaders}
-          noDataMessage={NoDataMessage}
-          dataSource={tradesData}
-          className={styles.table}
-        />
-      ) : <LoadingWithContainer />}
-
+      <CTable
+        columns={tableHeaders}
+        noDataMessage={NoDataMessage}
+        dataSource={tradesData}
+        className={styles.table}
+        loading={!tradesData}
+        customLoading={LoadingWithContainer}
+      />
     </div>
   );
 }
