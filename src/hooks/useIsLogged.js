@@ -1,8 +1,8 @@
 const { useSelector } = require('react-redux');
 
-function useLoggedInfo() {
+function useIsLogged() {
   const isLogged = useSelector((state) => state.user.logged);
   return isLogged;
 }
 
-export default useLoggedInfo;
+export default useIsLogged;

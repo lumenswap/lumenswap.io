@@ -8,7 +8,7 @@ import urlMaker from 'helpers/urlMaker';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import useLoggedInfo from 'hooks/useUserLoggedInfo';
+import useIsLogged from 'hooks/useIsLogged';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -25,7 +25,7 @@ const NFTCollections = () => {
   const [myLusi, setMyLusi] = useState(null);
   const userAdress = useSelector((state) => state.user.detail.address);
 
-  const isLogged = useLoggedInfo();
+  const isLogged = useIsLogged();
 
   const router = useRouter();
 

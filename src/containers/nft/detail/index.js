@@ -8,7 +8,7 @@ import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
 import { useDispatch } from 'react-redux';
 import PlaceNFTOrder from 'containers/nft/PlaceNFTOrder';
-import useLoggedInfo from 'hooks/useUserLoggedInfo';
+import useIsLogged from 'hooks/useIsLogged';
 import minimizeAddress from 'helpers/minimizeAddress';
 import InfoBox from 'components/InfoBox';
 import {
@@ -25,7 +25,7 @@ import styles from './styles.module.scss';
 
 const NFTDetail = ({ id, data }) => {
   const dispatch = useDispatch();
-  const isLogged = useLoggedInfo();
+  const isLogged = useIsLogged();
 
   const nftInfo = [
     {

@@ -1,36 +1,16 @@
-import classNames from 'classnames';
-import Link from 'next/link';
 import Image from 'next/image';
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import styles from './styles.module.scss';
+import InfoBoxLink from './InfoBoxLink';
 import QuestionIcon from '../../assets/images/question-icon.png';
 
 function InfoBoxItem({ item, data }) {
-  let RowLink = null;
-  if (item.externalLink) {
-    RowLink = () => (
-      <a
-        className={classNames(styles['ticket-id'], styles.infos)}
-        style={{ textDecoration: 'none' }}
-        href={item.externalLink.url}
-        target="_blank"
-        rel="noreferrer"
-      >{item.externalLink.title}
-      </a>
-    );
-  }
-  if (item.internalLink) {
-    RowLink = () => (
-      <Link href={item.internalLink.url}>
-        <a className={classNames(styles['ticket-id'], styles.infos)}>
-          {item.internalLink.title}
-        </a>
-      </Link>
-    );
+  let url = false;
+  if (item.externalLink || item.internalLink) {
+    url = true;
   }
 
   return (
-
     <div className={styles.row}>
       <div className={styles.title}>
         <span>
@@ -44,7 +24,7 @@ function InfoBoxItem({ item, data }) {
           )}
         </span>
       </div>
-      <div>{RowLink ? <RowLink /> : item.render(data)}</div>
+      <div>{url ? <InfoBoxLink item={item} /> : item.render(data)}</div>
     </div>
 
   );
