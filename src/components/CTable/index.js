@@ -26,12 +26,17 @@ const CTable = ({
   noDataMessage: NoDataMessage,
   rowLink,
   loading,
+  customLoading: CustomLoading,
 }) => {
   if (loading) {
     return (
-      <div style={{ padding: '70px 0' }} className="d-flex align-items-center justify-content-center">
-        <Loading size={50} />
-      </div>
+      <>
+        {CustomLoading ? <CustomLoading /> : (
+          <div style={{ padding: '71px 0' }} className="d-flex align-items-center justify-content-center">
+            <Loading size={48} />
+          </div>
+        )}
+      </>
     );
   }
 

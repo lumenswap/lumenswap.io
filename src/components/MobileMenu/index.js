@@ -12,9 +12,9 @@ const MobileMenu = ({ menus, isLogged }) => (
       customBurgerIcon={<BurgerMenu />}
     >
       <ul>
-        {menus.map((menu, index) => (menu.public || isLogged) && (
+        {menus.map((menu, index) => (!menu.restricted || isLogged) && (
           <li key={index}>
-            <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+            <NavLink name={menu.name} href={menu.link} mainHref={menu.mainHref} />
           </li>
         ))}
       </ul>

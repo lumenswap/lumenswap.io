@@ -9,6 +9,7 @@ import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginTypes } from 'reducers/user';
 import urlMaker from 'helpers/urlMaker';
+import Breadcrumb from 'components/BreadCrumb';
 import BuyTicketSingle from './BuyTicketSingle';
 import BuyTicketPrivateKey from './BuyTicketPrivateKey';
 import BoardData from './BoardData';
@@ -58,6 +59,16 @@ const RoundDetailsPage = ({ round }) => {
     );
   }
 
+  const breadCrumbData = [
+    {
+      name: 'Board',
+      url: urlMaker.lottery.root(),
+    },
+    {
+      name: `Round #${round?.number}`,
+    },
+  ];
+
   return (
     <>
       <div className="container-fluid">
@@ -72,17 +83,7 @@ const RoundDetailsPage = ({ round }) => {
       </div>
       <div className={styles.main}>
         <div className={classNames(styles.title, 'flex-column flex-md-row')}>
-          <h1 className={classNames(styles.board, 'd-flex align-items-center')}>
-            <Link href={urlMaker.lottery.root()} passHref>
-              <a style={{ color: 'black', textDecoration: 'none' }}>
-                Board
-              </a>
-            </Link>
-            <span style={{ marginLeft: 12, marginTop: 3 }}>
-              <Image src={ArrowIcon} width={18} height={18} />
-            </span>
-            <span style={{ marginLeft: 12 }}>Round #{round?.number}</span>
-          </h1>
+          <Breadcrumb data={breadCrumbData} />
           {round?.status.toLowerCase() === 'live' && (
             <Button
               onClick={handleBuyTicket}
@@ -97,7 +98,7 @@ const RoundDetailsPage = ({ round }) => {
           <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-lg-6')}>
             <RoundPrize round={round} />
           </div>
-          <div className={classNames(styles['round-info'], 'col-12 col-lg-6')}>
+          <div className={classNames(styles['round-info'], 'col-12 col-lg-6 pr-0')}>
             <RoundInfo round={round} />
           </div>
         </div>

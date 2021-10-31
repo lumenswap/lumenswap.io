@@ -34,10 +34,10 @@ const LotteryHeader = () => {
   const menus = {
     left: [
       {
-        name: 'Board', href: urlMaker.lottery.root(), public: true, exact: true,
+        name: 'Board', link: urlMaker.lottery.root(), exact: true,
       },
       {
-        name: 'My Tickets', href: urlMaker.lottery.tickets(), public: false, exact: false,
+        name: 'My Tickets', link: urlMaker.lottery.tickets(), restricted: true, exact: false,
       },
     ],
   };
@@ -50,11 +50,11 @@ const LotteryHeader = () => {
         <ul className={styles.list}>
           <div>
             <li>{logoLink}</li>
-            {menus.left.map((menu, index) => (menu.public || isLogged) && (
+            {menus.left.map((menu, index) => (!menu.restricted || isLogged) && (
               <li key={index}>
                 <NavLink
                   name={menu.name}
-                  href={menu.href}
+                  href={menu.link}
                   mainHref={menu.mainHref}
                   exact={menu.exact}
                 />

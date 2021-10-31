@@ -30,17 +30,16 @@ const ObmHeader = () => {
 
   const menus = {
     right: [
-      { name: 'Wallet', href: urlMaker.wallet.root(), public: false },
-      { name: 'Order', href: urlMaker.order.root(), public: false },
+      { name: 'Wallet', link: urlMaker.wallet.root(), restricted: true },
+      { name: 'Order', link: urlMaker.order.root(), restricted: true },
     ],
     left: [
-      { name: 'Market', href: urlMaker.market.root(), public: true },
-      { name: 'Swap', href: urlMaker.swap.root(), public: true },
+      { name: 'Market', link: urlMaker.market.root() },
+      { name: 'Swap', link: urlMaker.swap.root() },
       {
         name: 'Spot',
-        href: urlMaker.spot.custom('XLM', null, 'USDC', null),
+        link: urlMaker.spot.custom('XLM', null, 'USDC', null),
         mainHref: urlMaker.spot.root(),
-        public: true,
       },
     ],
   };
@@ -53,16 +52,16 @@ const ObmHeader = () => {
         <ul className={styles.list}>
           <div>
             <li>{logoLink}</li>
-            {menus.left.map((menu, index) => (menu.public || isLogged) && (
+            {menus.left.map((menu, index) => (!menu.restricted || isLogged) && (
               <li key={index}>
-                <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+                <NavLink name={menu.name} href={menu.link} mainHref={menu.mainHref} />
               </li>
             ))}
           </div>
           <div className={styles.right_list}>
-            {menus.right.map((menu, index) => (menu.public || isLogged) && (
+            {menus.right.map((menu, index) => (!menu.restricted || isLogged) && (
               <li key={index}>
-                <NavLink name={menu.name} href={menu.href} mainHref={menu.mainHref} />
+                <NavLink name={menu.name} href={menu.link} mainHref={menu.mainHref} />
               </li>
             ))}
           </div>

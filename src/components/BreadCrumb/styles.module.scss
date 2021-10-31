@@ -1,0 +1,22 @@
+@import 'styles/vars';
+
+.main {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: $CodGray;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  
+    div:not(:first-child) {
+      margin-left: 12px;
+    }
+    svg {
+      margin: 0 12px;
+    }
+  }

@@ -1,72 +1,103 @@
-import classNames from 'classnames';
 import numeral from 'numeral';
 import Image from 'next/image';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
-import QuestionIcon from 'assets/images/question-icon.png';
 import moment from 'moment';
-import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import { useState } from 'react';
-import WinnerInfo from './WinnerInfo';
-import toolTipContent from './toolTipContent';
+import InfoBox from 'components/InfoBox';
+import minimizeAddress from 'helpers/minimizeAddress';
+import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
 import styles from './style.module.scss';
 
 const RoundInfo = ({ round }) => {
   const [endPeriod, setEndPeriod] = useState(true);
 
+  const PeriodInfo = (info) => (
+    <span className={styles.infos}>
+      {endPeriod ? moment(info.startDate).format('D MMM Y') : `${info.startLedger} Ledger`}
+      <span style={{ marginLeft: 6, marginRight: 6 }}>
+        <Image src={ArrowIcon} width={12} height={12} />
+      </span>
+      <span className="d-inline-flex align-items-center">
+        {endPeriod ? moment(info.endDate).format('D MMM Y') : `${info.endLedger} Ledger`}
+        <span
+          className="icon-arrow-repeat"
+          style={{ cursor: 'pointer', marginLeft: 3, color: '#8d8f9a' }}
+          onClick={() => setEndPeriod(!endPeriod)}
+        />
+      </span>
+    </span>
+  );
+
+  const roundInfo = [
+    {
+      title: 'Period',
+      render: PeriodInfo,
+    },
+    {
+      title: 'Ticket',
+      tooltip: 'This shows the number of purchased tickets for this round.',
+      render: (info) => (
+        <span className={styles.infos}>{numeral(info.ticketCount).format('0,0')}</span>
+      ),
+    },
+    {
+      title: 'Participants',
+      tooltip: 'This shows the number of addresses that have purchased tickets and participated in this',
+      render: (info) => (
+        <span className={styles.infos}>{numeral(info.participantCount).format('0,0')}</span>
+      ),
+    },
+  ];
+
+  const winnerInfo = [
+    {
+      title: 'Address',
+      tooltip: 'This shows winner address.',
+      externalLink: {
+        title: `${minimizeAddress(round?.Winner?.address)}`,
+        url: generateAddressURL(round?.Winner?.address),
+      },
+    },
+    {
+      title: 'Ticket ID',
+      tooltip: 'This shows ticket id with which the winner has won the lottery.',
+      externalLink: {
+        title: `${minimizeAddress(round?.Winner?.ticketId, 8)}`,
+        url: generateTransactionURL(round?.Winner?.ticketId),
+      },
+    },
+    {
+      title: 'Price Tx',
+      tooltip: 'This shows the transaction hash in which the winner has received the prize.',
+      externalLink: {
+        title: `${minimizeAddress(round?.Winner?.transactionId, 8)}`,
+        url: generateTransactionURL(round?.Winner?.transactionId),
+      },
+    },
+  ];
+
   return (
-    <div style={{ height: '100%' }} className={classNames('row', styles['round-info'])}>
-      <div className="col-12 d-flex flex-column">
-        <p className={styles['box-title']}>Round Info</p>
-        <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
-          <span className={styles['info-title']}>Period</span>
-          <span>
-            {endPeriod ? `~${moment.utc(round.startDate).format('D MMM Y')}` : `${parseInt(round.startLedger, 10) + 1} Ledger`}
-            <span style={{ marginLeft: 6, marginRight: 6 }}>
-              <Image src={ArrowIcon} width={12} height={12} />
-            </span>
-            <span className="d-inline-flex align-items-center">
-              {endPeriod ? `~${moment.utc(round.endDate).format('D MMM Y')}` : `${round.endLedger - 1} Ledger`}
-              <span
-                className="icon-arrow-repeat"
-                style={{ cursor: 'pointer', marginLeft: 3, color: '#8d8f9a' }}
-                onClick={() => setEndPeriod(!endPeriod)}
-              />
-            </span>
-          </span>
-        </div>
-        <div style={{ marginBottom: 15 }} className="d-flex justify-content-between">
-          <span className={styles['info-title']}>
-            Ticket
-            <Tooltips placement="top" id="ticket" text={<PrimaryTooltip text={toolTipContent.ticket} />}>
-              <span style={{ marginLeft: 2, height: 18 }}>
-                <Image src={QuestionIcon} width={16} height={16} />
-              </span>
-            </Tooltips>
-          </span>
-          <span>{numeral(round.ticketCount).format('0,0')}</span>
-        </div>
-        <div className={classNames(styles['participants-row'], 'd-flex justify-content-between')}>
-          <span className={styles['info-title']}>
-            Participants
-            <Tooltips placement="top" id="participants" text={<PrimaryTooltip text={toolTipContent.participant} />}>
-              <span style={{ marginLeft: 2, height: 18 }}>
-                <Image src={QuestionIcon} width={16} height={16} />
-              </span>
-            </Tooltips>
-          </span>
-          <span>{numeral(round.participantCount).format('0,0')}</span>
-        </div>
-      </div>
+    <div>
+      <InfoBox
+        title="Round Info"
+        rows={roundInfo}
+        data={round}
+        className={styles['first-info-box']}
+      />
       {round.winner
         ? (
-          <div style={{ padding: '15px 14px' }} className={classNames('col-12 d-flex flex-column mt-auto')}>
-            <WinnerInfo round={round} />
-          </div>
+          <InfoBox
+            data={round}
+            rows={winnerInfo}
+            title="Winner Info"
+          />
         ) : (
-          <div className={classNames('col-12 d-flex flex-column mt-auto', styles['winner-info'])}>
-            <p style={{ margin: 4 }}>Winner Info</p>
-            <p>The winner will be determined in this Ledger Number:</p>
-            <div>{round?.endLedger}</div>
+          <div className={styles['winner-info-about']}>
+            <div className={styles['winner-info-about-items']}>
+              <p style={{ margin: 4 }}>Winner Info</p>
+              <p>The winner will be determined in this<br /> Ledger Number:</p>
+              <span>{round?.endLedger}</span>
+            </div>
           </div>
         )}
     </div>

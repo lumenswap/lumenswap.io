@@ -1,81 +1,106 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
-
-import ObmHeader from 'components/ObmHeader';
-import Arrow from 'assets/images/arrowRight';
+import NFTHeader from 'components/NFTHeader';
 import Button from 'components/Button';
-import BasicList from 'components/BasicList';
 import CTabs from 'components/CTabs';
-import Table from 'components/Table';
-import ModalDialog from 'components/ModalDialog';
-import SetNFTPrice from 'blocks/SetNFTPrice';
-import imgSrc from 'assets/images/nft-sample-2.png';
-
+import { openModalAction, openConnectModal } from 'actions/modal';
+import { useDispatch } from 'react-redux';
+import PlaceNFTOrder from 'containers/nft/PlaceNFTOrder';
+import useIsLogged from 'hooks/useIsLogged';
+import minimizeAddress from 'helpers/minimizeAddress';
+import InfoBox from 'components/InfoBox';
+import {
+  generateAddressURL,
+  twitterUrlMaker,
+  telegramUrlMaker,
+  assetGenerator,
+  ipfsHashGenerator,
+} from 'helpers/explorerURLGenerator';
+import numeral from 'numeral';
+import Breadcrumb from 'components/BreadCrumb';
+import NFTDetailsTabContent from './NFTDetailsTabContent';
 import styles from './styles.module.scss';
 
-const NFTDetail = () => {
-  const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
+const NFTDetail = ({ id, data }) => {
+  const dispatch = useDispatch();
+  const isLogged = useIsLogged();
 
   const nftInfo = [
-    { subject: 'Price', info: '10,000 LSP' },
     {
-      subject: 'Asset', info: `Lusi #${router.query.id}`, link: '/', external: true,
+      title: 'Price',
+      tooltip: 'tooltip',
+      render: (info) => <span className={styles.infos}>{numeral(info.price).format('0,0')} LSP</span>,
     },
     {
-      subject: 'IPFs hash', info: '0xdD467…E06b4fA', link: '/', external: false,
+      title: 'Asset',
+      tooltip: 'tooltip',
+      externalLink: {
+        title: `${data.nftInfo.asset}`,
+        url: assetGenerator(data.asset.code, data.asset.issuer),
+      },
+    },
+    {
+      title: 'IPFs hash',
+      tooltip: 'tooltip',
+      externalLink: {
+        title: `${minimizeAddress(data.nftInfo.hash)}`,
+        url: ipfsHashGenerator(data.nftInfo.hash),
+      },
     },
   ];
   const ownerInfo = [
-    { subject: 'Address', info: '0xdd467…3d4253d' },
-    { subject: 'Twitter', info: '@username', link: '/' },
-    { subject: 'Telegram', info: '@username', link: '/' },
+    {
+      title: 'Address',
+      tooltip: 'tooltip',
+      externalLink: {
+        title: `${minimizeAddress(data.ownerInfo.address)}`,
+        url: generateAddressURL(data.ownerInfo.address),
+      },
+    },
+    {
+      title: 'Twitter',
+      tooltip: 'tooltip',
+      externalLink: {
+        title: `@${data.ownerInfo.twitter}`,
+        url: twitterUrlMaker(data.ownerInfo.twitter),
+      },
+    },
+    {
+      title: 'Telegram',
+      tooltip: 'tooltip',
+      externalLink: {
+        title: `@${data.ownerInfo.telegram}`,
+        url: telegramUrlMaker(data.ownerInfo.telegram),
+      },
+    },
   ];
-
-  const offerTableHeader = ['Address', 'Date', 'Amount'];
-  const offerTableRow = (
-    <tr>
-      <td><a href="/">Gi9nf8ie…k5Tnd5s3</a></td>
-      <td>1 min ago</td>
-      <td>2300 LSP</td>
-    </tr>
-  );
-
-  const tradeTableHeader = ['Buyer', 'Seller', 'Amount'];
-  const tradeTableRow = (
-    <tr>
-      <td><a href="/">Gi9nf8ie…k5Tnd5s3</a></td>
-      <td><a href="/">Gi9nf8ie…k5Tnd5s3</a></td>
-      <td>2300 LSP</td>
-    </tr>
-  );
 
   const tabs = [
     { title: 'Offers', id: 'offer' },
     { title: 'Trades', id: 'trade' },
   ];
-  const tabContent = ({ tab }) => {
-    if (tab === 'offer') {
-      return (
-        <Table
-          tableRows={Array(10).fill(offerTableRow)}
-          tableHead={offerTableHeader}
-          className={styles.table}
-          verticalScrollHeight={345}
-        />
+  const breadCrumbData = [
+    {
+      name: 'My lusi',
+    },
+    {
+      name: `Lusi #${id}`,
+    },
+  ];
+
+  const handlePlaceOffer = () => {
+    if (isLogged) {
+      dispatch(
+        openModalAction({
+          modalProps: { title: 'Set a price' },
+          content: <PlaceNFTOrder />,
+        }),
       );
+    } else {
+      dispatch(openConnectModal());
     }
-    return (
-      <Table
-        tableRows={Array(10).fill(tradeTableRow)}
-        tableHead={tradeTableHeader}
-        className={styles.table}
-        verticalScrollHeight={345}
-      />
-    );
   };
 
   return (
@@ -83,48 +108,42 @@ const NFTDetail = () => {
       <Head>
         <title>NFT | Lumenswap</title>
       </Head>
-      <ObmHeader />
+      <NFTHeader />
       <div className={classNames('layout main', styles.main)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
 
             <div className="d-flex justify-content-between align-items-center">
-              <h1 className={styles.title}>My lusi <Arrow /> Lusi #{router.query.id}</h1>
+              <Breadcrumb data={breadCrumbData} />
               <Button
                 variant="primary"
                 content="Place an offer"
                 fontWeight={500}
                 className={styles.btn}
-                onClick={() => setShowModal(true)}
+                onClick={handlePlaceOffer}
               />
-              {showModal
-              && (
-              <ModalDialog
-                show={showModal}
-                setShow={setShowModal}
-                title="Set a price"
-                className="main"
-              >
-                <SetNFTPrice mode="set" />
-              </ModalDialog>
-              )}
             </div>
 
             <div className={classNames('row', styles.row)}>
               <div className={classNames('col-lg-6 col-md-12 col-sm-12 col-12', styles.col)}>
                 <div className={classNames(styles.card, styles['card-nft'])}>
                   <div className="d-flex justify-content-center">
-                    <Image src={imgSrc} width={342} height={342} />
+                    <Image src={data.lusiImage} width={342} height={342} />
                   </div>
                 </div>
               </div>
               <div className={classNames('col-lg-6 col-md-12 col-sm-12 col-12', styles.col)}>
-                <div className={classNames(styles.card, styles['card-nft-info'])}>
-                  <BasicList title="NFT Info" items={nftInfo} />
-                </div>
-                <div className={classNames(styles.card, styles['card-nft-info'])}>
-                  <BasicList title="Owner Info" items={ownerInfo} />
-                </div>
+                <InfoBox
+                  title="NFT Info"
+                  rows={nftInfo}
+                  data={data.nftInfo}
+                  className={styles['first-info-box']}
+                />
+                <InfoBox
+                  title="Owner Info"
+                  rows={ownerInfo}
+                  data={data.ownerInfo}
+                />
               </div>
             </div>
 
@@ -133,8 +152,11 @@ const NFTDetail = () => {
                 <div className={classNames(styles.card, styles['card-tabs'])}>
                   <CTabs
                     tabs={tabs}
-                    tabContent={tabContent}
+                    tabContent={NFTDetailsTabContent}
                     className={styles.tabs}
+                    customTabProps={{
+                      lusiId: id,
+                    }}
                   />
                 </div>
               </div>

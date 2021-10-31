@@ -6,7 +6,7 @@ export function PrimaryTooltip({ text }) {
 }
 
 const Tooltips = ({
-  placement = placement || 'top', id, text, children,
+  placement = 'top', id, text, children,
 }) => (
   <OverlayTrigger
     key={placement}

@@ -3,12 +3,9 @@ import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import moment from 'moment';
 
-import fakeDataChart from 'helpers/fakeDataChart';
-
 import styles from './styles.module.scss';
 
-const TVLChart = ({ showLabel = true }) => {
-  const { data, date } = fakeDataChart;
+const NftStatsChart = ({ showLabel = true, data, date }) => {
   const [label, setLabel] = useState({});
 
   useEffect(() => {
@@ -111,4 +108,4 @@ const TVLChart = ({ showLabel = true }) => {
   );
 };
 
-export default TVLChart;
+export default NftStatsChart;

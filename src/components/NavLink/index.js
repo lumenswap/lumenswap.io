@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
 const NavLink = ({
-  mainHref, href, name, className, activeClassName, exact = false,
+  mainHref, href, name, className, activeClassName, exact = false, disableMainHref,
 }) => {
   const { asPath } = useRouter();
   let linkClassName;
@@ -18,7 +18,7 @@ const NavLink = ({
     }
   } else if (asPath === href) {
     linkClassName = activeClassName ?? styles.header_link_active;
-  } else if (asPath.search(mainHref ?? href) !== -1) {
+  } else if (asPath.search(mainHref ?? href) !== -1 && !disableMainHref) {
     linkClassName = styles.header_link_active;
   } else {
     linkClassName = className ?? styles.header_link;

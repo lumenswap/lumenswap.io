@@ -46,12 +46,7 @@
   justify-content: center;
 }
 
-.ticketId {
-  display: flex;
-  align-items: center;
-  font-family: SofiaPro;
-  color: $BlueRibbon;
-}
+
 
 .buy-ticket {
   padding-bottom: 24px;
@@ -228,4 +223,69 @@
       margin-bottom: 20px;
     }
   }
+}
+
+.winner-info-about {
+  background-color: $White;
+  border-radius: 4px;
+  height: 178px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+}
+
+.winner-info-about-items {
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  padding-right: 16px;
+  padding-left: 16px;
+  width: 100%;
+  text-align: center;
+  p:first-child {
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
+  p:not(:first-child) {
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.31;
+    letter-spacing: normal;
+    text-align: center;
+    color: $ShuttleGray;
+  }
+  span {
+    font-family: SofiaPro;
+    font-size: 24px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
+}
+
+.first-info-box {
+  margin-bottom: 24px;
+}
+
+.infos {
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $CodGray;
 }

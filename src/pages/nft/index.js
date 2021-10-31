@@ -1,3 +1,3 @@
-import nft from 'containers/nft';
+import NftPage from 'containers/nft';
 
-export default nft;
+export default NftPage;

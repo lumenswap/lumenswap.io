@@ -67,3 +67,43 @@
   margin-bottom: 15px;
 }
 
+.statistics {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.c-statistics {
+  div {
+    color: $Manatee;
+  }
+}
+.statistics-info {
+  font-family: SofiaPro;
+  font-size: 20px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $CodGray !important;
+  span {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  div {
+    margin-top: 320px;
+  }
+}

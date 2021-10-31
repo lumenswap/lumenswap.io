@@ -51,3 +51,12 @@
   padding-right: 10px !important;
   padding-left: 10px !important;
 }
+
+.loading-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  div {
+    margin-top: 320px;
+  }
+}

@@ -3,6 +3,7 @@ const rootUrl = {
   reward: '/reward',
   amm: '/amm',
   lottery: '/lottery',
+  nft: '/nft',
 };
 
 if (process.env.REACT_APP_MODE === 'OBM') {
@@ -69,6 +70,13 @@ const urlMaker = {
     learn: () => `${rootUrl.lottery}/learnmore`,
     allTickets: (round) => `${rootUrl.lottery}/round/${round}/tickets`,
     allParticipants: (round) => `${rootUrl.lottery}/round/${round}/participants`,
+  },
+  nft: {
+    root: () => `${rootUrl.nft}`,
+    orders: () => `${rootUrl.nft}/orders`,
+    stats: () => `${rootUrl.nft}/stats`,
+    myLusi: () => `${rootUrl.nft}/my-lusi`,
+    lusi: (number) => `${rootUrl.nft}/lusi/${number}`,
   },
 };
 
