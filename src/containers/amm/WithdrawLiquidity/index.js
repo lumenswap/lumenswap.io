@@ -99,10 +99,16 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
     if (new BN(value).gt(tokenA.balance)) {
       return 'Insufficient balance';
     }
+    if (new BN(0).isEqualTo(value)) {
+      return 'Amount is not valid';
+    }
     return true;
   };
   const validateAmountB = (value) => {
     if (new BN(0).gt(value)) {
+      return 'Amount is not valid';
+    }
+    if (new BN(0).isEqualTo(value)) {
       return 'Amount is not valid';
     }
     if (new BN(value).gt(tokenB.balance)) {

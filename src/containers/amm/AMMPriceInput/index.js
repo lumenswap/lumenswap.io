@@ -4,15 +4,6 @@ import styles from './styles.module.scss';
 function AMMPriceInput({
   value, onChange, placeholder, defaultValue, token, type,
 }) {
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    const number = new BN(e.target.value);
-    if (!number.isNaN()) {
-      onChange(parseInt(e.target.value, 10));
-    } else if (e.target.value === '') {
-      onChange('');
-    }
-  };
   const handleDecreaseValue = () => {
     if (parseInt(value, 10) > 0) {
       onChange(parseInt(value, 10) - 1);
@@ -39,10 +30,11 @@ function AMMPriceInput({
         </div>
         <input
           value={value}
-          onChange={handleInputChange}
+          onChange={onChange}
           placeholder={placeholder}
           className={styles.input}
           defaultValue={defaultValue}
+          type="number"
         />
         <div className={styles['btns-container']}>
           <div className={styles.btns} onClick={handleIncreaseValue}>

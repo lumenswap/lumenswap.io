@@ -3,11 +3,52 @@
 .main {
   margin-top: 76px;
 }
-
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+}
 .info-pool {
   display: flex;
   justify-content: center;
   margin-top: 18px;
+}
+.btns-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.deposit-btn {
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: 500 !important;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 4px;
+  height: 40px !important;
+  box-shadow: none;
+}
+.withdraw-btn {
+  font-family: SofiaPro;
+  box-shadow: none;
+  height: 40px !important;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 500 !important;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-left: 5px;
 }
 
 .pool-info-container {

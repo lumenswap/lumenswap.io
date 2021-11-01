@@ -13,10 +13,16 @@ import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import Image from 'next/image';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
-import iconRightLogo from '../../../../../public/images/arrow-right-icon.png';
-import iconRefresh from '../../../../../public/images/icon-refresh.png';
-import questionLogo from '../../../../../public/images/question.png';
+import { useDispatch } from 'react-redux';
+import DepositLiquidity from 'containers/amm/DepositLiquidity';
+import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
+import { openModalAction } from 'actions/modal';
+import Button from 'components/Button';
 import styles from './styles.module.scss';
+import questionLogo from '../../../../../public/images/question.png';
+import iconRefresh from '../../../../../public/images/icon-refresh.png';
+import secondStyles from '../../../../components/Button/styles.module.scss';
+import iconRightLogo from '../../../../../public/images/arrow-right-icon.png';
 
 const NoDataMessage = () => (
   <div className={styles['no-data-message-container']}>
@@ -25,6 +31,7 @@ const NoDataMessage = () => (
 );
 
 const Details = ({ poolDetail }) => {
+  const dispatch = useDispatch();
   const a1 = poolDetail.reserves[0].asset.split(':');
   const a2 = poolDetail.reserves[1].asset.split(':');
   const refinedA = getAssetDetails({
@@ -39,7 +46,7 @@ const Details = ({ poolDetail }) => {
 
   const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
   const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
-  const grid1 = 'col-xl-7 col-lg-6 col-md-6 col-sm-12 col-12';
+  const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
 
   const TVLInfo = () => (
     <div className={styles['pool-info-container']}>
@@ -119,6 +126,48 @@ const Details = ({ poolDetail }) => {
       render: (pool) => <span>{moment(pool.time).fromNow()}</span>,
     },
   ];
+  console.log(tokenA, tokenB);
+  let tokenAInfo;
+  let tokenBInfo;
+  if (tokenA) {
+    tokenAInfo = tokenA;
+  } else {
+    tokenAInfo = { ...refinedA, logo: questionLogo };
+  }
+  if (tokenB) {
+    tokenBInfo = tokenB;
+  } else {
+    tokenBInfo = { ...refinedB, logo: questionLogo };
+  }
+
+  const handleDeposit = () => {
+    dispatch(
+      openModalAction({
+        modalProps: {
+          title: 'Deposit Liquidity',
+          className: 'main',
+        },
+        content: <DepositLiquidity
+          tokenA={tokenAInfo}
+          tokenB={tokenBInfo}
+        />,
+      }),
+    );
+  };
+  const handleWithdraw = () => {
+    dispatch(
+      openModalAction({
+        modalProps: {
+          title: 'Withdraw Liquidity',
+          className: 'main',
+        },
+        content: <WithdrawLiquidity
+          tokenA={tokenAInfo}
+          tokenB={tokenBInfo}
+        />,
+      }),
+    );
+  };
 
   return (
     <div className="container-fluid pb-5">
@@ -130,18 +179,26 @@ const Details = ({ poolDetail }) => {
         <div className="row justify-content-center">
           <div className="col-xl-7 col-lg-11 col-md-12 col-sm-12 col-12">
             <div className="row align-items-center">
-              <div className={grid1}>
-                <h1 className={styles.label}>
-                  Pool
-                  <div className="mx-2">
-                    <ArrowRight />
+              <div className={grid2}>
+                <div className={styles['header-container']}>
+                  <div>
+                    <h1 className={styles.label}>
+                      Pool
+                      <div className="mx-2">
+                        <ArrowRight />
+                      </div>
+                      <CurrencyPair
+                        size={26}
+                        source={[tokenA?.logo ?? questionLogo, tokenB?.logo ?? questionLogo]}
+                      />
+                      <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
+                    </h1>
                   </div>
-                  <CurrencyPair
-                    size={26}
-                    source={[tokenA?.logo ?? questionLogo, tokenB?.logo ?? questionLogo]}
-                  />
-                  <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
-                </h1>
+                  <div className={styles['btns-container']}>
+                    <Button className={classNames(styles['deposit-btn'], secondStyles['button-primary'])} content="Deposit Liquidity" onClick={handleDeposit} />
+                    <Button className={classNames(styles['withdraw-btn'], secondStyles['button-basic'])} content="Withdraw Liquidity" onClick={handleWithdraw} />
+                  </div>
+                </div>
               </div>
             </div>
             <div className="row p">

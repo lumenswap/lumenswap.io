@@ -35,8 +35,8 @@ function DepositLiquidity({ tokenA, tokenB }) {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      maxPrice: 1,
-      minPrice: 0,
+      maxPrice: 2,
+      minPrice: 1,
     },
   });
   const onSubmit = (data) => {
@@ -104,6 +104,9 @@ function DepositLiquidity({ tokenA, tokenB }) {
     if (new BN(0).gt(value)) {
       return 'Amount is not valid';
     }
+    if (new BN(0).isEqualTo(value)) {
+      return 'Amount is not valid';
+    }
     return true;
   };
   const validateAmountTokenB = (value) => {
@@ -113,12 +116,18 @@ function DepositLiquidity({ tokenA, tokenB }) {
     if (new BN(0).gt(value)) {
       return 'Amount is not valid';
     }
+    if (new BN(0).isEqualTo(value)) {
+      return 'Amount is not valid';
+    }
     return true;
   };
 
   const validateMinPrice = (value) => {
     if (new BN(0).gt(value)) {
-      return 'Max price is not valid';
+      return 'Min price is not valid';
+    }
+    if (new BN(0).isEqualTo(value)) {
+      return 'Min price is not valid';
     }
     if (new BN(value).gt(getValues('maxPrice')) || value === getValues('maxPrice')) {
       return 'Max price should be bigger';
