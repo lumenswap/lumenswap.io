@@ -14,8 +14,6 @@ const ConfirmLiquidity = ({ data }) => {
     const store = initializeStore();
     const storeData = store.getState();
 
-    console.log(data);
-
     function func() {
       return generateDepositPoolTRX(
         storeData.user.detail.address,
@@ -60,7 +58,7 @@ const ConfirmLiquidity = ({ data }) => {
         content="Confirm"
         fontWeight={500}
         className={styles.btn}
-        onClick={confirm}
+        onClick={() => confirm}
       />
     </div>
   );

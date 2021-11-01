@@ -1,5 +1,7 @@
 import BN from 'helpers/BN';
+import sevenDigit from 'helpers/sevenDigit';
 import React from 'react';
+import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import styles from './styles.module.scss';
 
 const AMMCurrentPrice = ({ poolData }) => {
@@ -29,7 +31,10 @@ const AMMCurrentPrice = ({ poolData }) => {
     <div className={styles.box}>
       <div className={styles['box-title']}>Current Price</div>
       <div className={styles['box-value']}>
-        {new BN(poolData.reserves[0].amount).div(poolData.reserves[1].amount)} {poolData.reserves[0].asset.split(':')[0]} per 1 {poolData.reserves[1].asset.split(':')[1]}
+        {sevenDigit(new BN(poolData.reserves[0].amount)
+          .div(poolData.reserves[1].amount)
+          .toFixed(7))}
+        {' '}{getAssetFromLPAsset(poolData.reserves[0].asset).code} per 1 {getAssetFromLPAsset(poolData.reserves[1].asset).code}
       </div>
     </div>
   );

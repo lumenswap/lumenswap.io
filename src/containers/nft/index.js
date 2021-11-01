@@ -30,7 +30,6 @@ const NftPage = () => {
   const [select, setSelect] = useState(dropdownItems[0]);
   const [allLusi, setAllLusi] = useState(null);
 
-  console.log(select);
   useEffect(() => {
     fetchAllLusi().then((data) => {
       setAllLusi(data);

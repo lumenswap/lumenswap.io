@@ -19,7 +19,6 @@ const PlaceNFTOrder = () => {
     control, handleSubmit, errors, formState, trigger,
   } = useForm({ mode: 'onChange' });
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(closeModalAction());
   };
 
