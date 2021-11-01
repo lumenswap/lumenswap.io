@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import classNames from 'classnames';
 import defaultTokens from 'tokens/defaultTokens';
 import AMMHeader from 'components/AMMHeader';
 import ArrowRight from 'assets/images/arrowRight';
 import CurrencyPair from 'components/CurrencyPair';
-import Loading from 'components/Loading';
 import numeral from 'numeral';
 import CStatistics from 'components/CStatistics';
 import moment from 'moment';
 import CTable from 'components/CTable';
-import fetchPoolDetails from 'helpers/poolDetailsAPI';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import Image from 'next/image';
+import getAssetDetails from 'helpers/getAssetDetails';
+import isSameAsset from 'helpers/isSameAsset';
 import iconRightLogo from '../../../../../public/images/arrow-right-icon.png';
 import iconRefresh from '../../../../../public/images/icon-refresh.png';
 import questionLogo from '../../../../../public/images/question.png';
@@ -25,33 +24,47 @@ const NoDataMessage = () => (
   </div>
 );
 
-const Details = ({ tokens }) => {
-  const [data, setData] = useState(null);
-  const tokenA = defaultTokens.find((token) => token.code === tokens.tokenA);
-  const tokenB = defaultTokens.find((token) => token.code === tokens.tokenB);
+const Details = ({ poolDetail }) => {
+  const a1 = poolDetail.reserves[0].asset.split(':');
+  const a2 = poolDetail.reserves[1].asset.split(':');
+  const refinedA = getAssetDetails({
+    code: a1[0],
+    issuer: a1[1],
+  });
+
+  const refinedB = getAssetDetails({
+    code: a2[0],
+    issuer: a2[1],
+  });
+
+  const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
+  const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
   const grid1 = 'col-xl-7 col-lg-6 col-md-6 col-sm-12 col-12';
 
   const TVLInfo = () => (
     <div className={styles['pool-info-container']}>
       <span className={styles['pool-info-content']}>
-        {numeral(data?.info.tvl1).format('0,0')} {tokenA?.code || tokens.tokenA}
+        {numeral(poolDetail.reserves[0].amount).format('0,0')} {refinedA.code}
       </span>
       <div className={styles.dot} />
       <span className={styles['pool-info-content']}>
-        {numeral(data?.info.tvl2).format('0,0')} {tokenB?.code || tokens.tokenB}
+        {numeral(poolDetail.reserves[1].amount).format('0,0')} {refinedB.code}
       </span>
-      <div className={styles['refresh-logo']}><Image src={iconRefresh} width={18} height={18} /></div>
+      <div className={styles['refresh-logo']}>
+        <Image src={iconRefresh} width={18} height={18} />
+      </div>
     </div>
   );
+
   const TrustLineInfo = () => (
     <span className={styles['pool-info-content']}>
-      {numeral(data?.info.trustline).format('0,0')}
+      {numeral(poolDetail.total_trustlines).format('0,0')}
     </span>
   );
 
   const ShareInfo = () => (
     <span className={styles['pool-info-content']}>
-      {numeral(data?.info.share).format('0,0')}
+      {numeral(poolDetail.total_shares).format('0,0')}
     </span>
   );
 
@@ -82,7 +95,8 @@ const Details = ({ tokens }) => {
           href={generateTransactionURL(pool.tx)}
           target="_blank"
           rel="noreferrer"
-        >{minimizeAddress(pool.tx)}
+        >
+          {minimizeAddress(pool.tx)}
         </a>
       ),
     },
@@ -92,9 +106,9 @@ const Details = ({ tokens }) => {
       key: 2,
       render: (pool) => (
         <div className={styles['table-info-row']}>
-          <span>{numeral(pool.info).format('0,0')} {tokenA?.code || tokens.tokenA}</span>
+          <span>{numeral(pool.info).format('0,0')} {refinedA.code}</span>
           <div><Image src={iconRightLogo} height={14} width={14} /></div>
-          <span>{numeral(pool.info / 5).format('0,0')} {tokenB?.code || tokens.tokenB}</span>
+          <span>{numeral(pool.info / 5).format('0,0')} {refinedB.code}</span>
         </div>
       ),
     },
@@ -106,30 +120,10 @@ const Details = ({ tokens }) => {
     },
   ];
 
-  useEffect(() => {
-    fetchPoolDetails().then((poolData) => {
-      setData(poolData);
-    });
-  }, []);
-
-  if (!data) {
-    return (
-      <div>
-        <Head>
-          <title>{tokens && `${tokens.tokenA}/${tokens.tokenB}`} | Lumenswap</title>
-        </Head>
-        <AMMHeader />
-        <div className={styles['loading-container']}>
-          <Loading size={48} />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="container-fluid pb-5">
       <Head>
-        <title>{tokens && `${tokens.tokenA}/${tokens.tokenB}`} | Lumenswap</title>
+        {/* <title>{tokens && `${tokens.tokenA}/${tokens.tokenB}`} | Lumenswap</title> */}
       </Head>
       <AMMHeader />
       <div className={classNames('layout main', styles.main)}>
@@ -146,7 +140,7 @@ const Details = ({ tokens }) => {
                     size={26}
                     source={[tokenA?.logo ?? questionLogo, tokenB?.logo ?? questionLogo]}
                   />
-                  <div className="ml-2">{tokens && `${tokens.tokenA}/${tokens.tokenB}`}</div>
+                  <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
                 </h1>
               </div>
             </div>
@@ -159,7 +153,7 @@ const Details = ({ tokens }) => {
                 <CTable
                   columns={tableHeaders}
                   noDataMessage={NoDataMessage}
-                  dataSource={data?.swaps}
+                  dataSource={[]}
                   className={styles.table}
                 />
               </div>

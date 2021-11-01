@@ -12,6 +12,7 @@ export default function signForThem(trx, dispatch) {
   const user = store.getState().user;
 
   if (user.loginType === loginTypes.PV) {
+    console.log('inja miai');
     return signWithPrivateKey(trx, user.detail.privateKey, dispatch);
   }
 
