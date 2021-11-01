@@ -21,20 +21,19 @@ const Purchased = ({ numTickets }) => {
     async function purchase() {
       let purchasedCount = 0;
       while (purchasedCount < numTickets) {
-        // eslint-disable-next-line no-await-in-loop
-        const trx = await generatePaymentTRX(
-          userAddress,
-          '1',
-          getAssetDetails(LSP),
-          process.env.REACT_APP_LOTTERY_ACCOUNT,
-          null,
-        );
-
         try {
+          // eslint-disable-next-line no-await-in-loop
+          const trx = await generatePaymentTRX(
+            userAddress,
+            '1',
+            getAssetDetails(LSP),
+            process.env.REACT_APP_LOTTERY_ACCOUNT,
+            null,
+          );
           // eslint-disable-next-line no-await-in-loop
           await signForThem(trx, () => {});
         } catch (e) {
-          setError(e);
+          setError(e.message);
           break;
         }
 
