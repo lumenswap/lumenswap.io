@@ -34,14 +34,6 @@ export default async function generateDepositPoolTRX(
     StellarSDK.LiquidityPoolFeeV18,
   );
 
-  console.log({
-    liquidityPoolId: poolId,
-    maxAmountA: new BN(assetAAmount).toFixed(7),
-    maxAmountB: new BN(assetBAmount).toFixed(7),
-    minPrice: new BN(minPrice).toFixed(7),
-    maxPrice: new BN(maxPrice).toFixed(7),
-  });
-
   transaction.addOperation(
     StellarSDK.Operation.changeTrust({
       asset: poolAsset,

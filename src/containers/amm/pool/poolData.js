@@ -10,9 +10,6 @@ import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import sevenDigit from 'helpers/sevenDigit';
-import StellarSDK from 'stellar-sdk';
-import LSP from 'tokens/LSP';
-import XLM from 'tokens/XLM';
 import questionLogo from '../../../../public/images/question.png';
 import styles from './styles.module.scss';
 
@@ -174,13 +171,6 @@ function PoolData({ userPools }) {
   ];
 
   const rowLink = (data) => urlMaker.pool.poolId(data.id);
-
-  const a = new StellarSDK.LiquidityPoolAsset(getAssetDetails(XLM), getAssetDetails(LSP), StellarSDK.LiquidityPoolFeeV18);
-
-  console.log(StellarSDK.getLiquidityPoolId(
-    'constant_product',
-    a.getLiquidityPoolParameters(),
-  ).toString('hex'));
 
   return (
     <div className={styles['table-container']}>

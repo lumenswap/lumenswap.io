@@ -38,7 +38,6 @@ const AddAsset = ({ changeToAsset, currentFrom, currentTo }) => {
     const asset = getAssetDetails({ code: data.code, issuer: data.issuer });
     dispatch(addCustomTokenAction(asset));
 
-    console.log(asset);
     changeToAsset({
       details: asset,
       web: minimizeAddress(asset.getIssuer()),

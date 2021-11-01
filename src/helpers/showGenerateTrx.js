@@ -11,7 +11,6 @@ export default async function showGenerateTrx(func, dispatch) {
   }));
 
   try {
-    console.log('darim generate mikonim');
     return await func();
   } catch (e) {
     console.error(e);
