@@ -1,0 +1,235 @@
+@import "styles/vars";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  margin-right: 82px;
+  margin-left: 82px;
+}
+.title {
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  margin-bottom: 20px;
+  margin-top: 29px;
+  height: 31px;
+  color: $CodGray;
+}
+.table-container {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 16px;
+  background-color: $White;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+}
+.table {
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: auto;
+  max-height: 578px;
+  table {
+    width: 100% !important;
+  tr {
+    th {
+      border-radius: 0px !important;
+    }
+  }
+  tr:not(:first-child) {
+    height: 62px;
+  }
+  }
+}
+.table::-webkit-scrollbar {
+  width: 0;  
+  background: transparent;  
+}
+
+.noDataMessageContainer {
+  width: 100%;
+  height: 126px;
+  background-color: $White;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+}
+.noDataMessage {
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  margin-top: 37px;
+}
+
+
+.info {
+  display: flex;
+  justify-content: center;
+}
+.info-content {
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $ShuttleGray;
+}
+
+.search-box {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.input {
+  margin-top: 16px;
+  margin-left: 24px;
+  min-width: 384px;
+  width: 384px;
+
+  input {
+    border-radius: 6px;
+  }
+  input::placeholder {
+    font-family: SofiaPro;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+}
+.send {
+  cursor: pointer;
+}
+.disabled-send {
+  cursor: not-allowed !important;
+  color: $Bombay;
+}
+
+
+.checkbox {
+  font-size: 14px !important;
+  color: $ShuttleGray !important;
+  margin-right: 24px;
+  label {
+    span {
+      font-family: SofiaPro;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 0.71;
+      letter-spacing: normal;
+      color: $ShuttleGray;
+    }
+  }
+
+  :global(.checkbox) {
+    border: 1px solid $Mischka;
+  }
+
+  label {
+    color: $ShuttleGray;
+    margin-top: 29px;
+  }
+}
+.actions {
+  display: flex;
+  flex-direction: row;
+  width: 219px;
+  justify-content: space-between;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $BlueRibbon;
+  div {
+    cursor: pointer;
+    min-width: 37px;
+  }
+}
+
+.asset {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  align-items: center;
+}
+.asset-info {
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $ShuttleGray;
+  line-height: 110%;
+  margin-bottom: 3px;
+}
+.asset-div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 6px;
+}
+
+.asset-code {
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $CodGray;
+}
+.asset-logo {
+  width: 32px;
+  height: 32px;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@media (max-width: $md) {
+  .input {
+    width: auto;
+    min-width: auto;
+    margin-right: 24px;
+  }
+  .main {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+}

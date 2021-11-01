@@ -29,6 +29,17 @@ const urlMaker = {
       return `${rootPath}${partA}/${partB}`;
     },
   },
+  ammswap: {
+    root: () => `${rootUrl.amm}/swap`,
+    tokens: (tokenA, tokenB) => `${rootUrl.amm}/swap/${tokenA}-${tokenB}`,
+    custom: (assetACode, assetAIssuer, assetBCode, assetBIssuer) => {
+      const rootPath = `${rootUrl.amm}/swap/`;
+      const partA = `${[assetACode, assetAIssuer].filter((i) => i).join('-')}`;
+      const partB = `${[assetBCode, assetBIssuer].filter((i) => i).join('-')}`;
+
+      return `${rootPath}${partA}/${partB}`;
+    },
+  },
   spot: {
     root: () => `${rootUrl.obm}/spot`,
     tokens: (tokenA, tokenB) => `${rootUrl.obm}/spot/${tokenA}-${tokenB}`,
@@ -48,6 +59,9 @@ const urlMaker = {
   },
   wallet: {
     root: () => `${rootUrl.obm}/wallet`,
+  },
+  ammwallet: {
+    root: () => `${rootUrl.amm}/wallet`,
   },
   order: {
     root: () => `${rootUrl.obm}/order`,
