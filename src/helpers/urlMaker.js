@@ -55,6 +55,7 @@ const urlMaker = {
   pool: {
     root: () => `${rootUrl.amm}/pool`,
     tokens: (tokenA, tokenB) => `${rootUrl.amm}/pool/${tokenA}/${tokenB}`,
+    poolId: (id) => `${rootUrl.amm}/pool/${id}`,
   },
   stats: {
     root: () => `${rootUrl.amm}/stats`,

@@ -108,11 +108,13 @@ function MyPoolPage() {
       })));
     });
   }, []);
-  useEffect(() => {
-    if (!isLogged) {
-      router.push(urlMaker.pool.root());
-    }
-  }, [isLogged]);
+
+  // useEffect(() => {
+  //   if (!isLogged) {
+  //     router.push(urlMaker.pool.root());
+  //   }
+  // }, [isLogged]);
+
   return (
     <div className="container-fluid">
       <Head>

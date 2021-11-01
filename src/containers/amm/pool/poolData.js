@@ -9,6 +9,10 @@ import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
+import sevenDigit from 'helpers/sevenDigit';
+import StellarSDK from 'stellar-sdk';
+import LSP from 'tokens/LSP';
+import XLM from 'tokens/XLM';
 import questionLogo from '../../../../public/images/question.png';
 import styles from './styles.module.scss';
 
@@ -21,15 +25,29 @@ function PoolData({ userPools }) {
   const dispatch = useDispatch();
 
   const renderModals = (data) => {
-    const token1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token1));
-    const token2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token2));
+    const a1 = data.reserves[0].asset.split(':');
+    const a2 = data.reserves[1].asset.split(':');
+    const refinedA = getAssetDetails({
+      code: a1[0],
+      issuer: a1[1],
+    });
+
+    const refinedB = getAssetDetails({
+      code: a2[0],
+      issuer: a2[1],
+    });
+
+    const token1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), refinedA));
+    const token2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), refinedB));
+
     let tokenA;
     if (!token1) {
       tokenA = {
-        ...data.token1,
+        code: a1[0],
+        issuer: a1[0],
         logo: questionLogo,
         balance: numeral(userBalance.find((balance) => isSameAsset(
-          balance.asset, getAssetDetails(data.token1),
+          balance.asset, refinedA,
         ))?.balance).format('0,0.[0000000]')
         ?? 0,
       };
@@ -42,13 +60,15 @@ function PoolData({ userPools }) {
         ?? 0,
       };
     }
+
     let tokenB;
     if (!token2) {
       tokenB = {
-        ...data.token2,
+        code: a2[0],
+        issuer: a2[1],
         logo: questionLogo,
         balance: numeral(userBalance.find((balance) => isSameAsset(
-          balance.asset, getAssetDetails(data.token2),
+          balance.asset, refinedB,
         ))?.balance).format('0,0.[0000000]')
         ?? 0,
       };
@@ -61,6 +81,7 @@ function PoolData({ userPools }) {
       ?? 0,
       };
     }
+
     const handleDeposit = (e) => {
       e.preventDefault();
       dispatch(
@@ -76,6 +97,7 @@ function PoolData({ userPools }) {
         }),
       );
     };
+
     const handleWithdraw = (e) => {
       e.preventDefault();
       dispatch(
@@ -100,8 +122,18 @@ function PoolData({ userPools }) {
   };
 
   const renderPoolInfo = (data) => {
-    const asset1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token1));
-    const asset2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token2));
+    const a1 = data.reserves[0].asset.split(':');
+    const a2 = data.reserves[1].asset.split(':');
+
+    const asset1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), getAssetDetails({
+      code: a1[0],
+      issuer: a1[1],
+    })));
+
+    const asset2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), getAssetDetails({
+      code: a2[0],
+      issuer: a2[1],
+    })));
 
     return (
       <div className={styles.pairs}>
@@ -109,7 +141,7 @@ function PoolData({ userPools }) {
           size={22}
           source={[asset1?.logo ?? questionLogo, asset2?.logo ?? questionLogo]}
         />
-        <span>{`${asset1?.code ?? data.token1.code}/${asset2?.code ?? data.token2.code}`}</span>
+        <span>{`${asset1?.code ?? a1[0]}/${asset2?.code ?? a2[0]}`}</span>
       </div>
     );
   };
@@ -125,16 +157,30 @@ function PoolData({ userPools }) {
       title: 'TVL',
       dataIndex: 'tvl',
       key: '2',
-      render: (data) => <span className={styles.balance}>${numeral(data.balance).format('0,0')}</span>,
+      render: (data) => (
+        <span className={styles.balance}>
+          {numeral(sevenDigit(data.reserves[0].amount)).format('0,0.[0000000]')} {data.reserves[0].asset.split(':')[0] === 'native' ? 'XLM' : data.reserves[0].asset.split(':')[0]}
+          {' / '}
+          {numeral(sevenDigit(data.reserves[1].amount)).format('0,0.[0000000]')} {data.reserves[1].asset.split(':')[0] === 'native' ? 'XLM' : data.reserves[1].asset.split(':')[0]}
+        </span>
+      ),
     },
     {
       title: 'Action',
       dataIndex: 'action',
-      key: 3,
+      key: '4',
       render: renderModals,
     },
   ];
-  const rowLink = (data) => urlMaker.pool.tokens(data.token1.code, data.token2.code);
+
+  const rowLink = (data) => urlMaker.pool.poolId(data.id);
+
+  const a = new StellarSDK.LiquidityPoolAsset(getAssetDetails(XLM), getAssetDetails(LSP), StellarSDK.LiquidityPoolFeeV18);
+
+  console.log(StellarSDK.getLiquidityPoolId(
+    'constant_product',
+    a.getLiquidityPoolParameters(),
+  ).toString('hex'));
 
   return (
     <div className={styles['table-container']}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
@@ -14,6 +14,8 @@ import AMMPriceInput from 'containers/amm/AMMPriceInput';
 import getAssetDetails from 'helpers/getAssetDetails';
 import XLM from 'tokens/XLM';
 import LSP from 'tokens/LSP';
+import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
+import { getPoolDetailsById } from 'api/stellarPool';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
 
@@ -26,6 +28,7 @@ const setLabel = (name, src) => (
 
 const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
   const userBalance = useSelector((state) => state.userBalance);
+  const [poolData, setPoolData] = useState(null);
 
   const defaultTokensData = {
     tokenA: {
@@ -74,16 +77,20 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
     dispatch(closeModalAction());
     const confirmData = {
       tokenA: {
-        logo: mainTokenA.logo,
-        code: mainTokenA.code,
-        balance: data.amountTokenA,
+        ...mainTokenA,
+        amount: data.amountTokenA,
       },
       tokenB: {
-        logo: mainTokenB.logo,
-        code: mainTokenB.code,
-        balance: data.amountTokenB,
+        ...mainTokenB,
+        amount: data.amountTokenB,
       },
+      range: {
+        min: data.minPrice,
+        max: data.maxPrice,
+      },
+      poolData,
     };
+
     dispatch(closeModalAction());
     dispatch(
       openModalAction({
@@ -97,14 +104,6 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
       }),
     );
   };
-
-  const currentCurrency = {
-    pair1: { value: '14', currency: mainTokenA.code },
-    pair2: { value: '1', currency: mainTokenB.code },
-  };
-  useEffect(() => {
-    trigger();
-  }, [JSON.stringify(getValues())]);
 
   function errorGenerator() {
     for (const error of Object.values(errors)) {
@@ -129,6 +128,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
       }),
     );
   };
+
   const validateAmountTokenA = (value) => {
     if (new BN(0).gt(value)) {
       return 'Amount is not valid';
@@ -168,6 +168,47 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
     return true;
   };
 
+  useEffect(() => {
+    trigger();
+  }, [JSON.stringify(getValues())]);
+
+  useEffect(() => {
+    async function loadData() {
+      const poolId = getLiquidityPoolIdFromAssets(
+        getAssetDetails(tokenA.details),
+        getAssetDetails(tokenB.details),
+      );
+
+      try {
+        const poolDetail = await getPoolDetailsById(poolId);
+        setPoolData(poolDetail);
+      } catch (e) {
+        const sortedTokens = lexoOrderAssets(
+          getAssetDetails(tokenA.details),
+          getAssetDetails(tokenB.details),
+        );
+
+        const assetA = sortedTokens[0].isNative() ? 'native' : `${sortedTokens[0].getCode()}:${sortedTokens[0].getIssuer()}`;
+        const assetB = sortedTokens[1].isNative() ? 'native' : `${sortedTokens[1].getCode()}:${sortedTokens[1].getIssuer()}`;
+
+        setPoolData({
+          reserves: [
+            {
+              asset: assetA,
+              amount: 0,
+            },
+            {
+              asset: assetB,
+              amount: 0,
+            },
+          ],
+        });
+      }
+    }
+
+    loadData();
+  }, [tokenA, tokenB]);
+
   return (
     <div className="pb-4">
       <h6 className={styles.label}>Select pair</h6>
@@ -182,7 +223,9 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
         </div>
       </div>
 
-      <div className={styles.current}><AMMCurrentPrice pairs={currentCurrency} /></div>
+      <div className={styles.current}>
+        <AMMCurrentPrice poolData={poolData} />
+      </div>
 
       <hr className={styles.hr} />
 

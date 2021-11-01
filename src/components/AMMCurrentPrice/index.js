@@ -1,18 +1,38 @@
+import BN from 'helpers/BN';
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
-const AMMCurrentPrice = ({ pairs }) => (
-  <div className={styles.box}>
-    <div className={styles['box-title']}>Current Price</div>
-    <div className={styles['box-value']}>
-      {pairs.pair1.value} {pairs.pair1.currency} per {pairs.pair2.value} {pairs.pair2.currency}
-    </div>
-  </div>
-);
+const AMMCurrentPrice = ({ poolData }) => {
+  if (!poolData) {
+    return (
+      <div className={styles.box}>
+        <div className={styles['box-title']}>Current Price</div>
+        <div className={styles['box-value']}>
+          Loading...
+        </div>
+      </div>
+    );
+  }
 
-AMMCurrentPrice.propTypes = {
-  pairs: PropTypes.object.isRequired,
+  if (new BN(poolData.reserves[0].amount).eq(0)) {
+    return (
+      <div className={styles.box}>
+        <div className={styles['box-title']}>Current Price</div>
+        <div className={styles['box-value']}>
+          Price is not set yet!
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.box}>
+      <div className={styles['box-title']}>Current Price</div>
+      <div className={styles['box-value']}>
+        {new BN(poolData.reserves[0].amount).div(poolData.reserves[1].amount)} {poolData.reserves[0].asset.split(':')[0]} per 1 {poolData.reserves[1].asset.split(':')[1]}
+      </div>
+    </div>
+  );
 };
 
 export default AMMCurrentPrice;

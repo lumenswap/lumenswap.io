@@ -1,22 +1,23 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
 import AMMHeader from 'components/AMMHeader';
-import fetchPools from 'helpers/poolsAPI';
 import Loading from 'components/Loading';
 import { useEffect, useState } from 'react';
+import { getAllLiquidityPool } from 'api/stellarPool';
 import PoolData from './poolData';
 
 import styles from './styles.module.scss';
 
 const PoolPage = () => {
   const [userPools, setUserPools] = useState(null);
-  const userAdress = useSelector((state) => state.user.detail.address);
 
   useEffect(() => {
-    fetchPools(userAdress).then((data) => {
-      setUserPools(data.map((pool) => ({ ...pool, key: pool.token1.code })));
+    getAllLiquidityPool().then((res) => {
+      setUserPools(res);
     });
+    // fetchPools(userAdress).then((data) => {
+    //   setUserPools(data.map((pool) => ({ ...pool, key: pool.token1.code })));
+    // });
   }, []);
 
   return (

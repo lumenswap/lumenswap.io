@@ -11,13 +11,14 @@ export default async function showGenerateTrx(func, dispatch) {
   }));
 
   try {
+    console.log('darim generate mikonim');
     return await func();
   } catch (e) {
     console.error(e);
     dispatch(openModalAction({
       modalProps: {},
       content: <TransactionResponse
-        message="Failed to generate your swap transaction"
+        message="Failed to generate your transaction"
         status="failed"
         title="Failed"
       />,
