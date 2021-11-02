@@ -1,3 +1,4 @@
+import numeral from 'numeral';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import styles from '../style.module.scss';
@@ -19,7 +20,7 @@ export default [
     key: '2',
     render: (data) => (
       <div>
-        {data.ticketCount}
+        {numeral(data.ticketCount).format('0,0')}
       </div>
     ),
   },
