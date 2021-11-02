@@ -17,6 +17,7 @@ import { extractLogo } from 'helpers/assetUtils';
 import isSameAsset from 'helpers/isSameAsset';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
+import Tolerance from '../Tolerance';
 
 const setLabel = (name, src) => (
   <div className="d-flex align-items-center">
@@ -259,42 +260,7 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
             />
           )}
         />
-        <div className={styles['footer-inputs-container']}>
-          <Controller
-            name="minPrice"
-            control={control}
-            rules={{
-              required: 'Min price is required',
-              validate: validateMinPrice,
-            }}
-            render={(props) => (
-              <AMMPriceInput
-                onChange={props.onChange}
-                value={props.value}
-                defaultValue={0}
-                token={tokenA}
-                type="Min"
-              />
-            )}
-          />
-          <Controller
-            name="maxPrice"
-            control={control}
-            rules={{
-              required: 'Max price is required',
-              validate: validateMaxPrice,
-            }}
-            render={(props) => (
-              <AMMPriceInput
-                onChange={props.onChange}
-                value={props.value}
-                defaultValue={1}
-                token={tokenA}
-                type="Max"
-              />
-            )}
-          />
-        </div>
+        <Tolerance onChange={() => {}} />
 
         <Button
           htmlType="submit"

@@ -1,0 +1,25 @@
+@import 'styles/vars';
+
+.tolerance {
+    color: $Manatee;
+}
+
+.tolerance-items {
+    display: flex;
+    span {
+        color: $Manatee;
+        border-radius: 4px;
+        background-color: #f7f8fa;
+        padding: 2px 6px;
+        cursor: pointer;
+    }
+
+    span:not(:last-child) {
+        margin-right: 6px;
+    }
+
+    .selected , .selected > span {
+        background-color: $BlueRibbon;
+        color: white;
+    }
+}

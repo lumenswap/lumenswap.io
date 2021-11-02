@@ -3,6 +3,7 @@ import Image from 'next/image';
 import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import Tolerance from 'containers/amm/Tolerance';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
@@ -128,45 +129,18 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
 
       <div className={styles.current}><AMMCurrentPrice pairs={currentCurrency} /></div>
 
+      <Tolerance onChange={() => {}} />
+
       <hr className={styles.hr} />
 
-      <h6 className={styles.label}>Withdraw Liquidity</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="amountTokenA"
-          control={control}
-          rules={{
-            required: 'Amount is required',
-            validate: validateAmountA,
-          }}
-          render={(props) => (
-            <LiquidityInput
-              balance={`${tokenA.balance} ${tokenA.code}`}
-              currency={tokenA.code}
-              onChange={props.onChange}
-              value={props.value}
-              currencySrc={tokenA.logo}
-            />
-          )}
-        />
-        <Controller
-          name="amountTokenB"
-          control={control}
-          rules={{
-            required: 'Amount is required',
-            validate: validateAmountB,
-          }}
-          render={(props) => (
-            <LiquidityInput
-              onChange={props.onChange}
-              value={props.value}
-              balance={`${tokenB.balance} ${tokenB.code}`}
-              currency={tokenB.code}
-              currencySrc={tokenB.logo}
-              className="mt-3"
-            />
-          )}
-        />
+        <div className={styles['info-box']}>
+          <p>
+            <span>Note: </span>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </div>
 
         <Button
           htmlType="submit"

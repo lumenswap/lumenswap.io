@@ -9,6 +9,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import { initializeStore } from 'store';
 import { extractLogo } from 'helpers/assetUtils';
 import styles from './styles.module.scss';
+import Tolerance from '../Tolerance';
 
 const ConfirmLiquidity = ({ data }) => {
   function confirm() {
@@ -53,6 +54,7 @@ const ConfirmLiquidity = ({ data }) => {
       <div className={styles.current}>
         <AMMCurrentPrice poolData={data.poolData} />
       </div>
+      <Tolerance selected="0.5" onChange={() => {}} />
 
       <Button
         variant="primary"
