@@ -12,8 +12,8 @@ import ShowTolerance from 'containers/amm/ShowTolerance';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-const ConfirmLiquidity = ({ data }) => {
-  function confirm() {
+const ConfirmLiquidity = ({ data, afterDeposit }) => {
+  async function confirm() {
     const store = initializeStore();
     const storeData = store.getState();
 
@@ -34,9 +34,11 @@ const ConfirmLiquidity = ({ data }) => {
       );
     }
 
-    showGenerateTrx(func, store.dispatch)
+    await showGenerateTrx(func, store.dispatch)
       .then((trx) => showSignResponse(trx, store.dispatch))
       .catch(console.error);
+
+    afterDeposit();
   }
 
   return (

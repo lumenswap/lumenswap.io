@@ -6,18 +6,23 @@ import transactionConsts from './consts';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 
-export default async function generateDepositPoolTRX(
+export default async function generateWithdrawPoolTRX(
   address,
   assetA,
   assetB,
-  assetAAmount,
-  assetBAmount,
-  maxPrice,
-  minPrice,
+  amount,
+  minAmountA,
+  minAmountB,
 ) {
   const poolId = getLiquidityPoolIdFromAssets(
     getAssetDetails(assetA),
     getAssetDetails(assetB),
+  );
+
+  const poolAsset = new StellarSDK.LiquidityPoolAsset(
+    ...(lexoOrderAssets(getAssetDetails(assetA),
+      getAssetDetails(assetB))),
+    StellarSDK.LiquidityPoolFeeV18,
   );
 
   const account = await server.loadAccount(address);
@@ -27,23 +32,17 @@ export default async function generateDepositPoolTRX(
     networkPassphrase: StellarSDK.Networks.TESTNET,
   });
 
-  const poolAsset = new StellarSDK.LiquidityPoolAsset(
-    ...(lexoOrderAssets(getAssetDetails(assetA),
-      getAssetDetails(assetB))),
-    StellarSDK.LiquidityPoolFeeV18,
-  );
-
   transaction.addOperation(
-    StellarSDK.Operation.changeTrust({
-      asset: poolAsset,
+    StellarSDK.Operation.liquidityPoolWithdraw({
+      liquidityPoolId: poolId,
+      amount,
+      minAmountA: new BN(minAmountA).toFixed(7),
+      minAmountB: new BN(minAmountB).toFixed(7),
     }),
   ).addOperation(
-    StellarSDK.Operation.liquidityPoolDeposit({
-      liquidityPoolId: poolId,
-      maxAmountA: new BN(assetAAmount).toFixed(7),
-      maxAmountB: new BN(assetBAmount).toFixed(7),
-      minPrice: new BN(minPrice).toFixed(7),
-      maxPrice: new BN(maxPrice).toFixed(7),
+    StellarSDK.Operation.changeTrust({
+      asset: poolAsset,
+      limit: '0',
     }),
   );
 

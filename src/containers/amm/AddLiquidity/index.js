@@ -258,7 +258,7 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
           content={errorGenerator()}
           fontWeight={500}
           className={styles.btn}
-          disabled={!formState.isValid || formState.isValidating}
+          disabled={!formState.isValid || formState.isValidating || poolData === null}
         />
       </form>
     </div>

@@ -4,7 +4,7 @@ import QuestionIcon from 'assets/images/question-icon.png';
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import styles from './style.module.scss';
 
-const Tolerance = ({ value }) => (
+const ShowTolerance = ({ value }) => (
   <div className="d-flex justify-content-between mt-3">
     <span
       className={classNames(styles.tolerance, 'd-flex align-items-center')}
@@ -31,4 +31,4 @@ const Tolerance = ({ value }) => (
   </div>
 );
 
-export default Tolerance;
+export default ShowTolerance;

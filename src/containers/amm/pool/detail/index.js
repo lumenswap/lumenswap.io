@@ -15,7 +15,7 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import { useDispatch, useSelector } from 'react-redux';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
-import { openModalAction } from 'actions/modal';
+import { openConnectModal, openModalAction } from 'actions/modal';
 import Button from 'components/Button';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import { useEffect, useState } from 'react';
@@ -23,8 +23,8 @@ import useIsLogged from 'hooks/useIsLogged';
 import { fetchAccountDetails } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
-import { getPoolOperationsAPI } from 'api/stellarPool';
-import AddLiquidity from 'containers/amm/AddLiquidity';
+import { getPoolDetailsById, getPoolOperationsAPI } from 'api/stellarPool';
+import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import styles from './styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
 import iconRefresh from '../../../../../public/images/icon-refresh.png';
@@ -51,7 +51,7 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
     );
   }
 
-  if (!userShare) {
+  if (userShare === null) {
     return (
       <ShareInfoContainer>
         Loading...
@@ -82,11 +82,35 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
   );
 };
 
-const Details = ({ poolDetail }) => {
+async function loadUserPool(setUserShare, isLogged, userAddress, poolId) {
+  if (isLogged) {
+    try {
+      const userData = await fetchAccountDetails(userAddress);
+      for (const balance of userData.balances) {
+        if (balance.asset_type === 'liquidity_pool_shares' && balance.liquidity_pool_id === poolId) {
+          setUserShare(balance.balance);
+          return;
+        }
+      }
+
+      setUserShare(0);
+    } catch (e) {
+      setUserShare(0);
+    }
+  }
+}
+
+async function reloadPoolDetail(setPoolDetail, poolId) {
+  const poolDetail = await getPoolDetailsById(poolId);
+  setPoolDetail(poolDetail);
+}
+
+const Details = ({ poolDetail: initPoolDetail }) => {
   const [userShare, setUserShare] = useState(null);
   const isLogged = useIsLogged();
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
+  const [poolDetail, setPoolDetail] = useState(initPoolDetail);
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
   const [poolOperations, setPoolOperations] = useState(null);
@@ -96,25 +120,7 @@ const Details = ({ poolDetail }) => {
   const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
 
   useEffect(() => {
-    async function loadData() {
-      if (isLogged) {
-        try {
-          const userData = await fetchAccountDetails(userAddress);
-          for (const balance of userData.balances) {
-            if (balance.asset_type === 'liquidity_pool_shares' && balance.liquidity_pool_id === poolDetail.id) {
-              setUserShare(balance.balance);
-              return;
-            }
-          }
-
-          setUserShare(0);
-        } catch (e) {
-          setUserShare(0);
-        }
-      }
-    }
-
-    loadData();
+    loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
   }, [isLogged, userAddress]);
 
   useEffect(() => {
@@ -223,19 +229,6 @@ const Details = ({ poolDetail }) => {
     },
   ];
 
-  let tokenAInfo;
-  let tokenBInfo;
-  if (tokenA) {
-    tokenAInfo = tokenA;
-  } else {
-    tokenAInfo = { ...refinedA, logo: questionLogo };
-  }
-  if (tokenB) {
-    tokenBInfo = tokenB;
-  } else {
-    tokenBInfo = { ...refinedB, logo: questionLogo };
-  }
-
   const handleDeposit = () => {
     dispatch(
       openModalAction({
@@ -243,13 +236,18 @@ const Details = ({ poolDetail }) => {
           title: 'Deposit Liquidity',
           className: 'main',
         },
-        content: <AddLiquidity
+        content: <DepositLiquidity
           tokenA={refinedA}
           tokenB={refinedB}
+          afterDeposit={() => {
+            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
+            reloadPoolDetail(setPoolDetail, poolDetail.id);
+          }}
         />,
       }),
     );
   };
+
   const handleWithdraw = () => {
     dispatch(
       openModalAction({
@@ -258,8 +256,12 @@ const Details = ({ poolDetail }) => {
           className: 'main',
         },
         content: <WithdrawLiquidity
-          tokenA={tokenAInfo}
-          tokenB={tokenBInfo}
+          tokenA={refinedA}
+          tokenB={refinedB}
+          afterWithdraw={() => {
+            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
+            reloadPoolDetail(setPoolDetail, poolDetail.id);
+          }}
         />,
       }),
     );
@@ -294,13 +296,21 @@ const Details = ({ poolDetail }) => {
                     <Button
                       className={classNames(styles['deposit-btn'], secondStyles['button-primary'])}
                       content="Deposit Liquidity"
-                      onClick={handleDeposit}
+                      onClick={() => {
+                        if (isLogged) {
+                          handleDeposit();
+                        } else {
+                          dispatch(openConnectModal());
+                        }
+                      }}
                     />
+                    {userShare !== null && new BN(userShare).gt(0) && (
                     <Button
                       className={classNames(styles['withdraw-btn'], secondStyles['button-basic'])}
                       content="Withdraw Liquidity"
                       onClick={handleWithdraw}
                     />
+                    )}
                   </div>
                 </div>
               </div>

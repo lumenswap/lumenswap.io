@@ -181,7 +181,7 @@ function MyPoolData() {
     <div>
       <CTable
         className={styles.table}
-        dataSource={[...pools, ...pools]}
+        dataSource={pools}
         columns={tableHeaders}
         noDataMessage={NoDataMessage}
         loading={pools === null}
