@@ -18,6 +18,7 @@ import loginWithFreighter from 'walletIntegeration/logins/loginWithFreighter';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
 import loginWithXbull from 'walletIntegeration/logins/loginWithXbull';
 import { useDispatch } from 'react-redux';
+import getAssetDetails from 'helpers/getAssetDetails';
 import styles from './styles.module.scss';
 
 const Initializing = ({ loginMethod }) => {
@@ -46,7 +47,11 @@ const Initializing = ({ loginMethod }) => {
 
       const accountDetail = await fetchAccountDetails(address);
       dispatch(userLogin(loginMethod, { address, subentry: accountDetail.subentry }));
-      dispatch(setUserBalance(accountDetail.balances.map(balanceMapper)));
+      dispatch(setUserBalance(accountDetail.balances.filter((item) => getAssetDetails({
+        code: item.asset_code,
+        issuer: item.asset_issuer,
+        type: item.asset_type,
+      }) !== null).map(balanceMapper)));
 
       dispatch(closeModalAction());
     } catch (e) {

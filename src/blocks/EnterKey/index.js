@@ -11,6 +11,7 @@ import { loginTypes } from 'reducers/user';
 import { closeModalAction } from 'actions/modal';
 import balanceMapper from 'helpers/balanceMapper';
 import { useDispatch } from 'react-redux';
+import getAssetDetails from 'helpers/getAssetDetails';
 import styles from './styles.module.scss';
 
 const EnterKey = () => {
@@ -31,7 +32,11 @@ const EnterKey = () => {
           privateKey: data.privateKey,
           subentry: res.subentry,
         }));
-        dispatch(setUserBalance(res.balances.map(balanceMapper)));
+        dispatch(setUserBalance(res.balances.filter((item) => getAssetDetails({
+          code: item.asset_code,
+          issuer: item.asset_issuer,
+          type: item.asset_type,
+        }) !== null).map(balanceMapper)));
         dispatch(closeModalAction());
       })
       .finally(() => {

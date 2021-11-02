@@ -64,7 +64,7 @@ const CSelectToken = ({ onTokenSelect }) => {
 
   function selectAsset(asset) {
     dispatch(closeModalAction());
-    onTokenSelect(asset);
+    onTokenSelect(asset.details);
   }
   const handleAddCustomAsset = () => {
     dispatch(

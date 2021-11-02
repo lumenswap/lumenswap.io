@@ -20,7 +20,7 @@ import ANSR from './ANSR';
 import PEN from './PEN';
 import NUNA from './NUNA';
 
-export default [
+const defaultTokens = [
   XLM,
   LSP,
   USDC,
@@ -43,3 +43,5 @@ export default [
   PEN,
   NUNA,
 ];
+
+export default defaultTokens;

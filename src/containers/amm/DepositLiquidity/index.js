@@ -5,10 +5,13 @@ import { useDispatch } from 'react-redux';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
-import { closeModalAction, openModalAction } from 'actions/modal';
+import { openModalAction } from 'actions/modal';
 import DepositLiquidityConfirm from 'containers/amm/DepositLiquidityConfirm';
 import BN from 'helpers/BN';
 import AMMPriceInput from 'containers/amm/AMMPriceInput';
+import getAssetDetails from 'helpers/getAssetDetails';
+import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
+import { getPoolDetailsById } from 'api/stellarPool';
 import styles from './styles.module.scss';
 
 function Inpool({ token }) {
@@ -39,6 +42,7 @@ function DepositLiquidity({ tokenA, tokenB }) {
       minPrice: 1,
     },
   });
+
   const onSubmit = (data) => {
     const confirmData = {
       tokenA: {
@@ -52,7 +56,7 @@ function DepositLiquidity({ tokenA, tokenB }) {
         balance: data.amountTokenB,
       },
     };
-    dispatch(closeModalAction());
+
     dispatch(
       openModalAction({
         modalProps: {
@@ -65,16 +69,15 @@ function DepositLiquidity({ tokenA, tokenB }) {
       }),
     );
   };
-  const currentCurrency = {
-    pair1: { value: '14', currency: tokenA.code },
-    pair2: { value: '1', currency: tokenB.code },
-  };
+
   useEffect(() => {
     trigger();
   }, []);
+
   useEffect(() => {
     trigger();
   }, [JSON.stringify(getValues())]);
+
   function errorGenerator() {
     for (const error of Object.values(errors)) {
       if (error.message) {
@@ -109,6 +112,7 @@ function DepositLiquidity({ tokenA, tokenB }) {
     }
     return true;
   };
+
   const validateAmountTokenB = (value) => {
     if (new BN(value).gt(tokenB.balance)) {
       return 'Insufficient balance';
@@ -145,6 +149,43 @@ function DepositLiquidity({ tokenA, tokenB }) {
     return true;
   };
 
+  useEffect(() => {
+    async function loadData() {
+      const poolId = getLiquidityPoolIdFromAssets(
+        getAssetDetails(tokenA.details),
+        getAssetDetails(tokenB.details),
+      );
+
+      try {
+        const poolDetail = await getPoolDetailsById(poolId);
+        setPoolData(poolDetail);
+      } catch (e) {
+        const sortedTokens = lexoOrderAssets(
+          getAssetDetails(tokenA.details),
+          getAssetDetails(tokenB.details),
+        );
+
+        const assetA = sortedTokens[0].isNative() ? 'native' : `${sortedTokens[0].getCode()}:${sortedTokens[0].getIssuer()}`;
+        const assetB = sortedTokens[1].isNative() ? 'native' : `${sortedTokens[1].getCode()}:${sortedTokens[1].getIssuer()}`;
+
+        setPoolData({
+          reserves: [
+            {
+              asset: assetA,
+              amount: 0,
+            },
+            {
+              asset: assetB,
+              amount: 0,
+            },
+          ],
+        });
+      }
+    }
+
+    loadData();
+  }, [tokenA, tokenB]);
+
   return (
     <div className="pb-4">
       <h6 className={styles.label}>Inpool</h6>
@@ -154,7 +195,7 @@ function DepositLiquidity({ tokenA, tokenB }) {
       </div>
       <div className="d-flex justify-content-between" />
 
-      <div className={styles.current}><AMMCurrentPrice pairs={currentCurrency} /></div>
+      <div className={styles.current}><AMMCurrentPrice poolData={poolData} /></div>
 
       <hr className={styles.hr} />
 

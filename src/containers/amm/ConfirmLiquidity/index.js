@@ -7,6 +7,7 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { initializeStore } from 'store';
+import { extractLogo } from 'helpers/assetUtils';
 import styles from './styles.module.scss';
 
 const ConfirmLiquidity = ({ data }) => {
@@ -35,7 +36,7 @@ const ConfirmLiquidity = ({ data }) => {
     <div className="pb-4">
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={data.tokenA.logo} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><Image src={extractLogo(data.tokenA)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
         <div>{data.tokenA.amount}</div>
@@ -43,7 +44,7 @@ const ConfirmLiquidity = ({ data }) => {
 
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={data.tokenB.logo} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><Image src={extractLogo(data.tokenB)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
         <div>{data.tokenB.amount}</div>
@@ -58,7 +59,7 @@ const ConfirmLiquidity = ({ data }) => {
         content="Confirm"
         fontWeight={500}
         className={styles.btn}
-        onClick={() => confirm}
+        onClick={confirm}
       />
     </div>
   );
