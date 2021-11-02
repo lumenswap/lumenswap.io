@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,13 +7,14 @@ import CSelectToken from 'components/CSelectToken';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
-import { closeModalAction, openModalAction } from 'actions/modal';
-import isSameAsset from 'helpers/isSameAsset';
+import { openModalAction } from 'actions/modal';
 import numeral from 'numeral';
 import AMMPriceInput from 'containers/amm/AMMPriceInput';
 import getAssetDetails from 'helpers/getAssetDetails';
-import XLM from 'tokens/XLM';
-import LSP from 'tokens/LSP';
+import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetails } from 'helpers/stellarPool';
+import { getPoolDetailsById } from 'api/stellarPool';
+import { extractLogo } from 'helpers/assetUtils';
+import isSameAsset from 'helpers/isSameAsset';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
 
@@ -24,35 +25,21 @@ const setLabel = (name, src) => (
   </div>
 );
 
-const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
+const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) => {
+  const [poolData, setPoolData] = useState(null);
   const userBalance = useSelector((state) => state.userBalance);
 
-  const defaultTokensData = {
-    tokenA: {
-      ...XLM,
-      balance:
-      numeral(userBalance.find((balance) => isSameAsset(
-        balance.asset, getAssetDetails(XLM),
-      ))?.balance).format('0,0.[0000000]')
-        ?? 0,
-    },
-    tokenB: {
-      ...getAssetDetails(LSP),
-      balance:
-      numeral(userBalance.find((balance) => isSameAsset(
-        balance.asset, getAssetDetails(LSP),
-      ))?.balance).format('0,0.[0000000]')
-       ?? 0,
-    },
-  };
-  let mainTokenA = { ...tokenA?.details, logo: tokenA?.logo, balance: tokenA?.balance };
-  let mainTokenB = { ...tokenB?.details, logo: tokenB?.logo, balance: tokenB?.balance };
-  if (!tokenA) {
-    mainTokenA = defaultTokensData.tokenA;
-  }
-  if (!tokenB) {
-    mainTokenB = defaultTokensData.tokenB;
-  }
+  const [tokenA, tokenB] = lexoOrderTokenWithDetails(
+    initTokenA,
+    initTokenB,
+  );
+
+  const tokenABalance = userBalance
+    .find((i) => isSameAsset(getAssetDetails(i.asset), tokenA))
+    ?.balance;
+  const tokenBBalance = userBalance
+    .find((i) => isSameAsset(getAssetDetails(i.asset), tokenB))
+    ?.balance;
 
   const dispatch = useDispatch();
   const {
@@ -71,20 +58,22 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
   });
 
   const onSubmit = (data) => {
-    dispatch(closeModalAction());
     const confirmData = {
       tokenA: {
-        logo: mainTokenA.logo,
-        code: mainTokenA.code,
-        balance: data.amountTokenA,
+        ...tokenA,
+        amount: data.amountTokenA,
       },
       tokenB: {
-        logo: mainTokenB.logo,
-        code: mainTokenB.code,
-        balance: data.amountTokenB,
+        ...tokenB,
+        amount: data.amountTokenB,
       },
+      range: {
+        min: data.minPrice,
+        max: data.maxPrice,
+      },
+      poolData,
     };
-    dispatch(closeModalAction());
+
     dispatch(
       openModalAction({
         modalProps: {
@@ -98,14 +87,6 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
     );
   };
 
-  const currentCurrency = {
-    pair1: { value: '14', currency: mainTokenA.code },
-    pair2: { value: '1', currency: mainTokenB.code },
-  };
-  useEffect(() => {
-    trigger();
-  }, [JSON.stringify(getValues())]);
-
   function errorGenerator() {
     for (const error of Object.values(errors)) {
       if (error.message) {
@@ -117,8 +98,18 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
 
   const handleSelectAsset = (token) => {
     function onTokenSelect(asset) {
-      selectAsset(token, asset);
+      const props = { tokenA: initTokenA, tokenB: initTokenB };
+      if (token === 'tokenA') {
+        props.tokenA = asset;
+      }
+
+      if (token === 'tokenB') {
+        props.tokenB = asset;
+      }
+
+      selectAsset(props);
     }
+
     dispatch(
       openModalAction({
         modalProps: {
@@ -129,20 +120,22 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
       }),
     );
   };
+
   const validateAmountTokenA = (value) => {
     if (new BN(0).gt(value)) {
       return 'Amount is not valid';
     }
-    if (new BN(value).gt(mainTokenA.balance)) {
+    if (new BN(value).gt(tokenABalance)) {
       return 'Insufficient balance';
     }
     return true;
   };
+
   const validateAmountTokenB = (value) => {
     if (new BN(0).gt(value)) {
       return 'Amount is not valid';
     }
-    if (new BN(value).gt(mainTokenB.balance)) {
+    if (new BN(value).gt(tokenBBalance)) {
       return 'Insufficient balance';
     }
     return true;
@@ -168,21 +161,64 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
     return true;
   };
 
+  useEffect(() => {
+    trigger();
+  }, [JSON.stringify(getValues())]);
+
+  useEffect(() => {
+    async function loadData() {
+      const poolId = getLiquidityPoolIdFromAssets(
+        getAssetDetails(tokenA),
+        getAssetDetails(tokenB),
+      );
+
+      try {
+        const poolDetail = await getPoolDetailsById(poolId);
+        setPoolData(poolDetail);
+      } catch (e) {
+        const sortedTokens = lexoOrderAssets(
+          getAssetDetails(tokenA),
+          getAssetDetails(tokenB),
+        );
+
+        const assetA = sortedTokens[0].isNative() ? 'native' : `${sortedTokens[0].getCode()}:${sortedTokens[0].getIssuer()}`;
+        const assetB = sortedTokens[1].isNative() ? 'native' : `${sortedTokens[1].getCode()}:${sortedTokens[1].getIssuer()}`;
+
+        setPoolData({
+          reserves: [
+            {
+              asset: assetA,
+              amount: 0,
+            },
+            {
+              asset: assetB,
+              amount: 0,
+            },
+          ],
+        });
+      }
+    }
+
+    loadData();
+  }, [tokenA, tokenB]);
+
   return (
     <div className="pb-4">
       <h6 className={styles.label}>Select pair</h6>
       <div className="d-flex justify-content-between">
         <div className={styles.select} onClick={() => handleSelectAsset('tokenA')}>
-          {setLabel(mainTokenA.code, mainTokenA.logo)}
+          {setLabel(initTokenA.code, extractLogo(initTokenA))}
           <span className="icon-angle-down" />
         </div>
         <div className={styles.select} onClick={() => handleSelectAsset('tokenB')}>
-          {setLabel(mainTokenB.code, mainTokenB.logo)}
+          {setLabel(initTokenB.code, extractLogo(initTokenB))}
           <span className="icon-angle-down" />
         </div>
       </div>
 
-      <div className={styles.current}><AMMCurrentPrice pairs={currentCurrency} /></div>
+      <div className={styles.current}>
+        <AMMCurrentPrice poolData={poolData} />
+      </div>
 
       <hr className={styles.hr} />
 
@@ -197,11 +233,11 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
           }}
           render={(props) => (
             <LiquidityInput
-              balance={`${numeral(mainTokenA.balance).format('0,0.[0000000]')} ${mainTokenA.code}`}
-              currency={mainTokenA.code}
+              balance={`${numeral(tokenABalance).format('0,0.[0000000]')} ${tokenA.code}`}
+              currency={tokenA.code}
               onChange={props.onChange}
               value={props.value}
-              currencySrc={mainTokenA.logo}
+              currencySrc={extractLogo(tokenA)}
             />
           )}
         />
@@ -216,9 +252,9 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
             <LiquidityInput
               onChange={props.onChange}
               value={props.value}
-              balance={`${numeral(mainTokenB.balance).format('0,0.[0000000]')} ${mainTokenB.code}`}
-              currency={mainTokenB.code}
-              currencySrc={mainTokenB.logo}
+              balance={`${numeral(tokenBBalance).format('0,0.[0000000]')} ${tokenB.code}`}
+              currency={tokenB.code}
+              currencySrc={extractLogo(tokenB)}
               className="mt-3"
             />
           )}
@@ -236,7 +272,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
                 onChange={props.onChange}
                 value={props.value}
                 defaultValue={0}
-                token={mainTokenA}
+                token={tokenA}
                 type="Min"
               />
             )}
@@ -253,7 +289,7 @@ const AddLiquidity = ({ tokenA, tokenB, selectAsset }) => {
                 onChange={props.onChange}
                 value={props.value}
                 defaultValue={1}
-                token={mainTokenA}
+                token={tokenA}
                 type="Max"
               />
             )}

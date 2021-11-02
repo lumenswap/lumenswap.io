@@ -14,7 +14,6 @@ import XLM from 'tokens/XLM';
 import LSP from 'tokens/LSP';
 import numeral from 'numeral';
 import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
@@ -24,51 +23,8 @@ function MyPoolPage() {
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
   const dispatch = useDispatch();
-  const userBalance = useSelector((state) => state.userBalance);
 
-  const defaultTokensData = {
-    tokenA: {
-      ...XLM,
-      balance:
-      numeral(userBalance.find((balance) => isSameAsset(
-        balance.asset, getAssetDetails(XLM),
-      ))?.balance).format('0,0.[0000000]')
-        ?? 0,
-    },
-    tokenB: {
-      ...LSP,
-      balance:
-      numeral(userBalance.find((balance) => isSameAsset(
-        balance.asset, getAssetDetails(LSP),
-      ))?.balance).format('0,0.[0000000]')
-       ?? 0,
-    },
-  };
-
-  let tokens = {
-    tokenA: { details: { ...defaultTokensData.tokenA }, ...defaultTokensData.tokenA },
-    tokenB: { details: { ...defaultTokensData.tokenB }, ...defaultTokensData.tokenB },
-  };
-  const handleSelectAsset = (selectedToken, tokenData) => {
-    if (selectedToken === 'tokenA') {
-      if (tokenData?.details?.code === tokens?.tokenB?.details?.code) {
-        const prevToken = tokens.tokenA;
-        tokens = {
-          tokenA: tokenData,
-          tokenB: prevToken,
-        };
-      } else {
-        tokens = { ...tokens, tokenA: tokenData };
-      }
-    } else if (tokenData?.details?.code === tokens?.tokenA?.details?.code) {
-      const prevToken = tokens.tokenB;
-      tokens = {
-        tokenA: prevToken,
-        tokenB: tokenData,
-      };
-    } else {
-      tokens = { ...tokens, tokenB: tokenData };
-    }
+  const handleSelectAsset = (newSelectTokens) => {
     dispatch(
       openModalAction({
         modalProps: {
@@ -77,8 +33,7 @@ function MyPoolPage() {
         },
         content: <AddLiquidity
           selectAsset={handleSelectAsset}
-          tokenA={tokens.tokenA}
-          tokenB={tokens.tokenB}
+          {...newSelectTokens}
         />,
       }),
     );
@@ -92,8 +47,8 @@ function MyPoolPage() {
           className: 'main',
         },
         content: <AddLiquidity
-          tokenA={tokens.tokenA}
-          tokenB={tokens.tokenB}
+          tokenA={getAssetDetails(XLM)}
+          tokenB={getAssetDetails(LSP)}
           selectAsset={handleSelectAsset}
         />,
       }),
@@ -108,11 +63,13 @@ function MyPoolPage() {
       })));
     });
   }, []);
-  useEffect(() => {
-    if (!isLogged) {
-      router.push(urlMaker.pool.root());
-    }
-  }, [isLogged]);
+
+  // useEffect(() => {
+  //   if (!isLogged) {
+  //     router.push(urlMaker.pool.root());
+  //   }
+  // }, [isLogged]);
+
   return (
     <div className="container-fluid">
       <Head>

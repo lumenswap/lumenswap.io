@@ -17,7 +17,7 @@ export default async function showGenerateTrx(func, dispatch) {
     dispatch(openModalAction({
       modalProps: {},
       content: <TransactionResponse
-        message="Failed to generate your swap transaction"
+        message="Failed to generate your transaction"
         status="failed"
         title="Failed"
       />,

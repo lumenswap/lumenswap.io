@@ -36,8 +36,13 @@ const AMMHeader = () => {
         link: urlMaker.pool.root(),
         mainHref: urlMaker.pool.root(),
       },
+      {
+        name: 'Swap',
+        link: urlMaker.ammswap.root(),
+      },
     ],
     right: [
+      { name: 'Wallet', link: urlMaker.ammwallet.root(), restricted: true },
       { name: 'My Pool', link: urlMaker.myPool.root(), restricted: true },
     ],
   };

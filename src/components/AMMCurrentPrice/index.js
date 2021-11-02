@@ -1,18 +1,43 @@
+import BN from 'helpers/BN';
+import sevenDigit from 'helpers/sevenDigit';
 import React from 'react';
-import PropTypes from 'prop-types';
+import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import styles from './styles.module.scss';
 
-const AMMCurrentPrice = ({ pairs }) => (
-  <div className={styles.box}>
-    <div className={styles['box-title']}>Current Price</div>
-    <div className={styles['box-value']}>
-      {pairs.pair1.value} {pairs.pair1.currency} per {pairs.pair2.value} {pairs.pair2.currency}
-    </div>
-  </div>
-);
+const AMMCurrentPrice = ({ poolData }) => {
+  if (!poolData) {
+    return (
+      <div className={styles.box}>
+        <div className={styles['box-title']}>Current Price</div>
+        <div className={styles['box-value']}>
+          Loading...
+        </div>
+      </div>
+    );
+  }
 
-AMMCurrentPrice.propTypes = {
-  pairs: PropTypes.object.isRequired,
+  if (new BN(poolData.reserves[0].amount).eq(0)) {
+    return (
+      <div className={styles.box}>
+        <div className={styles['box-title']}>Current Price</div>
+        <div className={styles['box-value']}>
+          Price is not set yet!
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.box}>
+      <div className={styles['box-title']}>Current Price</div>
+      <div className={styles['box-value']}>
+        {sevenDigit(new BN(poolData.reserves[0].amount)
+          .div(poolData.reserves[1].amount)
+          .toFixed(7))}
+        {' '}{getAssetFromLPAsset(poolData.reserves[0].asset).code} per 1 {getAssetFromLPAsset(poolData.reserves[1].asset).code}
+      </div>
+    </div>
+  );
 };
 
 export default AMMCurrentPrice;

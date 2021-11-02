@@ -43,6 +43,7 @@ module.exports = {
     'linebreak-style': 'off',
     'react/jsx-props-no-spreading': 'off',
     'new-cap': 'off',
+    'react/jsx-no-bind': 'off',
   },
   root: true,
 };
