@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
-import DepositLiquidityConfirm from 'containers/amm/DepositLiquidityConfirm';
 import BN from 'helpers/BN';
-import AMMPriceInput from 'containers/amm/AMMPriceInput';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
+import { extractLogo } from 'helpers/assetUtils';
+import humanAmount from 'helpers/humanAmount';
+import isSameAsset from 'helpers/isSameAsset';
 import styles from './styles.module.scss';
+import Tolerance from '../Tolerance';
+import ConfirmLiquidity from '../ConfirmLiquidity';
 
 function Inpool({ token }) {
   return (
@@ -21,13 +24,23 @@ function Inpool({ token }) {
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{token.balance}</div>
+      <div>{humanAmount(token.balance, true)}</div>
     </div>
   );
 }
 
-function DepositLiquidity({ tokenA, tokenB }) {
+function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit = () => {} }) {
   const dispatch = useDispatch();
+  const [poolData, setPoolData] = useState(null);
+  const userBalance = useSelector((state) => state.userBalance);
+  const [tokenA, tokenB] = lexoOrderAssets(initTokenA, initTokenB);
+  const tokenABalance = userBalance
+    .find((i) => isSameAsset(getAssetDetails(i.asset), tokenA))
+    ?.balance;
+  const tokenBBalance = userBalance
+    .find((i) => isSameAsset(getAssetDetails(i.asset), tokenB))
+    ?.balance;
+
   const {
     handleSubmit,
     control,
@@ -37,24 +50,20 @@ function DepositLiquidity({ tokenA, tokenB }) {
     getValues,
   } = useForm({
     mode: 'onChange',
-    defaultValues: {
-      maxPrice: 2,
-      minPrice: 1,
-    },
   });
 
   const onSubmit = (data) => {
     const confirmData = {
       tokenA: {
-        logo: tokenA.logo,
-        code: tokenA.code,
-        balance: data.amountTokenA,
+        ...tokenA,
+        amount: data.amountTokenA,
       },
       tokenB: {
-        logo: tokenB.logo,
-        code: tokenB.code,
-        balance: data.amountTokenB,
+        ...tokenB,
+        amount: data.amountTokenB,
       },
+      tolerance: data.tolerance,
+      poolData,
     };
 
     dispatch(
@@ -63,8 +72,9 @@ function DepositLiquidity({ tokenA, tokenB }) {
           title: 'Deposit Liquidity Confirm',
           className: 'main',
         },
-        content: <DepositLiquidityConfirm
+        content: <ConfirmLiquidity
           data={confirmData}
+          afterDeposit={afterDeposit}
         />,
       }),
     );
@@ -89,19 +99,19 @@ function DepositLiquidity({ tokenA, tokenB }) {
 
   const inpoolData = [
     {
-      logo: tokenA.logo,
+      logo: extractLogo(tokenA),
       code: tokenA.code,
-      balance: tokenA.balance,
+      balance: poolData ? poolData.reserves[0].amount : '',
     },
     {
-      logo: tokenB.logo,
+      logo: extractLogo(tokenB),
       code: tokenB.code,
-      balance: tokenB.balance,
+      balance: poolData ? poolData.reserves[1].amount : '',
     },
   ];
 
   const validateAmountTokenA = (value) => {
-    if (new BN(value).gt(tokenA.balance)) {
+    if (new BN(value).gt(tokenABalance)) {
       return 'Insufficient balance';
     }
     if (new BN(0).gt(value)) {
@@ -114,7 +124,7 @@ function DepositLiquidity({ tokenA, tokenB }) {
   };
 
   const validateAmountTokenB = (value) => {
-    if (new BN(value).gt(tokenB.balance)) {
+    if (new BN(value).gt(tokenBBalance)) {
       return 'Insufficient balance';
     }
     if (new BN(0).gt(value)) {
@@ -126,34 +136,11 @@ function DepositLiquidity({ tokenA, tokenB }) {
     return true;
   };
 
-  const validateMinPrice = (value) => {
-    if (new BN(0).gt(value)) {
-      return 'Min price is not valid';
-    }
-    if (new BN(0).isEqualTo(value)) {
-      return 'Min price is not valid';
-    }
-    if (new BN(value).gt(getValues('maxPrice')) || value === getValues('maxPrice')) {
-      return 'Max price should be bigger';
-    }
-    return true;
-  };
-
-  const validateMaxPrice = (value) => {
-    if (new BN(0).gt(value)) {
-      return 'Max price is not valid';
-    }
-    if (new BN(getValues('minPrice')).gt(value) || value === getValues('minPrice')) {
-      return 'Max price should be bigger';
-    }
-    return true;
-  };
-
   useEffect(() => {
     async function loadData() {
       const poolId = getLiquidityPoolIdFromAssets(
-        getAssetDetails(tokenA.details),
-        getAssetDetails(tokenB.details),
+        getAssetDetails(tokenA),
+        getAssetDetails(tokenB),
       );
 
       try {
@@ -161,8 +148,8 @@ function DepositLiquidity({ tokenA, tokenB }) {
         setPoolData(poolDetail);
       } catch (e) {
         const sortedTokens = lexoOrderAssets(
-          getAssetDetails(tokenA.details),
-          getAssetDetails(tokenB.details),
+          getAssetDetails(tokenA),
+          getAssetDetails(tokenB),
         );
 
         const assetA = sortedTokens[0].isNative() ? 'native' : `${sortedTokens[0].getCode()}:${sortedTokens[0].getIssuer()}`;
@@ -210,11 +197,11 @@ function DepositLiquidity({ tokenA, tokenB }) {
           }}
           render={(props) => (
             <LiquidityInput
-              balance={`${tokenA.balance} ${tokenA.code}`}
+              balance={`${tokenABalance} ${tokenA.code}`}
               currency={tokenA.code}
               onChange={props.onChange}
               value={props.value}
-              currencySrc={tokenA.logo}
+              currencySrc={extractLogo(tokenA)}
             />
           )}
         />
@@ -229,57 +216,36 @@ function DepositLiquidity({ tokenA, tokenB }) {
             <LiquidityInput
               onChange={props.onChange}
               value={props.value}
-              balance={`${tokenB.balance} ${tokenB.code}`}
+              balance={`${tokenBBalance} ${tokenB.code}`}
               currency={tokenB.code}
-              currencySrc={tokenB.logo}
+              currencySrc={extractLogo(tokenB)}
               className="mt-3"
             />
           )}
         />
 
-        <div className={styles['footer-inputs-container']}>
-          <Controller
-            name="minPrice"
-            control={control}
-            rules={{
-              required: 'Min price is required',
-              validate: validateMinPrice,
-            }}
-            render={(props) => (
-              <AMMPriceInput
-                onChange={props.onChange}
-                value={props.value}
-                defaultValue={0}
-                token={tokenA}
-                type="Min"
-              />
-            )}
-          />
-          <Controller
-            name="maxPrice"
-            control={control}
-            rules={{
-              required: 'Max price is required',
-              validate: validateMaxPrice,
-            }}
-            render={(props) => (
-              <AMMPriceInput
-                onChange={props.onChange}
-                value={props.value}
-                defaultValue={1}
-                token={tokenA}
-                type="Max"
-              />
-            )}
-          />
-        </div>
+        <Controller
+          name="tolerance"
+          control={control}
+          rules={{
+            required: 'Tolerance is required',
+          }}
+          defaultValue="0.1"
+          render={(props) => (
+            <Tolerance
+              onChange={props.onChange}
+              value={props.value}
+            />
+          )}
+        />
+
         <Button
           htmlType="submit"
           variant="primary"
           content={errorGenerator()}
           fontWeight={500}
           className={styles.btn}
-          disabled={!formState.isValid || formState.isValidating}
+          disabled={!formState.isValid || formState.isValidating || poolData === null}
         />
       </form>
     </div>

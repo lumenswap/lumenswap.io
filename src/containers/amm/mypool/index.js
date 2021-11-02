@@ -18,7 +18,6 @@ import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
 function MyPoolPage() {
-  const [userPools, setUserPools] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
@@ -55,15 +54,6 @@ function MyPoolPage() {
     );
   };
 
-  useEffect(() => {
-    fetchMyPools(userAddress).then((poolData) => {
-      setUserPools(poolData.map((pool, index) => ({
-        ...pool,
-        key: index,
-      })));
-    });
-  }, []);
-
   // useEffect(() => {
   //   if (!isLogged) {
   //     router.push(urlMaker.pool.root());
@@ -88,8 +78,7 @@ function MyPoolPage() {
                 onClick={openModal}
               />
             </div>
-            {userPools ? <MyPoolData userPools={userPools} />
-              : <div className={styles['loading-container']}><Loading size={48} /></div>}
+            <MyPoolData />
           </div>
         </div>
       </div>

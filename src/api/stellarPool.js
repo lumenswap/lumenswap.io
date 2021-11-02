@@ -9,3 +9,8 @@ export function getPoolDetailsById(poolId) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/liquidity_pools/${poolId}`)
     .then((res) => res.data);
 }
+
+export function getPoolOperationsAPI(poolId, params) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/liquidity_pools/${poolId}/operations`, { params })
+    .then((res) => res.data._embedded.records);
+}
