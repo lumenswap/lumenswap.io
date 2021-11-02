@@ -9,7 +9,6 @@ import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
 import numeral from 'numeral';
-import AMMPriceInput from 'containers/amm/AMMPriceInput';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetails } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
@@ -68,10 +67,7 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
         ...tokenB,
         amount: data.amountTokenB,
       },
-      range: {
-        min: data.minPrice,
-        max: data.maxPrice,
-      },
+      tolerance: data.tolerance,
       poolData,
     };
 
@@ -123,7 +119,7 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
   };
 
   const validateAmountTokenA = (value) => {
-    if (new BN(0).gt(value)) {
+    if (new BN(0).gte(value)) {
       return 'Amount is not valid';
     }
     if (new BN(value).gt(tokenABalance)) {
@@ -133,31 +129,11 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
   };
 
   const validateAmountTokenB = (value) => {
-    if (new BN(0).gt(value)) {
+    if (new BN(0).gte(value)) {
       return 'Amount is not valid';
     }
     if (new BN(value).gt(tokenBBalance)) {
       return 'Insufficient balance';
-    }
-    return true;
-  };
-
-  const validateMinPrice = (value) => {
-    if (value < 0) {
-      return 'Min price is not valid';
-    }
-    if (new BN(value).gt(getValues('maxPrice')) || value === getValues('maxPrice')) {
-      return 'Max price should be bigger';
-    }
-    return true;
-  };
-
-  const validateMaxPrice = (value) => {
-    if (value < 0) {
-      return 'Max price is not valid';
-    }
-    if (new BN(getValues('minPrice')).gt(value) || value === getValues('minPrice')) {
-      return 'Max price should be bigger';
     }
     return true;
   };
@@ -260,7 +236,21 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
             />
           )}
         />
-        <Tolerance onChange={() => {}} />
+
+        <Controller
+          name="tolerance"
+          control={control}
+          rules={{
+            required: 'Tolerance is required',
+          }}
+          defaultValue="0.1"
+          render={(props) => (
+            <Tolerance
+              onChange={props.onChange}
+              value={props.value}
+            />
+          )}
+        />
 
         <Button
           htmlType="submit"
