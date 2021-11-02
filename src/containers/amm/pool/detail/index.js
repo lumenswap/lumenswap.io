@@ -79,15 +79,17 @@ const Details = ({ poolDetail }) => {
     {
       title: 'TVL',
       content: <TVLInfo />,
+      tooltip: 'tooltip',
     },
     {
       title: 'Trustline',
-      content: <TrustLineInfo />
-      ,
+      content: <TrustLineInfo />,
+      tooltip: 'tooltip',
     },
     {
       title: 'Share',
       content: <ShareInfo />,
+      tooltip: 'tooltip',
     },
   ];
 
