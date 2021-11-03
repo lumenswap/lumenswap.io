@@ -5,20 +5,16 @@ import Button from 'components/Button';
 import AddLiquidity from 'containers/amm/AddLiquidity';
 import { openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-import fetchMyPools from 'helpers/myPoolsAPI';
-import Loading from 'components/Loading';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import XLM from 'tokens/XLM';
 import LSP from 'tokens/LSP';
-import numeral from 'numeral';
 import getAssetDetails from 'helpers/getAssetDetails';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
 function MyPoolPage() {
-  const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -54,11 +50,11 @@ function MyPoolPage() {
     );
   };
 
-  // useEffect(() => {
-  //   if (!isLogged) {
-  //     router.push(urlMaker.pool.root());
-  //   }
-  // }, [isLogged]);
+  useEffect(() => {
+    if (!isLogged) {
+      router.push(urlMaker.pool.root());
+    }
+  }, [isLogged]);
 
   return (
     <div className="container-fluid">

@@ -35,7 +35,7 @@ export default async function generateWithdrawPoolTRX(
   transaction.addOperation(
     StellarSDK.Operation.liquidityPoolWithdraw({
       liquidityPoolId: poolId,
-      amount,
+      amount: new BN(amount).toFixed(7),
       minAmountA: new BN(minAmountA).toFixed(7),
       minAmountB: new BN(minAmountB).toFixed(7),
     }),
