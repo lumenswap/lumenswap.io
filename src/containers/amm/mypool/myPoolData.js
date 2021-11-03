@@ -25,6 +25,30 @@ const NoDataMessage = () => (
   </div>
 );
 
+function calculateBalanceUSD(data, xlmPrice) {
+  let balance = '-';
+  const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
+  const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
+
+  if (isSameAsset(tokenA, getAssetDetails(USDC))) {
+    balance = new BN(data.reserves[0].amount).times(2).toFixed(7);
+  }
+
+  if (isSameAsset(tokenB, getAssetDetails(USDC))) {
+    balance = new BN(data.reserves[1].amount).times(2).toFixed(7);
+  }
+
+  if (tokenA.isNative()) {
+    balance = new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7);
+  }
+
+  if (tokenB.isNative()) {
+    balance = new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7);
+  }
+
+  return balance;
+}
+
 function MyPoolData() {
   const dispatch = useDispatch();
   const [pools, setPools] = useState(null);
@@ -45,7 +69,15 @@ function MyPoolData() {
         }))),
       );
 
-      setPools(fetchedPools);
+      const poolsWithBalances = fetchedPools.map((pool) => {
+        const balanceUSD = calculateBalanceUSD(pool, xlmPrice);
+        return {
+          ...pool,
+          balanceUSD,
+        };
+      });
+
+      setPools(poolsWithBalances);
     }
 
     if (isLogged) {
@@ -133,39 +165,12 @@ function MyPoolData() {
       title: 'Balance (USD)',
       dataIndex: 'balanceUSD',
       key: 3,
-      render: (data) => {
-        let balance = '-';
-        const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
-        const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
-
-        if (isSameAsset(tokenA, getAssetDetails(USDC))) {
-          balance = humanAmount(new BN(data.reserves[0].amount).times(2).toFixed(7), true);
-        }
-
-        if (isSameAsset(tokenB, getAssetDetails(USDC))) {
-          balance = humanAmount(new BN(data.reserves[1].amount).times(2).toFixed(7), true);
-        }
-
-        if (tokenA.isNative()) {
-          balance = humanAmount(
-            new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7),
-            true,
-          );
-        }
-
-        if (tokenB.isNative()) {
-          balance = humanAmount(
-            new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7),
-            true,
-          );
-        }
-
-        return (
-          <span>
-            {balance !== '-' && '$'}{balance}
-          </span>
-        );
-      },
+      sortFunc: (a, b, order) => (order === 'asc' ? a.balanceUSD - b.balanceUSD : b.balanceUSD - a.balanceUSD),
+      render: (data) => (
+        <span>
+          {data.balanceUSD !== '-' && '$'}{humanAmount(data.balanceUSD, true)}
+        </span>
+      ),
     },
     {
       title: 'Action',
@@ -176,7 +181,7 @@ function MyPoolData() {
   ];
 
   return (
-    <div>
+    <div className={styles['table-container']}>
       <CTable
         className={styles.table}
         dataSource={pools}

@@ -22,6 +22,30 @@ function NoDataMessage() {
   return <div className={styles['empty-table-container']}><span>There is no pool</span></div>;
 }
 
+function calculateTVLFromBalances(data, xlmPrice) {
+  let balance = '-';
+  const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
+  const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
+
+  if (isSameAsset(tokenA, getAssetDetails(USDC))) {
+    balance = new BN(data.reserves[0].amount).times(2).toFixed(7);
+  }
+
+  if (isSameAsset(tokenB, getAssetDetails(USDC))) {
+    balance = new BN(data.reserves[1].amount).times(2).toFixed(7);
+  }
+
+  if (tokenA.isNative()) {
+    balance = new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7);
+  }
+
+  if (tokenB.isNative()) {
+    balance = new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7);
+  }
+
+  return balance;
+}
+
 function PoolData() {
   const [knownPools, setKnownPools] = useState(null);
   const xlmPrice = useSelector((state) => state.xlmPrice);
@@ -130,7 +154,15 @@ function PoolData() {
             pair: pool.pair,
           }))));
 
-      setKnownPools(allPools);
+      const poolsWithTvl = allPools.map((pool) => {
+        const tvl = calculateTVLFromBalances(pool, xlmPrice);
+        return {
+          ...pool,
+          tvl,
+        };
+      });
+
+      setKnownPools(poolsWithTvl);
     }
 
     loadData();
@@ -166,43 +198,17 @@ function PoolData() {
       title: 'TVL',
       dataIndex: 'tvl',
       key: '2',
-      render: (data) => {
-        let balance = '-';
-        const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
-        const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
-
-        if (isSameAsset(tokenA, getAssetDetails(USDC))) {
-          balance = humanAmount(new BN(data.reserves[0].amount).times(2).toFixed(7), true);
-        }
-
-        if (isSameAsset(tokenB, getAssetDetails(USDC))) {
-          balance = humanAmount(new BN(data.reserves[1].amount).times(2).toFixed(7), true);
-        }
-
-        if (tokenA.isNative()) {
-          balance = humanAmount(
-            new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7),
-            true,
-          );
-        }
-
-        if (tokenB.isNative()) {
-          balance = humanAmount(
-            new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7),
-            true,
-          );
-        }
-
-        return (
-          <span className={styles.balance}>
-            {balance !== '-' && '$'}{balance}
-          </span>
-        );
-      },
+      sortFunc: (a, b, order) => (order === 'asc' ? a.tvl - b.tvl : b.tvl - a.tvl),
+      render: (data) => (
+        <span className={styles.balance}>
+          {data.tvl !== '-' && '$'}{humanAmount(data.tvl, true)}
+        </span>
+      ),
     },
     {
       title: 'Accounts in pool',
       dataIndex: 'accounts',
+      sortFunc: (a, b, order) => (order === 'asc' ? a.total_trustlines - b.total_trustlines : b.total_trustlines - a.total_trustlines),
       key: '5',
       render: (data) => humanAmount(data.total_trustlines),
     },
@@ -215,7 +221,6 @@ function PoolData() {
   ];
 
   let filteredPools = knownPools ? [...knownPools] : [];
-  console.log(filteredPools);
   if (searchQuery) {
     filteredPools = filteredPools?.filter(
       (pool) => pool.pair.base.code
