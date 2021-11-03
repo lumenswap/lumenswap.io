@@ -2,7 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import defaultTokens from 'tokens/defaultTokens';
 import AMMHeader from 'components/AMMHeader';
-import ArrowRight from 'assets/images/arrowRight';
+import Breadcrumb from 'components/BreadCrumb';
 import CurrencyPair from 'components/CurrencyPair';
 import numeral from 'numeral';
 import CStatistics from 'components/CStatistics';
@@ -27,6 +27,7 @@ import { getPoolDetailsById, getPoolOperationsAPI } from 'api/stellarPool';
 import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import sevenDigit from 'helpers/sevenDigit';
+import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
 import iconRefresh from '../../../../../public/images/icon-refresh.png';
@@ -313,6 +314,23 @@ const Details = ({ poolDetail: initPoolDetail }) => {
       }),
     );
   };
+  const breadCrumbData = [
+    {
+      name: 'Pool',
+      url: urlMaker.pool.root(),
+    },
+    {
+      render: () => (
+        <div className={styles['pair-data']}>
+          <CurrencyPair
+            size={26}
+            source={[tokenA?.logo ?? questionLogo, tokenB?.logo ?? questionLogo]}
+          />
+          <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div className="container-fluid pb-5">
@@ -327,22 +345,14 @@ const Details = ({ poolDetail: initPoolDetail }) => {
               <div className={grid2}>
                 <div className={styles['header-container']}>
                   <div>
-                    <h1 className={styles.label}>
-                      Pool
-                      <div className="mx-2">
-                        <ArrowRight />
-                      </div>
-                      <CurrencyPair
-                        size={26}
-                        source={[tokenA?.logo ?? questionLogo, tokenB?.logo ?? questionLogo]}
-                      />
-                      <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
-                    </h1>
+                    <Breadcrumb
+                      data={breadCrumbData}
+                    />
                   </div>
                   <div className={styles['btns-container']}>
                     <Button
                       className={classNames(styles['deposit-btn'], secondStyles['button-primary'])}
-                      content="Deposit Liquidity"
+                      content="Deposit"
                       onClick={() => {
                         if (isLogged) {
                           handleDeposit();
