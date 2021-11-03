@@ -6,17 +6,22 @@ import styles from './styles.module.scss';
 function Breadcrumb({ data, className }) {
   return (
     <h1 className={classNames(styles.main, className)}>
-      {data.map((item, index) => (
-        <div>{item.url ? (
-          <Link href={item.url}>
-            <a>
-              {item.name}
-            </a>
-          </Link>
-        )
-          : item.name} {index < data.length - 1 && <Arrow />}
-        </div>
-      ))}
+      {data.map((item, index) => {
+        if (item.render) {
+          return <>{item.render()}</>;
+        }
+        return (
+          <div>{item.url ? (
+            <Link href={item.url}>
+              <a>
+                {item.name}
+              </a>
+            </Link>
+          )
+            : item.name} {index < data.length - 1 && <Arrow />}
+          </div>
+        );
+      })}
     </h1>
   );
 }
