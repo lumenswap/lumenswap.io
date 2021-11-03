@@ -193,11 +193,17 @@ function PoolData() {
       },
     },
     {
-      title: 'Action',
-      dataIndex: 'action',
-      key: '4',
-      render: renderModals,
+      title: 'Accounts in pool',
+      dataIndex: 'accounts',
+      key: '5',
+      render: (data) => humanAmount(data.total_trustlines),
     },
+    // {
+    //   title: 'Action',
+    //   dataIndex: 'action',
+    //   key: '4',
+    //   render: renderModals,
+    // },
   ];
 
   const rowLink = (data) => urlMaker.pool.poolId(data.id);
