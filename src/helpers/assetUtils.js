@@ -17,6 +17,21 @@ export function extractLogo(token) {
 
 export function listOfKnownPoolIds() {
   const poolIds = [];
+
+  {
+    const main = getAssetDetails(XLM);
+    const poolId = getLiquidityPoolIdFromAssets(getAssetDetails(USDC), main);
+    const [A, B] = lexoOrderAssets(getAssetDetails(USDC), main);
+
+    poolIds.push({
+      id: poolId,
+      pair: {
+        base: A,
+        counter: B,
+      },
+    });
+  }
+
   for (const token of defaultTokens) {
     if (!isSameAsset(getAssetDetails(token), getAssetDetails(XLM))
     && !isSameAsset(getAssetDetails(token), getAssetDetails(USDC))) {

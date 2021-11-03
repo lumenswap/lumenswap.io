@@ -25,6 +25,8 @@ import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import { getPoolDetailsById, getPoolOperationsAPI } from 'api/stellarPool';
 import DepositLiquidity from 'containers/amm/DepositLiquidity';
+import { getTVLInUSD } from 'helpers/stellarPool';
+import sevenDigit from 'helpers/sevenDigit';
 import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
@@ -38,6 +40,8 @@ const NoDataMessage = () => (
 );
 
 const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
+  const [isUSDTVL, setIsUSDTVL] = useState(false);
+
   const ShareInfoContainer = ({ children }) => (
     <span className={styles['pool-info-content']}>
       {children}
@@ -75,12 +79,30 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
     .times(poolDetail.reserves[1].amount)
     .div(poolDetail.total_shares);
 
+  if (isUSDTVL) {
+    return (
+      <div className={styles['pool-info-container']}>
+        <span className={styles['pool-info-content']}>
+          %{sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(4))}
+        </span>
+        <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
+          <Image src={iconRefresh} width={18} height={18} />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <span className={styles['pool-info-content']}>
-      {humanAmount(shareA.toFixed(7), true)} {getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}{' / '}
-      {humanAmount(shareB.toFixed(7), true)}{' '}
-      {getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}
-    </span>
+    <div className={styles['pool-info-container']}>
+      <span className={styles['pool-info-content']}>
+        {humanAmount(shareA.toFixed(7), true)} {getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}{' / '}
+        {humanAmount(shareB.toFixed(7), true)}{' '}
+        {getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}
+      </span>
+      <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
+        <Image src={iconRefresh} width={18} height={18} />
+      </div>
+    </div>
   );
 };
 
@@ -134,20 +156,40 @@ const Details = ({ poolDetail: initPoolDetail }) => {
     loadData();
   }, []);
 
-  const TVLInfo = () => (
-    <div className={styles['pool-info-container']}>
-      <span className={styles['pool-info-content']}>
-        {humanAmount(poolDetail.reserves[0].amount, true)} {refinedA.code}
-      </span>
-      <div className={styles.dot} />
-      <span className={styles['pool-info-content']}>
-        {humanAmount(poolDetail.reserves[1].amount, true)} {refinedB.code}
-      </span>
-      <div className={styles['refresh-logo']}>
-        <Image src={iconRefresh} width={18} height={18} />
+  const TVLInfo = () => {
+    const [isUSDTVL, setIsUSDTVL] = useState(false);
+    const xlmPrice = useSelector((state) => state.xlmPrice);
+
+    const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
+
+    if (isUSDTVL) {
+      return (
+        <div className={styles['pool-info-container']}>
+          <span className={styles['pool-info-content']}>
+            {usdTvl !== '-' && '$'}{usdTvl}
+          </span>
+          <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
+            <Image src={iconRefresh} width={18} height={18} />
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles['pool-info-container']}>
+        <span className={styles['pool-info-content']}>
+          {humanAmount(poolDetail.reserves[0].amount, true)} {refinedA.code}
+        </span>
+        <div className={styles.dot} />
+        <span className={styles['pool-info-content']}>
+          {humanAmount(poolDetail.reserves[1].amount, true)} {refinedB.code}
+        </span>
+        <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
+          <Image src={iconRefresh} width={18} height={18} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const TrustLineInfo = () => (
     <span className={styles['pool-info-content']}>
