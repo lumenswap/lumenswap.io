@@ -215,7 +215,6 @@ function PoolData() {
   ];
 
   let filteredPools = knownPools ? [...knownPools] : [];
-  console.log(filteredPools);
   if (searchQuery) {
     filteredPools = filteredPools?.filter(
       (pool) => pool.pair.base.code

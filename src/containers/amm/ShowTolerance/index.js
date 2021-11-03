@@ -21,10 +21,8 @@ const ShowTolerance = ({ value }) => (
       </Tooltips>
     </span>
 
-    <div className={styles['tolerance-items']}>
-      <span
-        className={styles.selected}
-      >
+    <div>
+      <span style={{ fontSize: 14 }}>
         {value}%
       </span>
     </div>
