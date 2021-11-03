@@ -1,24 +1,31 @@
-import defaultTokens from 'tokens/defaultTokens';
 import isSameAsset from 'helpers/isSameAsset';
 import CurrencyPair from 'components/CurrencyPair';
 import getAssetDetails from 'helpers/getAssetDetails';
-import numeral from 'numeral';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
-import sevenDigit from 'helpers/sevenDigit';
-import questionLogo from '../../../../public/images/question.png';
+import { useEffect, useState } from 'react';
+import { extractLogo, listOfKnownPoolIds } from 'helpers/assetUtils';
+import { getPoolDetailsById } from 'api/stellarPool';
+import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
+import humanAmount from 'helpers/humanAmount';
+import USDC from 'tokens/USDC';
+import BN from 'helpers/BN';
+import { fetchAccountDetails } from 'api/stellar';
 import styles from './styles.module.scss';
 
 function NoDataMessage() {
-  return <div className={styles['empty-table-container']}><span>You have no pool</span></div>;
+  return <div className={styles['empty-table-container']}><span>There is no pool</span></div>;
 }
 
-function PoolData({ userPools }) {
-  const userBalance = useSelector((state) => state.userBalance);
+function PoolData() {
+  const [knownPools, setKnownPools] = useState(null);
+  const xlmPrice = useSelector((state) => state.xlmPrice);
+  const userAddress = useSelector((state) => state.user.detail.address);
+  const [userPoolShares, setUserPoolShares] = useState({});
   const dispatch = useDispatch();
 
   const renderModals = (data) => {
@@ -34,51 +41,6 @@ function PoolData({ userPools }) {
       issuer: a2[1],
     });
 
-    const token1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), refinedA));
-    const token2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), refinedB));
-
-    let tokenA;
-    if (!token1) {
-      tokenA = {
-        code: a1[0],
-        issuer: a1[0],
-        logo: questionLogo,
-        balance: numeral(userBalance.find((balance) => isSameAsset(
-          balance.asset, refinedA,
-        ))?.balance).format('0,0.[0000000]')
-        ?? 0,
-      };
-    } else {
-      tokenA = {
-        ...token1,
-        balance: numeral(userBalance.find((balance) => isSameAsset(
-          balance.asset, getAssetDetails(token1),
-        ))?.balance).format('0,0.[0000000]')
-        ?? 0,
-      };
-    }
-
-    let tokenB;
-    if (!token2) {
-      tokenB = {
-        code: a2[0],
-        issuer: a2[1],
-        logo: questionLogo,
-        balance: numeral(userBalance.find((balance) => isSameAsset(
-          balance.asset, refinedB,
-        ))?.balance).format('0,0.[0000000]')
-        ?? 0,
-      };
-    } else {
-      tokenB = {
-        ...token2,
-        balance: numeral(userBalance.find((balance) => isSameAsset(
-          balance.asset, getAssetDetails(token2),
-        ))?.balance).format('0,0.[0000000]')
-      ?? 0,
-      };
-    }
-
     const handleDeposit = (e) => {
       e.preventDefault();
       dispatch(
@@ -88,8 +50,8 @@ function PoolData({ userPools }) {
             className: 'main',
           },
           content: <DepositLiquidity
-            tokenA={tokenA}
-            tokenB={tokenB}
+            tokenA={refinedA}
+            tokenB={refinedB}
           />,
         }),
       );
@@ -104,44 +66,86 @@ function PoolData({ userPools }) {
             className: 'main',
           },
           content: <WithdrawLiquidity
-            tokenA={tokenA}
-            tokenB={tokenB}
+            tokenA={refinedA}
+            tokenB={refinedB}
           />,
         }),
       );
     };
+
     return (
       <div className={styles['modal-btns']}>
         <div onClick={handleDeposit}>Deposit</div>
-        <div onClick={handleWithdraw}>Withdraw</div>
+        {userPoolShares[data.id]
+        && !(new BN(userPoolShares[data.id]).eq(0))
+        && <div onClick={handleWithdraw}>Withdraw</div>}
       </div>
     );
   };
 
   const renderPoolInfo = (data) => {
-    const a1 = data.reserves[0].asset.split(':');
-    const a2 = data.reserves[1].asset.split(':');
-
-    const asset1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), getAssetDetails({
-      code: a1[0],
-      issuer: a1[1],
-    })));
-
-    const asset2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), getAssetDetails({
-      code: a2[0],
-      issuer: a2[1],
-    })));
+    const assetA = getAssetFromLPAsset(data.reserves[0].asset);
+    const assetB = getAssetFromLPAsset(data.reserves[1].asset);
 
     return (
       <div className={styles.pairs}>
         <CurrencyPair
           size={22}
-          source={[asset1?.logo ?? questionLogo, asset2?.logo ?? questionLogo]}
+          source={[extractLogo(assetA), extractLogo(assetB)]}
         />
-        <span>{`${asset1?.code ?? a1[0]}/${asset2?.code ?? a2[0]}`}</span>
+        <span>{`${assetA.code}/${assetB.code}`}</span>
       </div>
     );
   };
+
+  useEffect(() => {
+    async function loadData() {
+      const allPools = await Promise.all(listOfKnownPoolIds()
+        .map((pool) => getPoolDetailsById(pool.id)
+          .then((res) => ({
+            ...res,
+            pair: pool.pair,
+          })).catch(() => ({
+            id: pool.id,
+            total_shares: 0,
+            total_trustlines: 0,
+            reserves: [
+              {
+                asset: `${pool.pair.base.code}:${pool.pair.base.issuer}`,
+                amount: 0,
+              },
+              {
+                asset: `${pool.pair.counter.code}:${pool.pair.counter.issuer}`,
+                amount: 0,
+              },
+            ],
+            pair: pool.pair,
+          }))));
+
+      setKnownPools(allPools);
+    }
+
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    async function loadData() {
+      const fetchedPoolShare = {};
+
+      if (userAddress) {
+        const userDetail = await fetchAccountDetails(userAddress);
+        for (const balance of userDetail.balances) {
+          if (balance.asset_type === 'liquidity_pool_shares') {
+            fetchedPoolShare[balance.liquidity_pool_id] = balance.balance;
+          }
+        }
+      }
+
+      setUserPoolShares(fetchedPoolShare);
+    }
+
+    loadData();
+  }, [userAddress]);
 
   const tableHeader = [
     {
@@ -154,13 +158,39 @@ function PoolData({ userPools }) {
       title: 'TVL',
       dataIndex: 'tvl',
       key: '2',
-      render: (data) => (
-        <span className={styles.balance}>
-          {numeral(sevenDigit(data.reserves[0].amount)).format('0,0.[0000000]')} {data.reserves[0].asset.split(':')[0] === 'native' ? 'XLM' : data.reserves[0].asset.split(':')[0]}
-          {' / '}
-          {numeral(sevenDigit(data.reserves[1].amount)).format('0,0.[0000000]')} {data.reserves[1].asset.split(':')[0] === 'native' ? 'XLM' : data.reserves[1].asset.split(':')[0]}
-        </span>
-      ),
+      render: (data) => {
+        let balance = '-';
+        const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
+        const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
+
+        if (isSameAsset(tokenA, getAssetDetails(USDC))) {
+          balance = humanAmount(new BN(data.reserves[0].amount).times(2).toFixed(7), true);
+        }
+
+        if (isSameAsset(tokenB, getAssetDetails(USDC))) {
+          balance = humanAmount(new BN(data.reserves[1].amount).times(2).toFixed(7), true);
+        }
+
+        if (tokenA.isNative()) {
+          balance = humanAmount(
+            new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7),
+            true,
+          );
+        }
+
+        if (tokenB.isNative()) {
+          balance = humanAmount(
+            new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7),
+            true,
+          );
+        }
+
+        return (
+          <span className={styles.balance}>
+            {balance !== '-' && '$'}{balance}
+          </span>
+        );
+      },
     },
     {
       title: 'Action',
@@ -176,10 +206,11 @@ function PoolData({ userPools }) {
     <div className={styles['table-container']}>
       <CTable
         columns={tableHeader}
-        dataSource={userPools}
+        dataSource={knownPools}
         noDataMessage={NoDataMessage}
         className={styles.table}
         rowLink={rowLink}
+        loading={knownPools === null}
       />
     </div>
   );

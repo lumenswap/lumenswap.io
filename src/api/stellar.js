@@ -1,5 +1,6 @@
 import axios from 'axios';
 import BN from 'helpers/BN';
+import CoinGecko from 'coingecko-api';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
@@ -141,4 +142,11 @@ export function checkAssetAPI(assetCode, assetIssuer) {
 export function fetchXLMPrice() {
   return fetchOrderBookAPI(getAssetDetails(XLM), getAssetDetails(USDC), { limit: 1 })
     .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2));
+}
+
+export function fetchXLMCoingeckoPrice() {
+  const CoinGeckoClient = new CoinGecko();
+  return CoinGeckoClient.coins
+    .fetch('stellar')
+    .then((res) => res.data.market_data.current_price.usd.toFixed(3));
 }

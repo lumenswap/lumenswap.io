@@ -27,6 +27,9 @@ const actionTypes = {
   customOrderPrice: {
     SET: 'customOrderPrice/SET',
   },
+  xlmPrice: {
+    UPDATE: 'xlmPrice/UPDATE',
+  },
 };
 
 export default actionTypes;

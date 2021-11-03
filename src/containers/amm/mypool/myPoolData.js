@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
-import isSameAsset from 'helpers/isSameAsset';
-import defaultTokens from 'tokens/defaultTokens';
-import getAssetDetails from 'helpers/getAssetDetails';
 import urlMaker from 'helpers/urlMaker';
 import useIsLogged from 'hooks/useIsLogged';
 import { fetchAccountDetails } from 'api/stellar';
 import { getPoolDetailsById } from 'api/stellarPool';
 import CurrencyPair from 'components/CurrencyPair';
-import numeral from 'numeral';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import { extractLogo } from 'helpers/assetUtils';
-import questionLogo from '../../../../public/images/question.png';
+import Link from 'next/link';
+import humanAmount from 'helpers/humanAmount';
+import isSameAsset from 'helpers/isSameAsset';
+import getAssetDetails from 'helpers/getAssetDetails';
+import USDC from 'tokens/USDC';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -27,8 +28,8 @@ const NoDataMessage = () => (
 function MyPoolData() {
   const dispatch = useDispatch();
   const [pools, setPools] = useState(null);
-  const userBalance = useSelector((state) => state.userBalance);
   const userAddress = useSelector((state) => state.user.detail.address);
+  const xlmPrice = useSelector((state) => state.xlmPrice);
   const isLogged = useIsLogged();
 
   useEffect(() => {
@@ -53,50 +54,9 @@ function MyPoolData() {
   }, [isLogged, userAddress]);
 
   const renderModals = (data) => {
-    const token1 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token1));
-    const token2 = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.token2));
-    let tokenA;
-    if (!token1) {
-      tokenA = {
-        ...data.token1,
-        logo: questionLogo,
-        balance:
-          numeral(
-            userBalance
-              .find((balance) => isSameAsset(balance.asset, getAssetDetails(data.token1)))?.balance,
-          ).format('0,0.[0000000]') ?? 0,
-      };
-    } else {
-      tokenA = {
-        ...token1,
-        balance:
-          numeral(
-            userBalance
-              .find((balance) => isSameAsset(balance.asset, getAssetDetails(token1)))?.balance,
-          ).format('0,0.[0000000]') ?? 0,
-      };
-    }
-    let tokenB;
-    if (!token2) {
-      tokenB = {
-        ...data.token2,
-        logo: questionLogo,
-        balance:
-          numeral(
-            userBalance
-              .find((balance) => isSameAsset(balance.asset, getAssetDetails(data.token2)))?.balance,
-          ).format('0,0.[0000000]') ?? 0,
-      };
-    } else {
-      tokenB = {
-        ...token2,
-        balance:
-          numeral(
-            userBalance
-              .find((balance) => isSameAsset(balance.asset, getAssetDetails(token2)))?.balance,
-          ).format('0,0.[0000000]') ?? 0,
-      };
-    }
+    const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
+    const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
+
     const handleDeposit = () => {
       dispatch(
         openModalAction({
@@ -108,6 +68,7 @@ function MyPoolData() {
         }),
       );
     };
+
     const handleWithdraw = () => {
       dispatch(
         openModalAction({
@@ -119,6 +80,7 @@ function MyPoolData() {
         }),
       );
     };
+
     return (
       <div className={styles['modal-btns']}>
         <div onClick={handleDeposit}>Deposit</div>
@@ -130,16 +92,21 @@ function MyPoolData() {
   const renderAssetInfo = (data) => {
     const token1 = getAssetFromLPAsset(data.reserves[0].asset);
     const token2 = getAssetFromLPAsset(data.reserves[1].asset);
+
     return (
-      <div className={styles.tokens}>
-        <CurrencyPair
-          size={22}
-          source={[extractLogo(token1), extractLogo(token2)]}
-        />
-        <span>
-          {token1.code}/{token2.code}
-        </span>
-      </div>
+      <Link href={urlMaker.pool.poolId(data.id)}>
+        <a>
+          <div className={styles.tokens}>
+            <CurrencyPair
+              size={22}
+              source={[extractLogo(token1), extractLogo(token2)]}
+            />
+            <span>
+              {token1.code}/{token2.code}
+            </span>
+          </div>
+        </a>
+      </Link>
     );
   };
 
@@ -150,32 +117,63 @@ function MyPoolData() {
       key: 1,
       render: renderAssetInfo,
     },
-    // {
-    //   title: 'Balance',
-    //   dataIndex: 'balance1',
-    //   key: 2,
-    //   render: (data) => (
-    //     <span>
-    //       {numeral(data.balance1).format('0,0')}
-    //       {data.token1.code}/{numeral(data.balance1 / 5).format('0,0')}
-    //       {data.token2.code}
-    //     </span>
-    //   ),
-    // },
-    // {
-    //   title: 'Balance(USD)',
-    //   dataIndex: 'balance2',
-    //   key: 3,
-    //   render: (data) => <span>${numeral(data.balance2).format('0,0')}</span>,
-    // },
-    // {
-    //   title: 'Action',
-    //   dataIndex: 'action',
-    //   key: 4,
-    //   render: renderModals,
-    // },
+    {
+      title: 'Balance',
+      dataIndex: 'balance',
+      key: 2,
+      render: (data) => (
+        <span>
+          {humanAmount(data.reserves[0].amount, true)} {getAssetFromLPAsset(data.reserves[0].asset).code}{' / '}
+          {humanAmount(data.reserves[1].amount, true)}{' '}
+          {getAssetFromLPAsset(data.reserves[1].asset).code}
+        </span>
+      ),
+    },
+    {
+      title: 'Balance (USD)',
+      dataIndex: 'balanceUSD',
+      key: 3,
+      render: (data) => {
+        let balance = '-';
+        const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
+        const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
+
+        if (isSameAsset(tokenA, getAssetDetails(USDC))) {
+          balance = humanAmount(new BN(data.reserves[0].amount).times(2).toFixed(7), true);
+        }
+
+        if (isSameAsset(tokenB, getAssetDetails(USDC))) {
+          balance = humanAmount(new BN(data.reserves[1].amount).times(2).toFixed(7), true);
+        }
+
+        if (tokenA.isNative()) {
+          balance = humanAmount(
+            new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7),
+            true,
+          );
+        }
+
+        if (tokenB.isNative()) {
+          balance = humanAmount(
+            new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7),
+            true,
+          );
+        }
+
+        return (
+          <span>
+            {balance !== '-' && '$'}{balance}
+          </span>
+        );
+      },
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+      key: 4,
+      render: renderModals,
+    },
   ];
-  const rowLink = (data) => urlMaker.pool.poolId(data.id);
 
   return (
     <div>
@@ -185,7 +183,7 @@ function MyPoolData() {
         columns={tableHeaders}
         noDataMessage={NoDataMessage}
         loading={pools === null}
-        rowLink={rowLink}
+        // rowLink={rowLink}
       />
     </div>
   );

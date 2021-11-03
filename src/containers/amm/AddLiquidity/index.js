@@ -36,10 +36,10 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
 
   const tokenABalance = userBalance
     .find((i) => isSameAsset(getAssetDetails(i.asset), tokenA))
-    ?.balance;
+    ?.balance ?? '0';
   const tokenBBalance = userBalance
     .find((i) => isSameAsset(getAssetDetails(i.asset), tokenB))
-    ?.balance;
+    ?.balance ?? '0';
 
   const dispatch = useDispatch();
   const {
