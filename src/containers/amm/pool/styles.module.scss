@@ -18,6 +18,15 @@
   font-weight: 500;
 }
 
+.search-box {
+  display: flex;
+
+  .input {
+    margin: 16px 16px 0 auto;
+    width: 297px;
+  }
+}
+
 .table-container {
   margin-top: 12px;
   background-color: $White;
