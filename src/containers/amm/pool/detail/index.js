@@ -76,8 +76,9 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
 
   return (
     <span className={styles['pool-info-content']}>
-      {humanAmount(shareA.toFixed(7))} {getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}{' / '}
-      {humanAmount(shareB.toFixed(7))} {getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}
+      {humanAmount(shareA.toFixed(7), true)} {getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}{' / '}
+      {humanAmount(shareB.toFixed(7), true)}{' '}
+      {getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}
     </span>
   );
 };
@@ -135,11 +136,11 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   const TVLInfo = () => (
     <div className={styles['pool-info-container']}>
       <span className={styles['pool-info-content']}>
-        {numeral(poolDetail.reserves[0].amount).format('0,0')} {refinedA.code}
+        {humanAmount(poolDetail.reserves[0].amount, true)} {refinedA.code}
       </span>
       <div className={styles.dot} />
       <span className={styles['pool-info-content']}>
-        {numeral(poolDetail.reserves[1].amount).format('0,0')} {refinedB.code}
+        {humanAmount(poolDetail.reserves[1].amount, true)} {refinedB.code}
       </span>
       <div className={styles['refresh-logo']}>
         <Image src={iconRefresh} width={18} height={18} />
@@ -212,6 +213,10 @@ const Details = ({ poolDetail: initPoolDetail }) => {
 
         if (operation.type === 'liquidity_pool_withdraw') {
           type = 'Withdraw';
+        }
+
+        if (operation.type === 'path_payment_strict_receive' || operation.type === 'path_payment_strict_send') {
+          type = 'Swap';
         }
 
         return (
