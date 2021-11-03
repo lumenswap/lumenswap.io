@@ -111,7 +111,9 @@ function PoolData() {
           .then((res) => ({
             ...res,
             pair: pool.pair,
+            key: pool.id,
           })).catch(() => ({
+            key: pool.id,
             id: pool.id,
             total_shares: 0,
             total_trustlines: 0,

@@ -309,7 +309,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
                         }
                       }}
                     />
-                    {userShare !== null && new BN(userShare).gt(0) && (
+                    {userShare !== null && new BN(userShare).gt(0) && isLogged && (
                     <Button
                       className={classNames(styles['withdraw-btn'], secondStyles['button-basic'])}
                       content="Withdraw Liquidity"
