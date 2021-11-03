@@ -24,7 +24,7 @@ export default async function generateDepositPoolTRX(
 
   let transaction = new StellarSDK.TransactionBuilder(account, {
     fee: transactionConsts.FEE,
-    networkPassphrase: StellarSDK.Networks.TESTNET,
+    networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
   const poolAsset = new StellarSDK.LiquidityPoolAsset(

@@ -29,7 +29,7 @@ export default async function generateWithdrawPoolTRX(
 
   let transaction = new StellarSDK.TransactionBuilder(account, {
     fee: transactionConsts.FEE,
-    networkPassphrase: StellarSDK.Networks.TESTNET,
+    networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
   transaction.addOperation(
