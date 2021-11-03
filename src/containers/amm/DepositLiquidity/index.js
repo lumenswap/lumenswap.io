@@ -36,10 +36,10 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
   const [tokenA, tokenB] = lexoOrderAssets(initTokenA, initTokenB);
   const tokenABalance = userBalance
     .find((i) => isSameAsset(getAssetDetails(i.asset), tokenA))
-    ?.balance;
+    ?.balance ?? '0';
   const tokenBBalance = userBalance
     .find((i) => isSameAsset(getAssetDetails(i.asset), tokenB))
-    ?.balance;
+    ?.balance ?? '0';
 
   const {
     handleSubmit,
@@ -205,6 +205,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
             />
           )}
         />
+
         <Controller
           name="amountTokenB"
           control={control}
