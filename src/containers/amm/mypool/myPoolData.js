@@ -95,7 +95,7 @@ function MyPoolData() {
 
     return (
       <Link href={urlMaker.pool.poolId(data.id)}>
-        <a>
+        <a style={{ textDecoration: 'none', color: '#1d1d1d' }}>
           <div className={styles.tokens}>
             <CurrencyPair
               size={22}
