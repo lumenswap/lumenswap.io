@@ -12,13 +12,18 @@ import ShowTolerance from 'containers/amm/ShowTolerance';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-const ConfirmLiquidity = ({ data, afterDeposit }) => {
+const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
   async function confirm() {
     const store = initializeStore();
     const storeData = store.getState();
 
-    const currentPrice = new BN(data.poolData.reserves[0].amount)
+    let currentPrice = new BN(data.poolData.reserves[0].amount)
       .div(data.poolData.reserves[1].amount);
+
+    if (new BN(data.poolData.reserves[0].amount).eq(0)) {
+      currentPrice = new BN(data.tokenA.amount).div(data.tokenB.amount);
+    }
+
     const max = currentPrice.plus(currentPrice.times(data.tolerance));
     const min = currentPrice.minus(currentPrice.times(data.tolerance));
 
