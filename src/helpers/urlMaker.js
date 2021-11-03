@@ -92,6 +92,8 @@ const urlMaker = {
     stats: () => `${rootUrl.nft}/stats`,
     myLusi: () => `${rootUrl.nft}/my-lusi`,
     lusi: (number) => `${rootUrl.nft}/lusi/${number}`,
+    lusiTrades: (number) => `${rootUrl.nft}/lusi/${number}/trades`,
+    lusiOffers: (number) => `${rootUrl.nft}/lusi/${number}/offers`,
   },
 };
 

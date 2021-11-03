@@ -32,6 +32,25 @@
   }
 }
 
+.card-2 {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+
+  &-nft {
+    padding: 18px 35px 20px 35px;
+    height: calc(100% - 24px);
+  }
+
+  &-nft-info {
+    padding: 12px 16px 26px 16px;
+  }
+
+  &-tabs {
+    padding-top: 14px;
+  }
+}
+
 .row {
   margin-top: 12px;
   margin-right: -12px !important;
@@ -135,4 +154,8 @@
 .table::-webkit-scrollbar {
   width: 0;
   background: transparent;
+}
+
+.all-btn {
+  margin-bottom: 55px;
 }
