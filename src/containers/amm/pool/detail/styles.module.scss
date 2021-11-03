@@ -33,20 +33,18 @@
   border-radius: 4px !important;
 }
 .withdraw-btn {
-  font-family: SofiaPro;
-  box-shadow: none;
-  height: 40px !important;
-  border-radius: 4px;
-  font-size: 18px;
-  font-weight: 500 !important;
+  font-size: 16px;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.56;
+  line-height: 1.5;
   letter-spacing: normal;
   text-align: center;
-  padding-right: 10px;
-  padding-left: 10px;
-  margin-left: 5px;
+  width: 120px !important;
+  height: 40px !important;
+  color: $ShuttleGray;
+  border-radius: 4px !important;
+  margin-left: 10px;
 }
 
 .pool-info-container {
