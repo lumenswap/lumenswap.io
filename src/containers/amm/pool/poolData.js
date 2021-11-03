@@ -15,6 +15,7 @@ import humanAmount from 'helpers/humanAmount';
 import USDC from 'tokens/USDC';
 import BN from 'helpers/BN';
 import { fetchAccountDetails } from 'api/stellar';
+import Input from 'components/Input';
 import styles from './styles.module.scss';
 
 function NoDataMessage() {
@@ -25,8 +26,13 @@ function PoolData() {
   const [knownPools, setKnownPools] = useState(null);
   const xlmPrice = useSelector((state) => state.xlmPrice);
   const userAddress = useSelector((state) => state.user.detail.address);
+  const [searchQuery, setSearchQuery] = useState('');
   const [userPoolShares, setUserPoolShares] = useState({});
   const dispatch = useDispatch();
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+  };
 
   const renderModals = (data) => {
     const a1 = data.reserves[0].asset.split(':');
@@ -206,13 +212,44 @@ function PoolData() {
     // },
   ];
 
+  let filteredPools = knownPools ? [...knownPools] : [];
+  console.log(filteredPools);
+  if (searchQuery) {
+    filteredPools = filteredPools?.filter(
+      (pool) => pool.pair.base.code
+        .toLowerCase()
+        .search(searchQuery.toLocaleLowerCase()) !== -1
+        || pool.pair.counter.code
+          .toLowerCase()
+          .search(searchQuery.toLocaleLowerCase()) !== -1,
+    ).map((item) => ({
+      ...item,
+    }));
+  }
+
   const rowLink = (data) => urlMaker.pool.poolId(data.id);
 
   return (
     <div className={styles['table-container']}>
+      {knownPools
+      && (
+        <div className={styles['search-box']}>
+          <div className={styles.input}>
+            <Input
+              type="text"
+              name="asset"
+              id="asset"
+              placeholder="Enter pair"
+              onChange={handleSearch}
+              height={40}
+              fontSize={15}
+            />
+          </div>
+        </div>
+      )}
       <CTable
         columns={tableHeader}
-        dataSource={knownPools}
+        dataSource={filteredPools}
         noDataMessage={NoDataMessage}
         className={styles.table}
         rowLink={rowLink}
