@@ -7,7 +7,7 @@ import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { extractLogo, listOfKnownPoolIds } from 'helpers/assetUtils';
 import { getPoolDetailsById } from 'api/stellarPool';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
@@ -52,6 +52,7 @@ function PoolData() {
   const userAddress = useSelector((state) => state.user.detail.address);
   const [searchQuery, setSearchQuery] = useState('');
   const [userPoolShares, setUserPoolShares] = useState({});
+  const doneRef = useRef(false);
   const dispatch = useDispatch();
 
   const handleSearch = (e) => {
@@ -161,12 +162,14 @@ function PoolData() {
           tvl,
         };
       });
-
+      doneRef.current = true;
       setKnownPools(poolsWithTvl);
     }
 
-    loadData();
-  }, []);
+    if (!(new BN(xlmPrice).isEqualTo(0)) && !doneRef.current) {
+      loadData();
+    }
+  }, [xlmPrice]);
 
   useEffect(() => {
     async function loadData() {
