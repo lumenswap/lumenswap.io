@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Tolerance from 'containers/amm/Tolerance';
 import Button from 'components/Button';
-import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
-import { closeModalAction, openModalAction } from 'actions/modal';
+import { openModalAction } from 'actions/modal';
 import WithdrawLiquidityConfirm from 'containers/amm/WithdrawLiquidityConfirm';
+import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
+import getAssetDetails from 'helpers/getAssetDetails';
+import { getPoolDetailsById } from 'api/stellarPool';
+import { extractLogo } from 'helpers/assetUtils';
+import humanAmount from 'helpers/humanAmount';
+import { fetchAccountDetails } from 'api/stellar';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 function Inpool({ token }) {
@@ -17,13 +23,18 @@ function Inpool({ token }) {
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{token.balance}</div>
+      <div>{humanAmount(token.balance, true)}</div>
     </div>
   );
 }
 
-function WithdrawLiquidity({ tokenA, tokenB }) {
+function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdraw = () => {} }) {
   const dispatch = useDispatch();
+  const [poolData, setPoolData] = useState(null);
+  const [userShare, setUserShare] = useState(null);
+  const userAddress = useSelector((state) => state.user.detail.address);
+  const [tokenA, tokenB] = lexoOrderAssets(initTokenA, initTokenB);
+
   const {
     handleSubmit,
     control,
@@ -34,20 +45,29 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
   } = useForm({
     mode: 'onChange',
   });
+
   const onSubmit = (data) => {
+    const shareA = new BN(userShare)
+      .times(poolData.reserves[0].amount)
+      .div(poolData.total_shares);
+    const shareB = new BN(userShare)
+      .times(poolData.reserves[1].amount)
+      .div(poolData.total_shares);
+
     const confirmData = {
       tokenA: {
-        logo: tokenA.logo,
-        code: tokenA.code,
-        balance: data.amountTokenA,
+        ...tokenA,
+        balance: shareA,
       },
       tokenB: {
-        logo: tokenB.logo,
-        code: tokenB.code,
-        balance: data.amountTokenB,
+        ...tokenB,
+        balance: shareB,
       },
+      tolerance: data.tolerance,
+      poolData,
+      userShare,
     };
-    dispatch(closeModalAction());
+
     dispatch(
       openModalAction({
         modalProps: {
@@ -56,117 +76,143 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
         },
         content: <WithdrawLiquidityConfirm
           data={confirmData}
+          afterWithdraw={afterWithdraw}
         />,
       }),
     );
   };
-  const currentCurrency = {
-    pair1: { value: '14', currency: tokenA.code },
-    pair2: { value: '1', currency: tokenB.code },
-  };
+
   useEffect(() => {
     trigger();
   }, []);
+
   useEffect(() => {
     trigger();
   }, [JSON.stringify(getValues())]);
+
   function errorGenerator() {
     for (const error of Object.values(errors)) {
       if (error.message) {
         return error.message;
       }
     }
+
     return 'Withdraw';
+  }
+
+  let shareA = '0';
+  let shareB = '0';
+  if (poolData) {
+    shareA = new BN(userShare)
+      .times(poolData.reserves[0].amount)
+      .div(poolData.total_shares);
+    shareB = new BN(userShare)
+      .times(poolData.reserves[1].amount)
+      .div(poolData.total_shares);
   }
 
   const inpoolData = [
     {
-      logo: tokenA.logo,
+      logo: extractLogo(tokenA),
       code: tokenA.code,
-      balance: tokenA.balance,
+      balance: poolData ? shareA.toFixed(7) : '',
     },
     {
-      logo: tokenB.logo,
+      logo: extractLogo(tokenB),
       code: tokenB.code,
-      balance: tokenB.balance,
+      balance: poolData ? shareB.toFixed(7) : '',
     },
   ];
 
-  const validateAmountA = (value) => {
-    if (new BN(0).gt(value)) {
-      return 'Amount is not valid';
+  useEffect(() => {
+    async function loadData() {
+      const poolId = getLiquidityPoolIdFromAssets(
+        getAssetDetails(tokenA),
+        getAssetDetails(tokenB),
+      );
+
+      let poolDetail;
+      try {
+        poolDetail = await getPoolDetailsById(poolId);
+        setPoolData(poolDetail);
+      } catch (e) {
+        const sortedTokens = lexoOrderAssets(
+          getAssetDetails(tokenA),
+          getAssetDetails(tokenB),
+        );
+
+        const assetA = sortedTokens[0].isNative() ? 'native' : `${sortedTokens[0].getCode()}:${sortedTokens[0].getIssuer()}`;
+        const assetB = sortedTokens[1].isNative() ? 'native' : `${sortedTokens[1].getCode()}:${sortedTokens[1].getIssuer()}`;
+
+        poolDetail = {
+          reserves: [
+            {
+              asset: assetA,
+              amount: 0,
+            },
+            {
+              asset: assetB,
+              amount: 0,
+            },
+          ],
+        };
+        setPoolData(poolDetail);
+      }
+
+      try {
+        const userData = await fetchAccountDetails(userAddress);
+        for (const balance of userData.balances) {
+          if (balance.asset_type === 'liquidity_pool_shares' && balance.liquidity_pool_id === poolDetail.id) {
+            setUserShare(balance.balance);
+            return;
+          }
+        }
+
+        setUserShare(0);
+      } catch (e) {
+        setUserShare(0);
+      }
     }
-    if (new BN(value).gt(tokenA.balance)) {
-      return 'Insufficient balance';
-    }
-    if (new BN(0).isEqualTo(value)) {
-      return 'Amount is not valid';
-    }
-    return true;
-  };
-  const validateAmountB = (value) => {
-    if (new BN(0).gt(value)) {
-      return 'Amount is not valid';
-    }
-    if (new BN(0).isEqualTo(value)) {
-      return 'Amount is not valid';
-    }
-    if (new BN(value).gt(tokenB.balance)) {
-      return 'Insufficient balance';
-    }
-    return true;
-  };
+
+    loadData();
+  }, [tokenA, tokenB]);
 
   return (
     <div className="pb-4">
-      <h6 className={styles.label}>Inpool</h6>
-      <div>
-        {inpoolData.map((token) => <Inpool token={token} />)}
-
-      </div>
-      <div className="d-flex justify-content-between" />
-
-      <div className={styles.current}><AMMCurrentPrice pairs={currentCurrency} /></div>
-
-      <hr className={styles.hr} />
-
-      <h6 className={styles.label}>Withdraw Liquidity</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <h6 className={styles.label}>Inpool</h6>
+        <div>
+          {inpoolData.map((token) => <Inpool token={token} />)}
+
+        </div>
+        <div className="d-flex justify-content-between" />
+
+        <div className={styles.current}><AMMCurrentPrice poolData={poolData} /></div>
+
         <Controller
-          name="amountTokenA"
+          name="tolerance"
           control={control}
           rules={{
-            required: 'Amount is required',
-            validate: validateAmountA,
+            required: 'Tolerance is required',
           }}
+          defaultValue="0.1"
           render={(props) => (
-            <LiquidityInput
-              balance={`${tokenA.balance} ${tokenA.code}`}
-              currency={tokenA.code}
+            <Tolerance
               onChange={props.onChange}
               value={props.value}
-              currencySrc={tokenA.logo}
             />
           )}
         />
-        <Controller
-          name="amountTokenB"
-          control={control}
-          rules={{
-            required: 'Amount is required',
-            validate: validateAmountB,
-          }}
-          render={(props) => (
-            <LiquidityInput
-              onChange={props.onChange}
-              value={props.value}
-              balance={`${tokenB.balance} ${tokenB.code}`}
-              currency={tokenB.code}
-              currencySrc={tokenB.logo}
-              className="mt-3"
-            />
-          )}
-        />
+
+        <hr className={styles.hr} />
+
+        <div className={styles['info-box']}>
+          <p>
+            <span>Note: </span>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </div>
 
         <Button
           htmlType="submit"
@@ -174,7 +220,7 @@ function WithdrawLiquidity({ tokenA, tokenB }) {
           content={errorGenerator()}
           fontWeight={500}
           className={styles.btn}
-          disabled={!formState.isValid || formState.isValidating}
+          disabled={!formState.isValid || formState.isValidating || poolData === null}
         />
       </form>
     </div>

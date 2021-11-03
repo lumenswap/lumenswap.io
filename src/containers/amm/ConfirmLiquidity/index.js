@@ -8,12 +8,24 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { initializeStore } from 'store';
 import { extractLogo } from 'helpers/assetUtils';
+import ShowTolerance from 'containers/amm/ShowTolerance';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-const ConfirmLiquidity = ({ data }) => {
-  function confirm() {
+const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
+  async function confirm() {
     const store = initializeStore();
     const storeData = store.getState();
+
+    let currentPrice = new BN(data.poolData.reserves[0].amount)
+      .div(data.poolData.reserves[1].amount);
+
+    if (new BN(data.poolData.reserves[0].amount).eq(0)) {
+      currentPrice = new BN(data.tokenA.amount).div(data.tokenB.amount);
+    }
+
+    const max = currentPrice.plus(currentPrice.times(data.tolerance));
+    const min = currentPrice.minus(currentPrice.times(data.tolerance));
 
     function func() {
       return generateDepositPoolTRX(
@@ -22,14 +34,16 @@ const ConfirmLiquidity = ({ data }) => {
         getAssetDetails(data.tokenB),
         data.tokenA.amount,
         data.tokenB.amount,
-        data.range.max,
-        data.range.min,
+        max.toFixed(7),
+        min.toFixed(7),
       );
     }
 
-    showGenerateTrx(func, store.dispatch)
+    await showGenerateTrx(func, store.dispatch)
       .then((trx) => showSignResponse(trx, store.dispatch))
       .catch(console.error);
+
+    afterDeposit();
   }
 
   return (
@@ -53,6 +67,7 @@ const ConfirmLiquidity = ({ data }) => {
       <div className={styles.current}>
         <AMMCurrentPrice poolData={data.poolData} />
       </div>
+      <ShowTolerance value={data.tolerance} />
 
       <Button
         variant="primary"

@@ -5,21 +5,16 @@ import Button from 'components/Button';
 import AddLiquidity from 'containers/amm/AddLiquidity';
 import { openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-import fetchMyPools from 'helpers/myPoolsAPI';
-import Loading from 'components/Loading';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import XLM from 'tokens/XLM';
 import LSP from 'tokens/LSP';
-import numeral from 'numeral';
 import getAssetDetails from 'helpers/getAssetDetails';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
 function MyPoolPage() {
-  const [userPools, setUserPools] = useState(null);
-  const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -56,19 +51,10 @@ function MyPoolPage() {
   };
 
   useEffect(() => {
-    fetchMyPools(userAddress).then((poolData) => {
-      setUserPools(poolData.map((pool, index) => ({
-        ...pool,
-        key: index,
-      })));
-    });
-  }, []);
-
-  // useEffect(() => {
-  //   if (!isLogged) {
-  //     router.push(urlMaker.pool.root());
-  //   }
-  // }, [isLogged]);
+    if (!isLogged) {
+      router.push(urlMaker.pool.root());
+    }
+  }, [isLogged]);
 
   return (
     <div className="container-fluid">
@@ -88,8 +74,7 @@ function MyPoolPage() {
                 onClick={openModal}
               />
             </div>
-            {userPools ? <MyPoolData userPools={userPools} />
-              : <div className={styles['loading-container']}><Loading size={48} /></div>}
+            <MyPoolData />
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import user from './user';
 import userBalanceReducer from './userBalance';
 import userCustomPairsReducer from './userCustomPairs';
 import customOrderPriceReducer from './customOrderPrice';
+import xlmPriceReducer from './xlmPrice';
 
 export default combineReducers({
   user,
@@ -13,4 +14,5 @@ export default combineReducers({
   userBalance: userBalanceReducer,
   userCustomPairs: userCustomPairsReducer,
   customOrderPrice: customOrderPriceReducer,
+  xlmPrice: xlmPriceReducer,
 });
