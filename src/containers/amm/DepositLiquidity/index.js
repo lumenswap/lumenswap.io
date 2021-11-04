@@ -48,6 +48,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
     errors,
     trigger,
     getValues,
+    setValue,
   } = useForm({
     mode: 'onChange',
   });
@@ -173,6 +174,30 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
     loadData();
   }, [tokenA, tokenB]);
 
+  function amountAChange(formChange) {
+    return (value) => {
+      if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
+        const price = new BN(poolData.reserves[1].amount)
+          .div(poolData.reserves[0].amount);
+        setValue('amountTokenB', new BN(value).times(price).toString());
+      }
+
+      formChange(value);
+    };
+  }
+
+  function amountBChange(formChange) {
+    return (value) => {
+      if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
+        const price = new BN(poolData.reserves[0].amount)
+          .div(poolData.reserves[1].amount);
+        setValue('amountTokenA', new BN(value).times(price).toString());
+      }
+
+      formChange(value);
+    };
+  }
+
   return (
     <div className="pb-4">
       <h6 className={styles.label}>Inpool</h6>
@@ -199,9 +224,10 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
             <LiquidityInput
               balance={`${tokenABalance} ${tokenA.code}`}
               currency={tokenA.code}
-              onChange={props.onChange}
+              onChange={amountAChange(props.onChange)}
               value={props.value}
               currencySrc={extractLogo(tokenA)}
+              disabled={poolData === null}
             />
           )}
         />
@@ -215,12 +241,13 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
           }}
           render={(props) => (
             <LiquidityInput
-              onChange={props.onChange}
+              onChange={amountBChange(props.onChange)}
               value={props.value}
               balance={`${tokenBBalance} ${tokenB.code}`}
               currency={tokenB.code}
               currencySrc={extractLogo(tokenB)}
               className="mt-3"
+              disabled={poolData === null}
             />
           )}
         />

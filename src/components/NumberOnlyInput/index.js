@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const NumberOnlyInput = ({
-  value, onChange, placeholder, className, onlyInt,
+  value, onChange, placeholder, className, onlyInt, disabled,
 }) => {
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -23,6 +23,7 @@ const NumberOnlyInput = ({
       value={value || ''}
       onChange={handleInputChange}
       placeholder={placeholder}
+      disabled={disabled}
     />
   );
 };

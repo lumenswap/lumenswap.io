@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 
 const LiquidityInput = ({
-  balance, currency, currencySrc, value, className, onChange,
+  balance, currency, currencySrc, value, className, onChange, disabled,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
   return (
@@ -22,6 +22,7 @@ const LiquidityInput = ({
             value={value}
             className={styles.input}
             placeholder="0.0"
+            disabled={disabled}
           />
         </div>
         <div className="col-auto pl-0">
