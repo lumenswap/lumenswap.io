@@ -14,6 +14,7 @@ import { extractLogo } from 'helpers/assetUtils';
 import humanAmount from 'helpers/humanAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
+import Checkbox from 'components/Checkbox';
 import styles from './styles.module.scss';
 
 function Inpool({ token, isLoading }) {
@@ -217,6 +218,24 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
             Lorem ipsum dolor sit amet, consectetur adipiscing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
+        </div>
+        <div className="mt-3">
+          <Controller
+            name="tolerance"
+            control={control}
+            render={(props) => (
+              <Checkbox
+                className="bg-light"
+                style={{ border: '1px solid #ecf0f5', borderRadius: 4 }}
+                labelClass="text-dark"
+                fontSize={14}
+                size={22}
+                onChange={props.onChange}
+                value={props.value}
+                label="Remove the pool after withdrawing liquidity"
+              />
+            )}
+          />
         </div>
 
         <Button
