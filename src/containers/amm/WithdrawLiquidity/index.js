@@ -225,7 +225,12 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
           content={errorGenerator()}
           fontWeight={500}
           className={styles.btn}
-          disabled={!formState.isValid || formState.isValidating || poolData === null}
+          disabled={
+            !formState.isValid
+            || formState.isValidating
+            || poolData === null
+            || userShare === null
+          }
         />
       </form>
     </div>
