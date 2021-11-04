@@ -165,7 +165,6 @@ function WalletData() {
           <Link href={urlMaker.ammswap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
             <a className={styles.link}>Swap</a>
           </Link>
-          <a href={urlMaker.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null)} className={styles.link}>Trade</a>
           {new BN(data.balance).isEqualTo('0') ? (
             <div className={styles['disabled-send']}>Send</div>
           ) : (
