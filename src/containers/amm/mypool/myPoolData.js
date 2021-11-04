@@ -17,7 +17,7 @@ const NoDataMessage = () => (
   </div>
 );
 
-function MyPoolData({ pools }) {
+function MyPoolData({ pools, afterWAD }) {
   const dispatch = useDispatch();
 
   const renderModals = (data) => {
@@ -31,7 +31,7 @@ function MyPoolData({ pools }) {
             title: 'Deposit Liquidity',
             className: 'main',
           },
-          content: <DepositLiquidity tokenA={tokenA} tokenB={tokenB} />,
+          content: <DepositLiquidity tokenA={tokenA} tokenB={tokenB} afterDeposit={afterWAD} />,
         }),
       );
     };
@@ -43,7 +43,7 @@ function MyPoolData({ pools }) {
             title: 'Withdraw Liquidity',
             className: 'main',
           },
-          content: <WithdrawLiquidity tokenA={tokenA} tokenB={tokenB} />,
+          content: <WithdrawLiquidity tokenA={tokenA} tokenB={tokenB} afterWithdraw={afterWAD} />,
         }),
       );
     };

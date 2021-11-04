@@ -138,7 +138,7 @@ function MyPoolPage() {
                 onClick={openModal}
               />
             </div>
-            <MyPoolData pools={pools} />
+            <MyPoolData pools={pools} afterWAD={() => fetchData(userAddress, xlmPrice, setPools)} />
           </div>
         </div>
       </div>
