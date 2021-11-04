@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
-import useIsLogged from 'hooks/useIsLogged';
-import { fetchAccountDetails } from 'api/stellar';
-import { getPoolDetailsById } from 'api/stellarPool';
 import CurrencyPair from 'components/CurrencyPair';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import DepositLiquidity from 'containers/amm/DepositLiquidity';
@@ -13,10 +9,6 @@ import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import { extractLogo } from 'helpers/assetUtils';
 import Link from 'next/link';
 import humanAmount from 'helpers/humanAmount';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
-import USDC from 'tokens/USDC';
-import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -25,65 +17,8 @@ const NoDataMessage = () => (
   </div>
 );
 
-function calculateBalanceUSD(data, xlmPrice) {
-  let balance = '-';
-  const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
-  const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
-
-  if (isSameAsset(tokenA, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[0].amount).times(2).toFixed(7);
-  }
-
-  if (isSameAsset(tokenB, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[1].amount).times(2).toFixed(7);
-  }
-
-  if (tokenA.isNative()) {
-    balance = new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7);
-  }
-
-  if (tokenB.isNative()) {
-    balance = new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7);
-  }
-
-  return balance;
-}
-
-function MyPoolData() {
+function MyPoolData({ pools }) {
   const dispatch = useDispatch();
-  const [pools, setPools] = useState(null);
-  const userAddress = useSelector((state) => state.user.detail.address);
-  const xlmPrice = useSelector((state) => state.xlmPrice);
-  const isLogged = useIsLogged();
-
-  useEffect(() => {
-    async function fetchData() {
-      const result = await fetchAccountDetails(userAddress);
-      const filteredBalances = result.balances
-        .filter((balance) => balance.asset_type === 'liquidity_pool_shares')
-        .slice(0, 20);
-      const fetchedPools = await Promise.all(
-        filteredBalances.map((pool) => getPoolDetailsById(pool.liquidity_pool_id).then((res) => ({
-          ...res,
-          userShare: pool.balance,
-        }))),
-      );
-
-      const poolsWithBalances = fetchedPools.map((pool) => {
-        const balanceUSD = calculateBalanceUSD(pool, xlmPrice);
-        return {
-          ...pool,
-          balanceUSD,
-        };
-      });
-
-      setPools(poolsWithBalances);
-    }
-
-    if (isLogged) {
-      fetchData();
-    }
-  }, [isLogged, userAddress]);
 
   const renderModals = (data) => {
     const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
@@ -188,7 +123,6 @@ function MyPoolData() {
         columns={tableHeaders}
         noDataMessage={NoDataMessage}
         loading={pools === null}
-        // rowLink={rowLink}
       />
     </div>
   );

@@ -25,7 +25,9 @@ const setLabel = (name, src) => (
   </div>
 );
 
-const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) => {
+const AddLiquidity = ({
+  tokenA: initTokenA, tokenB: initTokenB, selectAsset, afterAdd = () => {},
+}) => {
   const [poolData, setPoolData] = useState(null);
   const userBalance = useSelector((state) => state.userBalance);
 
@@ -80,6 +82,7 @@ const AddLiquidity = ({ tokenA: initTokenA, tokenB: initTokenB, selectAsset }) =
         },
         content: <ConfirmLiquidity
           data={confirmData}
+          afterDeposit={afterAdd}
         />,
       }),
     );
