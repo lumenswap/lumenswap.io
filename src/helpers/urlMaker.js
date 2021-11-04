@@ -67,8 +67,7 @@ const urlMaker = {
     root: () => `${rootUrl.obm}/order`,
   },
   pool: {
-    root: () => `${rootUrl.amm}/pool`,
-    tokens: (tokenA, tokenB) => `${rootUrl.amm}/pool/${tokenA}/${tokenB}`,
+    root: () => `${rootUrl.amm}/pools`,
     poolId: (id) => `${rootUrl.amm}/pool/${id}`,
   },
   stats: {

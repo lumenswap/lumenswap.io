@@ -32,7 +32,7 @@ const AMMHeader = () => {
   const menus = {
     left: [
       {
-        name: 'Pool',
+        name: 'Pools',
         link: urlMaker.pool.root(),
         mainHref: urlMaker.pool.root(),
       },

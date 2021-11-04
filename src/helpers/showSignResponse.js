@@ -1,6 +1,7 @@
 import { openModalAction } from 'actions/modal';
 import TransactionResponse from 'blocks/TransactionResponse';
 import signForThem from 'walletIntegeration/signForThem';
+import { generateTransactionURL } from './explorerURLGenerator';
 
 export default async function showSignResponse(trx, dispatch) {
   try {
@@ -13,7 +14,7 @@ export default async function showSignResponse(trx, dispatch) {
         title="Success Transaction"
         btnText="View on Explorer"
         btnType="link"
-        btnLink={`${process.env.REACT_APP_LUMENSCAN_URL}/txns/${trxHash}`}
+        btnLink={generateTransactionURL(trxHash)}
       />,
     }));
   } catch (e) {

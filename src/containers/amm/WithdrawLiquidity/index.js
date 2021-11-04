@@ -16,14 +16,14 @@ import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-function Inpool({ token }) {
+function Inpool({ token, isLoading }) {
   return (
     <div className={styles.inpool}>
       <div>
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{humanAmount(token.balance, true)}</div>
+      <div>{isLoading ? '' : humanAmount(token.balance, true)}</div>
     </div>
   );
 }
@@ -182,7 +182,12 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
       <form onSubmit={handleSubmit(onSubmit)}>
         <h6 className={styles.label}>Inpool</h6>
         <div>
-          {inpoolData.map((token) => <Inpool token={token} />)}
+          {inpoolData.map((token) => (
+            <Inpool
+              token={token}
+              isLoading={poolData === null || userShare === null}
+            />
+          ))}
 
         </div>
         <div className="d-flex justify-content-between" />

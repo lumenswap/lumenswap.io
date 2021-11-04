@@ -9,7 +9,7 @@ import CStatistics from 'components/CStatistics';
 import moment from 'moment';
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
-import { generateTransactionURL } from 'helpers/explorerURLGenerator';
+import { generateOperationIdURL } from 'helpers/explorerURLGenerator';
 import Image from 'next/image';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
@@ -40,7 +40,7 @@ const NoDataMessage = () => (
 );
 
 const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
-  const [isUSDTVL, setIsUSDTVL] = useState(false);
+  const [isUSDTVL, setIsUSDTVL] = useState(true);
 
   const ShareInfoContainer = ({ children }) => (
     <span className={styles['pool-info-content']}>
@@ -157,7 +157,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   }, []);
 
   const TVLInfo = () => {
-    const [isUSDTVL, setIsUSDTVL] = useState(false);
+    const [isUSDTVL, setIsUSDTVL] = useState(true);
     const xlmPrice = useSelector((state) => state.xlmPrice);
 
     const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
@@ -201,12 +201,12 @@ const Details = ({ poolDetail: initPoolDetail }) => {
     {
       title: 'TVL',
       content: <TVLInfo />,
-      tooltip: 'tooltip',
+      tooltip: 'This shows the total amount of volume locked in this pool.',
     },
     {
-      title: 'Trustline',
+      title: 'Accounts in pool',
       content: <TrustLineInfo />,
-      tooltip: 'tooltip',
+      tooltip: 'This shows the number of accounts that participated in this pool.',
     },
     {
       title: 'Your Share',
@@ -215,7 +215,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
         isLogged={isLogged}
         userShare={userShare}
       />,
-      tooltip: 'tooltip',
+      tooltip: 'This shows your share of this pool.',
     },
   ];
 
@@ -227,7 +227,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
       render: (operation) => (
         <a
           className={styles['tx-link']}
-          href={generateTransactionURL(operation.id)}
+          href={generateOperationIdURL(operation.id)}
           target="_blank"
           rel="noreferrer"
         >
@@ -376,7 +376,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
               <div className={classNames(styles['info-pool'], 'col-12')}>
                 <CStatistics className={styles['c-statistic']} blocks={infoBlocks} />
               </div>
-              <div className="col-12"> <h1 className={styles.title}>Latest activity</h1></div>
+              <div className="col-12"> <h1 className={styles.title}>Latest pool activity</h1></div>
               <div className="col-12">
                 <CTable
                   columns={tableHeaders}
