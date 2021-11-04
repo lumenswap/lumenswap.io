@@ -178,11 +178,11 @@ const Details = ({ poolDetail: initPoolDetail }) => {
     return (
       <div className={styles['pool-info-container']}>
         <span className={styles['pool-info-content']}>
-          {humanAmount(poolDetail.reserves[0].amount, true)} {refinedA.code}
+          {humanAmount(poolDetail.reserves[0].amount, true)} <span className={styles['pool-info-code']}>{refinedA.code}</span>
         </span>
         <div className={styles.dot} />
         <span className={styles['pool-info-content']}>
-          {humanAmount(poolDetail.reserves[1].amount, true)} {refinedB.code}
+          {humanAmount(poolDetail.reserves[1].amount, true)} <span className={styles['pool-info-code']}>{refinedB.code}</span>
         </span>
         <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
           <Image src={iconRefresh} width={18} height={18} />

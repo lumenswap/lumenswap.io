@@ -116,6 +116,7 @@ const MyTicketsPage = () => {
             </div>
           </div>
           <CTable
+            rowFix={{ rowNumbers: 10, rowHeight: 55, headerRowHeight: 49 }}
             className={styles.table}
             columns={tableHeaders}
             dataSource={searchedTickets}

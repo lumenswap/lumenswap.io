@@ -5,10 +5,11 @@ import ArrowDownFill from 'assets/images/arrow-down-fill.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import Loading from 'components/Loading';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-const TableRow = ({ columns, data }) => (
-  <tr className={styles.row}>
+const TableRow = ({ columns, data, height }) => (
+  <tr style={{ height: `${height}px` }} className={styles.row}>
     {columns.map((column, index) => (
       <td key={index} className={styles['row-item']}>
         <section>
@@ -27,6 +28,7 @@ const CTable = ({
   rowLink,
   loading,
   customLoading: CustomLoading,
+  rowFix = { rowNumbers: 10, rowHeight: 50, headerRowHeight: 49 },
 }) => {
   if (loading) {
     return (
@@ -66,9 +68,15 @@ const CTable = ({
   const sortColumn = columns.find((column) => column.dataIndex === sortIndex);
 
   return (
-    <div className={className ?? styles['table-container']}>
+    <div
+      style={{
+        maxHeight: `${(rowFix.rowHeight * rowFix.rowNumbers) + rowFix.headerRowHeight}px`,
+        height: `${(rowFix.rowHeight * rowFix.rowNumbers) + rowFix.headerRowHeight}px`,
+      }}
+      className={classNames(styles['table-container'], className)}
+    >
       <table className={styles.table}>
-        <tr className={styles['header-table']}>
+        <tr style={{ height: `${rowFix.headerRowHeight}px` }} className={styles['header-table']}>
           {columns.map((title) => (
             <th
               style={title.style ?? { width: `${100 / columns.length}%`, minWidth: '150px' }}
@@ -106,7 +114,7 @@ const CTable = ({
           rowLink ? (
             <Link key={data.key ?? nanoid(6)} href={rowLink(data)}>
               <a className={styles.rowLink}>
-                <TableRow columns={columns} data={data} />
+                <TableRow columns={columns} data={data} height={rowFix.rowHeight} />
               </a>
             </Link>
           ) : (
@@ -115,6 +123,7 @@ const CTable = ({
               key={data.key ?? nanoid(6)}
               columns={columns}
               data={data}
+              height={rowFix.rowHeight}
             />
           )
         ))}
