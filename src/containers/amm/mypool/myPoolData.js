@@ -1,7 +1,7 @@
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import DepositLiquidity from 'containers/amm/DepositLiquidity';
@@ -9,6 +9,10 @@ import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import { extractLogo } from 'helpers/assetUtils';
 import Link from 'next/link';
 import humanAmount from 'helpers/humanAmount';
+import BN from 'helpers/BN';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
+import generateRemovePoolTrustlineTRX from 'stellar-trx/generateRemovePoolTrustlineTRX';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -19,6 +23,7 @@ const NoDataMessage = () => (
 
 function MyPoolData({ pools, afterWAD }) {
   const dispatch = useDispatch();
+  const userAddress = useSelector((state) => state.user.detail.address);
 
   const renderModals = (data) => {
     const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
@@ -36,22 +41,39 @@ function MyPoolData({ pools, afterWAD }) {
       );
     };
 
-    const handleWithdraw = () => {
-      dispatch(
-        openModalAction({
-          modalProps: {
-            title: 'Withdraw Liquidity',
-            className: 'main',
-          },
-          content: <WithdrawLiquidity tokenA={tokenA} tokenB={tokenB} afterWithdraw={afterWAD} />,
-        }),
-      );
+    const handleWithdraw = async () => {
+      if (new BN(data.userShare).eq(0)) {
+        // eslint-disable-next-line no-inner-declarations
+        function func() {
+          return generateRemovePoolTrustlineTRX(
+            userAddress,
+            tokenA,
+            tokenB,
+          );
+        }
+
+        await showGenerateTrx(func, dispatch)
+          .then((trx) => showSignResponse(trx, dispatch))
+          .catch(console.error);
+
+        afterWAD();
+      } else {
+        dispatch(
+          openModalAction({
+            modalProps: {
+              title: 'Withdraw Liquidity',
+              className: 'main',
+            },
+            content: <WithdrawLiquidity tokenA={tokenA} tokenB={tokenB} afterWithdraw={afterWAD} />,
+          }),
+        );
+      }
     };
 
     return (
       <div className={styles['modal-btns']}>
         <div onClick={handleDeposit}>Deposit</div>
-        <div onClick={handleWithdraw}>Withdraw</div>
+        <div onClick={handleWithdraw}>{new BN(data.userShare).eq(0) ? 'Remove' : 'Withdraw'}</div>
       </div>
     );
   };
@@ -90,8 +112,8 @@ function MyPoolData({ pools, afterWAD }) {
       key: 2,
       render: (data) => (
         <span>
-          {humanAmount(data.reserves[0].amount, true)} {getAssetFromLPAsset(data.reserves[0].asset).code}{' / '}
-          {humanAmount(data.reserves[1].amount, true)}{' '}
+          {humanAmount(data.calculateUserBalance(data.reserves[0].amount), true)} {getAssetFromLPAsset(data.reserves[0].asset).code}{' / '}
+          {humanAmount(data.calculateUserBalance(data.reserves[1].amount), true)}{' '}
           {getAssetFromLPAsset(data.reserves[1].asset).code}
         </span>
       ),

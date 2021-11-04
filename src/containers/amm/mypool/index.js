@@ -26,19 +26,29 @@ function calculateBalanceUSD(data, xlmPrice) {
   const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
 
   if (isSameAsset(tokenA, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[0].amount).times(2).toFixed(7);
+    balance = new BN(data.calculateUserBalance(data.reserves[0].amount))
+      .times(2)
+      .toFixed(7);
   }
 
   if (isSameAsset(tokenB, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[1].amount).times(2).toFixed(7);
+    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+      .times(2)
+      .toFixed(7);
   }
 
   if (tokenA.isNative()) {
-    balance = new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7);
+    balance = new BN(data.calculateUserBalance(data.reserves[0].amount))
+      .times(xlmPrice)
+      .times(2)
+      .toFixed(7);
   }
 
   if (tokenB.isNative()) {
-    balance = new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7);
+    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+      .times(xlmPrice)
+      .times(2)
+      .toFixed(7);
   }
 
   return balance;
@@ -53,6 +63,12 @@ async function fetchData(userAddress, xlmPrice, setPools) {
     filteredBalances.map((pool) => getPoolDetailsById(pool.liquidity_pool_id).then((res) => ({
       ...res,
       userShare: pool.balance,
+      calculateUserBalance: (a) => {
+        if (new BN(res.total_shares).eq(0)) {
+          return 0;
+        }
+        return new BN(pool.balance).times(a).div(res.total_shares);
+      },
     }))),
   );
 
