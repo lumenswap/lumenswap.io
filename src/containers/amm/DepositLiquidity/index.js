@@ -13,18 +13,19 @@ import { getPoolDetailsById } from 'api/stellarPool';
 import { extractLogo } from 'helpers/assetUtils';
 import humanAmount from 'helpers/humanAmount';
 import isSameAsset from 'helpers/isSameAsset';
+import { fetchAccountDetails } from 'api/stellar';
 import styles from './styles.module.scss';
 import Tolerance from '../Tolerance';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 
-function Inpool({ token }) {
+function Inpool({ token, isLoading }) {
   return (
     <div className={styles.inpool}>
       <div>
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{humanAmount(token.balance, true)}</div>
+      <div>{isLoading ? '' : humanAmount(token.balance, true)}</div>
     </div>
   );
 }
@@ -32,7 +33,9 @@ function Inpool({ token }) {
 function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit = () => {} }) {
   const dispatch = useDispatch();
   const [poolData, setPoolData] = useState(null);
+  const [userShare, setUserShare] = useState(null);
   const userBalance = useSelector((state) => state.userBalance);
+  const userAddress = useSelector((state) => state.user.detail.address);
   const [tokenA, tokenB] = lexoOrderAssets(initTokenA, initTokenB);
   const tokenABalance = userBalance
     .find((i) => isSameAsset(getAssetDetails(i.asset), tokenA))
@@ -98,16 +101,27 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
     return 'Deposit';
   }
 
+  let shareA = '0';
+  let shareB = '0';
+  if (poolData) {
+    shareA = new BN(userShare)
+      .times(poolData.reserves[0].amount)
+      .div(poolData.total_shares);
+    shareB = new BN(userShare)
+      .times(poolData.reserves[1].amount)
+      .div(poolData.total_shares);
+  }
+
   const inpoolData = [
     {
       logo: extractLogo(tokenA),
       code: tokenA.code,
-      balance: poolData ? poolData.reserves[0].amount : '',
+      balance: poolData ? shareA.toFixed(7) : '',
     },
     {
       logo: extractLogo(tokenB),
       code: tokenB.code,
-      balance: poolData ? poolData.reserves[1].amount : '',
+      balance: poolData ? shareB.toFixed(7) : '',
     },
   ];
 
@@ -144,8 +158,9 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
         getAssetDetails(tokenB),
       );
 
+      let poolDetail;
       try {
-        const poolDetail = await getPoolDetailsById(poolId);
+        poolDetail = await getPoolDetailsById(poolId);
         setPoolData(poolDetail);
       } catch (e) {
         const sortedTokens = lexoOrderAssets(
@@ -156,7 +171,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
         const assetA = sortedTokens[0].isNative() ? 'native' : `${sortedTokens[0].getCode()}:${sortedTokens[0].getIssuer()}`;
         const assetB = sortedTokens[1].isNative() ? 'native' : `${sortedTokens[1].getCode()}:${sortedTokens[1].getIssuer()}`;
 
-        setPoolData({
+        poolDetail = {
           reserves: [
             {
               asset: assetA,
@@ -167,7 +182,22 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               amount: 0,
             },
           ],
-        });
+        };
+        setPoolData(poolDetail);
+      }
+
+      try {
+        const userData = await fetchAccountDetails(userAddress);
+        for (const balance of userData.balances) {
+          if (balance.asset_type === 'liquidity_pool_shares' && balance.liquidity_pool_id === poolDetail.id) {
+            setUserShare(balance.balance);
+            return;
+          }
+        }
+
+        setUserShare(0);
+      } catch (e) {
+        setUserShare(0);
       }
     }
 
@@ -202,7 +232,12 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
     <div className="pb-4">
       <h6 className={styles.label}>Inpool</h6>
       <div>
-        {inpoolData.map((token) => <Inpool token={token} />)}
+        {inpoolData.map((token) => (
+          <Inpool
+            token={token}
+            isLoading={poolData === null || userShare === null}
+          />
+        ))}
 
       </div>
       <div className="d-flex justify-content-between" />

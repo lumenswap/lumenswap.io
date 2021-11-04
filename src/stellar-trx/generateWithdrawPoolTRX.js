@@ -13,6 +13,7 @@ export default async function generateWithdrawPoolTRX(
   amount,
   minAmountA,
   minAmountB,
+  removeTrustline,
 ) {
   const poolId = getLiquidityPoolIdFromAssets(
     getAssetDetails(assetA),
@@ -39,12 +40,16 @@ export default async function generateWithdrawPoolTRX(
       minAmountA: new BN(minAmountA).toFixed(7),
       minAmountB: new BN(minAmountB).toFixed(7),
     }),
-  ).addOperation(
-    StellarSDK.Operation.changeTrust({
-      asset: poolAsset,
-      limit: '0',
-    }),
   );
+
+  if (removeTrustline) {
+    transaction.addOperation(
+      StellarSDK.Operation.changeTrust({
+        asset: poolAsset,
+        limit: '0',
+      }),
+    );
+  }
 
   transaction = transaction.setTimeout(transactionConsts.TIMEOUT).build();
 

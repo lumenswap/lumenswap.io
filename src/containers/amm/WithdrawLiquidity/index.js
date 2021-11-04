@@ -67,6 +67,7 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
       tolerance: data.tolerance,
       poolData,
       userShare,
+      removeTrustline: data.removeTrustline,
     };
 
     dispatch(
@@ -215,13 +216,13 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
         <div className={styles['info-box']}>
           <p>
             <span>Note: </span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            By performing this operation, all your liquidity will{' '}
+            be transferred from this pool to your wallet account.
           </p>
         </div>
         <div className="mt-3">
           <Controller
-            name="tolerance"
+            name="removeTrustline"
             control={control}
             render={(props) => (
               <Checkbox
