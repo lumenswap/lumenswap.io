@@ -28,6 +28,10 @@ import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import sevenDigit from 'helpers/sevenDigit';
 import urlMaker from 'helpers/urlMaker';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
+import generateRemovePoolTrustlineTRX from 'stellar-trx/generateRemovePoolTrustlineTRX';
+import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
 import iconRefresh from '../../../../../public/images/icon-refresh.png';
@@ -113,20 +117,21 @@ async function loadUserPool(setUserShare, isLogged, userAddress, poolId) {
       for (const balance of userData.balances) {
         if (balance.asset_type === 'liquidity_pool_shares' && balance.liquidity_pool_id === poolId) {
           setUserShare(balance.balance);
-          return;
+          break;
         }
       }
-
-      setUserShare(0);
-    } catch (e) {
-      setUserShare(0);
-    }
+    // eslint-disable-next-line no-empty
+    } catch (e) {}
   }
 }
 
-async function reloadPoolDetail(setPoolDetail, poolId) {
-  const poolDetail = await getPoolDetailsById(poolId);
-  setPoolDetail(poolDetail);
+async function reloadPoolDetail(setPoolDetail, poolId, router) {
+  try {
+    const poolDetail = await getPoolDetailsById(poolId);
+    setPoolDetail(poolDetail);
+  } catch (e) {
+    router.push(urlMaker.pool.root());
+  }
 }
 
 const Details = ({ poolDetail: initPoolDetail }) => {
@@ -138,6 +143,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
   const [poolOperations, setPoolOperations] = useState(null);
+  const router = useRouter();
 
   const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
   const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
@@ -289,30 +295,48 @@ const Details = ({ poolDetail: initPoolDetail }) => {
           tokenB={refinedB}
           afterDeposit={() => {
             loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
-            reloadPoolDetail(setPoolDetail, poolDetail.id);
+            reloadPoolDetail(setPoolDetail, poolDetail.id, router);
           }}
         />,
       }),
     );
   };
 
-  const handleWithdraw = () => {
-    dispatch(
-      openModalAction({
-        modalProps: {
-          title: 'Withdraw Liquidity',
-          className: 'main',
-        },
-        content: <WithdrawLiquidity
-          tokenA={refinedA}
-          tokenB={refinedB}
-          afterWithdraw={() => {
-            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
-            reloadPoolDetail(setPoolDetail, poolDetail.id);
-          }}
-        />,
-      }),
-    );
+  const handleWithdraw = async () => {
+    if (new BN(userShare).eq(0)) {
+      // eslint-disable-next-line no-inner-declarations
+      function func() {
+        return generateRemovePoolTrustlineTRX(
+          userAddress,
+          tokenA,
+          tokenB,
+        );
+      }
+
+      await showGenerateTrx(func, dispatch)
+        .then((trx) => showSignResponse(trx, dispatch))
+        .catch(console.error);
+
+      loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
+      reloadPoolDetail(setPoolDetail, poolDetail.id, router);
+    } else {
+      dispatch(
+        openModalAction({
+          modalProps: {
+            title: 'Withdraw Liquidity',
+            className: 'main',
+          },
+          content: <WithdrawLiquidity
+            tokenA={refinedA}
+            tokenB={refinedB}
+            afterWithdraw={() => {
+              loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
+              reloadPoolDetail(setPoolDetail, poolDetail.id, router);
+            }}
+          />,
+        }),
+      );
+    }
   };
   const breadCrumbData = [
     {
@@ -361,10 +385,10 @@ const Details = ({ poolDetail: initPoolDetail }) => {
                         }
                       }}
                     />
-                    {userShare !== null && new BN(userShare).gt(0) && isLogged && (
+                    {userShare !== null && isLogged && (
                     <Button
                       className={classNames(styles['withdraw-btn'], secondStyles['button-basic'])}
-                      content="Withdraw"
+                      content={new BN(userShare).eq(0) ? 'Remove' : 'Withdraw'}
                       onClick={handleWithdraw}
                     />
                     )}
