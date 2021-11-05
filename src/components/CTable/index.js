@@ -71,7 +71,6 @@ const CTable = ({
     <div
       style={{
         maxHeight: `${(rowFix.rowHeight * rowFix.rowNumbers) + rowFix.headerRowHeight}px`,
-        height: `${(rowFix.rowHeight * rowFix.rowNumbers) + rowFix.headerRowHeight}px`,
       }}
       className={classNames(styles['table-container'], className)}
     >
