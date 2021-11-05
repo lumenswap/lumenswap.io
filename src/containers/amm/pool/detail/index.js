@@ -340,7 +340,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   };
   const breadCrumbData = [
     {
-      name: 'Pool',
+      name: 'Pools',
       url: urlMaker.pool.root(),
     },
     {
@@ -359,7 +359,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   return (
     <div className="container-fluid pb-5">
       <Head>
-        <title>{refinedA.getCode()}/{refinedB.getCode()} | Lumenswap</title>
+        <title>Pool - {refinedA.getCode()}/{refinedB.getCode()} | Lumenswap</title>
       </Head>
       <AMMHeader />
       <div className={classNames('layout main', styles.main)}>

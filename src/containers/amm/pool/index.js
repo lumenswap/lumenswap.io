@@ -7,7 +7,7 @@ import PoolData from './poolData';
 const PoolPage = () => (
   <div className="container-fluid">
     <Head>
-      <title>Pool | Lumenswap</title>
+      <title>Pools | Lumenswap</title>
     </Head>
     <AMMHeader />
     <div className={classNames('layout main', styles.main)}>
