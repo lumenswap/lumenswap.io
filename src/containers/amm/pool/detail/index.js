@@ -63,7 +63,7 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
   if (userShare === null) {
     return (
       <ShareInfoContainer>
-        Loading...
+        -
       </ShareInfoContainer>
     );
   }
