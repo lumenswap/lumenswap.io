@@ -34,7 +34,7 @@ const Tolerance = ({ onChange, value }) => {
         <Tooltips
           placement="top"
           id="price"
-          text={<PrimaryTooltip text="Your transaction will revert if the price changes unfavaorably by more than this percentage." />}
+          text={<PrimaryTooltip text="Your transaction will revert if the price changes unfavorably by more than this percentage." />}
         >
           <span style={{ marginLeft: 2, height: 18 }}>
             <Image src={QuestionIcon} width={16} height={16} />
