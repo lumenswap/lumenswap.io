@@ -99,9 +99,9 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
   return (
     <div className={styles['pool-info-container']}>
       <span className={styles['pool-info-content']}>
-        {humanAmount(shareA.toFixed(7), true)} {getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}{' / '}
+        {humanAmount(shareA.toFixed(7), true)} <span className={styles['pool-info-code']}>{getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}</span>{' / '}
         {humanAmount(shareB.toFixed(7), true)}{' '}
-        {getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}
+        <span className={styles['pool-info-code']}>{getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}</span>
       </span>
       <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
         <Image src={iconRefresh} width={18} height={18} />
