@@ -1,4 +1,3 @@
-import isSameAsset from 'helpers/isSameAsset';
 import CurrencyPair from 'components/CurrencyPair';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,42 +7,17 @@ import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import { useEffect, useRef, useState } from 'react';
-import { extractLogo, listOfKnownPoolIds } from 'helpers/assetUtils';
-import { getPoolDetailsById } from 'api/stellarPool';
+import { extractLogo } from 'helpers/assetUtils';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import humanAmount from 'helpers/humanAmount';
-import USDC from 'tokens/USDC';
 import BN from 'helpers/BN';
 import { fetchAccountDetails } from 'api/stellar';
+import { getKnownPools } from 'api/amm';
 import Input from 'components/Input';
 import styles from './styles.module.scss';
 
 function NoDataMessage() {
   return <div className={styles['empty-table-container']}><span>There is no pool</span></div>;
-}
-
-function calculateTVLFromBalances(data, xlmPrice) {
-  let balance = '-';
-  const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
-  const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
-
-  if (isSameAsset(tokenA, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[0].amount).times(2).toFixed(7);
-  }
-
-  if (isSameAsset(tokenB, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[1].amount).times(2).toFixed(7);
-  }
-
-  if (tokenA.isNative()) {
-    balance = new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7);
-  }
-
-  if (tokenB.isNative()) {
-    balance = new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7);
-  }
-
-  return balance;
 }
 
 function PoolData() {
@@ -131,39 +105,9 @@ function PoolData() {
 
   useEffect(() => {
     async function loadData() {
-      const allPools = await Promise.all(listOfKnownPoolIds()
-        .map((pool) => getPoolDetailsById(pool.id)
-          .then((res) => ({
-            ...res,
-            pair: pool.pair,
-            key: pool.id,
-          })).catch(() => ({
-            key: pool.id,
-            id: pool.id,
-            total_shares: 0,
-            total_trustlines: 0,
-            reserves: [
-              {
-                asset: `${pool.pair.base.code}:${pool.pair.base.issuer}`,
-                amount: 0,
-              },
-              {
-                asset: `${pool.pair.counter.code}:${pool.pair.counter.issuer}`,
-                amount: 0,
-              },
-            ],
-            pair: pool.pair,
-          }))));
-
-      const poolsWithTvl = allPools.map((pool) => {
-        const tvl = calculateTVLFromBalances(pool, xlmPrice);
-        return {
-          ...pool,
-          tvl,
-        };
-      });
+      const allPools = await getKnownPools();
       doneRef.current = true;
-      setKnownPools(poolsWithTvl);
+      setKnownPools(allPools);
     }
 
     if (!(new BN(xlmPrice).isEqualTo(0)) && !doneRef.current) {
