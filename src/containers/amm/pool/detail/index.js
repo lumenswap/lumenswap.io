@@ -83,11 +83,16 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
     .times(poolDetail.reserves[1].amount)
     .div(poolDetail.total_shares);
 
+  let isLessThan0 = false;
+  if (new BN(userShare).times(100).div(poolDetail.total_shares).lt(0.01)) {
+    isLessThan0 = true;
+  }
+
   if (isUSDTVL) {
     return (
       <div className={styles['pool-info-container']}>
         <span className={styles['pool-info-content']}>
-          %{sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(4))}
+          {isLessThan0 ? '<0.01%' : `%${sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
         </span>
         <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
           <Image src={iconRefresh} width={18} height={18} />
@@ -99,9 +104,9 @@ const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
   return (
     <div className={styles['pool-info-container']}>
       <span className={styles['pool-info-content']}>
-        {humanAmount(shareA.toFixed(7), true)} {getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}{' / '}
+        {humanAmount(shareA.toFixed(7), true)} <span className={styles['pool-info-code']}>{getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}</span>{' / '}
         {humanAmount(shareB.toFixed(7), true)}{' '}
-        {getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}
+        <span className={styles['pool-info-code']}>{getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}</span>
       </span>
       <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
         <Image src={iconRefresh} width={18} height={18} />
