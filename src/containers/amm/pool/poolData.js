@@ -6,13 +6,12 @@ import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { extractLogo } from 'helpers/assetUtils';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import { fetchAccountDetails } from 'api/stellar';
-import { getKnownPools } from 'api/amm';
 import Input from 'components/Input';
 import styles from './styles.module.scss';
 
@@ -20,13 +19,11 @@ function NoDataMessage() {
   return <div className={styles['empty-table-container']}><span>There is no pool</span></div>;
 }
 
-function PoolData() {
+function PoolData({ allPools }) {
   const [knownPools, setKnownPools] = useState(null);
-  const xlmPrice = useSelector((state) => state.xlmPrice);
   const userAddress = useSelector((state) => state.user.detail.address);
   const [searchQuery, setSearchQuery] = useState('');
   const [userPoolShares, setUserPoolShares] = useState({});
-  const doneRef = useRef(false);
   const dispatch = useDispatch();
 
   const handleSearch = (e) => {
@@ -104,16 +101,8 @@ function PoolData() {
   };
 
   useEffect(() => {
-    async function loadData() {
-      const allPools = await getKnownPools();
-      doneRef.current = true;
-      setKnownPools(allPools);
-    }
-
-    if (!(new BN(xlmPrice).isEqualTo(0)) && !doneRef.current) {
-      loadData();
-    }
-  }, [xlmPrice]);
+    setKnownPools(allPools);
+  }, [allPools]);
 
   useEffect(() => {
     async function loadData() {

@@ -4,7 +4,7 @@ import AMMHeader from 'components/AMMHeader';
 import styles from './styles.module.scss';
 import PoolData from './poolData';
 
-const PoolPage = () => (
+const PoolPage = ({ allPools }) => (
   <div className="container-fluid">
     <Head>
       <title>Pools | Lumenswap</title>
@@ -16,7 +16,7 @@ const PoolPage = () => (
           <div className="d-flex justify-content-between align-items-center">
             <h1 className={styles.label}>Pools</h1>
           </div>
-          <PoolData />
+          <PoolData allPools={allPools} />
         </div>
       </div>
     </div>
