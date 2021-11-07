@@ -1,15 +1,13 @@
-import BN from './BN';
-
 const LUMENSCAN_URL = 'https://lumenscan.io';
-const STELLAR_EXPERT = 'https://stellar.expert/explorer/public';
-
-// export function generateTransactionURL(tx) {
-//   return `${LUMENSCAN_URL}/txns/${tx}`;
-// }
+// const STELLAR_EXPERT = 'https://stellar.expert/explorer/public';
 
 export function generateTransactionURL(tx) {
-  return `${STELLAR_EXPERT}/tx/${tx}`;
+  return `${LUMENSCAN_URL}/txns/${tx}`;
 }
+
+// export function generateTransactionURL(tx) {
+//   return `${STELLAR_EXPERT}/tx/${tx}`;
+// }
 
 export function generateAddressURL(account) {
   return `${LUMENSCAN_URL}/account/${account}`;
@@ -32,8 +30,5 @@ export function ipfsHashGenerator(hash) {
 }
 
 export function generateOperationIdURL(operationId) {
-  const oneBefore = new BN(operationId).minus(1).toFixed(0);
-  const oneAfter = new BN(operationId).plus(1).toFixed(0);
-
-  return `${STELLAR_EXPERT}/tx/${oneBefore}#${oneAfter}`;
+  return `${LUMENSCAN_URL}/ops/${operationId}`;
 }
