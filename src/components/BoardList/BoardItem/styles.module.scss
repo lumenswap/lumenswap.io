@@ -1,0 +1,51 @@
+@import "styles/vars";
+
+.box {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+}
+
+.banner {
+  min-height: 198px;
+  border: 1px solid red;
+}
+
+.info {
+  padding: 12px 24px 16px 24px;
+
+  &-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.42;
+    color: $CodGray;
+    margin: 0;
+  }
+
+  &-desc {
+    font-size: 16px;
+    line-height: 1.5;
+    color: $ShuttleGray;
+    margin: 14px 0 0 0;
+  }
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.badge {
+  background-color: $AthensGray;
+  border-radius: 4px;
+  margin-right: 14px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: normal;
+
+  &-subject {
+    color: $ShuttleGray;
+    margin-right: 8px;
+  }
+}
