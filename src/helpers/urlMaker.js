@@ -4,6 +4,7 @@ const rootUrl = {
   amm: '/amm',
   lottery: '/lottery',
   nft: '/nft',
+  auction: '/auction',
 };
 
 if (process.env.REACT_APP_MODE === 'OBM') {
@@ -91,6 +92,9 @@ const urlMaker = {
     stats: () => `${rootUrl.nft}/stats`,
     myLusi: () => `${rootUrl.nft}/my-lusi`,
     lusi: (number) => `${rootUrl.nft}/lusi/${number}`,
+  },
+  auction: {
+    root: () => `${rootUrl.auction}/board`,
   },
 };
 
