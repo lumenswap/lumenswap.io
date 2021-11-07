@@ -19,6 +19,7 @@ import SHX from './SHX';
 import ANSR from './ANSR';
 import PEN from './PEN';
 import NUNA from './NUNA';
+import AQUA from './AQUA';
 
 const defaultTokens = [
   XLM,
@@ -42,6 +43,7 @@ const defaultTokens = [
   ANSR,
   PEN,
   NUNA,
+  AQUA,
 ];
 
 export default defaultTokens;
