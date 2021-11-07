@@ -20,8 +20,12 @@ const AuctionBoard = () => {
   return (
     <Container>
       <div className={classNames('layout main', styles.layout)}>
-        <h1 className={styles.title}>Auction Board</h1>
-        <BoardList />
+        <div className="row justify-content-center">
+          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+            <h1 className={styles.title}>Auction Board</h1>
+            <BoardList data={[0, 1]} />
+          </div>
+        </div>
       </div>
     </Container>
   );

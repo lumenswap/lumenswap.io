@@ -9,12 +9,12 @@ import styles from './styles.module.scss';
 const BoardItem = (props) => (
   <div className={styles.box}>
     <div className="row">
-      <div className="col-4 pr-0">
+      <div className="col-lg-4 col-md-12 col-sm-12 col-12 pr-lg-0 pr-md-3 pr-sm-3 pr-3">
         <div className={styles.banner}>
           <Image src={bannerSrc} layout="fill" objectFit="cover" objectPosition="center" />
         </div>
       </div>
-      <div className="col-8 pl-0">
+      <div className="col-lg-8 col-md-12 col-sm-12 col-12 pl-lg-0 pl-md-3 pl-sm-3 pl-3">
         <div className={styles.info}>
           <h6 className={styles['info-title']}>Rabet (RBT)</h6>
           <p className={styles['info-desc']}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,

@@ -8,7 +8,7 @@
 
 .banner {
   min-height: 198px;
-  border: 1px solid red;
+  position: relative;
 }
 
 .info {
@@ -32,8 +32,9 @@
 
 .badges {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 32px;
 }
 
 .badge {
@@ -43,6 +44,8 @@
   padding: 8px 12px;
   font-size: 16px;
   font-weight: normal;
+  white-space: nowrap;
+  margin-top: 8px;
 
   &-subject {
     color: $ShuttleGray;
