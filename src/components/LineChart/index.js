@@ -3,6 +3,7 @@ import ReactECharts from 'echarts-for-react';
 // import { CHART_KEYS } from 'pages/Auction/aggregation';
 import numeral from 'numeral';
 
+import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 const lineColor = '#e3e9ff';
@@ -17,6 +18,28 @@ const tooltipFormatter = (values) => `<div class="${styles.tooltip}">
   </div>`;
 
 const LineChart = ({ data, height }) => {
+  const [isFullScreen, setFullScreen] = useState(false);
+
+  const initialSize = { CHeight: `${height + 60}px`, CWidth: 'auto' };
+  const [size, setSize] = useState(initialSize);
+
+  const fullScreenView = {
+    myTool: {
+      show: true,
+      title: 'Fullscreen',
+      iconStyle: {
+        color: '#0e41f5',
+        borderColor: '#0e41f5',
+        borderWidth: 0,
+      },
+      icon: 'M.73 0a.726.726 0 0 0-.72.827v3.539a.726.726 0 1 0 1.453 0V2.487L4.58 5.605a.726.726 0 1 0 1.027-1.027L2.49 1.46h1.878a.726.726 0 1 0 0-1.453H.822A.726.726 0 0 0 .729 0zm14.52 0a.726.726 0 0 0-.082.007h-3.536a.726.726 0 1 0 0 1.453h1.878l-3.118 3.118a.726.726 0 1 0 1.027 1.027l3.118-3.118v1.879a.726.726 0 1 0 1.453 0V.826A.726.726 0 0 0 15.25 0zM5.08 10.17a.726.726 0 0 0-.499.22l-3.118 3.117V11.63a.726.726 0 1 0-1.453 0v3.521a.726.726 0 0 0 .837.837h3.521a.726.726 0 1 0 0-1.453H2.49l3.118-3.118a.726.726 0 0 0-.528-1.247zm5.818 0a.726.726 0 0 0-.506 1.246l3.118 3.118h-1.878a.726.726 0 1 0 0 1.453h3.52a.726.726 0 0 0 .838-.837v-3.52a.726.726 0 1 0-1.453 0v1.877L11.42 10.39a.726.726 0 0 0-.52-.22z',
+      onclick() {
+        setFullScreen(true);
+      },
+    },
+  };
+  const [tool, setTool] = useState(fullScreenView);
+
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -28,7 +51,6 @@ const LineChart = ({ data, height }) => {
       right: '0',
       bottom: '0',
       containLabel: true,
-      height: `${height}px`,
     },
     xAxis: {
       type: 'category',
@@ -60,9 +82,7 @@ const LineChart = ({ data, height }) => {
     yAxis: {
       type: 'value',
       name: 'Amount(LSP)',
-      // interval: 10000000,
       min: 0,
-      // max: 9000,
       nameTextStyle: {
         color: '#1d1d1d',
         fontSize: '14',
@@ -99,8 +119,6 @@ const LineChart = ({ data, height }) => {
         areaStyle: {
           color: '#0E41F3',
           opacity: 0.09,
-          // shadowOffsetY: 3,
-          // shadowOffsetX: 3,
         },
         lineStyle: {
           color: '#0e41f5',
@@ -109,8 +127,37 @@ const LineChart = ({ data, height }) => {
     ],
     toolbox: {
       show: true,
+      itemSize: 16,
+      showTitle: false,
+      right: 10,
+      top: 15,
+      feature: { ...tool },
     },
   };
+
+  useEffect(() => {
+    if (isFullScreen) {
+      setSize({ CHeight: '100%', CWidth: '100%' });
+      setTool({
+        myTool: {
+          show: true,
+          title: 'Exit fullscreen',
+          iconStyle: {
+            color: '#0e41f5',
+            borderColor: '#0e41f5',
+            borderWidth: 0,
+          },
+          icon: 'm8.874 7.5 5.84-5.84A.97.97 0 1 0 13.342.284L7.5 6.125 1.66.286A.97.97 0 1 0 .284 1.659L6.125 7.5l-5.84 5.841a.97.97 0 1 0 1.374 1.374l5.84-5.84 5.842 5.84a.97.97 0 0 0 1.374 0 .97.97 0 0 0 0-1.374l-5.84-5.84z',
+          onclick() {
+            setFullScreen(false);
+          },
+        },
+      });
+    } else {
+      setSize(initialSize);
+      setTool(fullScreenView);
+    }
+  }, [isFullScreen]);
 
   // if (!data) {
   //   return (
@@ -130,14 +177,28 @@ const LineChart = ({ data, height }) => {
   return (
     <div className="row">
       <div className="col-12">
-        <div className={styles.echart}>
-          <ReactECharts
-            option={option}
-            notMerge
-            lazyUpdate
-            style={{ height: `${height + 60}px` }}
-          />
-        </div>
+        {
+          isFullScreen ? (
+            <div
+              className={styles.fullScreenMask}
+              style={{ height: size.CHeight, width: size.CWidth }}
+            >
+              <ReactECharts
+                option={option}
+                notMerge
+                lazyUpdate
+                style={{ height: size.CHeight, width: size.CWidth }}
+              />
+            </div>
+          ) : (
+            <ReactECharts
+              option={option}
+              notMerge
+              lazyUpdate
+              style={{ height: size.CHeight, width: size.CWidth }}
+            />
+          )
+        }
       </div>
     </div>
   );
