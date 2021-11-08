@@ -9,7 +9,7 @@ const ShowTolerance = ({ value }) => (
     <span
       className={classNames(styles.tolerance, 'd-flex align-items-center')}
     >
-      Tolerance
+      Slippage
       <Tooltips
         placement="top"
         id="price"
