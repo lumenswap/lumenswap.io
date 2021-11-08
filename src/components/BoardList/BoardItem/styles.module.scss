@@ -52,3 +52,28 @@
     margin-right: 8px;
   }
 }
+
+.status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 14px;
+  color: $BlueRibbon;
+  background-color: $Zumthor;
+  border-radius: 4px;
+  padding: 0 6px;
+  z-index: 1;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-circle {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color:  $BlueRibbon;
+    margin-right: 3px;
+  }
+}

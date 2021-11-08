@@ -11,6 +11,10 @@ const BoardItem = (props) => (
     <div className="row">
       <div className="col-lg-4 col-md-12 col-sm-12 col-12 pr-lg-0 pr-md-3 pr-sm-3 pr-3">
         <div className={styles.banner}>
+          <div className={styles.status}>
+            <span className={styles['status-circle']} />
+            <span>Live</span>
+          </div>
           <Image src={bannerSrc} layout="fill" objectFit="cover" objectPosition="center" />
         </div>
       </div>
