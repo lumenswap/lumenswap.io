@@ -5,6 +5,7 @@ import urlMaker from 'helpers/urlMaker';
 import AuctionHeader from 'components/AuctionHeader';
 import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
+import LineChart from 'components/LineChart';
 
 import styles from './styles.module.scss';
 
@@ -43,6 +44,14 @@ const AuctionDetail = () => {
                 content="Send Bid"
                 variant="primary"
               />
+            </div>
+            <div className="row mt-3">
+              <div className="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div className={classNames(styles.card, styles.chart)}>
+                  <LineChart height={300} />
+                </div>
+              </div>
+              <div className="col-6" />
             </div>
           </div>
         </div>
