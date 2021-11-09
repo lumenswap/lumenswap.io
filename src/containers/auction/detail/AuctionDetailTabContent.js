@@ -1,13 +1,14 @@
 import BidsData from './BidsData';
+import WinnersData from './WinnersData';
 
-const AuctionDetailContent = ({ tab, lusiId }) => {
+const AuctionDetailContent = ({ tab }) => {
   if (tab === 'bid') {
     return (
       <BidsData />
     );
   }
   return (
-    '2'
+    <WinnersData />
   );
 };
 
