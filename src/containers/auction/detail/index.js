@@ -2,7 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import urlMaker from 'helpers/urlMaker';
 import AuctionHeader from 'components/AuctionHeader';
@@ -14,12 +14,14 @@ import sampleSrc from 'assets/images/btc-logo.png';
 import ArrowRight from 'assets/images/arrowRight';
 import Refresh from 'assets/images/refresh';
 import CTabs from 'components/CTabs';
+import Input from 'components/Input';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
 
 import styles from './styles.module.scss';
 
 const AuctionDetail = () => {
   const [currentTab, setCurrentTab] = useState('bid');
+
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
@@ -75,6 +77,17 @@ const AuctionDetail = () => {
     { title: 'Winners', id: 'winner' },
   ];
 
+  const SearchInput = useCallback(() => (
+    <div className={styles.input}>
+      <Input
+        type="text"
+        placeholder="Enter your address"
+        height={40}
+        fontSize={14}
+      />
+    </div>
+  ), []);
+
   return (
     <Container>
       <div className={classNames('layout main', styles.layout)}>
@@ -112,7 +125,8 @@ const AuctionDetail = () => {
                     tabs={tabs}
                     tabContent={AuctionDetailTabContent}
                     className={styles.tabs}
-                    onChange={(tab) => { setCurrentTab(tab); }}
+                    onChange={(tab) => setCurrentTab(tab)}
+                    extraComponent={SearchInput}
                   />
                 </div>
                 <Link href="/">

@@ -60,8 +60,8 @@
   margin-top: 10px;
 
   tr:first-child {
-    line-height: 30px !important;
-    height: 30px !important;
+    line-height: 38px !important;
+    height: 38px !important;
   }
 }
 
@@ -84,5 +84,14 @@
 
   &:hover {
     color: $ShuttleGray;
+  }
+}
+
+.input {
+  margin-right: 16px;
+
+  input {
+    border-radius: 6px;
+    width: 290px !important;
   }
 }
