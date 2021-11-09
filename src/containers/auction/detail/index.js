@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import classNames from 'classnames';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
 import urlMaker from 'helpers/urlMaker';
 import AuctionHeader from 'components/AuctionHeader';
@@ -17,6 +19,7 @@ import AuctionDetailTabContent from './AuctionDetailTabContent';
 import styles from './styles.module.scss';
 
 const AuctionDetail = () => {
+  const [currentTab, setCurrentTab] = useState('bid');
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
@@ -42,13 +45,7 @@ const AuctionDetail = () => {
       title: 'Asset code',
       render: () => (
         <>
-          <Image
-            src={sampleSrc}
-            height={22}
-            width={22}
-            className="rounded-circle"
-            alt="logo"
-          />
+          <Image src={sampleSrc} height={22} width={22} className="rounded-circle" alt="logo" />
           <div className="ml-1">RBT</div>
         </>
       ),
@@ -115,8 +112,15 @@ const AuctionDetail = () => {
                     tabs={tabs}
                     tabContent={AuctionDetailTabContent}
                     className={styles.tabs}
+                    onChange={(tab) => { setCurrentTab(tab); }}
                   />
                 </div>
+                <Link href="/">
+                  <a className={styles['link-see-all']}>
+                    See all {currentTab === 'bid' ? 'offers' : 'winners'}
+                    <ArrowRight />
+                  </a>
+                </Link>
               </div>
             </div>
           </div>

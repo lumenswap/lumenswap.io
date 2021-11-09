@@ -64,3 +64,25 @@
     height: 30px !important;
   }
 }
+
+.link-see-all {
+  text-decoration: none !important;
+  margin-top: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ShuttleGray;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  svg {
+    margin-left: 8px;
+    margin-top: 2px;
+    width: 16px;
+    height: auto;
+  }
+
+  &:hover {
+    color: $ShuttleGray;
+  }
+}
