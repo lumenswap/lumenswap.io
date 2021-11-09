@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import classNames from 'classnames';
+import Image from 'next/image';
 
 import urlMaker from 'helpers/urlMaker';
 import AuctionHeader from 'components/AuctionHeader';
@@ -8,9 +9,10 @@ import Button from 'components/Button';
 import LineChart from 'components/LineChart';
 import InfoBox from 'components/InfoBox';
 import sampleSrc from 'assets/images/btc-logo.png';
-import Image from 'next/image';
 import ArrowRight from 'assets/images/arrowRight';
 import Refresh from 'assets/images/refresh';
+import CTabs from 'components/CTabs';
+import AuctionDetailTabContent from './AuctionDetailTabContent';
 
 import styles from './styles.module.scss';
 
@@ -71,6 +73,11 @@ const AuctionDetail = () => {
     { title: 'Bids', tooltip: 'some data', render: () => '12,000 XLM' },
   ];
 
+  const tabs = [
+    { title: 'Bids', id: 'bid' },
+    { title: 'Winners', id: 'winner' },
+  ];
+
   return (
     <Container>
       <div className={classNames('layout main', styles.layout)}>
@@ -98,6 +105,17 @@ const AuctionDetail = () => {
                 </div>
                 <div className={classNames(styles.card, 'mt-4')}>
                   <InfoBox title="Auction info" rows={auctionInfo} />
+                </div>
+              </div>
+            </div>
+            <div className="row mt-4">
+              <div className="col-12">
+                <div className={classNames(styles.card, styles['card-table'])}>
+                  <CTabs
+                    tabs={tabs}
+                    tabContent={AuctionDetailTabContent}
+                    className={styles.tabs}
+                  />
                 </div>
               </div>
             </div>
