@@ -48,7 +48,7 @@ const BidsData = () => {
   return (
     <CTable
       columns={columns}
-      noDataMessage={<NoData message="There is no asset bid" />}
+      noDataMessage={<NoData message="There is no bid" />}
       className={styles.table}
       dataSource={data}
       customLoading={LoadingWithContainer}
