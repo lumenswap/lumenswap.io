@@ -18,3 +18,22 @@
 .chart {
  padding-bottom: 20px;
 }
+
+.period {
+  display: flex;
+  align-items: center;
+
+  svg {
+    height: auto;
+  }
+}
+
+.arrow-icon svg {
+  width: 12px;
+  margin: 0 6px;
+}
+
+.refresh-icon svg {
+  width: 14px;
+  margin-left: 4px;
+}
