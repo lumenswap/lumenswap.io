@@ -10,6 +10,7 @@
   letter-spacing: normal;
   color: $CodGray;
 }
+
 .rows {
   height: 140px;
   display: flex;
@@ -29,9 +30,11 @@
   display: flex;
   align-items: center;
 }
+
 .title {
   display: flex;
   flex-direction: row;
+
   span {
     font-family: SofiaPro;
     font-size: 16px;
@@ -43,16 +46,19 @@
     color: $ShuttleGray;
   }
 }
+
 .row {
   display: flex;
   justify-content: space-between;
 }
+
 .ticket-id {
   display: flex;
   align-items: center;
   font-family: SofiaPro;
   color: $BlueRibbon !important;
 }
+
 .infos {
   font-family: SofiaPro;
   font-size: 16px;
@@ -62,4 +68,9 @@
   line-height: 1.5;
   letter-spacing: normal;
   color: $CodGray;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
 }

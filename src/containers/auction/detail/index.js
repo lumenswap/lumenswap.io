@@ -46,7 +46,8 @@ const AuctionDetail = () => {
             width={22}
             className="rounded-circle"
             alt="logo"
-          /> RBT
+          />
+          <div className="ml-1">RBT</div>
         </>
       ),
     },
