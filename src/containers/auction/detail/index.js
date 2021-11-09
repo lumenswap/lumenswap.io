@@ -16,6 +16,7 @@ import CTabs from 'components/CTabs';
 import Input from 'components/Input';
 import ModalDialog from 'components/ModalDialog';
 import SendBid from 'blocks/SendBid';
+// import ConfirmBid from 'blocks/ConfirmBid';
 import sampleSrc from 'assets/images/btc-logo.png';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
 
@@ -110,6 +111,7 @@ const AuctionDetail = () => {
               && (
               <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid">
                 <SendBid setShow={setShow} />
+                {/* <ConfirmBid /> */}
               </ModalDialog>
               )}
             </div>
