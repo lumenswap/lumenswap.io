@@ -109,8 +109,8 @@ const AuctionDetail = () => {
                   <LineChart height={300} />
                 </div>
               </div>
-              <div className="col-6">
-                <div className={styles.card}>
+              <div className="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div className={classNames(styles.card, 'mt-lg-0 mt-md-4 mt-sm-4 mt-4')}>
                   <InfoBox title="Asset info" rows={assetInfo} />
                 </div>
                 <div className={classNames(styles.card, 'mt-4')}>
