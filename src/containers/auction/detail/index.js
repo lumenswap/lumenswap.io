@@ -10,17 +10,20 @@ import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
 import LineChart from 'components/LineChart';
 import InfoBox from 'components/InfoBox';
-import sampleSrc from 'assets/images/btc-logo.png';
 import ArrowRight from 'assets/images/arrowRight';
 import Refresh from 'assets/images/refresh';
 import CTabs from 'components/CTabs';
 import Input from 'components/Input';
+import ModalDialog from 'components/ModalDialog';
+import SendBid from 'blocks/SendBid';
+import sampleSrc from 'assets/images/btc-logo.png';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
 
 import styles from './styles.module.scss';
 
 const AuctionDetail = () => {
   const [currentTab, setCurrentTab] = useState('bid');
+  const [show, setShow] = useState(false);
 
   const Container = ({ children }) => (
     <div className="container-fluid">
@@ -101,7 +104,14 @@ const AuctionDetail = () => {
                 className={styles.btn}
                 content="Send Bid"
                 variant="primary"
+                onClick={() => setShow(true)}
               />
+              {show
+              && (
+              <ModalDialog show={show} setShow={setShow} className="main" title="Send Bid">
+                <SendBid setShow={setShow} />
+              </ModalDialog>
+              )}
             </div>
             <div className="row mt-3">
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
