@@ -7,10 +7,14 @@ import SelectOption from 'components/SelectOption';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
 import LoadingWithContainer from 'components/LoadingWithContainer/LoadingWithContainer';
+import CPagination from 'components/CPagination';
 
 import styles from './styles.module.scss';
 
 const AuctionTickets = () => {
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(10);
+
   const dropdownItems = [
     { value: 'rbt', label: 'Rabet (RBT)' },
     { value: 'lsp', label: 'Lumenswap (LSP)' },
@@ -100,6 +104,15 @@ const AuctionTickets = () => {
                     className={styles.table}
                     dataSource={data}
                     customLoading={LoadingWithContainer}
+                  />
+                </div>
+                <div className="d-flex justify-content-end mt-4">
+                  <CPagination
+                    pages={pages}
+                    currentPage={page}
+                    onPageClick={(newPage) => {
+                      setPage(newPage);
+                    }}
                   />
                 </div>
               </div>
