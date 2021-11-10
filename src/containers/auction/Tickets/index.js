@@ -90,6 +90,7 @@ const AuctionTickets = () => {
               <h1 className={styles.title}>My Bids</h1>
               <SelectOption
                 items={dropdownItems}
+                defaultValue={selectedItem}
                 setValue={setSelectedItem}
                 className={styles.filter}
                 isSearchable={false}

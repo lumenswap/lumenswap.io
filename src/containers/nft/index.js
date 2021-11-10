@@ -70,6 +70,7 @@ const NftPage = () => {
               <h1 className={styles.title}>All Lusi’s</h1>
               <SelectOption
                 items={dropdownItems}
+                defaultValue={select}
                 setValue={setSelect}
                 className={styles.filter}
                 isSearchable={false}
