@@ -42,3 +42,18 @@
     padding: 10px 0;
   }
 }
+
+.card {
+  margin-top: 14px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.status-cancel {
+ color: $BlueRibbon;
+}
+
+.status-settled {
+  color: $Manatee;
+}
