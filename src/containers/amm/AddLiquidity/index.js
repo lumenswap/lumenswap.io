@@ -14,6 +14,7 @@ import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetail
 import { getPoolDetailsById } from 'api/stellarPool';
 import { extractLogo } from 'helpers/assetUtils';
 import isSameAsset from 'helpers/isSameAsset';
+import { calculateMaxXLM } from 'helpers/XLMValidator';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
 import Tolerance from '../Tolerance';
@@ -30,6 +31,7 @@ const AddLiquidity = ({
 }) => {
   const [poolData, setPoolData] = useState(null);
   const userBalance = useSelector((state) => state.userBalance);
+  const userSubentry = useSelector((state) => state.user.detail.subentry);
 
   const [tokenA, tokenB] = lexoOrderTokenWithDetails(
     initTokenA,
@@ -124,21 +126,33 @@ const AddLiquidity = ({
 
   const validateAmountTokenA = (value) => {
     if (new BN(0).gte(value)) {
-      return 'Amount is not valid';
+      return `${tokenA.getCode()} amount is not valid`;
     }
+
     if (new BN(value).gt(tokenABalance)) {
-      return 'Insufficient balance';
+      return `Insufficient ${tokenA.getCode()} balance`;
     }
+
+    if (tokenA.isNative() && new BN(value).gt(calculateMaxXLM(tokenABalance, userSubentry))) {
+      return `Insufficient ${tokenA.getCode()} balance`;
+    }
+
     return true;
   };
 
   const validateAmountTokenB = (value) => {
     if (new BN(0).gte(value)) {
-      return 'Amount is not valid';
+      return `${tokenB.getCode()} amount is not valid`;
     }
+
     if (new BN(value).gt(tokenBBalance)) {
-      return 'Insufficient balance';
+      return `Insufficient ${tokenB.getCode()} balance`;
     }
+
+    if (tokenA.isNative() && new BN(value).gt(calculateMaxXLM(tokenABalance, userSubentry))) {
+      return `Insufficient ${tokenB.getCode()} balance`;
+    }
+
     return true;
   };
 

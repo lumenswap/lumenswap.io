@@ -14,6 +14,7 @@ import { extractLogo } from 'helpers/assetUtils';
 import humanAmount from 'helpers/humanAmount';
 import isSameAsset from 'helpers/isSameAsset';
 import { fetchAccountDetails } from 'api/stellar';
+import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from './styles.module.scss';
 import Tolerance from '../Tolerance';
 import ConfirmLiquidity from '../ConfirmLiquidity';
@@ -36,6 +37,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
   const [userShare, setUserShare] = useState(null);
   const userBalance = useSelector((state) => state.userBalance);
   const userAddress = useSelector((state) => state.user.detail.address);
+  const userSubentry = useSelector((state) => state.user.detail.subentry);
   const [tokenA, tokenB] = lexoOrderAssets(initTokenA, initTokenB);
   const tokenABalance = userBalance
     .find((i) => isSameAsset(getAssetDetails(i.asset), tokenA))
@@ -127,27 +129,33 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
 
   const validateAmountTokenA = (value) => {
     if (new BN(value).gt(tokenABalance)) {
-      return 'Insufficient balance';
+      return `Insufficient ${tokenA.getCode()} balance`;
     }
-    if (new BN(0).gt(value)) {
-      return 'Amount is not valid';
+
+    if (tokenA.isNative() && new BN(value).gt(calculateMaxXLM(tokenABalance, userSubentry))) {
+      return `Insufficient ${tokenA.getCode()} balance`;
     }
-    if (new BN(0).isEqualTo(value)) {
-      return 'Amount is not valid';
+
+    if (new BN(0).gte(value)) {
+      return `${tokenA.getCode()} amount is not valid`;
     }
+
     return true;
   };
 
   const validateAmountTokenB = (value) => {
     if (new BN(value).gt(tokenBBalance)) {
-      return 'Insufficient balance';
+      return `Insufficient ${tokenB.getCode()} balance`;
     }
-    if (new BN(0).gt(value)) {
-      return 'Amount is not valid';
+
+    if (tokenA.isNative() && new BN(value).gt(calculateMaxXLM(tokenABalance, userSubentry))) {
+      return `Insufficient ${tokenB.getCode()} balance`;
     }
-    if (new BN(0).isEqualTo(value)) {
-      return 'Amount is not valid';
+
+    if (new BN(0).gte(value)) {
+      return `${tokenB.getCode()} amount is not valid`;
     }
+
     return true;
   };
 
