@@ -95,6 +95,8 @@ const urlMaker = {
   },
   auction: {
     root: () => `${rootUrl.auction}/board`,
+    singleBoard: (name) => `${rootUrl.auction}/board/${name}`,
+    tickets: () => `${rootUrl.auction}/tickets`,
   },
 };
 

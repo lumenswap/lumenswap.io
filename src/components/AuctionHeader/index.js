@@ -9,6 +9,11 @@ const AuctionHeader = () => {
       disableMainHref: true,
     },
     {
+      name: 'My Tickets',
+      link: urlMaker.auction.tickets(),
+      disableMainHref: true,
+    },
+    {
       name: 'Learn about auction',
       link: '/',
       disableMainHref: true,

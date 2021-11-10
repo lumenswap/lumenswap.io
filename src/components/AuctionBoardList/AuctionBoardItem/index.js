@@ -2,13 +2,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import bannerSrc from 'assets/images/auction-banner.png';
+import urlMaker from 'helpers/urlMaker';
 
 import styles from './styles.module.scss';
 
 const AuctionBoardItem = () => {
   const router = useRouter();
   return (
-    <div className={styles.box} onClick={() => router.push('Rabet(RBT)')}>
+    <div className={styles.box} onClick={() => router.push(urlMaker.auction.singleBoard('Rabet(RBT)'))}>
       <div className="row">
         <div className="col-lg-4 col-md-12 col-sm-12 col-12 pr-lg-0 pr-md-3 pr-sm-3 pr-3">
           <div className={styles.banner}>
