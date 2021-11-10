@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BoardItem from './BoardItem';
+import AuctionBoardItem from './AuctionBoardItem';
 
-const BoardList = ({ data }) => (
+const AuctionBoardList = ({ data }) => (
   <>
     {data.map((board, index) => (
       <div className="mt-4" key={index}>
-        <BoardItem />
+        <AuctionBoardItem />
       </div>
     ))}
   </>
 );
 
-BoardList.propTypes = {
+AuctionBoardList.propTypes = {
   data: PropTypes.array.isRequired,
 };
 
-export default BoardList;
+export default AuctionBoardList;

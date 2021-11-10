@@ -5,7 +5,7 @@ import bannerSrc from 'assets/images/auction-banner.png';
 
 import styles from './styles.module.scss';
 
-const BoardItem = () => {
+const AuctionBoardItem = () => {
   const router = useRouter();
   return (
     <div className={styles.box} onClick={() => router.push('Rabet(RBT)')}>
@@ -40,4 +40,4 @@ const BoardItem = () => {
   );
 };
 
-export default BoardItem;
+export default AuctionBoardItem;
