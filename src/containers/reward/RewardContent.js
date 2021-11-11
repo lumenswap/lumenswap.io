@@ -94,6 +94,11 @@ const RewardContent = () => {
       tooltip: 'This shows your earned rewards from the trader program.',
       content: <Info text="LSP" number={rewardAmountHumanize(rewardStats?.trader?.total)} />,
     },
+    {
+      title: 'LP reward earned',
+      tooltip: 'This shows your earned reward from the LP program.',
+      content: <span>-</span>,
+    },
   ];
 
   return (

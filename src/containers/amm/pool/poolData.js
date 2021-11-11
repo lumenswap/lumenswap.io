@@ -209,11 +209,21 @@ function PoolData() {
       ),
     },
     {
-      title: 'Accounts in pool',
-      dataIndex: 'accounts',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.total_trustlines - b.total_trustlines : b.total_trustlines - a.total_trustlines),
-      key: '5',
-      render: (data) => humanAmount(data.total_trustlines),
+      title: 'Volume 24h',
+      dataIndex: 'volume',
+      key: 3,
+      sortFunc: (a, b) => a - b,
+      render: (data) => <span>$12</span>,
+    },
+    {
+      title: 'APR',
+      dataIndex: 'apr',
+      key: 3,
+      render: (data) => (
+        <span>
+          %12
+        </span>
+      ),
     },
     // {
     //   title: 'Action',

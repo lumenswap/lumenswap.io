@@ -13,6 +13,7 @@ import LModal from '../containers/LModal';
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rc-slider/assets/index.css';
+import 'react-circular-progressbar/dist/styles.css';
 
 function MyApp({ Component, pageProps }) {
   const updateUserDetailIntervalRef = useRef(null);
