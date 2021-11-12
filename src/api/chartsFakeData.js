@@ -2,7 +2,7 @@ const lineData = [];
 
 const xAxisData = [];
 const barData = [];
-for (let i = 20; i < 100; i++) {
+for (let i = 20; i < 180; i++) {
   xAxisData.push(1636489119415 + (i * 60 * 30 * 10000));
   barData.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
 }

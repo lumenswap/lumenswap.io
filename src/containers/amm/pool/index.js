@@ -6,31 +6,30 @@ import * as echarts from 'echarts';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { chartData } from 'api/chartsFakeData';
+import Loading from 'components/Loading';
 import styles from './styles.module.scss';
 import PoolData from './poolData';
 
 const { barData, lineData, date } = chartData;
 
+const ChartLoading = () => (
+  <div className={styles['loading-container-chart']}>
+    <Loading size={48} />
+  </div>
+);
+
 const tvlOptions = {
-  // tooltip: {
-  //   trigger: 'axis',
-  //   formatter(params) {
-  //     params = params[0];
-  //     const date = new Date(params.name);
-  //     return (
-  //       `${date.getDate()
-  //       }/${
-  //         date.getMonth() + 1
-  //       }/${
-  //         date.getFullYear()
-  //       } : ${
-  //         params.value[1]}`
-  //     );
-  //   },
-  //   axisPointer: {
-  //     animation: false,
-  //   },
-  // },
+  tooltip: {
+    show: true,
+    trigger: 'axis',
+    alwaysShowContent: true,
+    showContent: true,
+    position: [5, 0],
+    className: 'echart-tooltip',
+    formatter() {
+      return null;
+    },
+  },
   dataZoom: {
     start: 0,
     end: 100,
@@ -87,6 +86,15 @@ const volumeOptions = {
     end: 100,
     type: 'inside',
   },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+    },
+    formatter() {
+      return null;
+    },
+  },
   xAxis: {
     axisLine: {
       show: false,
@@ -110,10 +118,11 @@ const volumeOptions = {
     {
       name: 'volume',
       type: 'bar',
-      barWidth: 5,
+      barWidth: 2,
+      barGap: '100%',
       data: barData,
       itemStyle: {
-        color: '#0e41f5', borderColor: '#fff',
+        color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
       },
       emphasis: {
         focus: 'series',
@@ -130,22 +139,46 @@ const volumeOptions = {
 };
 
 function VolumeChart({ setCurrentVolume }) {
+  if (!volumeOptions) {
+    return <ChartLoading />;
+  }
   return (
-    <CChart
-      options={volumeOptions}
-      onEvents={{
-        mouseover: (params) => setCurrentVolume(barData[params.dataIndex]),
-        mouseout: () => setCurrentVolume(100),
-      }}
-      height="117px"
-    />
+    <div className={styles.chart}>
+      <CChart
+        options={volumeOptions}
+        onEvents={{
+          mouseover: (params) => setCurrentVolume(barData[params.dataIndex]),
+          mouseout: () => setCurrentVolume(100),
+        }}
+        height="117px"
+      />
+    </div>
+  );
+}
+function TVLChart({ setCurrentTVL }) {
+  if (!tvlOptions) {
+    return <ChartLoading />;
+  }
+  return (
+    <div className={styles.chart}>
+      <CChart
+        onEvents={{
+          mouseover: (params) => setCurrentTVL(barData[params.dataIndex]),
+          mouseout: () => setCurrentTVL(2),
+        }}
+        options={tvlOptions}
+        height="117px"
+      />
+    </div>
   );
 }
 
-const MemuVolumeChart = React.memo(VolumeChart);
+const MemoVolumeChart = React.memo(VolumeChart);
+const MemoTVLChart = React.memo(TVLChart);
 
 const PoolPage = () => {
   const [currentVolume, setCurrentVolume] = useState(100);
+  const [currentTVL, setCurrentTVL] = useState(2);
 
   return (
     <div className="container-fluid">
@@ -163,12 +196,12 @@ const PoolPage = () => {
               <div className="col-md-6 col-12">
                 <div className={styles['chart-container']}>
                   <div className={styles['chart-info-container']}>
-                    <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>2b</span>
+                    <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>{currentTVL}</span>
                       <span className={styles['tvl-chart-text']}>TVL</span>
                     </div>
                     <span className={styles['tvl-chart-time']}>Nov,23</span>
                   </div>
-                  <div className={styles.chart}><CChart options={tvlOptions} height="117px" /></div>
+                  <MemoTVLChart setCurrentTVL={setCurrentTVL} />
                 </div>
               </div>
               <div className="col-md-6 col-12">
@@ -179,9 +212,7 @@ const PoolPage = () => {
                       <span className={styles['volume-chart-text']}>Volume 24h</span>
                     </div>
                   </div>
-                  <div className={styles.chart}>
-                    <MemuVolumeChart setCurrentVolume={setCurrentVolume} />
-                  </div>
+                  <MemoVolumeChart setCurrentVolume={setCurrentVolume} />
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import defaultTokens from 'tokens/defaultTokens';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import { useSelector, useDispatch } from 'react-redux';
+import sevenDigit from 'helpers/sevenDigit';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import { fetchAccountDetails } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
@@ -20,6 +21,7 @@ import useIsLogged from 'hooks/useIsLogged';
 import Button from 'components/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import BN from 'helpers/BN';
 import secondStyles from '../../../../components/Button/styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
 import styles from './styles.module.scss';
@@ -91,13 +93,25 @@ function MyPoolDetails({ poolDetail }) {
     },
   ];
 
+  const shareA = new BN(userShare)
+    .times(poolDetail.reserves[0].amount)
+    .div(poolDetail.total_shares);
+  const shareB = new BN(userShare)
+    .times(poolDetail.reserves[1].amount)
+    .div(poolDetail.total_shares);
+
+  let isLessThan0 = false;
+  if (new BN(userShare).times(100).div(poolDetail.total_shares).lt(0.01)) {
+    isLessThan0 = true;
+  }
+
   useEffect(() => {
     if (!isLogged) {
       router.push(urlMaker.pool.root());
     }
     loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
   }, []);
-  const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
+
   return (
     <div className="container-fluid">
       <Head>
@@ -135,8 +149,8 @@ function MyPoolDetails({ poolDetail }) {
                       <span className={styles['share-info-text']}>This is your share of the pool</span>
                     </div>
                     <CCricularProgressBar
-                      value={userShare ?? 0}
-                      text={userShare ? `${parseFloat(userShare).toFixed(2)}%` : 0}
+                      value={isLessThan0 ? 0.01 : `%${sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
+                      text={isLessThan0 ? '<0.01%' : `%${sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
                       size={110}
                       strokeWidth={5}
                       className={styles.progressbar}
@@ -158,23 +172,23 @@ function MyPoolDetails({ poolDetail }) {
                   <div className={styles['liquidity-info']}>
                     <div className={styles['liquidity-info-header']}>
                       <span>Liquidity</span>
-                      <span>${usdTvl}</span>
+                      {/* <span>{humanAmount(poolDetail.balanceUSD, true)}</span> */}
                     </div>
                     <div className={styles['liquidity-info-items']}>
                       <div className={styles['liquidity-info-item']}>
                         <span>
-                          {humanAmount(poolDetail.reserves[0].amount, true)}
+                          {humanAmount(shareA.toFixed(7), true)}
                         </span>
                         <span>
-                          {refinedA.getCode()}
+                          {getAssetFromLPAsset(poolDetail.reserves[0].asset).code}
                         </span>
                       </div>
                       <div className={styles['liquidity-info-item']}>
                         <span>
-                          {humanAmount(poolDetail.reserves[1].amount, true)}
+                          {humanAmount(shareB.toFixed(7), true)}
                         </span>
                         <span>
-                          {refinedB.getCode()}
+                          {getAssetFromLPAsset(poolDetail.reserves[1].asset).code}
                         </span>
                       </div>
                     </div>

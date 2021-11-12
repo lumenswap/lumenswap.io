@@ -182,6 +182,7 @@
   padding-right: 12px;
   div {
     height: 144px !important;
+    cursor: default !important;
   }
 }
 
@@ -258,7 +259,13 @@
   
 }
 
-
+.loading-container-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
 
 @media screen and (max-width: 768px) {
   .chart-container {

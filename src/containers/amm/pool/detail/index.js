@@ -13,6 +13,7 @@ import { chartData } from 'api/chartsFakeData';
 import { useEffect, useState } from 'react';
 import CTabs from 'components/CTabs';
 import useIsLogged from 'hooks/useIsLogged';
+import BN from 'helpers/BN';
 import { fetchAccountDetails } from 'api/stellar';
 import fetchPoolSwaps from 'api/poolDetailsSwaps';
 import humanAmount from 'helpers/humanAmount';
@@ -21,7 +22,6 @@ import { getTVLInUSD } from 'helpers/stellarPool';
 import urlMaker from 'helpers/urlMaker';
 import PoolMultiCharts from './PoolMultiCharts';
 import PoolDetailsTabContent from './PoolDetailsTabContent';
-import chartIcon from '../../../../assets/images/chart-icon.png';
 import refreshIcon from '../../../../assets/images/refresh-icon.png';
 import equalIcon from '../../../../assets/images/equal-icon.png';
 import styles from './styles.module.scss';
@@ -60,11 +60,18 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
   const [poolOperations, setPoolOperations] = useState(null);
   const [chartsData, setChartsData] = useState(chartData);
+  const [reverseHeaderInfo, setReverseHeaderInfo] = useState(false);
   const [poolSwaps, setPoolSwaps] = useState(null);
 
   const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
   const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
   const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
+
+  let HeaderInfoAsset = `${new BN(initPoolDetail.reserves[0].amount).div(initPoolDetail.reserves[1].amount)}`;
+
+  if (reverseHeaderInfo) {
+    HeaderInfoAsset = `${new BN(initPoolDetail.reserves[1].amount).div(initPoolDetail.reserves[0].amount)}`;
+  }
 
   useEffect(() => {
     loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
@@ -112,6 +119,10 @@ const Details = ({ poolDetail: initPoolDetail }) => {
     },
   ];
 
+  const handleReverseHeaderInfo = () => {
+    setReverseHeaderInfo((prev) => !prev);
+  };
+
   return (
     <div className="container-fluid pb-5">
       <Head>
@@ -130,25 +141,17 @@ const Details = ({ poolDetail: initPoolDetail }) => {
                     />
                   </div>
                   <div className={styles['header-info-container']}>
-                    <span className={styles['header-info-container-texts']}>10 LSP</span>
+                    <span className={styles['header-info-container-texts']}>1 {reverseHeaderInfo ? refinedB.getCode() : refinedA.getCode()}</span>
                     <div className={styles['equal-icon']}><Image src={equalIcon} width={14} height={8} /></div>
-                    <span className={styles['header-info-container-texts']}>100 XLM</span>
-                    <div className={styles['refresh-icon']}><Image src={refreshIcon} width={18} height={18} /></div>
+                    <span className={styles['header-info-container-texts']}>{HeaderInfoAsset} {reverseHeaderInfo ? refinedA.getCode() : refinedB.getCode()}</span>
+                    <div onClick={handleReverseHeaderInfo} className={styles['refresh-icon']}><Image src={refreshIcon} width={18} height={18} /></div>
                   </div>
                 </div>
               </div>
             </div>
             <div className={classNames(styles['info-containers'], 'row p')}>
               <div className="col-md-8 col-12">
-                {chartsData ? (
-                  <PoolMultiCharts />
-                )
-                  : (
-                    <div className={styles['chart-pool']}>
-                      <div className={styles['chart-icon-container']}><Image src={chartIcon} width={32} height={27} /></div>
-                      <span>The chart is not available for this pool</span>
-                    </div>
-                  )}
+                <PoolMultiCharts chartsData={chartData} />
               </div>
               <div className={classNames(styles['info-pool-container'], 'col-md-4 col-12')}>
                 <div className={styles['tvl-info-container']}>

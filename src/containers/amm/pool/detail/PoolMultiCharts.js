@@ -1,33 +1,32 @@
 import CChart from 'components/CChart';
 import * as echarts from 'echarts';
 import React, { useState } from 'react';
-
+import Image from 'next/image';
 import moment from 'moment';
 import { chartData } from 'api/chartsFakeData';
+import Loading from 'components/Loading';
+import chartIcon from '../../../../assets/images/chart-icon.png';
 import styles from './styles.module.scss';
 
 const { date, lineData, barData } = chartData;
+const ChartLoading = () => (
+  <div className={styles['loading-container-chart']}>
+    <Loading size={48} />
+  </div>
+);
 
 const tvlOptions = {
-  // tooltip: {
-  //   trigger: 'axis',
-  //   formatter(params) {
-  //     params = params[0];
-  //     const date = new Date(params.name);
-  //     return (
-  //       `${date.getDate()
-  //       }/${
-  //         date.getMonth() + 1
-  //       }/${
-  //         date.getFullYear()
-  //       } : ${
-  //         params.value[1]}`
-  //     );
-  //   },
-  //   axisPointer: {
-  //     animation: false,
-  //   },
-  // },
+  tooltip: {
+    show: true,
+    trigger: 'axis',
+    alwaysShowContent: true,
+    showContent: true,
+    position: [5, 0],
+    className: 'echart-tooltip',
+    formatter() {
+      return null;
+    },
+  },
   dataZoom: {
     start: 0,
     end: 100,
@@ -79,6 +78,15 @@ const tvlOptions = {
 
 const volumeOptions = {
   // tooltip: {},
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+    },
+    formatter() {
+      return null;
+    },
+  },
   dataZoom: {
     start: 0,
     end: 100,
@@ -128,6 +136,15 @@ const volumeOptions = {
 
 const feeOptions = {
   // tooltip: {},
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+    },
+    formatter() {
+      return null;
+    },
+  },
   dataZoom: {
     start: 0,
     end: 100,
@@ -176,40 +193,64 @@ const feeOptions = {
 };
 
 const Chart = ({
-  currentChart, setCurrentValue,
+  currentChart, setCurrentValue, chartsData,
 }) => {
   if (currentChart === 'tvl') {
-    return <CChart height="125px" options={tvlOptions} />;
+    // if (!chartsData.tvl) {
+    //   return <ChartLoading />;
+    // }
+    return (
+      <div className={styles['multi-chart-container']}>
+        <CChart
+          height="125px"
+          onEvents={{
+            mouseover: (params) => setCurrentValue(barData[params.dataIndex]),
+            mouseout: () => setCurrentValue(326),
+          }}
+          options={tvlOptions}
+        />
+      </div>
+    );
   }
   if (currentChart === 'fee') {
+    // if (!chartsData.fee) {
+    //   return <ChartLoading />;
+    // }
     return (
-      <CChart
-        onEvents={{
-          mouseover: (params) => setCurrentValue(barData[params.dataIndex]),
-          mouseout: () => setCurrentValue(326),
-        }}
-        options={feeOptions}
-        height="125px"
-      />
+      <div className={styles['multi-chart-container']}>
+        <CChart
+          onEvents={{
+            mouseover: (params) => setCurrentValue(barData[params.dataIndex]),
+            mouseout: () => setCurrentValue(326),
+          }}
+          options={feeOptions}
+          height="125px"
+        />
+      </div>
     );
   }
   if (currentChart === 'volume') {
+    // if (!chartsData.volume) {
+    //   return <ChartLoading />;
+    // }
     return (
-      <CChart
-        onEvents={{
-          mouseover: (params) => setCurrentValue(barData[params.dataIndex]),
-          mouseout: () => setCurrentValue(326),
-        }}
-        options={volumeOptions}
-        height="125px"
-      />
+      <div className={styles['multi-chart-container']}>
+        <CChart
+          onEvents={{
+            mouseover: (params) => setCurrentValue(barData[params.dataIndex]),
+            mouseout: () => setCurrentValue(326),
+          }}
+          options={volumeOptions}
+          height="125px"
+        />
+      </div>
     );
   }
-  return <></>;
+  return null;
 };
-const MemuCharts = React.memo(Chart);
+const MemoCharts = React.memo(Chart);
 
-function PoolMultiCharts() {
+function PoolMultiCharts({ chartsData }) {
   const [currentChart, setCurrentChart] = useState('tvl');
   const [currentValue, setCurrentValue] = useState(324);
 
@@ -222,6 +263,15 @@ function PoolMultiCharts() {
   const handleFee = () => {
     setCurrentChart('fee');
   };
+
+  if (chartsData === []) {
+    return (
+      <div className={styles['chart-pool']}>
+        <div className={styles['chart-icon-container']}><Image src={chartIcon} width={32} height={27} /></div>
+        <span>The chart is not available for this pool</span>
+      </div>
+    );
+  }
   return (
     <div className={styles['chart-container']}>
       <div className={styles['chart-header']}>
@@ -235,9 +285,11 @@ function PoolMultiCharts() {
           <div className={currentChart === 'fee' ? styles['btn-active'] : styles.btn} onClick={handleFee}>Fee</div>
         </div>
       </div>
-      <div className={styles['multi-chart-container']}>
-        <MemuCharts currentChart={currentChart} setCurrentValue={setCurrentValue} />
-      </div>
+      <MemoCharts
+        currentChart={currentChart}
+        setCurrentValue={setCurrentValue}
+        chartsData={chartsData}
+      />
     </div>
   );
 }
