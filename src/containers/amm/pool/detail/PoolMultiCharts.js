@@ -115,10 +115,10 @@ const volumeOptions = {
     {
       name: 'volume',
       type: 'bar',
-      barWidth: 5,
+      barWidth: 2,
       data: barData,
       itemStyle: {
-        color: '#0e41f5', borderColor: '#fff',
+        color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
       },
       emphasis: {
         focus: 'series',
@@ -173,10 +173,10 @@ const feeOptions = {
     {
       name: 'fee',
       type: 'bar',
-      barWidth: 5,
+      barWidth: 2,
       data: barData,
       itemStyle: {
-        color: '#0e41f5', borderColor: '#fff',
+        color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
       },
       emphasis: {
         focus: 'series',
