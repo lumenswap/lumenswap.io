@@ -1,6 +1,5 @@
 import Loading from 'components/Loading';
 import ReactECharts from 'echarts-for-react';
-import { CHART_KEYS } from 'pages/Auction/aggregation';
 import numeral from 'numeral';
 
 import styles from './styles.module.scss';

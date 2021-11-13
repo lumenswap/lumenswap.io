@@ -121,6 +121,16 @@ input[type='number'] {
 .modal-content {
   border-radius: 12px !important;
 }
+.CircularProgressbar-text {
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: normal;
+  fill: $BlueRibbon !important;
+}
 
 .tooltip-inner {
   background-color: white !important;

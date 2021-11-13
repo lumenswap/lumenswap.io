@@ -8,7 +8,18 @@
   font-size: 20px;
   font-weight: 600;
   color: $CodGray;
-  margin-bottom: 0;
+  margin-bottom: 21px;
+  &-second {
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    color: $CodGray;
+    margin-top: 24px;
+  }
 }
 
 .btn {
@@ -154,5 +165,110 @@
     letter-spacing: normal;
     cursor: pointer;
     color: $BlueRibbon;
+  }
+}
+
+
+.chart-container {
+  background-color: $White;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  width: 100%;
+  height: 200px;
+}
+
+.chart {
+  padding-left: 12px;
+  padding-right: 12px;
+  div {
+    height: 144px !important;
+    cursor: default !important;
+  }
+}
+
+.chart-info-container {
+  height: 54px;
+  width: 100%;
+  padding-right: 12px;
+  padding-left: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.tvl-chart {
+  display: flex;
+  flex-direction: column;
+  &-number {
+    font-family: SofiaPro;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $CodGray;
+    padding-top: 7px;
+  }
+  &-text {
+    font-family: SofiaPro;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+  &-time {
+    font-family: SofiaPro;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: right;
+    color: $Manatee;
+    padding-top: 12px;
+  }
+}
+.volume-chart {
+  display: flex;
+  flex-direction: column;
+  &-number {
+    font-family: SofiaPro;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $CodGray;
+    padding-top: 7px;
+  }
+  &-text {
+    font-family: SofiaPro;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+  
+}
+
+.loading-container-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .chart-container {
+    margin-top: 14px;
   }
 }

@@ -72,6 +72,13 @@
   max-height: 474px;
   overflow-y: auto;
   scrollbar-width: none;
+  
+    a {
+      tr {
+        vertical-align: middle;
+      }
+    }
+  
   td {
     height: 53px;
     font-family: SofiaPro;

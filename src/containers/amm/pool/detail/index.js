@@ -4,116 +4,28 @@ import defaultTokens from 'tokens/defaultTokens';
 import AMMHeader from 'components/AMMHeader';
 import Breadcrumb from 'components/BreadCrumb';
 import CurrencyPair from 'components/CurrencyPair';
-import numeral from 'numeral';
-import CStatistics from 'components/CStatistics';
-import moment from 'moment';
-import CTable from 'components/CTable';
-import minimizeAddress from 'helpers/minimizeAddress';
-import { generateOperationIdURL } from 'helpers/explorerURLGenerator';
 import Image from 'next/image';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
-import { useDispatch, useSelector } from 'react-redux';
-import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
-import { openConnectModal, openModalAction } from 'actions/modal';
-import Button from 'components/Button';
+import { useSelector } from 'react-redux';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
+import { chartData } from 'api/chartsFakeData';
 import { useEffect, useState } from 'react';
+import CTabs from 'components/CTabs';
 import useIsLogged from 'hooks/useIsLogged';
-import { fetchAccountDetails } from 'api/stellar';
-import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
-import { getPoolDetailsById, getPoolOperationsAPI } from 'api/stellarPool';
-import DepositLiquidity from 'containers/amm/DepositLiquidity';
+import { fetchAccountDetails } from 'api/stellar';
+import fetchPoolSwaps from 'api/poolDetailsSwaps';
+import humanAmount from 'helpers/humanAmount';
+import { getPoolOperationsAPI } from 'api/stellarPool';
 import { getTVLInUSD } from 'helpers/stellarPool';
-import sevenDigit from 'helpers/sevenDigit';
 import urlMaker from 'helpers/urlMaker';
-import showGenerateTrx from 'helpers/showGenerateTrx';
-import showSignResponse from 'helpers/showSignResponse';
-import generateRemovePoolTrustlineTRX from 'stellar-trx/generateRemovePoolTrustlineTRX';
-import { useRouter } from 'next/router';
+import PoolMultiCharts from './PoolMultiCharts';
+import PoolDetailsTabContent from './PoolDetailsTabContent';
+import refreshIcon from '../../../../assets/images/refresh-icon.png';
+import equalIcon from '../../../../assets/images/equal-icon.png';
 import styles from './styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
-import iconRefresh from '../../../../../public/images/icon-refresh.png';
-import secondStyles from '../../../../components/Button/styles.module.scss';
-
-const NoDataMessage = () => (
-  <div className={styles['no-data-message-container']}>
-    <span>There is no activity</span>
-  </div>
-);
-
-const ShareInfo = ({ poolDetail, isLogged, userShare }) => {
-  const [isUSDTVL, setIsUSDTVL] = useState(true);
-
-  const ShareInfoContainer = ({ children }) => (
-    <span className={styles['pool-info-content']}>
-      {children}
-    </span>
-  );
-
-  if (!isLogged) {
-    return (
-      <ShareInfoContainer>
-        -
-      </ShareInfoContainer>
-    );
-  }
-
-  if (userShare === null) {
-    return (
-      <ShareInfoContainer>
-        -
-      </ShareInfoContainer>
-    );
-  }
-
-  if (new BN(userShare).eq(0)) {
-    return (
-      <ShareInfoContainer>
-        -
-      </ShareInfoContainer>
-    );
-  }
-
-  const shareA = new BN(userShare)
-    .times(poolDetail.reserves[0].amount)
-    .div(poolDetail.total_shares);
-  const shareB = new BN(userShare)
-    .times(poolDetail.reserves[1].amount)
-    .div(poolDetail.total_shares);
-
-  let isLessThan0 = false;
-  if (new BN(userShare).times(100).div(poolDetail.total_shares).lt(0.01)) {
-    isLessThan0 = true;
-  }
-
-  if (isUSDTVL) {
-    return (
-      <div className={styles['pool-info-container']}>
-        <span className={styles['pool-info-content']}>
-          {isLessThan0 ? '<0.01%' : `%${sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
-        </span>
-        <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
-          <Image src={iconRefresh} width={18} height={18} />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className={styles['pool-info-container']}>
-      <span className={styles['pool-info-content']}>
-        {humanAmount(shareA.toFixed(7), true)} <span className={styles['pool-info-code']}>{getAssetFromLPAsset(poolDetail.reserves[0].asset).getCode()}</span>{' / '}
-        {humanAmount(shareB.toFixed(7), true)}{' '}
-        <span className={styles['pool-info-code']}>{getAssetFromLPAsset(poolDetail.reserves[1].asset).getCode()}</span>
-      </span>
-      <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
-        <Image src={iconRefresh} width={18} height={18} />
-      </div>
-    </div>
-  );
-};
 
 async function loadUserPool(setUserShare, isLogged, userAddress, poolId) {
   if (isLogged) {
@@ -130,35 +42,43 @@ async function loadUserPool(setUserShare, isLogged, userAddress, poolId) {
   }
 }
 
-async function reloadPoolDetail(setPoolDetail, poolId, router) {
-  try {
-    const poolDetail = await getPoolDetailsById(poolId);
-    setPoolDetail(poolDetail);
-  } catch (e) {
-    router.push(urlMaker.pool.root());
-  }
-}
+// async function reloadPoolDetail(setPoolDetail, poolId, router) {
+//   try {
+//     const poolDetail = await getPoolDetailsById(poolId);
+//     setPoolDetail(poolDetail);
+//   } catch (e) {
+//     router.push(urlMaker.pool.root());
+//   }
+// }
 
 const Details = ({ poolDetail: initPoolDetail }) => {
   const [userShare, setUserShare] = useState(null);
   const isLogged = useIsLogged();
   const userAddress = useSelector((state) => state.user.detail.address);
-  const dispatch = useDispatch();
   const [poolDetail, setPoolDetail] = useState(initPoolDetail);
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
   const [poolOperations, setPoolOperations] = useState(null);
-  const router = useRouter();
+  const [chartsData, setChartsData] = useState(chartData);
+  const [reverseHeaderInfo, setReverseHeaderInfo] = useState(false);
+  const [poolSwaps, setPoolSwaps] = useState(null);
 
   const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
   const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
   const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
+
+  let HeaderInfoAsset = `${new BN(initPoolDetail.reserves[0].amount).div(initPoolDetail.reserves[1].amount)}`;
+
+  if (reverseHeaderInfo) {
+    HeaderInfoAsset = `${new BN(initPoolDetail.reserves[1].amount).div(initPoolDetail.reserves[0].amount)}`;
+  }
 
   useEffect(() => {
     loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
   }, [isLogged, userAddress]);
 
   useEffect(() => {
+    fetchPoolSwaps().then((data) => setPoolSwaps(data));
     async function loadData() {
       const operations = await getPoolOperationsAPI(poolDetail.id, { order: 'desc', limit: 20 });
       setPoolOperations(operations);
@@ -167,182 +87,6 @@ const Details = ({ poolDetail: initPoolDetail }) => {
     loadData();
   }, []);
 
-  const TVLInfo = () => {
-    const [isUSDTVL, setIsUSDTVL] = useState(true);
-    const xlmPrice = useSelector((state) => state.xlmPrice);
-
-    const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
-
-    if (isUSDTVL) {
-      return (
-        <div className={styles['pool-info-container']}>
-          <span className={styles['pool-info-content']}>
-            {usdTvl !== '-' && '$'}{usdTvl}
-          </span>
-          <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
-            <Image src={iconRefresh} width={18} height={18} />
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div className={styles['pool-info-container']}>
-        <span className={styles['pool-info-content']}>
-          {humanAmount(poolDetail.reserves[0].amount, true)} <span className={styles['pool-info-code']}>{refinedA.code}</span>
-        </span>
-        <div className={styles.dot} />
-        <span className={styles['pool-info-content']}>
-          {humanAmount(poolDetail.reserves[1].amount, true)} <span className={styles['pool-info-code']}>{refinedB.code}</span>
-        </span>
-        <div className={styles['refresh-logo']} onClick={() => setIsUSDTVL((prev) => !prev)}>
-          <Image src={iconRefresh} width={18} height={18} />
-        </div>
-      </div>
-    );
-  };
-
-  const TrustLineInfo = () => (
-    <span className={styles['pool-info-content']}>
-      {numeral(poolDetail.total_trustlines).format('0,0')}
-    </span>
-  );
-
-  const infoBlocks = [
-    {
-      title: 'TVL',
-      content: <TVLInfo />,
-      tooltip: 'This shows the total amount of volume locked in this pool.',
-    },
-    {
-      title: 'Accounts in pool',
-      content: <TrustLineInfo />,
-      tooltip: 'This shows the number of accounts that participated in this pool.',
-    },
-    {
-      title: 'Your Share',
-      content: <ShareInfo
-        poolDetail={poolDetail}
-        isLogged={isLogged}
-        userShare={userShare}
-      />,
-      tooltip: 'This shows your share of this pool.',
-    },
-  ];
-
-  const tableHeaders = [
-    {
-      title: 'Operation ID',
-      dataIndex: 'operationId',
-      key: 1,
-      render: (operation) => (
-        <a
-          className={styles['tx-link']}
-          href={generateOperationIdURL(operation.id)}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {minimizeAddress(operation.id)}
-        </a>
-      ),
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 2,
-      render: (operation) => {
-        let type = 'Unknown';
-
-        if (operation.type === 'change_trust') {
-          if (new BN(operation.limit).isEqualTo(0)) {
-            type = 'Remove Trustline';
-          } else {
-            type = 'Add Trustline';
-          }
-        }
-
-        if (operation.type === 'liquidity_pool_deposit') {
-          type = 'Deposit';
-        }
-
-        if (operation.type === 'liquidity_pool_withdraw') {
-          type = 'Withdraw';
-        }
-
-        if (operation.type === 'path_payment_strict_receive' || operation.type === 'path_payment_strict_send') {
-          type = 'Swap';
-        }
-
-        return (
-          <div className={styles['table-info-row']}>
-            <span>{type}</span>
-          </div>
-        );
-      },
-    },
-    {
-      title: 'Time',
-      dataIndex: 'time',
-      key: 3,
-      render: (operation) => <span>{moment(operation.created_at).fromNow()}</span>,
-    },
-  ];
-
-  const handleDeposit = () => {
-    dispatch(
-      openModalAction({
-        modalProps: {
-          title: 'Deposit Liquidity',
-          className: 'main',
-        },
-        content: <DepositLiquidity
-          tokenA={refinedA}
-          tokenB={refinedB}
-          afterDeposit={() => {
-            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
-            reloadPoolDetail(setPoolDetail, poolDetail.id, router);
-          }}
-        />,
-      }),
-    );
-  };
-
-  const handleWithdraw = async () => {
-    if (new BN(userShare).eq(0)) {
-      // eslint-disable-next-line no-inner-declarations
-      function func() {
-        return generateRemovePoolTrustlineTRX(
-          userAddress,
-          tokenA,
-          tokenB,
-        );
-      }
-
-      await showGenerateTrx(func, dispatch)
-        .then((trx) => showSignResponse(trx, dispatch))
-        .catch(console.error);
-
-      loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
-      reloadPoolDetail(setPoolDetail, poolDetail.id, router);
-    } else {
-      dispatch(
-        openModalAction({
-          modalProps: {
-            title: 'Withdraw Liquidity',
-            className: 'main',
-          },
-          content: <WithdrawLiquidity
-            tokenA={refinedA}
-            tokenB={refinedB}
-            afterWithdraw={() => {
-              loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
-              reloadPoolDetail(setPoolDetail, poolDetail.id, router);
-            }}
-          />,
-        }),
-      );
-    }
-  };
   const breadCrumbData = [
     {
       name: 'Pools',
@@ -360,6 +104,24 @@ const Details = ({ poolDetail: initPoolDetail }) => {
       ),
     },
   ];
+  const xlmPrice = useSelector((state) => state.xlmPrice);
+
+  const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
+
+  const tabs = [
+    {
+      title: 'Swaps',
+      id: 'swaps',
+    },
+    {
+      title: 'Pool activities',
+      id: 'activity',
+    },
+  ];
+
+  const handleReverseHeaderInfo = () => {
+    setReverseHeaderInfo((prev) => !prev);
+  };
 
   return (
     <div className="container-fluid pb-5">
@@ -373,47 +135,55 @@ const Details = ({ poolDetail: initPoolDetail }) => {
             <div className="row align-items-center">
               <div className={grid2}>
                 <div className={styles['header-container']}>
-                  <div>
+                  <div className={styles['bread-crumb-container']}>
                     <Breadcrumb
                       data={breadCrumbData}
                     />
                   </div>
-                  <div className={styles['btns-container']}>
-                    <Button
-                      className={classNames(styles['deposit-btn'], secondStyles['button-primary'])}
-                      content="Deposit"
-                      onClick={() => {
-                        if (isLogged) {
-                          handleDeposit();
-                        } else {
-                          dispatch(openConnectModal());
-                        }
-                      }}
-                    />
-                    {userShare !== null && isLogged && (
-                    <Button
-                      className={classNames(styles['withdraw-btn'], secondStyles['button-basic'])}
-                      content={new BN(userShare).eq(0) ? 'Remove' : 'Withdraw'}
-                      onClick={handleWithdraw}
-                    />
-                    )}
+                  <div className={styles['header-info-container']}>
+                    <span className={styles['header-info-container-texts']}>1 {reverseHeaderInfo ? refinedB.getCode() : refinedA.getCode()}</span>
+                    <div className={styles['equal-icon']}><Image src={equalIcon} width={14} height={8} /></div>
+                    <span className={styles['header-info-container-texts']}>{HeaderInfoAsset} {reverseHeaderInfo ? refinedA.getCode() : refinedB.getCode()}</span>
+                    <div onClick={handleReverseHeaderInfo} className={styles['refresh-icon']}><Image src={refreshIcon} width={18} height={18} /></div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row p">
-              <div className={classNames(styles['info-pool'], 'col-12')}>
-                <CStatistics className={styles['c-statistic']} blocks={infoBlocks} />
+            <div className={classNames(styles['info-containers'], 'row p')}>
+              <div className="col-md-8 col-12">
+                <PoolMultiCharts chartsData={chartData} />
               </div>
-              <div className="col-12"> <h1 className={styles.title}>Latest pool activity</h1></div>
+              <div className={classNames(styles['info-pool-container'], 'col-md-4 col-12')}>
+                <div className={styles['tvl-info-container']}>
+                  <div className={styles['tvl-info-header']}>
+                    <span className={styles['tvl-info-header-text']}>TVL</span>
+                    <span className={styles['tvl-info-header-number']}>${usdTvl ?? '-'}</span>
+                  </div>
+                  <div className={styles['tvl-info-items']}>
+                    <div className={styles['tvl-info-item']}><span>{humanAmount(poolDetail.reserves[0].amount, true)} {refinedA.getCode()}</span></div>
+                    <div className={styles['tvl-info-item']}><span>{humanAmount(poolDetail.reserves[1].amount, true)} {refinedB.getCode()}</span></div>
+                  </div>
+                </div>
+                <div className={styles['volume-info-container']}>
+                  <div className={styles['volume-info-item']}>
+                    <span>24h fees</span>
+                    <span>$200</span>
+                  </div>
+                  <div className={styles['volume-info-item']}>
+                    <span>Volume 24h</span>
+                    <span>$100</span>
+                  </div>
+                </div>
+              </div>
               <div className="col-12">
-                <CTable
-                  columns={tableHeaders}
-                  noDataMessage={NoDataMessage}
-                  dataSource={poolOperations}
-                  className={styles.table}
-                  loading={poolOperations === null}
-                />
+                <div className={styles.card}>
+                  <CTabs
+                    tabs={tabs}
+                    tabContent={PoolDetailsTabContent}
+                    customTabProps={{ poolOperations, poolSwaps }}
+                    className={styles.tabs}
+                  />
+                </div>
               </div>
             </div>
           </div>
