@@ -15,8 +15,8 @@ const ChartLoading = () => (
 const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions, chartData }) => (
   <CChart
     onEvents={{
-      mouseover: (params) => setCurrentTVL(chartData[params.dataIndex]),
-      mouseout: () => setCurrentTVL(chartData[chartData.length - 1]),
+      highlight: (params) => setCurrentTVL(chartData[params.batch[0].dataIndex]),
+      downplay: () => setCurrentTVL(chartData[chartData.length - 1]),
     }}
     options={tvlOptions}
     height="117px"

@@ -17,8 +17,8 @@ function VolumeChart({ options, setCurrentVolume, chartData }) {
     <CChart
       options={options}
       onEvents={{
-        mouseover: (params) => setCurrentVolume(chartData[params.dataIndex]),
-        mouseout: () => setCurrentVolume(chartData[chartData.length - 1]),
+        highlight: (params) => setCurrentVolume(chartData[params.batch[0].dataIndex]),
+        downplay: () => setCurrentVolume(chartData[chartData.length - 1]),
       }}
       height="117px"
     />
@@ -72,7 +72,7 @@ function AMMOVerallVolumeChart({ chartData }) {
       {
         name: 'volume',
         type: 'bar',
-        barWidth: 2,
+        barWidth: Math.max(2, 20 / Math.round(Math.sqrt(chartData?.length))),
         barGap: '100%',
         data: chartData?.map((i) => i.volume),
         itemStyle: {

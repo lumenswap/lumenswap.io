@@ -119,7 +119,7 @@ const Chart = ({
       {
         name: 'volume',
         type: 'bar',
-        barWidth: 2,
+        barWidth: Math.max(2, 20 / Math.round(Math.sqrt(chartData?.length))),
         data: chartData?.map((i) => new BN(i.volume).div(10 ** 7).toString()),
         itemStyle: {
           color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
@@ -177,7 +177,7 @@ const Chart = ({
       {
         name: 'fee',
         type: 'bar',
-        barWidth: 2,
+        barWidth: Math.max(2, 20 / Math.round(Math.sqrt(chartData?.length))),
         data: chartData?.map((i) => new BN(i.volume).div(10 ** 7).times(0.003).toString()),
         itemStyle: {
           color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
@@ -202,8 +202,8 @@ const Chart = ({
         <CChart
           height="125px"
           onEvents={{
-            mouseover: (params) => setCurrentValue(chartData[params.dataIndex]),
-            mouseout: () => setCurrentValue(chartData[chartData.length - 1]),
+            highlight: (params) => setCurrentValue(chartData[params.batch[0].dataIndex]),
+            downplay: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={tvlOptions}
         />
@@ -215,8 +215,8 @@ const Chart = ({
       <div className={styles['multi-chart-container']}>
         <CChart
           onEvents={{
-            mouseover: (params) => setCurrentValue(chartData[params.dataIndex]),
-            mouseout: () => setCurrentValue(chartData[chartData.length - 1]),
+            highlight: (params) => setCurrentValue(chartData[params.batch[0].dataIndex]),
+            downplay: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={feeOptions}
           height="125px"
@@ -229,8 +229,8 @@ const Chart = ({
       <div className={styles['multi-chart-container']}>
         <CChart
           onEvents={{
-            mouseover: (params) => setCurrentValue(chartData[params.dataIndex]),
-            mouseout: () => setCurrentValue(chartData[chartData.length - 1]),
+            highlight: (params) => setCurrentValue(chartData[params.batch[0].dataIndex]),
+            downplay: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={volumeOptions}
           height="125px"
