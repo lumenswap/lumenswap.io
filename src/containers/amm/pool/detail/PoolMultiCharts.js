@@ -200,7 +200,7 @@ const Chart = ({
     return (
       <div className={styles['multi-chart-container']}>
         <CChart
-          height="125px"
+          height="175px"
           onEvents={{
             highlight: (params) => setCurrentValue(chartData[params.batch[0].dataIndex]),
             downplay: () => setCurrentValue(chartData[chartData.length - 1]),
@@ -219,7 +219,7 @@ const Chart = ({
             downplay: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={feeOptions}
-          height="125px"
+          height="175px"
         />
       </div>
     );
@@ -233,7 +233,7 @@ const Chart = ({
             downplay: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={volumeOptions}
-          height="125px"
+          height="175px"
         />
       </div>
     );
@@ -268,9 +268,7 @@ function PoolMultiCharts({ poolId }) {
     setCurrentChart('fee');
   };
 
-  if (chartData === null) {
-    return <ChartLoading />;
-  }
+ 
 
   if (chartData === []) {
     return (
@@ -293,11 +291,11 @@ function PoolMultiCharts({ poolId }) {
           <div className={currentChart === 'fee' ? styles['btn-active'] : styles.btn} onClick={handleFee}>Fee</div>
         </div>
       </div>
-      <MemoCharts
+      {!chartData ? <ChartLoading /> : <MemoCharts
         currentChart={currentChart}
         setCurrentValue={setCurrentValue}
         chartData={chartData}
-      />
+      />}
     </div>
   );
 }

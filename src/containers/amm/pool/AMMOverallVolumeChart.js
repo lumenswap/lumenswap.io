@@ -12,6 +12,20 @@ const ChartLoading = () => (
   </div>
 );
 
+const PageWrapper = ({ children, currentVolume }) => (
+  <div className="col-md-6 col-12">
+    <div className={styles['chart-container']}>
+      <div className={styles['chart-info-container']}>
+        <div className={styles['volume-chart']}>
+          <span className={styles['volume-chart-number']}>${humanAmount(new BN(currentVolume.volume).div(10 ** 7).toString(), true)}</span>
+          <span className={styles['volume-chart-text']}>Volume 24h</span>
+        </div>
+      </div>
+      {children}
+    </div>
+  </div>
+);
+
 function VolumeChart({ options, setCurrentVolume, chartData }) {
   return (
     <CChart
@@ -98,28 +112,24 @@ function AMMOVerallVolumeChart({ chartData }) {
     }
   }, [chartData]);
 
-  if (!volumeOptions) {
-    return <ChartLoading />;
+  if (!chartData) {
+    return (
+      <PageWrapper currentVolume={currentVolume}>
+        <ChartLoading />
+      </PageWrapper>
+    );
   }
 
   return (
-    <div className="col-md-6 col-12">
-      <div className={styles['chart-container']}>
-        <div className={styles['chart-info-container']}>
-          <div className={styles['volume-chart']}>
-            <span className={styles['volume-chart-number']}>${humanAmount(new BN(currentVolume.volume).div(10 ** 7).toString(), true)}</span>
-            <span className={styles['volume-chart-text']}>Volume 24h</span>
-          </div>
-        </div>
-        <div className={styles.chart}>
-          <InnerChartMemo
-            options={volumeOptions}
-            setCurrentVolume={setCurrentVolume}
-            chartData={chartData}
-          />
-        </div>
+    <PageWrapper currentVolume={currentVolume}>
+      <div className={styles.chart}>
+        <InnerChartMemo
+          options={volumeOptions}
+          setCurrentVolume={setCurrentVolume}
+          chartData={chartData}
+        />
       </div>
-    </div>
+    </PageWrapper>
   );
 }
 

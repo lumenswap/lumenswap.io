@@ -1,0 +1,9 @@
+@import 'styles/vars';
+
+card {
+    border-radius: 4px;
+    background-color: $White;
+    width: 100%;
+    box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+    height: 100%;
+}

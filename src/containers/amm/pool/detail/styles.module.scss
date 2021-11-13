@@ -513,7 +513,7 @@
   padding-right: 14px;
   padding-left: 14px;
   font-family: SofiaPro;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
@@ -526,10 +526,10 @@
   align-items: center;
   background-color: $White;
   &-active {
-    padding-right: 14px;
+  padding-right: 14px;
   padding-left: 14px;
   font-family: SofiaPro;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
@@ -574,10 +574,10 @@
 .multi-chart-container {
   padding-left: 12px;
   padding-right: 12px;
-  margin-top: 106px;
+  margin-top: 56px;
   width: 100%;
   div {
-    height: 145px !important;
+    height: 195px !important;
     cursor: default !important;
   }
 }

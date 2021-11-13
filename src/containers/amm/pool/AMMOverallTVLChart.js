@@ -12,6 +12,20 @@ const ChartLoading = () => (
   </div>
 );
 
+const PageWrapper = ({ children, currentTVL }) => (
+  <div className="col-md-6 col-12">
+    <div className={styles['chart-container']}>
+      <div className={styles['chart-info-container']}>
+        <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>${humanAmount(currentTVL.tvl, true)}</span>
+          <span className={styles['tvl-chart-text']}>TVL</span>
+        </div>
+        <span className={styles['tvl-chart-time']}>{moment(currentTVL.periodTime).utc().format('MMM, DD')}</span>
+      </div>
+      {children}
+    </div>
+  </div>
+);
+
 const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions, chartData }) => (
   <CChart
     onEvents={{
@@ -98,27 +112,23 @@ function AMMOverallTVLChart({ chartData }) {
   }, [chartData]);
 
   if (!chartData) {
-    return <ChartLoading />;
+    return (
+      <PageWrapper currentTVL={currentTVL}>
+        <ChartLoading />
+      </PageWrapper>
+    );
   }
 
   return (
-    <div className="col-md-6 col-12">
-      <div className={styles['chart-container']}>
-        <div className={styles['chart-info-container']}>
-          <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>${humanAmount(currentTVL.tvl, true)}</span>
-            <span className={styles['tvl-chart-text']}>TVL</span>
-          </div>
-          <span className={styles['tvl-chart-time']}>{moment(currentTVL.periodTime).utc().format('MMM, DD')}</span>
-        </div>
-        <div className={styles.chart}>
-          <InnerChartMemo
-            tvlOptions={tvlOptions}
-            setCurrentTVL={setCurrentTVL}
-            chartData={chartData}
-          />
-        </div>
+    <PageWrapper currentTVL={currentTVL}>
+      <div className={styles.chart}>
+        <InnerChartMemo
+          tvlOptions={tvlOptions}
+          setCurrentTVL={setCurrentTVL}
+          chartData={chartData}
+        />
       </div>
-    </div>
+    </PageWrapper>
   );
 }
 

@@ -90,9 +90,9 @@ const Details = ({ poolDetail }) => {
                     />
                   </div>
                   <div className={styles['header-info-container']}>
-                    <span className={styles['header-info-container-texts']}>1 {reverseHeaderInfo ? refinedB.getCode() : refinedA.getCode()}</span>
+                    <span className={styles['header-info-container-texts']}>1 {reverseHeaderInfo ? refinedA.getCode() : refinedB.getCode()}</span>
                     <div className={styles['equal-icon']}><Image src={equalIcon} width={14} height={8} /></div>
-                    <span className={styles['header-info-container-texts']}>{HeaderInfoAsset} {reverseHeaderInfo ? refinedA.getCode() : refinedB.getCode()}</span>
+                    <span className={styles['header-info-container-texts']}>{HeaderInfoAsset} {reverseHeaderInfo ? refinedB.getCode() : refinedA.getCode()}</span>
                     <div onClick={handleReverseHeaderInfo} className={styles['refresh-icon']}><Image src={refreshIcon} width={18} height={18} /></div>
                   </div>
                 </div>
