@@ -1,117 +1,29 @@
-import isSameAsset from 'helpers/isSameAsset';
 import CurrencyPair from 'components/CurrencyPair';
-import getAssetDetails from 'helpers/getAssetDetails';
-import { useDispatch, useSelector } from 'react-redux';
-import { openModalAction } from 'actions/modal';
-import DepositLiquidity from 'containers/amm/DepositLiquidity';
-import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
-import { useEffect, useRef, useState } from 'react';
-import { extractLogo, listOfKnownPoolIds } from 'helpers/assetUtils';
-import { getPoolDetailsById } from 'api/stellarPool';
+import { useEffect, useState } from 'react';
+import { extractLogo } from 'helpers/assetUtils';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import humanAmount from 'helpers/humanAmount';
-import USDC from 'tokens/USDC';
-import BN from 'helpers/BN';
-import { fetchAccountDetails } from 'api/stellar';
 import Input from 'components/Input';
+import { getKnownPools } from 'api/amm';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 function NoDataMessage() {
-  return <div className={styles['empty-table-container']}><span>There is no pool</span></div>;
-}
-
-function calculateTVLFromBalances(data, xlmPrice) {
-  let balance = '-';
-  const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
-  const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
-
-  if (isSameAsset(tokenA, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[0].amount).times(2).toFixed(7);
-  }
-
-  if (isSameAsset(tokenB, getAssetDetails(USDC))) {
-    balance = new BN(data.reserves[1].amount).times(2).toFixed(7);
-  }
-
-  if (tokenA.isNative()) {
-    balance = new BN(data.reserves[0].amount).times(xlmPrice).times(2).toFixed(7);
-  }
-
-  if (tokenB.isNative()) {
-    balance = new BN(data.reserves[1].amount).times(xlmPrice).times(2).toFixed(7);
-  }
-
-  return balance;
+  return (
+    <div className={styles['empty-table-container']}>
+      <span>There is no pool</span>
+    </div>
+  );
 }
 
 function PoolData() {
   const [knownPools, setKnownPools] = useState(null);
-  const xlmPrice = useSelector((state) => state.xlmPrice);
-  const userAddress = useSelector((state) => state.user.detail.address);
   const [searchQuery, setSearchQuery] = useState('');
-  const [userPoolShares, setUserPoolShares] = useState({});
-  const doneRef = useRef(false);
-  const dispatch = useDispatch();
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
-  };
-
-  const renderModals = (data) => {
-    const a1 = data.reserves[0].asset.split(':');
-    const a2 = data.reserves[1].asset.split(':');
-    const refinedA = getAssetDetails({
-      code: a1[0],
-      issuer: a1[1],
-    });
-
-    const refinedB = getAssetDetails({
-      code: a2[0],
-      issuer: a2[1],
-    });
-
-    const handleDeposit = (e) => {
-      e.preventDefault();
-      dispatch(
-        openModalAction({
-          modalProps: {
-            title: 'Deposit Liquidity',
-            className: 'main',
-          },
-          content: <DepositLiquidity
-            tokenA={refinedA}
-            tokenB={refinedB}
-          />,
-        }),
-      );
-    };
-
-    const handleWithdraw = (e) => {
-      e.preventDefault();
-      dispatch(
-        openModalAction({
-          modalProps: {
-            title: 'Withdraw Liquidity',
-            className: 'main',
-          },
-          content: <WithdrawLiquidity
-            tokenA={refinedA}
-            tokenB={refinedB}
-          />,
-        }),
-      );
-    };
-
-    return (
-      <div className={styles['modal-btns']}>
-        <div onClick={handleDeposit}>Deposit</div>
-        {userPoolShares[data.id]
-        && !(new BN(userPoolShares[data.id]).eq(0))
-        && <div onClick={handleWithdraw}>Withdraw</div>}
-      </div>
-    );
   };
 
   const renderPoolInfo = (data) => {
@@ -130,65 +42,14 @@ function PoolData() {
   };
 
   useEffect(() => {
-    async function loadData() {
-      const allPools = await Promise.all(listOfKnownPoolIds()
-        .map((pool) => getPoolDetailsById(pool.id)
-          .then((res) => ({
-            ...res,
-            pair: pool.pair,
-            key: pool.id,
-          })).catch(() => ({
-            key: pool.id,
-            id: pool.id,
-            total_shares: 0,
-            total_trustlines: 0,
-            reserves: [
-              {
-                asset: `${pool.pair.base.code}:${pool.pair.base.issuer}`,
-                amount: 0,
-              },
-              {
-                asset: `${pool.pair.counter.code}:${pool.pair.counter.issuer}`,
-                amount: 0,
-              },
-            ],
-            pair: pool.pair,
-          }))));
-
-      const poolsWithTvl = allPools.map((pool) => {
-        const tvl = calculateTVLFromBalances(pool, xlmPrice);
-        return {
-          ...pool,
-          tvl,
-        };
-      });
-      doneRef.current = true;
-      setKnownPools(poolsWithTvl);
-    }
-
-    if (!(new BN(xlmPrice).isEqualTo(0)) && !doneRef.current) {
-      loadData();
-    }
-  }, [xlmPrice]);
-
-  useEffect(() => {
-    async function loadData() {
-      const fetchedPoolShare = {};
-
-      if (userAddress) {
-        const userDetail = await fetchAccountDetails(userAddress);
-        for (const balance of userDetail.balances) {
-          if (balance.asset_type === 'liquidity_pool_shares') {
-            fetchedPoolShare[balance.liquidity_pool_id] = balance.balance;
-          }
-        }
-      }
-
-      setUserPoolShares(fetchedPoolShare);
-    }
-
-    loadData();
-  }, [userAddress]);
+    getKnownPools().then((allPools) => {
+      setKnownPools(allPools.map((pool) => ({
+        ...pool,
+        key: pool.poolId,
+      }))
+        .sort((a, b) => new BN(b.tvl).comparedTo(a.tvl)));
+    });
+  }, []);
 
   const tableHeader = [
     {
@@ -204,7 +65,7 @@ function PoolData() {
       sortFunc: (a, b, order) => (order === 'asc' ? a.tvl - b.tvl : b.tvl - a.tvl),
       render: (data) => (
         <span className={styles.balance}>
-          {data.tvl !== '-' && '$'}{humanAmount(data.tvl, true)}
+          ${humanAmount(data.tvl, true)}
         </span>
       ),
     },
@@ -213,7 +74,11 @@ function PoolData() {
       dataIndex: 'volume',
       key: 3,
       sortFunc: (a, b) => a - b,
-      render: (data) => <span>$12</span>,
+      render: (data) => (
+        <span>
+          ${humanAmount(new BN(data.volume_24h).div(10 ** 7).toString(), true)}
+        </span>
+      ),
     },
     {
       title: 'APR',
@@ -221,7 +86,12 @@ function PoolData() {
       key: 3,
       render: (data) => (
         <span>
-          %12
+          %{new BN(data.volume_24h)
+          .div(10 ** 7)
+          .times(0.003)
+          .times(365)
+          .div(data.tvl)
+          .toFixed(2)}
         </span>
       ),
     },
@@ -247,7 +117,7 @@ function PoolData() {
     }));
   }
 
-  const rowLink = (data) => urlMaker.pool.poolId(data.id);
+  const rowLink = (data) => urlMaker.pool.poolId(data.poolId);
 
   return (
     <div className={styles['table-container']}>

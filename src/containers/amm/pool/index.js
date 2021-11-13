@@ -176,7 +176,7 @@ function TVLChart({ setCurrentTVL }) {
 const MemoVolumeChart = React.memo(VolumeChart);
 const MemoTVLChart = React.memo(TVLChart);
 
-const PoolPage = () => {
+const PoolPage = ({ allPools }) => {
   const [currentVolume, setCurrentVolume] = useState(100);
   const [currentTVL, setCurrentTVL] = useState(2);
 
@@ -217,7 +217,7 @@ const PoolPage = () => {
               </div>
             </div>
             <h1 className={styles['label-second']}>Pools</h1>
-            <PoolData />
+            <PoolData allPools={allPools} />
           </div>
         </div>
       </div>
