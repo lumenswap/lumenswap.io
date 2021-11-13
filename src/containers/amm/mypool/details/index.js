@@ -109,6 +109,9 @@ function MyPoolDetails({ poolDetail }) {
     if (!isLogged) {
       router.push(urlMaker.pool.root());
     }
+  }, []);
+
+  useEffect(() => {
     loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
   }, []);
 
@@ -172,7 +175,20 @@ function MyPoolDetails({ poolDetail }) {
                   <div className={styles['liquidity-info']}>
                     <div className={styles['liquidity-info-header']}>
                       <span>Liquidity</span>
-                      {/* <span>{humanAmount(poolDetail.balanceUSD, true)}</span> */}
+                      <span>${humanAmount(getTVLInUSD(
+                        [
+                          {
+                            asset: poolDetail.reserves[0].asset,
+                            amount: shareA.toFixed(7),
+                          },
+                          {
+                            asset: poolDetail.reserves[1].asset,
+                            amount: shareB.toFixed(7),
+                          },
+                        ],
+                        xlmPrice,
+                      ), true)}
+                      </span>
                     </div>
                     <div className={styles['liquidity-info-items']}>
                       <div className={styles['liquidity-info-item']}>
