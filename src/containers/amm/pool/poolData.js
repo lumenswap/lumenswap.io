@@ -88,7 +88,7 @@ function PoolData() {
         <span>
           %{new BN(data.volume_24h)
           .div(10 ** 7)
-          .times(0.003)
+          .times(0.3)
           .times(365)
           .div(data.tvl)
           .toFixed(2)}

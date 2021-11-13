@@ -7,7 +7,6 @@ function CChart({ height, options, onEvents }) {
     maintainAspectRatio: false,
     ...options,
     height,
-
     grid: {
       x: 0,
       y: 0,
@@ -16,6 +15,7 @@ function CChart({ height, options, onEvents }) {
       width: '100%',
     },
   };
+
   return (
     <EChartsReact
       onEvents={onEvents}
@@ -26,4 +26,4 @@ function CChart({ height, options, onEvents }) {
   );
 }
 
-export default CChart;
+export default React.memo(CChart);
