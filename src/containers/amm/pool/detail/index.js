@@ -59,9 +59,10 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
   const [poolOperations, setPoolOperations] = useState(null);
-  const [chartsData, setChartsData] = useState(chartData);
   const [reverseHeaderInfo, setReverseHeaderInfo] = useState(false);
   const [poolSwaps, setPoolSwaps] = useState(null);
+  const xlmPrice = useSelector((state) => state.xlmPrice);
+  const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
 
   const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
   const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
@@ -104,9 +105,6 @@ const Details = ({ poolDetail: initPoolDetail }) => {
       ),
     },
   ];
-  const xlmPrice = useSelector((state) => state.xlmPrice);
-
-  const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
 
   const tabs = [
     {
@@ -151,7 +149,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
             </div>
             <div className={classNames(styles['info-containers'], 'row p')}>
               <div className="col-md-8 col-12">
-                <PoolMultiCharts chartsData={chartData} />
+                <PoolMultiCharts poolId={poolDetail.id} />
               </div>
               <div className={classNames(styles['info-pool-container'], 'col-md-4 col-12')}>
                 <div className={styles['tvl-info-container']}>
@@ -167,11 +165,15 @@ const Details = ({ poolDetail: initPoolDetail }) => {
                 <div className={styles['volume-info-container']}>
                   <div className={styles['volume-info-item']}>
                     <span>24h fees</span>
-                    <span>$200</span>
+                    <span>${humanAmount(new BN(poolDetail.volume24).times(0.003)
+                      .div(10 ** 7).toString(), true)}
+                    </span>
                   </div>
                   <div className={styles['volume-info-item']}>
-                    <span>Volume 24h</span>
-                    <span>$100</span>
+                    <span>24h Volume</span>
+                    <span>${humanAmount(new BN(poolDetail.volume24)
+                      .div(10 ** 7).toString(), true)}
+                    </span>
                   </div>
                 </div>
               </div>

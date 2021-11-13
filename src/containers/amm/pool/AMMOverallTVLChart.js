@@ -1,8 +1,9 @@
 import Loading from 'components/Loading';
 import CChart from 'components/CChart';
 import * as echarts from 'echarts';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const ChartLoading = () => (
@@ -11,11 +12,11 @@ const ChartLoading = () => (
   </div>
 );
 
-const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions }) => (
+const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions, chartData }) => (
   <CChart
     onEvents={{
-      mouseover: (params) => setCurrentTVL([][params.dataIndex]),
-      mouseout: () => setCurrentTVL(2),
+      mouseover: (params) => setCurrentTVL(chartData[params.dataIndex]),
+      mouseout: () => setCurrentTVL(chartData[chartData.length - 1]),
     }}
     options={tvlOptions}
     height="117px"
@@ -23,7 +24,11 @@ const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions }) => (
 ));
 
 function AMMOverallTVLChart({ chartData }) {
-  const [currentTVL, setCurrentTVL] = useState(null);
+  const [currentTVL, setCurrentTVL] = useState({
+    tvl: 0,
+    volume: 0,
+    periodTime: Date.now(),
+  });
 
   const tvlOptions = useMemo(() => ({
     tooltip: {
@@ -86,6 +91,12 @@ function AMMOverallTVLChart({ chartData }) {
     ],
   }), [chartData]);
 
+  useEffect(() => {
+    if (chartData !== null) {
+      setCurrentTVL(chartData[chartData.length - 1]);
+    }
+  }, [chartData]);
+
   if (!chartData) {
     return <ChartLoading />;
   }
@@ -94,13 +105,17 @@ function AMMOverallTVLChart({ chartData }) {
     <div className="col-md-6 col-12">
       <div className={styles['chart-container']}>
         <div className={styles['chart-info-container']}>
-          <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>{currentTVL}</span>
+          <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>${humanAmount(currentTVL.tvl, true)}</span>
             <span className={styles['tvl-chart-text']}>TVL</span>
           </div>
-          <span className={styles['tvl-chart-time']}>Nov,23</span>
+          <span className={styles['tvl-chart-time']}>{moment(currentTVL.periodTime).utc().format('MMM, DD')}</span>
         </div>
         <div className={styles.chart}>
-          <InnerChartMemo tvlOptions={tvlOptions} setCurrentTVL={setCurrentTVL} />
+          <InnerChartMemo
+            tvlOptions={tvlOptions}
+            setCurrentTVL={setCurrentTVL}
+            chartData={chartData}
+          />
         </div>
       </div>
     </div>

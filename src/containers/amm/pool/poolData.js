@@ -46,6 +46,12 @@ function PoolData() {
       setKnownPools(allPools.map((pool) => ({
         ...pool,
         key: pool.poolId,
+        apr: new BN(pool.volume_24h)
+          .div(10 ** 7)
+          .times(0.3)
+          .times(365)
+          .div(pool.tvl)
+          .toFixed(2),
       }))
         .sort((a, b) => new BN(b.tvl).comparedTo(a.tvl)));
     });
@@ -62,7 +68,7 @@ function PoolData() {
       title: 'TVL',
       dataIndex: 'tvl',
       key: '2',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.tvl - b.tvl : b.tvl - a.tvl),
+      sortFunc: (a, b, order) => (order === 'asc' ? new BN(a.tvl).comparedTo(b.tvl) : new BN(b.tvl).comparedTo(a.tvl)),
       render: (data) => (
         <span className={styles.balance}>
           ${humanAmount(data.tvl, true)}
@@ -73,7 +79,7 @@ function PoolData() {
       title: 'Volume 24h',
       dataIndex: 'volume',
       key: 3,
-      sortFunc: (a, b) => a - b,
+      sortFunc: (a, b, order) => (order === 'asc' ? new BN(a.volume_24h).comparedTo(b.volume_24h) : new BN(b.volume_24h).comparedTo(a.volume_24h)),
       render: (data) => (
         <span>
           ${humanAmount(new BN(data.volume_24h).div(10 ** 7).toString(), true)}
@@ -83,15 +89,11 @@ function PoolData() {
     {
       title: 'APR',
       dataIndex: 'apr',
+      sortFunc: (a, b, order) => (order === 'asc' ? new BN(a.apr).comparedTo(b.apr) : new BN(b.apr).comparedTo(a.apr)),
       key: 3,
       render: (data) => (
         <span>
-          %{new BN(data.volume_24h)
-          .div(10 ** 7)
-          .times(0.3)
-          .times(365)
-          .div(data.tvl)
-          .toFixed(2)}
+          %{data.apr}
         </span>
       ),
     },
