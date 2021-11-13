@@ -1,12 +1,12 @@
 import PoolsActivityData from './PoolsActivityData';
 import PoolSwapsData from './PoolSwapsData';
 
-function PoolDetailsTabContent({ tab, poolOperations, poolSwaps }) {
+function PoolDetailsTabContent({ tab, poolId }) {
   if (tab === 'swaps') {
-    return <PoolSwapsData poolSwaps={poolSwaps} />;
+    return <PoolSwapsData poolId={poolId} />;
   }
   if (tab === 'activity') {
-    return <PoolsActivityData poolOperations={poolOperations} />;
+    return <PoolsActivityData poolId={poolId} />;
   }
 }
 

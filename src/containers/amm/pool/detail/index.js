@@ -9,15 +9,10 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import { useSelector } from 'react-redux';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
-import { chartData } from 'api/chartsFakeData';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CTabs from 'components/CTabs';
-import useIsLogged from 'hooks/useIsLogged';
 import BN from 'helpers/BN';
-import { fetchAccountDetails } from 'api/stellar';
-import fetchPoolSwaps from 'api/poolDetailsSwaps';
 import humanAmount from 'helpers/humanAmount';
-import { getPoolOperationsAPI } from 'api/stellarPool';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import urlMaker from 'helpers/urlMaker';
 import PoolMultiCharts from './PoolMultiCharts';
@@ -27,40 +22,10 @@ import equalIcon from '../../../../assets/images/equal-icon.png';
 import styles from './styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
 
-async function loadUserPool(setUserShare, isLogged, userAddress, poolId) {
-  if (isLogged) {
-    try {
-      const userData = await fetchAccountDetails(userAddress);
-      for (const balance of userData.balances) {
-        if (balance.asset_type === 'liquidity_pool_shares' && balance.liquidity_pool_id === poolId) {
-          setUserShare(balance.balance);
-          break;
-        }
-      }
-    // eslint-disable-next-line no-empty
-    } catch (e) {}
-  }
-}
-
-// async function reloadPoolDetail(setPoolDetail, poolId, router) {
-//   try {
-//     const poolDetail = await getPoolDetailsById(poolId);
-//     setPoolDetail(poolDetail);
-//   } catch (e) {
-//     router.push(urlMaker.pool.root());
-//   }
-// }
-
-const Details = ({ poolDetail: initPoolDetail }) => {
-  const [userShare, setUserShare] = useState(null);
-  const isLogged = useIsLogged();
-  const userAddress = useSelector((state) => state.user.detail.address);
-  const [poolDetail, setPoolDetail] = useState(initPoolDetail);
+const Details = ({ poolDetail }) => {
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
-  const [poolOperations, setPoolOperations] = useState(null);
   const [reverseHeaderInfo, setReverseHeaderInfo] = useState(false);
-  const [poolSwaps, setPoolSwaps] = useState(null);
   const xlmPrice = useSelector((state) => state.xlmPrice);
   const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
 
@@ -68,25 +33,11 @@ const Details = ({ poolDetail: initPoolDetail }) => {
   const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
   const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
 
-  let HeaderInfoAsset = `${new BN(initPoolDetail.reserves[0].amount).div(initPoolDetail.reserves[1].amount)}`;
+  let HeaderInfoAsset = `${new BN(poolDetail.reserves[0].amount).div(poolDetail.reserves[1].amount)}`;
 
   if (reverseHeaderInfo) {
-    HeaderInfoAsset = `${new BN(initPoolDetail.reserves[1].amount).div(initPoolDetail.reserves[0].amount)}`;
+    HeaderInfoAsset = `${new BN(poolDetail.reserves[1].amount).div(poolDetail.reserves[0].amount)}`;
   }
-
-  useEffect(() => {
-    loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
-  }, [isLogged, userAddress]);
-
-  useEffect(() => {
-    fetchPoolSwaps().then((data) => setPoolSwaps(data));
-    async function loadData() {
-      const operations = await getPoolOperationsAPI(poolDetail.id, { order: 'desc', limit: 20 });
-      setPoolOperations(operations);
-    }
-
-    loadData();
-  }, []);
 
   const breadCrumbData = [
     {
@@ -182,7 +133,7 @@ const Details = ({ poolDetail: initPoolDetail }) => {
                   <CTabs
                     tabs={tabs}
                     tabContent={PoolDetailsTabContent}
-                    customTabProps={{ poolOperations, poolSwaps }}
+                    customTabProps={{ poolId: poolDetail.id }}
                     className={styles.tabs}
                   />
                 </div>

@@ -3,6 +3,8 @@ import moment from 'moment';
 import { generateOperationIdURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import BN from 'helpers/BN';
+import { useEffect, useState } from 'react';
+import { getPoolOperationsAPI } from 'api/stellarPool';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -11,7 +13,18 @@ const NoDataMessage = () => (
   </div>
 );
 
-function PoolsActivityData({ poolOperations }) {
+function PoolsActivityData({ poolId }) {
+  const [poolOperations, setOperations] = useState(null);
+
+  useEffect(() => {
+    async function loadData() {
+      const operations = await getPoolOperationsAPI(poolId, { order: 'desc', limit: 20 });
+      setOperations(operations);
+    }
+
+    loadData();
+  }, []);
+
   const tableHeaders = [
     {
       title: 'Operation ID',

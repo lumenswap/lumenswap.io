@@ -43,16 +43,22 @@ function PoolData() {
 
   useEffect(() => {
     getKnownPools().then((allPools) => {
-      setKnownPools(allPools.map((pool) => ({
-        ...pool,
-        key: pool.poolId,
-        apr: new BN(pool.volume_24h)
+      setKnownPools(allPools.map((pool) => {
+        let apr = new BN(pool.volume_24h)
           .div(10 ** 7)
           .times(0.3)
           .times(365)
           .div(pool.tvl)
-          .toFixed(2),
-      }))
+          .toFixed(2);
+        if (new BN(pool.volume_24h).isEqualTo(0) || new BN(pool.tvl).isEqualTo(0)) {
+          apr = 0;
+        }
+        return {
+          ...pool,
+          key: pool.poolId,
+          apr,
+        };
+      })
         .sort((a, b) => new BN(b.tvl).comparedTo(a.tvl)));
     });
   }, []);

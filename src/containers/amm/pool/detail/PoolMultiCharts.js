@@ -203,7 +203,7 @@ const Chart = ({
           height="125px"
           onEvents={{
             mouseover: (params) => setCurrentValue(chartData[params.dataIndex]),
-            mouseout: () => setCurrentValue(chartData[0]),
+            mouseout: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={tvlOptions}
         />
@@ -216,7 +216,7 @@ const Chart = ({
         <CChart
           onEvents={{
             mouseover: (params) => setCurrentValue(chartData[params.dataIndex]),
-            mouseout: () => setCurrentValue(chartData[0]),
+            mouseout: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={feeOptions}
           height="125px"
@@ -230,7 +230,7 @@ const Chart = ({
         <CChart
           onEvents={{
             mouseover: (params) => setCurrentValue(chartData[params.dataIndex]),
-            mouseout: () => setCurrentValue(chartData[0]),
+            mouseout: () => setCurrentValue(chartData[chartData.length - 1]),
           }}
           options={volumeOptions}
           height="125px"
