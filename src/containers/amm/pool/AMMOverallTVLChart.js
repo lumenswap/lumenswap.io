@@ -46,12 +46,10 @@ function AMMOverallTVLChart({ chartData }) {
 
   const tvlOptions = useMemo(() => ({
     tooltip: {
-      show: true,
       trigger: 'axis',
       alwaysShowContent: true,
       showContent: true,
-      position: [5, 0],
-      className: 'echart-tooltip',
+      className: 'disabled-chart-tooltip',
       formatter() {
         return null;
       },

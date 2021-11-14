@@ -114,12 +114,9 @@ function PoolData() {
   let filteredPools = knownPools ? [...knownPools] : [];
   if (searchQuery) {
     filteredPools = filteredPools?.filter(
-      (pool) => pool.pair.base.code
+      (pool) => `${pool.reserves[0].asset.split(':')[0]}/${pool.reserves[1].asset.split(':')[0]}`
         .toLowerCase()
-        .search(searchQuery.toLocaleLowerCase()) !== -1
-        || pool.pair.counter.code
-          .toLowerCase()
-          .search(searchQuery.toLocaleLowerCase()) !== -1,
+        .search(searchQuery.toLocaleLowerCase()) !== -1,
     ).map((item) => ({
       ...item,
     }));

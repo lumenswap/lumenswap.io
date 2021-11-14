@@ -56,6 +56,8 @@ function AMMOVerallVolumeChart({ chartData }) {
     },
     tooltip: {
       trigger: 'axis',
+      alwaysShowContent: true,
+      showContent: true,
       axisPointer: {
         type: 'shadow',
       },
@@ -90,7 +92,7 @@ function AMMOVerallVolumeChart({ chartData }) {
         barGap: '100%',
         data: chartData?.map((i) => i.volume),
         itemStyle: {
-          color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
+          color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
