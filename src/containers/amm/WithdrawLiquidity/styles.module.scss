@@ -27,7 +27,7 @@
 }
 
 .hr {
-  margin: 22px -17px 11px;
+  margin: 24px -17px 23px;
   border-top: 1px solid $CatskillWhite;
 }
 
@@ -41,24 +41,34 @@
   margin-top: 24px;
 }
 
-.info-box {
-  background: $AthensGray;
-  padding: 8px 10px;
-  border-radius: 8px;
+
+.footer-section {
+  width: 100%;
+  height: 78px;
+  background-color: $AthensGray;
   border: 1px solid $CatskillWhite;
-
-  p {
-    color: $Manatee;
-    font-size: 14px;
-    line-height: 16px;
-    margin: 0;
-
-    span {
-      color: $CodGray;
-    }
-  }
+  border-radius: 8px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
 }
 
+.footer-items {
+  height: 62px;
+  margin-top: 5px;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.footer-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .inpool {
     display: flex;
     flex-direction: row;
@@ -86,4 +96,33 @@
         }
     }
     
+}
+
+.footer-first-section {
+  display: flex;
+  flex-direction: row;
+}
+.footer {
+ &-code { font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: $CodGray;
+  margin-left: 3px;
+ }
+
+ &-balance {
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  text-align: right;
+  color: $CodGray;
+ }
 }

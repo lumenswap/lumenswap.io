@@ -15,6 +15,7 @@ import humanAmount from 'helpers/humanAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
 import Checkbox from 'components/Checkbox';
+import WithdrawLiquiditySliderInput from '../WithdrawLiquiditySliderInput';
 import styles from './styles.module.scss';
 
 function Inpool({ token, isLoading }) {
@@ -67,7 +68,6 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
       tolerance: data.tolerance,
       poolData,
       userShare,
-      removeTrustline: data.removeTrustline,
     };
 
     dispatch(
@@ -90,6 +90,7 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
 
   useEffect(() => {
     trigger();
+    console.log(getValues());
   }, [JSON.stringify(getValues())]);
 
   function errorGenerator() {
@@ -192,51 +193,30 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
           ))}
 
         </div>
-        <div className="d-flex justify-content-between" />
-
-        <div className={styles.current}><AMMCurrentPrice poolData={poolData} /></div>
-
-        <Controller
-          name="tolerance"
-          control={control}
-          rules={{
-            required: 'Tolerance is required',
-          }}
-          defaultValue="0.1"
-          render={(props) => (
-            <Tolerance
-              onChange={props.onChange}
-              value={props.value}
-            />
-          )}
-        />
 
         <hr className={styles.hr} />
-
-        <div className={styles['info-box']}>
-          <p>
-            <span>Note: </span>
-            By performing this operation, all your liquidity will{' '}
-            be transferred from this pool to your wallet account.
-          </p>
-        </div>
-        <div className="mt-3">
+        <div className="d-flex flex-column justify-content-between">
           <Controller
-            name="removeTrustline"
+            name="tolerance"
             control={control}
-            render={(props) => (
-              <Checkbox
-                className="bg-light"
-                style={{ border: '1px solid #ecf0f5', borderRadius: 4 }}
-                labelClass="text-dark"
-                fontSize={14}
-                size={22}
-                onChange={props.onChange}
-                value={props.value}
-                label="Remove the pool after withdrawing liquidity"
-              />
-            )}
+            defaultValue={1}
+            render={(props) => <WithdrawLiquiditySliderInput {...props} />}
           />
+          <div className={styles['footer-section']}>
+            <div className={styles['footer-items']}>
+              {inpoolData.map((inpool) => (
+                <div className={styles['footer-item']}>
+                  <div className={styles['footer-first-section']}>
+                    <div className={styles['footer-img']}><Image src={inpool.logo} width={20} height={20} /></div>
+                    <span className={styles['footer-code']}>{inpool.code}</span>
+                  </div>
+                  <span className={styles['footer-balance']}>
+                    {`${new BN(inpool.balance).times(new BN(getValues().tolerance).div(100))}`}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <Button
