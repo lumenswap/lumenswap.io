@@ -25,7 +25,7 @@ function Inpool({ token, isLoading }) {
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{isLoading ? '' : humanAmount(token.balance, true)}</div>
+      <div>{isLoading ? '' : humanAmount(token.balance)}</div>
     </div>
   );
 }
@@ -90,7 +90,6 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
 
   useEffect(() => {
     trigger();
-    console.log(getValues());
   }, [JSON.stringify(getValues())]);
 
   function errorGenerator() {
