@@ -38,6 +38,9 @@ const Details = ({ poolDetail }) => {
   if (reverseHeaderInfo) {
     HeaderInfoAsset = `${new BN(poolDetail.reserves[1].amount).div(poolDetail.reserves[0].amount)}`;
   }
+  if (new BN(poolDetail.reserves[0].amount).isEqualTo(0) || new BN(poolDetail.reserves[1].amount).isEqualTo(0)) {
+    HeaderInfoAsset = null;
+  }
 
   const breadCrumbData = [
     {
@@ -89,12 +92,14 @@ const Details = ({ poolDetail }) => {
                       data={breadCrumbData}
                     />
                   </div>
+                  {HeaderInfoAsset && (
                   <div className={styles['header-info-container']}>
                     <span className={styles['header-info-container-texts']}>1 {reverseHeaderInfo ? refinedA.getCode() : refinedB.getCode()}</span>
                     <div className={styles['equal-icon']}><Image src={equalIcon} width={14} height={8} /></div>
                     <span className={styles['header-info-container-texts']}>{HeaderInfoAsset} {reverseHeaderInfo ? refinedB.getCode() : refinedA.getCode()}</span>
                     <div onClick={handleReverseHeaderInfo} className={styles['refresh-icon']}><Image src={refreshIcon} width={18} height={18} /></div>
                   </div>
+                  )}
                 </div>
               </div>
             </div>
