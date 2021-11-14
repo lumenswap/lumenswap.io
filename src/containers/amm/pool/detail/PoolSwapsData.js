@@ -45,20 +45,32 @@ function PoolSwapsData({ poolId }) {
           issuer: data.counter_asset_issuer,
         });
 
-        let baseToken;
-        let counterToken;
+        let base;
+        let counter;
         if (isSell) {
-          baseToken = tokenA;
-          counterToken = tokenB;
+          base = {
+            token: tokenA,
+            amount: data.base_amount,
+          };
+          counter = {
+            token: tokenB,
+            amount: data.counter_amount,
+          };
         } else {
-          baseToken = tokenB;
-          counterToken = tokenA;
+          base = {
+            token: tokenB,
+            amount: data.counter_amount,
+          };
+          counter = {
+            token: tokenA,
+            amount: data.base_amount,
+          };
         }
 
         return (
-          <span>Swap {humanAmount(data.base_amount)}{' '}
-            {baseToken.getCode()} for {humanAmount(data.counter_amount)}{' '}
-            {counterToken.getCode()}
+          <span>Swap {humanAmount(base.amount)}{' '}
+            {base.token.getCode()} for {humanAmount(counter.amount)}{' '}
+            {counter.token.getCode()}
           </span>
         );
       },
