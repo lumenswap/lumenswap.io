@@ -22,11 +22,12 @@ import Button from 'components/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import BN from 'helpers/BN';
+import { getPoolDetailsById } from 'api/stellarPool';
 import secondStyles from '../../../../components/Button/styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
 import styles from './styles.module.scss';
 
-async function loadUserPool(setUserShare, isLogged, userAddress, poolId) {
+async function loadUserPool(setUserShare, isLogged, userAddress, poolId, setPoolDetail) {
   if (isLogged) {
     try {
       const userData = await fetchAccountDetails(userAddress);
@@ -36,22 +37,28 @@ async function loadUserPool(setUserShare, isLogged, userAddress, poolId) {
           break;
         }
       }
+
+      const poolDetail = await getPoolDetailsById(poolId);
+      setPoolDetail(poolDetail);
     // eslint-disable-next-line no-empty
     } catch (e) {}
   }
 }
 
-function MyPoolDetails({ poolDetail }) {
+function MyPoolDetails({ poolDetail: initPoolDetail }) {
   const [userShare, setUserShare] = useState(null);
   const router = useRouter();
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
   const xlmPrice = useSelector((state) => state.xlmPrice);
   const isLogged = useIsLogged();
+  const [poolDetail, setPoolDetail] = useState(initPoolDetail);
+
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
   const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
   const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
+
   const handleDeposit = () => {
     dispatch(
       openModalAction({
@@ -59,7 +66,13 @@ function MyPoolDetails({ poolDetail }) {
           title: 'Deposit Liquidity',
           className: 'main',
         },
-        content: <DepositLiquidity tokenA={refinedA} tokenB={refinedB} />,
+        content: <DepositLiquidity
+          tokenA={refinedA}
+          tokenB={refinedB}
+          afterDeposit={() => {
+            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id, setPoolDetail);
+          }}
+        />,
       }),
     );
   };
@@ -71,7 +84,13 @@ function MyPoolDetails({ poolDetail }) {
           title: 'Withdraw Liquidity',
           className: 'main',
         },
-        content: <WithdrawLiquidity tokenA={refinedA} tokenB={refinedB} />,
+        content: <WithdrawLiquidity
+          tokenA={refinedA}
+          tokenB={refinedB}
+          afterWithdraw={() => {
+            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id, setPoolDetail);
+          }}
+        />,
       }),
     );
   };
@@ -175,7 +194,7 @@ function MyPoolDetails({ poolDetail }) {
                   <div className={styles['liquidity-info']}>
                     <div className={styles['liquidity-info-header']}>
                       <span>Liquidity</span>
-                      <span>${humanAmount(getTVLInUSD(
+                      <span>${getTVLInUSD(
                         [
                           {
                             asset: poolDetail.reserves[0].asset,
@@ -187,13 +206,13 @@ function MyPoolDetails({ poolDetail }) {
                           },
                         ],
                         xlmPrice,
-                      ), true)}
+                      )}
                       </span>
                     </div>
                     <div className={styles['liquidity-info-items']}>
                       <div className={styles['liquidity-info-item']}>
                         <span>
-                          {humanAmount(shareA.toFixed(7), true)}
+                          {humanAmount(shareA.toFixed(7))}
                         </span>
                         <span>
                           {getAssetFromLPAsset(poolDetail.reserves[0].asset).code}
@@ -201,7 +220,7 @@ function MyPoolDetails({ poolDetail }) {
                       </div>
                       <div className={styles['liquidity-info-item']}>
                         <span>
-                          {humanAmount(shareB.toFixed(7), true)}
+                          {humanAmount(shareB.toFixed(7))}
                         </span>
                         <span>
                           {getAssetFromLPAsset(poolDetail.reserves[1].asset).code}

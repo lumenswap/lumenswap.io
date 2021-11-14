@@ -28,7 +28,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
         data.userShare,
         minAmountA.toFixed(7),
         minAmountB.toFixed(7),
-        data.removeTrustline,
+        new BN(data.withdrawPercent).isEqualTo(100),
       );
     }
 

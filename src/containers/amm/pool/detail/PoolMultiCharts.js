@@ -267,6 +267,7 @@ function PoolMultiCharts({ poolId }) {
   const handleFee = () => {
     setCurrentChart('fee');
   };
+
   if (!currentValue) {
     return (
       <div className={styles['chart-pool']}>
