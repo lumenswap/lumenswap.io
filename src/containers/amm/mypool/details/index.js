@@ -171,7 +171,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                       <span className={styles['share-info-text']}>This is your share of the pool</span>
                     </div>
                     <CCricularProgressBar
-                      value={isLessThan0 ? 0.01 : `%${sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
+                      value={isLessThan0 ? 0.01 : sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}
                       text={isLessThan0 ? '<0.01%' : `%${sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
                       size={110}
                       strokeWidth={5}
