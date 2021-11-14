@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import Tolerance from 'containers/amm/Tolerance';
 import Button from 'components/Button';
-import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
 import WithdrawLiquidityConfirm from 'containers/amm/WithdrawLiquidityConfirm';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
@@ -14,7 +12,6 @@ import { extractLogo } from 'helpers/assetUtils';
 import humanAmount from 'helpers/humanAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
-import Checkbox from 'components/Checkbox';
 import WithdrawLiquiditySliderInput from '../WithdrawLiquiditySliderInput';
 import styles from './styles.module.scss';
 

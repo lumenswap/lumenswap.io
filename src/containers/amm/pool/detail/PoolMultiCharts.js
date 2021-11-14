@@ -268,8 +268,6 @@ function PoolMultiCharts({ poolId }) {
     setCurrentChart('fee');
   };
 
- 
-
   if (chartData === []) {
     return (
       <div className={styles['chart-pool']}>
@@ -291,11 +289,13 @@ function PoolMultiCharts({ poolId }) {
           <div className={currentChart === 'fee' ? styles['btn-active'] : styles.btn} onClick={handleFee}>Fee</div>
         </div>
       </div>
-      {!chartData ? <ChartLoading /> : <MemoCharts
-        currentChart={currentChart}
-        setCurrentValue={setCurrentValue}
-        chartData={chartData}
-      />}
+      {!chartData ? <ChartLoading /> : (
+        <MemoCharts
+          currentChart={currentChart}
+          setCurrentValue={setCurrentValue}
+          chartData={chartData}
+        />
+      )}
     </div>
   );
 }
