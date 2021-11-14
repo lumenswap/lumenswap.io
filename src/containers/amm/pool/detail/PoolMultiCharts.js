@@ -62,7 +62,7 @@ const Chart = ({
         name: 'TVL',
         type: 'line',
         showSymbol: false,
-        data: chartData?.map((i) => i.tvl),
+        data: chartData?.map((i) => i?.tvl),
         lineStyle: { backgroundColor: '#0e41f5' },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -122,7 +122,7 @@ const Chart = ({
         barWidth: Math.max(2, 20 / Math.round(Math.sqrt(chartData?.length))),
         data: chartData?.map((i) => new BN(i.volume).div(10 ** 7).toString()),
         itemStyle: {
-          color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
+          color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
@@ -180,7 +180,7 @@ const Chart = ({
         barWidth: Math.max(2, 20 / Math.round(Math.sqrt(chartData?.length))),
         data: chartData?.map((i) => new BN(i.volume).div(10 ** 7).times(0.003).toString()),
         itemStyle: {
-          color: '#0e41f5', borderColor: '#fff', borderWidth: 0,
+          color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
@@ -267,6 +267,15 @@ function PoolMultiCharts({ poolId }) {
   const handleFee = () => {
     setCurrentChart('fee');
   };
+
+  if (!currentValue) {
+    return (
+      <div className={styles['chart-pool']}>
+        <div className={styles['chart-icon-container']}><Image src={chartIcon} width={32} height={27} /></div>
+        <span>The chart is not available for this pool</span>
+      </div>
+    );
+  }
 
   if (chartData === []) {
     return (
