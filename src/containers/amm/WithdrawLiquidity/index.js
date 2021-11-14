@@ -48,10 +48,12 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
   const onSubmit = (data) => {
     const shareA = new BN(userShare)
       .times(poolData.reserves[0].amount)
-      .div(poolData.total_shares);
+      .div(poolData.total_shares)
+      .times(new BN(data.withdrawPercent).div(100));
     const shareB = new BN(userShare)
       .times(poolData.reserves[1].amount)
-      .div(poolData.total_shares);
+      .div(poolData.total_shares)
+      .times(new BN(data.withdrawPercent).div(100));
 
     const confirmData = {
       tokenA: {
@@ -62,9 +64,10 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
         ...tokenB,
         balance: shareB,
       },
-      tolerance: data.tolerance,
+      tolerance: '0.003',
+      withdrawPercent: data.withdrawPercent,
       poolData,
-      userShare,
+      userShare: new BN(userShare).times(new BN(data.withdrawPercent).div(100)),
     };
 
     dispatch(
@@ -193,7 +196,7 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
         <hr className={styles.hr} />
         <div className="d-flex flex-column justify-content-between">
           <Controller
-            name="tolerance"
+            name="withdrawPercent"
             control={control}
             defaultValue={1}
             render={(props) => <WithdrawLiquiditySliderInput {...props} />}
@@ -207,7 +210,7 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
                     <span className={styles['footer-code']}>{inpool.code}</span>
                   </div>
                   <span className={styles['footer-balance']}>
-                    {`${new BN(inpool.balance).times(new BN(getValues().tolerance).div(100))}`}
+                    {`${new BN(inpool.balance).times(new BN(getValues().withdrawPercent).div(100))}`}
                   </span>
                 </div>
               ))}
