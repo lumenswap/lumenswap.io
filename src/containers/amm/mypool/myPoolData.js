@@ -3,7 +3,7 @@ import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import { extractLogo } from 'helpers/assetUtils';
-import Link from 'next/link';
+// import Link from 'next/link';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
@@ -19,19 +19,19 @@ function MyPoolData({ pools }) {
     const token2 = getAssetFromLPAsset(data.reserves[1].asset);
 
     return (
-      <Link href={urlMaker.pool.poolId(data.id)}>
-        <a style={{ textDecoration: 'none', color: '#1d1d1d' }}>
-          <div className={styles.tokens}>
-            <CurrencyPair
-              size={22}
-              source={[extractLogo(token1), extractLogo(token2)]}
-            />
-            <span>
-              {token1.code}/{token2.code}
-            </span>
-          </div>
-        </a>
-      </Link>
+    // <Link href={urlMaker.pool.poolId(data.id)}>
+    //   <a style={{ textDecoration: 'none', color: '#1d1d1d' }}>
+      <div className={styles.tokens}>
+        <CurrencyPair
+          size={22}
+          source={[extractLogo(token1), extractLogo(token2)]}
+        />
+        <span>
+          {token1.code}/{token2.code}
+        </span>
+      </div>
+    //   </a>
+    // </Link>
     );
   };
 
