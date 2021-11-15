@@ -98,7 +98,7 @@ function PoolData() {
       sortFunc: (a, b, order) => (order === 'asc' ? new BN(a.apr).comparedTo(b.apr) : new BN(b.apr).comparedTo(a.apr)),
       key: 3,
       render: (data) => (
-        <span>
+        <span style={{ color: '#29b87f' }}>
           %{data.apr}
         </span>
       ),
