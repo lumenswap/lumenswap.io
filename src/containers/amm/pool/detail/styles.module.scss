@@ -66,13 +66,12 @@
     }
     &-number {
       font-family: SofiaPro;
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 500;
       font-stretch: normal;
       font-style: normal;
-      line-height: 1.42;
+      line-height: 1.45;
       letter-spacing: normal;
-      text-align: center;
       color: $CodGray;
     }
   }
@@ -89,12 +88,11 @@
     height: 47px;
     font-family: SofiaPro;
     font-size: 18px;
-    font-weight: normal;
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.56;
+    line-height: 1.75;
     letter-spacing: normal;
-    text-align: center;
     color: $CodGray;
   }
   &-item:first-child {
@@ -161,7 +159,7 @@
   &-texts {
     font-family: SofiaPro;
     font-size: 20px;
-    font-weight: normal;
+    font-weight: 600;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.5;
@@ -591,4 +589,14 @@
   div {
     margin-bottom: 50px;
   }
+}
+.bread {
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: normal;
+  color: $CodGray;
 }

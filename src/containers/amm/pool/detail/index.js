@@ -90,6 +90,7 @@ const Details = ({ poolDetail }) => {
                   <div className={styles['bread-crumb-container']}>
                     <Breadcrumb
                       data={breadCrumbData}
+                      className={styles.bread}
                     />
                   </div>
                   {HeaderInfoAsset && (
@@ -114,8 +115,8 @@ const Details = ({ poolDetail }) => {
                     <span className={styles['tvl-info-header-number']}>${usdTvl ?? '-'}</span>
                   </div>
                   <div className={styles['tvl-info-items']}>
-                    <div className={styles['tvl-info-item']}><span>{humanAmount(poolDetail.reserves[0].amount, true)} {refinedA.getCode()}</span></div>
-                    <div className={styles['tvl-info-item']}><span>{humanAmount(poolDetail.reserves[1].amount, true)} {refinedB.getCode()}</span></div>
+                    <div className={styles['tvl-info-item']}><span><span className={styles['tvl-info-item-number']}>{humanAmount(poolDetail.reserves[0].amount, true)}</span> {refinedA.getCode()}</span></div>
+                    <div className={styles['tvl-info-item']}><span><span className={styles['tvl-info-item-number']}>{humanAmount(poolDetail.reserves[1].amount, true)}</span> {refinedB.getCode()}</span></div>
                   </div>
                 </div>
                 <div className={styles['volume-info-container']}>

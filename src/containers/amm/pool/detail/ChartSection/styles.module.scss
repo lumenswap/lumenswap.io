@@ -551,23 +551,23 @@
   flex-direction: column;
   &-text {
     font-family: SofiaPro;
-    font-size: 18px;
-    font-weight: normal;
+    font-size: 22px;
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.56;
+    line-height: 1.45;
     letter-spacing: normal;
     color: $CodGray;
   }
   &-date {
     font-family: SofiaPro;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $Manatee;
+    color: $ShuttleGray;
   }
 }
 
