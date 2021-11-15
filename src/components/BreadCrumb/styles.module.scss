@@ -12,11 +12,14 @@
       text-decoration: none;
       color: inherit;
     }
-  
-    div:not(:first-child) {
-      margin-left: 12px;
-    }
-    svg {
-      margin: 0 12px;
+    div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      svg {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+      }
     }
   }
