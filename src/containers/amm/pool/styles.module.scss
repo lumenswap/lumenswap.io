@@ -226,14 +226,13 @@
   }
   &-time {
     font-family: SofiaPro;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.33;
+    line-height: 1.43;
     letter-spacing: normal;
-    text-align: right;
-    color: $Manatee;
+    color: $ShuttleGray;
     padding-top: 12px;
   }
 }
@@ -274,8 +273,27 @@
   }
 }
 
+
 @media screen and (max-width: 768px) {
   .chart-container {
     margin-top: 14px;
+  }
+  .chart-main-container {
+    &-left {
+      padding-right: 15px !important;
+    }
+    &-right {
+      padding-left: 15px !important;
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .chart-main-container {
+    &-left {
+      padding-right: 12px !important;
+    }
+    &-right {
+      padding-left: 12px !important;
+    }
   }
 }

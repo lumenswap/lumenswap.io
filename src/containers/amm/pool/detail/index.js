@@ -105,10 +105,10 @@ const Details = ({ poolDetail }) => {
               </div>
             </div>
             <div className={classNames(styles['info-containers'], 'row p')}>
-              <div className="col-md-8 col-12">
+              <div className={classNames('col-md-8 col-12', styles['info-pool-col'])}>
                 <PoolMultiCharts poolId={poolDetail.id} />
               </div>
-              <div className={classNames(styles['info-pool-container'], 'col-md-4 col-12')}>
+              <div className={classNames(styles['info-pool-container'], 'col-md-4 col-12', styles['info-pool-col'])}>
                 <div className={styles['tvl-info-container']}>
                   <div className={styles['tvl-info-header']}>
                     <span className={styles['tvl-info-header-text']}>TVL</span>

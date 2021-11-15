@@ -99,6 +99,10 @@
     border-right: 1px solid $CatskillWhite;
   }
 }
+.info-pool-col {
+  height: 336px;
+  margin-bottom: 24px;
+}
 .volume-info {
   &-container {
     background-color: $White;
@@ -134,7 +138,7 @@
     span {
       font-family: SofiaPro;
       font-size: 24px;
-      font-weight: 600;
+      font-weight: 500;
       font-stretch: normal;
       font-style: normal;
       line-height: 1.42;
@@ -159,7 +163,7 @@
   &-texts {
     font-family: SofiaPro;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.5;
@@ -391,8 +395,12 @@
     line-height: 1.5;
     letter-spacing: normal;
   }
+  th:not(:first-child) {
+    padding-left: 40px !important;
+  }
   tr:first-child {
     height: 36px !important;
+    
     th {
       position: relative;
       span {
@@ -403,6 +411,9 @@
   }
   td {
     height: 50px !important;
+  }
+  td:not(:first-child) {
+    padding-left: 40px !important;
   }
 }
 
@@ -463,6 +474,7 @@
 }
 
 .tabs {
+  
 
   nav {
     a:first-child {
@@ -511,8 +523,8 @@
   padding-right: 14px;
   padding-left: 14px;
   font-family: SofiaPro;
-  font-size: 12px;
-  font-weight: normal;
+  font-size: 14px;
+  font-weight: 400;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.4;
@@ -527,8 +539,8 @@
   padding-right: 14px;
   padding-left: 14px;
   font-family: SofiaPro;
-  font-size: 12px;
-  font-weight: normal;
+  font-size: 14px;
+  font-weight: 400;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.4;

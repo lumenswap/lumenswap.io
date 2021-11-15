@@ -4,6 +4,7 @@ import CChart from 'components/CChart';
 import Loading from 'components/Loading';
 import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const ChartLoading = () => (
@@ -13,7 +14,7 @@ const ChartLoading = () => (
 );
 
 const PageWrapper = ({ children, currentVolume }) => (
-  <div className="col-md-6 col-12">
+  <div className={classNames('col-md-6 col-12 pl-0', styles['chart-main-container-right'])}>
     <div className={styles['chart-container']}>
       <div className={styles['chart-info-container']}>
         <div className={styles['volume-chart']}>

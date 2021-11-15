@@ -4,6 +4,7 @@ import * as echarts from 'echarts';
 import React, { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const ChartLoading = () => (
@@ -13,7 +14,7 @@ const ChartLoading = () => (
 );
 
 const PageWrapper = ({ children, currentTVL }) => (
-  <div className="col-md-6 col-12">
+  <div className={classNames('col-md-6 col-12 pr-0', styles['chart-main-container-left'])}>
     <div className={styles['chart-container']}>
       <div className={styles['chart-info-container']}>
         <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>${humanAmount(currentTVL.tvl, true)}</span>
