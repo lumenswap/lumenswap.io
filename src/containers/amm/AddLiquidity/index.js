@@ -17,7 +17,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
-import Tolerance from '../Tolerance';
+// import Tolerance from '../Tolerance';
 
 const setLabel = (name, src) => (
   <div className="d-flex align-items-center">
@@ -72,7 +72,7 @@ const AddLiquidity = ({
         ...tokenB,
         amount: data.amountTokenB,
       },
-      tolerance: data.tolerance,
+      tolerance: '0.005',
       poolData,
     };
 
@@ -281,7 +281,7 @@ const AddLiquidity = ({
           )}
         />
 
-        <Controller
+        {/* <Controller
           name="tolerance"
           control={control}
           rules={{
@@ -294,7 +294,7 @@ const AddLiquidity = ({
               value={props.value}
             />
           )}
-        />
+        /> */}
 
         <Button
           htmlType="submit"

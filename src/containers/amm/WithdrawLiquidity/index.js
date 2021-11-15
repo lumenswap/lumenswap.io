@@ -64,7 +64,7 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
         ...tokenB,
         balance: shareB,
       },
-      tolerance: '0.003',
+      tolerance: '0.005',
       withdrawPercent: data.withdrawPercent,
       poolData,
       userShare: new BN(userShare).times(new BN(data.withdrawPercent).div(100)),

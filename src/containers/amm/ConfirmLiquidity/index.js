@@ -8,7 +8,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { initializeStore } from 'store';
 import { extractLogo } from 'helpers/assetUtils';
-import ShowTolerance from 'containers/amm/ShowTolerance';
+// import ShowTolerance from 'containers/amm/ShowTolerance';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
@@ -67,7 +67,7 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
       <div className={styles.current}>
         <AMMCurrentPrice poolData={data.poolData} />
       </div>
-      <ShowTolerance value={data.tolerance} />
+      {/* <ShowTolerance value={data.tolerance} /> */}
 
       <Button
         variant="primary"
