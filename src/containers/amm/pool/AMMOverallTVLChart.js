@@ -33,7 +33,7 @@ const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions, chartData }) => 
       downplay: () => setCurrentTVL(chartData[chartData.length - 1]),
     }}
     options={tvlOptions}
-    height="117px"
+    height="137px"
   />
 ));
 

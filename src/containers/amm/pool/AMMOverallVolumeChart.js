@@ -34,7 +34,7 @@ function VolumeChart({ options, setCurrentVolume, chartData }) {
         highlight: (params) => setCurrentVolume(chartData[params.batch[0].dataIndex]),
         downplay: () => setCurrentVolume(chartData[chartData.length - 1]),
       }}
-      height="117px"
+      height="137px"
     />
   );
 }
