@@ -18,7 +18,7 @@ function PoolsActivityData({ poolId }) {
 
   useEffect(() => {
     async function loadData() {
-      const operations = await getPoolOperationsAPI(poolId, { order: 'desc', limit: 20 });
+      const operations = await getPoolOperationsAPI(poolId, { order: 'desc', limit: 10 });
       setOperations(operations);
     }
 

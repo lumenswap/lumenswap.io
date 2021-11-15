@@ -19,7 +19,7 @@ function PoolSwapsData({ poolId }) {
 
   useEffect(() => {
     async function loadData() {
-      const swaps = await getPoolSwapsAPI(poolId, { order: 'desc', limit: 20 });
+      const swaps = await getPoolSwapsAPI(poolId, { order: 'desc', limit: 10 });
       setPoolSwaps(swaps);
     }
 
