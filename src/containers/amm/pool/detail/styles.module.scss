@@ -396,7 +396,10 @@
     letter-spacing: normal;
   }
   th:not(:first-child) {
-    padding-left: 40px !important;
+    padding-left: 100px !important;
+  }
+  th:last-child {
+    padding-left: 20px !important;
   }
   tr:first-child {
     height: 36px !important;
@@ -413,7 +416,10 @@
     height: 50px !important;
   }
   td:not(:first-child) {
-    padding-left: 40px !important;
+    padding-left: 100px !important;
+  }
+  td:last-child {
+    padding-left: 20px !important;
   }
 }
 
