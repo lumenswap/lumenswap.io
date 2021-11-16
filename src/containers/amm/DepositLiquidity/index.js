@@ -148,7 +148,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
       return `Insufficient ${tokenB.getCode()} balance`;
     }
 
-    if (tokenA.isNative() && new BN(value).gt(calculateMaxXLM(tokenABalance, userSubentry))) {
+    if (tokenB.isNative() && new BN(value).gt(calculateMaxXLM(tokenBBalance, userSubentry))) {
       return `Insufficient ${tokenB.getCode()} balance`;
     }
 
