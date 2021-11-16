@@ -84,15 +84,9 @@ function OpenOrder({ openOrderList, setOpenOrderList }) {
       title: 'Date',
       dataIndex: 'time',
       key: '1',
-      render: (data) => {
-        const time = data.time.split(' ');
-        return (
-          <div className={styles.date}>
-            <span className={styles['date-item']}>{time[0]}</span>
-            <span className={styles['date-item']}>{time[2]}</span>
-          </div>
-        );
-      },
+      render: (data) => (
+        <span>{moment(data.time).fromNow()}</span>
+      ),
     },
     {
       title: 'Sell',

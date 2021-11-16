@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getPoolSwapsAPI } from 'api/stellarPool';
 import getAssetDetails from 'helpers/getAssetDetails';
 import humanAmount from 'helpers/humanAmount';
+import RightArrowIcon from 'assets/images/arrowRight';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -28,7 +29,7 @@ function PoolSwapsData({ poolId }) {
 
   const tableHeaders = [
     {
-      title: 'TX',
+      title: 'info',
       dataIndex: 'tx',
       key: 1,
       render: (data) => {
@@ -67,8 +68,8 @@ function PoolSwapsData({ poolId }) {
         }
 
         return (
-          <span>Swap {humanAmount(base.amount)}{' '}
-            {base.token.getCode()} for {humanAmount(counter.amount)}{' '}
+          <span className={styles['info-tx']}>{humanAmount(base.amount)}{' '}
+            {base.token.getCode()} <div className={styles['arrow-icon']}><RightArrowIcon /></div> {humanAmount(counter.amount)}{' '}
             {counter.token.getCode()}
           </span>
         );

@@ -238,7 +238,13 @@
 }
 .volume-chart {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  &-info {
+    display: flex;
+    flex-direction: column;
+  }
   &-number {
     font-family: SofiaPro;
     font-size: 22px;
@@ -259,6 +265,17 @@
     line-height: 1.43;
     letter-spacing: normal;
     color: $ShuttleGray;
+  }
+  &-time {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+    padding-top: 12px;
   }
 }
 
