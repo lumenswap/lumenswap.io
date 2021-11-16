@@ -31,7 +31,7 @@ const ObmHeader = () => {
   const menus = {
     right: [
       { name: 'Wallet', link: urlMaker.wallet.root(), restricted: true },
-      { name: 'Order', link: urlMaker.order.root(), restricted: true },
+      { name: 'My Orders', link: urlMaker.order.root(), restricted: true },
     ],
     left: [
       { name: 'Market', link: urlMaker.market.root() },

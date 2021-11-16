@@ -18,8 +18,11 @@ const PageWrapper = ({ children, currentVolume }) => (
     <div className={styles['chart-container']}>
       <div className={styles['chart-info-container']}>
         <div className={styles['volume-chart']}>
-          <span className={styles['volume-chart-number']}>${humanAmount(new BN(currentVolume.volume).div(10 ** 7).toString(), true)}</span>
-          <span className={styles['volume-chart-text']}>Volume 24h</span>
+          <div className={styles['volume-chart-info']}>
+            <span className={styles['volume-chart-number']}>${humanAmount(new BN(currentVolume.volume).div(10 ** 7).toString(), true)}</span>
+            <span className={styles['volume-chart-text']}>Volume 24h</span>
+          </div>
+          <span className={styles['volume-chart-time']}>{moment(currentVolume.periodTime).utc().format('MMM , DD')}</span>
         </div>
       </div>
       {children}

@@ -618,3 +618,15 @@
   letter-spacing: normal;
   color: $CodGray;
 }
+.arrow-icon {
+  margin-left: 6px;
+  margin-right: 6px;
+  svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+.info-tx {
+  display: flex;
+  flex-direction: row;
+}

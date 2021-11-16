@@ -128,11 +128,17 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
     if (!isLogged) {
       router.push(urlMaker.pool.root());
     }
-  }, []);
+  }, [isLogged]);
 
   useEffect(() => {
     loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
   }, []);
+
+  useEffect(() => {
+    if (new BN(userShare).isEqualTo(0)) {
+      router.push(urlMaker.myPool.root());
+    }
+  }, [userShare]);
 
   return (
     <div className="container-fluid">

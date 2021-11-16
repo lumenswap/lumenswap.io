@@ -59,7 +59,7 @@ const RewardContent = () => {
           target="_blank"
           rel="noreferrer"
           style={{ color: '#0e41f5', textDecoration: 'none' }}
-        >{minimizeAddress(data.txHash)}
+        >{minimizeAddress(data.txHash, 8)}
         </a>
       ),
     },

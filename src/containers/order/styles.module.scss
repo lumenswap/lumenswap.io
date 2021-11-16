@@ -102,22 +102,8 @@
     width: 0;  
     background: transparent;  
   }
-  .date {
-    color: $RollingStone;
-    font-family: SofiaPro;
-    font-size: 16px;
-    display: flex;
-    flex-direction: row;
-    width: 115px;
-    justify-content: space-between;
-}
-.date-item {
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 24px;
-    letter-spacing: 0;
-}
+  
+
 .table::-webkit-scrollbar {
     width: 0;  
     background: transparent;  
