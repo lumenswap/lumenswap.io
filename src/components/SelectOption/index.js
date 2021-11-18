@@ -1,19 +1,12 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
 import styles from './styles.module.scss';
 
 const SelectOption = ({
-  items, height, width, setValue, className, isSearchable,
+  items, height, width, setValue, defaultValue, className, isSearchable,
 }) => {
-  const [selected, setSelected] = useState(items[0]);
-
-  const onChangeNetwork = (e) => {
-    setSelected(e);
-    setValue(e);
-    console.warn(selected);
-  };
+  const onChangeNetwork = (e) => { setValue(e); };
 
   return (
     <div className={styles.select}>
@@ -21,7 +14,7 @@ const SelectOption = ({
         classNamePrefix="select"
         separator={false}
         closeMenuOnSelect
-        defaultValue={selected}
+        defaultValue={defaultValue}
         options={items}
         hideSelectedOptions={false}
         isSearchable={isSearchable}

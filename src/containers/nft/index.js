@@ -71,6 +71,7 @@ const NftPage = () => {
               <SelectOption
                 items={dropdownItems}
                 setValue={setSelect}
+                defaultValue={select}
                 className={styles.filter}
                 isSearchable={false}
               />
