@@ -13,7 +13,7 @@ function InfoBoxItem({ item, data }) {
   return (
     <div className={styles.row}>
       <div className={styles.title}>
-        <span>
+        <span className={styles['align-center']}>
           {item.title}
           {item.tooltip && (
             <Tooltips placement="top" id="price" text={<PrimaryTooltip text={item.tooltip} />}>
@@ -24,7 +24,7 @@ function InfoBoxItem({ item, data }) {
           )}
         </span>
       </div>
-      <div>{url ? <InfoBoxLink item={item} /> : item.render(data)}</div>
+      <div className={styles['align-center']}>{url ? <InfoBoxLink item={item} /> : item.render(data)}</div>
     </div>
 
   );

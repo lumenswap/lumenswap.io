@@ -1,0 +1,18 @@
+@import "styles/vars";
+
+.text {
+  font-size: 18px;
+  line-height: 1.56;
+  color: $CodGray;
+
+  span {
+    font-weight: bold;
+  }
+}
+
+.btn {
+  width: 100%;
+  font-weight: 500;
+  font-size: 18px;
+  margin: 40px 0 24px 0;
+}

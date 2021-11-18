@@ -1,0 +1,80 @@
+@import "styles/vars";
+
+.box {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+  cursor: pointer;
+}
+
+.banner {
+  min-height: 198px;
+  position: relative;
+}
+
+.info {
+  padding: 12px 24px 16px 24px;
+
+  &-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.42;
+    color: $CodGray;
+    margin: 0;
+  }
+
+  &-desc {
+    font-size: 16px;
+    line-height: 1.5;
+    color: $ShuttleGray;
+    margin: 14px 0 0 0;
+  }
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.badge {
+  background-color: $AthensGray;
+  border-radius: 4px;
+  margin-right: 14px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: normal;
+  white-space: nowrap;
+  margin-top: 8px;
+
+  &-subject {
+    color: $ShuttleGray;
+    margin-right: 8px;
+  }
+}
+
+.status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 14px;
+  color: $BlueRibbon;
+  background-color: $Zumthor;
+  border-radius: 4px;
+  padding: 0 6px;
+  z-index: 1;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-circle {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color:  $BlueRibbon;
+    margin-right: 3px;
+  }
+}
