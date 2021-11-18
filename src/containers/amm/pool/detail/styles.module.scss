@@ -618,3 +618,9 @@
   letter-spacing: normal;
   color: $CodGray;
 }
+
+@media screen and (max-width: 576px) {
+  .header-container {
+    flex-direction: column;
+  }
+}

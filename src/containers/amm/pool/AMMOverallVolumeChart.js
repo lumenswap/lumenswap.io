@@ -59,6 +59,7 @@ function AMMOVerallVolumeChart({ chartData }) {
       trigger: 'axis',
       alwaysShowContent: true,
       showContent: true,
+      className: 'disabled-chart-tooltip',
       axisPointer: {
         type: 'shadow',
       },

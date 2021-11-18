@@ -13,6 +13,7 @@ function CChart({ height, options, onEvents }) {
       x2: 0,
       y2: 0,
       width: '100%',
+      height: '84%',
     },
   };
 

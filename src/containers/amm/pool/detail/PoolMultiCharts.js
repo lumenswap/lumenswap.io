@@ -26,7 +26,7 @@ const Chart = ({
       alwaysShowContent: true,
       showContent: true,
       position: [5, 0],
-      className: 'echart-tooltip',
+      className: 'disabled-chart-tooltip',
       formatter() {
         return null;
       },
@@ -87,6 +87,7 @@ const Chart = ({
       axisPointer: {
         type: 'shadow',
       },
+      className: 'disabled-chart-tooltip',
       formatter() {
         return null;
       },
@@ -145,6 +146,7 @@ const Chart = ({
       axisPointer: {
         type: 'shadow',
       },
+      className: 'disabled-chart-tooltip',
       formatter() {
         return null;
       },
