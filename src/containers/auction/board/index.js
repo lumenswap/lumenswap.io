@@ -2,7 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 
 import AuctionHeader from 'components/AuctionHeader';
-import AuctionBoardList from 'components/AuctionBoardList';
+import AuctionBoardList from '../AuctionBoardList';
 
 import styles from './styles.module.scss';
 
