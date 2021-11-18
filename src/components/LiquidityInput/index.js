@@ -13,6 +13,7 @@ const LiquidityInput = ({
   const handleSetMaxValue = () => {
     onChange(maxValue);
   };
+
   return (
     <div className={classNames(styles.box, className)}>
       <div className={styles.amount}>
@@ -31,7 +32,7 @@ const LiquidityInput = ({
         </div>
         <div className="col-auto pl-0">
           <div className={styles.btns}>
-            {maxValue && <div onClick={handleSetMaxValue} className={classNames(styles['max-btn'], secondStyles['button-secondary'])}>MAX</div>}
+            {maxValue && value !== maxValue && <div onClick={handleSetMaxValue} className={classNames(styles['max-btn'], secondStyles['button-secondary'])}>MAX</div>}
             <div className={styles.badge}>
               <Image src={currencySrc} width={20} height={20} alt={currency} />
               <span className="ml-2">{currency}</span>
