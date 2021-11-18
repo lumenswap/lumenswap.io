@@ -27,19 +27,25 @@ import secondStyles from '../../../../components/Button/styles.module.scss';
 import questionLogo from '../../../../../public/images/question.png';
 import styles from './styles.module.scss';
 
-async function loadUserPool(setUserShare, isLogged, userAddress, poolId, setPoolDetail) {
+async function loadUserPool(setUserShare, isLogged, userAddress, poolId, setPoolDetail, router) {
   if (isLogged) {
     try {
       const userData = await fetchAccountDetails(userAddress);
+      let found = false;
       for (const balance of userData.balances) {
         if (balance.asset_type === 'liquidity_pool_shares' && balance.liquidity_pool_id === poolId) {
           setUserShare(balance.balance);
+          found = true;
           break;
         }
       }
 
-      const poolDetail = await getPoolDetailsById(poolId);
-      setPoolDetail(poolDetail);
+      if (!found) {
+        router.push(urlMaker.pool.root());
+      } else {
+        const poolDetail = await getPoolDetailsById(poolId);
+        setPoolDetail(poolDetail);
+      }
     // eslint-disable-next-line no-empty
     } catch (e) {}
   }
@@ -53,7 +59,6 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
   const xlmPrice = useSelector((state) => state.xlmPrice);
   const isLogged = useIsLogged();
   const [poolDetail, setPoolDetail] = useState(initPoolDetail);
-
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
   const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
@@ -70,7 +75,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
           tokenA={refinedA}
           tokenB={refinedB}
           afterDeposit={() => {
-            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id, setPoolDetail);
+            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id, setPoolDetail, router);
           }}
         />,
       }),
@@ -88,7 +93,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
           tokenA={refinedA}
           tokenB={refinedB}
           afterWithdraw={() => {
-            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id, setPoolDetail);
+            loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id, setPoolDetail, router);
           }}
         />,
       }),
@@ -131,7 +136,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
   }, [isLogged]);
 
   useEffect(() => {
-    loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id);
+    loadUserPool(setUserShare, isLogged, userAddress, poolDetail.id, router);
   }, []);
 
   useEffect(() => {

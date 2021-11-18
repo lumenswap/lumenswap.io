@@ -217,7 +217,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
       if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
         const price = new BN(poolData.reserves[1].amount)
           .div(poolData.reserves[0].amount);
-        setValue('amountTokenB', new BN(value).times(price).toString());
+        setValue('amountTokenB', new BN(value).times(price).toFixed(7));
       }
 
       formChange(value);
@@ -229,7 +229,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
       if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
         const price = new BN(poolData.reserves[0].amount)
           .div(poolData.reserves[1].amount);
-        setValue('amountTokenA', new BN(value).times(price).toString());
+        setValue('amountTokenA', new BN(value).times(price).toFixed(7));
       }
 
       formChange(value);
