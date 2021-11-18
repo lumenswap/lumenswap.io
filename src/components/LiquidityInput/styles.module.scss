@@ -14,6 +14,27 @@
   color: $Manatee;
   margin-bottom: 12px;
 }
+.btns {
+  display: flex;
+  flex-direction: row;
+}
+.max-btn {
+  width: 39px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: SofiaPro;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  margin-right: 10px;
+}
 
 .input {
   width: 100%;

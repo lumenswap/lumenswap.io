@@ -258,6 +258,7 @@ const AddLiquidity = ({
               value={props.value}
               currencySrc={extractLogo(tokenA)}
               disabled={poolData === null}
+              maxValue={tokenABalance}
             />
           )}
         />
@@ -277,6 +278,7 @@ const AddLiquidity = ({
               currencySrc={extractLogo(tokenB)}
               className="mt-3"
               disabled={poolData === null}
+              maxValue={tokenBBalance}
             />
           )}
         />
