@@ -41,7 +41,7 @@ async function loadUserPool(setUserShare, isLogged, userAddress, poolId, setPool
       }
 
       if (!found) {
-        router.push(urlMaker.pool.root());
+        router.push(urlMaker.myPool.root());
       } else {
         const poolDetail = await getPoolDetailsById(poolId);
         setPoolDetail(poolDetail);
