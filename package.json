@@ -9,8 +9,8 @@
     },
     "dependencies": {
         "@albedo-link/intent": "^0.11.0",
-        "@ledgerhq/hw-app-str": "^5.46.0",
-        "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
+        "@ledgerhq/hw-app-str": "^6.11.2",
+        "@ledgerhq/hw-transport-webhid": "^6.11.2",
         "@optimizely/optimizely-sdk": "^4.6.2",
         "@stellar/freighter-api": "^1.0.0-beta.0",
         "@svgr/webpack": "^5.5.0",

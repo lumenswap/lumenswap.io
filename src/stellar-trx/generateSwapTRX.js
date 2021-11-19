@@ -10,14 +10,13 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
     .times(new BN(1).minus(new BN(checkout.priceSpread).div(100)));
 
   const account = await server.loadAccount(checkout.fromAddress);
-  // const fee = await server.fetchBaseFee();
 
   let transaction = new StellarSDK.TransactionBuilder(account, {
     fee: transactionConsts.FEE,
     networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
-  if ((needToTrust || forceTrust) && !checkout.to.asset.details.isNative()) {
+  if ((needToTrust) && !checkout.to.asset.details.isNative()) {
     transaction = transaction.addOperation(
       StellarSDK.Operation.changeTrust({
         asset: checkout.to.asset.details,

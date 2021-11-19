@@ -1,5 +1,5 @@
 import StellarSDK from 'stellar-sdk';
-import Transport from '@ledgerhq/hw-transport-u2f';
+import Transport from '@ledgerhq/hw-transport-webhid';
 import Str from '@ledgerhq/hw-app-str';
 import extractErrorText from 'helpers/extractErrorText';
 import WaitingContent from 'blocks/WaitingContent';
@@ -11,6 +11,7 @@ export default async function signWithLedger(trx, publicKey, dispatch) {
   try {
     const transport = await Transport.create();
     const str = new Str(transport);
+    const result = await str.signTransaction("44'/148'/0'", trx.signatureBase());
     const signatureFromLedger = await str.signTransaction(
       "44'/148'/0'",
       trx.signatureBase(),
@@ -31,8 +32,8 @@ export default async function signWithLedger(trx, publicKey, dispatch) {
       content: <WaitingContent message="Sending to network" />,
     }));
 
-    const result = await server.submitTransaction(trx);
-    return result.hash;
+    const submittedTrxResult = await server.submitTransaction(trx);
+    return submittedTrxResult.hash;
   } catch (error) {
     throw new Error(extractErrorText(error));
   }
