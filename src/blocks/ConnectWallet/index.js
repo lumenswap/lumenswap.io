@@ -2,7 +2,7 @@ import rabetIcon from 'assets/images/rabet.svg';
 import privateKeyIcon from 'assets/images/keyword.svg';
 import albedoIcon from 'assets/images/albedo.svg';
 import xbullIcon from 'assets/images/xbull.webp';
-// import ledgerIcon from 'assets/images/ledger.svg';
+import ledgerIcon from 'assets/images/ledger.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import EnterKey from 'blocks/EnterKey';
@@ -34,13 +34,13 @@ const ConnectWallet = () => {
       validator: validateFreighterPresent,
       link: 'https://www.freighter.app',
     },
-    // {
-    //   icon: ledgerIcon,
-    //   iconSize: '18',
-    //   text: 'Ledger',
-    //   loginMethod: loginTypes.LEDGER_S,
-    //   validator: () => true,
-    // },
+    {
+      icon: ledgerIcon,
+      iconSize: '18',
+      text: 'Ledger',
+      loginMethod: loginTypes.LEDGER_S,
+      validator: () => true,
+    },
     {
       icon: albedoIcon,
       iconSize: '18',

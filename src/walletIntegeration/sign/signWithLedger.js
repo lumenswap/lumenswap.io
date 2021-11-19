@@ -1,5 +1,5 @@
 import StellarSDK from 'stellar-sdk';
-import Transport from '@ledgerhq/hw-transport-webhid';
+import Transport from '@ledgerhq/hw-transport-webusb';
 import Str from '@ledgerhq/hw-app-str';
 import extractErrorText from 'helpers/extractErrorText';
 import WaitingContent from 'blocks/WaitingContent';

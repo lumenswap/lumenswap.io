@@ -1,5 +1,5 @@
 import Str from '@ledgerhq/hw-app-str';
-import Transport from '@ledgerhq/hw-transport-webhid';
+import Transport from '@ledgerhq/hw-transport-webusb';
 
 export default async function loginWithLedger() {
   const transport = await Transport.create();
