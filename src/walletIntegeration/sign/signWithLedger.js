@@ -11,7 +11,6 @@ export default async function signWithLedger(trx, publicKey, dispatch) {
   try {
     const transport = await Transport.create();
     const str = new Str(transport);
-    const result = await str.signTransaction("44'/148'/0'", trx.signatureBase());
     const signatureFromLedger = await str.signTransaction(
       "44'/148'/0'",
       trx.signatureBase(),
