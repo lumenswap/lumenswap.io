@@ -39,6 +39,7 @@ function VolumeChart({ options, setCurrentVolume, chartData }) {
         downplay: () => setCurrentVolume(chartData[chartData.length - 1]),
       }}
       height="137px"
+      gridOptions={{ top: 3 }}
     />
   );
 }

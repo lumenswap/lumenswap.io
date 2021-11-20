@@ -1,7 +1,9 @@
 import EChartsReact from 'echarts-for-react';
 import React from 'react';
 
-function CChart({ height, options, onEvents }) {
+function CChart({
+  height, options, onEvents, gridOptions = { top: 10 },
+}) {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -13,6 +15,7 @@ function CChart({ height, options, onEvents }) {
       x2: 0,
       y2: 0,
       width: '100%',
+      ...gridOptions,
     },
   };
 

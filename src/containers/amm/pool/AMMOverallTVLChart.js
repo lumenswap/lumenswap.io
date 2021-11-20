@@ -35,6 +35,7 @@ const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions, chartData }) => 
     }}
     options={tvlOptions}
     height="137px"
+    gridOptions={{ top: 3 }}
   />
 ));
 

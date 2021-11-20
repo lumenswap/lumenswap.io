@@ -292,17 +292,8 @@
       padding: 4px 0;
     }
   }
-
-  &-chart {
-    margin-top: 15px;
-    padding: 5px 8px 0 10px;
-    height: calc(100% - 15px);
-
-    canvas, :global(.echarts-for-react) {
-      height: 340px !important;
-    }
-  }
 }
+
 
 .box-section {
   display: flex;
@@ -590,10 +581,10 @@
 .multi-chart-container {
   padding-left: 12px;
   padding-right: 12px;
-  margin-top: 56px;
+  margin-top: 46px;
   width: 100%;
   div {
-    height: 195px !important;
+    height: 205px !important;
     cursor: default !important;
   }
 }
