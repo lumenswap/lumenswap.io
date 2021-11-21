@@ -4,11 +4,11 @@ import TradesData from './TradesData';
 const NFTDetailsTabContent = ({ tab, lusiId }) => {
   if (tab === 'offer') {
     return (
-      <OffersData />
+      <OffersData id={lusiId} />
     );
   }
   return (
-    <TradesData />
+    <TradesData id={lusiId} />
   );
 };
 

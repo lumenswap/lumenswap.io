@@ -1,5 +1,5 @@
-import React from 'react';
 import Head from 'next/head';
+import { useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import NFTHeader from 'components/NFTHeader';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import PlaceNFTOrder from 'containers/nft/PlaceNFTOrder';
 import useIsLogged from 'hooks/useIsLogged';
 import minimizeAddress from 'helpers/minimizeAddress';
+import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import InfoBox from 'components/InfoBox';
 import {
   generateAddressURL,
@@ -20,12 +21,14 @@ import {
 } from 'helpers/explorerURLGenerator';
 import numeral from 'numeral';
 import Breadcrumb from 'components/BreadCrumb';
+import urlMaker from 'helpers/urlMaker';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import styles from './styles.module.scss';
 
 const NFTDetail = ({ id, data }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
+  const [tab, setTab] = useState('offer');
 
   const nftInfo = [
     {
@@ -102,6 +105,15 @@ const NFTDetail = ({ id, data }) => {
       dispatch(openConnectModal());
     }
   };
+  const handleChangeTab = (tabId) => {
+    setTab(tabId);
+  };
+  function generateLink() {
+    if (tab === 'offer') {
+      return urlMaker.nft.lusiOffers(id);
+    }
+    return urlMaker.nft.lusiTrades(id);
+  }
 
   return (
     <div className="container-fluid">
@@ -149,16 +161,18 @@ const NFTDetail = ({ id, data }) => {
 
             <div className="row">
               <div className="col-12">
-                <div className={classNames(styles.card, styles['card-tabs'])}>
+                <div className={classNames(styles['card-2'], styles['card-tabs'])}>
                   <CTabs
                     tabs={tabs}
                     tabContent={NFTDetailsTabContent}
                     className={styles.tabs}
+                    onChange={handleChangeTab}
                     customTabProps={{
                       lusiId: id,
                     }}
                   />
                 </div>
+                <CSeeAllContentsButton className={styles['all-btn']} link={generateLink()} content={tab === 'offer' ? 'See all offers' : 'See all trades'} />
               </div>
             </div>
           </div>
