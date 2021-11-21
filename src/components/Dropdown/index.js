@@ -23,21 +23,25 @@ const CustomDropdown = ({ className }) => {
   const loginMethod = user.loginType;
   let walletIcon;
   if (loginMethod === loginTypes.PV) {
-    walletIcon = privateKeyIcon.src;
+    walletIcon = privateKeyIcon;
   } else if (loginMethod === loginTypes.ALBEDO) {
-    walletIcon = albedoIcon.src;
+    walletIcon = albedoIcon;
   } else if (loginMethod === loginTypes.FREIGHTER) {
-    walletIcon = freighterIcon.src;
+    walletIcon = freighterIcon;
   } else if (loginMethod === loginTypes.LEDGER_S) {
-    walletIcon = ledgerIcon.src;
+    walletIcon = ledgerIcon;
   } else if (loginMethod === loginTypes.RABET) {
-    walletIcon = rabetIcon.src;
+    walletIcon = rabetIcon;
   } else if (loginMethod === loginTypes.XBULL) {
-    walletIcon = xbullIcon.src;
+    walletIcon = xbullIcon;
   }
 
   return (
-    <div className={classNames(styles.dropdown, className)}>
+    <div
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+      className={classNames(styles.dropdown, className)}
+    >
       <NavDropdown
         title={(
           <>
@@ -47,8 +51,6 @@ const CustomDropdown = ({ className }) => {
             /> {minimizeAddress(userAddress)}
           </>
         )}
-        onMouseEnter={() => setShow(true)}
-        onMouseLeave={() => setShow(false)}
         show={show}
         className={show && styles.hover}
         id="language-switcher-container"

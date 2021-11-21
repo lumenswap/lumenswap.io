@@ -16,7 +16,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import { fetchAccountDetails } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from './styles.module.scss';
-import Tolerance from '../Tolerance';
+// import Tolerance from '../Tolerance';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 
 function Inpool({ token, isLoading }) {
@@ -68,7 +68,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
         ...tokenB,
         amount: data.amountTokenB,
       },
-      tolerance: data.tolerance,
+      tolerance: '0.005',
       poolData,
     };
 
@@ -148,7 +148,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
       return `Insufficient ${tokenB.getCode()} balance`;
     }
 
-    if (tokenA.isNative() && new BN(value).gt(calculateMaxXLM(tokenABalance, userSubentry))) {
+    if (tokenB.isNative() && new BN(value).gt(calculateMaxXLM(tokenBBalance, userSubentry))) {
       return `Insufficient ${tokenB.getCode()} balance`;
     }
 
@@ -217,7 +217,9 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
       if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
         const price = new BN(poolData.reserves[1].amount)
           .div(poolData.reserves[0].amount);
-        setValue('amountTokenB', new BN(value).times(price).toString());
+        setValue('amountTokenB', new BN(value).times(price).toFixed(7));
+      } else {
+        setValue('amountTokenB', '');
       }
 
       formChange(value);
@@ -229,7 +231,9 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
       if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
         const price = new BN(poolData.reserves[0].amount)
           .div(poolData.reserves[1].amount);
-        setValue('amountTokenA', new BN(value).times(price).toString());
+        setValue('amountTokenA', new BN(value).times(price).toFixed(7));
+      } else {
+        setValue('amountTokenA', '');
       }
 
       formChange(value);
@@ -271,6 +275,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               value={props.value}
               currencySrc={extractLogo(tokenA)}
               disabled={poolData === null}
+              maxValue={tokenABalance}
             />
           )}
         />
@@ -291,11 +296,12 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               currencySrc={extractLogo(tokenB)}
               className="mt-3"
               disabled={poolData === null}
+              maxValue={tokenBBalance}
             />
           )}
         />
 
-        <Controller
+        {/* <Controller
           name="tolerance"
           control={control}
           rules={{
@@ -308,7 +314,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               value={props.value}
             />
           )}
-        />
+        /> */}
 
         <Button
           htmlType="submit"

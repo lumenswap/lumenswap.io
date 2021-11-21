@@ -59,7 +59,7 @@ const RewardContent = () => {
           target="_blank"
           rel="noreferrer"
           style={{ color: '#0e41f5', textDecoration: 'none' }}
-        >{minimizeAddress(data.txHash)}
+        >{minimizeAddress(data.txHash, 8)}
         </a>
       ),
     },
@@ -93,6 +93,11 @@ const RewardContent = () => {
       title: 'Trade reward earned',
       tooltip: 'This shows your earned rewards from the trader program.',
       content: <Info text="LSP" number={rewardAmountHumanize(rewardStats?.trader?.total)} />,
+    },
+    {
+      title: 'LP reward earned',
+      tooltip: 'This shows your earned reward from the LP program.',
+      content: <span>-</span>,
     },
   ];
 

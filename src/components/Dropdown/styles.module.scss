@@ -3,7 +3,6 @@
 .dropdown {
   position: relative;
   display: flex;
-
   :global(.dropdown-toggle) {
     text-align: left;
     display: flex;
@@ -16,6 +15,7 @@
     padding-right: 14px;
     padding-left: 14px;
     height: 36px;
+    // width: 160px !important;
 
     svg {
       margin-right: 8px;
@@ -48,6 +48,7 @@
       font-weight: normal;
       display: flex;
       align-items: center;
+      margin-top: -1px !important;
 
       span {
         margin-right: 7px;
@@ -75,7 +76,7 @@
     }
 
     :global(.dropdown-item):active {
-      background: white !important;
+      background: #fff !important;
       color: $CodGray !important;
     }
   }
@@ -83,6 +84,6 @@
 
 .hover {
   :global(.dropdown-toggle) {
-    background-color: white;
+    background-color: #fff;
   }
 }

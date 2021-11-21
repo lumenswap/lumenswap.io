@@ -1,0 +1,95 @@
+@import 'styles/vars';
+
+
+.container {
+    width: 100%;
+    height: 114px;
+    border-radius: 8px;
+    border: 1px solid $CatskillWhite;
+    background-color: $AthensGray;
+}
+.items {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btn {
+    width: 34px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: SofiaPro;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: center;
+    color: $BlueRibbon;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-active {
+        width: 34px;
+        height: 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: SofiaPro;
+        font-size: 12px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.33;
+        letter-spacing: normal;
+        text-align: center;
+        color: $BlueRibbon;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $White;
+    }
+    &-active:not(:last-child) {
+        margin-right: 4px;
+    }
+}
+.btn:not(:last-child) {
+    margin-right: 4px;
+}
+.current-value {
+    font-family: SofiaPro;
+    font-size: 32px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.31;
+    letter-spacing: normal;
+    color: $CodGray;
+}
+.btns {
+    display: flex;
+    flex-direction: row;
+    margin-top: 7px;
+}
+.input {
+    margin-top: 11px;
+}
+
+  
+  
+
+.header {
+    padding-top: 5px;
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+}

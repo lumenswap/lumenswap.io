@@ -3,12 +3,17 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import { useSelector } from 'react-redux';
+import secondStyles from 'components/Button/styles.module.scss';
 import styles from './styles.module.scss';
 
 const LiquidityInput = ({
-  balance, currency, currencySrc, value, className, onChange, disabled,
+  balance, currency, currencySrc, value, className, onChange, disabled, maxValue,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
+  const handleSetMaxValue = () => {
+    onChange(maxValue);
+  };
+
   return (
     <div className={classNames(styles.box, className)}>
       <div className={styles.amount}>
@@ -26,9 +31,12 @@ const LiquidityInput = ({
           />
         </div>
         <div className="col-auto pl-0">
-          <div className={styles.badge}>
-            <Image src={currencySrc} width={20} height={20} alt={currency} />
-            <span className="ml-2">{currency}</span>
+          <div className={styles.btns}>
+            {maxValue && value !== maxValue && <div onClick={handleSetMaxValue} className={classNames(styles['max-btn'], secondStyles['button-secondary'])}>MAX</div>}
+            <div className={styles.badge}>
+              <Image src={currencySrc} width={20} height={20} alt={currency} />
+              <span className="ml-2">{currency}</span>
+            </div>
           </div>
         </div>
       </div>

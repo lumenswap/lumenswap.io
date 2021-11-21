@@ -5,10 +5,26 @@
 }
 
 .label {
-  font-size: 20px;
+  font-family: SofiaPro;
+  font-size: 24px;
   font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: normal;
   color: $CodGray;
-  margin-bottom: 0;
+  margin-bottom: 14px;
+  &-second {
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    color: $CodGray;
+    margin-top: 24px;
+  }
 }
 
 .btn {
@@ -29,6 +45,7 @@
 
 .table-container {
   margin-top: 12px;
+  margin-bottom: 34px;
   background-color: $White;
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
@@ -82,7 +99,6 @@
   height: 190px;
   background-color: $White;
   border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -154,5 +170,147 @@
     letter-spacing: normal;
     cursor: pointer;
     color: $BlueRibbon;
+  }
+}
+
+
+.chart-container {
+  background-color: $White;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  width: 100%;
+  height: 220px;
+}
+
+.chart {
+  padding-left: 12px;
+  padding-right: 12px;
+  div {
+    height: 164px !important;
+    cursor: default !important;
+  }
+}
+
+.chart-info-container {
+  height: 54px;
+  width: 100%;
+  padding-right: 12px;
+  padding-left: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.tvl-chart {
+  display: flex;
+  flex-direction: column;
+  &-number {
+    font-family: SofiaPro;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $CodGray;
+    padding-top: 7px;
+  }
+  &-text {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+  }
+  &-time {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+    padding-top: 12px;
+  }
+}
+.volume-chart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  &-info {
+    display: flex;
+    flex-direction: column;
+  }
+  &-number {
+    font-family: SofiaPro;
+    font-size: 22px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: $CodGray;
+    padding-top: 7px;
+  }
+  &-text {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+  }
+  &-time {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+    padding-top: 12px;
+  }
+}
+
+.loading-container-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  div {
+    margin-bottom: 50px;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .chart-container {
+    margin-top: 14px;
+  }
+  .chart-main-container {
+    &-left {
+      padding-right: 15px !important;
+    }
+    &-right {
+      padding-left: 15px !important;
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .chart-main-container {
+    &-left {
+      padding-right: 12px !important;
+    }
+    &-right {
+      padding-left: 12px !important;
+    }
   }
 }

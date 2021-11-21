@@ -14,7 +14,7 @@ export const Info = ({ number, text, className }) => (
 const CStatistics = ({ blocks, className }) => (
   <div className={classNames('row w-100', styles.main, className)}>{blocks.map((block) => (
     <div
-      className={classNames('col-lg-4 col-md-6 col-sm-12 col-12 px-0',
+      className={classNames(`col-lg-${blocks.length <= 3 ? 4 : 12 / blocks.length} col-md-6 col-sm-12 col-12 px-0`,
         styles.container)}
       key={block.title}
     >

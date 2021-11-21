@@ -16,11 +16,11 @@ function InfoBoxItem({ item, data }) {
         <span className={styles['align-center']}>
           {item.title}
           {item.tooltip && (
-            <Tooltips placement="top" id="price" text={<PrimaryTooltip text={item.tooltip} />}>
-              <span style={{ marginLeft: 2, height: 18 }}>
-                <Image src={QuestionIcon} width={16} height={16} />
-              </span>
-            </Tooltips>
+          <Tooltips placement="top" id="price" text={<PrimaryTooltip text={item.tooltip} />}>
+            <span style={{ marginLeft: 2, height: 18 }}>
+              <Image src={QuestionIcon} width={16} height={16} />
+            </span>
+          </Tooltips>
           )}
         </span>
       </div>

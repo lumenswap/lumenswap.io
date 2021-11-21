@@ -17,7 +17,7 @@ import isSameAsset from 'helpers/isSameAsset';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
-import Tolerance from '../Tolerance';
+// import Tolerance from '../Tolerance';
 
 const setLabel = (name, src) => (
   <div className="d-flex align-items-center">
@@ -72,7 +72,7 @@ const AddLiquidity = ({
         ...tokenB,
         amount: data.amountTokenB,
       },
-      tolerance: data.tolerance,
+      tolerance: '0.005',
       poolData,
     };
 
@@ -149,7 +149,7 @@ const AddLiquidity = ({
       return `Insufficient ${tokenB.getCode()} balance`;
     }
 
-    if (tokenA.isNative() && new BN(value).gt(calculateMaxXLM(tokenABalance, userSubentry))) {
+    if (tokenB.isNative() && new BN(value).gt(calculateMaxXLM(tokenBBalance, userSubentry))) {
       return `Insufficient ${tokenB.getCode()} balance`;
     }
 
@@ -202,7 +202,9 @@ const AddLiquidity = ({
       if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
         const price = new BN(poolData.reserves[1].amount)
           .div(poolData.reserves[0].amount);
-        setValue('amountTokenB', new BN(value).times(price).toString());
+        setValue('amountTokenB', new BN(value).times(price).toFixed(7));
+      } else {
+        setValue('amountTokenB', '');
       }
 
       formChange(value);
@@ -214,7 +216,9 @@ const AddLiquidity = ({
       if (!(new BN(poolData.reserves[0].amount).eq(0)) && value !== '' && value !== '0') {
         const price = new BN(poolData.reserves[0].amount)
           .div(poolData.reserves[1].amount);
-        setValue('amountTokenA', new BN(value).times(price).toString());
+        setValue('amountTokenA', new BN(value).times(price).toFixed(7));
+      } else {
+        setValue('amountTokenA', '');
       }
 
       formChange(value);
@@ -258,6 +262,7 @@ const AddLiquidity = ({
               value={props.value}
               currencySrc={extractLogo(tokenA)}
               disabled={poolData === null}
+              maxValue={tokenABalance}
             />
           )}
         />
@@ -277,11 +282,12 @@ const AddLiquidity = ({
               currencySrc={extractLogo(tokenB)}
               className="mt-3"
               disabled={poolData === null}
+              maxValue={tokenBBalance}
             />
           )}
         />
 
-        <Controller
+        {/* <Controller
           name="tolerance"
           control={control}
           rules={{
@@ -294,7 +300,7 @@ const AddLiquidity = ({
               value={props.value}
             />
           )}
-        />
+        /> */}
 
         <Button
           htmlType="submit"

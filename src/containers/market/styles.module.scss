@@ -20,12 +20,37 @@
   }
 }
 .title {
-  margin-top: 29px;
+  margin-top: 42px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
   height: 31px;
+}
+.top-pair-details {
+  margin-top: 44px;
+  &-text {
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
+  &-info {
+    display: flex;
+    flex-direction: row;
+    margin-right: 20px;
+    width: 148px;
+    align-items: center;
+    height: 40px;
+  }
+  &-image {
+    margin-right: 3px;
+    margin-top: 5px;
+  }
 }
 .market {
   font-family: SofiaPro;
@@ -37,13 +62,79 @@
   letter-spacing: normal;
   color: $CodGray;
 }
+.top-pair-item {
+  background-color: $White;
+  margin-right: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  height: 40px;
+  width: 320px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 18px;
+  padding-left: 18px;
+  justify-content: space-between;
+  &-info {
+    display: flex;
+    flex-direction: row;
+    span:first-child {
+      margin-right: 10px;
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $Manatee;
+    }
+    span:last-child {
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $CodGray;
+      margin-left: 8px;
+    }
+    &-images {
+      margin-top: 2px;
+    }
+  }
+  &-amount {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    &-text {
+      margin-left: 4px;
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $SuccessGreen;
+    }
+  }
+  &-icon-container {
+    height: 100%;
+    div {
+      margin-top: 12px;
+    }
+  }
+}
 
 .table-container {
   width: 100%;
   background-color: $White;
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
-  margin-top: 23px;
+  margin-top: 18px;
   div {
     height: auto;
   }
@@ -195,5 +286,10 @@
 @media (max-width: 363px) {
   .input {
     margin-top: 62px;
+  }
+}
+@media screen and (max-width: 1360px) {
+  .top-pair-item {
+    margin-bottom: 20px;
   }
 }

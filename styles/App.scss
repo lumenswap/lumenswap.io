@@ -14,6 +14,7 @@ body {
   font-family: Roboto, sans-serif !important;
 }
 
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -121,6 +122,16 @@ input[type='number'] {
 .modal-content {
   border-radius: 12px !important;
 }
+.CircularProgressbar-text {
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: normal;
+  fill: $BlueRibbon !important;
+}
 
 .tooltip-inner {
   background-color: white !important;
@@ -166,10 +177,16 @@ input[type='number'] {
   opacity: 1 !important;
 }
 
+.styles_tab__Fo26p .nav-link.active {
+  font-weight: 500 !important;
+}
 .title {
   font-size: 24px;
   font-weight: 600;
   color: $CodGray;
+}
+.disabled-chart-tooltip {
+  display: none;
 }
 
 @media (max-width: $lg) {

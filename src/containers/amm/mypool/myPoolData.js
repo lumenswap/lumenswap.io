@@ -1,18 +1,10 @@
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
-import { useDispatch, useSelector } from 'react-redux';
-import { openModalAction } from 'actions/modal';
-import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
-import DepositLiquidity from 'containers/amm/DepositLiquidity';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import { extractLogo } from 'helpers/assetUtils';
-import Link from 'next/link';
+// import Link from 'next/link';
 import humanAmount from 'helpers/humanAmount';
-import BN from 'helpers/BN';
-import showGenerateTrx from 'helpers/showGenerateTrx';
-import showSignResponse from 'helpers/showSignResponse';
-import generateRemovePoolTrustlineTRX from 'stellar-trx/generateRemovePoolTrustlineTRX';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -21,81 +13,25 @@ const NoDataMessage = () => (
   </div>
 );
 
-function MyPoolData({ pools, afterWAD }) {
-  const dispatch = useDispatch();
-  const userAddress = useSelector((state) => state.user.detail.address);
-
-  const renderModals = (data) => {
-    const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
-    const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
-
-    const handleDeposit = () => {
-      dispatch(
-        openModalAction({
-          modalProps: {
-            title: 'Deposit Liquidity',
-            className: 'main',
-          },
-          content: <DepositLiquidity tokenA={tokenA} tokenB={tokenB} afterDeposit={afterWAD} />,
-        }),
-      );
-    };
-
-    const handleWithdraw = async () => {
-      if (new BN(data.userShare).eq(0)) {
-        // eslint-disable-next-line no-inner-declarations
-        function func() {
-          return generateRemovePoolTrustlineTRX(
-            userAddress,
-            tokenA,
-            tokenB,
-          );
-        }
-
-        await showGenerateTrx(func, dispatch)
-          .then((trx) => showSignResponse(trx, dispatch))
-          .catch(console.error);
-
-        afterWAD();
-      } else {
-        dispatch(
-          openModalAction({
-            modalProps: {
-              title: 'Withdraw Liquidity',
-              className: 'main',
-            },
-            content: <WithdrawLiquidity tokenA={tokenA} tokenB={tokenB} afterWithdraw={afterWAD} />,
-          }),
-        );
-      }
-    };
-
-    return (
-      <div className={styles['modal-btns']}>
-        <div onClick={handleDeposit}>Deposit</div>
-        <div onClick={handleWithdraw}>{new BN(data.userShare).eq(0) ? 'Remove' : 'Withdraw'}</div>
-      </div>
-    );
-  };
-
+function MyPoolData({ pools }) {
   const renderAssetInfo = (data) => {
     const token1 = getAssetFromLPAsset(data.reserves[0].asset);
     const token2 = getAssetFromLPAsset(data.reserves[1].asset);
 
     return (
-      <Link href={urlMaker.pool.poolId(data.id)}>
-        <a style={{ textDecoration: 'none', color: '#1d1d1d' }}>
-          <div className={styles.tokens}>
-            <CurrencyPair
-              size={22}
-              source={[extractLogo(token1), extractLogo(token2)]}
-            />
-            <span>
-              {token1.code}/{token2.code}
-            </span>
-          </div>
-        </a>
-      </Link>
+    // <Link href={urlMaker.pool.poolId(data.id)}>
+    //   <a style={{ textDecoration: 'none', color: '#1d1d1d' }}>
+      <div className={styles.tokens}>
+        <CurrencyPair
+          size={22}
+          source={[extractLogo(token1), extractLogo(token2)]}
+        />
+        <span>
+          {token1.code}/{token2.code}
+        </span>
+      </div>
+    //   </a>
+    // </Link>
     );
   };
 
@@ -129,13 +65,9 @@ function MyPoolData({ pools, afterWAD }) {
         </span>
       ),
     },
-    {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 4,
-      render: renderModals,
-    },
   ];
+
+  const rowURLGenerator = (data) => urlMaker.myPool.myPoolId(data.id);
 
   return (
     <div className={styles['table-container']}>
@@ -145,6 +77,7 @@ function MyPoolData({ pools, afterWAD }) {
         columns={tableHeaders}
         noDataMessage={NoDataMessage}
         loading={pools === null}
+        rowLink={rowURLGenerator}
       />
     </div>
   );

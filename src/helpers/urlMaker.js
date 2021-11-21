@@ -77,6 +77,7 @@ const urlMaker = {
   },
   myPool: {
     root: () => `${rootUrl.amm}/my-pool`,
+    myPoolId: (id) => `${rootUrl.amm}/my-pool/${id}`,
   },
   lottery: {
     root: () => `${rootUrl.lottery === '' ? '/' : rootUrl.lottery}`,

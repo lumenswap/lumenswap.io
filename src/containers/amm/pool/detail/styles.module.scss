@@ -9,42 +9,179 @@
   flex-direction: row;
   width: 100%;
 }
-.info-pool {
-  display: flex;
-  justify-content: center;
-  margin-top: 18px;
+.info-containers {
+  margin-top: 23px;
 }
-.btns-container {
+.chart-pool {
+  background-color: $White;
+  border-radius: 4px;
+  height: 336px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  width: 100%;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+ 
+  span {
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: center;
+    color: $CodGray;
+    margin-top: 13px;
+  }
+}
+.tvl-info {
+  &-container {
+    background-color: $White;
+    box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+    border-radius: 4px;
+    width: 100%;
+    height: 132px;
+  }
+  &-header {
+    height: 84px;
+    border-bottom: 1px solid $CatskillWhite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    &-text {
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      text-align: center;
+      color: $ShuttleGray;
+      padding-bottom: 4px;
+    }
+    &-number {
+      font-family: SofiaPro;
+      font-size: 22px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.45;
+      letter-spacing: normal;
+      color: $CodGray;
+    }
+  }
+  &-items {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 47px;
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.75;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
+  &-item:first-child {
+    border-right: 1px solid $CatskillWhite;
+  }
+}
+.info-pool-col {
+  height: 336px;
+  margin-bottom: 24px;
+}
+.volume-info {
+  &-container {
+    background-color: $White;
+    border-radius: 4px;
+    margin-top: 16px;
+    width: 100%;
+    height: 187px;
+    box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+    margin-bottom: 16px;
+  }
+  &-item:first-child {
+    border-bottom: 1px solid $CatskillWhite;
+  }
+  &-item {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    span:first-child {
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      text-align: center;
+      color: $ShuttleGray;
+      padding-bottom: 4px;
+    }
+    span {
+      font-family: SofiaPro;
+      font-size: 22px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.42;
+      letter-spacing: normal;
+      text-align: center;
+      color: $CodGray;
+    }
+  }
+}
+.chart-icon-container {
+  width: 56px;
+  height: 56px;
+  background-color: $CatskillWhite;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-info-container {
   display: flex;
   flex-direction: row;
+  &-texts {
+    font-family: SofiaPro;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
 }
 
-.deposit-btn {
-  font-size: 16px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-align: center;
-  width: 120px !important;
-  height: 40px !important;
-  color: $White;
-  border-radius: 4px !important;
+.equal-icon {
+  padding-right: 8px;
+  padding-left: 8px;
+  margin-top: 2px;
 }
-.withdraw-btn {
-  font-size: 16px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-align: center;
-  width: 120px !important;
-  height: 40px !important;
-  color: $ShuttleGray;
-  border-radius: 4px !important;
-  margin-left: 10px;
+
+.refresh-icon {
+  margin-left: 4px;
+  margin-top: 6px;
+  cursor: pointer;
 }
 
 .pool-info-container {
@@ -155,17 +292,8 @@
       padding: 4px 0;
     }
   }
-
-  &-chart {
-    margin-top: 15px;
-    padding: 5px 8px 0 10px;
-    height: calc(100% - 15px);
-
-    canvas, :global(.echarts-for-react) {
-      height: 340px !important;
-    }
-  }
 }
+
 
 .box-section {
   display: flex;
@@ -245,10 +373,7 @@
 
 
 .table {
-  background-color: $White;
   border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  max-height: 474px;
   overflow-y: auto;
   scrollbar-width: none;
   th {
@@ -261,8 +386,15 @@
     line-height: 1.5;
     letter-spacing: normal;
   }
+  th:not(:first-child) {
+    padding-left: 100px !important;
+  }
+  th:last-child {
+    padding-left: 20px !important;
+  }
   tr:first-child {
     height: 36px !important;
+    
     th {
       position: relative;
       span {
@@ -273,6 +405,12 @@
   }
   td {
     height: 50px !important;
+  }
+  td:not(:first-child) {
+    padding-left: 100px !important;
+  }
+  td:last-child {
+    padding-left: 20px !important;
   }
 }
 
@@ -323,6 +461,170 @@
 }
 
 .pair-data {
+  display: flex;
+  flex-direction: row;
+}
+
+.bread-crumb-container {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.tabs {
+  
+
+  nav {
+    a:first-child {
+      margin-left: 24px;
+    }
+    a {
+      font-size: 16px;
+    }
+  }
+}
+
+.card {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  margin-bottom: 24px;
+  padding-top: 14px;
+}
+
+.chart-container {
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: $White;
+  border-radius: 4px;
+  height: 336px;
+  width: 100%;
+}
+.chart-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 10px;
+}
+
+.btns {
+  margin-top: 7px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 4px;
+  border: 1px solid $CatskillWhite;
+  height: 26px;
+}
+.btn {
+  padding-right: 14px;
+  padding-left: 14px;
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: $ShuttleGray;
+  cursor: pointer;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  background-color: $White;
+  &-active {
+  padding-right: 14px;
+  padding-left: 14px;
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: $ShuttleGray;
+  cursor: pointer;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  background-color: $BlueRibbon;
+  border-radius: 4px;
+  color: $White;
+  }
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+  &-text {
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
+  &-date {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+}
+
+.multi-chart-container {
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-top: 46px;
+  width: 100%;
+  div {
+    height: 205px !important;
+    cursor: default !important;
+  }
+}
+
+.loading-container-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  div {
+    margin-bottom: 50px;
+  }
+}
+.bread {
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.42;
+  letter-spacing: normal;
+  color: $CodGray;
+}
+
+@media screen and (max-width: 576px) {
+  .header-container {
+    flex-direction: column;
+  }
+}
+
+.arrow-icon {
+  margin-left: 6px;
+  margin-right: 6px;
+  svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+.info-tx {
   display: flex;
   flex-direction: row;
 }

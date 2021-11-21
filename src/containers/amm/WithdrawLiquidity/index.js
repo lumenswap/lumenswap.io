@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import Tolerance from 'containers/amm/Tolerance';
 import Button from 'components/Button';
-import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
 import WithdrawLiquidityConfirm from 'containers/amm/WithdrawLiquidityConfirm';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
@@ -14,7 +12,7 @@ import { extractLogo } from 'helpers/assetUtils';
 import humanAmount from 'helpers/humanAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
-import Checkbox from 'components/Checkbox';
+import WithdrawLiquiditySliderInput from '../WithdrawLiquiditySliderInput';
 import styles from './styles.module.scss';
 
 function Inpool({ token, isLoading }) {
@@ -24,7 +22,7 @@ function Inpool({ token, isLoading }) {
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{isLoading ? '' : humanAmount(token.balance, true)}</div>
+      <div>{isLoading ? '' : humanAmount(token.balance)}</div>
     </div>
   );
 }
@@ -50,10 +48,12 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
   const onSubmit = (data) => {
     const shareA = new BN(userShare)
       .times(poolData.reserves[0].amount)
-      .div(poolData.total_shares);
+      .div(poolData.total_shares)
+      .times(new BN(data.withdrawPercent).div(100));
     const shareB = new BN(userShare)
       .times(poolData.reserves[1].amount)
-      .div(poolData.total_shares);
+      .div(poolData.total_shares)
+      .times(new BN(data.withdrawPercent).div(100));
 
     const confirmData = {
       tokenA: {
@@ -64,10 +64,10 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
         ...tokenB,
         balance: shareB,
       },
-      tolerance: data.tolerance,
+      tolerance: '0.005',
+      withdrawPercent: data.withdrawPercent,
       poolData,
-      userShare,
-      removeTrustline: data.removeTrustline,
+      userShare: new BN(userShare).times(new BN(data.withdrawPercent).div(100)),
     };
 
     dispatch(
@@ -192,51 +192,30 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
           ))}
 
         </div>
-        <div className="d-flex justify-content-between" />
-
-        <div className={styles.current}><AMMCurrentPrice poolData={poolData} /></div>
-
-        <Controller
-          name="tolerance"
-          control={control}
-          rules={{
-            required: 'Tolerance is required',
-          }}
-          defaultValue="0.1"
-          render={(props) => (
-            <Tolerance
-              onChange={props.onChange}
-              value={props.value}
-            />
-          )}
-        />
 
         <hr className={styles.hr} />
-
-        <div className={styles['info-box']}>
-          <p>
-            <span>Note: </span>
-            By performing this operation, all your liquidity will{' '}
-            be transferred from this pool to your wallet account.
-          </p>
-        </div>
-        <div className="mt-3">
+        <div className="d-flex flex-column justify-content-between">
           <Controller
-            name="removeTrustline"
+            name="withdrawPercent"
             control={control}
-            render={(props) => (
-              <Checkbox
-                className="bg-light"
-                style={{ border: '1px solid #ecf0f5', borderRadius: 4 }}
-                labelClass="text-dark"
-                fontSize={14}
-                size={22}
-                onChange={props.onChange}
-                value={props.value}
-                label="Remove the pool after withdrawing liquidity"
-              />
-            )}
+            defaultValue={1}
+            render={(props) => <WithdrawLiquiditySliderInput {...props} />}
           />
+          <div className={styles['footer-section']}>
+            <div className={styles['footer-items']}>
+              {inpoolData.map((inpool) => (
+                <div className={styles['footer-item']}>
+                  <div className={styles['footer-first-section']}>
+                    <div className={styles['footer-img']}><Image src={inpool.logo} width={20} height={20} /></div>
+                    <span className={styles['footer-code']}>{inpool.code}</span>
+                  </div>
+                  <span className={styles['footer-balance']}>
+                    {`${new BN(inpool.balance).times(new BN(getValues().withdrawPercent).div(100))}`}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <Button
