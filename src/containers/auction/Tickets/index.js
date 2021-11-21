@@ -1,19 +1,28 @@
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 import AuctionHeader from 'components/AuctionHeader';
 import SelectOption from 'components/SelectOption';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
-import LoadingWithContainer from 'components/LoadingWithContainer/LoadingWithContainer';
 import CPagination from 'components/CPagination';
+import fetchAuctionTickets from 'api/auctionFakeTickets';
 
+import moment from 'moment';
+import useIsLogged from 'hooks/useIsLogged';
+import { useRouter } from 'next/router';
+import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
+
+const TableNoData = () => <NoData message="There is no bid" />;
 
 const AuctionTickets = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(10);
+  const [tickets, setTickets] = useState(null);
+  const isLogged = useIsLogged();
+  const router = useRouter();
 
   const dropdownItems = [
     { value: 'rbt', label: 'Rabet (RBT)' },
@@ -36,50 +45,57 @@ const AuctionTickets = () => {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => data.amount,
+      render: (data) => <span>{data.amount} RBT</span>,
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 4,
-      render: (data) => data.price,
+      render: (data) => <span>{data.price} XLM</span>,
     },
     {
       title: 'Total',
       dataIndex: 'total',
       key: 5,
-      render: (data) => data.total,
+      render: (data) => <span>{data.total} XLM</span>,
     },
     {
       title: 'Date',
       dataIndex: 'data',
       key: 2,
-      render: (data) => data.date,
+      render: (data) => <span>{moment(data.date).fromNow()}</span>,
     },
     {
       title: 'Auction',
       dataIndex: 'auction',
       key: 2,
-      render: (data) => (
-        <div className={data.auction === 'Cancel'
-          ? styles['status-cancel'] : styles['status-settled']}
-        >
-          {data.auction}
-        </div>
-      ),
+      render: (data) => {
+        if (data.settled) {
+          return (
+            <div className={styles['status-settled']}>
+              Settled
+            </div>
+          );
+        }
+        return <div className={styles['status-cancel']}>Cancel</div>;
+      }
+      ,
     },
   ];
+  useEffect(() => {
+    if (!isLogged) {
+      router.push(urlMaker.auction.root());
+    }
+  }, []);
 
-  const rows = [
-    {
-      date: '1 min ago', amount: '100 RBT', price: '0.1 XLM', total: '100 XLM', auction: 'Cancel',
-    },
-    {
-      date: '1 min ago', amount: '100 RBT', price: '0.1 XLM', total: '100 XLM', auction: 'Settled',
-    },
-  ];
-
-  const data = Array(4).fill(rows[0]).concat(...Array(5).fill(rows[1]));
+  useEffect(() => {
+    setTickets(null);
+    const query = { number: 10, currentPage: page };
+    fetchAuctionTickets(query).then((data) => {
+      setTickets(data.ticketsData);
+      setPages(data.totalPages);
+    });
+  }, [page]);
 
   return (
     <Container>
@@ -101,10 +117,10 @@ const AuctionTickets = () => {
                 <div className={styles.card}>
                   <CTable
                     columns={columns}
-                    noDataMessage={<NoData message="There is no bid" />}
+                    noDataMessage={TableNoData}
                     className={styles.table}
-                    dataSource={data}
-                    customLoading={LoadingWithContainer}
+                    dataSource={tickets}
+                    loading={!tickets}
                   />
                 </div>
                 <div className="d-flex justify-content-end mt-4">

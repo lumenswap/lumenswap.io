@@ -35,6 +35,9 @@ const AuctionDetail = () => {
       {children}
     </div>
   );
+  const handleTabChange = (tab) => {
+    // setCurrentTab(tab);
+  };
 
   const breadCrumbData = [
     {
@@ -137,7 +140,7 @@ const AuctionDetail = () => {
                     tabs={tabs}
                     tabContent={AuctionDetailTabContent}
                     className={styles.tabs}
-                    onChange={(tab) => setCurrentTab(tab)}
+                    onChange={handleTabChange}
                     extraComponent={SearchInput}
                   />
                 </div>

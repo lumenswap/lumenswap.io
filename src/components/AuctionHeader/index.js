@@ -9,15 +9,18 @@ const AuctionHeader = () => {
       disableMainHref: true,
     },
     {
-      name: 'My Tickets',
-      link: urlMaker.auction.tickets(),
-      disableMainHref: true,
-    },
-    {
       name: 'Learn about auction',
       link: '/',
       disableMainHref: true,
       external: true,
+    },
+  ];
+  const rightSideLinks = [
+    {
+      name: 'My Tickets',
+      link: urlMaker.auction.tickets(),
+      disableMainHref: true,
+      restricted: true,
     },
   ];
 
@@ -25,6 +28,7 @@ const AuctionHeader = () => {
     <LumenSwapHeader
       showLSP
       leftSide={leftSideLinks}
+      rightSide={rightSideLinks}
     />
   );
 };
