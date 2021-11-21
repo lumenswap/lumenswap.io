@@ -37,7 +37,6 @@ const MarketPage = ({ assets }) => {
     return mainAsset;
   });
 
-  console.log(topChangeAssets);
   return (
     <>
       <div className="container-fluid">
