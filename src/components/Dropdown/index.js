@@ -36,7 +36,6 @@ const CustomDropdown = ({ className }) => {
     walletIcon = xbullIcon;
   }
 
-  console.log(walletIcon);
   return (
     <div
       onMouseEnter={() => setShow(true)}
