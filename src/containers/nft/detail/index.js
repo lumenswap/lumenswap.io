@@ -66,24 +66,24 @@ const NFTDetail = ({ id, data }) => {
       title: 'Address',
       tooltip: 'tooltip',
       externalLink: {
-        title: `${minimizeAddress(ownerInfoData.address)}`,
-        url: generateAddressURL(ownerInfoData.address),
+        title: `${minimizeAddress(ownerInfoData?.address)}`,
+        url: generateAddressURL(ownerInfoData?.address),
       },
     },
     {
       title: 'Twitter',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${ownerInfoData.twitter}`,
-        url: twitterUrlMaker(ownerInfoData.twitter),
+        title: `@${ownerInfoData?.twitter}`,
+        url: twitterUrlMaker(ownerInfoData?.twitter),
       },
     },
     {
       title: 'Telegram',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${ownerInfoData.telegram}`,
-        url: telegramUrlMaker(ownerInfoData.telegram),
+        title: `@${ownerInfoData?.telegram}`,
+        url: telegramUrlMaker(ownerInfoData?.telegram),
       },
     },
   ];
@@ -153,7 +153,7 @@ const NFTDetail = ({ id, data }) => {
                 <InfoBox
                   title="Owner Info"
                   rows={ownerInfo}
-                  data={data.ownerInfo}
+                  data={ownerInfoData}
                 />
               </div>
             </div>
