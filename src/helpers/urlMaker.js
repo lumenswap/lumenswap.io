@@ -14,6 +14,8 @@ if (process.env.REACT_APP_MODE === 'OBM') {
   rootUrl.amm = '';
 } else if (process.env.REACT_APP_MODE === 'LOTTERY') {
   rootUrl.lottery = '';
+} else if (process.env.REACT_APP_MODE === 'NFT') {
+  rootUrl.nft = '';
 }
 
 const urlMaker = {
