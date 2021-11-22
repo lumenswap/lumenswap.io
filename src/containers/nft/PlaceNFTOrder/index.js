@@ -8,19 +8,40 @@ import InputGroup from 'components/InputGroup';
 import { closeModalAction } from 'actions/modal';
 import Button from 'components/Button';
 import BN from 'helpers/BN';
+import { ONE_LUSI_AMOUNT } from 'appConsts';
+import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
 import styles from './styles.module.scss';
 
-const PlaceNFTOrder = () => {
+const PlaceNFTOrder = ({ lusiAssetCode }) => {
   const dispatch = useDispatch();
   const userLSPBalance = useSelector((state) => state.userBalance)
     .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(LSP)));
+  const userAddress = useSelector((state) => state.user.detail.address);
 
   const {
     control, handleSubmit, errors, formState, trigger,
   } = useForm({ mode: 'onChange' });
 
   const onSubmit = (data) => {
-    console.log(data);
+    function func() {
+      return generateManageBuyTRX(
+        userAddress,
+        getAssetDetails({
+          code: lusiAssetCode,
+          issuer: process.env.REACT_APP_LUSI_ISSUER,
+        }),
+        getAssetDetails(LSP),
+        ONE_LUSI_AMOUNT,
+        new BN(data.price).times(10 ** 7).toFixed(0),
+        0,
+      );
+    }
+
+    showGenerateTrx(func, dispatch)
+      .then((trx) => showSignResponse(trx, dispatch))
+      .catch(console.log);
     dispatch(closeModalAction());
   };
 

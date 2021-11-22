@@ -29,7 +29,7 @@ function cancelSingleOder(data, setOpenOrderList) {
         data.counterAsset,
         data.baseAsset,
         '0',
-        data.price,
+        '0.1',
         data.id,
       );
     }

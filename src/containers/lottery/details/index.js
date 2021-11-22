@@ -106,7 +106,6 @@ const RoundDetailsPage = ({ round }) => {
         >
           <BoardData onTabChange={onTabChange} round={round} />
           <CSeeAllContentsButton link={generateLink()} content={tab === 'tickets' ? 'See all tickets' : 'See all addresses'} />
-
         </div>
       </div>
     </>

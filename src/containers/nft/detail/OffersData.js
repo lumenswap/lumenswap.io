@@ -4,6 +4,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import BN from 'helpers/BN';
 import moment from 'moment';
 import numeral from 'numeral';
+import humanAmount from 'helpers/humanAmount';
 import { useState, useEffect } from 'react';
 import { fetchOfferAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
@@ -39,7 +40,7 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{numeral(data.price).format('0,0')} LSP</span>,
+    render: (data) => <span>{humanAmount(data.amount)} LSP</span>,
   },
 
 ];
@@ -50,12 +51,17 @@ function OffersData({ lusiData }) {
   useEffect(() => {
     fetchOfferAPI(
       getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-      getAssetDetails(LSP), {
+      getAssetDetails(LSP),
+      {
         limit: 200,
         order: 'desc',
       },
-    ).then((res) => res.data._embedded.records
-      .filter((i) => new BN(i.amount).isEqualTo(ONE_LUSI_AMOUNT)))
+    ).then((res) => res
+      .data
+      ._embedded
+      .records
+      .filter((i) => new BN(i.price).isEqualTo(ONE_LUSI_AMOUNT)))
+      // .map((i) => ({ ...i, price: new BN(i.price).div(10 ** 7).toFixed(7) })))
       .then((res) => setOffersData(res));
   }, []);
 
