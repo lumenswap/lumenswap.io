@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import classNames from 'classnames';
@@ -26,6 +26,11 @@ import styles from './styles.module.scss';
 const NFTDetail = ({ id, data }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
+  const [ownerInfoData] = useState({
+    address: '0xdD467E06b406b406b406b406b406b406b406b406b4fA',
+    telegram: 'lumenswap',
+    twitter: 'lumenswap',
+  });
 
   const nftInfo = [
     {
@@ -61,24 +66,24 @@ const NFTDetail = ({ id, data }) => {
       title: 'Address',
       tooltip: 'tooltip',
       externalLink: {
-        title: `${minimizeAddress(data.ownerInfo.address)}`,
-        url: generateAddressURL(data.ownerInfo.address),
+        title: `${minimizeAddress(ownerInfoData.address)}`,
+        url: generateAddressURL(ownerInfoData.address),
       },
     },
     {
       title: 'Twitter',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${data.ownerInfo.twitter}`,
-        url: twitterUrlMaker(data.ownerInfo.twitter),
+        title: `@${ownerInfoData.twitter}`,
+        url: twitterUrlMaker(ownerInfoData.twitter),
       },
     },
     {
       title: 'Telegram',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${data.ownerInfo.telegram}`,
-        url: telegramUrlMaker(data.ownerInfo.telegram),
+        title: `@${ownerInfoData.telegram}`,
+        url: telegramUrlMaker(ownerInfoData.telegram),
       },
     },
   ];

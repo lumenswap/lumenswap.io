@@ -11,11 +11,6 @@ function fetchNFTDetails(number) {
       },
       imageUrl: data.imageUrl,
       assetCode: data.assetCode,
-      ownerInfo: {
-        address: '0xdD467E06b406b406b406b406b406b406b406b406b4fA',
-        telegram: 'lumenswap',
-        twitter: 'lumenswap',
-      },
     }));
 }
 

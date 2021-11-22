@@ -2,10 +2,10 @@ import { useRef, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import Link from 'next/link';
-import numeral from 'numeral';
 
 import Logo from 'assets/images/logo';
 
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const CardThumbnail = ({
@@ -45,7 +45,7 @@ const CardThumbnail = ({
             {price ? (
               <>
                 <Logo />
-                {numeral(price).format('0,0')}
+                {humanAmount(price)}
               </>
             ) : 'Not set yet'}
           </div>
