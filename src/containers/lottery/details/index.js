@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import classNames from 'classnames';
 import Head from 'next/head';
 import Button from 'components/Button';
-import Link from 'next/link';
-import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import { useDispatch, useSelector } from 'react-redux';
+import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import { loginTypes } from 'reducers/user';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
@@ -107,14 +105,7 @@ const RoundDetailsPage = ({ round }) => {
           className={styles['table-container']}
         >
           <BoardData onTabChange={onTabChange} round={round} />
-          <Link href={generateLink()} passHref>
-            <a style={{ textDecoration: 'none' }} className={styles['address-link']}>
-              {tab === 'tickets' ? 'See all tickets' : 'See all addresses'}
-              <span>
-                <Image src={ArrowIcon} width={16} height={16} />
-              </span>
-            </a>
-          </Link>
+          <CSeeAllContentsButton link={generateLink()} content={tab === 'tickets' ? 'See all tickets' : 'See all addresses'} />
 
         </div>
       </div>
