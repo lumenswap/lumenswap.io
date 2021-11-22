@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
-
-import fetchAuctionWinners from 'api/AuctionWinners';
+import numeral from 'numeral';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
-import numeral from 'numeral';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import fetchAuctionBids from 'api/AuctionBids';
 import styles from './styles.module.scss';
 
-const WinnersData = ({ searchQuery, tab, assetCode }) => {
-  const [winners, setWinners] = useState(null);
+function BidsData({
+  page, setTotalPages, searchQuery, assetCode, tab,
+}) {
+  const [bids, setBids] = useState(null);
 
-  let filteredWinners = winners && [...winners];
+  let filteredBids = bids && [...bids];
+
   if (searchQuery) {
-    if (tab === 'winner') {
-      filteredWinners = filteredWinners?.filter((bid) => bid.address.search(searchQuery) !== -1);
+    if (tab === 'bids') {
+      filteredBids = filteredBids?.filter((bid) => bid.address.search(searchQuery) !== -1);
     }
   }
+
   const columns = [
     {
       title: 'Address',
@@ -26,6 +30,16 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
         <a href={generateAddressURL(data.address)} className={styles.link}>
           {minimizeAddress(data.address)}
         </a>
+      ),
+    },
+    {
+      title: 'Date',
+      dataIndex: 'data',
+      key: 2,
+      render: (data) => (
+        <span>
+          {moment(data.date).fromNow()}
+        </span>
       ),
     },
     {
@@ -61,18 +75,25 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
   ];
 
   useEffect(() => {
-    fetchAuctionWinners(null, assetCode).then((data) => setWinners(data.winnersData));
-  }, []);
+    setBids(null);
+    const query = { currentPage: page, number: 10 };
+    fetchAuctionBids(query, assetCode).then((data) => {
+      setBids(data.bidsData);
+      setTotalPages(data.totalPages);
+    });
+  }, [page]);
 
   return (
-    <CTable
-      columns={columns}
-      noDataMessage={() => <NoData message="There is no winner" />}
-      className={styles.table}
-      dataSource={filteredWinners?.slice(0, 6)}
-      loading={!winners}
-    />
+    <>
+      <CTable
+        columns={columns}
+        noDataMessage={() => <NoData message="There is no bid" />}
+        className={styles.table}
+        dataSource={filteredBids}
+        loading={!bids}
+      />
+    </>
   );
-};
+}
 
-export default WinnersData;
+export default BidsData;

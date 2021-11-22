@@ -1,57 +1,86 @@
-import React from 'react';
-import LoadingWithContainer from 'components/LoadingWithContainer/LoadingWithContainer';
+import React, { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
-
+import fetchAuctionBids from 'api/AuctionBids';
+import { generateAddressURL } from 'helpers/explorerURLGenerator';
+import minimizeAddress from 'helpers/minimizeAddress';
+import moment from 'moment';
+import numeral from 'numeral';
 import styles from './styles.module.scss';
 
-const BidsData = () => {
+const BidsData = ({ searchQuery, tab, assetCode }) => {
+  const [bids, setBids] = useState(null);
+
+  let filteredBids = bids && [...bids];
+  if (searchQuery) {
+    if (tab === 'bid') {
+      filteredBids = filteredBids?.filter((bid) => bid.address.search(searchQuery) !== -1);
+    }
+  }
   const columns = [
     {
       title: 'Address',
       dataIndex: 'address',
       key: 1,
-      render: (data) => <a href="/" className={styles.link}>{data.address}</a>,
+      render: (data) => (
+        <a href={generateAddressURL(data.address)} className={styles.link}>
+          {minimizeAddress(data.address)}
+        </a>
+      ),
     },
     {
       title: 'Date',
       dataIndex: 'data',
       key: 2,
-      render: (data) => data.date,
+      render: (data) => (
+        <span>
+          {moment(data.date).fromNow()}
+        </span>
+      ),
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => data.amount,
+      render: (data) => (
+        <span>
+          {numeral(data.amount).format('0,0')} {data.amountAssetCode}
+        </span>
+      ),
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 4,
-      render: (data) => data.price,
+      render: (data) => (
+        <span>
+          {data.price} {data.baseAssetCode}
+        </span>
+      ),
     },
     {
       title: 'Total',
       dataIndex: 'total',
       key: 5,
-      render: (data) => data.total,
+      render: (data) => (
+        <span>
+          {numeral(data.total).format('0,0')} {data.baseAssetCode}
+        </span>
+      ),
     },
   ];
 
-  const row = {
-    address: 'G8d6…r5fy', date: '1 min ago', amount: '10,000 RBT', price: '1 XLM', total: '1250 XLM',
-  };
-
-  const data = Array(7).fill(row);
+  useEffect(() => {
+    fetchAuctionBids(null, assetCode).then((data) => setBids(data.bidsData));
+  }, []);
 
   return (
     <CTable
       columns={columns}
-      noDataMessage={<NoData message="There is no bid" />}
+      noDataMessage={() => <NoData message="There is no bid" />}
       className={styles.table}
-      dataSource={data}
-      customLoading={LoadingWithContainer}
+      dataSource={filteredBids?.slice(0, 6)}
+      loading={!bids}
     />
   );
 };

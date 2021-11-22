@@ -1,61 +1,51 @@
 import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
-import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
-import { initializeStore } from 'store';
 import getAssetDetails from 'helpers/getAssetDetails';
-import LSP from 'tokens/LSP';
 import XLM from 'tokens/XLM';
-import showGenerateTrx from 'helpers/showGenerateTrx';
-import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
 import sevenDigit from 'helpers/sevenDigit';
 import isSameAsset from 'helpers/isSameAsset';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ConfirmBid from 'blocks/ConfirmBid';
+import { openModalAction } from 'actions/modal';
 import styles from './styles.module.scss';
 
-const SendBid = ({ setShow }) => {
+const SendBid = ({ tokenA }) => {
+  const userBalance = useSelector((state) => state.userBalance);
   const {
     handleSubmit, control, watch, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
   const dispatch = useDispatch();
 
   useEffect(() => {
-    trigger(['lsp', 'price']);
-  }, [watch('lsp'), watch('price')]);
+    trigger(['tokenAmount', 'price']);
+  }, [watch('tokenAmount'), watch('price')]);
 
   async function onSubmit(data) {
-    const store = initializeStore();
-    const address = store.getState().user.detail.address;
-
-    function func() {
-      return generateManageBuyTRX(
-        address,
-        getAssetDetails(LSP),
-        getAssetDetails(XLM),
-        new BN(data.lsp).toFixed(7),
-        new BN(data.price).toFixed(7),
-        0,
-      );
-    }
-
-    setShow(false);
-
-    showGenerateTrx(func, dispatch)
-      .then((trx) => showSignResponse(trx, dispatch))
-      .catch(console.log);
+    dispatch(
+      openModalAction({
+        modalProps: { title: 'Confirm Bid' },
+        content: (
+          <ConfirmBid data={data} tokenA={tokenA} />
+        ),
+      }),
+    );
   }
 
   const price = watch('price');
-  const lsp = watch('lsp');
+  const token = watch('tokenAmount');
   let total = new BN(0);
-  if (price !== '' && !!price && lsp !== '' && !!lsp) {
-    total = new BN(price).times(lsp);
+  if (price !== '' && !!price && token !== '' && !!token) {
+    total = new BN(price).times(token);
   }
 
+  const userXlm = userBalance
+    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(XLM)));
+
   function buttonContent() {
-    const errorMessage = formState.errors?.lsp?.message || formState.errors?.price?.message;
+    const errorMessage = formState.errors?.tokenAmount?.message || formState.errors?.price?.message;
     if (errorMessage) {
       return errorMessage;
     }
@@ -67,13 +57,13 @@ const SendBid = ({ setShow }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <label className="label-primary mb-1">Amount</label>
       <Controller
-        name="lsp"
+        name="tokenAmount"
         control={control}
         rules={{
-          required: 'LSP amount is required',
+          required: 'amount is required',
           validate: (val) => {
             if (!(new BN(val).isGreaterThan(0))) {
-              return 'LSP amount must be greater than 0';
+              return 'amount must be greater than 0';
             }
 
             return true;
@@ -84,7 +74,7 @@ const SendBid = ({ setShow }) => {
           <InputGroup
             variant="primary"
             placeholder="100"
-            rightLabel="LSP"
+            rightLabel={`${tokenA.code}`}
             value={props.value}
             onChange={props.onChange}
           />
@@ -97,17 +87,13 @@ const SendBid = ({ setShow }) => {
         rules={{
           required: 'Price is required',
           validate: (val) => {
-            const userXlm = store
-              .getState()
-              .userBalance
-              .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(XLM)));
-
             if (new BN(val).isLessThan(0.002)) {
               return 'Price must be greater than 0.002';
             }
 
-            const lspVal = getValues().lsp;
-            if (lspVal && new BN(val).times(lspVal).isGreaterThan(userXlm.balance)) {
+            const tokenAmountVal = getValues().tokenAmount;
+            if (tokenAmountVal && new BN(val)
+              .times(tokenAmountVal).isGreaterThan(userXlm.balance)) {
               return 'Insufficient XLM balance';
             }
 

@@ -2,6 +2,8 @@
 import ReactECharts from 'echarts-for-react';
 // import { CHART_KEYS } from 'pages/Auction/aggregation';
 import numeral from 'numeral';
+import Loading from 'components/Loading';
+import CCard from 'components/CCard';
 
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
@@ -17,7 +19,7 @@ const tooltipFormatter = (values) => `<div class="${styles.tooltip}">
     VOLUME: <span>${numeral(values[0].value[1]).format('0,0')}</span> LSP
   </div>`;
 
-const LineChart = ({ data, height }) => {
+const LineChart = ({ chartData, height }) => {
   const [isFullScreen, setFullScreen] = useState(false);
 
   const initialSize = { CHeight: `${height + 60}px`, CWidth: 'auto' };
@@ -113,7 +115,7 @@ const LineChart = ({ data, height }) => {
         type: 'line',
         step: 'start',
         symbol: 'none',
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        data: chartData,
         // CHART_KEYS.map((i) => [i, 0])
         legendHoverLink: false,
         areaStyle: {
@@ -174,6 +176,17 @@ const LineChart = ({ data, height }) => {
 
   // option.series[0].data = CHART_KEYS.map((chartKey) => [chartKey, data[chartKey].toFixed(0)]);
 
+  if (!chartData) {
+    return (
+      <div className="row">
+        <div className="col-12">
+          <CCard centerItems className={styles.CCard}>
+            <Loading size={48} />
+          </CCard>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="row">
       <div className="col-12">

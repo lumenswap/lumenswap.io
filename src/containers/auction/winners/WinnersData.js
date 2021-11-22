@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
-
-import fetchAuctionWinners from 'api/AuctionWinners';
+import numeral from 'numeral';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
-import numeral from 'numeral';
+import { useEffect, useState } from 'react';
+import fetchAuctionWinners from 'api/AuctionWinners';
 import styles from './styles.module.scss';
 
-const WinnersData = ({ searchQuery, tab, assetCode }) => {
+function WinnersData({
+  page, setTotalPages, searchQuery, assetCode, tab,
+}) {
   const [winners, setWinners] = useState(null);
 
   let filteredWinners = winners && [...winners];
+
   if (searchQuery) {
-    if (tab === 'winner') {
-      filteredWinners = filteredWinners?.filter((bid) => bid.address.search(searchQuery) !== -1);
+    if (tab === 'winners') {
+      filteredWinners = filteredWinners?.filter((winner) => winner.address
+        .search(searchQuery) !== -1);
     }
   }
+
   const columns = [
     {
       title: 'Address',
@@ -61,18 +65,25 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
   ];
 
   useEffect(() => {
-    fetchAuctionWinners(null, assetCode).then((data) => setWinners(data.winnersData));
-  }, []);
+    setWinners(null);
+    const query = { currentPage: page, number: 10 };
+    fetchAuctionWinners(query, assetCode).then((data) => {
+      setWinners(data.winnersData);
+      setTotalPages(data.totalPages);
+    });
+  }, [page]);
 
   return (
-    <CTable
-      columns={columns}
-      noDataMessage={() => <NoData message="There is no winner" />}
-      className={styles.table}
-      dataSource={filteredWinners?.slice(0, 6)}
-      loading={!winners}
-    />
+    <>
+      <CTable
+        columns={columns}
+        noDataMessage={() => <NoData message="There is no winner" />}
+        className={styles.table}
+        dataSource={filteredWinners}
+        loading={!winners}
+      />
+    </>
   );
-};
+}
 
 export default WinnersData;

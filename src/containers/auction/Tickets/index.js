@@ -45,7 +45,7 @@ const AuctionTickets = () => {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{data.amount} RBT</span>,
+      render: (data) => <span>{data.amount} {data.baseAssetCode}</span>,
     },
     {
       title: 'Price',
@@ -90,12 +90,12 @@ const AuctionTickets = () => {
 
   useEffect(() => {
     setTickets(null);
-    const query = { number: 10, currentPage: page };
+    const query = { number: 10, currentPage: page, asset: selectedItem.value };
     fetchAuctionTickets(query).then((data) => {
       setTickets(data.ticketsData);
       setPages(data.totalPages);
     });
-  }, [page]);
+  }, [page, selectedItem]);
 
   return (
     <Container>
