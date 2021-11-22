@@ -1,12 +1,16 @@
 import CTable from 'components/CTable';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
-import fetchNFTOffers from 'api/nftOffersAPI';
+import BN from 'helpers/BN';
 import moment from 'moment';
 import numeral from 'numeral';
 import { useState, useEffect } from 'react';
-import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
+import { fetchOfferAPI } from 'api/stellar';
+import getAssetDetails from 'helpers/getAssetDetails';
+import LSP from 'tokens/LSP';
+import { ONE_LUSI_AMOUNT } from 'appConsts';
 import styles from './styles.module.scss';
+import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 
 const NoDataMessage = () => (
   <div className={styles['no-data-container']}>
@@ -21,7 +25,7 @@ const tableHeaders = [
     key: 1,
     render: (data) => (
       <span className={styles.address}>
-        <a href={generateAddressURL(data.address)} target="_blank" rel="noreferrer">{minimizeAddress(data.address)}</a>
+        <a href={generateAddressURL(data.seller)} target="_blank" rel="noreferrer">{minimizeAddress(data.seller)}</a>
       </span>
     ),
   },
@@ -29,23 +33,32 @@ const tableHeaders = [
     title: 'Date',
     dataIndex: 'date',
     key: 2,
-    render: (data) => <span>{moment(data.time).fromNow()}</span>,
+    render: (data) => <span>{moment(data.last_modified_time).fromNow()}</span>,
   },
   {
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{numeral(data.amount).format('0,0')} LSP</span>,
+    render: (data) => <span>{numeral(data.price).format('0,0')} LSP</span>,
   },
 
 ];
 
-function OffersData({ id }) {
+function OffersData({ lusiData }) {
   const [offersData, setOffersData] = useState(null);
 
   useEffect(() => {
-    fetchNFTOffers(id).then((data) => setOffersData(data));
+    fetchOfferAPI(
+      getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
+      getAssetDetails(LSP), {
+        limit: 200,
+        order: 'desc',
+      },
+    ).then((res) => res.data._embedded.records
+      .filter((i) => new BN(i.amount).isEqualTo(ONE_LUSI_AMOUNT)))
+      .then((res) => setOffersData(res));
   }, []);
+
   return (
     <div>
       <CTable

@@ -12,6 +12,7 @@ module.exports = withImages(withTM({
     REACT_APP_MODE: process.env.REACT_APP_MODE,
     REACT_APP_PRODUCT_ENV: process.env.REACT_APP_PRODUCT_ENV,
     REACT_APP_LOTTERY_ACCOUNT: process.env.REACT_APP_LOTTERY_ACCOUNT,
+    REACT_APP_LUSI_ISSUER: process.env.REACT_APP_LUSI_ISSUER,
   },
   webpack5: false,
   images: {

@@ -25,57 +25,69 @@ import urlMaker from 'helpers/urlMaker';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import styles from './styles.module.scss';
 
-const NFTDetail = ({ id, data }) => {
+const NFTDetail = ({ id: lusiId, data }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
+  const [ownerInfoData] = useState({
+    address: '0xdD467E06b406b406b406b406b406b406b406b406b4fA',
+    telegram: 'lumenswap',
+    twitter: 'lumenswap',
+  });
   const [tab, setTab] = useState('offer');
 
   const nftInfo = [
     {
       title: 'Price',
       tooltip: 'tooltip',
-      render: (info) => <span className={styles.infos}>{numeral(info.price).format('0,0')} LSP</span>,
+      render: (info) => {
+        if (info.price) {
+          return <span className={styles.infos}>{numeral(info.price).format('0,0')} LSP</span>;
+        }
+
+        return <span className={styles.infos}>Not set yet</span>;
+      },
     },
     {
       title: 'Asset',
       tooltip: 'tooltip',
       externalLink: {
         title: `${data.nftInfo.asset}`,
-        url: assetGenerator(data.asset.code, data.asset.issuer),
+        url: assetGenerator(data.assetCode, process.env.REACT_APP_LUSI_ISSUER),
       },
     },
     {
       title: 'IPFs hash',
       tooltip: 'tooltip',
       externalLink: {
-        title: `${minimizeAddress(data.nftInfo.hash)}`,
-        url: ipfsHashGenerator(data.nftInfo.hash),
+        title: `${minimizeAddress(data.nftInfo.ipfHash)}`,
+        url: ipfsHashGenerator(data.nftInfo.ipfHash),
       },
     },
   ];
+
   const ownerInfo = [
     {
       title: 'Address',
       tooltip: 'tooltip',
       externalLink: {
-        title: `${minimizeAddress(data.ownerInfo.address)}`,
-        url: generateAddressURL(data.ownerInfo.address),
+        title: `${minimizeAddress(ownerInfoData?.address)}`,
+        url: generateAddressURL(ownerInfoData?.address),
       },
     },
     {
       title: 'Twitter',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${data.ownerInfo.twitter}`,
-        url: twitterUrlMaker(data.ownerInfo.twitter),
+        title: `@${ownerInfoData?.twitter}`,
+        url: twitterUrlMaker(ownerInfoData?.twitter),
       },
     },
     {
       title: 'Telegram',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${data.ownerInfo.telegram}`,
-        url: telegramUrlMaker(data.ownerInfo.telegram),
+        title: `@${ownerInfoData?.telegram}`,
+        url: telegramUrlMaker(ownerInfoData?.telegram),
       },
     },
   ];
@@ -84,12 +96,13 @@ const NFTDetail = ({ id, data }) => {
     { title: 'Offers', id: 'offer' },
     { title: 'Trades', id: 'trade' },
   ];
+
   const breadCrumbData = [
     {
       name: 'My lusi',
     },
     {
-      name: `Lusi #${id}`,
+      name: `Lusi #${lusiId}`,
     },
   ];
 
@@ -105,14 +118,17 @@ const NFTDetail = ({ id, data }) => {
       dispatch(openConnectModal());
     }
   };
+
   const handleChangeTab = (tabId) => {
     setTab(tabId);
   };
+
   function generateLink() {
     if (tab === 'offer') {
-      return urlMaker.nft.lusiOffers(id);
+      return urlMaker.nft.lusiOffers(lusiId);
     }
-    return urlMaker.nft.lusiTrades(id);
+
+    return urlMaker.nft.lusiTrades(lusiId);
   }
 
   return (
@@ -140,7 +156,7 @@ const NFTDetail = ({ id, data }) => {
               <div className={classNames('col-lg-6 col-md-12 col-sm-12 col-12', styles.col)}>
                 <div className={classNames(styles.card, styles['card-nft'])}>
                   <div className="d-flex justify-content-center">
-                    <Image src={data.lusiImage} width={342} height={342} />
+                    <Image src={data.imageUrl} width={342} height={342} />
                   </div>
                 </div>
               </div>
@@ -154,7 +170,7 @@ const NFTDetail = ({ id, data }) => {
                 <InfoBox
                   title="Owner Info"
                   rows={ownerInfo}
-                  data={data.ownerInfo}
+                  data={ownerInfoData}
                 />
               </div>
             </div>
@@ -168,11 +184,15 @@ const NFTDetail = ({ id, data }) => {
                     className={styles.tabs}
                     onChange={handleChangeTab}
                     customTabProps={{
-                      lusiId: id,
+                      lusiData: data,
                     }}
                   />
                 </div>
-                <CSeeAllContentsButton className={styles['all-btn']} link={generateLink()} content={tab === 'offer' ? 'See all offers' : 'See all trades'} />
+                <CSeeAllContentsButton
+                  className={styles['all-btn']}
+                  link={generateLink()}
+                  content={tab === 'offer' ? 'See all offers' : 'See all trades'}
+                />
               </div>
             </div>
           </div>

@@ -1,14 +1,14 @@
 import OffersData from './OffersData';
 import TradesData from './TradesData';
 
-const NFTDetailsTabContent = ({ tab, lusiId }) => {
+const NFTDetailsTabContent = ({ tab, lusiData }) => {
   if (tab === 'offer') {
     return (
-      <OffersData id={lusiId} />
+      <OffersData lusiData={lusiData} />
     );
   }
   return (
-    <TradesData id={lusiId} />
+    <TradesData lusiData={lusiData} />
   );
 };
 

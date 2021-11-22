@@ -5,12 +5,12 @@ import moment from 'moment';
 
 import styles from './styles.module.scss';
 
-const NftStatsChart = ({ showLabel = true, data, date }) => {
+const NftStatsChart = ({ showLabel = true, data }) => {
   const [label, setLabel] = useState({});
 
   useEffect(() => {
-    setLabel({ value: data[data.length - 1], time: moment(date.length - 1).format('MMM Do YY') });
-  }, []);
+    if (data) setLabel({ value: data[data?.length - 1], time: moment(data[data?.length - 1]?.periodTime).format('MMM Do YY') });
+  }, [data]);
 
   const option = {
     grid: {
@@ -39,7 +39,7 @@ const NftStatsChart = ({ showLabel = true, data, date }) => {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: date,
+      data: () => data?.map((i) => i?.periodTime),
       axisLabel: {
         formatter(value) {
           return moment(value).format('DD');
