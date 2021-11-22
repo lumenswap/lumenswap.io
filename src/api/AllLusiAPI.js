@@ -1,3 +1,4 @@
+import axios from 'axios';
 import LusiLogo from '../assets/images/nft-sample.png';
 
 const lusis = [
@@ -32,7 +33,7 @@ function getAllLusi() {
 }
 
 function fetchAllLusi() {
-  return new Promise((reslove) => setTimeout(reslove, 1000)).then(() => getAllLusi());
+  return axios.get(`${process.env.REACT_APP_LUMEN_API}/nft/lusi`).then((response) => response.data.data);
 }
 function getRewardLusi() {
   return lusis[3];
