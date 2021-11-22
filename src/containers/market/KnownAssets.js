@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import numeral from 'numeral';
-import BN from 'bignumber.js';
-
+import BN from 'helpers/BN';
 import CTable from 'components/CTable';
 import Loading from 'components/Loading';
 import questionLogo from 'assets/images/question.png';
@@ -58,10 +57,7 @@ function KnownAssets({ assets, searchQuery }) {
       };
     });
 
-    const sortedAssets = pairedAssets.sort((a, b) => {
-      if (b.pair.counter.code.toLowerCase() === 'usdc') return 1;
-      return -1;
-    });
+    const sortedAssets = pairedAssets.sort((a, b) => new BN(b.volume24h).comparedTo(a.volume24h));
 
     setKnownAssets(sortedAssets);
   }, [assets]);
