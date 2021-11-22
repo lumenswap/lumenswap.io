@@ -1,5 +1,5 @@
 const transactionConsts = {
-  TIMEOUT: 30,
+  TIMEOUT: 120,
   FEE: 10000,
 };
 
