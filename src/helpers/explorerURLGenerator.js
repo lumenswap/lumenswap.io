@@ -23,7 +23,6 @@ export function telegramUrlMaker(userName) {
 }
 
 export function assetGenerator(code, issuer) {
-  console.log(issuer);
   return `${LUMENSCAN_URL}/assets/${code}-${issuer}`;
 }
 
