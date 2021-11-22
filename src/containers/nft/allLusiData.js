@@ -4,7 +4,6 @@ import CardThumbnail from './CardThumbnail';
 import styles from './styles.module.scss';
 
 function AllLusiData({ allLusi }) {
-  console.log(allLusi);
   return (
     <div className={classNames('row', styles.row)}>
       {allLusi?.map((item) => (

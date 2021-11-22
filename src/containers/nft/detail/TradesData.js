@@ -1,9 +1,11 @@
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
-import fetchNFTTrades from 'api/nftTradesAPI';
 import numeral from 'numeral';
 import { useState, useEffect } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
+import { fetchTradeAPI } from 'api/stellar';
+import getAssetDetails from 'helpers/getAssetDetails';
+import LSP from 'tokens/LSP';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
@@ -43,11 +45,23 @@ const tableHeaders = [
 
 ];
 
-function TradesData({ id }) {
+function TradesData({ lusiData }) {
   const [tradesData, setTradesData] = useState(null);
 
   useEffect(() => {
-    fetchNFTTrades(id).then((data) => setTradesData(data));
+    fetchTradeAPI(
+      getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
+      getAssetDetails(LSP), {
+        limit: 200,
+        order: 'desc',
+      },
+    )
+      .then((res) => {
+        setTradesData(res.data._embedded.records);
+      })
+      .catch(() => {
+        setTradesData([]);
+      });
   }, []);
   return (
     <div>

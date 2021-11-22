@@ -74,6 +74,27 @@ export function fetchTradeAPI(baseAsset, counterAsset, params) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/trades`, { params: { ...assetParam, ...params } });
 }
 
+export function fetchOfferAPI(baseAsset, counterAsset, params) {
+  const assetParam = {};
+  if (baseAsset.isNative()) {
+    assetParam.buying_asset_type = baseAsset.getAssetType();
+  } else {
+    assetParam.buying_asset_type = baseAsset.getAssetType();
+    assetParam.buying_asset_code = baseAsset.getCode();
+    assetParam.buying_asset_issuer = baseAsset.getIssuer();
+  }
+
+  if (counterAsset.isNative()) {
+    assetParam.selling_asset_type = counterAsset.getAssetType();
+  } else {
+    assetParam.selling_asset_type = counterAsset.getAssetType();
+    assetParam.selling_asset_code = counterAsset.getCode();
+    assetParam.selling_asset_issuer = counterAsset.getIssuer();
+  }
+
+  return axios.get(`${process.env.REACT_APP_HORIZON}/offers`, { params: { ...assetParam, ...params } });
+}
+
 export function fetchOrderBookAPI(selling, buying, params) {
   const assetParam = {};
   if (selling.isNative()) {

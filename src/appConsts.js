@@ -7,4 +7,6 @@ const appConsts = {
   },
 };
 
+export const ONE_LUSI_AMOUNT = '0.0000001';
+
 export default appConsts;

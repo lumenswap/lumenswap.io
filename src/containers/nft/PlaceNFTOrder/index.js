@@ -18,28 +18,35 @@ const PlaceNFTOrder = () => {
   const {
     control, handleSubmit, errors, formState, trigger,
   } = useForm({ mode: 'onChange' });
+
   const onSubmit = (data) => {
+    console.log(data);
     dispatch(closeModalAction());
   };
 
   useEffect(() => {
     trigger();
   }, []);
+
   const validatePrice = (price) => {
     if (new BN(0).gt(price)) {
       return 'Price is not valid';
     }
+
     if (new BN(price).gt(parseInt(userLSPBalance.balance, 10))) {
       return 'Insufficient LSP';
     }
+
     return true;
   };
+
   function generateError() {
     for (const error of Object.values(errors)) {
       if (error) {
         return error.message;
       }
     }
+
     return 'Set my price';
   }
 

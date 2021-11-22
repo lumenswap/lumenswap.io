@@ -25,7 +25,7 @@ import urlMaker from 'helpers/urlMaker';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import styles from './styles.module.scss';
 
-const NFTDetail = ({ id, data }) => {
+const NFTDetail = ({ id: lusiId, data }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
   const [ownerInfoData] = useState({
@@ -64,6 +64,7 @@ const NFTDetail = ({ id, data }) => {
       },
     },
   ];
+
   const ownerInfo = [
     {
       title: 'Address',
@@ -95,12 +96,13 @@ const NFTDetail = ({ id, data }) => {
     { title: 'Offers', id: 'offer' },
     { title: 'Trades', id: 'trade' },
   ];
+
   const breadCrumbData = [
     {
       name: 'My lusi',
     },
     {
-      name: `Lusi #${id}`,
+      name: `Lusi #${lusiId}`,
     },
   ];
 
@@ -116,14 +118,17 @@ const NFTDetail = ({ id, data }) => {
       dispatch(openConnectModal());
     }
   };
+
   const handleChangeTab = (tabId) => {
     setTab(tabId);
   };
+
   function generateLink() {
     if (tab === 'offer') {
-      return urlMaker.nft.lusiOffers(id);
+      return urlMaker.nft.lusiOffers(lusiId);
     }
-    return urlMaker.nft.lusiTrades(id);
+
+    return urlMaker.nft.lusiTrades(lusiId);
   }
 
   return (
@@ -179,11 +184,15 @@ const NFTDetail = ({ id, data }) => {
                     className={styles.tabs}
                     onChange={handleChangeTab}
                     customTabProps={{
-                      lusiId: id,
+                      lusiData: data,
                     }}
                   />
                 </div>
-                <CSeeAllContentsButton className={styles['all-btn']} link={generateLink()} content={tab === 'offer' ? 'See all offers' : 'See all trades'} />
+                <CSeeAllContentsButton
+                  className={styles['all-btn']}
+                  link={generateLink()}
+                  content={tab === 'offer' ? 'See all offers' : 'See all trades'}
+                />
               </div>
             </div>
           </div>
