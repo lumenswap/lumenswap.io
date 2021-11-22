@@ -42,8 +42,12 @@ const CardThumbnail = ({
             <Image src={imgSrc} width={dimensions.size} height={dimensions.size} />
           </div>
           <div className={styles.value}>
-            <Logo />
-            {numeral(price).format('0,0')}
+            {price ? (
+              <>
+                <Logo />
+                {numeral(price).format('0,0')}
+              </>
+            ) : 'Not set yet'}
           </div>
         </div>
       </a>

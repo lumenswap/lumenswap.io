@@ -68,8 +68,7 @@ const NFTStats = () => {
               <div className="row flex-nowrap mt-5 align-items-end">
                 <div className="col">
                   <NftStatsChart
-                    data={statsData?.chart.data}
-                    date={statsData?.chart.date}
+                    data={statsData?.chart}
                     showLabel={false}
                   />
                 </div>

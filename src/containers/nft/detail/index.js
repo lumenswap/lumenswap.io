@@ -31,22 +31,28 @@ const NFTDetail = ({ id, data }) => {
     {
       title: 'Price',
       tooltip: 'tooltip',
-      render: (info) => <span className={styles.infos}>{numeral(info.price).format('0,0')} LSP</span>,
+      render: (info) => {
+        if (info.price) {
+          return <span className={styles.infos}>{numeral(info.price).format('0,0')} LSP</span>;
+        }
+
+        return <span className={styles.infos}>Not set yet</span>;
+      },
     },
     {
       title: 'Asset',
       tooltip: 'tooltip',
       externalLink: {
         title: `${data.nftInfo.asset}`,
-        url: assetGenerator(data.asset.code, data.asset.issuer),
+        url: assetGenerator(data.assetCode, process.env.REACT_APP_LUSI_ISSUER),
       },
     },
     {
       title: 'IPFs hash',
       tooltip: 'tooltip',
       externalLink: {
-        title: `${minimizeAddress(data.nftInfo.hash)}`,
-        url: ipfsHashGenerator(data.nftInfo.hash),
+        title: `${minimizeAddress(data.nftInfo.ipfHash)}`,
+        url: ipfsHashGenerator(data.nftInfo.ipfHash),
       },
     },
   ];
@@ -128,7 +134,7 @@ const NFTDetail = ({ id, data }) => {
               <div className={classNames('col-lg-6 col-md-12 col-sm-12 col-12', styles.col)}>
                 <div className={classNames(styles.card, styles['card-nft'])}>
                   <div className="d-flex justify-content-center">
-                    <Image src={data.lusiImage} width={342} height={342} />
+                    <Image src={data.imageUrl} width={342} height={342} />
                   </div>
                 </div>
               </div>

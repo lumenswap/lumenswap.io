@@ -55,10 +55,10 @@ const NftPage = () => {
     filteredLusi = filteredLusi.sort((a, b) => b.price - a.price);
   }
   if (select.value === '3') {
-    filteredLusi = filteredLusi.sort((a, b) => a.id - b.id);
+    filteredLusi = filteredLusi.sort((a, b) => a.number - b.number);
   }
   if (select.value === '4') {
-    filteredLusi = filteredLusi.sort((a, b) => b.id - a.id);
+    filteredLusi = filteredLusi.sort((a, b) => b.number - a.number);
   }
 
   return (

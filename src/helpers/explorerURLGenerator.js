@@ -1,4 +1,5 @@
 const LUMENSCAN_URL = 'https://lumenscan.io';
+const IPFS_URL = 'https://ipfs.io';
 // const STELLAR_EXPERT = 'https://stellar.expert/explorer/public';
 
 export function generateTransactionURL(tx) {
@@ -22,11 +23,12 @@ export function telegramUrlMaker(userName) {
 }
 
 export function assetGenerator(code, issuer) {
+  console.log(issuer);
   return `${LUMENSCAN_URL}/assets/${code}-${issuer}`;
 }
 
 export function ipfsHashGenerator(hash) {
-  return `${LUMENSCAN_URL}/assets/${hash}`;
+  return `${IPFS_URL}/ipfs/${hash}`;
 }
 
 export function generateOperationIdURL(operationId) {

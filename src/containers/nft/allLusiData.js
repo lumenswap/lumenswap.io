@@ -4,18 +4,19 @@ import CardThumbnail from './CardThumbnail';
 import styles from './styles.module.scss';
 
 function AllLusiData({ allLusi }) {
+  console.log(allLusi);
   return (
     <div className={classNames('row', styles.row)}>
       {allLusi?.map((item) => (
         <div
-          key={item.id}
+          key={item.number}
           className={classNames('col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 mt-4', styles.col)}
         >
           <CardThumbnail
-            name={item.name}
-            imgSrc={item.img}
+            name={`Lusi-${item.number}`}
+            imgSrc={item.imageUrl}
             price={item.price}
-            url={urlMaker.nft.lusi(item.id)}
+            url={urlMaker.nft.lusi(item.number)}
           />
         </div>
       ))}
