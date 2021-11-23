@@ -105,7 +105,7 @@ const NFTOrder = () => {
     if (!isLogged) {
       router.push(urlMaker.nft.root());
     }
-  }, []);
+  }, [isLogged]);
 
   useEffect(() => {
     loadOfferData(userAddress, setOrders);

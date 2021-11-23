@@ -35,7 +35,7 @@ const NFTCollections = () => {
     if (!isLogged) {
       router.push(urlMaker.nft.root());
     }
-  }, []);
+  }, [isLogged]);
 
   useEffect(() => {
     const lusis = userBalances

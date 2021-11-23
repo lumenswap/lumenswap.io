@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserRewardLusi } from 'api/AllLusiAPI';
 import { openModalAction } from 'actions/modal';
 import useIsLogged from 'hooks/useIsLogged';
+import { fetchClaimableBalances } from 'api/stellar';
 import questionLogo from '../../../../public/images/question.png';
 import ClaimLusiModal from '../ClaimLusiModal';
 
@@ -11,17 +11,23 @@ import styles from './styles.module.scss';
 
 function ClaimLusiBtn() {
   const [rewardLusi, setRewardLusi] = useState(null);
-
   const userAdress = useSelector((state) => state.user.detail.address);
   const isLogged = useIsLogged();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLogged) {
-      fetchUserRewardLusi(userAdress).then((lusi) => setRewardLusi(lusi));
+      // fetchClaimableBalances({ limit: 200, claimant: userAdress }).then((res) => {
+      //   const lusi = res._embedded.records.find((claimy) => {
+      //     if (claimy.asset.split(':')[1] === process.env.REACT_APP_LUSI_ISSUER) {
+      //       console.log(claimy);
+      //       return true;
+      //     }
+      //   });
+      // });
+      // fetchUserRewardLusi(userAdress).then((lusi) => setRewardLusi(lusi));
     }
   }, [isLogged]);
-
-  const dispatch = useDispatch();
 
   const handleOpenModal = () => {
     if (rewardLusi) {
@@ -33,9 +39,11 @@ function ClaimLusiBtn() {
       );
     }
   };
+
   if (!isLogged) {
     return null;
   }
+
   return (
     <div onClick={handleOpenModal} className={styles.main}>
       <div className={styles.items}>
