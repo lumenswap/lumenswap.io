@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import useIsLogged from 'hooks/useIsLogged';
 import fetchAllLusi from 'api/AllLusiAPI';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -36,7 +37,8 @@ const NFTCollections = () => {
 
   useEffect(() => {
     const lusis = userBalances
-      .filter((i) => i.asset.issuer === process.env.REACT_APP_LUSI_ISSUER)
+      .filter((i) => i.asset.issuer === process.env.REACT_APP_LUSI_ISSUER
+      && new BN(i.balance).isGreaterThan(0))
       .map((i) => i.asset.code);
     fetchAllLusi().then((data) => {
       setMyLusi(data.filter((i) => lusis.includes(i.assetCode)));
