@@ -10,6 +10,8 @@ import { useRouter } from 'next/router';
 import useIsLogged from 'hooks/useIsLogged';
 import fetchAllLusi from 'api/AllLusiAPI';
 import BN from 'helpers/BN';
+import NoData from 'components/NoData';
+import CCard from 'components/CCard';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -64,6 +66,11 @@ const NFTCollections = () => {
             <h1 className={styles.title}>My Lusi</h1>
 
             <div className={classNames('row', styles.row)}>
+              {myLusi.length === 0 && (
+              <CCard className={styles['no-data-card']}>
+                <NoData message="You have no Lusi." />
+              </CCard>
+              )}
               {myLusi?.map((item) => (
                 <div
                   key={item.id}
