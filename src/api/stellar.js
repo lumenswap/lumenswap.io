@@ -171,3 +171,12 @@ export function fetchXLMCoingeckoPrice() {
     .fetch('stellar')
     .then((res) => res.data.market_data.current_price.usd.toFixed(3));
 }
+
+export function fetchClaimableBalances(params) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/claimable_balances`, {
+    params: {
+      order: 'desc',
+      ...params,
+    },
+  }).then((res) => res.data);
+}
