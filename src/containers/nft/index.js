@@ -22,12 +22,12 @@ const Container = ({ children }) => (
 const dropdownItems = [
   { value: '1', label: 'Price: Low to High' },
   { value: '2', label: 'Price: High to Low' },
-  { value: '3', label: 'Number: 1 to 107' },
-  { value: '4', label: 'Number: 107 to 1' },
+  { value: '3', label: 'Number: 1 to 108' },
+  { value: '4', label: 'Number: 108 to 1' },
 ];
 
 const NftPage = () => {
-  const [select, setSelect] = useState(dropdownItems[0]);
+  const [select, setSelect] = useState(dropdownItems[1]);
   const [allLusi, setAllLusi] = useState(null);
 
   useEffect(() => {
