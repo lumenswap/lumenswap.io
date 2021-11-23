@@ -4,12 +4,14 @@ import classNames from 'classnames';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
-import fetchNFTTrades from 'api/nftTradesAPI';
 import { useState, useEffect } from 'react';
 import numeral from 'numeral';
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
 import InfinitePagination from 'components/InfinitePagination';
+import { fetchTradeAPI } from 'api/stellar';
+import getAssetDetails from 'helpers/getAssetDetails';
+import LSP from 'tokens/LSP';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -18,9 +20,24 @@ const NoDataMessage = () => (
   </div>
 );
 
+function fetchLusiTrades(cursor, id) {
+  return fetchTradeAPI(
+    getAssetDetails({ code: `Lusi${id}`, issuer: process.env.REACT_APP_LUSI_ISSUER }),
+    getAssetDetails(LSP),
+    {
+      limit: 200,
+      order: 'desc',
+      cursor,
+    },
+  );
+}
+
+const OFFER_FETCH_LIMIT = 20;
+
 function AllTradesPage({ id }) {
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(10);
+  const [nextPageToken, setNextPageToken] = useState(null);
+  const [currentPagingToken, setCurrentPagingToken] = useState(null);
+  const [pagingTokens, setPagingTokens] = useState([]);
   const headerData = [
     {
       name: "All Lusi's",
@@ -28,6 +45,7 @@ function AllTradesPage({ id }) {
     },
     {
       name: `Lusi #${id}`,
+      url: urlMaker.nft.lusi(id),
     },
     {
       name: 'Trades',
@@ -66,17 +84,68 @@ function AllTradesPage({ id }) {
 
   const [tradesData, setTradesData] = useState(null);
 
-  const handlePageChange = (currentPage) => {
-    setPage(currentPage);
+  const handlePrevPage = () => {
+    if (pagingTokens.length > 0) {
+      const prevPageToken = pagingTokens[pagingTokens.length - 1];
+      fetchLusiTrades(prevPageToken, id).then(async (res) => {
+        setNextPageToken(currentPagingToken);
+        setCurrentPagingToken(prevPageToken);
+        setPagingTokens((prev) => prev.slice(0, -1));
+        setTradesData(res.data._embedded.records);
+      }).catch(() => {
+        setPagingTokens([]);
+        setCurrentPagingToken(null);
+        setNextPageToken(null);
+        setTradesData([]);
+      });
+    }
+  };
+
+  const handleNextPage = () => {
+    if (nextPageToken) {
+      fetchLusiTrades(nextPageToken, id).then(async (res) => {
+        if (res.data._embedded.records.length < 1) {
+          setNextPageToken(null);
+          return;
+        }
+
+        if (res.data._embedded.records.length >= OFFER_FETCH_LIMIT) {
+          setNextPageToken(res
+            .data._embedded
+            .records[res.data._embedded.records.length - 1]
+            .paging_token);
+        } else {
+          setNextPageToken(null);
+        }
+        setPagingTokens((prev) => [...prev, currentPagingToken]);
+
+        setCurrentPagingToken(nextPageToken);
+        setTradesData(res.data._embedded.records);
+      }).catch(() => {
+        setPagingTokens([]);
+        setCurrentPagingToken(null);
+        setNextPageToken(null);
+        setTradesData([]);
+      });
+    }
   };
 
   useEffect(() => {
-    const query = {
-      page,
-      limit: 20,
-    };
-    fetchNFTTrades(id, query).then((data) => setTradesData(data));
-  }, [page]);
+    fetchLusiTrades(undefined, id).then(async (res) => {
+      if (res.data._embedded.records.length >= OFFER_FETCH_LIMIT) {
+        setNextPageToken(res
+          .data._embedded
+          .records[res.data._embedded.records.length - 1]
+          .paging_token);
+      }
+      setTradesData(res.data._embedded.records);
+    }).catch(() => {
+      setPagingTokens([]);
+      setCurrentPagingToken(null);
+      setNextPageToken(null);
+      setTradesData([]);
+    });
+  }, []);
   return (
     <div className="container-fluid">
       <Head>
@@ -100,9 +169,10 @@ function AllTradesPage({ id }) {
               />
             </div>
             <InfinitePagination
-              allPages={pages}
-              currentPage={page}
-              onPageChange={handlePageChange}
+              hasNextPage={!!nextPageToken}
+              hasPreviousPage={pagingTokens.length > 0}
+              onNextPage={handleNextPage}
+              onPrevPage={handlePrevPage}
               className={styles.pagination}
             />
           </div>
