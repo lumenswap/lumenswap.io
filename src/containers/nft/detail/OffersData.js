@@ -51,7 +51,7 @@ function OffersData({ lusiData }) {
       getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
       getAssetDetails(LSP),
       {
-        limit: 200,
+        limit: 10,
         order: 'desc',
       },
     ).then((res) => res

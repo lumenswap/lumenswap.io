@@ -5,13 +5,13 @@ import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { useState, useEffect } from 'react';
-import numeral from 'numeral';
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
 import InfinitePagination from 'components/InfinitePagination';
 import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import LSP from 'tokens/LSP';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -20,19 +20,19 @@ const NoDataMessage = () => (
   </div>
 );
 
+const OFFER_FETCH_LIMIT = 20;
+
 function fetchLusiTrades(cursor, id) {
   return fetchTradeAPI(
     getAssetDetails({ code: `Lusi${id}`, issuer: process.env.REACT_APP_LUSI_ISSUER }),
     getAssetDetails(LSP),
     {
-      limit: 200,
+      limit: OFFER_FETCH_LIMIT,
       order: 'desc',
       cursor,
     },
   );
 }
-
-const OFFER_FETCH_LIMIT = 20;
 
 function AllTradesPage({ id }) {
   const [nextPageToken, setNextPageToken] = useState(null);
@@ -59,7 +59,7 @@ function AllTradesPage({ id }) {
       key: 1,
       render: (data) => (
         <span className={styles.address}>
-          <a href={generateAddressURL(data.buyer)} target="_blank" rel="noreferrer">{minimizeAddress(data.buyer)}</a>
+          <a href={generateAddressURL(data.base_account)} target="_blank" rel="noreferrer">{minimizeAddress(data.base_account)}</a>
         </span>
       ),
     },
@@ -69,7 +69,7 @@ function AllTradesPage({ id }) {
       key: 2,
       render: (data) => (
         <span className={styles.address}>
-          <a href={generateAddressURL(data.seller)} target="_blank" rel="noreferrer">{minimizeAddress(data.seller)}</a>
+          <a href={generateAddressURL(data.counter_account)} target="_blank" rel="noreferrer">{minimizeAddress(data.counter_account)}</a>
         </span>
       ),
     },
@@ -77,9 +77,8 @@ function AllTradesPage({ id }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{numeral(data.amount).format('0,0')} LSP</span>,
+      render: (data) => <span>{humanAmount(data.counter_amount)} LSP</span>,
     },
-
   ];
 
   const [tradesData, setTradesData] = useState(null);
@@ -131,7 +130,7 @@ function AllTradesPage({ id }) {
   };
 
   useEffect(() => {
-    fetchLusiTrades(undefined, id).then(async (res) => {
+    fetchLusiTrades(null, id).then(async (res) => {
       if (res.data._embedded.records.length >= OFFER_FETCH_LIMIT) {
         setNextPageToken(res
           .data._embedded

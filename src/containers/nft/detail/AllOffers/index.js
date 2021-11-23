@@ -134,7 +134,7 @@ function AllOffersPage({ id }) {
   };
 
   useEffect(() => {
-    fetchLusiOffers(undefined, id).then(async (res) => {
+    fetchLusiOffers(null, id).then(async (res) => {
       if (res.data._embedded.records.length >= OFFER_FETCH_LIMIT) {
         setNextPageToken(res
           .data._embedded

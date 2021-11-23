@@ -1,11 +1,11 @@
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
-import numeral from 'numeral';
 import { useState, useEffect } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import LSP from 'tokens/LSP';
+import humanAmount from 'helpers/humanAmount';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
@@ -22,7 +22,7 @@ const tableHeaders = [
     key: 1,
     render: (data) => (
       <span className={styles.address}>
-        <a href={generateAddressURL(data.buyer)} target="_blank" rel="noreferrer">{minimizeAddress(data.buyer)}</a>
+        <a href={generateAddressURL(data.base_account)} target="_blank" rel="noreferrer">{minimizeAddress(data.base_account)}</a>
       </span>
     ),
   },
@@ -32,7 +32,7 @@ const tableHeaders = [
     key: 2,
     render: (data) => (
       <span className={styles.address}>
-        <a href={generateAddressURL(data.seller)} target="_blank" rel="noreferrer">{minimizeAddress(data.seller)}</a>
+        <a href={generateAddressURL(data.counter_account)} target="_blank" rel="noreferrer">{minimizeAddress(data.counter_account)}</a>
       </span>
     ),
   },
@@ -40,9 +40,8 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{numeral(data.amount).format('0,0')} LSP</span>,
+    render: (data) => <span>{humanAmount(data.counter_amount)} LSP</span>,
   },
-
 ];
 
 function TradesData({ lusiData }) {
@@ -52,11 +51,12 @@ function TradesData({ lusiData }) {
     fetchTradeAPI(
       getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
       getAssetDetails(LSP), {
-        limit: 200,
+        limit: 10,
         order: 'desc',
       },
     )
       .then((res) => {
+        console.log(res.data._embedded.records);
         setTradesData(res.data._embedded.records);
       })
       .catch(() => {

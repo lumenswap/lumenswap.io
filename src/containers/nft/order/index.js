@@ -30,10 +30,14 @@ function loadOfferData(userAddress, setOrders) {
   const allOffers = [];
   fetchOffersOfAccount(userAddress, { limit: 200 }).then((data) => {
     allOffers.push(...data.data._embedded.records);
-    return fetchOffersOfAccount(userAddress, {
-      limit: 200,
-      cursor: data.data._embedded.records[data.data._embedded.records.length - 1].paging_token,
-    });
+    if (data.data._embedded.records.length > 0) {
+      return fetchOffersOfAccount(userAddress, {
+        limit: 200,
+        cursor: data.data._embedded.records[data.data._embedded.records.length - 1].paging_token,
+      });
+    }
+
+    return data;
   }).then((data) => {
     allOffers.push(...data.data._embedded.records);
     setOrders(allOffers

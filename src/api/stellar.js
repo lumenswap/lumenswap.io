@@ -180,3 +180,10 @@ export function fetchClaimableBalances(params) {
     },
   }).then((res) => res.data);
 }
+
+export function fetchAssetHolderList(asset) {
+  return axios.get(`https://api.stellar.expert/explorer/public/asset/${asset}/holders`, {
+    params: {
+    },
+  }).then((res) => res.data);
+}
