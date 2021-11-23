@@ -1,5 +1,25 @@
 @import 'styles/vars';
 
+.no-data-container {
+  width: 100%;
+  height: 139px;
+  display: flex;
+  justify-content: center;
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  span {
+    margin-top: 30px;
+  }
+}
+
+
 .header {
     margin-top: 74px;
 }
