@@ -101,6 +101,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
   const breadCrumbData = [
     {
       name: 'My lusi',
+      url: urlMaker.nft.root(),
     },
     {
       name: `Lusi #${lusiId}`,
