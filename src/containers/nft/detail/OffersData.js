@@ -3,7 +3,6 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import BN from 'helpers/BN';
 import moment from 'moment';
-import numeral from 'numeral';
 import humanAmount from 'helpers/humanAmount';
 import { useState, useEffect } from 'react';
 import { fetchOfferAPI } from 'api/stellar';
