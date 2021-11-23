@@ -27,7 +27,7 @@ const dropdownItems = [
 ];
 
 const NftPage = () => {
-  const [select, setSelect] = useState(dropdownItems[0]);
+  const [select, setSelect] = useState(dropdownItems[1]);
   const [allLusi, setAllLusi] = useState(null);
 
   useEffect(() => {
