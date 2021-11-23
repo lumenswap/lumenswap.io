@@ -3,7 +3,6 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import BN from 'helpers/BN';
 import moment from 'moment';
-import numeral from 'numeral';
 import humanAmount from 'helpers/humanAmount';
 import { useState, useEffect } from 'react';
 import { fetchOfferAPI } from 'api/stellar';
@@ -42,7 +41,6 @@ const tableHeaders = [
     key: 3,
     render: (data) => <span>{humanAmount(data.amount)} LSP</span>,
   },
-
 ];
 
 function OffersData({ lusiData }) {
@@ -61,7 +59,6 @@ function OffersData({ lusiData }) {
       ._embedded
       .records
       .filter((i) => new BN(i.price).isEqualTo(ONE_LUSI_AMOUNT)))
-      // .map((i) => ({ ...i, price: new BN(i.price).div(10 ** 7).toFixed(7) })))
       .then((res) => setOffersData(res));
   }, []);
 

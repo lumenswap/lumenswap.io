@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import NFTHeader from 'components/NFTHeader';
 import classNames from 'classnames';
-import fetchMyLusi from 'api/myLusiAPI';
 import CardThumbnail from 'containers/nft/CardThumbnail';
 import Loading from 'components/Loading';
 import urlMaker from 'helpers/urlMaker';
@@ -9,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import useIsLogged from 'hooks/useIsLogged';
+import fetchAllLusi from 'api/AllLusiAPI';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -23,8 +23,7 @@ const Container = ({ children }) => (
 
 const NFTCollections = () => {
   const [myLusi, setMyLusi] = useState(null);
-  const userAdress = useSelector((state) => state.user.detail.address);
-
+  const userBalances = useSelector((state) => state.userBalance);
   const isLogged = useIsLogged();
 
   const router = useRouter();
@@ -36,7 +35,12 @@ const NFTCollections = () => {
   }, []);
 
   useEffect(() => {
-    fetchMyLusi(userAdress).then((data) => setMyLusi(data));
+    const lusis = userBalances
+      .filter((i) => i.asset.issuer === process.env.REACT_APP_LUSI_ISSUER)
+      .map((i) => i.asset.code);
+    fetchAllLusi().then((data) => {
+      setMyLusi(data.filter((i) => lusis.includes(i.assetCode)));
+    });
   }, []);
 
   if (!myLusi) {
@@ -48,6 +52,7 @@ const NFTCollections = () => {
       </Container>
     );
   }
+
   return (
     <Container>
       <div className={classNames('layout main', styles.main)}>
@@ -63,10 +68,10 @@ const NFTCollections = () => {
                   className={classNames('col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 mt-4', styles.col)}
                 >
                   <CardThumbnail
-                    name={item.name}
-                    imgSrc={item.img}
+                    name={`Lusi ${item.number}`}
+                    imgSrc={item.imageUrl}
                     price={item.price}
-                    url={urlMaker.nft.lusi(item.id)}
+                    url={urlMaker.nft.lusi(item.number)}
                   />
                 </div>
               ))}
