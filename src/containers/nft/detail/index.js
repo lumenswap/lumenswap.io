@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import NFTHeader from 'components/NFTHeader';
+import BN from 'helpers/BN';
 import Button from 'components/Button';
 import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
@@ -40,7 +41,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
       title: 'Price',
       tooltip: 'tooltip',
       render: (info) => {
-        if (info.price) {
+        if (!new BN(info.price).isZero()) {
           return <span className={styles.infos}>{numeral(info.price).format('0,0')} LSP</span>;
         }
 

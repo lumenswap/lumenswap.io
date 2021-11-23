@@ -1,5 +1,6 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
+import BN from 'helpers/BN';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -42,7 +43,7 @@ const CardThumbnail = ({
             <Image src={imgSrc} width={dimensions.size} height={dimensions.size} />
           </div>
           <div className={styles.value}>
-            {price ? (
+            {!new BN(price).isZero() ? (
               <>
                 <Logo />
                 {humanAmount(price)}
