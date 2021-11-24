@@ -3,29 +3,28 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import useIsLogged from 'hooks/useIsLogged';
-import { fetchClaimableBalances } from 'api/stellar';
-import questionLogo from '../../../../public/images/question.png';
+import { checkLusiDropped } from 'api/nft';
 import ClaimLusiModal from '../ClaimLusiModal';
 
 import styles from './styles.module.scss';
 
+function loadRewardLusi(userAddress, setRewardLusi) {
+  checkLusiDropped(userAddress).then((res) => {
+    setRewardLusi(res.data.lusi);
+  }).catch(() => {
+    setRewardLusi(null);
+  });
+}
+
 function ClaimLusiBtn() {
   const [rewardLusi, setRewardLusi] = useState(null);
-  const userAdress = useSelector((state) => state.user.detail.address);
+  const userAddress = useSelector((state) => state.user.detail.address);
   const isLogged = useIsLogged();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLogged) {
-      // fetchClaimableBalances({ limit: 200, claimant: userAdress }).then((res) => {
-      //   const lusi = res._embedded.records.find((claimy) => {
-      //     if (claimy.asset.split(':')[1] === process.env.REACT_APP_LUSI_ISSUER) {
-      //       console.log(claimy);
-      //       return true;
-      //     }
-      //   });
-      // });
-      // fetchUserRewardLusi(userAdress).then((lusi) => setRewardLusi(lusi));
+      loadRewardLusi(userAddress, setRewardLusi);
     }
   }, [isLogged]);
 
@@ -33,14 +32,17 @@ function ClaimLusiBtn() {
     if (rewardLusi) {
       dispatch(
         openModalAction({
-          modalProps: { title: `You won #${rewardLusi.name}` },
-          content: <ClaimLusiModal lusi={rewardLusi} />,
+          modalProps: { title: `You won #${rewardLusi.assetCode}` },
+          content: <ClaimLusiModal
+            lusi={rewardLusi}
+            loadRewardLusi={() => loadRewardLusi(userAddress, setRewardLusi)}
+          />,
         }),
       );
     }
   };
 
-  if (!isLogged) {
+  if (!isLogged || !rewardLusi) {
     return null;
   }
 
@@ -48,7 +50,7 @@ function ClaimLusiBtn() {
     <div onClick={handleOpenModal} className={styles.main}>
       <div className={styles.items}>
         <div className={styles.logo}>
-          <Image src={rewardLusi?.img ?? questionLogo} width={28} height={28} />
+          <Image src={rewardLusi.imageUrl} width={28} height={28} />
         </div>
         <span>Claim my lusi</span>
       </div>

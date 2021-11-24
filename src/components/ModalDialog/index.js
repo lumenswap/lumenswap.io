@@ -4,11 +4,21 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const ModalDialog = ({
-  children, title, show, setShow, width = 360, back, backAction, hasClose = true, className,
+  children,
+  title,
+  show,
+  setShow,
+  width = 360,
+  back,
+  backAction,
+  hasClose = true,
+  className,
+  onAfterClose = () => {},
 }) => {
   const handleClose = () => {
     if (hasClose) {
       setShow(false);
+      onAfterClose();
     }
   };
 
