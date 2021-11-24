@@ -59,11 +59,11 @@ const NftStatsChart = ({ showLabel = true, data }) => {
       show: false,
       type: 'value',
     },
-    dataZoom: {
-      start: 50,
-      end: 57,
-      type: 'inside',
-    },
+    // dataZoom: {
+    //   start: 50,
+    //   end: 57,
+    //   type: 'inside',
+    // },
     series: [
       {
         name: 'Liquidity',
@@ -85,7 +85,7 @@ const NftStatsChart = ({ showLabel = true, data }) => {
             },
           ]),
         },
-        data,
+        data: data?.map((i) => i.tradeAmount),
       },
     ],
   };
