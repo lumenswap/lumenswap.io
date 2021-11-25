@@ -19,6 +19,11 @@ const NftStatsChart = ({ showLabel = true, data }) => {
       left: 0,
       bottom: 40,
     },
+    dataZoom: {
+      start: 0,
+      end: 100,
+      type: 'inside',
+    },
     tooltip: {
       show: true,
       trigger: 'axis',
@@ -37,9 +42,12 @@ const NftStatsChart = ({ showLabel = true, data }) => {
       className: 'echart-tooltip',
     },
     xAxis: {
+      data: data?.map((i) => i?.periodTime),
       type: 'category',
-      boundaryGap: false,
-      data: () => data?.map((i) => i?.periodTime),
+      boundaryGap: true,
+      splitLine: {
+        show: false,
+      },
       axisLabel: {
         formatter(value) {
           return moment(value).format('DD');
@@ -59,11 +67,6 @@ const NftStatsChart = ({ showLabel = true, data }) => {
       show: false,
       type: 'value',
     },
-    // dataZoom: {
-    //   start: 50,
-    //   end: 57,
-    //   type: 'inside',
-    // },
     series: [
       {
         name: 'Liquidity',
@@ -73,15 +76,16 @@ const NftStatsChart = ({ showLabel = true, data }) => {
         itemStyle: {
           color: '#0e41f5',
         },
+        lineStyle: { backgroundColor: '#0e41f5' },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#0e41f5',
+              color: '#aab6cc',
             },
             {
               offset: 1,
-              color: 'rgb(14, 65, 245, 0.2)',
+              color: '#e8f0fe',
             },
           ]),
         },

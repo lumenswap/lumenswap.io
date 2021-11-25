@@ -157,8 +157,8 @@ const NFTDetail = ({ id: lusiId, data }) => {
             <div className={classNames('row', styles.row)}>
               <div className={classNames('col-lg-6 col-md-12 col-sm-12 col-12', styles.col)}>
                 <div className={classNames(styles.card, styles['card-nft'])}>
-                  <div className="d-flex justify-content-center">
-                    <Image src={data.imageUrl} width={342} height={342} />
+                  <div className={classNames('d-flex justify-content-center', styles['img-container'])}>
+                    <Image src={data.imageUrl} layout="fill" objectFit="contain" />
                   </div>
                 </div>
               </div>
