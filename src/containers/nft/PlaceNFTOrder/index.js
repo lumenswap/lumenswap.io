@@ -5,7 +5,6 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'components/InputGroup';
-import { closeModalAction } from 'actions/modal';
 import Button from 'components/Button';
 import BN from 'helpers/BN';
 import { ONE_LUSI_AMOUNT } from 'appConsts';
@@ -42,7 +41,6 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
     showGenerateTrx(func, dispatch)
       .then((trx) => showSignResponse(trx, dispatch))
       .catch(console.log);
-    dispatch(closeModalAction());
   };
 
   useEffect(() => {
@@ -68,7 +66,7 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
       }
     }
 
-    return 'Set my price';
+    return 'Confirm';
   }
 
   return (

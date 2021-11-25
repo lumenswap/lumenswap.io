@@ -56,7 +56,6 @@ function TradesData({ lusiData }) {
       },
     )
       .then((res) => {
-        console.log(res.data._embedded.records);
         setTradesData(res.data._embedded.records);
       })
       .catch(() => {

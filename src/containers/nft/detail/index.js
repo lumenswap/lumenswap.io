@@ -112,7 +112,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
     if (isLogged) {
       dispatch(
         openModalAction({
-          modalProps: { title: 'Set a price' },
+          modalProps: { title: 'Place an offer' },
           content: <PlaceNFTOrder lusiAssetCode={data.assetCode} />,
         }),
       );
