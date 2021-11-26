@@ -7,7 +7,7 @@ function TopPair({
   number, info, images, percentage,
 }) {
   return (
-    <div className="col-lg-auto col-md-8 col-12 p-lg-0">
+    <div className="col-lg-4 col-md-8 col-12 p-lg-0">
       <div className={styles['top-pair-item']}>
         <div className={styles['top-pair-item-info']}>
           <span>{number}</span>

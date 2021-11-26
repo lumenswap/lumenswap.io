@@ -74,7 +74,7 @@ const RewardContent = () => {
       title: 'Amount',
       dataIndex: 'amount',
       key: '4',
-      render: (data) => <span>{rewardAmountHumanize(data.amount)}</span>,
+      render: (data) => <span>{rewardAmountHumanize(data.amount)} LSP</span>,
     },
   ];
 

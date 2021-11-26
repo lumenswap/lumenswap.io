@@ -48,7 +48,7 @@ const MarketPage = ({ assets }) => {
       <div className={styles.main}>
         <div className={styles['top-pair-details']}>
           <div className="row">
-            <div className="col-lg-auto col-md-2 col-12 pr-0">
+            <div className="col-lg-2 col-md-3 col-12 pr-0">
               <div className={styles['top-pair-details-info']}>
                 <div className={styles['top-pair-details-image']}><Image src={topPairIcon} width={22} height={22} /></div>
                 <span className={styles['top-pair-details-text']}>Top Pair Gainers</span>

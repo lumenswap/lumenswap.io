@@ -14,7 +14,7 @@ import LoadingWithContainer from '../../../components/LoadingWithContainer/Loadi
 
 const NoDataMessage = () => (
   <div className={styles['no-data-container']}>
-    <span>There is no asset offer</span>
+    <span>There is no offer</span>
   </div>
 );
 
