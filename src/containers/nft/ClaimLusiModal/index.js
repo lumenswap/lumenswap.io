@@ -39,7 +39,7 @@ const handleClaim = async (lusi, lusiAsset, userAddress, step, dispatch,
         dispatch(
           openModalAction({
             modalProps: { title: `You won #${lusi.assetCode}` },
-            content: <ClaimLusiModal lusi={lusi} />,
+            content: <ClaimLusiModal lusi={lusi} loadRewardLusi={loadRewardLusi} />,
           }),
         );
       }))
