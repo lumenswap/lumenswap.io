@@ -55,11 +55,7 @@ function PlaceOrSetPriceButtonContent({ buttonState }) {
 const NFTDetail = ({ id: lusiId, data }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
-  const [ownerInfoData, setOnwerInfoData] = useState({
-    address: '0xdD467E06b406b406b406b406b406b406b406b406b4fA',
-    telegram: 'lumenswap',
-    twitter: 'lumenswap',
-  });
+  const [ownerInfoData, setOnwerInfoData] = useState(null);
   const [tab, setTab] = useState('offer');
   const userBalances = useSelector((state) => state.userBalance);
   const userAddress = useSelector((state) => state.user.detail.address);
