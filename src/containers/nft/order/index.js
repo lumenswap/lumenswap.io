@@ -18,6 +18,7 @@ import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import XLM from 'tokens/XLM';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -55,33 +56,33 @@ function loadOfferData(userAddress, setOrders) {
 
         return (isSellAssetLusi || isBuyAssetLusi) && (isSellAssetLSP || isBuyAssetLSP);
       }).map((offer) => {
-        const isSellAssetLSP = isSameAsset(getAssetDetails(LSP), getAssetDetails({
-          code: offer.selling.asset_code,
-          issuer: offer.selling.asset_issuer,
-        }));
-
+        const isSellAssetLusi = offer.selling.asset_issuer === process.env.REACT_APP_LUSI_ISSUER;
         const isBuyAssetLSP = isSameAsset(getAssetDetails(LSP), getAssetDetails({
           code: offer.buying.asset_code,
           issuer: offer.buying.asset_issuer,
         }));
 
         const isSeller = offer.seller === userAddress;
-        const isBuyer = offer.buyer === userAddress;
+        // const isBuyer = offer.buyer === userAddress;
 
         let type;
-        if (isBuyer && isBuyAssetLSP) {
-          type = 'Sell';
-        }
-
-        if (isSeller && isSellAssetLSP) {
+        if (isSellAssetLusi && isBuyAssetLSP) {
+          if (isSeller) {
+            type = 'Sell';
+          } else {
+            type = 'Buy';
+          }
+        } else if (isSeller) {
           type = 'Buy';
+        } else {
+          type = 'Sell';
         }
 
         let lusiNumber;
         let amount;
         if (isBuyAssetLSP) {
           lusiNumber = offer.selling.asset_code.replace('Lusi', '');
-          amount = offer.price;
+          amount = new BN(offer.price).div(10 ** 7).toFixed(0);
         } else {
           lusiNumber = offer.buying.asset_code.replace('Lusi', '');
           amount = offer.amount;
