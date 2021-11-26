@@ -11,3 +11,7 @@ export function claimLusiApi(address) {
     `${process.env.REACT_APP_LUMEN_API}/nft/airdrop/${address}/claim`,
   );
 }
+
+export function getAssetHolderApi(asset) {
+  return axios.get(`https://api-holder.lumenswap.io/${asset}`).then((res) => res.data);
+}

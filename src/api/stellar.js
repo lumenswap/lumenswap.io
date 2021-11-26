@@ -24,6 +24,10 @@ export function fetchAccountDetails(address) {
     }));
 }
 
+export function fetchAccountFullDetails(address) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${address}`);
+}
+
 export function isActiveAccount(address) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${address}`)
     .then((res) => ({

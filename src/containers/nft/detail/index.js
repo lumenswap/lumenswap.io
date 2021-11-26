@@ -26,7 +26,8 @@ import urlMaker from 'helpers/urlMaker';
 import Submitting from 'components/Submitting';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
-import { fetchOffersOfAccount } from 'api/stellar';
+import { fetchAccountFullDetails, fetchOffersOfAccount } from 'api/stellar';
+import { getAssetHolderApi } from 'api/nft';
 import styles from './styles.module.scss';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import SetOrUpdateNFTPrice from './SetOrUpdateNFTPrice';
@@ -54,7 +55,7 @@ function PlaceOrSetPriceButtonContent({ buttonState }) {
 const NFTDetail = ({ id: lusiId, data }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
-  const [ownerInfoData] = useState({
+  const [ownerInfoData, setOnwerInfoData] = useState({
     address: '0xdD467E06b406b406b406b406b406b406b406b406b4fA',
     telegram: 'lumenswap',
     twitter: 'lumenswap',
@@ -112,6 +113,18 @@ const NFTDetail = ({ id: lusiId, data }) => {
     loadOfferData();
   }, [isLogged, userAddress, JSON.stringify(userBalances)]);
 
+  useEffect(() => {
+    getAssetHolderApi(`${data.assetCode}-${process.env.REACT_APP_LUSI_ISSUER}`).then((res) => {
+      fetchAccountFullDetails(res._embedded.records[0].account).then((accDet) => {
+        setOnwerInfoData({
+          address: res._embedded.records[0].account,
+          telegram: accDet.data.telegram,
+          twitter: accDet.data.twitter,
+        });
+      });
+    });
+  }, []);
+
   const nftInfo = [
     {
       title: 'Price',
@@ -147,24 +160,24 @@ const NFTDetail = ({ id: lusiId, data }) => {
       title: 'Address',
       tooltip: 'tooltip',
       externalLink: {
-        title: `${minimizeAddress(ownerInfoData?.address)}`,
-        url: generateAddressURL(ownerInfoData?.address),
+        title: ownerInfoData?.address ? `${minimizeAddress(ownerInfoData?.address)}` : '-',
+        url: ownerInfoData?.address ? generateAddressURL(ownerInfoData?.address) : '-',
       },
     },
     {
       title: 'Twitter',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${ownerInfoData?.twitter}`,
-        url: twitterUrlMaker(ownerInfoData?.twitter),
+        title: ownerInfoData?.twitter ? `@${ownerInfoData?.twitter}` : '-',
+        url: ownerInfoData?.twitter ? twitterUrlMaker(ownerInfoData?.twitter) : '-',
       },
     },
     {
       title: 'Telegram',
       tooltip: 'tooltip',
       externalLink: {
-        title: `@${ownerInfoData?.telegram}`,
-        url: telegramUrlMaker(ownerInfoData?.telegram),
+        title: ownerInfoData?.telegram ? `@${ownerInfoData?.telegram}` : '-',
+        url: ownerInfoData?.telegram ? telegramUrlMaker(ownerInfoData?.telegram) : '-',
       },
     },
   ];
