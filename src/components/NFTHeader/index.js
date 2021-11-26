@@ -15,7 +15,7 @@ const NFTHeader = () => {
       restricted: true,
     },
     {
-      name: 'Orders',
+      name: 'My Offers',
       link: urlMaker.nft.orders(),
       restricted: true,
     },

@@ -22,7 +22,7 @@ import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
   <div className={styles['loading-data-container']}>
-    <span>You have no orders</span>
+    <span>You have no offers</span>
   </div>
 );
 
@@ -184,13 +184,13 @@ const NFTOrder = () => {
   return (
     <div className="container-fluid">
       <Head>
-        <title>NFT Order | Lumenswap</title>
+        <title>NFT Offers | Lumenswap</title>
       </Head>
       <NFTHeader />
       <div className={classNames('layout main', styles.main)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <h1 className={styles.title}>My Orders</h1>
+            <h1 className={styles.title}>My Offers</h1>
             <div className={styles['table-container']}>
               <CTable
                 className={styles.table}

@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
   <div className={styles['no-data-container']}>
-    <span>There is no asset trade</span>
+    <span>There is no trade</span>
   </div>
 );
 
