@@ -163,18 +163,32 @@ const NFTDetail = ({ id: lusiId, data }) => {
     {
       title: 'Twitter',
       tooltip: 'tooltip',
-      externalLink: {
-        title: ownerInfoData?.twitter ? `@${ownerInfoData?.twitter}` : '-',
-        url: ownerInfoData?.twitter ? twitterUrlMaker(ownerInfoData?.twitter) : '-',
-      },
+      render: (info) => (info?.twitter ? (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          style={{ textDecoration: 'none' }}
+          className={styles['info-link']}
+          href={twitterUrlMaker(info?.twitter)}
+        >
+          @{info?.twitter}
+        </a>
+      ) : <span className={styles['no-link']}>-</span>),
     },
     {
       title: 'Telegram',
       tooltip: 'tooltip',
-      externalLink: {
-        title: ownerInfoData?.telegram ? `@${ownerInfoData?.telegram}` : '-',
-        url: ownerInfoData?.telegram ? telegramUrlMaker(ownerInfoData?.telegram) : '-',
-      },
+      render: (info) => (info?.telegram ? (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          style={{ textDecoration: 'none' }}
+          className={styles['info-link']}
+          href={telegramUrlMaker(info?.telegram)}
+        >
+          @{info?.telegram}
+        </a>
+      ) : <span className={styles['no-link']}>-</span>),
     },
   ];
 
