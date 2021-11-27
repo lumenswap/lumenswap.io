@@ -12,6 +12,17 @@ export function claimLusiApi(address) {
   );
 }
 
-export function getAssetHolderApi(asset) {
-  return axios.get(`https://api-holder.lumenswap.io/${asset}`).then((res) => res.data);
+// export function getAssetHolderApi(asset) {
+//   return axios.get(`https://api-holder.lumenswap.io/${asset}`).then((res) => res.data);
+// }
+
+export function getAccounts(assetCode, cursor) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/accounts`, {
+    params: {
+      limit: 200,
+      order: 'desc',
+      asset: `${assetCode}:${process.env.REACT_APP_LUSI_ISSUER}`,
+      cursor,
+    },
+  });
 }

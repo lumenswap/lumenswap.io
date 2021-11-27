@@ -26,11 +26,11 @@ import urlMaker from 'helpers/urlMaker';
 import Submitting from 'components/Submitting';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
-import { fetchAccountFullDetails, fetchOffersOfAccount } from 'api/stellar';
-import { getAssetHolderApi } from 'api/nft';
+import { fetchOffersOfAccount } from 'api/stellar';
 import styles from './styles.module.scss';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import SetOrUpdateNFTPrice from './SetOrUpdateNFTPrice';
+import getLusiOwner from './getLusiOwner';
 
 function PlaceOrSetPriceButtonContent({ buttonState }) {
   if (buttonState === 'loading') {
@@ -86,7 +86,6 @@ const NFTDetail = ({ id: lusiId, data }) => {
               issuer: offer.selling.asset_issuer,
             });
             if (isSameAsset(offerSellingAsset, currentLusi)) {
-              console.log('peyda kard');
               offerFound = offer.id;
               break;
             }
@@ -110,14 +109,8 @@ const NFTDetail = ({ id: lusiId, data }) => {
   }, [isLogged, userAddress, JSON.stringify(userBalances)]);
 
   useEffect(() => {
-    getAssetHolderApi(`${data.assetCode}-${process.env.REACT_APP_LUSI_ISSUER}`).then((res) => {
-      fetchAccountFullDetails(res._embedded.records[0].account).then((accDet) => {
-        setOnwerInfoData({
-          address: res._embedded.records[0].account,
-          telegram: accDet.data.telegram,
-          twitter: accDet.data.twitter,
-        });
-      });
+    getLusiOwner(`Lusi${lusiId}`).then((ownerInfo) => {
+      setOnwerInfoData(ownerInfo);
     });
   }, []);
 
