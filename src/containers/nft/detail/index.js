@@ -86,7 +86,6 @@ const NFTDetail = ({ id: lusiId, data }) => {
               issuer: offer.selling.asset_issuer,
             });
             if (isSameAsset(offerSellingAsset, currentLusi)) {
-              console.log('peyda kard');
               offerFound = offer.id;
               break;
             }
@@ -110,7 +109,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
   }, [isLogged, userAddress, JSON.stringify(userBalances)]);
 
   useEffect(() => {
-    getLusiOwner(lusiId).then((ownerInfo) => {
+    getLusiOwner(`Lusi${lusiId}`).then((ownerInfo) => {
       setOnwerInfoData(ownerInfo);
     });
   }, []);

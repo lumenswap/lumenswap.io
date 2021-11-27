@@ -12,8 +12,8 @@ export default function getLusiOwner(lusiId) {
           ) {
             return {
               address: account.account_id,
-              telegram: account.x.data.telegram,
-              twitter: account.x.data.twitter,
+              telegram: account.telegram,
+              twitter: account.twitter,
             };
           }
         }
