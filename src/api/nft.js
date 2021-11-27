@@ -16,13 +16,13 @@ export function claimLusiApi(address) {
 //   return axios.get(`https://api-holder.lumenswap.io/${asset}`).then((res) => res.data);
 // }
 
-export function getAccounts(assetCode, curosr) {
+export function getAccounts(assetCode, cursor) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/accounts`, {
     params: {
       limit: 200,
       order: 'desc',
       asset: `${assetCode}:${process.env.REACT_APP_LUSI_ISSUER}`,
-      curosr,
+      cursor,
     },
   });
 }
