@@ -7,6 +7,7 @@ import CStatistics, { Info } from 'components/CStatistics';
 import fetchNFTStats from 'api/nftStatsAPI';
 import { useState, useEffect } from 'react';
 import Loading from 'components/Loading';
+import moment from 'moment';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -21,6 +22,10 @@ const Container = ({ children }) => (
 
 const NFTStats = () => {
   const [statsData, setStatsData] = useState(null);
+  const [statsVolumeInfo, setStatsVolumeInfo] = useState({
+    currentTime: Date.now(),
+    currentVolume: 0,
+  });
 
   const statsInfo = [
     {
@@ -64,12 +69,20 @@ const NFTStats = () => {
               <CStatistics className={styles['c-statistics']} blocks={statsInfo} />
             </div>
             <div className={classNames(styles.card, styles['card-chart'])}>
-              <div>Volume</div>
-              <div className="row flex-nowrap mt-5 align-items-end">
+              <div className={styles['chart-header-info']}>
+                <div className={styles['volume-info']}>
+                  <span className={styles['volume-info-number']}>${statsVolumeInfo.currentVolume}</span>
+                  <span className={styles['volume-info-text']}>Volume 24h</span>
+                </div>
+                <span className={styles['date-chart']}>
+                  {moment(statsVolumeInfo.currentTime).utc().format('MMM , DD')}
+                </span>
+              </div>
+              <div className={classNames('row flex-nowrap align-items-end', styles['chart-container'])}>
                 <div className="col">
                   <NftStatsChart
                     data={statsData?.chart}
-                    showLabel={false}
+                    setStatsVolumeInfo={setStatsVolumeInfo}
                   />
                 </div>
                 <div className="col-auto">

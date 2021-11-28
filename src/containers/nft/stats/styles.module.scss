@@ -16,6 +16,7 @@
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   margin-top: 24px;
+  height: 365px;
 
   &-info {
     padding: 9px 0;
@@ -64,7 +65,7 @@
 }
 
 .date {
-  margin-bottom: 15px;
+  margin-bottom: 2px;
 }
 
 .statistics {
@@ -106,4 +107,52 @@
   div {
     margin-top: 320px;
   }
+}
+
+.chart-container {
+  margin-top: 50px;
+}
+
+.volume-info {
+  display: flex;
+  flex-direction: column;
+  &-number {
+    font-family: SofiaPro;
+    font-size: 22px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
+
+  &-text {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+  }
+}
+
+.chart-header-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.date-chart {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+    margin-top: 6px;
 }
