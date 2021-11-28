@@ -35,18 +35,20 @@ const RewardContent = () => {
 
   useEffect(() => {
     function loadingUserData() {
-      fetchAddressRewardStats(userAdress)
+      fetchAddressRewardStats('GDZGP5DNONF6UQ4QLVTHZ5OWHS5LKKQDE3LNJLERY45L3LK7AJWFZFR6')
         .then((res) => setRewardStats(res.data)).catch((err) => console.log(err));
     }
 
     function loadAddressReward() {
-      fetchAddressReward(userAdress)
+      fetchAddressReward('GDZGP5DNONF6UQ4QLVTHZ5OWHS5LKKQDE3LNJLERY45L3LK7AJWFZFR6')
         .then((res) => setAddressReward(res.data)).catch((err) => console.log(err));
     }
 
     loadingUserData();
     loadAddressReward();
   }, [userAdress]);
+
+  console.log(rewardStats, addressReward);
 
   const tableHeaders = [
     {
@@ -97,7 +99,7 @@ const RewardContent = () => {
     {
       title: 'LP reward earned',
       tooltip: 'This shows your earned reward from the LP program.',
-      content: <span>-</span>,
+      content: <Info text="LSP" number={rewardAmountHumanize(rewardStats?.lp?.total)} />,
     },
   ];
 
