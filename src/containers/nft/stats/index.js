@@ -85,11 +85,6 @@ const NFTStats = () => {
                     setStatsVolumeInfo={setStatsVolumeInfo}
                   />
                 </div>
-                <div className="col-auto">
-                  <div className={styles.date}>
-                    Date
-                  </div>
-                </div>
               </div>
             </div>
           </div>
