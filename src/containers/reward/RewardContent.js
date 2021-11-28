@@ -35,12 +35,12 @@ const RewardContent = () => {
 
   useEffect(() => {
     function loadingUserData() {
-      fetchAddressRewardStats('GDZGP5DNONF6UQ4QLVTHZ5OWHS5LKKQDE3LNJLERY45L3LK7AJWFZFR6')
+      fetchAddressRewardStats(userAdress)
         .then((res) => setRewardStats(res.data)).catch((err) => console.log(err));
     }
 
     function loadAddressReward() {
-      fetchAddressReward('GDZGP5DNONF6UQ4QLVTHZ5OWHS5LKKQDE3LNJLERY45L3LK7AJWFZFR6')
+      fetchAddressReward(userAdress)
         .then((res) => setAddressReward(res.data)).catch((err) => console.log(err));
     }
 
