@@ -48,8 +48,6 @@ const RewardContent = () => {
     loadAddressReward();
   }, [userAdress]);
 
-  console.log(rewardStats, addressReward);
-
   const tableHeaders = [
     {
       title: 'Tx',
