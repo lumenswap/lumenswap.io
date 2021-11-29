@@ -28,7 +28,8 @@ const NFTHeader = () => {
 
   return (
     <LumenSwapHeader
-      showLSP
+      showAssetBox
+      assetBoxProps={{ color: '#DF4886' }}
       leftSide={leftSideLinks}
       extraRightComponent={extraRightComponent}
     />

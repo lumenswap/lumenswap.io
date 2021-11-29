@@ -82,7 +82,7 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label className="label-primary mb-2 mt-4">Order price</label>
+        <label className="label-primary mb-2 mt-4">Price</label>
         <Controller
           name="price"
           control={control}
@@ -95,7 +95,7 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
             <InputGroup
               variant="primary"
               placeholder="100"
-              rightLabel="LSP"
+              rightLabel="NLSP"
               value={props.value}
               onChange={props.onChange}
             />

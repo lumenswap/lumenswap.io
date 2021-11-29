@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import BN from 'helpers/BN';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import Logo from 'assets/images/logo';
-
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 

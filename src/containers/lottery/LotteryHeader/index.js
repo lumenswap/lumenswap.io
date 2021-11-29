@@ -10,7 +10,7 @@ import { openConnectModal } from 'actions/modal';
 import NavLink from 'components/NavLink';
 import MobileMenu from 'components/MobileMenu';
 import ArrowHeader from 'assets/images/arrow-header.svg';
-import LSPBox from 'components/LSPBox';
+import AssetBox from 'components/AssetBox';
 import styles from './styles.module.scss';
 
 const LotteryHeader = () => {
@@ -73,7 +73,7 @@ const LotteryHeader = () => {
             </li>
           </div>
         </ul>
-        <LSPBox />
+        <AssetBox />
         {BtnConnect}
       </div>
       <div className="d-md-none d-sm-block d-block w-100">

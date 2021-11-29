@@ -74,7 +74,7 @@ const NFTCollections = () => {
               {myLusi?.map((item) => (
                 <div
                   key={item.id}
-                  className={classNames('col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 mt-4', styles.col)}
+                  className={classNames('col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12', styles.col, styles['no-data-card'])}
                 >
                   <CardThumbnail
                     name={`Lusi ${item.number}`}

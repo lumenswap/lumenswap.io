@@ -62,7 +62,7 @@
 }
 
 .row {
-  margin-top: 12px;
+  margin-top: 14px;
   margin-right: -12px !important;
   margin-left: -12px !important;
 }
@@ -99,8 +99,12 @@
   }
 }
 
-
+.logo {
+  margin-right: 6px;
+}
 .infos {
+  display: flex;
+  flex-direction: row;
   font-family: SofiaPro;
   font-size: 16px;
   font-weight: normal;
@@ -198,4 +202,8 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
+}
+
+.bread {
+  font-size: 24px !important;
 }
