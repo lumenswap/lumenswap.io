@@ -129,7 +129,6 @@ const NFTDetail = ({ id: lusiId, data }) => {
     },
     {
       title: 'Asset',
-      tooltip: 'tooltip',
       externalLink: {
         title: `${data.nftInfo.asset}`,
         url: assetGenerator(data.assetCode, process.env.REACT_APP_LUSI_ISSUER),
@@ -137,7 +136,6 @@ const NFTDetail = ({ id: lusiId, data }) => {
     },
     {
       title: 'IPFs hash',
-      tooltip: 'tooltip',
       externalLink: {
         title: `${minimizeAddress(data.nftInfo.ipfHash)}`,
         url: ipfsHashGenerator(data.nftInfo.ipfHash),
@@ -148,7 +146,6 @@ const NFTDetail = ({ id: lusiId, data }) => {
   const ownerInfo = [
     {
       title: 'Address',
-      tooltip: 'tooltip',
       externalLink: {
         title: ownerInfoData?.address ? `${minimizeAddress(ownerInfoData?.address)}` : '-',
         url: ownerInfoData?.address ? generateAddressURL(ownerInfoData?.address) : '-',
@@ -156,7 +153,6 @@ const NFTDetail = ({ id: lusiId, data }) => {
     },
     {
       title: 'Twitter',
-      tooltip: 'tooltip',
       render: (info) => (info?.twitter ? (
         <a
           target="_blank"
@@ -171,7 +167,6 @@ const NFTDetail = ({ id: lusiId, data }) => {
     },
     {
       title: 'Telegram',
-      tooltip: 'tooltip',
       render: (info) => (info?.telegram ? (
         <a
           target="_blank"

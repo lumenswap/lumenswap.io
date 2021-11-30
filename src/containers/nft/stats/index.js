@@ -30,17 +30,14 @@ const NFTStats = () => {
   const statsInfo = [
     {
       title: 'Volume 24h',
-      tooltip: 'tooltip',
       content: <Info text="LSP" number={numeral(statsData?.info.volume24h).format('0,0')} className={styles['statistics-info']} />,
     },
     {
       title: 'Volume 7d',
-      tooltip: 'tooltip',
       content: <Info text="LSP" number={numeral(statsData?.info.volume7d).format('0,0')} className={styles['statistics-info']} />,
     },
     {
       title: 'Total number of trades',
-      tooltip: 'tooltip',
       content: <Info number={numeral(statsData?.info.total).format('0,0')} className={styles['statistics-info']} />,
     },
   ];
