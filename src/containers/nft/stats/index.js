@@ -75,7 +75,7 @@ const NFTStats = () => {
                   <span className={styles['volume-info-text']}>Volume 24h</span>
                 </div>
                 <span className={styles['date-chart']}>
-                  {moment(statsVolumeInfo.currentTime).utc().format('MMM , DD')}
+                  {moment(statsVolumeInfo.currentTime).utc().format('MMM, DD')}
                 </span>
               </div>
               <div className={classNames('row flex-nowrap align-items-end', styles['chart-container'])}>
