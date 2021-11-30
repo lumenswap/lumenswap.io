@@ -45,7 +45,7 @@ function TradeHistory() {
           }
 
           return {
-            time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
+            time,
             price: sevenDigit(price.toFixed(7)),
             otherPrice: sevenDigit(otherPrice.toFixed(7)),
             sellAsset,

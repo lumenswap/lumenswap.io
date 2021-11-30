@@ -26,7 +26,7 @@ const defaultTokens = [
   XLM,
   LSP,
   USDC,
-  NLSP,
+  // NLSP,
   CNY,
   ARS,
   BRL,
