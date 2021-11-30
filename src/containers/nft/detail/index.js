@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import NFTHeader from 'components/NFTHeader';
 import BN from 'helpers/BN';
 import Button from 'components/Button';
+import BigLogo from 'assets/images/BigLogo';
 import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -120,7 +121,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
       tooltip: 'tooltip',
       render: (info) => {
         if (!new BN(info.price).isZero()) {
-          return <span className={styles.infos}>{numeral(info.price).format('0,0')} LSP</span>;
+          return <span className={styles.infos}><div className={styles.logo}><BigLogo /></div>{numeral(info.price).format('0,0')} NLSP</span>;
         }
 
         return <span className={styles.infos}>Not set yet</span>;
@@ -260,7 +261,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
 
             <div className="d-flex justify-content-between align-items-center">
-              <Breadcrumb data={breadCrumbData} />
+              <Breadcrumb className={styles.bread} data={breadCrumbData} />
               {buttonState !== null && (
                 <Button
                   variant="primary"

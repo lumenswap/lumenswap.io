@@ -5,7 +5,7 @@
 }
 
 .title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 1.5;
   color: $CodGray;
@@ -13,6 +13,7 @@
 }
 
 .filter {
+
   :global(.select__control) {
     width: 174px;
     height: 40px;
@@ -33,6 +34,7 @@
     font-size: 14px;
     font-weight: normal;
     padding: 8px 14px;
+    color: $CodGray !important;
   }
 
   :global(.select__menu-list) {
@@ -59,5 +61,13 @@
   justify-content: center;
   div {
     margin-top: 320px;
+  }
+}
+.m-t {
+  &-col {
+    margin-top: 24px;
+  }
+  &-row {
+    margin-top: -6px;
   }
 }

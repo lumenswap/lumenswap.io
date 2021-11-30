@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import LSPBox from 'components/LSPBox';
+import AssetBox from 'components/AssetBox';
 import { useSelector } from 'react-redux';
 import MobileMenu from 'components/MobileMenu';
 import LogoLink from './LogoLink';
@@ -8,7 +8,7 @@ import SideBarLink from './SideBarLink';
 import styles from './styles.module.scss';
 
 const LumenSwapHeader = ({
-  showLSP, leftSide, rightSide, extraRightComponent, extraLeftComponent,
+  showAssetBox, assetBoxProps, leftSide, rightSide, extraRightComponent, extraLeftComponent,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
 
@@ -37,7 +37,7 @@ const LumenSwapHeader = ({
           </div>
         </ul>
         {extraRightComponent?.map((Component, index) => <Component key={index} />)}
-        {(isLogged && showLSP) && <LSPBox />}
+        {(isLogged && showAssetBox) && <AssetBox {...assetBoxProps} />}
         <ConnectButton />
       </div>
       <div className="d-md-none d-sm-block d-block w-100">
