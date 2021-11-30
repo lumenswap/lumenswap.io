@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
-import LSP from 'tokens/LSP';
 import humanAmount from 'helpers/humanAmount';
+import NLSP from 'tokens/NLSP';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
@@ -50,7 +50,7 @@ function TradesData({ lusiData }) {
   useEffect(() => {
     fetchTradeAPI(
       getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-      getAssetDetails(LSP), {
+      getAssetDetails(NLSP), {
         limit: 10,
         order: 'desc',
       },

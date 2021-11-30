@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import LSP from 'tokens/LSP';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,12 +10,13 @@ import { ONE_LUSI_AMOUNT } from 'appConsts';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
 const PlaceNFTOrder = ({ lusiAssetCode }) => {
   const dispatch = useDispatch();
-  const userLSPBalance = useSelector((state) => state.userBalance)
-    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(LSP)));
+  const userNLSPBalance = useSelector((state) => state.userBalance)
+    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(NLSP)));
   const userAddress = useSelector((state) => state.user.detail.address);
 
   const {
@@ -31,7 +31,7 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
           code: lusiAssetCode,
           issuer: process.env.REACT_APP_LUSI_ISSUER,
         }),
-        getAssetDetails(LSP),
+        getAssetDetails(NLSP),
         ONE_LUSI_AMOUNT,
         new BN(data.price).times(10 ** 7).toFixed(0),
         0,
@@ -52,7 +52,7 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
       return 'Price is not valid';
     }
 
-    if (new BN(price).gt(parseInt(userLSPBalance.balance, 10))) {
+    if (new BN(price).gt(parseInt(userNLSPBalance.balance, 10))) {
       return 'Insufficient NSLP';
     }
 

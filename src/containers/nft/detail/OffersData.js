@@ -7,8 +7,8 @@ import humanAmount from 'helpers/humanAmount';
 import { useState, useEffect } from 'react';
 import { fetchOfferAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
-import LSP from 'tokens/LSP';
 import { ONE_LUSI_AMOUNT } from 'appConsts';
+import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 
@@ -49,7 +49,7 @@ function OffersData({ lusiData }) {
   useEffect(() => {
     fetchOfferAPI(
       getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-      getAssetDetails(LSP),
+      getAssetDetails(NLSP),
       {
         limit: 10,
         order: 'desc',

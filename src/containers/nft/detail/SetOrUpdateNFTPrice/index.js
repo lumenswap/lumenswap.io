@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import LSP from 'tokens/LSP';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'components/InputGroup';
@@ -10,6 +9,7 @@ import { ONE_LUSI_AMOUNT } from 'appConsts';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
 const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
@@ -25,7 +25,7 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
       if (mode === 'update') {
         return generateManageSellTRX(
           userAddress,
-          getAssetDetails(LSP),
+          getAssetDetails(NLSP),
           getAssetDetails({
             code: lusiAssetCode,
             issuer: process.env.REACT_APP_LUSI_ISSUER,
@@ -38,7 +38,7 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
 
       return generateManageSellTRX(
         userAddress,
-        getAssetDetails(LSP),
+        getAssetDetails(NLSP),
         getAssetDetails({
           code: lusiAssetCode,
           issuer: process.env.REACT_APP_LUSI_ISSUER,

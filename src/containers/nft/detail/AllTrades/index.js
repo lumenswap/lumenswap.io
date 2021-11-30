@@ -10,8 +10,8 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import InfinitePagination from 'components/InfinitePagination';
 import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
-import LSP from 'tokens/LSP';
 import humanAmount from 'helpers/humanAmount';
+import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -25,7 +25,7 @@ const OFFER_FETCH_LIMIT = 20;
 function fetchLusiTrades(cursor, id) {
   return fetchTradeAPI(
     getAssetDetails({ code: `Lusi${id}`, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(LSP),
+    getAssetDetails(NLSP),
     {
       limit: OFFER_FETCH_LIMIT,
       order: 'desc',

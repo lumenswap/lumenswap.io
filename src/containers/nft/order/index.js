@@ -13,12 +13,12 @@ import { useRouter } from 'next/router';
 import useIsLogged from 'hooks/useIsLogged';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
-import LSP from 'tokens/LSP';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import XLM from 'tokens/XLM';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
+import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -45,11 +45,11 @@ function loadOfferData(userAddress, setOrders) {
       .filter((offer) => {
         const isSellAssetLusi = offer.selling.asset_issuer === process.env.REACT_APP_LUSI_ISSUER;
         const isBuyAssetLusi = offer.buying.asset_issuer === process.env.REACT_APP_LUSI_ISSUER;
-        const isSellAssetLSP = isSameAsset(getAssetDetails(LSP), getAssetDetails({
+        const isSellAssetLSP = isSameAsset(getAssetDetails(NLSP), getAssetDetails({
           code: offer.selling.asset_code,
           issuer: offer.selling.asset_issuer,
         }));
-        const isBuyAssetLSP = isSameAsset(getAssetDetails(LSP), getAssetDetails({
+        const isBuyAssetLSP = isSameAsset(getAssetDetails(NLSP), getAssetDetails({
           code: offer.buying.asset_code,
           issuer: offer.buying.asset_issuer,
         }));
@@ -57,7 +57,7 @@ function loadOfferData(userAddress, setOrders) {
         return (isSellAssetLusi || isBuyAssetLusi) && (isSellAssetLSP || isBuyAssetLSP);
       }).map((offer) => {
         const isSellAssetLusi = offer.selling.asset_issuer === process.env.REACT_APP_LUSI_ISSUER;
-        const isBuyAssetLSP = isSameAsset(getAssetDetails(LSP), getAssetDetails({
+        const isBuyAssetLSP = isSameAsset(getAssetDetails(NLSP), getAssetDetails({
           code: offer.buying.asset_code,
           issuer: offer.buying.asset_issuer,
         }));
@@ -121,7 +121,7 @@ const NFTOrder = () => {
       return generateManageBuyTRX(
         userAddress,
         getAssetDetails(XLM),
-        getAssetDetails(LSP),
+        getAssetDetails(NLSP),
         '0',
         '0.1',
         offerId,
@@ -164,7 +164,7 @@ const NFTOrder = () => {
       key: 3,
       render: (data) => (
         <div>
-          {numeral(data.amount).format('0,0')} LSP
+          {numeral(data.amount).format('0,0')} NLSP
         </div>
       ),
     },

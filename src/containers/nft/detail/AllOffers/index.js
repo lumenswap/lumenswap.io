@@ -12,9 +12,9 @@ import moment from 'moment';
 import InfinitePagination from 'components/InfinitePagination';
 import { fetchOfferAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
-import LSP from 'tokens/LSP';
 import BN from 'helpers/BN';
 import { ONE_LUSI_AMOUNT } from 'appConsts';
+import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -28,7 +28,7 @@ const OFFER_FETCH_LIMIT = 20;
 function fetchLusiOffers(cursor, id) {
   return fetchOfferAPI(
     getAssetDetails({ code: `Lusi${id}`, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(LSP),
+    getAssetDetails(NLSP),
     {
       limit: OFFER_FETCH_LIMIT,
       order: 'desc',
