@@ -76,7 +76,7 @@ function AllOffersPage({ id }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{numeral(data.amount).format('0,0')} LSP</span>,
+      render: (data) => <span>{numeral(data.amount).format('0,0')} NLSP</span>,
     },
 
   ];

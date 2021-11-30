@@ -39,7 +39,7 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{humanAmount(data.amount)} LSP</span>,
+    render: (data) => <span>{humanAmount(data.amount)} NLSP</span>,
   },
 ];
 

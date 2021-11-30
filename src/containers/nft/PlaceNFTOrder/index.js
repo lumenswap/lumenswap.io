@@ -53,7 +53,17 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
     }
 
     if (new BN(price).gt(parseInt(userLSPBalance.balance, 10))) {
-      return 'Insufficient LSP';
+      return 'Insufficient NSLP';
+    }
+
+    const moreThanNLSP = 100;
+    if (new BN(price).gt(moreThanNLSP)) {
+      return `Price must be less than ${moreThanNLSP}`;
+    }
+
+    const lessThanNLSP = '0.0000001';
+    if (new BN(price).lt(lessThanNLSP)) {
+      return `Price must be greater than ${moreThanNLSP}`;
     }
 
     return true;
