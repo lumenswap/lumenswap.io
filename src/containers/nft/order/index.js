@@ -18,6 +18,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
 import NLSP from 'tokens/NLSP';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -163,7 +164,7 @@ const NFTOrder = () => {
       key: 3,
       render: (data) => (
         <div>
-          {data.amount} NLSP
+          {humanAmount(data.amount)} NLSP
         </div>
       ),
     },

@@ -11,9 +11,8 @@ import moment from 'moment';
 import InfinitePagination from 'components/InfinitePagination';
 import { fetchOfferAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
-import BN from 'helpers/BN';
-import { ONE_LUSI_AMOUNT } from 'appConsts';
 import NLSP from 'tokens/NLSP';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -75,7 +74,7 @@ function AllOffersPage({ id }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{data.amount} NLSP</span>,
+      render: (data) => <span>{humanAmount(data.amount)} NLSP</span>,
     },
 
   ];
@@ -90,7 +89,7 @@ function AllOffersPage({ id }) {
         setCurrentPagingToken(prevPageToken);
         setPagingTokens((prev) => prev.slice(0, -1));
         setOffersData(
-          res.data._embedded.records.filter((i) => new BN(i.price).isEqualTo(ONE_LUSI_AMOUNT)),
+          res.data._embedded.records,
         );
       }).catch(() => {
         setPagingTokens([]);
@@ -121,7 +120,7 @@ function AllOffersPage({ id }) {
 
         setCurrentPagingToken(nextPageToken);
         setOffersData(
-          res.data._embedded.records.filter((i) => new BN(i.price).isEqualTo(ONE_LUSI_AMOUNT)),
+          res.data._embedded.records,
         );
       }).catch(() => {
         setPagingTokens([]);
@@ -141,7 +140,7 @@ function AllOffersPage({ id }) {
           .paging_token);
       }
 
-      return (res.data._embedded.records.filter((i) => new BN(i.price).isEqualTo(ONE_LUSI_AMOUNT)));
+      return res.data._embedded.records;
     }).then(async (res) => {
       setOffersData(res);
     }).catch(() => {

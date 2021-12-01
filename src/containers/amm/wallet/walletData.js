@@ -19,6 +19,7 @@ import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import questionLogo from 'assets/images/question.svg';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -153,7 +154,7 @@ function WalletData() {
       key: '2',
       sortFunc: (a, b, order) => (order === 'asc' ? a.balance - b.balance : b.balance - a.balance),
       render: (data) => (
-        <span>{numeral(data.balance).format('0,0.[0000000]')}</span>
+        <span>{humanAmount(data.balance)}</span>
       ),
     },
     {

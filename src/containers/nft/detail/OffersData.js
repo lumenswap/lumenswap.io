@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { fetchOfferAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import NLSP from 'tokens/NLSP';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 
@@ -36,7 +37,7 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{data.amount} NLSP</span>,
+    render: (data) => <span>{humanAmount(data.amount)} NLSP</span>,
   },
 ];
 

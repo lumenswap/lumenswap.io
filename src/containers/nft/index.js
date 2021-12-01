@@ -5,8 +5,8 @@ import Loading from 'components/Loading';
 import NFTHeader from 'components/NFTHeader';
 import SelectOption from 'components/SelectOption';
 import fetchAllLusi from 'api/AllLusiAPI';
+import BN from 'helpers/BN';
 import AllLusiData from './allLusiData';
-
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -49,16 +49,16 @@ const NftPage = () => {
   }
 
   if (select.value === '1') {
-    filteredLusi = filteredLusi.sort((a, b) => a.price - b.price);
+    filteredLusi = filteredLusi.sort((a, b) => new BN(a.price).comparedTo(b.price));
   }
   if (select.value === '2') {
-    filteredLusi = filteredLusi.sort((a, b) => b.price - a.price);
+    filteredLusi = filteredLusi.sort((a, b) => new BN(b.price).comparedTo(a.price));
   }
   if (select.value === '3') {
-    filteredLusi = filteredLusi.sort((a, b) => a.number - b.number);
+    filteredLusi = filteredLusi.sort((a, b) => new BN(a.number).comparedTo(b.number));
   }
   if (select.value === '4') {
-    filteredLusi = filteredLusi.sort((a, b) => b.number - a.number);
+    filteredLusi = filteredLusi.sort((a, b) => new BN(b.number).comparedTo(a.number));
   }
 
   return (

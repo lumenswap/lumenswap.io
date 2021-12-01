@@ -27,6 +27,7 @@ import Submitting from 'components/Submitting';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { fetchOffersOfAccount } from 'api/stellar';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import SetOrUpdateNFTPrice from './SetOrUpdateNFTPrice';
@@ -123,7 +124,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
           return (
             <span className={styles.infos}>
               <div className={styles.logo}><BigLogo color="#DF4886" />
-              </div>{new BN(info.price).div(10 ** 7).toFixed(7)} NLSP
+              </div>{humanAmount(new BN(info.price).div(10 ** 7).toFixed(7))} NLSP
             </span>
           );
         }

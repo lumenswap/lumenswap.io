@@ -11,6 +11,7 @@ import InfinitePagination from 'components/InfinitePagination';
 import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import NLSP from 'tokens/NLSP';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -58,7 +59,9 @@ function AllTradesPage({ id }) {
       key: 1,
       render: (data) => (
         <span className={styles.address}>
-          <a href={generateAddressURL(data.counter_account)} target="_blank" rel="noreferrer">{minimizeAddress(data.base_account)}</a>
+          <a href={generateAddressURL(data.base_is_seller ? data.counter_account : data.base_account)} target="_blank" rel="noreferrer">
+            {minimizeAddress(data.base_is_seller ? data.counter_account : data.base_account)}
+          </a>
         </span>
       ),
     },
@@ -68,7 +71,9 @@ function AllTradesPage({ id }) {
       key: 2,
       render: (data) => (
         <span className={styles.address}>
-          <a href={generateAddressURL(data.base_account)} target="_blank" rel="noreferrer">{minimizeAddress(data.counter_account)}</a>
+          <a href={generateAddressURL(!data.base_is_seller ? data.counter_account : data.base_account)} target="_blank" rel="noreferrer">
+            {minimizeAddress(!data.base_is_seller ? data.counter_account : data.base_account)}
+          </a>
         </span>
       ),
     },
@@ -76,7 +81,7 @@ function AllTradesPage({ id }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{data.counter_amount} NLSP</span>,
+      render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
     },
   ];
 
