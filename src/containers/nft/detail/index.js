@@ -21,7 +21,6 @@ import {
   assetGenerator,
   ipfsHashGenerator,
 } from 'helpers/explorerURLGenerator';
-import numeral from 'numeral';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import Submitting from 'components/Submitting';
@@ -121,7 +120,12 @@ const NFTDetail = ({ id: lusiId, data }) => {
       tooltip: 'tooltip',
       render: (info) => {
         if (!new BN(info.price).isZero()) {
-          return <span className={styles.infos}><div className={styles.logo}><BigLogo /></div>{numeral(info.price).format('0,0')} NLSP</span>;
+          return (
+            <span className={styles.infos}>
+              <div className={styles.logo}><BigLogo color="#DF4886" />
+              </div>{new BN(info.price).div(10 ** 7).toFixed(7)} NLSP
+            </span>
+          );
         }
 
         return <span className={styles.infos}>Not set yet</span>;

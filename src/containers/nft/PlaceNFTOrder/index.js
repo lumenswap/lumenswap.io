@@ -56,14 +56,14 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
       return 'Insufficient NSLP';
     }
 
+    const lessThanNLSP = '0.0000001';
+    if (new BN(price).lt(lessThanNLSP)) {
+      return 'Price must be greater than 0';
+    }
+
     const moreThanNLSP = 100;
     if (new BN(price).gt(moreThanNLSP)) {
       return `Price must be less than ${moreThanNLSP}`;
-    }
-
-    const lessThanNLSP = '0.0000001';
-    if (new BN(price).lt(lessThanNLSP)) {
-      return `Price must be greater than ${moreThanNLSP}`;
     }
 
     return true;
@@ -97,7 +97,7 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
           render={(props) => (
             <InputGroup
               variant="primary"
-              placeholder="100"
+              placeholder="10"
               rightLabel="NLSP"
               value={props.value}
               onChange={props.onChange}

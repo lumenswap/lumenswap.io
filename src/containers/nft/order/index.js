@@ -5,7 +5,6 @@ import NFTHeader from 'components/NFTHeader';
 import moment from 'moment';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
-import numeral from 'numeral';
 import { useState, useEffect } from 'react';
 import { fetchOffersOfAccount } from 'api/stellar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -82,7 +81,7 @@ function loadOfferData(userAddress, setOrders) {
         let amount;
         if (isBuyAssetLSP) {
           lusiNumber = offer.selling.asset_code.replace('Lusi', '');
-          amount = new BN(offer.price).div(10 ** 7).toFixed(0);
+          amount = new BN(offer.price).div(10 ** 7).toFixed(7);
         } else {
           lusiNumber = offer.buying.asset_code.replace('Lusi', '');
           amount = offer.amount;
@@ -164,7 +163,7 @@ const NFTOrder = () => {
       key: 3,
       render: (data) => (
         <div>
-          {numeral(data.amount).format('0,0')} NLSP
+          {data.amount} NLSP
         </div>
       ),
     },

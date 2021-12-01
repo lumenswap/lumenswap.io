@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
-import humanAmount from 'helpers/humanAmount';
 import NLSP from 'tokens/NLSP';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
@@ -40,7 +39,7 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
+    render: (data) => <span>{data.counter_amount} NLSP</span>,
   },
 ];
 
@@ -62,6 +61,7 @@ function TradesData({ lusiData }) {
         setTradesData([]);
       });
   }, []);
+
   return (
     <div>
       <CTable

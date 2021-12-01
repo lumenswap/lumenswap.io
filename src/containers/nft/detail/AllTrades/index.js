@@ -10,7 +10,6 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import InfinitePagination from 'components/InfinitePagination';
 import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
-import humanAmount from 'helpers/humanAmount';
 import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
@@ -77,7 +76,7 @@ function AllTradesPage({ id }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
+      render: (data) => <span>{data.counter_amount} NLSP</span>,
     },
   ];
 

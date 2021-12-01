@@ -40,7 +40,7 @@ const NFTCollections = () => {
   useEffect(() => {
     const lusis = userBalances
       .filter((i) => i.asset.issuer === process.env.REACT_APP_LUSI_ISSUER
-      && new BN(i.balance).isGreaterThan(0))
+      && new BN(i.rawBalance).isGreaterThan(0))
       .map((i) => i.asset.code);
     fetchAllLusi().then((data) => {
       setMyLusi(data.filter((i) => lusis.includes(i.assetCode)));

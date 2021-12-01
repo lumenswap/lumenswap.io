@@ -5,7 +5,6 @@ import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { useState, useEffect } from 'react';
-import numeral from 'numeral';
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
@@ -76,7 +75,7 @@ function AllOffersPage({ id }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{numeral(data.amount).format('0,0')} NLSP</span>,
+      render: (data) => <span>{data.amount} NLSP</span>,
     },
 
   ];

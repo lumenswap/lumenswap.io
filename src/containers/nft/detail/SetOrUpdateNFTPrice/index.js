@@ -63,14 +63,14 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
       return 'Price is not valid';
     }
 
+    const lessThanNLSP = '0.0000001';
+    if (new BN(price).lt(lessThanNLSP)) {
+      return 'Price must be greater than 0';
+    }
+
     const moreThanNLSP = 100;
     if (new BN(price).gt(moreThanNLSP)) {
       return `Price must be less than ${moreThanNLSP}`;
-    }
-
-    const lessThanNLSP = '0.0000001';
-    if (new BN(price).lt(lessThanNLSP)) {
-      return `Price must be greater than ${moreThanNLSP}`;
     }
 
     return true;
