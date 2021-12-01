@@ -52,7 +52,7 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
       return 'Price is not valid';
     }
 
-    if (new BN(price).gt(parseInt(userNLSPBalance.balance, 10))) {
+    if (new BN(price).gt(userNLSPBalance.balance)) {
       return 'Insufficient NSLP';
     }
 
