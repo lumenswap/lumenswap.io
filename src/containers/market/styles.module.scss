@@ -274,6 +274,12 @@
   min-width: auto;
 }
 
+.link {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 @media (max-width: $md) {
   .main {
     margin-right: 15px;

@@ -1,32 +1,39 @@
 import smallArrowUp from 'assets/images/small-arrow-up.svg';
+import classNames from 'classnames';
 import CurrencyPair from 'components/CurrencyPair';
+import urlMaker from 'helpers/urlMaker';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './styles.module.scss';
 
 function TopPair({
   number, info, images, percentage,
 }) {
+  const tokens = info.split('/');
+
   return (
     <div className="col-lg-4 col-md-8 col-12 p-lg-0">
-      <div className={styles['top-pair-item']}>
-        <div className={styles['top-pair-item-info']}>
-          <span>{number}</span>
-          <span className={styles['top-pair-item-info-images']}>
-            <CurrencyPair size={20} source={images} />
-          </span>
-          <span>{info}</span>
-        </div>
-        <div className={styles['top-pair-item-amount']}>
-          <div className={styles['top-pair-item-icon-container']}>
+      <Link href={urlMaker.spot.tokens(tokens[0], tokens[1])}>
+        <a className={classNames(styles['top-pair-item'], styles.link)}>
+          <div className={styles['top-pair-item-info']}>
+            <span>{number}</span>
+            <span className={styles['top-pair-item-info-images']}>
+              <CurrencyPair size={20} source={images} />
+            </span>
+            <span>{info}</span>
+          </div>
+          <div className={styles['top-pair-item-amount']}>
+            <div className={styles['top-pair-item-icon-container']}>
+              <div>
+                <Image src={smallArrowUp} width={8} height={5} />
+              </div>
+            </div>
             <div>
-              <Image src={smallArrowUp} width={8} height={5} />
+              <span className={styles['top-pair-item-amount-text']}>{percentage}%</span>
             </div>
           </div>
-          <div>
-            <span className={styles['top-pair-item-amount-text']}>{percentage}%</span>
-          </div>
-        </div>
-      </div>
+        </a>
+      </Link>
     </div>
   );
 }

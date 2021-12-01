@@ -60,7 +60,7 @@ const MarketPage = ({ assets }) => {
                   <TopPair
                     info={`${asset.baseAssetCode}/${asset.counterAssetCode}`}
                     number={i + 1}
-                    images={[asset.counterLogo, asset.baseLogo]}
+                    images={[asset.baseLogo, asset.counterLogo]}
                     percentage={asset.change24h}
                   />
                 ))}
