@@ -2,10 +2,6 @@ import CTable from 'components/CTable';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
-import { useState, useEffect } from 'react';
-import { fetchOfferAPI } from 'api/stellar';
-import getAssetDetails from 'helpers/getAssetDetails';
-import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
@@ -41,32 +37,15 @@ const tableHeaders = [
   },
 ];
 
-function OffersData({ lusiData }) {
-  const [offersData, setOffersData] = useState(null);
-
-  useEffect(() => {
-    fetchOfferAPI(
-      getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-      getAssetDetails(NLSP),
-      {
-        limit: 10,
-        order: 'desc',
-      },
-    ).then((res) => res
-      .data
-      ._embedded
-      .records)
-      .then((res) => setOffersData(res));
-  }, []);
-
+function OffersData({ offers }) {
   return (
     <div>
       <CTable
         columns={tableHeaders}
         noDataMessage={NoDataMessage}
-        dataSource={offersData}
+        dataSource={offers}
         className={styles.table}
-        loading={!offersData}
+        loading={!offers}
         customLoading={LoadingWithContainer}
       />
     </div>

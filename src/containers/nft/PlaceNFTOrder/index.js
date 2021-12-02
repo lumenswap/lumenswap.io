@@ -13,7 +13,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
-const PlaceNFTOrder = ({ lusiAssetCode }) => {
+const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
   const dispatch = useDispatch();
   const userNLSPBalance = useSelector((state) => state.userBalance)
     .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(NLSP)));
@@ -40,7 +40,8 @@ const PlaceNFTOrder = ({ lusiAssetCode }) => {
 
     showGenerateTrx(func, dispatch)
       .then((trx) => showSignResponse(trx, dispatch))
-      .catch(console.log);
+      .catch(console.log)
+      .then(afterPlace);
   };
 
   useEffect(() => {

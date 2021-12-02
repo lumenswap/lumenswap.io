@@ -26,8 +26,9 @@ import urlMaker from 'helpers/urlMaker';
 import Submitting from 'components/Submitting';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
-import { fetchOffersOfAccount } from 'api/stellar';
+import { fetchOfferAPI, fetchOffersOfAccount } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
+import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import SetOrUpdateNFTPrice from './SetOrUpdateNFTPrice';
@@ -53,6 +54,23 @@ function PlaceOrSetPriceButtonContent({ buttonState }) {
   return null;
 }
 
+function loadLusiOffers(data, setLusiOffers) {
+  fetchOfferAPI(
+    getAssetDetails({ code: data.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
+    getAssetDetails(NLSP),
+    {
+      limit: 10,
+      order: 'desc',
+    },
+  ).then((res) => res
+    .data
+    ._embedded
+    .records)
+    .then((res) => {
+      setLusiOffers(res);
+    });
+}
+
 const NFTDetail = ({ id: lusiId, data }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
@@ -62,6 +80,11 @@ const NFTDetail = ({ id: lusiId, data }) => {
   const userAddress = useSelector((state) => state.user.detail.address);
   const [buttonState, setButtonState] = useState(null);
   const [offerIdToUpdate, setOfferIdToUpdate] = useState(null);
+  const [lusiOffers, setLusiOffers] = useState(null);
+
+  useEffect(() => {
+    loadLusiOffers(data, setLusiOffers);
+  }, []);
 
   useEffect(() => {
     async function loadOfferData() {
@@ -207,7 +230,10 @@ const NFTDetail = ({ id: lusiId, data }) => {
         dispatch(
           openModalAction({
             modalProps: { title: 'Place an offer' },
-            content: <PlaceNFTOrder lusiAssetCode={data.assetCode} />,
+            content: <PlaceNFTOrder
+              lusiAssetCode={data.assetCode}
+              afterPlace={() => loadLusiOffers(data, setLusiOffers)}
+            />,
           }),
         );
       } else if (buttonState === 'set') {
@@ -240,6 +266,10 @@ const NFTDetail = ({ id: lusiId, data }) => {
 
   const handleChangeTab = (tabId) => {
     setTab(tabId);
+    if (tabId === 'offer') {
+      setLusiOffers(null);
+      loadLusiOffers(data, setLusiOffers);
+    }
   };
 
   function generateLink() {
@@ -308,6 +338,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
                     onChange={handleChangeTab}
                     customTabProps={{
                       lusiData: data,
+                      offers: lusiOffers,
                     }}
                   />
                 </div>
