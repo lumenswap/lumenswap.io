@@ -154,7 +154,7 @@ function AllOffersPage({ id }) {
   return (
     <div className="container-fluid">
       <Head>
-        <title>NFT | Lumenswap</title>
+        <title>NFT | Lusi#{id} | All offers</title>
       </Head>
       <NFTHeader />
       <div className={classNames('layout main', styles.main)}>

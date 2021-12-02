@@ -6,6 +6,7 @@ import NFTHeader from 'components/NFTHeader';
 import BN from 'helpers/BN';
 import Button from 'components/Button';
 import BigLogo from 'assets/images/BigLogo';
+import refreshIcon from 'assets/images/refresh-icon-nft.svg';
 import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +30,7 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import { fetchOfferAPI, fetchOffersOfAccount } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
 import NLSP from 'tokens/NLSP';
+import numeral from 'numeral';
 import styles from './styles.module.scss';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import SetOrUpdateNFTPrice from './SetOrUpdateNFTPrice';
@@ -81,6 +83,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
   const [buttonState, setButtonState] = useState(null);
   const [offerIdToUpdate, setOfferIdToUpdate] = useState(null);
   const [lusiOffers, setLusiOffers] = useState(null);
+  const [showNLSP, setShowNLSP] = useState(true);
 
   useEffect(() => {
     loadLusiOffers(data, setLusiOffers);
@@ -137,6 +140,26 @@ const NFTDetail = ({ id: lusiId, data }) => {
       setOnwerInfoData(ownerInfo);
     });
   }, []);
+  const handleSwitchBetweenPrices = () => {
+    setShowNLSP((prev) => !prev);
+  };
+
+  const PriceInfo = ({ info }) => {
+    if (showNLSP) {
+      return (
+        <>
+          <div className={styles.logo}><BigLogo color="#DF4886" />
+          </div>{humanAmount(new BN(info.price).div(10 ** 7).toFixed(7))} NLSP
+        </>
+      );
+    }
+    return (
+      <>
+        <div className={styles.logo}><BigLogo color="#0e41f5" />
+        </div>{numeral(humanAmount(new BN(info.price))).format('0,0')} LSP
+      </>
+    );
+  };
 
   const nftInfo = [
     {
@@ -146,8 +169,15 @@ const NFTDetail = ({ id: lusiId, data }) => {
         if (!new BN(info.price).isZero()) {
           return (
             <span className={styles.infos}>
-              <div className={styles.logo}><BigLogo color="#DF4886" />
-              </div>{humanAmount(new BN(info.price).div(10 ** 7).toFixed(7))} NLSP
+              <PriceInfo info={info} />
+              <div className={styles['refresh-icon']}>
+                <Image
+                  src={refreshIcon}
+                  height={18}
+                  width={18}
+                  onClick={handleSwitchBetweenPrices}
+                />
+              </div>
             </span>
           );
         }
@@ -283,7 +313,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
   return (
     <div className="container-fluid">
       <Head>
-        <title>NFT | Lumenswap</title>
+        <title>NFT | Lusi#{lusiId}</title>
       </Head>
       <NFTHeader />
       <div className={classNames('layout main', styles.main)}>

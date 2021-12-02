@@ -9,6 +9,9 @@ import { ONE_LUSI_AMOUNT } from 'appConsts';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import numeral from 'numeral';
+import Image from 'next/image';
+import almostIcon from 'assets/images/almost.svg';
 import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
@@ -17,7 +20,7 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
   const userAddress = useSelector((state) => state.user.detail.address);
 
   const {
-    control, handleSubmit, errors, formState, trigger,
+    control, handleSubmit, errors, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
 
   const onSubmit = (data) => {
@@ -111,6 +114,11 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
             />
           )}
         />
+        <div className={styles.info}>
+          <div>
+            <Image src={almostIcon} width={12} height={8} /> <span>{numeral(new BN(getValues('price')).times(10 ** 7).toFixed(0)).format('0,0')} LSP</span>
+          </div>
+        </div>
         <Button
           htmlType="submit"
           variant="primary"

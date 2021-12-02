@@ -6,11 +6,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'components/InputGroup';
 import Button from 'components/Button';
 import BN from 'helpers/BN';
+import Image from 'next/image';
+import almostIcon from 'assets/images/almost.svg';
 import { ONE_LUSI_AMOUNT } from 'appConsts';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import NLSP from 'tokens/NLSP';
+import numeral from 'numeral';
 import styles from './styles.module.scss';
 
 const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
@@ -20,7 +23,7 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
   const userAddress = useSelector((state) => state.user.detail.address);
 
   const {
-    control, handleSubmit, errors, formState, trigger,
+    control, handleSubmit, errors, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
 
   const onSubmit = (data) => {
@@ -53,7 +56,7 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
       return 'Price is not valid';
     }
 
-    if (new BN(price).gt(userNLSPBalance.balance)) {
+    if (new BN(price).gt(userNLSPBalance?.balance)) {
       return 'Insufficient NSLP';
     }
 
@@ -105,6 +108,11 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
             />
           )}
         />
+        <div className={styles.info}>
+          <div>
+            <Image src={almostIcon} width={12} height={8} /> <span>{numeral(new BN(getValues('price')).times(10 ** 7).toFixed(0)).format('0,0')} LSP</span>
+          </div>
+        </div>
         <Button
           htmlType="submit"
           variant="primary"

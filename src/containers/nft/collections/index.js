@@ -17,7 +17,7 @@ import styles from './styles.module.scss';
 const Container = ({ children }) => (
   <div className="container-fluid">
     <Head>
-      <title>NFT Collections | Lumenswap</title>
+      <title>NFT | My Lusi</title>
     </Head>
     <NFTHeader />
     {children}

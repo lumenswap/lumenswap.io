@@ -185,7 +185,7 @@ const NFTOrder = () => {
   return (
     <div className="container-fluid">
       <Head>
-        <title>NFT Offers | Lumenswap</title>
+        <title>NFT | My offers</title>
       </Head>
       <NFTHeader />
       <div className={classNames('layout main', styles.main)}>

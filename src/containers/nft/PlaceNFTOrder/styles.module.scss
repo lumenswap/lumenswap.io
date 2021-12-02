@@ -14,3 +14,19 @@
   width: 100%;
   margin-top: 32px;
 }
+
+.info {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 3px;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $CodGray;
+}
