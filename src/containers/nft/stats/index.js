@@ -8,6 +8,7 @@ import fetchNFTStats from 'api/nftStatsAPI';
 import { useState, useEffect } from 'react';
 import Loading from 'components/Loading';
 import moment from 'moment';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -68,7 +69,7 @@ const NFTStats = () => {
             <div className={classNames(styles.card, styles['card-chart'])}>
               <div className={styles['chart-header-info']}>
                 <div className={styles['volume-info']}>
-                  <span className={styles['volume-info-number']}>${statsVolumeInfo.currentVolume}</span>
+                  <span className={styles['volume-info-number']}>{humanAmount(statsVolumeInfo.currentVolume)} LSP</span>
                   <span className={styles['volume-info-text']}>Volume 24h</span>
                 </div>
                 <span className={styles['date-chart']}>
