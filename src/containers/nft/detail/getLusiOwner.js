@@ -13,8 +13,8 @@ export default function getLusiOwner(lusiId) {
           ) {
             return {
               address: account.account_id,
-              telegram: account.telegram,
-              twitter: account.twitter,
+              telegram: account.LusiTelegram,
+              twitter: account.LusiTwitter,
             };
           }
         }
@@ -35,8 +35,8 @@ export default function getLusiOwner(lusiId) {
             ) {
               return {
                 address: account.account_id,
-                telegram: account.telegram,
-                twitter: account.twitter,
+                telegram: account.LusiTelegram,
+                twitter: account.LusiTwitter,
               };
             }
           }
@@ -45,9 +45,9 @@ export default function getLusiOwner(lusiId) {
     }
 
     return {
-      address: '',
-      telegram: '',
-      twitter: '',
+      address: null,
+      telegram: null,
+      twitter: null,
     };
   });
 }

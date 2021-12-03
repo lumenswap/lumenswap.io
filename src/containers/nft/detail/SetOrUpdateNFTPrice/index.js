@@ -13,7 +13,9 @@ import numeral from 'numeral';
 import NLSP from 'tokens/NLSP';
 import styles from './styles.module.scss';
 
-const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
+const SetOrUpdateNFTPrice = ({
+  lusiAssetCode, mode, offerId, afterSetPrice,
+}) => {
   const dispatch = useDispatch();
   const userAddress = useSelector((state) => state.user.detail.address);
 
@@ -52,7 +54,8 @@ const SetOrUpdateNFTPrice = ({ lusiAssetCode, mode, offerId }) => {
 
     showGenerateTrx(func, dispatch)
       .then((trx) => showSignResponse(trx, dispatch))
-      .catch(console.log);
+      .catch(console.log)
+      .then(afterSetPrice);
   };
 
   useEffect(() => {
