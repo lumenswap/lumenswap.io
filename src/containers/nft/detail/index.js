@@ -315,6 +315,8 @@ const NFTDetail = ({ id: lusiId, data }) => {
               lusiAssetCode={data.assetCode}
               mode={buttonState}
               offerId={offerIdToUpdate}
+              afterSetPrice={() => loadAllRelatedDataToLusi(data,
+                setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice)}
             />,
           }),
         );
