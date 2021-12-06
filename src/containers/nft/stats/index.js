@@ -9,12 +9,13 @@ import { useState, useEffect } from 'react';
 import Loading from 'components/Loading';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
   <div className="container-fluid">
     <Head>
-      <title>NFT | Stats</title>
+      <title>Stats | Lumenswap</title>
     </Head>
     <NFTHeader />
     {children}
@@ -31,11 +32,11 @@ const NFTStats = () => {
   const statsInfo = [
     {
       title: 'Volume 24h',
-      content: <Info text="LSP" number={numeral(statsData?.info.volume24h).format('0,0')} className={styles['statistics-info']} />,
+      content: <Info text="NLSP" number={humanAmount(new BN(statsData?.info.volume24h).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
     },
     {
       title: 'Volume 7d',
-      content: <Info text="LSP" number={numeral(statsData?.info.volume7d).format('0,0')} className={styles['statistics-info']} />,
+      content: <Info text="NLSP" number={humanAmount(new BN(statsData?.info.volume7d).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
     },
     {
       title: 'Total number of trades',

@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 const Container = ({ children }) => (
   <div className="container-fluid">
     <Head>
-      <title>NFT | All Lusi’s</title>
+      <title>All Lusi’s | Lumenswap</title>
     </Head>
     <NFTHeader />
     {children}

@@ -152,7 +152,7 @@ function AllTradesPage({ id }) {
   return (
     <div className="container-fluid">
       <Head>
-        <title>NFT | Lusi#{id} | All trades</title>
+        <title>Lusi#{id} | All trades | Lumenswap</title>
       </Head>
       <NFTHeader />
       <div className={classNames('layout main', styles.main)}>
@@ -169,6 +169,7 @@ function AllTradesPage({ id }) {
                 dataSource={tradesData}
                 className={styles.table}
                 loading={!tradesData}
+                rowFix={{ rowHeight: 53, rowNumbers: 20, headerRowHeight: 46 }}
               />
             </div>
             <InfinitePagination

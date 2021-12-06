@@ -343,7 +343,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
   return (
     <div className="container-fluid">
       <Head>
-        <title>NFT | Lusi#{lusiId}</title>
+        <title>Lusi#{lusiId} | Lumenswap</title>
       </Head>
       <NFTHeader />
       <div className={classNames('layout main', styles.main)}>

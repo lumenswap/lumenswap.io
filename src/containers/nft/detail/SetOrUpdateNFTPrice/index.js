@@ -116,7 +116,7 @@ const SetOrUpdateNFTPrice = ({
           )}
         />
         <div className={styles.info}>
-          <span>{numeral(getValues('price')).format('0,0')} NLSP = {numeral(new BN(getValues('price')).times(10 ** 7).toFixed(0)).format('0,0')} LSP</span>
+          <span>{getValues('price')} NLSP = {numeral(new BN(getValues('price')).times(10 ** 7).toFixed(0)).format('0,0')} LSP</span>
         </div>
         <Button
           htmlType="submit"
