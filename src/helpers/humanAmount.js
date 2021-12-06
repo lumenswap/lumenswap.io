@@ -4,6 +4,9 @@ import sevenDigit from './sevenDigit';
 
 export default function humanAmount(amount, big = false) {
   if (new BN(amount).isLessThan('0.000001')) {
+    if (new BN(amount).isEqualTo(0)) {
+      return 0;
+    }
     return amount;
   }
 

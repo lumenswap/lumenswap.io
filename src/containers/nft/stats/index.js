@@ -70,7 +70,7 @@ const NFTStats = () => {
             <div className={classNames(styles.card, styles['card-chart'])}>
               <div className={styles['chart-header-info']}>
                 <div className={styles['volume-info']}>
-                  <span className={styles['volume-info-number']}>{humanAmount(statsVolumeInfo.currentVolume)} LSP</span>
+                  <span className={styles['volume-info-number']}>{humanAmount(new BN(statsVolumeInfo.currentVolume).div(10 ** 7).toFixed(7))} NLSP</span>
                   <span className={styles['volume-info-text']}>Volume 24h</span>
                 </div>
                 <span className={styles['date-chart']}>
