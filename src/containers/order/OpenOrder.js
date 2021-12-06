@@ -60,7 +60,7 @@ function OpenOrder({ openOrderList, setOpenOrderList }) {
         const buyAmount = new BN(item.price).times(item.amount);
 
         return {
-          time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
+          time: time.getTime(),
           sellAmount: sevenDigit(item.amount),
           buyAmount: sevenDigit(buyAmount.toString()),
           otherPrice: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
