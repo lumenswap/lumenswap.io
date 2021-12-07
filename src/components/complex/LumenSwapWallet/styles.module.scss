@@ -152,8 +152,6 @@
 .actions {
   display: flex;
   flex-direction: row;
-  width: 219px;
-  justify-content: space-between;
   font-family: SofiaPro;
   font-size: 16px;
   font-weight: 500;
@@ -166,7 +164,11 @@
     cursor: pointer;
     min-width: 37px;
   }
+  a {
+    margin-right: 47px;
+  }
 }
+
 
 .asset {
   display: flex;

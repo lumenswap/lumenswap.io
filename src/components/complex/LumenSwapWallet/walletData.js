@@ -18,8 +18,8 @@ import Link from 'next/link';
 import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
-import questionLogo from 'assets/images/question.svg';
 import humanAmount from 'helpers/humanAmount';
+import questionLogo from 'assets/images/question.svg';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -28,7 +28,7 @@ const NoDataMessage = () => (
   </div>
 );
 
-function WalletData() {
+function WalletData({ type }) {
   const userBalances = useSelector((state) => state.userBalance);
   const hashedUserBalance = userBalances.reduce((acc, value) => {
     acc[value.asset.code] = value;
@@ -161,32 +161,43 @@ function WalletData() {
       title: 'Action',
       dataIndex: 'action',
       key: '3',
-      render: (data) => (
-        <div className={styles.actions}>
-          <Link href={urlMaker.amm.swap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
-            <a className={styles.link}>Swap</a>
-          </Link>
-          {new BN(data.balance).isEqualTo('0') ? (
-            <div className={styles['disabled-send']}>Send</div>
-          ) : (
-            <span
-              className={styles.send}
-              onClick={() => {
-                dispatch(
-                  openModalAction({
-                    modalProps: {
-                      title: 'Send Asset',
-                    },
-                    content: <SendAsset selectedAsset={data.asset} />,
-                  }),
-                );
-              }}
-            >
-              Send
-            </span>
-          )}
-        </div>
-      ),
+      render: (data) => {
+        let swapBaseURL = urlMaker.obm.swap;
+        if (type === 'amm') {
+          swapBaseURL = urlMaker.amm.swap;
+        }
+        return (
+          <div className={styles.actions}>
+            <Link href={swapBaseURL.custom('XLM', null, data.asset.code, data.asset.issuer)}>
+              <a className={styles.link}>Swap</a>
+            </Link>
+            {type === 'obm' && (
+            <Link href={urlMaker.obm.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null)}>
+              <a className={styles.link}>Trade</a>
+            </Link>
+            )}
+            {new BN(data.balance).isEqualTo('0') ? (
+              <div className={styles['disabled-send']}>Send</div>
+            ) : (
+              <span
+                className={styles.send}
+                onClick={() => {
+                  dispatch(
+                    openModalAction({
+                      modalProps: {
+                        title: 'Send Asset',
+                      },
+                      content: <SendAsset selectedAsset={data.asset} />,
+                    }),
+                  );
+                }}
+              >
+                Send
+              </span>
+            )}
+          </div>
+        );
+      },
     },
   ];
 
