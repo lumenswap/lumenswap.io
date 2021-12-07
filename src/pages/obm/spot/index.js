@@ -1,5 +1,5 @@
-import SpotPage from 'containers/spot';
-import { spotPageGetServerSideProps } from 'containers/spot/props';
+import SpotPage from 'containers/obm/spot';
+import { spotPageGetServerSideProps } from 'containers/obm/spot/props';
 
 export default SpotPage;
 

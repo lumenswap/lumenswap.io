@@ -19,8 +19,8 @@ import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import humanAmount from 'helpers/humanAmount';
+import questionLogo from 'assets/images/question.svg';
 import styles from './styles.module.scss';
-import questionLogo from '../../assets/images/question.svg';
 
 const NoDataMessage = () => (
   <div className={styles.noDataMessageContainer}>
@@ -163,10 +163,10 @@ function WalletData() {
       key: '3',
       render: (data) => (
         <div className={styles.actions}>
-          <Link href={urlMaker.swap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
+          <Link href={urlMaker.obm.swap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
             <a className={styles.link}>Swap</a>
           </Link>
-          <Link href={urlMaker.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null)}>
+          <Link href={urlMaker.obm.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null)}>
             <a className={styles.link}>Trade</a>
           </Link>
           {new BN(data.balance).isEqualTo('0') ? (

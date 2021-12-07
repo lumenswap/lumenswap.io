@@ -6,7 +6,7 @@ import { useState } from 'react';
 import generateBulkCancelOrderTRX from 'stellar-trx/generateBulkCancelOrderTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
-import orderConnectIcon from '../../assets/images/orderNotConnected.png';
+import orderConnectIcon from 'assets/images/orderNotConnected.png';
 import OrderData from './OrderData';
 import styles from './styles.module.scss';
 

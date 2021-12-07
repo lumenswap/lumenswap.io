@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import urlMaker from 'helpers/urlMaker';
-import CardThumbnail from './CardThumbnail';
+import CardThumbnail from './myLusi/CardThumbnail';
 import styles from './styles.module.scss';
 
 function AllLusiData({ allLusi }) {

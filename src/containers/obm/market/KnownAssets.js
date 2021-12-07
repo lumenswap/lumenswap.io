@@ -148,7 +148,7 @@ function KnownAssets({ assets, searchQuery }) {
     );
   }
 
-  const rowLink = (data) => urlMaker.spot.custom(
+  const rowLink = (data) => urlMaker.obm.spot.custom(
     data.pair.base.code,
     null,
     data.pair.counter.code,

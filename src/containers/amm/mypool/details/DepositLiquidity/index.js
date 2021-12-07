@@ -17,7 +17,7 @@ import { fetchAccountDetails } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from './styles.module.scss';
 // import Tolerance from '../Tolerance';
-import ConfirmLiquidity from '../ConfirmLiquidity';
+import ConfirmLiquidity from '../../ConfirmLiquidity';
 
 function Inpool({ token, isLoading }) {
   return (

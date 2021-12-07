@@ -163,7 +163,7 @@ function WalletData() {
       key: '3',
       render: (data) => (
         <div className={styles.actions}>
-          <Link href={urlMaker.ammswap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
+          <Link href={urlMaker.amm.swap.custom('XLM', null, data.asset.code, data.asset.issuer)}>
             <a className={styles.link}>Swap</a>
           </Link>
           {new BN(data.balance).isEqualTo('0') ? (

@@ -1,5 +1,5 @@
-import MarketPage from 'containers/market';
-import { marketPageGetServerSideProps } from 'containers/market/props';
+import MarketPage from 'containers/obm/market';
+import { marketPageGetServerSideProps } from 'containers/obm/market/props';
 
 export default MarketPage;
 

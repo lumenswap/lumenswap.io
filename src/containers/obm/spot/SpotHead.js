@@ -32,7 +32,7 @@ const SpotHead = ({ price, custom }) => {
         rel="canonical"
         herf={`${process.env.REACT_APP_HOST}${
           custom
-          && urlMaker.spot.custom(
+          && urlMaker.obm.spot.custom(
             custom.base.code,
             custom.base.issuer,
             custom.counter.code,

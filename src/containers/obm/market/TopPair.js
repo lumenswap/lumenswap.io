@@ -13,7 +13,7 @@ function TopPair({
 
   return (
     <div className="col-lg-4 col-md-8 col-12 p-lg-0">
-      <Link href={urlMaker.spot.tokens(tokens[0], tokens[1])}>
+      <Link href={urlMaker.obm.spot.tokens(tokens[0], tokens[1])}>
         <a className={classNames(styles['top-pair-item'], styles.link)}>
           <div className={styles['top-pair-item-info']}>
             <span>{number}</span>

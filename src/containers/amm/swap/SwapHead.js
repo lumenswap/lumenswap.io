@@ -28,7 +28,7 @@ const SwapHead = ({ custom }) => {
       {custom ? (
         <link
           rel="canonical"
-          herf={`${process.env.REACT_APP_HOST}${urlMaker.swap.custom(
+          herf={`${process.env.REACT_APP_HOST}${urlMaker.obm.swap.custom(
             custom.from.code,
             custom.from.issuer === 'native' ? null : custom.from.issuer,
             custom.to.code,
@@ -38,7 +38,7 @@ const SwapHead = ({ custom }) => {
       ) : (
         <link
           rel="canonical"
-          herf={`${process.env.REACT_APP_HOST}${urlMaker.swap.root()}`}
+          herf={`${process.env.REACT_APP_HOST}${urlMaker.obm.swap.root()}`}
         />
       )}
     </Head>

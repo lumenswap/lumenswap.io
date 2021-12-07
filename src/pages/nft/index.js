@@ -1,3 +1,3 @@
-import NftPage from 'containers/nft';
+import NftPage from 'containers/nft/allLusi';
 
 export default NftPage;

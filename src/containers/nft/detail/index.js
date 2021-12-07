@@ -10,7 +10,7 @@ import refreshIcon from 'assets/images/refresh-icon-nft.svg';
 import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import PlaceNFTOrder from 'containers/nft/PlaceNFTOrder';
+import PlaceNFTOrder from 'containers/nft/detail/PlaceNFTOrder';
 import useIsLogged from 'hooks/useIsLogged';
 import minimizeAddress from 'helpers/minimizeAddress';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';

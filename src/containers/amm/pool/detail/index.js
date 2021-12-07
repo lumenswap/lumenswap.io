@@ -45,7 +45,7 @@ const Details = ({ poolDetail }) => {
   const breadCrumbData = [
     {
       name: 'Pools',
-      url: urlMaker.pool.root(),
+      url: urlMaker.amm.pool.root(),
     },
     {
       render: () => (

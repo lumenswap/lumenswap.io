@@ -2,7 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import numeral from 'numeral';
 import NFTHeader from 'components/NFTHeader';
-import NftStatsChart from 'containers/nft/NftStatsChart';
+import NftStatsChart from 'containers/nft/stats/NftStatsChart';
 import CStatistics, { Info } from 'components/CStatistics';
 import fetchNFTStats from 'api/nftStatsAPI';
 import { useState, useEffect } from 'react';

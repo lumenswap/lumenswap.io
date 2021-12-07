@@ -1,3 +1,3 @@
-import NFTOrder from 'containers/nft/order';
+import NFTOrder from 'containers/nft/myOffers';
 
 export default NFTOrder;

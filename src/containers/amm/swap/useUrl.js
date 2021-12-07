@@ -4,7 +4,7 @@ import questionLogo from 'assets/images/question.png';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import getAssetDetails from 'helpers/getAssetDetails';
-import { changeFromAsset, changeToAsset } from 'containers/swap/swapHelpers';
+import { changeFromAsset, changeToAsset } from 'containers/obm/swap/swapHelpers';
 import isSameAsset from 'helpers/isSameAsset';
 import { useDispatch, useSelector } from 'react-redux';
 

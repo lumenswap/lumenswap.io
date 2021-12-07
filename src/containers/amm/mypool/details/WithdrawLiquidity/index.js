@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
-import WithdrawLiquidityConfirm from 'containers/amm/WithdrawLiquidityConfirm';
+import WithdrawLiquidityConfirm from 'containers/amm/mypool/details/WithdrawLiquidityConfirm';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { getPoolDetailsById } from 'api/stellarPool';

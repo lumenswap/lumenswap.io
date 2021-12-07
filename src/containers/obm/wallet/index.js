@@ -3,7 +3,7 @@ import Head from 'next/head';
 import ObmHeader from 'components/ObmHeader';
 import LoginRequired from 'components/LoginRequired';
 import { useSelector } from 'react-redux';
-import walletNotConnectedIcon from '../../assets/images/walletNotConnected.png';
+import walletNotConnectedIcon from 'assets/images/walletNotConnected.png';
 import WalletData from './walletData';
 import styles from './styles.module.scss';
 

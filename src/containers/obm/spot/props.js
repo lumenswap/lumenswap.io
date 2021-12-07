@@ -1,11 +1,12 @@
 import StellarSDK from 'stellar-sdk';
 
-import isSameAsset from 'helpers/isSameAsset';
-import defaultTokens from 'tokens/defaultTokens';
-import getAssetDetails from 'helpers/getAssetDetails';
+import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
 import urlMaker from 'helpers/urlMaker';
+import defaultTokens from 'tokens/defaultTokens';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
+import getAssetDetails from 'helpers/getAssetDetails';
 import { checkAssetValidation } from 'api/tokens';
+import isSameAsset from 'helpers/isSameAsset';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 const customTokenValidation = (tokenString) => {
@@ -45,16 +46,18 @@ const customTokenValidation = (tokenString) => {
 
   return null;
 };
-export async function swapPageGetServerSideProps(context) {
+export async function spotPageGetServerSideProps(context) {
+  const createdDefaultPairs = createPairForDefaultTokens();
   const redirectObj = {
     redirect: {
-      destination: urlMaker.swap.root(),
+      destination: urlMaker.obm.spot.custom('XLM', null, 'USDC', null),
       permanent: true,
     },
   };
 
   if (context.query.tokens) {
     const tokens = context.query.tokens;
+
     if (!tokensValid(tokens)) {
       return redirectObj;
     }
@@ -62,14 +65,20 @@ export async function swapPageGetServerSideProps(context) {
     const fromToken = tokens.split('-')[0];
     const toToken = tokens.split('-')[1];
 
-    const tokenCodes = defaultTokens.map((token) => token.code.toLowerCase());
+    const tokenPairCodes = createdDefaultPairs.map((pair) => {
+      const pairCodes = {
+        base: pair.base.code,
+        counter: pair.counter.code,
+      };
 
-    if (
-      !tokenCodes.includes(fromToken.toLowerCase())
-      || !tokenCodes.includes(toToken.toLowerCase())
-    ) {
-      return redirectObj;
-    }
+      return pairCodes;
+    });
+
+    const found = tokenPairCodes.find(
+      (pair) => pair.base === fromToken && pair.counter === toToken,
+    );
+
+    if (!found) return redirectObj;
 
     const fromTokenDetails = defaultTokens.find(
       (token) => token.code.toLowerCase() === fromToken.toLowerCase(),
@@ -89,7 +98,7 @@ export async function swapPageGetServerSideProps(context) {
 
     return {
       redirect: {
-        destination: urlMaker.swap.custom(
+        destination: urlMaker.obm.spot.custom(
           fromTokenDetails.code,
           null,
           toTokenDetails.code,
@@ -100,15 +109,13 @@ export async function swapPageGetServerSideProps(context) {
     };
   }
 
-  return {
-    props: {},
-  };
+  return redirectObj;
 }
 
-export async function swapCustomTokenGetServerSideProps(context) {
+export async function customSpotPageGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: urlMaker.swap.root(),
+      destination: urlMaker.obm.spot.root(),
     },
   };
 
@@ -119,12 +126,12 @@ export async function swapCustomTokenGetServerSideProps(context) {
     };
   };
 
-  if (context.query.tokens && context.query.customTokens) {
+  if (context.query.tokens && context.query.customCounterToken) {
     const fromResult = customTokenValidation(context.query.tokens);
-    const toResult = customTokenValidation(context.query.customTokens);
+    const toResult = customTokenValidation(context.query.customCounterToken);
 
     const queryFromIssuer = context.query.tokens.split('-')[1];
-    const queryToIssuer = context.query.customTokens.split('-')[1];
+    const queryToIssuer = context.query.customCounterToken.split('-')[1];
 
     if (!fromResult || !toResult) {
       return notFoundError();
@@ -133,7 +140,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
     if (fromResult.redirect || toResult.redirect) {
       return {
         redirect: {
-          destination: urlMaker.swap.custom(
+          destination: urlMaker.obm.spot.custom(
             fromResult.code,
             fromResult.issuer,
             toResult.code,
@@ -157,7 +164,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
 
       return {
         redirect: {
-          destination: urlMaker.swap.custom(
+          destination: urlMaker.obm.spot.custom(
             fromResult.code,
             checkedFromIssuer,
             toResult.code,
@@ -213,8 +220,8 @@ export async function swapCustomTokenGetServerSideProps(context) {
       return {
         props: {
           custom: {
-            from: fromAsset,
-            to: toAsset,
+            base: fromAsset,
+            counter: toAsset,
           },
         },
       };
@@ -222,6 +229,5 @@ export async function swapCustomTokenGetServerSideProps(context) {
       return redirectObj;
     }
   }
-
   return redirectObj;
 }

@@ -1,6 +1,6 @@
 import LumenSwapHeader from 'components/LumenSwapHeader';
 import urlMaker from 'helpers/urlMaker';
-import ClaimLusiBtn from 'containers/nft/ClaimLusiBtn';
+import ClaimLusiBtn from 'components/NFTHeader/ClaimLusiBtn';
 import NLSP from 'tokens/NLSP';
 
 const NFTHeader = () => {

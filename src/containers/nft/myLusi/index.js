@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import NFTHeader from 'components/NFTHeader';
 import classNames from 'classnames';
-import CardThumbnail from 'containers/nft/CardThumbnail';
+import CardThumbnail from 'containers/nft/myLusi/CardThumbnail';
 import Loading from 'components/Loading';
 import urlMaker from 'helpers/urlMaker';
 import { useState, useEffect } from 'react';

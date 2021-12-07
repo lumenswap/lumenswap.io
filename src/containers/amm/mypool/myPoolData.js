@@ -19,7 +19,7 @@ function MyPoolData({ pools }) {
     const token2 = getAssetFromLPAsset(data.reserves[1].asset);
 
     return (
-    // <Link href={urlMaker.pool.poolId(data.id)}>
+    // <Link href={urlMaker.amm.pool.poolId(data.id)}>
     //   <a style={{ textDecoration: 'none', color: '#1d1d1d' }}>
       <div className={styles.tokens}>
         <CurrencyPair
@@ -67,7 +67,7 @@ function MyPoolData({ pools }) {
     },
   ];
 
-  const rowURLGenerator = (data) => urlMaker.myPool.myPoolId(data.id);
+  const rowURLGenerator = (data) => urlMaker.amm.myPool.myPoolId(data.id);
 
   return (
     <div className={styles['table-container']}>

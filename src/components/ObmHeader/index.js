@@ -30,16 +30,16 @@ const ObmHeader = () => {
 
   const menus = {
     right: [
-      { name: 'Wallet', link: urlMaker.wallet.root(), restricted: true },
-      { name: 'My Orders', link: urlMaker.order.root(), restricted: true },
+      { name: 'Wallet', link: urlMaker.obm.wallet.root(), restricted: true },
+      { name: 'My Orders', link: urlMaker.obm.order.root(), restricted: true },
     ],
     left: [
-      { name: 'Market', link: urlMaker.market.root() },
-      { name: 'Swap', link: urlMaker.swap.root() },
+      { name: 'Market', link: urlMaker.obm.market.root() },
+      { name: 'Swap', link: urlMaker.obm.swap.root() },
       {
         name: 'Spot',
-        link: urlMaker.spot.custom('XLM', null, 'USDC', null),
-        mainHref: urlMaker.spot.root(),
+        link: urlMaker.obm.spot.custom('XLM', null, 'USDC', null),
+        mainHref: urlMaker.obm.spot.root(),
       },
     ],
   };

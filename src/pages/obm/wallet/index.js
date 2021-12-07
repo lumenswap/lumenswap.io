@@ -1,3 +1,3 @@
-import WalletPage from 'containers/wallet';
+import WalletPage from 'containers/obm/wallet';
 
 export default WalletPage;

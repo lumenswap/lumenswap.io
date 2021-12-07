@@ -1,12 +1,11 @@
 import StellarSDK from 'stellar-sdk';
 
-import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
-import urlMaker from 'helpers/urlMaker';
-import defaultTokens from 'tokens/defaultTokens';
-import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
-import getAssetDetails from 'helpers/getAssetDetails';
-import { checkAssetValidation } from 'api/tokens';
 import isSameAsset from 'helpers/isSameAsset';
+import defaultTokens from 'tokens/defaultTokens';
+import getAssetDetails from 'helpers/getAssetDetails';
+import urlMaker from 'helpers/urlMaker';
+import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
+import { checkAssetValidation } from 'api/tokens';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 const customTokenValidation = (tokenString) => {
@@ -46,18 +45,16 @@ const customTokenValidation = (tokenString) => {
 
   return null;
 };
-export async function spotPageGetServerSideProps(context) {
-  const createdDefaultPairs = createPairForDefaultTokens();
+export async function swapPageGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: urlMaker.spot.custom('XLM', null, 'USDC', null),
+      destination: urlMaker.obm.swap.root(),
       permanent: true,
     },
   };
 
   if (context.query.tokens) {
     const tokens = context.query.tokens;
-
     if (!tokensValid(tokens)) {
       return redirectObj;
     }
@@ -65,20 +62,14 @@ export async function spotPageGetServerSideProps(context) {
     const fromToken = tokens.split('-')[0];
     const toToken = tokens.split('-')[1];
 
-    const tokenPairCodes = createdDefaultPairs.map((pair) => {
-      const pairCodes = {
-        base: pair.base.code,
-        counter: pair.counter.code,
-      };
+    const tokenCodes = defaultTokens.map((token) => token.code.toLowerCase());
 
-      return pairCodes;
-    });
-
-    const found = tokenPairCodes.find(
-      (pair) => pair.base === fromToken && pair.counter === toToken,
-    );
-
-    if (!found) return redirectObj;
+    if (
+      !tokenCodes.includes(fromToken.toLowerCase())
+      || !tokenCodes.includes(toToken.toLowerCase())
+    ) {
+      return redirectObj;
+    }
 
     const fromTokenDetails = defaultTokens.find(
       (token) => token.code.toLowerCase() === fromToken.toLowerCase(),
@@ -98,7 +89,7 @@ export async function spotPageGetServerSideProps(context) {
 
     return {
       redirect: {
-        destination: urlMaker.spot.custom(
+        destination: urlMaker.obm.swap.custom(
           fromTokenDetails.code,
           null,
           toTokenDetails.code,
@@ -109,13 +100,15 @@ export async function spotPageGetServerSideProps(context) {
     };
   }
 
-  return redirectObj;
+  return {
+    props: {},
+  };
 }
 
-export async function customSpotPageGetServerSideProps(context) {
+export async function swapCustomTokenGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: urlMaker.spot.root(),
+      destination: urlMaker.obm.swap.root(),
     },
   };
 
@@ -126,12 +119,12 @@ export async function customSpotPageGetServerSideProps(context) {
     };
   };
 
-  if (context.query.tokens && context.query.customCounterToken) {
+  if (context.query.tokens && context.query.customTokens) {
     const fromResult = customTokenValidation(context.query.tokens);
-    const toResult = customTokenValidation(context.query.customCounterToken);
+    const toResult = customTokenValidation(context.query.customTokens);
 
     const queryFromIssuer = context.query.tokens.split('-')[1];
-    const queryToIssuer = context.query.customCounterToken.split('-')[1];
+    const queryToIssuer = context.query.customTokens.split('-')[1];
 
     if (!fromResult || !toResult) {
       return notFoundError();
@@ -140,7 +133,7 @@ export async function customSpotPageGetServerSideProps(context) {
     if (fromResult.redirect || toResult.redirect) {
       return {
         redirect: {
-          destination: urlMaker.spot.custom(
+          destination: urlMaker.obm.swap.custom(
             fromResult.code,
             fromResult.issuer,
             toResult.code,
@@ -164,7 +157,7 @@ export async function customSpotPageGetServerSideProps(context) {
 
       return {
         redirect: {
-          destination: urlMaker.spot.custom(
+          destination: urlMaker.obm.swap.custom(
             fromResult.code,
             checkedFromIssuer,
             toResult.code,
@@ -220,8 +213,8 @@ export async function customSpotPageGetServerSideProps(context) {
       return {
         props: {
           custom: {
-            base: fromAsset,
-            counter: toAsset,
+            from: fromAsset,
+            to: toAsset,
           },
         },
       };
@@ -229,5 +222,6 @@ export async function customSpotPageGetServerSideProps(context) {
       return redirectObj;
     }
   }
+
   return redirectObj;
 }

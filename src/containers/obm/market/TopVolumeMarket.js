@@ -158,7 +158,7 @@ function TopVolumeMarket({ searchQuery }) {
     const assetA = getAssetDetails(data.pair.base);
     const assetB = getAssetDetails(data.pair.counter);
 
-    return urlMaker.spot.custom(
+    return urlMaker.obm.spot.custom(
       assetB.code,
       assetB.issuer,
       assetA.code,
