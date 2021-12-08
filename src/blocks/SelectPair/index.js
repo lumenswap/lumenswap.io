@@ -144,7 +144,7 @@ const SelectPair = ({ setAppSpotPair }) => {
                   );
                   if (found) {
                     router.push(
-                      urlMaker.spot.custom(
+                      urlMaker.obm.spot.custom(
                         item.base.details.code,
                         item.base.details.issuer,
                         item.counter.details.code,
@@ -153,7 +153,7 @@ const SelectPair = ({ setAppSpotPair }) => {
                     );
                   } else {
                     router.push(
-                      urlMaker.spot.custom(
+                      urlMaker.obm.spot.custom(
                         item.base.details.code,
                         item.base.details.issuer,
                         item.counter.details.code,

@@ -63,7 +63,7 @@ const Stats = () => {
     },
   ];
 
-  const rowLink = (data) => urlMaker.stats.tokens(data.token1.code, data.token2.code);
+  const rowLink = (data) => urlMaker.amm.stats.tokens(data.token1.code, data.token2.code);
 
   useEffect(() => {
     fetchStats(userAdress).then((data) => {

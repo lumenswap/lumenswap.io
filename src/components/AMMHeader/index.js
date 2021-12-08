@@ -33,17 +33,17 @@ const AMMHeader = () => {
     left: [
       {
         name: 'Pools',
-        link: urlMaker.pool.root(),
-        mainHref: urlMaker.pool.root(),
+        link: urlMaker.amm.pool.root(),
+        mainHref: urlMaker.amm.pool.root(),
       },
       {
         name: 'Swap',
-        link: urlMaker.ammswap.root(),
+        link: urlMaker.amm.swap.root(),
       },
     ],
     right: [
-      { name: 'Wallet', link: urlMaker.ammwallet.root(), restricted: true },
-      { name: 'My Pools', link: urlMaker.myPool.root(), restricted: true },
+      { name: 'Wallet', link: urlMaker.amm.wallet.root(), restricted: true },
+      { name: 'My Pools', link: urlMaker.amm.myPool.root(), restricted: true },
     ],
   };
 

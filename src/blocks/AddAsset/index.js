@@ -45,7 +45,7 @@ const AddAsset = ({ changeToAsset, currentFrom, currentTo }) => {
     });
 
     router.push(
-      urlMaker.swap.custom(
+      urlMaker.obm.swap.custom(
         currentFrom?.details?.code,
         currentFrom?.issuer,
         asset.code,

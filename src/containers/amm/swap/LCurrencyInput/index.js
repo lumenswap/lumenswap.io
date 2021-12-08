@@ -42,7 +42,7 @@ export default function LCurrencyInput({
       const toAsset = { ...getFormValues().to.asset.details };
       toAsset.isDefault = true;
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           isFromCustomToken.code,
           isFromCustomToken.issuer === 'native'
             ? null
@@ -55,7 +55,7 @@ export default function LCurrencyInput({
       const fromAsset = { ...getFormValues().from.asset.details };
       fromAsset.isDefault = true;
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           fromAsset.code,
           fromAsset.issuer === 'native' ? null : fromAsset.issuer,
           isToCustomToken.code,
@@ -64,7 +64,7 @@ export default function LCurrencyInput({
       );
     } else if (isFromCustomToken && isToCustomToken) {
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           isFromCustomToken.code,
           isFromCustomToken.issuer === 'native'
             ? null
@@ -75,7 +75,7 @@ export default function LCurrencyInput({
       );
     } else {
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           getFormValues().from.asset.details.code,
           null,
           getFormValues().to.asset.details.code,

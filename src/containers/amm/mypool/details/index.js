@@ -14,8 +14,8 @@ import { getTVLInUSD } from 'helpers/stellarPool';
 import { fetchAccountDetails } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
 import CCricularProgressBar from 'components/CCricularProgressBar';
-import WithdrawLiquidity from 'containers/amm/WithdrawLiquidity';
-import DepositLiquidity from 'containers/amm/DepositLiquidity';
+import WithdrawLiquidity from 'containers/amm/mypool/details/WithdrawLiquidity';
+import DepositLiquidity from 'containers/amm/mypool/details/DepositLiquidity';
 import { openModalAction } from 'actions/modal';
 import useIsLogged from 'hooks/useIsLogged';
 import Button from 'components/Button';
@@ -41,7 +41,7 @@ async function loadUserPool(setUserShare, isLogged, userAddress, poolId, setPool
       }
 
       if (!found) {
-        router.push(urlMaker.myPool.root());
+        router.push(urlMaker.amm.myPool.root());
       } else {
         const poolDetail = await getPoolDetailsById(poolId);
         setPoolDetail(poolDetail);
@@ -102,7 +102,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
   const breadCrumbData = [
     {
       name: 'My Pools',
-      url: urlMaker.myPool.root(),
+      url: urlMaker.amm.myPool.root(),
     },
     {
       render: () => (
@@ -131,7 +131,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
 
   useEffect(() => {
     if (!isLogged) {
-      router.push(urlMaker.pool.root());
+      router.push(urlMaker.amm.pool.root());
     }
   }, [isLogged]);
 
@@ -141,7 +141,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
 
   useEffect(() => {
     if (new BN(userShare).isEqualTo(0)) {
-      router.push(urlMaker.myPool.root());
+      router.push(urlMaker.amm.myPool.root());
     }
   }, [userShare]);
 

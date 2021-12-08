@@ -17,11 +17,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import isSameAsset from 'helpers/isSameAsset';
 
-import ExchangeRate from 'containers/swap/ExchangeRate';
-import SwapButton from 'containers/swap/SwapButton';
-import SwapHead from 'containers/swap/SwapHead';
-import useUrl from 'containers/swap/useUrl';
-import { changeToAsset } from 'containers/swap/swapHelpers';
+import ExchangeRate from 'containers/obm/swap/ExchangeRate';
+import SwapButton from 'containers/obm/swap/SwapButton';
+import SwapHead from 'containers/obm/swap/SwapHead';
+import useUrl from 'containers/obm/swap/useUrl';
+import { changeToAsset } from 'containers/obm/swap/swapHelpers';
 import LCurrencyInput from './LCurrencyInput';
 import styles from './styles.module.scss';
 
@@ -198,7 +198,7 @@ const SwapPage = ({ custom, errorCode }) => {
       const toAsset = { ...getValues().to.asset.details };
       toAsset.isDefault = true;
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           isFromCustomToken.code,
           isFromCustomToken.issuer === 'native'
             ? null
@@ -211,7 +211,7 @@ const SwapPage = ({ custom, errorCode }) => {
       const fromAsset = { ...getValues().from.asset.details };
       fromAsset.isDefault = true;
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           fromAsset.code,
           fromAsset.issuer === 'native' ? null : fromAsset.issuer,
           isToCustomToken.code,
@@ -220,7 +220,7 @@ const SwapPage = ({ custom, errorCode }) => {
       );
     } else if (isFromCustomToken && isToCustomToken) {
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           isFromCustomToken.code,
           isFromCustomToken.issuer === 'native'
             ? null
@@ -231,7 +231,7 @@ const SwapPage = ({ custom, errorCode }) => {
       );
     } else {
       router.push(
-        urlMaker.ammswap.custom(
+        urlMaker.amm.swap.custom(
           formValues.to.asset.details.code,
           null,
           formValues.from.asset.details.code,

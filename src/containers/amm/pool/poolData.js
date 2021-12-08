@@ -122,7 +122,7 @@ function PoolData() {
     }));
   }
 
-  const rowLink = (data) => urlMaker.pool.poolId(data.poolId);
+  const rowLink = (data) => urlMaker.amm.pool.poolId(data.poolId);
 
   return (
     <div className={styles['table-container']}>
