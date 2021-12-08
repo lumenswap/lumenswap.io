@@ -4,10 +4,11 @@ import ObmHeader from 'components/ObmHeader';
 import LoginRequired from 'components/LoginRequired';
 import { useSelector } from 'react-redux';
 import walletNotConnectedIcon from 'assets/images/walletNotConnected.png';
+import { walletTypes } from 'helpers/consts';
 import WalletData from './walletData';
 import styles from './styles.module.scss';
 
-function LumenSwapWallet({ type = 'obm' }) {
+function LumenSwapWallet({ type = walletTypes.OBM }) {
   const isLogged = useSelector((state) => state.user.logged);
   return (
     <>
