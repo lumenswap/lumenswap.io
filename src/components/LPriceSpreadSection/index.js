@@ -5,7 +5,7 @@ import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'helpers/fetchMarketPrice';
 import sevenDigit from 'helpers/sevenDigit';
-import ColorizedPriceImpact from 'containers/obm/swap/ColorizedPriceImpact';
+import ColorizedPriceImpact from 'components/complex/LumenSwapSwap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
 import styles from './styles.module.scss';
 
