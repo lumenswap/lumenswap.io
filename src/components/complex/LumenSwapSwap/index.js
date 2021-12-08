@@ -15,6 +15,7 @@ import BN from 'helpers/BN';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import ObmHeader from 'components/ObmHeader';
 import isSameAsset from 'helpers/isSameAsset';
 
 import { walletTypes } from 'helpers/consts';
@@ -260,7 +261,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
   return (
     <div className="container-fluid main">
       <SwapHead custom={custom} baseURL={swapBaseURL} />
-      <AMMHeader />
+      {type === 'obm' ? <ObmHeader /> : <AMMHeader />}
       <div className="row justify-content-center">
         <div className="col-auto">
           <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
