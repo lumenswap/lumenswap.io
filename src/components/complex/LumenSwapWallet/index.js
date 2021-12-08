@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import ObmHeader from 'components/ObmHeader';
+import AMMHeader from 'components/AMMHeader';
 import LoginRequired from 'components/LoginRequired';
 import { useSelector } from 'react-redux';
 import walletNotConnectedIcon from 'assets/images/walletNotConnected.png';
@@ -16,7 +17,7 @@ function LumenSwapWallet({ type = walletTypes.OBM }) {
         <Head>
           <title>Wallet | Lumenswap</title>
         </Head>
-        <ObmHeader />
+        {type === 'obm' ? <ObmHeader /> : <AMMHeader />}
       </div>
       <div className={styles.main}>
         <h1 className={styles.title}>Wallet</h1>
