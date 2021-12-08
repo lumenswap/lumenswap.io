@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import React from 'react';
-import urlMaker from 'helpers/urlMaker';
 
-const SwapHead = ({ custom }) => {
+const SwapHead = ({ custom, baseURL }) => {
   let headTitle = 'Swap | Lumenswap';
 
   // if (tokens) {
@@ -28,7 +26,7 @@ const SwapHead = ({ custom }) => {
       {custom ? (
         <link
           rel="canonical"
-          herf={`${process.env.REACT_APP_HOST}${urlMaker.obm.swap.custom(
+          herf={`${process.env.REACT_APP_HOST}${baseURL.custom(
             custom.from.code,
             custom.from.issuer === 'native' ? null : custom.from.issuer,
             custom.to.code,
@@ -38,7 +36,7 @@ const SwapHead = ({ custom }) => {
       ) : (
         <link
           rel="canonical"
-          herf={`${process.env.REACT_APP_HOST}${urlMaker.obm.swap.root()}`}
+          herf={`${process.env.REACT_APP_HOST}${baseURL.root()}`}
         />
       )}
     </Head>

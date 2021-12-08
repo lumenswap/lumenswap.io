@@ -259,7 +259,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
 
   return (
     <div className="container-fluid main">
-      <SwapHead custom={custom} />
+      <SwapHead custom={custom} baseURL={swapBaseURL} />
       <AMMHeader />
       <div className="row justify-content-center">
         <div className="col-auto">
