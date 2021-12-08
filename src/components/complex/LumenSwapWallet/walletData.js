@@ -149,18 +149,38 @@ function WalletData({ type }) {
       },
     },
     {
-      title: 'Balance',
-      dataIndex: 'balance',
+      title: 'Total',
+      dataIndex: 'rawBalance',
       key: '2',
+      sortFunc: (a, b, order) => (order === 'asc' ? a.rawBalance - b.rawBalance : b.rawBalance - a.rawBalance),
+      render: (data) => (
+        <span>{data.rawBalance ? humanAmount(data.rawBalance) : 0}</span>
+      ),
+    },
+    {
+      title: 'Available',
+      dataIndex: 'balance',
+      key: '3',
       sortFunc: (a, b, order) => (order === 'asc' ? a.balance - b.balance : b.balance - a.balance),
       render: (data) => (
         <span>{humanAmount(data.balance)}</span>
       ),
     },
     {
+      title: 'In order',
+      dataIndex: 'order',
+      key: '4',
+      sortFunc: (a, b, order) => (order === 'asc' ? a.rawBalance - b.rawBalance : b.rawBalance - a.rawBalance),
+      render: (data) => (
+        <span>
+          {humanAmount(new BN(data.rawBalance ?? 0).minus(new BN(data.balance)))}
+        </span>
+      ),
+    },
+    {
       title: 'Action',
       dataIndex: 'action',
-      key: '3',
+      key: '5',
       render: (data) => {
         let swapBaseURL = urlMaker.obm.swap;
         if (type === 'amm') {
