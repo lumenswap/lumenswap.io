@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import classNames from 'classnames';
 import numeral from 'numeral';
-import NFTHeader from 'components/NFTHeader';
 import NftStatsChart from 'containers/nft/stats/NftStatsChart';
 import CStatistics, { Info } from 'components/CStatistics';
 import fetchNFTStats from 'api/nftStatsAPI';
@@ -10,6 +9,7 @@ import Loading from 'components/Loading';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
+import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (

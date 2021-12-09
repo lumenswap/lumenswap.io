@@ -5,7 +5,7 @@ import urlMaker from 'helpers/urlMaker';
 import { Controller, useForm } from 'react-hook-form';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'blocks/ConfirmSwap';
-import AMMHeader from 'components/AMMHeader';
+import AMMHeader from 'containers/amm/AMMHeader';
 import XLM from 'tokens/XLM';
 import LPriceSpreadSection from 'components/LPriceSpreadSection';
 import calculateSendEstimatedAndPath from 'helpers/calculateSendEstimatedAndPath';
@@ -15,7 +15,7 @@ import BN from 'helpers/BN';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import ObmHeader from 'components/ObmHeader';
+import ObmHeader from 'containers/obm/ObmHeader';
 import isSameAsset from 'helpers/isSameAsset';
 
 import { walletTypes } from 'helpers/consts';

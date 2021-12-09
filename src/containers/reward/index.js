@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import LoginRequired from 'components/LoginRequired';
-import RewardHeader from 'components/RewardHeader';
+import RewardHeader from 'containers/reward/RewardHeader';
 import rewardConnectIcon from '../../assets/images/rewardNotConnected.png';
 import styles from './styles.module.scss';
 import RewardContent from './RewardContent';

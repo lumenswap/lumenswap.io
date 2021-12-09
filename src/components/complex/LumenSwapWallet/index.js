@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import ObmHeader from 'components/ObmHeader';
+import ObmHeader from 'containers/obm/ObmHeader';
 import LoginRequired from 'components/LoginRequired';
 import { useSelector } from 'react-redux';
 import walletNotConnectedIcon from 'assets/images/walletNotConnected.png';

@@ -4,7 +4,7 @@ import numeral from 'numeral';
 import CoinGecko from 'coingecko-api';
 import { useSelector } from 'react-redux';
 
-import ObmHeader from 'components/ObmHeader';
+import ObmHeader from 'containers/obm/ObmHeader';
 import LineChart from 'components/LineChart';
 import AngleRight from 'assets/images/angle-right.svg';
 import Button from 'components/Button';

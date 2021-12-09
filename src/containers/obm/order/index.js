@@ -1,4 +1,4 @@
-import ObmHeader from 'components/ObmHeader';
+import ObmHeader from 'containers/obm/ObmHeader';
 import Head from 'next/head';
 import LoginRequired from 'components/LoginRequired';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import AMMHeader from 'components/AMMHeader';
+import AMMHeader from 'containers/amm/AMMHeader';
 import React, { useEffect, useState } from 'react';
 import { getAmmOverallPoolStats } from 'api/amm';
 import styles from './styles.module.scss';

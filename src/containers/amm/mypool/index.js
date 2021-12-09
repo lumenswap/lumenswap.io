@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import AMMHeader from 'components/AMMHeader';
+import AMMHeader from 'containers/amm/AMMHeader';
 import Button from 'components/Button';
 import AddLiquidity from 'containers/amm/mypool/AddLiquidity';
 import { openModalAction } from 'actions/modal';
