@@ -56,7 +56,7 @@ const InnerForm = ({
   } = useForm();
 
   function wrapperSetValue(field, val) {
-    setValue(field, sevenDigit(val));
+    setValue(field, val);
   }
 
   async function onSubmit(data) {
@@ -110,6 +110,8 @@ const InnerForm = ({
             setSliderValue(perc > 100 ? 100 : perc);
           }
         }
+
+        console.log('test', values.price, values.amount, res, res.toString());
 
         wrapperSetValue('total', res.toString());
       }
