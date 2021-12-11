@@ -111,8 +111,6 @@ const InnerForm = ({
           }
         }
 
-        console.log('test', values.price, values.amount, res, res.toString());
-
         wrapperSetValue('total', res.toString());
       }
 
