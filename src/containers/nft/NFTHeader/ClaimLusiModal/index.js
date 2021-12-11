@@ -106,7 +106,7 @@ const ClaimLusiModal = ({ lusi, loadRewardLusi }) => {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        To get started, you need to create a trust line for the x.
       </div>
       <div className={styles.img}>
         <Image

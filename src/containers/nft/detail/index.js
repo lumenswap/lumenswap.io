@@ -191,7 +191,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
   const nftInfo = [
     {
       title: 'Price',
-      tooltip: 'tooltip',
+      tooltip: '$NLSP is an LSP-backed asset minted on Stellar, and it’s used for buying and selling Lusis on Lumenswap’s NFT marketplace. 1 NLSP = 10,000,000 LSP.',
       render: () => {
         if (!new BN(lusiPrice).isZero() && lusiPrice !== null) {
           return (
@@ -244,9 +244,9 @@ const NFTDetail = ({ id: lusiId, data }) => {
           rel="noreferrer"
           style={{ textDecoration: 'none' }}
           className={styles['info-link']}
-          href={twitterUrlMaker(ownerInfoData?.twitter)}
+          href={twitterUrlMaker(Buffer.from(ownerInfoData.twitter, 'base64').toString('utf-8'))}
         >
-          @{ownerInfoData?.twitter}
+          @{Buffer.from(ownerInfoData.twitter, 'base64').toString('utf-8')}
         </a>
       ) : <span className={styles['no-link']}>-</span>),
     },
@@ -258,9 +258,9 @@ const NFTDetail = ({ id: lusiId, data }) => {
           rel="noreferrer"
           style={{ textDecoration: 'none' }}
           className={styles['info-link']}
-          href={telegramUrlMaker(ownerInfoData?.telegram)}
+          href={telegramUrlMaker(Buffer.from(ownerInfoData.telegram, 'base64').toString('utf-8'))}
         >
-          @{ownerInfoData?.telegram}
+          @{Buffer.from(ownerInfoData.telegram, 'base64').toString('utf-8')}
         </a>
       ) : <span className={styles['no-link']}>-</span>),
     },
