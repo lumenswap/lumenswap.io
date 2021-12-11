@@ -67,7 +67,7 @@ function MyPoolData({ pools }) {
     },
   ];
 
-  const rowURLGenerator = (data) => urlMaker.amm.myPool.myPoolId(data.id);
+  const rowURLGenerator = (data) => urlMaker.amm.myPool.detail(data.id);
 
   return (
     <div className={styles['table-container']}>

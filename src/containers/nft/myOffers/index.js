@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import classNames from 'classnames';
-import NFTHeader from 'components/NFTHeader';
 import moment from 'moment';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
@@ -19,6 +18,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
 import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
+import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -144,7 +144,7 @@ const NFTOrder = () => {
       render: (data) => (
         <div className={styles['type-clmn']}>
           <span>{data.type} </span>
-          <Link href={urlMaker.nft.lusi(data.lusiNumber)}><a>Lusi#{data.lusiNumber}</a></Link>
+          <Link href={urlMaker.nft.lusi.root(data.lusiNumber)}><a>Lusi#{data.lusiNumber}</a></Link>
         </div>
       ),
     },

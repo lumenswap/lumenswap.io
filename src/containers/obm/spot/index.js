@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Error from 'containers/404';
 import classNames from 'classnames';
-import ObmHeader from 'components/ObmHeader';
+import ObmHeader from 'containers/obm/ObmHeader';
 import getAssetDetails from 'helpers/getAssetDetails';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';

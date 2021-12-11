@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import NFTHeader from 'components/NFTHeader';
 import classNames from 'classnames';
 import CardThumbnail from 'containers/nft/myLusi/CardThumbnail';
 import Loading from 'components/Loading';
@@ -12,6 +11,7 @@ import fetchAllLusi from 'api/AllLusiAPI';
 import BN from 'helpers/BN';
 import NoData from 'components/NoData';
 import CCard from 'components/CCard';
+import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
@@ -80,7 +80,7 @@ const NFTCollections = () => {
                     name={`Lusi ${item.number}`}
                     imgSrc={item.imageUrl}
                     price={item.price}
-                    url={urlMaker.nft.lusi(item.number)}
+                    url={urlMaker.nft.lusi.root(item.number)}
                   />
                 </div>
               ))}

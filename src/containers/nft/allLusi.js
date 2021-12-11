@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Loading from 'components/Loading';
-import NFTHeader from 'components/NFTHeader';
 import SelectOption from 'components/SelectOption';
 import fetchAllLusi from 'api/AllLusiAPI';
 import BN from 'helpers/BN';
+import NFTHeader from './NFTHeader';
 import AllLusiData from './allLusiData';
 import styles from './styles.module.scss';
 

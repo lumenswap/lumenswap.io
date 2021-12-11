@@ -1,4 +1,4 @@
-import AMMHeader from 'components/AMMHeader';
+import AMMHeader from 'containers/amm/AMMHeader';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Breadcrumb from 'components/BreadCrumb';

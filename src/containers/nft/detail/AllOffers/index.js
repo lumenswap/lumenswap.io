@@ -1,4 +1,3 @@
-import NFTHeader from 'components/NFTHeader';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Breadcrumb from 'components/BreadCrumb';
@@ -13,6 +12,7 @@ import { fetchOfferAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
+import NFTHeader from '../../NFTHeader';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -46,7 +46,7 @@ function AllOffersPage({ id }) {
     },
     {
       name: `Lusi #${id}`,
-      url: urlMaker.nft.lusi(id),
+      url: urlMaker.nft.lusi.root(id),
     },
     {
       name: 'Offers',

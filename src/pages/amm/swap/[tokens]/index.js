@@ -1,5 +1,5 @@
 import SwapPage from 'containers/obm/swap';
-import { swapPageGetServerSideProps } from 'containers/obm/swap/props';
+import { swapPageGetServerSideProps } from 'containers/amm/swap/props';
 
 export default SwapPage;
 

@@ -1,5 +1,5 @@
 import LumenSwapWallet from 'components/complex/LumenSwapWallet';
-import { walletTypes } from 'helpers/consts';
+import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
 
 function WalletPage() {
   return <LumenSwapWallet type={walletTypes.AMM} />;

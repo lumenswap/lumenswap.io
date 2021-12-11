@@ -6,7 +6,7 @@ import styles from './style.module.scss';
 const RoundData = ({ rounds }) => (
   <div className={styles.roundsList}>
     {rounds.map((round, i) => (
-      <Link key={i} href={urlMaker.lottery.singleRound(round.number)} passHref>
+      <Link key={i} href={urlMaker.lottery.round.root(round.number)} passHref>
         <a className="text-decoration-none">
           <RoundItem round={round} />
         </a>

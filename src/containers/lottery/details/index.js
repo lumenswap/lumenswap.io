@@ -28,9 +28,9 @@ const RoundDetailsPage = ({ round }) => {
 
   function generateLink() {
     if (tab === 'tickets') {
-      return urlMaker.lottery.allTickets(round.number);
+      return urlMaker.lottery.round.tickets(round.number);
     }
-    return urlMaker.lottery.allParticipants(round.number);
+    return urlMaker.lottery.round.participants(round.number);
   }
 
   function handleBuyTicket() {
@@ -74,7 +74,7 @@ const RoundDetailsPage = ({ round }) => {
           <title>Round {round.number} | Lumenswap</title>
           <link
             rel="canonical"
-            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.singleRound(round.number)}`}
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.round.root(round.number)}`}
           />
         </Head>
         <LotteryHeader />

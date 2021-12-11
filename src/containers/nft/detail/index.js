@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
-import NFTHeader from 'components/NFTHeader';
 import BN from 'helpers/BN';
 import Button from 'components/Button';
 import BigLogo from 'assets/images/BigLogo';
@@ -31,6 +30,7 @@ import { fetchOfferAPI, fetchOffersOfAccount, fetchOrderBookAPI } from 'api/stel
 import humanAmount from 'helpers/humanAmount';
 import NLSP from 'tokens/NLSP';
 import numeral from 'numeral';
+import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
 import SetOrUpdateNFTPrice from './SetOrUpdateNFTPrice';
@@ -336,10 +336,10 @@ const NFTDetail = ({ id: lusiId, data }) => {
 
   function generateLink() {
     if (tab === 'offer') {
-      return urlMaker.nft.lusiOffers(lusiId);
+      return urlMaker.nft.lusi.offers(lusiId);
     }
 
-    return urlMaker.nft.lusiTrades(lusiId);
+    return urlMaker.nft.lusi.trades(lusiId);
   }
 
   return (

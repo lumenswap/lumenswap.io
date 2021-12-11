@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import ObmHeader from 'components/ObmHeader';
+import ObmHeader from 'containers/obm/ObmHeader';
 import topPairIcon from 'assets/images/top-pair.svg';
 import Image from 'next/image';
 import defaultTokens from 'tokens/defaultTokens';
