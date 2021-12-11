@@ -35,8 +35,11 @@ export default function LCurrencyInput({
     const isFromCustomToken = userCustomTokens
       .find((token) => isSameAsset(getAssetDetails(token), getFormValues().from.asset?.details));
 
-    const isToCustomToken = userCustomTokens
-      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
+    let isToCustomToken;
+    if (getFormValues().to.asset) {
+      isToCustomToken = userCustomTokens
+        .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
+    }
 
     if (isFromCustomToken && !isToCustomToken) {
       const toAsset = { ...getFormValues().to.asset.details };
@@ -78,7 +81,7 @@ export default function LCurrencyInput({
         baseURL.custom(
           getFormValues().from.asset.details.code,
           null,
-          getFormValues().to.asset.details.code,
+          getFormValues().to.asset?.details.code,
           null,
         ),
       );
