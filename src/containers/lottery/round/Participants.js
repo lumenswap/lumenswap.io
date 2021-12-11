@@ -63,7 +63,7 @@ const AllParticipantPage = ({ round }) => {
           <title>Round {round.number} Participants | Lumenswap</title>
           <link
             rel="canonical"
-            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.round.allParticipants(round.number)}`}
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.round.participants(round.number)}`}
           />
         </Head>
         <LotteryHeader />

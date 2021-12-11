@@ -73,7 +73,7 @@ const urlMaker = {
     },
     myPool: {
       root: () => `${rootUrl.amm}/my-pool`,
-      myPoolId: (id) => `${urlMaker.amm.myPool.root()}/${id}`,
+      detail: (id) => `${urlMaker.amm.myPool.root()}/${id}`,
     },
 
   },
@@ -87,8 +87,8 @@ const urlMaker = {
     tickets: () => `${rootUrl.lottery}/tickets`,
     round: {
       root: (round) => `${rootUrl.lottery}/round/${round}`,
-      allTickets: (round) => `${urlMaker.lottery.round.root(round)}/tickets`,
-      allParticipants: (round) => `${urlMaker.lottery.round.root(round)}/participants`,
+      tickets: (round) => `${urlMaker.lottery.round.root(round)}/tickets`,
+      participants: (round) => `${urlMaker.lottery.round.root(round)}/participants`,
     },
   },
   nft: {
@@ -98,8 +98,8 @@ const urlMaker = {
     myLusi: () => `${rootUrl.nft}/my-lusi`,
     lusi: {
       root: (number) => `${rootUrl.nft}/lusi/${number}`,
-      lusiTrades: (number) => `${urlMaker.nft.lusi.root(number)}/trades`,
-      lusiOffers: (number) => `${urlMaker.nft.lusi.root(number)}/offers`,
+      trades: (number) => `${urlMaker.nft.lusi.root(number)}/trades`,
+      offers: (number) => `${urlMaker.nft.lusi.root(number)}/offers`,
     },
   },
 };

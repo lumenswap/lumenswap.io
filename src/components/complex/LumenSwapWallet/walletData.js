@@ -157,7 +157,7 @@ function WalletData({ type }) {
       title: 'Total',
       dataIndex: 'rawBalance',
       key: '2',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.rawBalance - b.rawBalance : b.rawBalance - a.rawBalance),
+      sortFunc: (a, b, order) => (order === 'asc' ? new BN(b.rawBalance).comparedTo(a.rawBalance) : new BN(a.rawBalance).comparedTo(b.rawBalance)),
       render: (data) => (
         <span>{data.rawBalance ? humanAmount(data.rawBalance) : 0}</span>
       ),
@@ -166,7 +166,7 @@ function WalletData({ type }) {
       title: 'Available',
       dataIndex: 'balance',
       key: '3',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.balance - b.balance : b.balance - a.balance),
+      sortFunc: (a, b, order) => (order === 'asc' ? new BN(b.balance).comparedTo(a.balance) : new BN(a.balance).comparedTo(b.balance)),
       render: (data) => (
         <span>{humanAmount(data.balance)}</span>
       ),
@@ -175,7 +175,7 @@ function WalletData({ type }) {
       title: 'In order',
       dataIndex: 'order',
       key: '4',
-      sortFunc: (a, b, order) => (order === 'asc' ? a.rawBalance - b.rawBalance : b.rawBalance - a.rawBalance),
+      sortFunc: (a, b, order) => (order === 'asc' ? new BN(b.rawBalance ?? 0).minus(new BN(b.balance)).comparedTo(new BN(a.rawBalance ?? 0).minus(new BN(a.balance))) : new BN(a.rawBalance ?? 0).minus(new BN(a.balance)).comparedTo(new BN(b.rawBalance ?? 0).minus(new BN(b.balance)))),
       render: (data) => (
         <span>
           {humanAmount(new BN(data.rawBalance ?? 0).minus(new BN(data.balance)))}

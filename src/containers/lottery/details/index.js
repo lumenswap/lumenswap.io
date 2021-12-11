@@ -28,9 +28,9 @@ const RoundDetailsPage = ({ round }) => {
 
   function generateLink() {
     if (tab === 'tickets') {
-      return urlMaker.lottery.round.allTickets(round.number);
+      return urlMaker.lottery.round.tickets(round.number);
     }
-    return urlMaker.lottery.round.allParticipants(round.number);
+    return urlMaker.lottery.round.participants(round.number);
   }
 
   function handleBuyTicket() {
