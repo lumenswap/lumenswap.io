@@ -123,6 +123,11 @@ function WalletData({ type }) {
     },
   ];
 
+  function compareInOrder(a, b) {
+    return new BN(a.rawBalance ?? 0).minus(new BN(a.balance))
+      .comparedTo(new BN(b.rawBalance ?? 0).minus(new BN(b.balance)));
+  }
+
   const tableHeaders = [
     {
       title: 'Assets',
@@ -175,7 +180,7 @@ function WalletData({ type }) {
       title: 'In order',
       dataIndex: 'order',
       key: '4',
-      sortFunc: (a, b, order) => (order === 'asc' ? new BN(b.rawBalance ?? 0).minus(new BN(b.balance)).comparedTo(new BN(a.rawBalance ?? 0).minus(new BN(a.balance))) : new BN(a.rawBalance ?? 0).minus(new BN(a.balance)).comparedTo(new BN(b.rawBalance ?? 0).minus(new BN(b.balance)))),
+      sortFunc: (a, b, order) => (order === 'asc' ? compareInOrder(b, a) : compareInOrder(a, b)),
       render: (data) => (
         <span>
           {humanAmount(new BN(data.rawBalance ?? 0).minus(new BN(data.balance)))}
