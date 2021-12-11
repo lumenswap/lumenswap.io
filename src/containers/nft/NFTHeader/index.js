@@ -1,7 +1,7 @@
 import LumenSwapHeader from 'components/LumenSwapHeader';
 import urlMaker from 'helpers/urlMaker';
-import ClaimLusiBtn from './ClaimLusiBtn'
 import NLSP from 'tokens/NLSP';
+import ClaimLusiBtn from './ClaimLusiBtn';
 
 const NFTHeader = () => {
   const leftSideLinks = [

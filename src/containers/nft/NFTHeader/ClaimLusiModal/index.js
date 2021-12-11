@@ -102,11 +102,16 @@ const ClaimLusiModal = ({ lusi, loadRewardLusi }) => {
   if (!found) {
     step = 'trust';
   }
+  let info = `To get started, you need to create a trust line for the #${lusi.assetCode}.`;
+
+  if (step === 'claim') {
+    info = 'This is the final step to claiming your Lusi. Please click Claim.';
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        To get started, you need to create a trust line for the x.
+        {info}
       </div>
       <div className={styles.img}>
         <Image

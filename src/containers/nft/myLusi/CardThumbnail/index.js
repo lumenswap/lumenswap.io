@@ -46,7 +46,7 @@ const CardThumbnail = ({
                 <Logo color="#DF4886" />
                 {humanAmount(new BN(price).div(10 ** 7).toFixed(7))}
               </>
-            ) : 'Not set yet'}
+            ) : '- -'}
           </div>
         </div>
       </a>
