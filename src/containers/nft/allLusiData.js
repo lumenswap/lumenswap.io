@@ -15,7 +15,7 @@ function AllLusiData({ allLusi }) {
             name={`Lusi-${item.number}`}
             imgSrc={item.imageUrl}
             price={item.price}
-            url={urlMaker.nft.lusi(item.number)}
+            url={urlMaker.nft.lusi.root(item.number)}
           />
         </div>
       ))}

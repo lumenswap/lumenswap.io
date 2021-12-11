@@ -46,7 +46,7 @@ function AllOffersPage({ id }) {
     },
     {
       name: `Lusi #${id}`,
-      url: urlMaker.nft.lusi(id),
+      url: urlMaker.nft.lusi.root(id),
     },
     {
       name: 'Offers',

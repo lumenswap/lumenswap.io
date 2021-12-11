@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 import ObmHeader from 'containers/obm/ObmHeader';
 import isSameAsset from 'helpers/isSameAsset';
 
-import { walletTypes } from 'helpers/consts';
+import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
 import { changeToAsset } from './swapHelpers';
 import SwapHead from './SwapHead';
 import useUrl from './useUrl';

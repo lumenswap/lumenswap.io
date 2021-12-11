@@ -5,7 +5,7 @@ import AMMHeader from 'containers/amm/AMMHeader';
 import LoginRequired from 'components/LoginRequired';
 import { useSelector } from 'react-redux';
 import walletNotConnectedIcon from 'assets/images/walletNotConnected.png';
-import { walletTypes } from 'helpers/consts';
+import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
 import WalletData from './walletData';
 import styles from './styles.module.scss';
 

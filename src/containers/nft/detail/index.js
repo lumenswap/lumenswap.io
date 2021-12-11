@@ -336,10 +336,10 @@ const NFTDetail = ({ id: lusiId, data }) => {
 
   function generateLink() {
     if (tab === 'offer') {
-      return urlMaker.nft.lusiOffers(lusiId);
+      return urlMaker.nft.lusi.lusiOffers(lusiId);
     }
 
-    return urlMaker.nft.lusiTrades(lusiId);
+    return urlMaker.nft.lusi.lusiTrades(lusiId);
   }
 
   return (

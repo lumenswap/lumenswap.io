@@ -144,7 +144,7 @@ const NFTOrder = () => {
       render: (data) => (
         <div className={styles['type-clmn']}>
           <span>{data.type} </span>
-          <Link href={urlMaker.nft.lusi(data.lusiNumber)}><a>Lusi#{data.lusiNumber}</a></Link>
+          <Link href={urlMaker.nft.lusi.root(data.lusiNumber)}><a>Lusi#{data.lusiNumber}</a></Link>
         </div>
       ),
     },

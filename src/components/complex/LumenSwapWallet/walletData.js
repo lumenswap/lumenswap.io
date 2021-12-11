@@ -28,6 +28,11 @@ const NoDataMessage = () => (
   </div>
 );
 
+export const walletTypes = {
+  OBM: 'obm',
+  AMM: 'amm',
+};
+
 function WalletData({ type }) {
   const userBalances = useSelector((state) => state.userBalance);
   const hashedUserBalance = userBalances.reduce((acc, value) => {

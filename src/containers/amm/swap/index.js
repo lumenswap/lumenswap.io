@@ -1,5 +1,5 @@
 import LumenSwapSwap from 'components/complex/LumenSwapSwap';
-import { walletTypes } from 'helpers/consts';
+import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
 
 const SwapPage = ({ custom, errorCode }) => (
   <LumenSwapSwap
