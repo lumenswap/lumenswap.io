@@ -3,6 +3,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
+import moment from 'moment';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { useState, useEffect } from 'react';
 import CTable from 'components/CTable';
@@ -82,6 +83,11 @@ function AllTradesPage({ id }) {
       dataIndex: 'amount',
       key: 3,
       render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
+    },
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      render: (data) => <span>{moment(data.ledger_close_time).fromNow()}</span>,
     },
   ];
 

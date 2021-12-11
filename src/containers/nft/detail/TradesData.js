@@ -6,6 +6,7 @@ import { fetchTradeAPI } from 'api/stellar';
 import getAssetDetails from 'helpers/getAssetDetails';
 import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
+import moment from 'moment';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
@@ -45,6 +46,11 @@ const tableHeaders = [
     dataIndex: 'amount',
     key: 3,
     render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
+  },
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    render: (data) => <span>{moment(data.ledger_close_time).fromNow()}</span>,
   },
 ];
 
