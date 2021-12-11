@@ -191,7 +191,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
   const nftInfo = [
     {
       title: 'Price',
-      tooltip: 'tooltip',
+      tooltip: '$NLSP is an LSP-backed asset minted on Stellar, and it’s used for buying and selling Lusis on Lumenswap’s NFT marketplace. 1 NLSP = 10,000,000 LSP.',
       render: () => {
         if (!new BN(lusiPrice).isZero() && lusiPrice !== null) {
           return (
