@@ -38,6 +38,7 @@ const CardThumbnail = ({
           <div className={styles.title}>#{name}</div>
           <div className={styles.img}>
             <img
+              loading="lazy"
               src={imgSrc}
               style={{ width: `${dimensions.size - 12}px`, height: `${dimensions.size - 12}px` }}
             />
