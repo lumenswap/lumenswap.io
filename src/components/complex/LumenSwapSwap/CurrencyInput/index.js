@@ -1,9 +1,8 @@
 import angleDownIcon from 'assets/images/angle-down.svg';
 import { useState } from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import ModalDialog from 'components/ModalDialog';
-import SelectAsset from 'blocks/SelectAsset';
+import SelectAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset';
 import { useSelector } from 'react-redux';
 import isSameAsset from 'helpers/isSameAsset';
 import sevenDigit from 'helpers/sevenDigit';

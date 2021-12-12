@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Button from 'components/Button';
-import CurrencyInput from 'components/CurrencyInput';
+import CurrencyInput from 'components/complex/LumenSwapSwap/CurrencyInput';
 import BN from 'helpers/BN';
 import isSameAsset from 'helpers/isSameAsset';
 import { useSelector } from 'react-redux';

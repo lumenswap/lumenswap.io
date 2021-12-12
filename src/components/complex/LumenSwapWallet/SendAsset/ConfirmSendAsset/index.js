@@ -9,7 +9,7 @@ import generateCreateAccountTRX from 'stellar-trx/generateCreateAccountTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { isActiveAccount } from 'api/stellar';
-import questionLogo from '../../assets/images/question.svg';
+import questionLogo from 'assets/images/question.svg';
 import styles from './styles.module.scss';
 
 const ConfirmSendAsset = ({ data }) => {

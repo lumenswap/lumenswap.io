@@ -1,5 +1,5 @@
 import { openModalAction } from 'actions/modal';
-import SelectPair from 'blocks/SelectPair';
+import SelectPair from 'containers/obm/spot/SelectPair';
 import classNames from 'classnames';
 import questionLogo from 'assets/images/question.png';
 import isSameAsset from 'helpers/isSameAsset';
