@@ -12,7 +12,7 @@ import numeral from 'numeral';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetails } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 import isSameAsset from 'helpers/isSameAsset';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import ConfirmLiquidity from '../ConfirmLiquidity';
@@ -230,11 +230,11 @@ const AddLiquidity = ({
       <h6 className={styles.label}>Select pair</h6>
       <div className="d-flex justify-content-between">
         <div className={styles.select} onClick={() => handleSelectAsset('tokenA')}>
-          {setLabel(initTokenA.code, extractLogo(initTokenA))}
+          {setLabel(initTokenA.code, extractLogoByToken(initTokenA))}
           <span className="icon-angle-down" />
         </div>
         <div className={styles.select} onClick={() => handleSelectAsset('tokenB')}>
-          {setLabel(initTokenB.code, extractLogo(initTokenB))}
+          {setLabel(initTokenB.code, extractLogoByToken(initTokenB))}
           <span className="icon-angle-down" />
         </div>
       </div>
@@ -260,7 +260,7 @@ const AddLiquidity = ({
               currency={tokenA.code}
               onChange={amountAChange(props.onChange)}
               value={props.value}
-              currencySrc={extractLogo(tokenA)}
+              currencySrc={extractLogoByToken(tokenA)}
               disabled={poolData === null}
               maxValue={tokenABalance}
             />
@@ -279,7 +279,7 @@ const AddLiquidity = ({
               value={props.value}
               balance={`${numeral(tokenBBalance).format('0,0.[0000000]')} ${tokenB.code}`}
               currency={tokenB.code}
-              currencySrc={extractLogo(tokenB)}
+              currencySrc={extractLogoByToken(tokenB)}
               className="mt-3"
               disabled={poolData === null}
               maxValue={tokenBBalance}

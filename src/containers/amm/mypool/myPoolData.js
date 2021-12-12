@@ -2,7 +2,7 @@ import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 // import Link from 'next/link';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
@@ -24,7 +24,7 @@ function MyPoolData({ pools }) {
       <div className={styles.tokens}>
         <CurrencyPair
           size={22}
-          source={[extractLogo(token1), extractLogo(token2)]}
+          source={[extractLogoByToken(token1), extractLogoByToken(token2)]}
         />
         <span>
           {token1.code}/{token2.code}

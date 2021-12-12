@@ -8,7 +8,7 @@ import WithdrawLiquidityConfirm from 'containers/amm/mypool/details/WithdrawLiqu
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { getPoolDetailsById } from 'api/stellarPool';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
@@ -115,12 +115,12 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
 
   const inpoolData = [
     {
-      logo: extractLogo(tokenA),
+      logo: extractLogoByToken(tokenA),
       code: tokenA.code,
       balance: poolData ? shareA.toFixed(7) : '',
     },
     {
-      logo: extractLogo(tokenB),
+      logo: extractLogoByToken(tokenB),
       code: tokenB.code,
       balance: poolData ? shareB.toFixed(7) : '',
     },
