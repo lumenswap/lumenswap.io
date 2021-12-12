@@ -1,6 +1,6 @@
 // import { getSendEstimatedValueAPI } from 'api/stellar';
 import StellarSDK from 'stellar-sdk';
-import BN from './BN';
+import BN from '../helpers/BN';
 
 const server = new StellarSDK.Server(process.env.REACT_APP_HORIZON);
 

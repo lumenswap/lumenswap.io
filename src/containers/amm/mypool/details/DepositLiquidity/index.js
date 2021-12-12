@@ -10,7 +10,7 @@ import BN from 'helpers/BN';
 import getAssetDetails from 'helpers/getAssetDetails';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
 import isSameAsset from 'helpers/isSameAsset';
 import { fetchAccountDetails } from 'api/stellar';
@@ -116,12 +116,12 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
 
   const inpoolData = [
     {
-      logo: extractLogo(tokenA),
+      logo: extractLogoByToken(tokenA),
       code: tokenA.code,
       balance: poolData ? shareA.toFixed(7) : '',
     },
     {
-      logo: extractLogo(tokenB),
+      logo: extractLogoByToken(tokenB),
       code: tokenB.code,
       balance: poolData ? shareB.toFixed(7) : '',
     },
@@ -273,7 +273,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               currency={tokenA.code}
               onChange={amountAChange(props.onChange)}
               value={props.value}
-              currencySrc={extractLogo(tokenA)}
+              currencySrc={extractLogoByToken(tokenA)}
               disabled={poolData === null}
               maxValue={tokenABalance}
             />
@@ -293,7 +293,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               value={props.value}
               balance={`${tokenBBalance} ${tokenB.code}`}
               currency={tokenB.code}
-              currencySrc={extractLogo(tokenB)}
+              currencySrc={extractLogoByToken(tokenB)}
               className="mt-3"
               disabled={poolData === null}
               maxValue={tokenBBalance}

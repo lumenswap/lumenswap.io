@@ -4,7 +4,7 @@ import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import { useEffect, useState } from 'react';
 import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
-import fetchMarketPrice from 'helpers/fetchMarketPrice';
+import fetchMarketPrice from 'api/fetchMarketPrice';
 import isSameAsset from 'helpers/isSameAsset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import { loginTypes } from 'reducers/user';
