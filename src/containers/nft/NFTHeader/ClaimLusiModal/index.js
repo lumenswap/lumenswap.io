@@ -114,9 +114,9 @@ const ClaimLusiModal = ({ lusi, loadRewardLusi }) => {
         {info}
       </div>
       <div className={styles.img}>
-        <Image
+        <img
           src={lusi.imageUrl}
-          layout="fill"
+          className={styles['lusi-img']}
         />
       </div>
       <Button
