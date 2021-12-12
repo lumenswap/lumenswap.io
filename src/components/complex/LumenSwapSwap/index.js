@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import urlMaker from 'helpers/urlMaker';
 import { Controller, useForm } from 'react-hook-form';
 import ModalDialog from 'components/ModalDialog';
-import ConfirmSwap from 'blocks/ConfirmSwap';
+import ConfirmSwap from 'components/complex/LumenSwapSwap/ConfirmSwap';
 import AMMHeader from 'containers/amm/AMMHeader';
 import XLM from 'tokens/XLM';
 import LPriceSpreadSection from 'components/LPriceSpreadSection';

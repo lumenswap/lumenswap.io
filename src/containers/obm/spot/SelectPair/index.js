@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import AddCustomPair from 'blocks/AddCustomPair';
+import AddCustomPair from 'containers/obm/spot/SelectPair/AddCustomPair';
 import { closeModalAction, openModalAction } from 'actions/modal';
 import defaultTokens from 'tokens/defaultTokens';
 import { useDispatch, useSelector } from 'react-redux';

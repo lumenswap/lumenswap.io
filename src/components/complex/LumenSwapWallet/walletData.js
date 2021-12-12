@@ -10,7 +10,6 @@ import { openModalAction } from 'actions/modal';
 import Image from 'next/image';
 import CStatistics, { Info } from 'components/CStatistics';
 import { useEffect, useState } from 'react';
-import SendAsset from 'blocks/SendAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
 import isSameAsset from 'helpers/isSameAsset';
 import BN from 'helpers/BN';
@@ -20,6 +19,7 @@ import { fetchXLMPrice } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import humanAmount from 'helpers/humanAmount';
 import questionLogo from 'assets/images/question.svg';
+import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (

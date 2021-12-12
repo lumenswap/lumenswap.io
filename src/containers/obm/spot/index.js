@@ -17,7 +17,7 @@ import useBreakPoint from 'hooks/useMyBreakpoint';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { useDispatch, useSelector } from 'react-redux';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
-import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
+import createPairForDefaultTokens from 'containers/obm/spot/SelectPair/createPairForDefaultTokens';
 import ChartTab from './ChartTab';
 import styles from './styles.module.scss';
 

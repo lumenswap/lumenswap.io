@@ -1,6 +1,6 @@
 import StellarSDK from 'stellar-sdk';
 
-import createPairForDefaultTokens from 'blocks/SelectPair/createPairForDefaultTokens';
+import createPairForDefaultTokens from 'containers/obm/spot/SelectPair/createPairForDefaultTokens';
 import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';

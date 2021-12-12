@@ -11,7 +11,7 @@ import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
 import sevenDigit from 'helpers/sevenDigit';
 import { openModalAction } from 'actions/modal';
-import AddAsset from 'blocks/AddAsset';
+import AddAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset/AddAsset';
 import { removeCustomTokenAction } from 'actions/userCustomTokens';
 import styles from './styles.module.scss';
 

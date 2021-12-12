@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
-import ConfirmSendAsset from 'blocks/ConfirmSendAsset';
 import defaultTokens from 'tokens/defaultTokens';
 import isSameAsset from 'helpers/isSameAsset';
 import getAssetDetails from 'helpers/getAssetDetails';
@@ -14,7 +13,8 @@ import { calculateMaxXLM } from 'helpers/XLMValidator';
 import { isActiveAccount } from 'api/stellar';
 import BN from 'helpers/BN';
 import StellarSDK from 'stellar-sdk';
-import questionLogo from '../../assets/images/question.svg';
+import questionLogo from 'assets/images/question.svg';
+import ConfirmSendAsset from './ConfirmSendAsset';
 import styles from './styles.module.scss';
 
 const SendAsset = ({ selectedAsset }) => {
