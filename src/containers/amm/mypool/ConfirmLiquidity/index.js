@@ -7,7 +7,7 @@ import getAssetDetails from 'helpers/getAssetDetails';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { initializeStore } from 'store';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 // import ShowTolerance from 'containers/amm/ShowTolerance';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
@@ -50,7 +50,7 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
     <div className="pb-4">
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogo(data.tokenA)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
         <div>{data.tokenA.amount}</div>
@@ -58,7 +58,7 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
 
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogo(data.tokenB)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
         <div>{data.tokenB.amount}</div>

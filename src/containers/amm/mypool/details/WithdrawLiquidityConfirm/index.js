@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import Button from 'components/Button';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import { initializeStore } from 'store';
@@ -43,7 +43,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
     <div className="pb-4">
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogo(data.tokenA)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
         <div>{humanAmount(data.tokenA.balance)}</div>
@@ -51,7 +51,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
 
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogo(data.tokenB)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
         <div>{humanAmount(data.tokenB.balance)}</div>

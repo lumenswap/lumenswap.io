@@ -83,9 +83,7 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.info}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      </div>
+      {/* <div className={styles.info} /> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <label className="label-primary mb-2 mt-4">Price</label>
         <Controller

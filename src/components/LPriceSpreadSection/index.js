@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
-import fetchMarketPrice from 'helpers/fetchMarketPrice';
+import fetchMarketPrice from 'api/fetchMarketPrice';
 import sevenDigit from 'helpers/sevenDigit';
 import ColorizedPriceImpact from 'components/complex/LumenSwapSwap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
