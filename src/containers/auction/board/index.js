@@ -23,7 +23,7 @@ const AuctionBoard = () => {
       sellAmount: '10,000,000 RBT',
       basePrice: '0.3 XLM',
       logo: bannerSrc,
-      url: urlMaker.auction.singleBoard('Rabet(RBT)'),
+      url: urlMaker.auction.board.root('Rabet(RBT)'),
       isLive: true,
     },
     {
@@ -32,7 +32,7 @@ const AuctionBoard = () => {
       sellAmount: '50,000,000 RBT',
       basePrice: '0.4 XLM',
       logo: bannerSrc,
-      url: urlMaker.auction.singleBoard('Rabet(RBT)'),
+      url: urlMaker.auction.board.root('Rabet(RBT)'),
       isLive: false,
     },
   ];

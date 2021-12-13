@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useState, useEffect } from 'react';
-import defaultTokens from 'tokens/defaultTokens';
 import urlMaker from 'helpers/urlMaker';
 import AuctionHeader from 'components/AuctionHeader';
 import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
+import { extractLogoByToken } from 'helpers/asset';
 import LineChart from 'components/LineChart';
 import InfoBox from 'components/InfoBox';
 import ArrowRight from 'assets/images/arrowRight';
@@ -15,7 +15,6 @@ import Refresh from 'assets/images/refresh';
 import CTabs from 'components/CTabs';
 import Input from 'components/Input';
 import SendBid from 'blocks/SendBid';
-import questionLogo from 'assets/images/question.png';
 import { fetchAuctionChartData } from 'api/AuctionFakeData';
 import { openModalAction } from 'actions/modal';
 import { useDispatch } from 'react-redux';
@@ -73,11 +72,6 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
     );
   };
 
-  const hashedDefaultTokens = defaultTokens.reduce((acc, cur) => {
-    acc[cur.code] = cur;
-    return acc;
-  }, {});
-
   const breadCrumbData = [
     {
       name: 'Auction',
@@ -91,33 +85,25 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const assetInfo = [
     {
       title: 'Asset code',
-      render: () => {
-        let image;
-        if (hashedDefaultTokens[infoData.asset.code]) {
-          image = hashedDefaultTokens[infoData.asset.code].logo;
-        } else {
-          image = questionLogo;
-        }
-        return (
-          <>
-            <Image src={image} height={22} width={22} className="rounded-circle" alt="logo" />
-            <div className="ml-1">{infoData.asset.code}</div>
-          </>
-        );
-      },
+      render: (data) => (
+        <>
+          <Image src={extractLogoByToken(data.asset)} height={22} width={22} className="rounded-circle" alt="logo" />
+          <div className="ml-1">{data.asset.code}</div>
+        </>
+      ),
     },
-    { title: 'Asset issuer', render: () => `${minimizeAddress(infoData.asset.issuer)}` },
-    { title: 'Amount to sell', tooltip: 'some data', render: () => `${numeral(infoData.asset.sellAmount).format('0,0')} ${infoData.asset.code}` },
+    { title: 'Asset issuer', render: (data) => `${minimizeAddress(data.asset.issuer)}` },
+    { title: 'Amount to sell', tooltip: 'some data', render: (data) => `${numeral(data.asset.sellAmount).format('0,0')} ${data.asset.code}` },
   ];
 
   const auctionInfo = [
     {
       title: 'Period',
-      render: () => (
+      render: (data) => (
         <div className={styles.period}>
-          {displayLedgers ? `${infoData.auction.startLedger} Ledger` : moment(infoData.auction.startDate).format('D MMM Y')}
+          {displayLedgers ? `${data.auction.startLedger} Ledger` : moment(data.auction.startDate).format('D MMM Y')}
           <div className={styles['arrow-icon']}><ArrowRight /></div>
-          {displayLedgers ? `${infoData.auction.endLedger} Ledger` : moment(infoData.auction.endDate).format('D MMM Y')}
+          {displayLedgers ? `${data.auction.endLedger} Ledger` : moment(data.auction.endDate).format('D MMM Y')}
           <div
             onClick={handleDisplayLedgers}
             className={styles['refresh-icon']}
@@ -126,8 +112,8 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         </div>
       ),
     },
-    { title: 'Base price', render: () => `${infoData.auction.basePrice} ${infoData.auction.baseAssetCode}` },
-    { title: 'Bids', tooltip: 'some data', render: () => `${numeral(infoData.auction.bids).format('0,0')} ${infoData.auction.baseAssetCode}` },
+    { title: 'Base price', render: (data) => `${data.auction.basePrice} ${data.auction.baseAssetCode}` },
+    { title: 'Bids', tooltip: 'some data', render: (data) => `${numeral(data.auction.bids).format('0,0')} ${data.auction.baseAssetCode}` },
   ];
 
   const tabs = [
@@ -148,9 +134,9 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   ), []);
   function generateLink() {
     if (currentTab === 'bid') {
-      return urlMaker.auction.bids(pageName);
+      return urlMaker.auction.board.bids(pageName);
     }
-    return urlMaker.auction.winners(pageName);
+    return urlMaker.auction.board.winners(pageName);
   }
 
   return (
@@ -181,10 +167,10 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
               </div>
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className={classNames(styles.card, 'mt-lg-0 mt-md-4 mt-sm-4 mt-4')}>
-                  <InfoBox title="Asset info" rows={assetInfo} />
+                  <InfoBox title="Asset info" rows={assetInfo} data={infoData} />
                 </div>
                 <div className={classNames(styles.card, 'mt-4')}>
-                  <InfoBox title="Auction info" rows={auctionInfo} />
+                  <InfoBox title="Auction info" rows={auctionInfo} data={infoData} />
                 </div>
               </div>
             </div>

@@ -38,7 +38,7 @@ function Bids({ pageName, assetCode }) {
   ];
   const crumbData = [
     { url: urlMaker.auction.root(), name: 'Auction' },
-    { url: urlMaker.auction.singleBoard(pageName), name: `${pageName}` },
+    { url: urlMaker.auction.board.root(pageName), name: `${pageName}` },
     { name: 'Bids' },
   ];
 

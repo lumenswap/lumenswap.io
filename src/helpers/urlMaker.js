@@ -105,10 +105,12 @@ const urlMaker = {
   },
   auction: {
     root: () => `${rootUrl.auction}/board`,
-    singleBoard: (name) => `${rootUrl.auction}/board/${name}`,
     tickets: () => `${rootUrl.auction}/tickets`,
-    bids: (name) => `${rootUrl.auction}/board/${name}/bids`,
-    winners: (name) => `${rootUrl.auction}/board/${name}/winners`,
+    board: {
+      root: (name) => `${rootUrl.auction}/board/${name}`,
+      bids: (name) => `${rootUrl.auction}/board/${name}/bids`,
+      winners: (name) => `${rootUrl.auction}/board/${name}/winners`,
+    },
   },
 };
 
