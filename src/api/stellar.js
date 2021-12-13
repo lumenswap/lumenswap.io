@@ -24,6 +24,10 @@ export function fetchAccountDetails(address) {
     }));
 }
 
+export function fetchAccountFullDetails(address) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${address}`);
+}
+
 export function isActiveAccount(address) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/accounts/${address}`)
     .then((res) => ({
@@ -72,6 +76,27 @@ export function fetchTradeAPI(baseAsset, counterAsset, params) {
   }
 
   return axios.get(`${process.env.REACT_APP_HORIZON}/trades`, { params: { ...assetParam, ...params } });
+}
+
+export function fetchOfferAPI(baseAsset, counterAsset, params) {
+  const assetParam = {};
+  if (baseAsset.isNative()) {
+    assetParam.buying_asset_type = baseAsset.getAssetType();
+  } else {
+    assetParam.buying_asset_type = baseAsset.getAssetType();
+    assetParam.buying_asset_code = baseAsset.getCode();
+    assetParam.buying_asset_issuer = baseAsset.getIssuer();
+  }
+
+  if (counterAsset.isNative()) {
+    assetParam.selling_asset_type = counterAsset.getAssetType();
+  } else {
+    assetParam.selling_asset_type = counterAsset.getAssetType();
+    assetParam.selling_asset_code = counterAsset.getCode();
+    assetParam.selling_asset_issuer = counterAsset.getIssuer();
+  }
+
+  return axios.get(`${process.env.REACT_APP_HORIZON}/offers`, { params: { ...assetParam, ...params } });
 }
 
 export function fetchOrderBookAPI(selling, buying, params) {
@@ -149,4 +174,20 @@ export function fetchXLMCoingeckoPrice() {
   return CoinGeckoClient.coins
     .fetch('stellar')
     .then((res) => res.data.market_data.current_price.usd.toFixed(3));
+}
+
+export function fetchClaimableBalances(params) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/claimable_balances`, {
+    params: {
+      order: 'desc',
+      ...params,
+    },
+  }).then((res) => res.data);
+}
+
+export function fetchAssetHolderList(asset) {
+  return axios.get(`https://api.stellar.expert/explorer/public/asset/${asset}/holders`, {
+    params: {
+    },
+  }).then((res) => res.data);
 }

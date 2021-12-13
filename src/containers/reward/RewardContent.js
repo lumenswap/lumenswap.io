@@ -74,7 +74,7 @@ const RewardContent = () => {
       title: 'Amount',
       dataIndex: 'amount',
       key: '4',
-      render: (data) => <span>{rewardAmountHumanize(data.amount)}</span>,
+      render: (data) => <span>{rewardAmountHumanize(data.amount)} LSP</span>,
     },
   ];
 
@@ -97,7 +97,7 @@ const RewardContent = () => {
     {
       title: 'LP reward earned',
       tooltip: 'This shows your earned reward from the LP program.',
-      content: <span>-</span>,
+      content: <Info text="LSP" number={rewardAmountHumanize(rewardStats?.lp?.total)} />,
     },
   ];
 

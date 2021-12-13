@@ -1,18 +1,21 @@
 import Head from 'next/head';
 import classNames from 'classnames';
 import numeral from 'numeral';
-import NFTHeader from 'components/NFTHeader';
-import NftStatsChart from 'containers/nft/NftStatsChart';
+import NftStatsChart from 'containers/nft/stats/NftStatsChart';
 import CStatistics, { Info } from 'components/CStatistics';
 import fetchNFTStats from 'api/nftStatsAPI';
 import { useState, useEffect } from 'react';
 import Loading from 'components/Loading';
+import moment from 'moment';
+import humanAmount from 'helpers/humanAmount';
+import BN from 'helpers/BN';
+import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
 const Container = ({ children }) => (
   <div className="container-fluid">
     <Head>
-      <title>NFT Stats | Lumenswap</title>
+      <title>Stats | Lumenswap</title>
     </Head>
     <NFTHeader />
     {children}
@@ -21,21 +24,22 @@ const Container = ({ children }) => (
 
 const NFTStats = () => {
   const [statsData, setStatsData] = useState(null);
+  const [statsVolumeInfo, setStatsVolumeInfo] = useState({
+    currentTime: Date.now(),
+    currentVolume: 0,
+  });
 
   const statsInfo = [
     {
       title: 'Volume 24h',
-      tooltip: 'tooltip',
-      content: <Info text="LSP" number={numeral(statsData?.info.volume24h).format('0,0')} className={styles['statistics-info']} />,
+      content: <Info text="NLSP" number={humanAmount(new BN(statsData?.info.volume24h).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
     },
     {
       title: 'Volume 7d',
-      tooltip: 'tooltip',
-      content: <Info text="LSP" number={numeral(statsData?.info.volume7d).format('0,0')} className={styles['statistics-info']} />,
+      content: <Info text="NLSP" number={humanAmount(new BN(statsData?.info.volume7d).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
     },
     {
       title: 'Total number of trades',
-      tooltip: 'tooltip',
       content: <Info number={numeral(statsData?.info.total).format('0,0')} className={styles['statistics-info']} />,
     },
   ];
@@ -64,19 +68,21 @@ const NFTStats = () => {
               <CStatistics className={styles['c-statistics']} blocks={statsInfo} />
             </div>
             <div className={classNames(styles.card, styles['card-chart'])}>
-              <div>Volume</div>
-              <div className="row flex-nowrap mt-5 align-items-end">
+              <div className={styles['chart-header-info']}>
+                <div className={styles['volume-info']}>
+                  <span className={styles['volume-info-number']}>{humanAmount(new BN(statsVolumeInfo.currentVolume).div(10 ** 7).toFixed(7))} NLSP</span>
+                  <span className={styles['volume-info-text']}>Volume 24h</span>
+                </div>
+                <span className={styles['date-chart']}>
+                  {moment(statsVolumeInfo.currentTime).utc().format('MMM, DD')}
+                </span>
+              </div>
+              <div className={classNames('row flex-nowrap align-items-end', styles['chart-container'])}>
                 <div className="col">
                   <NftStatsChart
-                    data={statsData?.chart.data}
-                    date={statsData?.chart.date}
-                    showLabel={false}
+                    data={statsData?.chart}
+                    setStatsVolumeInfo={setStatsVolumeInfo}
                   />
-                </div>
-                <div className="col-auto">
-                  <div className={styles.date}>
-                    Date
-                  </div>
                 </div>
               </div>
             </div>

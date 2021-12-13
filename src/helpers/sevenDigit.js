@@ -8,18 +8,20 @@ export default function sevenDigit(number) {
 
   switch (before.length) {
     case 0:
-      return parseFloat(`${integer}.${after.slice(0, 7)}`, 10);
+      return `${integer}.${after.slice(0, 8)}`;
     case 1:
-      return parseFloat(`${integer}.${after.slice(0, 6)}`, 10);
+      return `${integer}.${after.slice(0, 7)}`;
     case 2:
-      return parseFloat(`${integer}.${after.slice(0, 5)}`, 10);
+      return `${integer}.${after.slice(0, 6)}`;
     case 3:
-      return parseFloat(`${integer}.${after.slice(0, 4)}`, 10);
+      return `${integer}.${after.slice(0, 5)}`;
     case 4:
-      return parseFloat(`${integer}.${after.slice(0, 3)}`, 10);
+      return `${integer}.${after.slice(0, 4)}`;
     case 5:
-      return parseFloat(`${integer}.${after.slice(0, 2)}`, 10);
+      return `${integer}.${after.slice(0, 3)}`;
+    case 6:
+      return `${integer}.${after.slice(0, 2)}`;
     default:
-      return parseFloat(`${integer}`, 10);
+      return integer;
   }
 }

@@ -1,0 +1,90 @@
+@import 'styles/vars';
+
+.header {
+    margin-top: 74px;
+    font-size: 24px !important;
+}
+.table-container {
+    margin-top: 13px;
+    margin-bottom: 24px;
+    background-color: $White;
+    box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+    border-radius: 4px;
+}
+
+.no-data-container {
+  width: 100%;
+  height: 139px;
+  display: flex;
+  justify-content: center;
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  span {
+    margin-top: 30px;
+  }
+}
+
+.table {
+    max-height: 1116px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    th {
+      color: $Manatee;
+      padding-top: 15px;
+    }
+    tr:first-child {
+      height: 30px !important;
+      line-height: 30px !important;
+    }
+    tr:not(:first-child) {
+      height: 53px !important;
+    }
+  }
+  .table::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+
+  .address {
+    a {
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $BlueRibbon;
+      text-decoration: none;
+    }
+  }
+
+  .table-header {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      span {
+            margin-left: 24px;
+            font-family: SofiaPro;
+            font-size: 16px;
+            font-weight: 600;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 200%;
+            letter-spacing: normal;
+            color: $CodGray;
+            height: 24px;
+            cursor: pointer;
+      }
+  }
+
+  .pagination {
+    margin-bottom: 62px;
+  }

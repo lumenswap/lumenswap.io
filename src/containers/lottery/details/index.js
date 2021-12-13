@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import classNames from 'classnames';
 import Head from 'next/head';
 import Button from 'components/Button';
-import Link from 'next/link';
-import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import { useDispatch, useSelector } from 'react-redux';
+import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import { loginTypes } from 'reducers/user';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
@@ -30,9 +28,9 @@ const RoundDetailsPage = ({ round }) => {
 
   function generateLink() {
     if (tab === 'tickets') {
-      return urlMaker.lottery.allTickets(round.number);
+      return urlMaker.lottery.round.tickets(round.number);
     }
-    return urlMaker.lottery.allParticipants(round.number);
+    return urlMaker.lottery.round.participants(round.number);
   }
 
   function handleBuyTicket() {
@@ -76,7 +74,7 @@ const RoundDetailsPage = ({ round }) => {
           <title>Round {round.number} | Lumenswap</title>
           <link
             rel="canonical"
-            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.singleRound(round.number)}`}
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.round.root(round.number)}`}
           />
         </Head>
         <LotteryHeader />
@@ -107,15 +105,7 @@ const RoundDetailsPage = ({ round }) => {
           className={styles['table-container']}
         >
           <BoardData onTabChange={onTabChange} round={round} />
-          <Link href={generateLink()} passHref>
-            <a style={{ textDecoration: 'none' }} className={styles['address-link']}>
-              {tab === 'tickets' ? 'See all tickets' : 'See all addresses'}
-              <span>
-                <Image src={ArrowIcon} width={16} height={16} />
-              </span>
-            </a>
-          </Link>
-
+          <CSeeAllContentsButton link={generateLink()} content={tab === 'tickets' ? 'See all tickets' : 'See all addresses'} />
         </div>
       </div>
     </>

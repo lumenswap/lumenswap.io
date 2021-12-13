@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import AMMHeader from 'components/AMMHeader';
+import AMMHeader from 'containers/amm/AMMHeader';
 import Button from 'components/Button';
-import AddLiquidity from 'containers/amm/AddLiquidity';
+import AddLiquidity from 'containers/amm/mypool/AddLiquidity';
 import { openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -126,7 +126,7 @@ function MyPoolPage() {
 
   useEffect(() => {
     if (!isLogged) {
-      router.push(urlMaker.pool.root());
+      router.push(urlMaker.amm.pool.root());
     }
   }, [isLogged]);
 

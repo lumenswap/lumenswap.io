@@ -20,11 +20,13 @@ import ANSR from './ANSR';
 import PEN from './PEN';
 import NUNA from './NUNA';
 import AQUA from './AQUA';
+import NLSP from './NLSP';
 
 const defaultTokens = [
   XLM,
   LSP,
   USDC,
+  NLSP,
   CNY,
   ARS,
   BRL,

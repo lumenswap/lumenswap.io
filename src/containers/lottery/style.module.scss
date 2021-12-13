@@ -129,23 +129,7 @@
   }
 }
 
-.address-link {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 14px;
-  font-family: SofiaPro;
-  color: $ShuttleGray;
 
-  &:hover {
-    color: $ShuttleGray;
-  }
-
-  span {
-    margin-left: 8px;
-    margin-top: 6px;
-  }
-}
 
 .table {
   overflow-y: auto;

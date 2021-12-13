@@ -1,24 +1,13 @@
-import fakeDataChart from '../helpers/fakeDataChart';
+import axios from 'axios';
 
-const { data, date } = fakeDataChart;
-const stats = {
-  info: {
-    volume24h: 200,
-    volume7d: 1023400,
-    total: 106,
-  },
-  chart: {
-    data,
-    date,
-  },
-};
+async function fetchNFTStats() {
+  const info = await axios.get(`${process.env.REACT_APP_LUMEN_API}/nft/stats/overall`);
+  const chart = await axios.get(`${process.env.REACT_APP_LUMEN_API}/nft/stats/aggregation`);
 
-function getStats() {
-  return stats;
-}
-
-function fetchNFTStats() {
-  return new Promise((reslove) => setTimeout(reslove, 1000)).then(() => getStats());
+  return {
+    info: info.data,
+    chart: chart.data,
+  };
 }
 
 export default fetchNFTStats;

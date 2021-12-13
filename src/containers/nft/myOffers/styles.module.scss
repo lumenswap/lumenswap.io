@@ -1,0 +1,119 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 63px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.card {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  margin-top: 24px;
+  
+}
+
+
+
+.td-gray {
+  color: $ShuttleGray !important;
+}
+
+.cancel {
+  cursor: pointer;
+  color: $BlueRibbon;
+}
+
+.loading-data-container {
+  width: 100%;
+  height: 190px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: center;
+    color: $ShuttleGray;
+  }
+}
+
+.table {
+  max-height: 474px;
+  background-color: $White;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  overflow-y: auto;
+  border-radius: 4px;
+  scrollbar-width: none;
+  table {
+    th {
+      color: $Manatee !important;
+      padding-top: 8px;
+    }
+    tr:first-child {
+      height: 37px !important;
+      line-height: 37px !important;
+    }
+    tr:not(:first-child) {
+      height: 53px !important;
+    }
+  }
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.type-clmn {
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $ShuttleGray;
+  a {
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $BlueRibbon;
+    &:hover {
+      text-decoration: none;
+      color: $BlueRibbon;
+    }
+  }
+}
+.table-container {
+  background-color: $White;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.cancel-btn {
+  color: $BlueRibbon;
+  cursor: pointer;
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+}

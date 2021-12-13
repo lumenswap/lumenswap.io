@@ -29,7 +29,7 @@ function PoolSwapsData({ poolId }) {
 
   const tableHeaders = [
     {
-      title: 'info',
+      title: 'Info',
       dataIndex: 'tx',
       key: 1,
       render: (data) => {

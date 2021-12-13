@@ -1,0 +1,299 @@
+@import 'styles/vars';
+.main {
+  margin-left: 82px;
+  margin-right: 82px;
+}
+.tabs {
+  nav {
+    height: 49px;
+    a {
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $Manatee;
+      margin-top: 12px;
+    }
+  }
+}
+.title {
+  margin-top: 42px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 31px;
+}
+.top-pair-details {
+  margin-top: 44px;
+  &-text {
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $CodGray;
+  }
+  &-info {
+    display: flex;
+    flex-direction: row;
+    margin-right: 20px;
+    align-items: center;
+    height: 40px;
+  }
+  &-image {
+    margin-right: 3px;
+    margin-top: 5px;
+  }
+}
+.market {
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $CodGray;
+}
+.top-pair-item {
+  background-color: $White;
+  margin-right: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 18px;
+  padding-left: 18px;
+  justify-content: space-between;
+  &-info {
+    display: flex;
+    flex-direction: row;
+    span:first-child {
+      margin-right: 10px;
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $Manatee;
+    }
+    span:last-child {
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $CodGray;
+      margin-left: 8px;
+    }
+    &-images {
+      margin-top: 2px;
+    }
+  }
+  &-amount {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    &-text {
+      margin-left: 4px;
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $SuccessGreen;
+    }
+  }
+  &-icon-container {
+    height: 100%;
+    div {
+      margin-top: 12px;
+    }
+  }
+}
+
+.table-container {
+  width: 100%;
+  background-color: $White;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  margin-top: 18px;
+  div {
+    height: auto;
+  }
+}
+
+.change_negative {
+  color: #f77f5a;
+}
+
+.change_positive {
+  color: #29b87f;
+}
+
+.input {
+  margin-top: 16px;
+  margin-right: 24px;
+  min-width: 384px;
+  width: 384px;
+
+  input {
+    border-radius: 6px;
+  }
+  input::placeholder {
+    font-family: SofiaPro;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $Manatee;
+  }
+}
+
+.header {
+  height: 49px;
+  width: 100%;
+  z-index: 2;
+}
+
+.ctab {
+  margin-left: 24px;
+}
+.table {
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: auto;
+  max-height: 593px;
+  table {
+    width: 100% !important;
+    min-width: 712px;
+    tr {
+      th {
+        border-radius: 0px !important;
+      }
+    }
+    a {
+      height: 52px !important;
+      tr {
+        td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.noDataMessage {
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  margin-top: 40px;
+}
+.loading-container {
+  width: 100%;
+  height: 140px !important;
+  display: flex;
+  justify-content: center;
+  div {
+    margin-top: 28px;
+  }
+}
+
+.noDataMessageContainer {
+  width: 100%;
+  height: 134px !important;
+  background-color: $White;
+  border-radius: 8px;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: center;
+}
+.noDataMessage {
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: $ShuttleGray;
+  margin-top: 37px;
+}
+
+.pair {
+  display: flex;
+  align-items: center;
+  transition: ease-in;
+  font-weight: 500;
+  img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  img:nth-child(2) {
+    margin-right: 10px;
+    margin-left: -10px;
+    z-index: 0;
+  }
+}
+.input {
+  min-width: auto;
+}
+
+.link {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+@media (max-width: $md) {
+  .main {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+}
+
+@media (max-width: 363px) {
+  .input {
+    margin-top: 62px;
+  }
+}
+@media screen and (max-width: 1360px) {
+  .top-pair-item {
+    margin-bottom: 20px;
+  }
+}

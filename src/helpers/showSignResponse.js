@@ -3,11 +3,11 @@ import TransactionResponse from 'blocks/TransactionResponse';
 import signForThem from 'walletIntegeration/signForThem';
 import { generateTransactionURL } from './explorerURLGenerator';
 
-export default async function showSignResponse(trx, dispatch) {
+export default async function showSignResponse(trx, dispatch, onAfterClose = () => {}) {
   try {
     const trxHash = await signForThem(trx, dispatch);
     dispatch(openModalAction({
-      modalProps: {},
+      modalProps: { onAfterClose },
       content: <TransactionResponse
         message={trxHash}
         status="success"

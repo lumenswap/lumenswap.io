@@ -2,7 +2,7 @@ import CurrencyPair from 'components/CurrencyPair';
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import { useEffect, useState } from 'react';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
 import humanAmount from 'helpers/humanAmount';
 import Input from 'components/Input';
@@ -34,7 +34,7 @@ function PoolData() {
       <div className={styles.pairs}>
         <CurrencyPair
           size={22}
-          source={[extractLogo(assetA), extractLogo(assetB)]}
+          source={[extractLogoByToken(assetA), extractLogoByToken(assetB)]}
         />
         <span>{`${assetA.code}/${assetB.code}`}</span>
       </div>
@@ -122,7 +122,7 @@ function PoolData() {
     }));
   }
 
-  const rowLink = (data) => urlMaker.pool.poolId(data.poolId);
+  const rowLink = (data) => urlMaker.amm.pool.poolId(data.poolId);
 
   return (
     <div className={styles['table-container']}>

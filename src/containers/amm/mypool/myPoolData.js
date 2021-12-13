@@ -2,7 +2,7 @@ import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
 import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
-import { extractLogo } from 'helpers/assetUtils';
+import { extractLogoByToken } from 'helpers/asset';
 // import Link from 'next/link';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
@@ -19,12 +19,12 @@ function MyPoolData({ pools }) {
     const token2 = getAssetFromLPAsset(data.reserves[1].asset);
 
     return (
-    // <Link href={urlMaker.pool.poolId(data.id)}>
+    // <Link href={urlMaker.amm.pool.poolId(data.id)}>
     //   <a style={{ textDecoration: 'none', color: '#1d1d1d' }}>
       <div className={styles.tokens}>
         <CurrencyPair
           size={22}
-          source={[extractLogo(token1), extractLogo(token2)]}
+          source={[extractLogoByToken(token1), extractLogoByToken(token2)]}
         />
         <span>
           {token1.code}/{token2.code}
@@ -67,7 +67,7 @@ function MyPoolData({ pools }) {
     },
   ];
 
-  const rowURLGenerator = (data) => urlMaker.myPool.myPoolId(data.id);
+  const rowURLGenerator = (data) => urlMaker.amm.myPool.detail(data.id);
 
   return (
     <div className={styles['table-container']}>

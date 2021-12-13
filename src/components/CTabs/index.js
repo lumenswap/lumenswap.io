@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 const CTabs = ({
   tabs,
   tabContent: TabContent,
-  onChange = () => {},
+  onChange = () => { },
   customTabProps,
   className,
   minimal,
@@ -33,7 +33,7 @@ const CTabs = ({
             <Tab eventKey={tab.id} title={tab.title} key={index} />
           ))}
         </Tabs>
-        { ExtraComponent && <ExtraComponent /> }
+        {ExtraComponent && <ExtraComponent />}
       </div>
 
       <TabContent tab={currentTab} {...customTabProps} />

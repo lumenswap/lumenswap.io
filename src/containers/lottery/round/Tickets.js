@@ -61,7 +61,7 @@ const AllTicketsPage = ({ round }) => {
           <title>Round {round.number} Tickets | Lumenswap</title>
           <link
             rel="canonical"
-            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.allTickets(round.number)}`}
+            herf={`${process.env.REACT_APP_HOST}${urlMaker.lottery.round.tickets(round.number)}`}
           />
         </Head>
         <LotteryHeader />
@@ -77,7 +77,7 @@ const AllTicketsPage = ({ round }) => {
             <span style={{ marginLeft: 12, marginTop: 3 }}>
               <Image src={ArrowIcon} width={18} height={18} />
             </span>
-            <Link href={urlMaker.lottery.singleRound(round.number)} passHref>
+            <Link href={urlMaker.lottery.round.root(round.number)} passHref>
               <a style={{ color: 'black', textDecoration: 'none', marginLeft: 12 }}>
                 Round #{round.number}
               </a>

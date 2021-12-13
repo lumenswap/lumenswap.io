@@ -48,7 +48,7 @@ const customTokenValidation = (tokenString) => {
 export async function swapPageGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: urlMaker.ammswap.root(),
+      destination: urlMaker.amm.swap.root(),
       permanent: true,
     },
   };
@@ -89,7 +89,7 @@ export async function swapPageGetServerSideProps(context) {
 
     return {
       redirect: {
-        destination: urlMaker.ammswap.custom(
+        destination: urlMaker.amm.swap.custom(
           fromTokenDetails.code,
           null,
           toTokenDetails.code,
@@ -108,7 +108,7 @@ export async function swapPageGetServerSideProps(context) {
 export async function swapCustomTokenGetServerSideProps(context) {
   const redirectObj = {
     redirect: {
-      destination: urlMaker.ammswap.root(),
+      destination: urlMaker.amm.swap.root(),
     },
   };
 
@@ -133,7 +133,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
     if (fromResult.redirect || toResult.redirect) {
       return {
         redirect: {
-          destination: urlMaker.ammswap.custom(
+          destination: urlMaker.amm.swap.custom(
             fromResult.code,
             fromResult.issuer,
             toResult.code,
@@ -157,7 +157,7 @@ export async function swapCustomTokenGetServerSideProps(context) {
 
       return {
         redirect: {
-          destination: urlMaker.ammswap.custom(
+          destination: urlMaker.amm.swap.custom(
             fromResult.code,
             checkedFromIssuer,
             toResult.code,

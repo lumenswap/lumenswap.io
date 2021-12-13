@@ -1,15 +1,18 @@
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
-import fetchNFTTrades from 'api/nftTradesAPI';
-import numeral from 'numeral';
 import { useState, useEffect } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
+import { fetchTradeAPI } from 'api/stellar';
+import getAssetDetails from 'helpers/getAssetDetails';
+import NLSP from 'tokens/NLSP';
+import humanAmount from 'helpers/humanAmount';
+import moment from 'moment';
 import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
   <div className={styles['no-data-container']}>
-    <span>There is no asset trade</span>
+    <span>There is no trade</span>
   </div>
 );
 
@@ -20,7 +23,9 @@ const tableHeaders = [
     key: 1,
     render: (data) => (
       <span className={styles.address}>
-        <a href={generateAddressURL(data.buyer)} target="_blank" rel="noreferrer">{minimizeAddress(data.buyer)}</a>
+        <a href={generateAddressURL(data.base_is_seller ? data.counter_account : data.base_account)} target="_blank" rel="noreferrer">
+          {minimizeAddress(data.base_is_seller ? data.counter_account : data.base_account)}
+        </a>
       </span>
     ),
   },
@@ -30,7 +35,9 @@ const tableHeaders = [
     key: 2,
     render: (data) => (
       <span className={styles.address}>
-        <a href={generateAddressURL(data.seller)} target="_blank" rel="noreferrer">{minimizeAddress(data.seller)}</a>
+        <a href={generateAddressURL(!data.base_is_seller ? data.counter_account : data.base_account)} target="_blank" rel="noreferrer">
+          {minimizeAddress(!data.base_is_seller ? data.counter_account : data.base_account)}
+        </a>
       </span>
     ),
   },
@@ -38,17 +45,34 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{numeral(data.amount).format('0,0')} LSP</span>,
+    render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
   },
-
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    render: (data) => <span>{moment(data.ledger_close_time).fromNow()}</span>,
+  },
 ];
 
-function TradesData({ id }) {
+function TradesData({ lusiData }) {
   const [tradesData, setTradesData] = useState(null);
 
   useEffect(() => {
-    fetchNFTTrades(id).then((data) => setTradesData(data));
+    fetchTradeAPI(
+      getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
+      getAssetDetails(NLSP), {
+        limit: 10,
+        order: 'desc',
+      },
+    )
+      .then((res) => {
+        setTradesData(res.data._embedded.records);
+      })
+      .catch(() => {
+        setTradesData([]);
+      });
   }, []);
+
   return (
     <div>
       <CTable

@@ -67,7 +67,7 @@ const RoundInfo = ({ round }) => {
       },
     },
     {
-      title: 'Price Tx',
+      title: 'Prize Tx',
       tooltip: 'This shows the transaction hash in which the winner has received the prize.',
       externalLink: {
         title: `${minimizeAddress(round?.Winner?.transactionId, 8)}`,

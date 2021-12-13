@@ -1,0 +1,36 @@
+@import "styles/vars";
+
+.main {
+  margin-top: 76px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.row {
+  margin-right: -12px !important;
+  margin-left: -12px !important;
+  padding-bottom: 79px;
+}
+.no-data-card {
+  margin-top: 24px;
+}
+
+.col {
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}
+
+.loading-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  div {
+    margin-top: 320px;
+  }
+}
