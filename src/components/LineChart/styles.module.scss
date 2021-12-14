@@ -1,11 +1,5 @@
 @import "styles/vars";
 
-.echart {
-  :global(.echarts-for-react) {
-    height: 447px !important;
-  }
-}
-
 .tooltip {
   color: $CodGray;
   font-size: 13px;
@@ -23,4 +17,16 @@
       height: auto !important;
     }
   }
+}
+
+.fullScreenMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  z-index: 1000;
+}
+.CCard {
+  height: 360px;
+  box-shadow: none !important;
 }

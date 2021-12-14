@@ -1,0 +1,102 @@
+@import "styles/vars";
+
+.layout {
+  padding-top: 74px;
+  padding-bottom: 55px;
+}
+
+.btn {
+  width: 129px;
+  height: 40px;
+}
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+
+  &-table {
+    padding-top: 10px;
+  }
+}
+
+.chart {
+  padding-bottom: 20px;
+}
+
+.period {
+  display: flex;
+  align-items: center;
+
+  svg {
+    height: auto;
+  }
+}
+
+.arrow-icon svg {
+  width: 12px;
+  margin: 0 6px;
+}
+
+.refresh-icon svg {
+  width: 14px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.link {
+  text-decoration: none !important;
+  color: $BlueRibbon;
+
+  &:hover {
+    color: $BlueRibbon;
+  }
+}
+
+.tabs nav {
+  margin-left: 24px;
+}
+
+.table {
+  margin-top: 10px;
+
+  tr:first-child {
+    line-height: 38px !important;
+    height: 38px !important;
+  }
+}
+
+.link-see-all {
+  text-decoration: none !important;
+  margin-top: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ShuttleGray;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  svg {
+    margin-left: 8px;
+    margin-top: 2px;
+    width: 16px;
+    height: auto;
+  }
+
+  &:hover {
+    color: $ShuttleGray;
+  }
+}
+
+.input {
+  margin-right: 16px;
+
+  input {
+    border-radius: 6px;
+    width: 290px !important;
+
+    @media(max-width: $lg) {
+      width: 100% !important;
+    }
+  }
+}

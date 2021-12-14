@@ -1,0 +1,61 @@
+@import "styles/vars";
+
+.layout {
+  padding-top: 65px;
+  padding-bottom: 38px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $CodGray;
+  margin-bottom: 8px;
+}
+
+.filter {
+  :global(.select__control) {
+    width: 144px;
+    height: 40px;
+    border: solid 1px $CatskillWhite;
+    border-radius: 4px;
+
+    :global(.select__value-container) {
+      padding: 0 14px;
+    }
+  }
+
+  :global(.select__control):hover {
+    border: solid 1px $CatskillWhite;
+  }
+
+  :global(.select__value-container),
+  :global(.select__option) {
+    font-size: 14px !important;
+    font-weight: normal !important;
+    padding: 8px 14px;
+  }
+
+  :global(.select__menu-list) {
+    border-radius: 4px;
+    box-shadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
+    padding: 10px 0;
+  }
+}
+
+.card {
+  margin-top: 14px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.status-cancel {
+ color: $BlueRibbon;
+ cursor: pointer;
+}
+
+.status-settled {
+  color: $Manatee;
+  cursor: not-allowed;
+}
