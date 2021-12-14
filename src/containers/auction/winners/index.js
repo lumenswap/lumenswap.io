@@ -1,4 +1,3 @@
-import AuctionHeader from 'components/AuctionHeader';
 import Head from 'next/head';
 import classNames from 'classnames';
 import Input from 'components/Input';
@@ -7,6 +6,7 @@ import CTabs from 'components/CTabs';
 import CPagination from 'components/CPagination';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
+import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
 import WinnersTabContent from './WinnersTabContent';
 

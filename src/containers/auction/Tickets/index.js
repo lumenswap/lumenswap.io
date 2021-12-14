@@ -2,7 +2,6 @@ import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
-import AuctionHeader from 'components/AuctionHeader';
 import SelectOption from 'components/SelectOption';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
@@ -13,6 +12,7 @@ import moment from 'moment';
 import useIsLogged from 'hooks/useIsLogged';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
+import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
 
 const TableNoData = () => <NoData message="There is no bid" />;

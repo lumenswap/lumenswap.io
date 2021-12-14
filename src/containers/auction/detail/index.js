@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useState, useEffect } from 'react';
 import urlMaker from 'helpers/urlMaker';
-import AuctionHeader from 'components/AuctionHeader';
 import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
 import { extractLogoByToken } from 'helpers/asset';
@@ -22,6 +21,7 @@ import numeral from 'numeral';
 import moment from 'moment';
 import minimizeAddress from 'helpers/minimizeAddress';
 import useIsLogged from 'hooks/useIsLogged';
+import AuctionHeader from '../AuctionHeader';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
 
 import styles from './styles.module.scss';

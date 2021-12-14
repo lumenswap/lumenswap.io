@@ -2,8 +2,8 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import bannerSrc from 'assets/images/auction-banner.png';
 import urlMaker from 'helpers/urlMaker';
-import AuctionHeader from 'components/AuctionHeader';
-import AuctionBoardItem from '../AuctionBoardItem';
+import AuctionHeader from '../AuctionHeader';
+import AuctionBoardItem from './AuctionBoardItem';
 import styles from './styles.module.scss';
 
 const AuctionBoard = () => {
