@@ -24,8 +24,7 @@ import {
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import Submitting from 'components/Submitting';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import { fetchOfferAPI, fetchOffersOfAccount, fetchOrderBookAPI } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
 import NLSP from 'tokens/NLSP';

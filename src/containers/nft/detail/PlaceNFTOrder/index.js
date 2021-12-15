@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'components/InputGroup';
 import Button from 'components/Button';

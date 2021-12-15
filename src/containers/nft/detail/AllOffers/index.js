@@ -9,7 +9,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import InfinitePagination from 'components/InfinitePagination';
 import { fetchOfferAPI } from 'api/stellar';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
 import NFTHeader from '../../NFTHeader';
