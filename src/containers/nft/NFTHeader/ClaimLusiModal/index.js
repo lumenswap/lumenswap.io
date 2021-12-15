@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import Button from 'components/Button';
-import Image from 'next/image';
 import Submitting from 'components/Submitting';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import generateTrustlineTRX from 'stellar-trx/generateTrustlineTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';

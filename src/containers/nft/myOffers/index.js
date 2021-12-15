@@ -9,8 +9,8 @@ import { fetchOffersOfAccount } from 'api/stellar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import useIsLogged from 'hooks/useIsLogged';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { isSameAsset, getAssetDetails } from 'helpers/asset';
+
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import XLM from 'tokens/XLM';
 import showGenerateTrx from 'helpers/showGenerateTrx';
