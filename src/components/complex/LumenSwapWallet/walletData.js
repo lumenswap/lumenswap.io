@@ -18,7 +18,7 @@ import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import humanAmount from 'helpers/humanAmount';
-import questionLogo from 'assets/images/question.svg';
+import { extractInfoByToken } from 'helpers/asset';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
@@ -133,30 +133,18 @@ function WalletData({ type }) {
       title: 'Assets',
       dataIndex: 'assets',
       key: '1',
-      render: (data) => {
-        const token = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.asset));
-        let logoSrc;
-        let assetInfo;
-        if (token) {
-          logoSrc = token.logo;
-          assetInfo = token.web;
-        } else {
-          assetInfo = minimizeAddress(data.asset.issuer);
-          logoSrc = questionLogo;
-        }
-
-        return (
-          <div className={styles.asset}>
-            <div className={styles['asset-logo']}>
-              <Image src={logoSrc} width="100%" height="100%" />
-            </div>
-            <div className={styles['asset-div']}>
-              <span className={styles['asset-code']}>{data.asset.code}</span>
-              <span className={styles['asset-info']}>{assetInfo}</span>
-            </div>
+      render: (data) => (
+        <div className={styles.asset}>
+          <div className={styles['asset-logo']}>
+            <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
           </div>
-        );
-      },
+          <div className={styles['asset-div']}>
+            <span className={styles['asset-code']}>{data.asset.code}</span>
+            <span className={styles['asset-info']}>{extractInfoByToken(data.asset)?.web ?? minimizeAddress(data.asset.issuer)}</span>
+          </div>
+        </div>
+      )
+      ,
     },
     {
       title: 'Total',

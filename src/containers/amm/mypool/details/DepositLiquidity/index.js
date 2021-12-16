@@ -7,14 +7,13 @@ import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
 import BN from 'helpers/BN';
-import getAssetDetails from 'helpers/getAssetDetails';
+import {
+  getAssetDetails, extractLogoByToken, isSameAsset, calculateMaxXLM,
+} from 'helpers/asset';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
-import { extractLogoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
-import isSameAsset from 'helpers/isSameAsset';
 import { fetchAccountDetails } from 'api/stellar';
-import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from './styles.module.scss';
 // import Tolerance from '../Tolerance';
 import ConfirmLiquidity from '../../ConfirmLiquidity';

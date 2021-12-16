@@ -4,7 +4,7 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { useEffect, useState } from 'react';
 import { getPoolSwapsAPI } from 'api/stellarPool';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
 import RightArrowIcon from 'assets/images/arrowRight';
 import styles from './styles.module.scss';

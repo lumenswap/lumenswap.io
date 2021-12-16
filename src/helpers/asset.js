@@ -33,6 +33,21 @@ export function extractLogoByToken(token) {
   return questionLogo;
 }
 
+export function extractInfoByToken(token) {
+  const found = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), getAssetDetails(token)));
+
+  if (found) {
+    return {
+      web: found.web,
+      logo: found.logo,
+    };
+  }
+  return {
+    web: null,
+    logo: questionLogo,
+  };
+}
+
 export function listOfKnownPoolIds() {
   const poolIds = [];
 

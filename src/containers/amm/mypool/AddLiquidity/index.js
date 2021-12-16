@@ -9,12 +9,11 @@ import LiquidityInput from 'components/LiquidityInput';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
 import numeral from 'numeral';
-import getAssetDetails from 'helpers/getAssetDetails';
+import {
+  getAssetDetails, extractLogoByToken, isSameAsset, calculateMaxXLM,
+} from 'helpers/asset';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetails } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
-import { extractLogoByToken } from 'helpers/asset';
-import isSameAsset from 'helpers/isSameAsset';
-import { calculateMaxXLM } from 'helpers/XLMValidator';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
 // import Tolerance from '../Tolerance';
@@ -103,11 +102,15 @@ const AddLiquidity = ({
     function onTokenSelect(asset) {
       const props = { tokenA: initTokenA, tokenB: initTokenB };
       if (token === 'tokenA') {
-        props.tokenA = asset;
+        if (asset.code !== props.tokenB.code) {
+          props.tokenA = asset;
+        }
       }
 
       if (token === 'tokenB') {
-        props.tokenB = asset;
+        if (asset.code !== props.tokenA.code) {
+          props.tokenB = asset;
+        }
       }
 
       selectAsset(props);

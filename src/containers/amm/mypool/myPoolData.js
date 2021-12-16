@@ -1,9 +1,7 @@
 import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
-import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
-import { extractLogoByToken } from 'helpers/asset';
-// import Link from 'next/link';
+import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 

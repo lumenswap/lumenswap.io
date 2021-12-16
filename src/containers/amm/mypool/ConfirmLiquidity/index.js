@@ -3,11 +3,11 @@ import Image from 'next/image';
 import generateDepositPoolTRX from 'stellar-trx/generateDepositPoolTRX';
 import AMMCurrentPrice from 'components/AMMCurrentPrice';
 import Button from 'components/Button';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails, extractLogoByToken } from 'helpers/asset';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { initializeStore } from 'store';
-import { extractLogoByToken } from 'helpers/asset';
+
 // import ShowTolerance from 'containers/amm/ShowTolerance';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';

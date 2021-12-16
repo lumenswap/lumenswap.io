@@ -4,12 +4,8 @@ import classNames from 'classnames';
 import Breadcrumb from 'components/BreadCrumb';
 import CurrencyPair from 'components/CurrencyPair';
 import urlMaker from 'helpers/urlMaker';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
-import defaultTokens from 'tokens/defaultTokens';
-import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
+import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import { useSelector, useDispatch } from 'react-redux';
-import sevenDigit from 'helpers/sevenDigit';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import { fetchAccountDetails } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
@@ -24,7 +20,6 @@ import { useEffect, useState } from 'react';
 import BN from 'helpers/BN';
 import { getPoolDetailsById } from 'api/stellarPool';
 import secondStyles from '../../../../components/Button/styles.module.scss';
-import questionLogo from '../../../../../public/images/question.png';
 import styles from './styles.module.scss';
 
 async function loadUserPool(setUserShare, isLogged, userAddress, poolId, setPoolDetail, router) {
@@ -61,8 +56,6 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
   const [poolDetail, setPoolDetail] = useState(initPoolDetail);
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
-  const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
-  const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
 
   const handleDeposit = () => {
     dispatch(
@@ -109,7 +102,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
         <div className={styles['pair-data']}>
           <CurrencyPair
             size={26}
-            source={[tokenA?.logo ?? questionLogo, tokenB?.logo ?? questionLogo]}
+            source={[extractLogoByToken(refinedA), extractLogoByToken(refinedB)]}
           />
           <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
         </div>
@@ -182,8 +175,9 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                       <span className={styles['share-info-text']}>This is your share of the pool</span>
                     </div>
                     <CCricularProgressBar
-                      value={isLessThan0 ? 0.01 : sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}
-                      text={isLessThan0 ? '<0.01%' : `%${sevenDigit(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
+                      value={isLessThan0 ? 0.01 : humanAmount(new BN(userShare).times(100)
+                        .div(poolDetail.total_shares).toFixed(2))}
+                      text={isLessThan0 ? '<0.01%' : `%${humanAmount(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
                       size={110}
                       strokeWidth={5}
                       className={styles.progressbar}
