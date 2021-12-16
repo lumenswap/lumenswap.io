@@ -4,7 +4,6 @@ import CTable from 'components/CTable';
 import numeral from 'numeral';
 import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
-import minimizeAddress from 'helpers/minimizeAddress';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import Image from 'next/image';
@@ -140,7 +139,7 @@ function WalletData({ type }) {
           </div>
           <div className={styles['asset-div']}>
             <span className={styles['asset-code']}>{data.asset.code}</span>
-            <span className={styles['asset-info']}>{extractInfoByToken(data.asset)?.web ?? minimizeAddress(data.asset.issuer)}</span>
+            <span className={styles['asset-info']}>{extractInfoByToken(data.asset).web}</span>
           </div>
         </div>
       )
