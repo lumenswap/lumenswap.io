@@ -5,7 +5,6 @@ import XLM from 'tokens/XLM';
 import StellarSDK from 'stellar-sdk';
 import BN from './BN';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from './stellarPool';
-import minimizeAddress from './minimizeAddress';
 
 export function getAssetDetails(asset) {
   if (asset.type === 'liquidity_pool_shares') {
@@ -44,7 +43,7 @@ export function extractInfoByToken(token) {
     };
   }
   return {
-    web: minimizeAddress(token.issuer),
+    web: token.issuer,
     logo: questionLogo,
   };
 }

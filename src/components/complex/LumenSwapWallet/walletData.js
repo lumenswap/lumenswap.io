@@ -18,6 +18,7 @@ import { fetchXLMPrice } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import humanAmount from 'helpers/humanAmount';
 import { extractInfoByToken } from 'helpers/asset';
+import minimizeAddress from 'helpers/minimizeAddress';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
@@ -132,17 +133,25 @@ function WalletData({ type }) {
       title: 'Assets',
       dataIndex: 'assets',
       key: '1',
-      render: (data) => (
-        <div className={styles.asset}>
-          <div className={styles['asset-logo']}>
-            <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
+      render: (data) => {
+        function showAssetInfo(info) {
+          if (info.length > 50) {
+            return minimizeAddress(info);
+          }
+          return info;
+        }
+        return (
+          <div className={styles.asset}>
+            <div className={styles['asset-logo']}>
+              <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
+            </div>
+            <div className={styles['asset-div']}>
+              <span className={styles['asset-code']}>{data.asset.code}</span>
+              <span className={styles['asset-info']}>{showAssetInfo(extractInfoByToken(data.asset).web)}</span>
+            </div>
           </div>
-          <div className={styles['asset-div']}>
-            <span className={styles['asset-code']}>{data.asset.code}</span>
-            <span className={styles['asset-info']}>{extractInfoByToken(data.asset).web}</span>
-          </div>
-        </div>
-      )
+        );
+      }
       ,
     },
     {
