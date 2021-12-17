@@ -1,10 +1,7 @@
 import { openModalAction } from 'actions/modal';
 import SelectPair from 'containers/obm/spot/SelectPair';
 import classNames from 'classnames';
-import questionLogo from 'assets/images/question.png';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
-import defaultTokens from 'tokens/defaultTokens';
+import { extractInfoByToken } from 'helpers/asset';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
@@ -13,10 +10,6 @@ export default function OpenDialogElement({
   appSpotPair,
   setAppSpotPair,
 }) {
-  const baseTokenLogo = defaultTokens
-    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.base))?.logo || questionLogo;
-  const counterTokenLogo = defaultTokens
-    .find((tok) => isSameAsset(getAssetDetails(tok), appSpotPair.counter))?.logo || questionLogo;
   const dispatch = useDispatch();
 
   return (
@@ -33,8 +26,8 @@ export default function OpenDialogElement({
           );
         }}
       >
-        <img className={styles['first-coin']} src={baseTokenLogo} alt="" />
-        <img className={styles['second-coin']} src={counterTokenLogo} alt="" />
+        <img className={styles['first-coin']} src={extractInfoByToken(appSpotPair.base).logo} alt="" />
+        <img className={styles['second-coin']} src={extractInfoByToken(appSpotPair.counter).logo} alt="" />
         <h1>{appSpotPair.base.getCode()}/{appSpotPair.counter.getCode()}</h1>
         <span className="icon-angle-down ml-auto" />
       </button>

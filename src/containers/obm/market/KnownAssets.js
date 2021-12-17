@@ -3,10 +3,9 @@ import numeral from 'numeral';
 import BN from 'helpers/BN';
 import CTable from 'components/CTable';
 import Loading from 'components/Loading';
-import questionLogo from 'assets/images/question.png';
-import defaultTokens from 'tokens/defaultTokens';
-import sevenDigit from 'helpers/sevenDigit';
 import urlMaker from 'helpers/urlMaker';
+import { extractInfoByToken } from 'helpers/asset';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -19,29 +18,21 @@ function KnownAssets({ assets, searchQuery }) {
   const [knownAssets, setKnownAssets] = useState(null);
   const [filteredAssets, setFilteredAssets] = useState(null);
 
-  const hashedDefaultTokens = defaultTokens.reduce((acc, cur) => {
-    acc[cur.code] = cur;
-    return acc;
-  }, {});
-
   useEffect(() => {
     const pairedAssets = assets?.data.map((asset) => {
       const base = {
         code: asset.baseAssetCode,
         issuer: asset.baseAssetIssuer,
-        logo: questionLogo.src,
+        logo: extractInfoByToken({ code: asset.baseAssetCode, issuer: asset.baseAssetIssuer }).logo,
       };
       const counter = {
         code: asset.counterAssetCode,
         issuer: asset.counterAssetIssuer,
-        logo: questionLogo.src,
+        logo: extractInfoByToken({
+          code: asset.counterAssetCode,
+          issuer: asset.counterAssetIssuer,
+        }).logo,
       };
-      if (hashedDefaultTokens[asset.baseAssetCode]) {
-        base.logo = hashedDefaultTokens[asset.baseAssetCode].logo;
-      }
-      if (hashedDefaultTokens[asset.counterAssetCode]) {
-        counter.logo = hashedDefaultTokens[asset.counterAssetCode].logo;
-      }
 
       return {
         id: asset.id,
@@ -51,8 +42,8 @@ function KnownAssets({ assets, searchQuery }) {
         },
         lastPrice: asset.lastPrice,
         change24h: Number(asset.change24h).toFixed(2),
-        high24h: sevenDigit(asset.high24h),
-        low24h: sevenDigit(asset.low24h),
+        high24h: humanAmount(asset.high24h),
+        low24h: humanAmount(asset.low24h),
         volume24h: asset.volume24h,
       };
     });
@@ -82,7 +73,7 @@ function KnownAssets({ assets, searchQuery }) {
       dataIndex: 'lastPrice',
       key: '2',
       sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
-      render: (data) => `${sevenDigit(data.lastPrice)}  ${data.pair.counter.code}`,
+      render: (data) => `${humanAmount(data.lastPrice)}  ${data.pair.counter.code}`,
     },
     {
       title: '24 change',

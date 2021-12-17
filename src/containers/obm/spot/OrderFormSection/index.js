@@ -4,9 +4,7 @@ import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { openConnectModal } from 'actions/modal';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
-import sevenDigit from 'helpers/sevenDigit';
+import { isSameAsset, getAssetDetails, calculateMaxXLM } from 'helpers/asset';
 import BN from 'helpers/BN';
 import { useEffect, useState } from 'react';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
@@ -15,7 +13,7 @@ import { initializeStore } from 'store';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import XLM from 'tokens/XLM';
-import { calculateMaxXLM } from 'helpers/XLMValidator';
+import humanAmount from 'helpers/humanAmount';
 import styles from '../styles.module.scss';
 
 function showBalance(isLogged, foundBalance) {
@@ -27,7 +25,7 @@ function showBalance(isLogged, foundBalance) {
     return '0';
   }
 
-  return sevenDigit(foundBalance);
+  return humanAmount(foundBalance);
 }
 
 function isNumber(text) {

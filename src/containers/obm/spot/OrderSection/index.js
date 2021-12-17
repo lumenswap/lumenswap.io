@@ -2,7 +2,7 @@ import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
 import { fetchOrderBookAPI } from 'api/stellar';
 import LeftSideAppLumen from 'components/SpotList/LeftSideAppLumen';
 import BN from 'helpers/BN';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -29,7 +29,7 @@ const OrderSection = ({ appSpotPair, price, setPrice }) => {
 
   useEffect(() => {
     if (orderBookData?.asks[0] && orderBookData?.bids[0]) {
-      setPrice(sevenDigit((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
+      setPrice(humanAmount((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
         .div(2)
         .toFixed(7)));
     } else {

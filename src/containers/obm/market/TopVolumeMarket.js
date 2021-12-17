@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
 import numeral from 'numeral';
-
 import CTable from 'components/CTable';
 import Loading from 'components/Loading';
-import questionLogo from 'assets/images/question.png';
-import defaultTokens from 'tokens/defaultTokens';
+import { extractInfoByToken, getAssetDetails } from 'helpers/asset';
 import { getTopVolume } from 'api/market';
-import sevenDigit from 'helpers/sevenDigit';
 import BN from 'helpers/BN';
 import urlMaker from 'helpers/urlMaker';
-import isDefaultToken from 'helpers/defaultTokenUtils';
-import getAssetDetails from 'helpers/getAssetDetails';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (
@@ -23,11 +19,6 @@ function TopVolumeMarket({ searchQuery }) {
   const [topVolumeList, setTopVolumeList] = useState(null);
   const [assets, setAssets] = useState(null);
   const [filteredAssets, setFilteredAssets] = useState(null);
-
-  const hashedDefaultTokens = defaultTokens.reduce((acc, cur) => {
-    acc[cur.code] = cur;
-    return acc;
-  }, {});
 
   useEffect(() => {
     async function loadData() {
@@ -43,23 +34,19 @@ function TopVolumeMarket({ searchQuery }) {
         const base = {
           code: asset.baseAssetCode,
           issuer: asset.baseAssetIssuer,
-          logo: questionLogo,
+          logo: extractInfoByToken({
+            code: asset.baseAssetCode,
+            issuer: asset.baseAssetIssuer,
+          }).logo,
         };
         const counter = {
           code: asset.counterAssetCode,
           issuer: asset.counterAssetIssuer,
-          logo: questionLogo,
+          logo: extractInfoByToken({
+            code: asset.counterAssetCode,
+            issuer: asset.counterAssetIssuer,
+          }).logo,
         };
-        if (hashedDefaultTokens[asset.baseAssetCode]) {
-          if (base.logo) {
-            base.logo = hashedDefaultTokens[asset.baseAssetCode].logo;
-          }
-        }
-        if (hashedDefaultTokens[asset.counterAssetCode]) {
-          if (counter.logo) {
-            counter.logo = hashedDefaultTokens[asset.counterAssetCode].logo;
-          }
-        }
 
         return {
           pair: {
@@ -114,7 +101,7 @@ function TopVolumeMarket({ searchQuery }) {
       sortFunc: (a, b, order) => (order === 'desc'
         ? a.lastPrice - b.lastPrice
         : b.lastPrice - a.lastPrice),
-      render: (data) => `${sevenDigit(data.lastPrice)} ${data.pair.base.code}`,
+      render: (data) => `${humanAmount(data.lastPrice)} ${data.pair.base.code}`,
     },
     {
       title: '24 change',

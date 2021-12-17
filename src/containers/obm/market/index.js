@@ -3,38 +3,24 @@ import Head from 'next/head';
 import ObmHeader from 'containers/obm/ObmHeader';
 import topPairIcon from 'assets/images/top-pair.svg';
 import Image from 'next/image';
-import defaultTokens from 'tokens/defaultTokens';
-import questionLogo from 'assets/images/question.png';
+import { extractInfoByToken } from 'helpers/asset';
 import MarketData from './MarketData';
 import styles from './styles.module.scss';
 import TopPair from './TopPair';
 
 const MarketPage = ({ assets }) => {
-  const hashedDefaultTokens = defaultTokens.reduce((acc, cur) => {
-    acc[cur.code] = cur;
-    return acc;
-  }, {});
-
   const sortedAssets = assets?.data.sort((a, b) => b.change24h - a.change24h);
-  const topChangeAssets = sortedAssets.slice(0, 3).map((asset) => {
-    let mainAsset = {
-      ...asset,
-      baseLogo: questionLogo,
-      counterLogo: questionLogo,
+  const topChangeAssets = sortedAssets.slice(0, 3).map((pair) => {
+    console.log(pair);
+    const mainPair = {
+      ...pair,
+      baseLogo: extractInfoByToken({ code: pair.baseAssetCode, issuer: pair.baseAssetIssuer }).logo,
+      counterLogo: extractInfoByToken({
+        code: pair.counterAssetCode,
+        issuer: pair.counterAssetIssuer,
+      }).logo,
     };
-    if (hashedDefaultTokens[asset.baseAssetCode]) {
-      mainAsset = {
-        ...mainAsset,
-        baseLogo: hashedDefaultTokens[asset.baseAssetCode].logo,
-      };
-    }
-    if (hashedDefaultTokens[asset.counterAssetCode]) {
-      mainAsset = {
-        ...mainAsset,
-        counterLogo: hashedDefaultTokens[asset.counterAssetCode].logo,
-      };
-    }
-    return mainAsset;
+    return mainPair;
   });
 
   return (
@@ -56,12 +42,12 @@ const MarketPage = ({ assets }) => {
             </div>
             <div className="col-12 col-lg-10 col-md-12">
               <div className="row">
-                {topChangeAssets.map((asset, i) => (
+                {topChangeAssets.map((pair, i) => (
                   <TopPair
-                    info={`${asset.baseAssetCode}/${asset.counterAssetCode}`}
+                    info={`${pair.baseAssetCode}/${pair.counterAssetCode}`}
                     number={i + 1}
-                    images={[asset.baseLogo, asset.counterLogo]}
-                    percentage={asset.change24h}
+                    images={[pair.baseLogo, pair.counterLogo]}
+                    percentage={pair.change24h}
                   />
                 ))}
               </div>
