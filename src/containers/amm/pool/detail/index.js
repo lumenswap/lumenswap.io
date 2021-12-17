@@ -1,14 +1,11 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import defaultTokens from 'tokens/defaultTokens';
 import AMMHeader from 'containers/amm/AMMHeader';
 import Breadcrumb from 'components/BreadCrumb';
 import CurrencyPair from 'components/CurrencyPair';
 import Image from 'next/image';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
 import { useSelector } from 'react-redux';
-import getAssetFromLPAsset from 'helpers/getCodeFromLPAsset';
+import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import { useState } from 'react';
 import CTabs from 'components/CTabs';
 import BN from 'helpers/BN';
@@ -20,7 +17,6 @@ import PoolDetailsTabContent from './PoolDetailsTabContent';
 import refreshIcon from '../../../../assets/images/refresh-icon.png';
 import equalIcon from '../../../../assets/images/equal-icon.png';
 import styles from './styles.module.scss';
-import questionLogo from '../../../../../public/images/question.png';
 
 const Details = ({ poolDetail }) => {
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
@@ -29,8 +25,6 @@ const Details = ({ poolDetail }) => {
   const xlmPrice = useSelector((state) => state.xlmPrice);
   const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice);
 
-  const tokenA = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedA));
-  const tokenB = defaultTokens.find((token) => isSameAsset(getAssetDetails(token), refinedB));
   const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
 
   let HeaderInfoAsset = `${new BN(poolDetail.reserves[0].amount).div(poolDetail.reserves[1].amount)}`;
@@ -38,7 +32,8 @@ const Details = ({ poolDetail }) => {
   if (reverseHeaderInfo) {
     HeaderInfoAsset = `${new BN(poolDetail.reserves[1].amount).div(poolDetail.reserves[0].amount)}`;
   }
-  if (new BN(poolDetail.reserves[0].amount).isEqualTo(0) || new BN(poolDetail.reserves[1].amount).isEqualTo(0)) {
+  if (new BN(poolDetail.reserves[0].amount).isEqualTo(0)
+   || new BN(poolDetail.reserves[1].amount).isEqualTo(0)) {
     HeaderInfoAsset = null;
   }
 
@@ -52,7 +47,7 @@ const Details = ({ poolDetail }) => {
         <div className={styles['pair-data']}>
           <CurrencyPair
             size={26}
-            source={[tokenA?.logo ?? questionLogo, tokenB?.logo ?? questionLogo]}
+            source={[extractLogoByToken(refinedA), extractLogoByToken(refinedB)]}
           />
           <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
         </div>

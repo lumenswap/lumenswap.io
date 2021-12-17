@@ -4,7 +4,6 @@ import CTable from 'components/CTable';
 import numeral from 'numeral';
 import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
-import minimizeAddress from 'helpers/minimizeAddress';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import Image from 'next/image';
@@ -18,7 +17,8 @@ import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
 import { calculateMaxXLM } from 'helpers/XLMValidator';
 import humanAmount from 'helpers/humanAmount';
-import questionLogo from 'assets/images/question.svg';
+import { extractInfoByToken } from 'helpers/asset';
+import minimizeAddress from 'helpers/minimizeAddress';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
@@ -134,29 +134,25 @@ function WalletData({ type }) {
       dataIndex: 'assets',
       key: '1',
       render: (data) => {
-        const token = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), data.asset));
-        let logoSrc;
-        let assetInfo;
-        if (token) {
-          logoSrc = token.logo;
-          assetInfo = token.web;
-        } else {
-          assetInfo = minimizeAddress(data.asset.issuer);
-          logoSrc = questionLogo;
+        function showAssetInfo(info) {
+          if (info.length > 50) {
+            return minimizeAddress(info);
+          }
+          return info;
         }
-
         return (
           <div className={styles.asset}>
             <div className={styles['asset-logo']}>
-              <Image src={logoSrc} width="100%" height="100%" />
+              <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
             </div>
             <div className={styles['asset-div']}>
               <span className={styles['asset-code']}>{data.asset.code}</span>
-              <span className={styles['asset-info']}>{assetInfo}</span>
+              <span className={styles['asset-info']}>{showAssetInfo(extractInfoByToken(data.asset).web)}</span>
             </div>
           </div>
         );
-      },
+      }
+      ,
     },
     {
       title: 'Total',

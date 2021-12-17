@@ -1,8 +1,7 @@
 import StellarSDK from 'stellar-sdk';
 
-import isSameAsset from 'helpers/isSameAsset';
+import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import defaultTokens from 'tokens/defaultTokens';
-import getAssetDetails from 'helpers/getAssetDetails';
 import urlMaker from 'helpers/urlMaker';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import { checkAssetValidation } from 'api/tokens';
