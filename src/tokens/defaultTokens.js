@@ -21,6 +21,7 @@ import PEN from './PEN';
 import NUNA from './NUNA';
 import AQUA from './AQUA';
 import NLSP from './NLSP';
+import YBX from './YBX';
 
 const defaultTokens = [
   XLM,
@@ -46,6 +47,7 @@ const defaultTokens = [
   PEN,
   NUNA,
   AQUA,
+  YBX,
 ];
 
 export default defaultTokens;
