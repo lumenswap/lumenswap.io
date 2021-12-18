@@ -5,13 +5,12 @@ import defaultTokens from 'tokens/defaultTokens';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
 import XLM from 'tokens/XLM';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
+import {
+  isSameAsset, getAssetDetails, isSamePair, extractInfoByToken,
+} from 'helpers/asset';
 import USDC from 'tokens/USDC';
-import questionLogo from 'assets/images/question.png';
 import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
-import isSamePair from 'helpers/isSamePair';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
@@ -40,36 +39,28 @@ const SelectPair = ({ setAppSpotPair }) => {
       const foundCounterToken = defaultTokens
         .find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
 
-      let enrichedBaseToken;
-      if (foundBaseToken) {
+      let enrichedBaseToken = {
+        details: item.base,
+        // web: foundBaseToken.web,
+        logo: extractInfoByToken(item.base).logo,
+        type: 'default',
+      };
+      if (!foundBaseToken) {
         enrichedBaseToken = {
-          details: item.base,
-          // web: foundBaseToken.web,
-          logo: foundBaseToken.logo,
-          type: 'default',
-        };
-      } else {
-        enrichedBaseToken = {
-          details: item.base,
-          // web: minimizeAddress(item.base.getIssuer()),
-          logo: questionLogo,
+          ...enrichedBaseToken,
           type: 'custom',
         };
       }
 
-      let enrichedCounterToken;
-      if (foundCounterToken) {
+      let enrichedCounterToken = {
+        details: item.counter,
+        // web: foundCounterToken.web,
+        logo: extractInfoByToken(item.counter).logo,
+        type: 'default',
+      };
+      if (!foundCounterToken) {
         enrichedCounterToken = {
-          details: item.counter,
-          // web: foundCounterToken.web,
-          logo: foundCounterToken.logo,
-          type: 'default',
-        };
-      } else {
-        enrichedCounterToken = {
-          details: item.counter,
-          // web: minimizeAddress(item.counter.getIssuer()),
-          logo: questionLogo,
+          ...enrichedCounterToken,
           type: 'custom',
         };
       }

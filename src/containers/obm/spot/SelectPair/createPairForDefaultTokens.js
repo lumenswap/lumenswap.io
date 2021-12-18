@@ -1,5 +1,4 @@
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import defaultTokens from 'tokens/defaultTokens';
 import LSP from 'tokens/LSP';
 import NLSP from 'tokens/NLSP';

@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import Loading from 'components/Loading';
 import styles from './styles.module.scss';
 
@@ -32,22 +32,22 @@ function TradeHistory() {
           let buyAmount;
           if (item.base_account === userAddress) {
             sellAsset = item.base_asset_code || 'XLM';
-            sellAmount = sevenDigit(item.base_amount);
+            sellAmount = humanAmount(item.base_amount);
 
             buyAsset = item.counter_asset_code || 'XLM';
-            buyAmount = sevenDigit(item.counter_amount);
+            buyAmount = humanAmount(item.counter_amount);
           } else {
             sellAsset = item.counter_asset_code || 'XLM';
-            sellAmount = sevenDigit(item.counter_amount);
+            sellAmount = humanAmount(item.counter_amount);
 
             buyAsset = item.base_asset_code || 'XLM';
-            buyAmount = sevenDigit(item.base_amount);
+            buyAmount = humanAmount(item.base_amount);
           }
 
           return {
             time,
-            price: sevenDigit(price.toFixed(7)),
-            otherPrice: sevenDigit(otherPrice.toFixed(7)),
+            price: humanAmount(price.toFixed(7)),
+            otherPrice: humanAmount(otherPrice.toFixed(7)),
             sellAsset,
             buyAsset,
             sellAmount,

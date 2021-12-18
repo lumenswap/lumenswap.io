@@ -5,7 +5,7 @@ import { useCallback, useEffect } from 'react';
 import StellarSDK from 'stellar-sdk';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import Loading from 'components/Loading';
 import { initializeStore } from 'store';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
@@ -61,10 +61,10 @@ function OpenOrder({ openOrderList, setOpenOrderList }) {
 
         return {
           time: time.getTime(),
-          sellAmount: sevenDigit(item.amount),
-          buyAmount: sevenDigit(buyAmount.toString()),
-          otherPrice: sevenDigit(new BN(item.amount).div(buyAmount).toString()),
-          price: sevenDigit(item.price),
+          sellAmount: humanAmount(item.amount),
+          buyAmount: humanAmount(buyAmount.toString()),
+          otherPrice: humanAmount(new BN(item.amount).div(buyAmount).toString()),
+          price: humanAmount(item.price),
           counterAsset,
           baseAsset,
           id: item.id,

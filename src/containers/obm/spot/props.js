@@ -4,9 +4,8 @@ import createPairForDefaultTokens from 'containers/obm/spot/SelectPair/createPai
 import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import { checkAssetValidation } from 'api/tokens';
-import isSameAsset from 'helpers/isSameAsset';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 const customTokenValidation = (tokenString) => {
