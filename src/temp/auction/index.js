@@ -5,7 +5,7 @@ import CoinGecko from 'coingecko-api';
 import { useSelector } from 'react-redux';
 
 import ObmHeader from 'containers/obm/ObmHeader';
-import LineChart from 'components/LineChart';
+import LineChart from 'containers/auction/detail/LineChart';
 import AngleRight from 'assets/images/angle-right.svg';
 import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';

@@ -1,5 +1,5 @@
 import CTable from 'components/CTable';
-import TableDropDown from 'components/TableDropDown';
+import TableDropDown from 'containers/lottery/tickets/TableDropDown';
 import Head from 'next/head';
 import CPagination from 'components/CPagination';
 import { useEffect, useState, useRef } from 'react';

@@ -1,6 +1,6 @@
-import OrderList from 'components/SpotList/OrderList';
 import classNames from 'classnames';
 import FetchDataLoading from 'components/FetchDataLoading';
+import OrderList from './OrderList';
 import styles from './styles.module.scss';
 
 export default function LeftSideAppLumen({

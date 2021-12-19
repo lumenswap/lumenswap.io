@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 
 import DepthChart from './DepthChart';
 
-const TVChart = dynamic(() => import('../../../components/TVChart'), {
+const TVChart = dynamic(() => import('./TVChart'), {
   ssr: false,
 });
 

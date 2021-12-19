@@ -7,7 +7,7 @@ import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
 import { extractLogoByToken } from 'helpers/asset';
-import LineChart from 'components/LineChart';
+import LineChart from 'containers/auction/detail/LineChart';
 import InfoBox from 'components/InfoBox';
 import ArrowRight from 'assets/images/arrowRight';
 import Refresh from 'assets/images/refresh';

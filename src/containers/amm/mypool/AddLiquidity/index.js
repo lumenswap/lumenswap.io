@@ -3,10 +3,9 @@ import Image from 'next/image';
 import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import CSelectToken from 'components/CSelectToken';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
-import AMMCurrentPrice from 'components/AMMCurrentPrice';
+import AMMCurrentPrice from 'containers/amm/mypool/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
 import numeral from 'numeral';
 import {
@@ -14,6 +13,7 @@ import {
 } from 'helpers/asset';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetails } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
+import CSelectToken from './CSelectToken';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
 // import Tolerance from '../Tolerance';

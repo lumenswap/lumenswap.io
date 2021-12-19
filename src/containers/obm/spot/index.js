@@ -5,7 +5,7 @@ import ObmHeader from 'containers/obm/ObmHeader';
 import { getAssetDetails } from 'helpers/asset';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
-import DetailList from 'components/DetailList';
+import DetailList from 'containers/obm/spot/DetailList';
 import InfoSection from 'containers/obm/spot/InfoSection';
 import CTabs from 'components/CTabs';
 import OrderSection from 'containers/obm/spot/OrderSection';

@@ -6,6 +6,7 @@ import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
+import minimizeAddress from 'helpers/minimizeAddress';
 import Image from 'next/image';
 import CStatistics, { Info } from 'components/CStatistics';
 import { useEffect, useState } from 'react';
@@ -131,17 +132,25 @@ function WalletData({ type }) {
       title: 'Assets',
       dataIndex: 'assets',
       key: '1',
-      render: (data) => (
-        <div className={styles.asset}>
-          <div className={styles['asset-logo']}>
-            <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
+      render: (data) => {
+        function showWebOrIssuer(info) {
+          if (info.length > 50) {
+            return minimizeAddress(info);
+          }
+          return info;
+        }
+        return (
+          <div className={styles.asset}>
+            <div className={styles['asset-logo']}>
+              <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
+            </div>
+            <div className={styles['asset-div']}>
+              <span className={styles['asset-code']}>{data.asset.code}</span>
+              <span className={styles['asset-info']}>{showWebOrIssuer(extractInfoByToken(data.asset).web)}</span>
+            </div>
           </div>
-          <div className={styles['asset-div']}>
-            <span className={styles['asset-code']}>{data.asset.code}</span>
-            <span className={styles['asset-info']}>{extractInfoByToken(data.asset, true).web}</span>
-          </div>
-        </div>
-      )
+        );
+      }
       ,
     },
     {

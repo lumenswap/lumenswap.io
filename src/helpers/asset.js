@@ -5,7 +5,6 @@ import XLM from 'tokens/XLM';
 import StellarSDK from 'stellar-sdk';
 import BN from './BN';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from './stellarPool';
-import minimizeAddress from './minimizeAddress';
 
 export function getAssetDetails(asset) {
   if (asset.type === 'liquidity_pool_shares') {
@@ -34,19 +33,13 @@ export function extractLogoByToken(token) {
   return questionLogo;
 }
 
-export function extractInfoByToken(token, minimize) {
+export function extractInfoByToken(token) {
   const found = defaultTokens.find((i) => isSameAsset(getAssetDetails(i), getAssetDetails(token)));
 
   if (found) {
     return {
       web: found.web,
       logo: found.logo,
-    };
-  }
-  if (minimize === true) {
-    return {
-      web: minimizeAddress(token.issuer),
-      logo: questionLogo,
     };
   }
   return {

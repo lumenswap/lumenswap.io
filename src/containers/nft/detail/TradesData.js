@@ -7,7 +7,7 @@ import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
 import moment from 'moment';
-import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
+import LoadingWithContainer from './LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
 const NoDataMessage = () => (

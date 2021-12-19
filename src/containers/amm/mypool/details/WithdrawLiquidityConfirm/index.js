@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import AMMCurrentPrice from 'components/AMMCurrentPrice';
+import AMMCurrentPrice from 'containers/amm/mypool/AMMCurrentPrice';
 import Button from 'components/Button';
 import { getAssetDetails, extractLogoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';

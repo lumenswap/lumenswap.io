@@ -2,9 +2,9 @@ import BN from 'helpers/BN';
 import { useEffect, useRef, useState } from 'react';
 
 import { fetchTradeAPI } from 'api/stellar';
-import CustomTabs from 'components/CustomTabs';
-import TradeList from 'components/SpotList/TradeList';
+import CustomTabs from 'containers/obm/spot/TradeSection/CustomTabs';
 import FetchDataLoading from 'components/FetchDataLoading';
+import TradeList from '../OrderSection/SpotList/TradeList';
 
 import styles from '../styles.module.scss';
 

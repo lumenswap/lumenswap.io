@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
-import InfinitePagination from 'components/InfinitePagination';
+import InfinitePagination from 'containers/nft/detail/InfinitePagination';
 import { fetchOfferAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';

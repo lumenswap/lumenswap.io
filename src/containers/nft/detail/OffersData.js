@@ -4,7 +4,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
-import LoadingWithContainer from '../../../components/LoadingWithContainer/LoadingWithContainer';
+import LoadingWithContainer from './LoadingWithContainer/LoadingWithContainer';
 
 const NoDataMessage = () => (
   <div className={styles['no-data-container']}>

@@ -1,6 +1,6 @@
 import useIsLogged from 'hooks/useIsLogged';
 import Button from 'components/Button';
-import CustomDropdown from 'components/Dropdown';
+import CustomDropdown from 'components/LumenSwapHeader/Dropdown';
 import { useDispatch } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
 import styles from './styles.module.scss';

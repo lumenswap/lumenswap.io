@@ -1,4 +1,4 @@
-import TradingviewChart from 'components/TradingviewChart';
+import TradingviewChart from 'containers/obm/spot/ChartSection/TradingviewChart';
 
 const ChartSection = ({ candleSeriesData, lineSeriesData, volumeSeriesData }) => (
   <div>

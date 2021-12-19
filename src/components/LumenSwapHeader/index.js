@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import AssetBox from 'components/AssetBox';
+import AssetBox from 'components/LumenSwapHeader/AssetBox';
 import { useSelector } from 'react-redux';
-import MobileMenu from 'components/MobileMenu';
+import MobileMenu from 'components/LumenSwapHeader/MobileMenu';
 import LogoLink from './LogoLink';
 import ConnectButton from './ConnectButton';
 import SideBarLink from './SideBarLink';

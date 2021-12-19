@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
 import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
-import CAddCustomToken from 'components/CAddCustomToken';
 import { openModalAction, closeModalAction } from 'actions/modal';
+import CAddCustomToken from './CAddCustomToken';
 import TokenItem from './TokenItem';
 import styles from './styles.module.scss';
 

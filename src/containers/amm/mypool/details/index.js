@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import { fetchAccountDetails } from 'api/stellar';
 import humanAmount from 'helpers/humanAmount';
-import CCricularProgressBar from 'components/CCricularProgressBar';
+import CCricularProgressBar from 'containers/amm/mypool/details/CCricularProgressBar';
 import WithdrawLiquidity from 'containers/amm/mypool/details/WithdrawLiquidity';
 import DepositLiquidity from 'containers/amm/mypool/details/DepositLiquidity';
 import { openModalAction } from 'actions/modal';

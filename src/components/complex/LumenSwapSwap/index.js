@@ -7,7 +7,7 @@ import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'components/complex/LumenSwapSwap/ConfirmSwap';
 import AMMHeader from 'containers/amm/AMMHeader';
 import XLM from 'tokens/XLM';
-import LPriceSpreadSection from 'components/LPriceSpreadSection';
+import LPriceSpreadSection from 'components/complex/LumenSwapSwap/LPriceSpreadSection';
 import calculateSendEstimatedAndPath from 'api/swapAPI/calculateSendEstimatedAndPath';
 import calculateReceiveEstimatedAndPath from 'api/swapAPI/calculateReceiveEstimatedAndPath';
 import { getAssetDetails, isSameAsset } from 'helpers/asset';

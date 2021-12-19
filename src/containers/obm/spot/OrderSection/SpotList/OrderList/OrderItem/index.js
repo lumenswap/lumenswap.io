@@ -6,8 +6,8 @@ import BN from 'helpers/BN';
 import { useDispatch } from 'react-redux';
 import Tooltips from 'components/Tooltip';
 import Image from 'next/image';
+import avgPriceIcon from 'assets/images/avg.price.png';
 import styles from '../../styles.module.scss';
-import avgPriceIcon from '../../../../assets/images/avg.price.png';
 
 function generateProgressStyle(percent, isSell) {
   return `linear-gradient(to left, ${isSell ? '#f5dce6' : '#e8eedc'} ${percent}%, transparent 0%)`;
