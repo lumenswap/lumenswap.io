@@ -9,8 +9,9 @@
 
 .title {
   font-family: SofiaPro;
-  font-size: 16px;
+  font-size: 18px;
   color: $CodGray;
+  font-weight: 500;
 }
 
 .roundImage {
@@ -19,14 +20,55 @@
   align-items: center;
   justify-content: center;
 }
+.round-item-main {
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  border-radius: 4px;
+  background-color: $White;
+}
 
 .roundItem {
   width: 410px;
   height: 223px;
-  background-color: white;
   padding: 10px 16px;
-  border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+}
+.round-item-info {
+  height: 71px;
+  border-top: 1px solid $CatskillWhite;
+  display: flex;
+  flex-direction: row;
+  &-section {
+    width: 50%;
+    display: flex;
+    align-items: center;
+  }
+  &-section:first-child {
+    border-right: 1px solid $CatskillWhite;
+  }
+  &-texts {
+    margin-left: 24px;
+    display: flex;
+    flex-direction: column;
+    &-text {
+      font-family: SofiaPro;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.43;
+      letter-spacing: normal;
+      color: $ShuttleGray;
+    }
+    &-number {
+      font-family: SofiaPro;
+      font-size: 22px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.45;
+      letter-spacing: normal;
+      color: $CodGray;
+    }
+  }
 }
 
 @media (max-width: $md) {

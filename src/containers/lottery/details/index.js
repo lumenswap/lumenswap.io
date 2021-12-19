@@ -81,7 +81,7 @@ const RoundDetailsPage = ({ round }) => {
       </div>
       <div className={styles.main}>
         <div className={classNames(styles.title, 'flex-column flex-md-row')}>
-          <Breadcrumb spaceBetween={12} data={breadCrumbData} />
+          <Breadcrumb className={styles.bread} spaceBetween={12} data={breadCrumbData} />
           {round?.status.toLowerCase() === 'live' && (
             <Button
               onClick={handleBuyTicket}

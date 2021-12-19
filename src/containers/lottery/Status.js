@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import GiftIcon from 'assets/images/gift-icon.svg';
 import styles from './style.module.scss';
 
-const Status = ({ round, gift }) => {
+const Status = ({ round }) => {
   let statusClassName = 'live';
   if (round.status.toLowerCase() === 'ended') {
     statusClassName = 'ended';
@@ -13,9 +13,9 @@ const Status = ({ round, gift }) => {
 
   return (
     <span className="d-flex align-items-center">
-      {round.status.toLowerCase() === 'live' && <Image src={GiftIcon} width={16} height={16} />}
+      {round.status.toLowerCase() === 'live' && <Image src={GiftIcon} width={20} height={20} />}
       <div
-        style={{ marginLeft: 10 }}
+        style={{ marginLeft: 14 }}
         className={classNames(
           styles.status,
           styles[statusClassName],
