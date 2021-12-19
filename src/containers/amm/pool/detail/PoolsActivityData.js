@@ -86,7 +86,7 @@ function PoolsActivityData({ poolId }) {
   return (
     <CTable
       columns={tableHeaders}
-      noDataMessage={NoDataMessage}
+      noDataComponent={NoDataMessage}
       dataSource={poolOperations}
       className={styles.table}
       loading={poolOperations === null}

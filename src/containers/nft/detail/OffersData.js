@@ -42,7 +42,7 @@ function OffersData({ offers }) {
     <div>
       <CTable
         columns={tableHeaders}
-        noDataMessage={NoDataMessage}
+        noDataComponent={NoDataMessage}
         dataSource={offers}
         className={styles.table}
         loading={!offers}

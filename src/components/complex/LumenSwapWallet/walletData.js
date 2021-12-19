@@ -281,7 +281,7 @@ function WalletData({ type }) {
           columns={tableHeaders}
           dataSource={filteredBalances}
           className={styles.table}
-          noDataMessage={NoDataMessage}
+          noDataComponent={NoDataMessage}
         />
       </div>
     </>

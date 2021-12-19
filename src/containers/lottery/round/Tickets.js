@@ -40,7 +40,7 @@ const Tickets = ({
         className={styles.table}
         columns={tableHeaders}
         dataSource={searchedTickets}
-        noDataMessage={NoDataMessage}
+        noDataComponent={NoDataMessage}
         loading={searchedTickets === null}
       />
     </div>

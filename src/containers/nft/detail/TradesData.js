@@ -77,7 +77,7 @@ function TradesData({ lusiData }) {
     <div>
       <CTable
         columns={tableHeaders}
-        noDataMessage={NoDataMessage}
+        noDataComponent={NoDataMessage}
         dataSource={tradesData}
         className={styles.table}
         loading={!tradesData}

@@ -40,7 +40,7 @@ const Participants = ({ searchQuery, round }) => {
         className={styles.table}
         columns={tableHeaders}
         dataSource={searchedParticipants}
-        noDataMessage={NoDataMessage}
+        noDataComponent={NoDataMessage}
         loading={searchedParticipants === null}
       />
     </div>

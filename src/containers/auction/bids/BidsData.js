@@ -87,7 +87,7 @@ function BidsData({
     <>
       <CTable
         columns={columns}
-        noDataMessage={() => <NoData message="There is no bid" />}
+        noDataComponent={() => <NoData message="There is no bid" />}
         className={styles.table}
         dataSource={filteredBids}
         loading={!bids}

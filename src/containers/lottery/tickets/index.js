@@ -120,7 +120,7 @@ const MyTicketsPage = () => {
             className={styles.table}
             columns={tableHeaders}
             dataSource={searchedTickets}
-            noDataMessage={NoDataMessage}
+            noDataComponent={NoDataMessage}
             loading={loading}
           />
         </div>

@@ -9,9 +9,8 @@ import { setUserBalance } from 'actions/userBalance';
 import userLogin from 'actions/user/login';
 import { loginTypes } from 'reducers/user';
 import { closeModalAction } from 'actions/modal';
-import balanceMapper from 'helpers/balanceMapper';
+import { filterUserBalance } from 'helpers/balanceMapper';
 import { useDispatch } from 'react-redux';
-import { getAssetDetails } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 const EnterKey = () => {
@@ -32,11 +31,7 @@ const EnterKey = () => {
           privateKey: data.privateKey,
           subentry: res.subentry,
         }));
-        dispatch(setUserBalance(res.balances.filter((item) => getAssetDetails({
-          code: item.asset_code,
-          issuer: item.asset_issuer,
-          type: item.asset_type,
-        }) !== null).map(balanceMapper)));
+        dispatch(setUserBalance(filterUserBalance(res.balances)));
         dispatch(closeModalAction());
       })
       .finally(() => {

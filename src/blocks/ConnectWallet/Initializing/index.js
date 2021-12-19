@@ -11,14 +11,13 @@ import loginWithAlbedo from 'walletIntegeration/logins/loginWithAlbedo';
 import { closeModalAction } from 'actions/modal';
 import userLogin from 'actions/user/login';
 import { setUserBalance } from 'actions/userBalance';
-import balanceMapper from 'helpers/balanceMapper';
+import { filterUserBalance } from 'helpers/balanceMapper';
 import { fetchAccountDetails } from 'api/stellar';
 import loginWithLedger from 'walletIntegeration/logins/loginWithLedger';
 import loginWithFreighter from 'walletIntegeration/logins/loginWithFreighter';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
 import loginWithXbull from 'walletIntegeration/logins/loginWithXbull';
 import { useDispatch } from 'react-redux';
-import { getAssetDetails } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 const Initializing = ({ loginMethod }) => {
@@ -47,11 +46,7 @@ const Initializing = ({ loginMethod }) => {
 
       const accountDetail = await fetchAccountDetails(address);
       dispatch(userLogin(loginMethod, { address, subentry: accountDetail.subentry }));
-      dispatch(setUserBalance(accountDetail.balances.filter((item) => getAssetDetails({
-        code: item.asset_code,
-        issuer: item.asset_issuer,
-        type: item.asset_type,
-      }) !== null).map(balanceMapper)));
+      dispatch(setUserBalance(filterUserBalance(accountDetail.balances)));
 
       dispatch(closeModalAction());
     } catch (e) {

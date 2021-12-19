@@ -105,7 +105,7 @@ function PoolSwapsData({ poolId }) {
   return (
     <CTable
       columns={tableHeaders}
-      noDataMessage={NoDataMessage}
+      noDataComponent={NoDataMessage}
       dataSource={poolSwaps}
       className={styles.table}
       loading={poolSwaps === null}

@@ -144,7 +144,7 @@ function PoolData() {
       <CTable
         columns={tableHeader}
         dataSource={filteredPools}
-        noDataMessage={NoDataMessage}
+        noDataComponent={NoDataMessage}
         className={styles.table}
         rowLink={rowLink}
         loading={knownPools === null}

@@ -14,12 +14,6 @@ import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no reward activity here</div>
-  </div>
-);
-
 function rewardAmountHumanize(amount) {
   return numeral(humanAmount(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0.0');
 }
@@ -115,7 +109,7 @@ const RewardContent = () => {
           <CTable
             columns={tableHeaders}
             dataSource={addressReward?.data}
-            noDataMessage={NoDataMessage}
+            noDataMessage="There is no reward activity here"
           />
         )}
       </div>

@@ -77,7 +77,7 @@ const BidsData = ({ searchQuery, tab, assetCode }) => {
   return (
     <CTable
       columns={columns}
-      noDataMessage={() => <NoData message="There is no bid" />}
+      noDataComponent={() => <NoData message="There is no bid" />}
       className={styles.table}
       dataSource={filteredBids?.slice(0, 6)}
       loading={!bids}

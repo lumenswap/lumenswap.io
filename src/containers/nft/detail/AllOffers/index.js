@@ -167,7 +167,7 @@ function AllOffersPage({ id }) {
               </div>
               <CTable
                 columns={tableHeaders}
-                noDataMessage={NoDataMessage}
+                noDataComponent={NoDataMessage}
                 dataSource={offersData}
                 className={styles.table}
                 loading={!offersData}

@@ -24,7 +24,8 @@ const CTable = ({
   columns,
   dataSource,
   className,
-  noDataMessage: NoDataMessage,
+  noDataMessage,
+  noDataComponent: NoDataComponent,
   rowLink,
   loading,
   customLoading: CustomLoading,
@@ -43,10 +44,24 @@ const CTable = ({
   }
 
   if (!dataSource || dataSource === null) {
-    return <NoDataMessage />;
+    if (NoDataComponent) {
+      return <NoDataComponent />;
+    }
+    return (
+      <div className={styles['no-data-container']}>
+        <span>{noDataMessage}</span>
+      </div>
+    );
   }
   if (dataSource.length === 0) {
-    return <NoDataMessage />;
+    if (NoDataComponent) {
+      return <NoDataComponent />;
+    }
+    return (
+      <div className={styles['no-data-container']}>
+        <span>{noDataMessage}</span>
+      </div>
+    );
   }
 
   const [sortIndex, setSortIndex] = useState(null);

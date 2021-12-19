@@ -105,7 +105,7 @@ const AllParticipantPage = ({ round }) => {
             className={styles.table}
             columns={tableHeaders}
             dataSource={searchedParticipants}
-            noDataMessage={NoDataMessage}
+            noDataComponent={NoDataMessage}
             loading={loading}
           />
         </div>

@@ -77,7 +77,7 @@ function WinnersData({
     <>
       <CTable
         columns={columns}
-        noDataMessage={() => <NoData message="There is no winner" />}
+        noDataComponent={() => <NoData message="There is no winner" />}
         className={styles.table}
         dataSource={filteredWinners}
         loading={!winners}
