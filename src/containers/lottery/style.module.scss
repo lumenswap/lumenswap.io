@@ -26,17 +26,20 @@
   display: flex;
   align-items: center;
   font-family: SofiaPro;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
   border-radius: 4px;
-  padding: 1px 6px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  padding: 0px 6px 0px 6px;
 
   .dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    margin-right: 3px;
+    margin-right: 4px;
   }
 
   &.live {
@@ -208,6 +211,9 @@
   }
 }
 
+.bread {
+  font-size: 24px !important;
+}
 @media (max-width: $md) {
   .round-prize {
     padding-right: 0 !important;
