@@ -17,13 +17,13 @@ const RoundItem = ({ round }) => (
     <div className={styles['round-item-info']}>
       <div className={styles['round-item-info-section']}>
         <div className={styles['round-item-info-texts']}>
-          <span className={styles['round-item-info-texts-number']}>{numeral(0).format('0,0')}</span>
+          <span className={styles['round-item-info-texts-number']}>{numeral(round.participantCount).format('0,0')}</span>
           <span className={styles['round-item-info-texts-text']}>Participants</span>
         </div>
       </div>
       <div className={styles['round-item-info-section']}>
         <div className={styles['round-item-info-texts']}>
-          <span className={styles['round-item-info-texts-number']}>{numeral(0).format('0,0')}</span>
+          <span className={styles['round-item-info-texts-number']}>{numeral(round.ticketCount).format('0,0')}</span>
           <span className={styles['round-item-info-texts-text']}>Tickets</span>
         </div>
       </div>
