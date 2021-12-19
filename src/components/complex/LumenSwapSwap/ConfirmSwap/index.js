@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import Button from 'components/Button';
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import { useEffect, useState } from 'react';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'api/fetchMarketPrice';
-import isSameAsset from 'helpers/isSameAsset';
+import { isSameAsset } from 'helpers/asset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import { loginTypes } from 'reducers/user';
 import ColorizedPriceImpact from 'components/complex/LumenSwapSwap/ColorizedPriceImpact';
@@ -96,14 +96,14 @@ const ConfirmSwap = ({ data }) => {
       </div>
       <p className={styles.message}>
         output is estimated. you will receive at least{' '}
-        {sevenDigit(calculatedMin.toString())}{' '}
+        {humanAmount(calculatedMin.toString())}{' '}
         {data.to.asset.details.getCode()} or the transaction will revert.
       </p>
       <div className={styles.info}>
         <div className={styles.container}>
           <div className={styles.label}>Price
           </div>
-          <div className={styles.value}>1 {leftSide} = {sevenDigit(pricePer)} {rightSide}
+          <div className={styles.value}>1 {leftSide} = {humanAmount(pricePer)} {rightSide}
             <span className="icon-arrow-repeat" style={{ cursor: 'pointer' }} onClick={() => setReverse((i) => !i)} />
           </div>
         </div>
@@ -111,7 +111,7 @@ const ConfirmSwap = ({ data }) => {
           <div className={styles.label}>Minimum received
             <Tooltips id="minimum" text={<PrimaryTooltip text={appConsts.tooltip.min} />}><span className="icon-question-circle" /></Tooltips>
           </div>
-          <div className={classNames(styles.value)}>{loading ? 'Loading' : sevenDigit(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
+          <div className={classNames(styles.value)}>{loading ? 'Loading' : humanAmount(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Price impact

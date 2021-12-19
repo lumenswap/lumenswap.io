@@ -18,7 +18,7 @@ import loginWithFreighter from 'walletIntegeration/logins/loginWithFreighter';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
 import loginWithXbull from 'walletIntegeration/logins/loginWithXbull';
 import { useDispatch } from 'react-redux';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 const Initializing = ({ loginMethod }) => {

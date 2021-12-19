@@ -1,5 +1,5 @@
 import BN from 'helpers/BN';
-import getAssetDetails from './getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 
 export default function balanceMapper(item) {
   const balance = new BN(item.balance)

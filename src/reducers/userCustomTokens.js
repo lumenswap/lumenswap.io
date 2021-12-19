@@ -1,5 +1,5 @@
 import actionTypes from 'actions';
-import isSameAsset from 'helpers/isSameAsset';
+import { isSameAsset } from 'helpers/asset';
 
 export default function userCustomTokensReducer(state = [], action) {
   switch (action.type) {

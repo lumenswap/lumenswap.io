@@ -1,11 +1,10 @@
 import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
-import sevenDigit from 'helpers/sevenDigit';
-import isSameAsset from 'helpers/isSameAsset';
+import humanAmount from 'helpers/humanAmount';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ConfirmBid from 'blocks/ConfirmBid';
@@ -113,7 +112,7 @@ const SendBid = ({ tokenA }) => {
       />
       <div className={styles.total}>
         <div>Total</div>
-        <div>{sevenDigit(total.toFixed(7))} XLM</div>
+        <div>{humanAmount(total.toFixed(7))} XLM</div>
       </div>
       <Button
         htmlType="submit"

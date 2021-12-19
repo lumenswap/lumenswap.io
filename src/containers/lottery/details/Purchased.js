@@ -4,7 +4,7 @@ import Loading from 'components/Loading';
 import Ticket from 'assets/images/ticket.svg';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
 import { useDispatch, useSelector } from 'react-redux';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import LSP from 'tokens/LSP';
 import signForThem from 'walletIntegeration/signForThem';
 import { updateModalProps } from 'actions/modal';

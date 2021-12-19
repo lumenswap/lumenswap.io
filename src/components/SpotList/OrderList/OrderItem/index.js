@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import { useDispatch } from 'react-redux';
 import Tooltips from 'components/Tooltip';
@@ -84,9 +84,9 @@ const OrderItem = ({
             }));
           }}
         >
-          <div className={styles['row-item']}>{sevenDigit(row.price)}</div>
-          <div className={styles['row-item']}>{isSell ? sevenDigit(row.amount) : sevenDigit(new BN(row.amount).div(row.price).toFixed(7))}</div>
-          <div className={styles['row-item']}>{sevenDigit(row.total.toFixed(7))}</div>
+          <div className={styles['row-item']}>{humanAmount(row.price)}</div>
+          <div className={styles['row-item']}>{isSell ? humanAmount(row.amount) : humanAmount(new BN(row.amount).div(row.price).toFixed(7))}</div>
+          <div className={styles['row-item']}>{humanAmount(row.total.toFixed(7))}</div>
         </div>
       </div>
     </Tooltips>

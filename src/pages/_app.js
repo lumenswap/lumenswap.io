@@ -8,7 +8,7 @@ import { updateXLMPrice } from 'actions/xlmPrice';
 import balanceMapper from 'helpers/balanceMapper';
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import LModal from '../containers/LModal';
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';

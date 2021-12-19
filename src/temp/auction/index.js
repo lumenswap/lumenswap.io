@@ -11,7 +11,7 @@ import Button from 'components/Button';
 import ModalDialog from 'components/ModalDialog';
 import SendBid from 'blocks/SendBid';
 import { openConnectModal } from 'actions/modal';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import BidsSection from 'page-scripts/auction/BidsSection';
 import aggregateLSPOffer from 'page-scripts/auction/aggregation';
@@ -75,10 +75,10 @@ const Auction = () => {
   let totalBids = 0;
 
   if (aggData) {
-    totalLSP = numeral(sevenDigit(aggData.totalLSP.toString())).format('0,0.[00000]');
-    totalXLM = numeral(sevenDigit(aggData.totalXLM.toString())).format('0,0.[00000]');
+    totalLSP = numeral(humanAmount(aggData.totalLSP.toString())).format('0,0.[00000]');
+    totalXLM = numeral(humanAmount(aggData.totalXLM.toString())).format('0,0.[00000]');
     totalBids = numeral(aggData.totalBids).format('0,0');
-    latestPrice = numeral(sevenDigit(aggData.latestBid.lspPrice)).format('0,0.[00000]');
+    latestPrice = numeral(humanAmount(aggData.latestBid.lspPrice)).format('0,0.[00000]');
   } else {
     totalLSP = '-';
     totalXLM = '-';

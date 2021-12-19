@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import BN from 'helpers/BN';
 import { useState } from 'react';
 import numeral from 'numeral';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import OrderItem from './OrderItem';
 import styles from '../styles.module.scss';
 
@@ -62,9 +62,9 @@ const OrderList = ({
       total = new BN(total).plus(item.total);
     }
     setTooltipData({
-      avg: numeral(sevenDigit(new BN(avg).dividedBy(filteredRows.length))).format('0,0.[0000]'),
-      sum: numeral(sevenDigit(sum.toFixed(7))).format('0.00a'),
-      total: numeral(sevenDigit(total.toFixed(7))).format('0.00a'),
+      avg: numeral(humanAmount(new BN(avg).dividedBy(filteredRows.length))).format('0,0.[0000]'),
+      sum: numeral(humanAmount(sum.toFixed(7))).format('0.00a'),
+      total: numeral(humanAmount(total.toFixed(7))).format('0.00a'),
     });
     setHoveredIndex(rowIndex);
   };

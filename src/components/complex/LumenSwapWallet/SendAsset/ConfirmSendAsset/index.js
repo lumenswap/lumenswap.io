@@ -1,29 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
 import Button from 'components/Button';
-import defaultTokens from 'tokens/defaultTokens';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails, extractInfoByToken } from 'helpers/asset';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
 import generateCreateAccountTRX from 'stellar-trx/generateCreateAccountTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { isActiveAccount } from 'api/stellar';
-import questionLogo from 'assets/images/question.svg';
 import styles from './styles.module.scss';
 
 const ConfirmSendAsset = ({ data }) => {
   const dispatch = useDispatch();
-  const foundAsset = defaultTokens.find((i) => isSameAsset(data.selectedAsset, getAssetDetails(i)));
   const userAddress = useSelector((state) => state.user.detail.address);
 
   return (
     <div>
       <label className={styles.label}>Asset</label>
       <div className="d-flex align-items-center mt-1">
-        <img src={foundAsset ? foundAsset.logo : questionLogo} width={26} height={26} alt="logo" />
+        <img src={extractInfoByToken(data.selectedAsset).logo} width={26} height={26} alt="logo" />
         <span className={styles['asset-name']}>{data.selectedAsset.code}</span>
-        <span className={styles['asset-web']}>{foundAsset ? foundAsset.web : minimizeAddress(data.selectedAsset.issuer)}</span>
+        <span className={styles['asset-web']}>{extractInfoByToken(data.selectedAsset, true).web}</span>
       </div>
       <hr className={styles.hr} />
       <label className={styles.label}>Amount</label>

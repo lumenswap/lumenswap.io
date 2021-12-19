@@ -1,5 +1,5 @@
 import actionTypes from 'actions';
-import isSamePair from 'helpers/isSamePair';
+import { isSamePair } from 'helpers/asset';
 
 export default function userCustomPairsReducer(state = [], action) {
   switch (action.type) {

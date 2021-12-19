@@ -1,5 +1,5 @@
 import BN from 'helpers/BN';
-import isSameAsset from 'helpers/isSameAsset';
+import { isSameAsset } from 'helpers/asset';
 import StellarSDK from 'stellar-sdk';
 import { initializeStore } from 'store';
 import transactionConsts from './consts';

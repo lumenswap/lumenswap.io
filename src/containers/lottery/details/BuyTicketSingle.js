@@ -1,7 +1,6 @@
 import Button from 'components/Button';
 import BN from 'helpers/BN';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import Image from 'next/image';
 import Ticket from 'assets/images/ticket.svg';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';

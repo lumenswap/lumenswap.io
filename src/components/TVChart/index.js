@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import moment from 'moment';
 import { widget } from '../../../public/static/charting_library';
 import { tvChartTrageAggregator } from './utils';

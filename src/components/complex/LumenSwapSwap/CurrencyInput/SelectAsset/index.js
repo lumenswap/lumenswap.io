@@ -2,14 +2,12 @@ import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
 import defaultTokens from 'tokens/defaultTokens';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
-import pureTokens from 'helpers/pureTokens';
 import minimizeAddress from 'helpers/minimizeAddress';
 import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import { openModalAction } from 'actions/modal';
 import AddAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset/AddAsset';
 import { removeCustomTokenAction } from 'actions/userCustomTokens';
@@ -137,7 +135,7 @@ const SelectAsset = ({
                 </div>
               </div>
               <div className={styles.text}>
-                {isLogged && sevenDigit(asset.balance)}
+                {isLogged && humanAmount(asset.balance)}
               </div>
             </div>
           ))

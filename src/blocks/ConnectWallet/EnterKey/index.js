@@ -11,7 +11,7 @@ import { loginTypes } from 'reducers/user';
 import { closeModalAction } from 'actions/modal';
 import balanceMapper from 'helpers/balanceMapper';
 import { useDispatch } from 'react-redux';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 const EnterKey = () => {

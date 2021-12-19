@@ -10,14 +10,12 @@ import XLM from 'tokens/XLM';
 import LPriceSpreadSection from 'components/LPriceSpreadSection';
 import calculateSendEstimatedAndPath from 'api/swapAPI/calculateSendEstimatedAndPath';
 import calculateReceiveEstimatedAndPath from 'api/swapAPI/calculateReceiveEstimatedAndPath';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import BN from 'helpers/BN';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import ObmHeader from 'containers/obm/ObmHeader';
-import isSameAsset from 'helpers/isSameAsset';
-
 import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
 import { changeToAsset } from './swapHelpers';
 import SwapHead from './SwapHead';

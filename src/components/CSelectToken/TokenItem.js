@@ -1,6 +1,6 @@
 import { removeCustomTokenAction } from 'actions/userCustomTokens';
 import { useDispatch, useSelector } from 'react-redux';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 function TokenItem({ asset, selectAsset }) {
@@ -39,7 +39,7 @@ function TokenItem({ asset, selectAsset }) {
         </div>
       </div>
       <div className={styles.text}>
-        {isLogged && sevenDigit(asset.balance)}
+        {isLogged && humanAmount(asset.balance)}
       </div>
     </div>
   );

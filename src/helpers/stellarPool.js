@@ -1,10 +1,8 @@
 import StellarSDK from 'stellar-sdk';
 import USDC from 'tokens/USDC';
-import getAssetDetails from './getAssetDetails';
-import getAssetFromLPAsset from './getCodeFromLPAsset';
+import { getAssetDetails, isSameAsset, getAssetFromLPAsset } from 'helpers/asset';
 import humanAmount from './humanAmount';
 import BN from './BN';
-import isSameAsset from './isSameAsset';
 
 export function lexoOrderAssets(A, B) {
   return (StellarSDK.Asset.compare(A, B) <= 0) ? [A, B] : [B, A];
