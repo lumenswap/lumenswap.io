@@ -139,13 +139,6 @@ const SendAsset = ({ selectedAsset }) => {
     return true;
   };
 
-  function showWebOrIssuer(info) {
-    if (info.length > 50) {
-      return minimizeAddress(info);
-    }
-    return info;
-  }
-
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group mb-3">
@@ -153,7 +146,7 @@ const SendAsset = ({ selectedAsset }) => {
         <div className={styles['input-asset']}>
           <img src={extractInfoByToken(selectedAsset).logo} width={26} height={26} alt="logo" />
           <span className={styles['asset-name']}>{selectedAsset.code}</span>
-          <span className={styles['asset-web']}>{showWebOrIssuer(extractInfoByToken(selectedAsset).web)}</span>
+          <span className={styles['asset-web']}>{extractInfoByToken(selectedAsset).isWebIssuer ? minimizeAddress(extractInfoByToken(selectedAsset).web) : extractInfoByToken(selectedAsset).web}</span>
         </div>
       </div>
       <div className="form-group mb-3">

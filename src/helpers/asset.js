@@ -40,11 +40,13 @@ export function extractInfoByToken(token) {
     return {
       web: found.web,
       logo: found.logo,
+      isWebIssuer: false,
     };
   }
   return {
     web: token.issuer,
     logo: questionLogo,
+    isWebIssuer: true,
   };
 }
 

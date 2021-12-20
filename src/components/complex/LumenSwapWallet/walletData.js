@@ -132,25 +132,17 @@ function WalletData({ type }) {
       title: 'Assets',
       dataIndex: 'assets',
       key: '1',
-      render: (data) => {
-        function showWebOrIssuer(info) {
-          if (info.length > 50) {
-            return minimizeAddress(info);
-          }
-          return info;
-        }
-        return (
-          <div className={styles.asset}>
-            <div className={styles['asset-logo']}>
-              <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
-            </div>
-            <div className={styles['asset-div']}>
-              <span className={styles['asset-code']}>{data.asset.code}</span>
-              <span className={styles['asset-info']}>{showWebOrIssuer(extractInfoByToken(data.asset).web)}</span>
-            </div>
+      render: (data) => (
+        <div className={styles.asset}>
+          <div className={styles['asset-logo']}>
+            <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
           </div>
-        );
-      }
+          <div className={styles['asset-div']}>
+            <span className={styles['asset-code']}>{data.asset.code}</span>
+            <span className={styles['asset-info']}>{extractInfoByToken(data.asset).isWebIssuer ? minimizeAddress(extractInfoByToken(data.asset).web) : extractInfoByToken(data.asset).web}</span>
+          </div>
+        </div>
+      )
       ,
     },
     {

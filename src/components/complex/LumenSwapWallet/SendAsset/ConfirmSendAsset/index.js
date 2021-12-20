@@ -12,12 +12,6 @@ import styles from './styles.module.scss';
 const ConfirmSendAsset = ({ data }) => {
   const dispatch = useDispatch();
   const userAddress = useSelector((state) => state.user.detail.address);
-  function showWebOrIssuer(info) {
-    if (info.length > 50) {
-      return minimizeAddress(info);
-    }
-    return info;
-  }
 
   return (
     <div>
@@ -25,7 +19,7 @@ const ConfirmSendAsset = ({ data }) => {
       <div className="d-flex align-items-center mt-1">
         <img src={extractInfoByToken(data.selectedAsset).logo} width={26} height={26} alt="logo" />
         <span className={styles['asset-name']}>{data.selectedAsset.code}</span>
-        <span className={styles['asset-web']}>{showWebOrIssuer(extractInfoByToken(data.selectedAsset).web)}</span>
+        <span className={styles['asset-web']}>{extractInfoByToken(data.selectedAsset).isWebIssuer ? minimizeAddress(extractInfoByToken(data.selectedAsset).web) : extractInfoByToken(data.selectedAsset).web}</span>
       </div>
       <hr className={styles.hr} />
       <label className={styles.label}>Amount</label>
