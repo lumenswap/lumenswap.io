@@ -14,13 +14,14 @@ const RoundPrize = ({ round }) => (
         {round.status === 'Not started'
           ? `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}.`
           : round?.prizeDescription}
-        {round.status === 'Live' && (
+
+        {round.status !== 'Not Started' && (
           <>
             {' '}The cost of buying a ticket is 1 LSP and the winner will be selected{' '}
             at the {round.endLedger} Ledger,{' '}
             <a
               style={{ textDecoration: 'none', color: 'white' }}
-              href="https://medium.com/lumenswap/round-1-of-the-lottery-is-now-live-11c7160d307f"
+              href={round.mediumLink}
               target="_blank"
               rel="noreferrer"
             >
