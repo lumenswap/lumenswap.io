@@ -5,15 +5,13 @@ import { useEffect } from 'react';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
-import defaultTokens from 'tokens/defaultTokens';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
-import minimizeAddress from 'helpers/minimizeAddress';
-import { calculateMaxXLM } from 'helpers/XLMValidator';
+import {
+  isSameAsset, getAssetDetails, calculateMaxXLM, extractInfoByToken,
+} from 'helpers/asset';
 import { isActiveAccount } from 'api/stellar';
 import BN from 'helpers/BN';
 import StellarSDK from 'stellar-sdk';
-import questionLogo from 'assets/images/question.svg';
+import minimizeAddress from 'helpers/minimizeAddress';
 import ConfirmSendAsset from './ConfirmSendAsset';
 import styles from './styles.module.scss';
 
@@ -31,7 +29,6 @@ const SendAsset = ({ selectedAsset }) => {
   });
   const dispatch = useDispatch();
   const userBalance = useSelector((state) => state.userBalance);
-  const foundAsset = defaultTokens.find((i) => isSameAsset(selectedAsset, getAssetDetails(i)));
   const foundBalance = userBalance.find((balance) => isSameAsset(balance.asset, selectedAsset));
   const userSubentry = useSelector((state) => state.user.detail.subentry);
   const userAddress = useSelector((state) => state.user.detail.address);
@@ -147,9 +144,9 @@ const SendAsset = ({ selectedAsset }) => {
       <div className="form-group mb-3">
         <label htmlFor="destination" className="label-primary mb-1">Asset</label>
         <div className={styles['input-asset']}>
-          <img src={foundAsset ? foundAsset.logo : questionLogo} width={26} height={26} alt="logo" />
+          <img src={extractInfoByToken(selectedAsset).logo} width={26} height={26} alt="logo" />
           <span className={styles['asset-name']}>{selectedAsset.code}</span>
-          <span className={styles['asset-web']}>{foundAsset ? foundAsset.web : minimizeAddress(selectedAsset.issuer)}</span>
+          <span className={styles['asset-web']}>{extractInfoByToken(selectedAsset).isWebIssuer ? minimizeAddress(extractInfoByToken(selectedAsset).web) : extractInfoByToken(selectedAsset).web}</span>
         </div>
       </div>
       <div className="form-group mb-3">

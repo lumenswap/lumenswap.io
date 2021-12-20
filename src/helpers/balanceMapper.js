@@ -1,5 +1,5 @@
 import BN from 'helpers/BN';
-import getAssetDetails from './getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 
 export default function balanceMapper(item) {
   const balance = new BN(item.balance)
@@ -14,4 +14,12 @@ export default function balanceMapper(item) {
     balance,
     rawBalance: item.balance,
   };
+}
+
+export function filterUserBalance(userBalance) {
+  return userBalance.filter((item) => getAssetDetails({
+    code: item.asset_code,
+    issuer: item.asset_issuer,
+    type: item.asset_type,
+  }) !== null).map(balanceMapper);
 }

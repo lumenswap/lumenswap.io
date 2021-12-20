@@ -158,7 +158,7 @@ function TopVolumeMarket({ searchQuery }) {
       <CTable
         className={styles.table}
         columns={tableHeaders}
-        noDataMessage={NoDataMessage}
+        noDataComponent={NoDataMessage}
         dataSource={filteredAssets}
         rowLink={rowLink}
       />

@@ -1,10 +1,10 @@
 import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
 import { fetchOrderBookAPI } from 'api/stellar';
-import LeftSideAppLumen from 'components/SpotList/LeftSideAppLumen';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import LeftSideAppLumen from './SpotList/LeftSideAppLumen';
 
 function setCustomOrderPriceInput(dispatch, data) {
   dispatch(setCustomOrderPriceAction({

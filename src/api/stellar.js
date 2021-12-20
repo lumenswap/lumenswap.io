@@ -1,7 +1,7 @@
 import axios from 'axios';
 import BN from 'helpers/BN';
 import CoinGecko from 'coingecko-api';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
 

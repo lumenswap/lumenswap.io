@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import ModalDialog from 'components/ModalDialog';
 import SelectAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset';
 import { useSelector } from 'react-redux';
-import isSameAsset from 'helpers/isSameAsset';
-import sevenDigit from 'helpers/sevenDigit';
+import { isSameAsset } from 'helpers/asset';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const CurrencyInput = ({
@@ -32,7 +32,7 @@ const CurrencyInput = ({
         <div className={styles.balance}>
           {(isLogged && currentCurrency)
             ? `Balance: ${
-              foundBalance ? sevenDigit(foundBalance.balance) : '0'
+              foundBalance ? humanAmount(foundBalance.balance) : '0'
             }`
             : null}
         </div>

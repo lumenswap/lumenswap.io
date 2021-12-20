@@ -7,7 +7,7 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { useState, useEffect } from 'react';
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
-import InfinitePagination from 'components/InfinitePagination';
+import InfinitePagination from 'containers/nft/detail/InfinitePagination';
 import { fetchTradeAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';
@@ -171,7 +171,7 @@ function AllTradesPage({ id }) {
               </div>
               <CTable
                 columns={tableHeaders}
-                noDataMessage={NoDataMessage}
+                noDataComponent={NoDataMessage}
                 dataSource={tradesData}
                 className={styles.table}
                 loading={!tradesData}

@@ -136,7 +136,7 @@ function OpenOrder({ openOrderList, setOpenOrderList }) {
           className={styles.table}
           columns={tableHeaders}
           dataSource={openOrderList}
-          noDataMessage={NoDataMessage}
+          noDataComponent={NoDataMessage}
         />
       </div>
     </>

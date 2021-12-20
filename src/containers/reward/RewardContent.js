@@ -8,21 +8,14 @@ import Loading from 'components/Loading';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchAddressReward, fetchAddressRewardStats } from 'api/rewards';
-import isSameAsset from 'helpers/isSameAsset';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import LSP from 'tokens/LSP';
-import sevenDigit from 'helpers/sevenDigit';
+import humanAmount from 'helpers/humanAmount';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no reward activity here</div>
-  </div>
-);
-
 function rewardAmountHumanize(amount) {
-  return numeral(sevenDigit(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0.0');
+  return numeral(humanAmount(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0.0');
 }
 
 const RewardContent = () => {
@@ -82,7 +75,7 @@ const RewardContent = () => {
     {
       title: 'Wallet balance',
       tooltip: 'This shows your wallet’s LSP balance.',
-      content: <Info text="LSP" number={numeral(sevenDigit(foundLSP ? foundLSP.balance : '0')).format('0,0.0')} />,
+      content: <Info text="LSP" number={numeral(humanAmount(foundLSP ? foundLSP.balance : '0')).format('0,0.0')} />,
     },
     {
       title: 'Holder reward earned',
@@ -116,7 +109,7 @@ const RewardContent = () => {
           <CTable
             columns={tableHeaders}
             dataSource={addressReward?.data}
-            noDataMessage={NoDataMessage}
+            noDataMessage="There is no reward activity here"
           />
         )}
       </div>

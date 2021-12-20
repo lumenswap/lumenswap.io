@@ -1,5 +1,4 @@
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import { useSelector } from 'react-redux';
 
 function useUserSingleAsset(asset) {

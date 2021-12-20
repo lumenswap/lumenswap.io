@@ -1,5 +1,5 @@
 import StellarSDK from 'stellar-sdk';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import BN from 'helpers/BN';
 import transactionConsts from './consts';
 

@@ -1,4 +1,4 @@
-import getAssetDetails from './getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 
 export default function getAssetFromLPAsset(asset) {
   const splitted = asset.split(':');

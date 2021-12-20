@@ -1,5 +1,5 @@
-import AllParticipantPage from 'containers/lottery/round/Participants';
-import { roundParticipantGetServerSideProps } from 'containers/lottery/round/props';
+import AllParticipantPage from 'containers/lottery/round/details/RoundParticipants';
+import { roundParticipantGetServerSideProps } from 'containers/lottery/round/details/props';
 
 export default AllParticipantPage;
 

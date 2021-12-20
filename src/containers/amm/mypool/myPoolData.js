@@ -5,12 +5,6 @@ import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles['no-data-message-container']}>
-    <span>You have no pool</span>
-  </div>
-);
-
 function MyPoolData({ pools }) {
   const renderAssetInfo = (data) => {
     const token1 = getAssetFromLPAsset(data.reserves[0].asset);
@@ -73,7 +67,7 @@ function MyPoolData({ pools }) {
         className={styles.table}
         dataSource={pools}
         columns={tableHeaders}
-        noDataMessage={NoDataMessage}
+        noDataMessage="You have no pool"
         loading={pools === null}
         rowLink={rowURLGenerator}
       />

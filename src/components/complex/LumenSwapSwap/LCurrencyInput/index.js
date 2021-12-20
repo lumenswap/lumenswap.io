@@ -2,11 +2,9 @@ import { useRouter } from 'next/router';
 import Button from 'components/Button';
 import CurrencyInput from 'components/complex/LumenSwapSwap/CurrencyInput';
 import BN from 'helpers/BN';
-import isSameAsset from 'helpers/isSameAsset';
+import { isSameAsset, getAssetDetails, calculateMaxXLM } from 'helpers/asset';
 import { useSelector } from 'react-redux';
-import getAssetDetails from 'helpers/getAssetDetails';
 import XLM from 'tokens/XLM';
-import { calculateMaxXLM } from 'helpers/XLMValidator';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({

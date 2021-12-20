@@ -6,19 +6,18 @@ import urlMaker from 'helpers/urlMaker';
 import defaultTokens from 'tokens/defaultTokens';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
+import minimizeAddress from 'helpers/minimizeAddress';
 import Image from 'next/image';
 import CStatistics, { Info } from 'components/CStatistics';
 import { useEffect, useState } from 'react';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import {
+  getAssetDetails, extractInfoByToken, isSameAsset, calculateMaxXLM,
+} from 'helpers/asset';
 import BN from 'helpers/BN';
 import Link from 'next/link';
 import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
-import { calculateMaxXLM } from 'helpers/XLMValidator';
 import humanAmount from 'helpers/humanAmount';
-import { extractInfoByToken } from 'helpers/asset';
-import minimizeAddress from 'helpers/minimizeAddress';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
@@ -133,25 +132,17 @@ function WalletData({ type }) {
       title: 'Assets',
       dataIndex: 'assets',
       key: '1',
-      render: (data) => {
-        function showAssetInfo(info) {
-          if (info.length > 50) {
-            return minimizeAddress(info);
-          }
-          return info;
-        }
-        return (
-          <div className={styles.asset}>
-            <div className={styles['asset-logo']}>
-              <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
-            </div>
-            <div className={styles['asset-div']}>
-              <span className={styles['asset-code']}>{data.asset.code}</span>
-              <span className={styles['asset-info']}>{showAssetInfo(extractInfoByToken(data.asset).web)}</span>
-            </div>
+      render: (data) => (
+        <div className={styles.asset}>
+          <div className={styles['asset-logo']}>
+            <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
           </div>
-        );
-      }
+          <div className={styles['asset-div']}>
+            <span className={styles['asset-code']}>{data.asset.code}</span>
+            <span className={styles['asset-info']}>{extractInfoByToken(data.asset).isWebIssuer ? minimizeAddress(extractInfoByToken(data.asset).web) : extractInfoByToken(data.asset).web}</span>
+          </div>
+        </div>
+      )
       ,
     },
     {
@@ -282,7 +273,7 @@ function WalletData({ type }) {
           columns={tableHeaders}
           dataSource={filteredBalances}
           className={styles.table}
-          noDataMessage={NoDataMessage}
+          noDataComponent={NoDataMessage}
         />
       </div>
     </>

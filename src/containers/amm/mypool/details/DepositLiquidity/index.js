@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
-import AMMCurrentPrice from 'components/AMMCurrentPrice';
+import AMMCurrentPrice from 'containers/amm/mypool/AMMCurrentPrice';
 import { openModalAction } from 'actions/modal';
 import BN from 'helpers/BN';
 import {

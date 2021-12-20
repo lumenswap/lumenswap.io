@@ -151,7 +151,7 @@ function KnownAssets({ assets, searchQuery }) {
         className={styles.table}
         columns={tableHeaders}
         dataSource={filteredAssets}
-        noDataMessage={NoDataMessage}
+        noDataComponent={NoDataMessage}
         rowLink={rowLink}
       />
     </div>

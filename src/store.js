@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { persistReducer, createTransform } from 'redux-persist';
 import persistStorage from 'redux-persist/lib/storage';
 import reducers from 'reducers';
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 

@@ -3,8 +3,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeFromAsset, changeToAsset } from './swapHelpers';
 

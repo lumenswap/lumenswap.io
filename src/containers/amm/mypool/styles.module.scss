@@ -44,27 +44,7 @@
   font-weight: 500;
 }
 
-.no-data-message-container {
-  width: 100%;
-  height: 190px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $White;
-  border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  span {
-    font-family: SofiaPro;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.56;
-    letter-spacing: normal;
-    text-align: center;
-    color: $ShuttleGray;
-  }
-}
+
 .table {
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;

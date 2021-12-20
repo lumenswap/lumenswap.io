@@ -1,8 +1,6 @@
 import Button from 'components/Button';
 import BN from 'helpers/BN';
-import getAssetDetails from 'helpers/getAssetDetails';
-import isSameAsset from 'helpers/isSameAsset';
-import { calculateMaxXLM } from 'helpers/XLMValidator';
+import { getAssetDetails, isSameAsset, calculateMaxXLM } from 'helpers/asset';
 import { useWatch } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import XLM from 'tokens/XLM';

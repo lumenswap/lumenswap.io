@@ -1,4 +1,4 @@
-import NavLink from 'components/NavLink';
+import NavLink from 'components/LumenSwapHeader/NavLink';
 import Image from 'next/image';
 import arrowHeaderIcon from '../../assets/images/arrow-header.svg';
 import styles from './styles.module.scss';

@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 import SelectOption from 'components/SelectOption';
 import CTable from 'components/CTable';
-import NoData from 'components/NoData';
 import CPagination from 'components/CPagination';
 import fetchAuctionTickets from 'api/auctionFakeTickets';
 
@@ -14,8 +13,6 @@ import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
-
-const TableNoData = () => <NoData message="There is no bid" />;
 
 const AuctionTickets = () => {
   const [page, setPage] = useState(1);
@@ -117,7 +114,7 @@ const AuctionTickets = () => {
                 <div className={styles.card}>
                   <CTable
                     columns={columns}
-                    noDataMessage={TableNoData}
+                    noDataMessage="There is no bid"
                     className={styles.table}
                     dataSource={tickets}
                     loading={!tickets}

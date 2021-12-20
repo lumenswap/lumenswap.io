@@ -1,4 +1,4 @@
-import getAssetDetails from 'helpers/getAssetDetails';
+import { getAssetDetails } from 'helpers/asset';
 import { lexoOrderAssets } from 'helpers/stellarPool';
 import StellarSDK from 'stellar-sdk';
 import transactionConsts from './consts';

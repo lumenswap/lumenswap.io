@@ -67,7 +67,7 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
   return (
     <CTable
       columns={columns}
-      noDataMessage={() => <NoData message="There is no winner" />}
+      noDataComponent={() => <NoData message="There is no winner" />}
       className={styles.table}
       dataSource={filteredWinners?.slice(0, 6)}
       loading={!winners}

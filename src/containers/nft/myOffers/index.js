@@ -21,12 +21,6 @@ import humanAmount from 'helpers/humanAmount';
 import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles['loading-data-container']}>
-    <span>You have no offers</span>
-  </div>
-);
-
 function loadOfferData(userAddress, setOrders) {
   const allOffers = [];
   fetchOffersOfAccount(userAddress, { limit: 200 }).then((data) => {
@@ -197,7 +191,7 @@ const NFTOrder = () => {
                 className={styles.table}
                 columns={tableHeaders}
                 dataSource={orders}
-                noDataMessage={NoDataMessage}
+                noDataMessage="You have no offers"
                 loading={!orders}
               />
             </div>

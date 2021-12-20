@@ -1,5 +1,5 @@
 import InputGroup from 'components/InputGroup';
-import CustomSlider from 'components/CustomSlider';
+import CustomSlider from 'containers/obm/spot/OrderFormSection/CustomSlider';
 import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
