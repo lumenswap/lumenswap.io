@@ -146,6 +146,26 @@
       th {
         border-radius: 0px !important;
       }
+      th:not(:first-child) {
+        span {
+          margin-left: 120px;
+        }
+      }
+      th:last-child {
+        span {
+          margin-left: 24px;
+        }
+      }
+      td:not(:first-child) {
+        section {
+          margin-left: 120px;
+        }
+      }
+      td:last-child {
+        section {
+          margin-left: 24px;
+        }
+      }
     }
     a {
       height: 52px !important;
@@ -153,6 +173,7 @@
         td {
           vertical-align: middle;
         }
+        
       }
     }
   }
@@ -233,6 +254,44 @@
     margin-left: 15px;
   }
 }
+
+.show-eye-icon {
+  cursor: pointer;
+  &-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+}
+
+.show-ticket-modal {
+  &-main {
+    :global(.modal-content) {
+      background-color: transparent;
+      border: none;
+    }
+    section {
+      background-color: #fff;
+      border-radius: 12px 12px 0px 0px;
+    }
+    :global(.modal-body) {
+      padding: 0 !important;
+    }
+  }
+  h2 {
+    font-family: SofiaPro;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+  }
+}
+
+ 
 
 @media (max-width: $sm) {
   .input {

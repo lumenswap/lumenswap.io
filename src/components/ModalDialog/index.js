@@ -13,6 +13,7 @@ const ModalDialog = ({
   backAction,
   hasClose = true,
   className,
+  mainClassName,
   onAfterClose = () => {},
 }) => {
   const handleClose = () => {
@@ -23,8 +24,8 @@ const ModalDialog = ({
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <div className={classNames(styles.header, className)}>
+    <Modal className={mainClassName} show={show} onHide={handleClose}>
+      <section className={classNames(styles.header, className)}>
         {back ? <span className="icon-arrow-left" style={{ cursor: 'pointer' }} onClick={backAction} />
           : (
             <h2 className={styles.title}>{title}</h2>
@@ -36,7 +37,7 @@ const ModalDialog = ({
           onClick={handleClose}
         />
         )}
-      </div>
+      </section>
       <div className={className} style={{ width: `${width}px` }}>
         <Modal.Body>
           {children}
