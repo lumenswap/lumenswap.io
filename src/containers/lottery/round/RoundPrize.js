@@ -15,7 +15,7 @@ const RoundPrize = ({ round }) => (
           ? `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}.`
           : round?.prizeDescription}
 
-        {round.status !== 'Not Started' && (
+        {round.status !== 'Not started' && (
           <>
             {' '}The cost of buying a ticket is 1 LSP and the winner will be selected{' '}
             at the {round.endLedger} Ledger,{' '}
