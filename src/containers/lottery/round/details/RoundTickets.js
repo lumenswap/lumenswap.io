@@ -4,10 +4,17 @@ import CPagination from 'components/CPagination';
 import { useEffect, useState, useRef } from 'react';
 import Input from 'components/Input';
 import classNames from 'classnames';
+import { openModalAction } from 'actions/modal';
 import { searchTikcets } from 'api/lottery';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
-import tableHeaders from './roundTicketTableHeaders';
+import moment from 'moment';
+import minimizeAddress from 'helpers/minimizeAddress';
+import eyeShowIcon from 'assets/images/eye-show-icon.png';
+import Image from 'next/image';
+import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
+import { useDispatch } from 'react-redux';
+import ShowTicketInfo from '../ShowTicketInfo';
 import LotteryHeader from '../../LotteryHeader';
 import styles from '../../style.module.scss';
 
@@ -24,6 +31,8 @@ const AllTicketsPage = ({ round }) => {
   const [searchedTickets, setSearchedTickets] = useState(null);
   const timeOutRef = useRef(null);
   const loading = searchedTickets === null;
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchInitialData() {
@@ -63,6 +72,68 @@ const AllTicketsPage = ({ round }) => {
     },
     {
       name: 'Tickets',
+    },
+  ];
+
+  const handleShowTicketInfo = (data) => {
+    dispatch(openModalAction({
+      modalProps: {
+        title: 'Ticket info',
+        className: styles['show-ticket-modal'],
+        mainClassName: styles['show-ticket-modal-main'],
+      },
+      content: <ShowTicketInfo data={data} />,
+    }));
+  };
+
+  const tableHeaders = [
+    {
+      title: 'Ticket ID',
+      dataIndex: 'ticketId',
+      key: '1',
+      render: (data) => (
+        <a style={{ textDecoration: 'none' }} href={generateTransactionURL(data.transactionId)} target="_blank" rel="noreferrer" className={styles.ticketId}>
+          {minimizeAddress(data.transactionId, 8)}
+        </a>
+      ),
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: '2',
+      render: (data) => (
+        <a style={{ textDecoration: 'none' }} href={generateAddressURL(data.address, 4)} target="_blank" rel="noreferrer" className={styles.ticketId}>
+          {minimizeAddress(data.address, 4)}
+        </a>
+      ),
+    },
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: '3',
+      render: (data) => (
+        <div>
+          {moment(data.ticketDate).fromNow()}
+        </div>
+      ),
+    },
+    {
+      title: '',
+      dataIndex: '',
+      key: '4',
+      render: (data) => (
+        <div className={styles['show-eye-icon-container']}>
+          <div>
+            <Image
+              onClick={() => handleShowTicketInfo(data)}
+              className={styles['show-eye-icon']}
+              src={eyeShowIcon}
+              width={16}
+              height={13}
+            />
+          </div>
+        </div>
+      ),
     },
   ];
 
