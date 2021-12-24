@@ -22,12 +22,17 @@ const RoundItem = ({ round }) => {
         </div>
         <div className={styles.roundImage}>
           {round?.prizeImage && (
-          <img
-            src={round?.prizeImage}
-            style={{
-              width: imageSizes[0], height: imageSizes[1], objectFit: 'contain', marginTop: `${isNotStarted ? '15px' : '0px'}`,
+            <div style={{
+              width: imageSizes[0], height: imageSizes[1],
             }}
-          />
+            >
+              <img
+                src={round?.prizeImage}
+                style={{
+                  width: '100%', height: '100%', objectFit: 'fill', marginTop: `${isNotStarted ? '15px' : '0px'}`,
+                }}
+              />
+            </div>
           )}
         </div>
       </div>
