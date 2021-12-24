@@ -36,9 +36,9 @@ function ShowTicketInfo({ data }) {
       <div className={styles['address-container']}>
         <span className={styles['info-title']}>Address</span>
         <span className={styles.info}>
-          {data.address.toLowerCase()}
+          {data.address}
           <a
-            href={generateAddressURL(data.transactionId)}
+            href={generateAddressURL(data.address)}
             target="_blank"
             rel="noreferrer"
             className={styles['arrow-icon']}
