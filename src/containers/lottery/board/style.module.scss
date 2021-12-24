@@ -21,6 +21,7 @@
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;
   background-color: $White;
+  margin-bottom: 32px;
 }
 
 .roundItem {
@@ -68,11 +69,6 @@
   }
 }
 
-@media (max-width: $md) {
-  .roundsList {
-    grid-template-columns: 1fr;
-  }
-}
 
 @media (max-width: $sm) {
   .roundItem {
