@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import bannerSrc from 'assets/images/auction-banner.png';
-import urlMaker from 'helpers/urlMaker';
+import { useEffect, useState } from 'react';
+import Loading from 'components/Loading';
+import { getAllAuctions } from 'api/auction';
 import AuctionHeader from '../AuctionHeader';
 import AuctionBoardItem from './AuctionBoardItem';
 import styles from './styles.module.scss';
@@ -16,26 +17,12 @@ const AuctionBoard = () => {
       {children}
     </div>
   );
-  const boards = [
-    {
-      title: 'Rabet (RBT)',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      sellAmount: '10,000,000 RBT',
-      basePrice: '0.3 XLM',
-      logo: bannerSrc,
-      url: urlMaker.auction.board.root('Rabet(RBT)'),
-      isLive: true,
-    },
-    {
-      title: 'Rabet (RBT)',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      sellAmount: '50,000,000 RBT',
-      basePrice: '0.4 XLM',
-      logo: bannerSrc,
-      url: urlMaker.auction.board.root('Rabet(RBT)'),
-      isLive: false,
-    },
-  ];
+
+  const [boards, setBoards] = useState(null);
+
+  useEffect(() => {
+    getAllAuctions().then((fetchedBoards) => setBoards(fetchedBoards));
+  }, []);
 
   return (
     <Container>
@@ -43,7 +30,12 @@ const AuctionBoard = () => {
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
             <h1 className={styles.title}>Auction Board</h1>
-            {boards.map((board, i) => <AuctionBoardItem board={board} key={i} />)}
+            {!boards && (
+              <div className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '50vh' }}>
+                <Loading size={50} />
+              </div>
+            )}
+            {boards?.map((board, i) => <AuctionBoardItem board={board} key={i} />)}
           </div>
         </div>
       </div>

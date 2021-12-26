@@ -1,7 +1,7 @@
 import BidsData from './BidsData';
 
 function BidTabContent({
-  tab, page, setTotalPages, assetCode, searchQuery,
+  tab, page, setTotalPages, assetCode, searchQuery, auction,
 }) {
   if (tab === 'bids') {
     return (
@@ -10,6 +10,7 @@ function BidTabContent({
         assetCode={assetCode}
         searchQuery={searchQuery}
         setTotalPages={setTotalPages}
+        auction={auction}
         tab={tab}
       />
     );

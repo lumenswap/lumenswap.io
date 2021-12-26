@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import CTabs from 'components/CTabs';
 import CPagination from 'components/CPagination';
 import Breadcrumb from 'components/BreadCrumb';
@@ -10,13 +10,17 @@ import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
 import WinnersTabContent from './WinnersTabContent';
 
-function Winners({ pageName, assetCode }) {
+function Winners({ pageName, assetCode, auction }) {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
   const [searchQuery, setSearchQuery] = useState(null);
+  const timeOutRef = useRef(null);
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+    clearTimeout(timeOutRef.current);
+    timeOutRef.current = setTimeout(async () => {
+      setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+    }, 700);
   };
 
   const handleTabChange = (newPage) => {
@@ -38,7 +42,7 @@ function Winners({ pageName, assetCode }) {
   ];
   const crumbData = [
     { url: urlMaker.auction.root(), name: 'Auction' },
-    { url: urlMaker.auction.board.root(pageName), name: `${pageName}` },
+    { url: urlMaker.auction.singleAuction.root(pageName), name: `${pageName}` },
     { name: 'Winners' },
   ];
 
@@ -65,7 +69,7 @@ function Winners({ pageName, assetCode }) {
                 onChange={handleTabChange}
                 extraComponent={SearchInput}
                 customTabProps={{
-                  page, setTotalPages, assetCode, searchQuery,
+                  page, setTotalPages, assetCode, searchQuery, auction,
                 }}
               />
             </div>

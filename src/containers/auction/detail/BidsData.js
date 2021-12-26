@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
-import fetchAuctionBids from 'api/AuctionBids';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
-import numeral from 'numeral';
+import { fetchOfferAPI } from 'api/stellar';
+import { getAssetDetails } from 'helpers/asset';
+import XLM from 'tokens/XLM';
+import BN from 'helpers/BN';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-const BidsData = ({ searchQuery, tab, assetCode }) => {
+const BidsData = ({
+  searchQuery, tab, assetCode, assetIssuer, basePrice, refreshData,
+}) => {
   const [bids, setBids] = useState(null);
 
   let filteredBids = bids && [...bids];
   if (searchQuery) {
     if (tab === 'bid') {
-      filteredBids = filteredBids?.filter((bid) => bid.address.search(searchQuery) !== -1);
+      filteredBids = filteredBids?.filter((bid) => bid.seller.search(searchQuery) !== -1);
     }
   }
   const columns = [
@@ -23,8 +28,8 @@ const BidsData = ({ searchQuery, tab, assetCode }) => {
       dataIndex: 'address',
       key: 1,
       render: (data) => (
-        <a href={generateAddressURL(data.address)} className={styles.link}>
-          {minimizeAddress(data.address)}
+        <a href={generateAddressURL(data.seller)} className={styles.link}>
+          {minimizeAddress(data.seller)}
         </a>
       ),
     },
@@ -34,7 +39,7 @@ const BidsData = ({ searchQuery, tab, assetCode }) => {
       key: 2,
       render: (data) => (
         <span>
-          {moment(data.date).fromNow()}
+          {moment(data.last_modified_time).fromNow()}
         </span>
       ),
     },
@@ -44,7 +49,8 @@ const BidsData = ({ searchQuery, tab, assetCode }) => {
       key: 3,
       render: (data) => (
         <span>
-          {numeral(data.amount).format('0,0')} {data.amountAssetCode}
+          {humanAmount(new BN(data.amount)
+            .times(data.price).toString())} {assetCode}
         </span>
       ),
     },
@@ -54,7 +60,7 @@ const BidsData = ({ searchQuery, tab, assetCode }) => {
       key: 4,
       render: (data) => (
         <span>
-          {data.price} {data.baseAssetCode}
+          {humanAmount(new BN(1).div(data.price).toFixed(7))} XLM
         </span>
       ),
     },
@@ -64,22 +70,36 @@ const BidsData = ({ searchQuery, tab, assetCode }) => {
       key: 5,
       render: (data) => (
         <span>
-          {numeral(data.total).format('0,0')} {data.baseAssetCode}
+          {humanAmount(new BN(data.amount))} XLM
         </span>
       ),
     },
   ];
 
   useEffect(() => {
-    fetchAuctionBids(null, assetCode).then((data) => setBids(data.bidsData));
-  }, []);
+    fetchOfferAPI(
+      getAssetDetails(
+        { code: assetCode, issuer: assetIssuer },
+      ), getAssetDetails(XLM),
+      { order: 'desc', limit: 200 },
+    )
+      .then((data) => {
+        const offers = data.data._embedded.records;
+        const theBids = offers.filter((offer) => new BN(1)
+          .div(offer.price)
+          .isGreaterThanOrEqualTo(basePrice));
+
+        setBids(theBids.slice(0, 10));
+      })
+      .catch((err) => console.log(err));
+  }, [refreshData]);
 
   return (
     <CTable
       columns={columns}
       noDataComponent={() => <NoData message="There is no bid" />}
       className={styles.table}
-      dataSource={filteredBids?.slice(0, 6)}
+      dataSource={filteredBids}
       loading={!bids}
     />
   );

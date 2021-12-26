@@ -4,22 +4,15 @@ import numeral from 'numeral';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { useEffect, useState } from 'react';
-import fetchAuctionWinners from 'api/AuctionWinners';
+import { getAuctionWinners } from 'api/auction';
 import styles from './styles.module.scss';
 
 function WinnersData({
-  page, setTotalPages, searchQuery, assetCode, tab,
+  page, setTotalPages, searchQuery, assetCode, auction,
 }) {
   const [winners, setWinners] = useState(null);
 
-  let filteredWinners = winners && [...winners];
-
-  if (searchQuery) {
-    if (tab === 'winners') {
-      filteredWinners = filteredWinners?.filter((winner) => winner.address
-        .search(searchQuery) !== -1);
-    }
-  }
+  const filteredWinners = winners && [...winners];
 
   const columns = [
     {
@@ -38,7 +31,7 @@ function WinnersData({
       key: 3,
       render: (data) => (
         <span>
-          {numeral(data.amount).format('0,0')} {data.amountAssetCode}
+          {numeral(data.amount).format('0,0')} {assetCode}
         </span>
       ),
     },
@@ -48,7 +41,7 @@ function WinnersData({
       key: 4,
       render: (data) => (
         <span>
-          {data.price} {data.baseAssetCode}
+          {data.price} XLM
         </span>
       ),
     },
@@ -58,7 +51,7 @@ function WinnersData({
       key: 5,
       render: (data) => (
         <span>
-          {numeral(data.total).format('0,0')} {data.baseAssetCode}
+          {numeral(data.total).format('0,0')} XLM
         </span>
       ),
     },
@@ -66,12 +59,11 @@ function WinnersData({
 
   useEffect(() => {
     setWinners(null);
-    const query = { currentPage: page, number: 10 };
-    fetchAuctionWinners(query, assetCode).then((data) => {
-      setWinners(data.winnersData);
+    getAuctionWinners(auction.id, { page, searchQuery }).then((data) => {
+      setWinners(data.data);
       setTotalPages(data.totalPages);
     });
-  }, [page]);
+  }, [page, searchQuery]);
 
   return (
     <>
