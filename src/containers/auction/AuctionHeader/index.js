@@ -17,8 +17,8 @@ const AuctionHeader = () => {
   ];
   const rightSideLinks = [
     {
-      name: 'My Tickets',
-      link: urlMaker.auction.tickets(),
+      name: 'My Bids',
+      link: urlMaker.auction.bids(),
       disableMainHref: true,
       restricted: true,
     },

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
 
-import fetchAuctionWinners from 'api/AuctionWinners';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import numeral from 'numeral';
+import { getAuctionWinners } from 'api/auction';
 import styles from './styles.module.scss';
 
-const WinnersData = ({ searchQuery, tab, assetCode }) => {
+const WinnersData = ({
+  searchQuery, tab, assetCode, auctionId,
+}) => {
   const [winners, setWinners] = useState(null);
 
   let filteredWinners = winners && [...winners];
@@ -17,6 +19,7 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
       filteredWinners = filteredWinners?.filter((bid) => bid.address.search(searchQuery) !== -1);
     }
   }
+
   const columns = [
     {
       title: 'Address',
@@ -34,7 +37,7 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
       key: 3,
       render: (data) => (
         <span>
-          {numeral(data.amount).format('0,0')} {data.amountAssetCode}
+          {numeral(data.amount).format('0,0')} {assetCode}
         </span>
       ),
     },
@@ -44,7 +47,7 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
       key: 4,
       render: (data) => (
         <span>
-          {data.price} {data.baseAssetCode}
+          {data.price} XLM
         </span>
       ),
     },
@@ -54,14 +57,14 @@ const WinnersData = ({ searchQuery, tab, assetCode }) => {
       key: 5,
       render: (data) => (
         <span>
-          {numeral(data.total).format('0,0')} {data.baseAssetCode}
+          {numeral(data.total).format('0,0')} XLM
         </span>
       ),
     },
   ];
 
   useEffect(() => {
-    fetchAuctionWinners(null, assetCode).then((data) => setWinners(data.winnersData));
+    getAuctionWinners(auctionId).then((data) => setWinners(data.data));
   }, []);
 
   return (

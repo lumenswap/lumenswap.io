@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
-import { getAssetDetails, isSameAsset } from 'helpers/asset';
+import { calculateMaxXLM, getAssetDetails, isSameAsset } from 'helpers/asset';
 import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
@@ -11,8 +11,10 @@ import ConfirmBid from 'blocks/ConfirmBid';
 import { openModalAction } from 'actions/modal';
 import styles from './styles.module.scss';
 
-const SendBid = ({ tokenA }) => {
+const SendBid = ({ tokenA, basePrice, reloadData }) => {
   const userBalance = useSelector((state) => state.userBalance);
+  const subEntry = useSelector((state) => state.user.detail.subentry);
+
   const {
     handleSubmit, control, watch, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
@@ -27,7 +29,7 @@ const SendBid = ({ tokenA }) => {
       openModalAction({
         modalProps: { title: 'Confirm Bid' },
         content: (
-          <ConfirmBid data={data} tokenA={tokenA} />
+          <ConfirmBid data={data} tokenA={tokenA} reloadData={reloadData} />
         ),
       }),
     );
@@ -59,10 +61,10 @@ const SendBid = ({ tokenA }) => {
         name="tokenAmount"
         control={control}
         rules={{
-          required: 'amount is required',
+          required: 'Amount is required',
           validate: (val) => {
             if (!(new BN(val).isGreaterThan(0))) {
-              return 'amount must be greater than 0';
+              return 'Amount must be greater than 0';
             }
 
             return true;
@@ -86,13 +88,13 @@ const SendBid = ({ tokenA }) => {
         rules={{
           required: 'Price is required',
           validate: (val) => {
-            if (new BN(val).isLessThan(0.002)) {
-              return 'Price must be greater than 0.002';
+            if (new BN(val).isLessThan(basePrice)) {
+              return `Price must be greater than ${basePrice}`;
             }
 
             const tokenAmountVal = getValues().tokenAmount;
             if (tokenAmountVal && new BN(val)
-              .times(tokenAmountVal).isGreaterThan(userXlm.balance)) {
+              .times(tokenAmountVal).isGreaterThan(calculateMaxXLM(userXlm.balance, subEntry))) {
               return 'Insufficient XLM balance';
             }
 
@@ -103,7 +105,7 @@ const SendBid = ({ tokenA }) => {
         render={(props) => (
           <InputGroup
             variant="primary"
-            placeholder="0.002"
+            placeholder={basePrice}
             rightLabel="XLM"
             value={props.value}
             onChange={props.onChange}

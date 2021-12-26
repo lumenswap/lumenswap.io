@@ -104,12 +104,12 @@ const urlMaker = {
     },
   },
   auction: {
-    root: () => `${rootUrl.auction}/board`,
-    tickets: () => `${rootUrl.auction}/tickets`,
-    board: {
-      root: (name) => `${rootUrl.auction}/board/${name}`,
-      bids: (name) => `${rootUrl.auction}/board/${name}/bids`,
-      winners: (name) => `${rootUrl.auction}/board/${name}/winners`,
+    root: () => `${rootUrl.auction}`,
+    bids: () => `${rootUrl.auction}/bids`,
+    singleAuction: {
+      root: (name) => `${rootUrl.auction}/${name}`,
+      bids: (name) => `${rootUrl.auction}/${name}/bids`,
+      winners: (name) => `${rootUrl.auction}/${name}/winners`,
     },
   },
 };

@@ -1,7 +1,7 @@
 import WinnersData from './WinnersData';
 
 function WinnersTabContent({
-  tab, page, setTotalPages, assetCode, searchQuery,
+  tab, page, setTotalPages, assetCode, searchQuery, auction,
 }) {
   if (tab === 'winners') {
     return (
@@ -11,6 +11,7 @@ function WinnersTabContent({
         searchQuery={searchQuery}
         setTotalPages={setTotalPages}
         tab={tab}
+        auction={auction}
       />
     );
   }

@@ -2,6 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
+import ServerSideLoading from 'components/ServerSideLoading';
 import { useCallback, useState, useEffect } from 'react';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
@@ -10,18 +11,19 @@ import { extractLogoByToken } from 'helpers/asset';
 import LineChart from 'containers/auction/detail/LineChart';
 import InfoBox from 'components/InfoBox';
 import ArrowRight from 'assets/images/arrowRight';
-import Refresh from 'assets/images/refresh';
 import CTabs from 'components/CTabs';
 import Input from 'components/Input';
 import SendBid from 'blocks/SendBid';
-import { fetchAuctionChartData } from 'api/AuctionFakeData';
+import { getAuctionStats } from 'api/auction';
 import { openModalAction } from 'actions/modal';
 import { useDispatch } from 'react-redux';
 import numeral from 'numeral';
 import moment from 'moment';
 import minimizeAddress from 'helpers/minimizeAddress';
 import useIsLogged from 'hooks/useIsLogged';
-import ServerSideLoading from 'components/ServerSideLoading';
+import BN from 'helpers/BN';
+import humanAmount from 'helpers/humanAmount';
+import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import AuctionHeader from '../AuctionHeader';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
 
@@ -41,7 +43,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const [currentTab, setCurrentTab] = useState('bid');
   const [searchQuery, setSearchQuery] = useState(null);
   const [chartData, setChartData] = useState(null);
-  const [displayLedgers, setDisplayLedgers] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
 
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
@@ -53,11 +55,14 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
   };
-  const handleDisplayLedgers = () => {
-    setDisplayLedgers((prev) => !prev);
-  };
+
   useEffect(() => {
-    fetchAuctionChartData(assetCode).then((data) => setChartData(data));
+    getAuctionStats(infoData.id).then((res) => {
+      const amounts = res.data.steps.map((item) => new BN(item.amount).div(10 ** 7).toString());
+      const prices = res.data.steps.map((item) => item.price);
+
+      setChartData({ amounts, prices, assetCode });
+    });
   }, []);
 
   const handleSendBid = () => {
@@ -66,7 +71,9 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         modalProps: { title: 'Send Bid' },
         content: (
           <SendBid
-            tokenA={infoData.bidAsset}
+            tokenA={{ code: infoData.assetCode, issuer: infoData.assetIssuer }}
+            basePrice={infoData.basePrice}
+            reloadData={() => setRefreshData((prev) => !prev)}
           />
         ),
       }),
@@ -88,13 +95,13 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
       title: 'Asset code',
       render: (data) => (
         <>
-          <Image src={extractLogoByToken(data.asset)} height={22} width={22} className="rounded-circle" alt="logo" />
-          <div className="ml-1">{data.asset.code}</div>
+          <Image src={extractLogoByToken({ code: data.assetCode, issuer: data.assetIssuer })} height={22} width={22} className="rounded-circle" alt="logo" />
+          <div className="ml-1">{data.assetCode}</div>
         </>
       ),
     },
-    { title: 'Asset issuer', render: (data) => `${minimizeAddress(data.asset.issuer)}` },
-    { title: 'Amount to sell', tooltip: 'some data', render: (data) => `${numeral(data.asset.sellAmount).format('0,0')} ${data.asset.code}` },
+    { title: 'Asset issuer', render: (data) => <a href={generateAddressURL(data.assetIssuer)} target="_blank" rel="noreferrer">{minimizeAddress(data.assetIssuer)}</a> },
+    { title: 'Amount to sell', tooltip: 'some data', render: (data) => `${numeral(data.amountToSell).format('0,0')} ${data.assetCode}` },
   ];
 
   const auctionInfo = [
@@ -102,19 +109,14 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
       title: 'Period',
       render: (data) => (
         <div className={styles.period}>
-          {displayLedgers ? `${data.auction.startLedger} Ledger` : moment(data.auction.startDate).format('D MMM Y')}
+          {moment(data.startDate).format('D MMM Y')}
           <div className={styles['arrow-icon']}><ArrowRight /></div>
-          {displayLedgers ? `${data.auction.endLedger} Ledger` : moment(data.auction.endDate).format('D MMM Y')}
-          <div
-            onClick={handleDisplayLedgers}
-            className={styles['refresh-icon']}
-          ><Refresh />
-          </div>
+          {moment(data.endDate).format('D MMM Y')}
         </div>
       ),
     },
-    { title: 'Base price', render: (data) => `${data.auction.basePrice} ${data.auction.baseAssetCode}` },
-    { title: 'Bids', tooltip: 'some data', render: (data) => `${numeral(data.auction.bids).format('0,0')} ${data.auction.baseAssetCode}` },
+    { title: 'Base price', render: (data) => `${data.basePrice} XLM` },
+    { title: 'Bids', tooltip: 'some data', render: (data) => `${humanAmount(new BN(data.totalBids).div(10 ** 7).toFixed(7))} XLM` },
   ];
 
   const tabs = [
@@ -123,6 +125,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   ];
 
   const SearchInput = useCallback(() => (
+    currentTab === 'winner' && (
     <div className={styles.input}>
       <Input
         type="text"
@@ -132,12 +135,13 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         onChange={handleSearch}
       />
     </div>
-  ), []);
+    )
+  ), [currentTab]);
   function generateLink() {
     if (currentTab === 'bid') {
-      return urlMaker.auction.board.bids(pageName);
+      return urlMaker.auction.singleAuction.bids(pageName);
     }
-    return urlMaker.auction.board.winners(pageName);
+    return urlMaker.auction.singleAuction.winners(pageName);
   }
 
   return (
@@ -176,25 +180,33 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
                   </div>
                 </div>
               </div>
-              <div className="row mt-4">
-                <div className="col-12">
-                  <div className={classNames(styles.card, styles['card-table'])}>
-                    <CTabs
-                      tabs={tabs}
-                      tabContent={AuctionDetailTabContent}
-                      className={styles.tabs}
-                      onChange={handleTabChange}
-                      extraComponent={SearchInput}
-                      customTabProps={{ searchQuery, assetCode }}
-                    />
-                  </div>
-                  <Link href={generateLink()}>
-                    <a className={styles['link-see-all']}>
-                      See all {currentTab === 'bid' ? 'offers' : 'winners'}
-                      <ArrowRight />
-                    </a>
-                  </Link>
+            </div>
+            <div className="row mt-4">
+              <div className="col-12">
+                <div className={classNames(styles.card, styles['card-table'])}>
+                  <CTabs
+                    tabs={tabs}
+                    tabContent={AuctionDetailTabContent}
+                    className={styles.tabs}
+                    onChange={handleTabChange}
+                    extraComponent={SearchInput}
+                    customTabProps={{
+                      searchQuery,
+                      assetCode,
+                      auctionId: infoData.id,
+                      assetIssuer: infoData.assetIssuer,
+                      basePrice: infoData.basePrice,
+                      refreshData,
+                      setRefreshData,
+                    }}
+                  />
                 </div>
+                <Link href={generateLink()}>
+                  <a className={styles['link-see-all']}>
+                    See all {currentTab === 'bid' ? 'bids' : 'winners'}
+                    <ArrowRight />
+                  </a>
+                </Link>
               </div>
             </div>
           </div>

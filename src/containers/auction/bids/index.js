@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import CTabs from 'components/CTabs';
 import CPagination from 'components/CPagination';
 import Breadcrumb from 'components/BreadCrumb';
@@ -11,13 +11,17 @@ import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
 import BidTabContent from './BidTabContent';
 
-function Bids({ pageName, assetCode }) {
+function Bids({ pageName, assetCode, auction }) {
+  const timeOutRef = useRef(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
   const [searchQuery, setSearchQuery] = useState(null);
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+    clearTimeout(timeOutRef.current);
+    timeOutRef.current = setTimeout(async () => {
+      setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
+    }, 700);
   };
 
   const handleTabChange = (newPage) => {
@@ -39,7 +43,7 @@ function Bids({ pageName, assetCode }) {
   ];
   const crumbData = [
     { url: urlMaker.auction.root(), name: 'Auction' },
-    { url: urlMaker.auction.board.root(pageName), name: `${pageName}` },
+    { url: urlMaker.auction.singleAuction.root(pageName), name: `${pageName}` },
     { name: 'Bids' },
   ];
 
@@ -67,7 +71,7 @@ function Bids({ pageName, assetCode }) {
                   onChange={handleTabChange}
                   extraComponent={SearchInput}
                   customTabProps={{
-                    page, setTotalPages, assetCode, searchQuery,
+                    page, setTotalPages, assetCode, searchQuery, auction,
                   }}
                 />
               </div>

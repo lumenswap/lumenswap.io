@@ -1,3 +1,5 @@
+import { getAllAuctions } from 'api/auction';
+
 async function BidsPageGetServerSideProps({ params }) {
   const pageName = params.name;
   const assetCode = pageName.substring(
@@ -5,10 +7,13 @@ async function BidsPageGetServerSideProps({ params }) {
     pageName.lastIndexOf(')'),
   );
 
+  const infoData = await getAllAuctions({ assetCode });
+
   return {
     props: {
       pageName,
       assetCode,
+      auction: infoData[0],
     },
   };
 }

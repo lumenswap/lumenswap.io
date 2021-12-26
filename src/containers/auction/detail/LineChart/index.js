@@ -56,6 +56,7 @@ const LineChart = ({ chartData, height }) => {
     },
     xAxis: {
       type: 'category',
+      data: chartData?.prices,
       boundaryGap: false,
       axisLabel: {
         color: textColor,
@@ -83,7 +84,7 @@ const LineChart = ({ chartData, height }) => {
     },
     yAxis: {
       type: 'value',
-      name: 'Amount(LSP)',
+      name: `Amount ${chartData?.assetCode}`,
       min: 0,
       nameTextStyle: {
         color: '#1d1d1d',
@@ -111,11 +112,11 @@ const LineChart = ({ chartData, height }) => {
     },
     series: [
       {
-        name: 'Step LSP',
+        name: `Step ${chartData?.assetCode}`,
         type: 'line',
         step: 'start',
         symbol: 'none',
-        data: chartData,
+        data: chartData?.amounts,
         // CHART_KEYS.map((i) => [i, 0])
         legendHoverLink: false,
         areaStyle: {
