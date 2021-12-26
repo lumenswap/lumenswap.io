@@ -34,7 +34,7 @@ const tableRows = (rows) => rows.map((row) => (
               row.counterAsset,
               row.baseAsset,
               '0',
-              row.price,
+              '1',
               row.id,
             );
           }
