@@ -29,6 +29,7 @@ import { fetchOfferAPI, fetchOffersOfAccount, fetchOrderBookAPI } from 'api/stel
 import humanAmount from 'helpers/humanAmount';
 import NLSP from 'tokens/NLSP';
 import numeral from 'numeral';
+import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 import NFTDetailsTabContent from './NFTDetailsTabContent';
@@ -347,13 +348,14 @@ const NFTDetail = ({ id: lusiId, data }) => {
         <title>Lusi#{lusiId} | Lumenswap</title>
       </Head>
       <NFTHeader />
-      <div className={classNames('layout main', styles.main)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.main)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
 
-            <div className="d-flex justify-content-between align-items-center">
-              <Breadcrumb className={styles.bread} data={breadCrumbData} />
-              {buttonState !== null && (
+              <div className="d-flex justify-content-between align-items-center">
+                <Breadcrumb className={styles.bread} data={breadCrumbData} />
+                {buttonState !== null && (
                 <Button
                   variant="primary"
                   fontWeight={500}
@@ -363,60 +365,61 @@ const NFTDetail = ({ id: lusiId, data }) => {
                 >
                   <PlaceOrSetPriceButtonContent buttonState={buttonState} />
                 </Button>
-              )}
-            </div>
+                )}
+              </div>
 
-            <div className={classNames('row', styles.row)}>
-              <div className={classNames('col-lg-6 col-md-6 col-sm-12 col-12', styles.col)}>
-                <div className={classNames(styles.card, styles['card-nft'])}>
-                  <div className={classNames('d-flex justify-content-center', styles['img-container'])}>
-                    <img
-                      loading="lazy"
-                      src={data.imageUrl}
-                      className={styles['lusi-img']}
-                    />
+              <div className={classNames('row', styles.row)}>
+                <div className={classNames('col-lg-6 col-md-6 col-sm-12 col-12', styles.col)}>
+                  <div className={classNames(styles.card, styles['card-nft'])}>
+                    <div className={classNames('d-flex justify-content-center', styles['img-container'])}>
+                      <img
+                        loading="lazy"
+                        src={data.imageUrl}
+                        className={styles['lusi-img']}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className={classNames('col-lg-6 col-md-6 col-sm-12 col-12', styles.col)}>
-                <InfoBox
-                  title="NFT Info"
-                  rows={nftInfo}
-                  data={data.nftInfo}
-                  className={styles['first-info-box']}
-                />
-                <InfoBox
-                  title="Owner Info"
-                  rows={ownerInfo}
-                  data={ownerInfoData}
-                />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-12">
-                <div className={classNames(styles['card-2'], styles['card-tabs'])}>
-                  <CTabs
-                    tabs={tabs}
-                    tabContent={NFTDetailsTabContent}
-                    className={styles.tabs}
-                    onChange={handleChangeTab}
-                    customTabProps={{
-                      lusiData: data,
-                      offers: lusiOffers,
-                    }}
+                <div className={classNames('col-lg-6 col-md-6 col-sm-12 col-12', styles.col)}>
+                  <InfoBox
+                    title="NFT Info"
+                    rows={nftInfo}
+                    data={data.nftInfo}
+                    className={styles['first-info-box']}
+                  />
+                  <InfoBox
+                    title="Owner Info"
+                    rows={ownerInfo}
+                    data={ownerInfoData}
                   />
                 </div>
-                <CSeeAllContentsButton
-                  className={styles['all-btn']}
-                  link={generateLink()}
-                  content={tab === 'offer' ? 'See all offers' : 'See all trades'}
-                />
+              </div>
+
+              <div className="row">
+                <div className="col-12">
+                  <div className={classNames(styles['card-2'], styles['card-tabs'])}>
+                    <CTabs
+                      tabs={tabs}
+                      tabContent={NFTDetailsTabContent}
+                      className={styles.tabs}
+                      onChange={handleChangeTab}
+                      customTabProps={{
+                        lusiData: data,
+                        offers: lusiOffers,
+                      }}
+                    />
+                  </div>
+                  <CSeeAllContentsButton
+                    className={styles['all-btn']}
+                    link={generateLink()}
+                    content={tab === 'offer' ? 'See all offers' : 'See all trades'}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </div>
   );
 };

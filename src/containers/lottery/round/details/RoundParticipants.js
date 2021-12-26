@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { getRoundParticipants } from 'api/lottery';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
+import ServerSideLoading from 'components/ServerSideLoading';
 import tableHeaders from '../participantsTableHeaders';
 import LotteryHeader from '../../LotteryHeader';
 import styles from '../../style.module.scss';
@@ -79,38 +80,39 @@ const AllParticipantPage = ({ round }) => {
         </Head>
         <LotteryHeader />
       </div>
-      <div className={styles.main}>
-        <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
-          <Breadcrumb
-            className={styles.bread}
-            spaceBetween={12}
-            data={breadCrumbData}
-          />
-        </div>
-        <div className={styles.tableContainer}>
-          <div className={classNames(styles.inputContainer, 'd-flex justify-content-between align-items-center')}>
-            <div className={styles.input}>
-              <Input
-                type="text"
-                placeholder="Enter your address"
-                onChange={handleSearch}
-                height={40}
-                fontSize={15}
-                className={styles.input}
-              />
-            </div>
-            <div className={styles['table-title']}>Participants</div>
+      <ServerSideLoading>
+        <div className={styles.main}>
+          <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
+            <Breadcrumb
+              className={styles.bread}
+              spaceBetween={12}
+              data={breadCrumbData}
+            />
           </div>
-          <CTable
-            className={styles.table}
-            columns={tableHeaders}
-            dataSource={searchedParticipants}
-            noDataComponent={NoDataMessage}
-            loading={loading}
-          />
-        </div>
+          <div className={styles.tableContainer}>
+            <div className={classNames(styles.inputContainer, 'd-flex justify-content-between align-items-center')}>
+              <div className={styles.input}>
+                <Input
+                  type="text"
+                  placeholder="Enter your address"
+                  onChange={handleSearch}
+                  height={40}
+                  fontSize={15}
+                  className={styles.input}
+                />
+              </div>
+              <div className={styles['table-title']}>Participants</div>
+            </div>
+            <CTable
+              className={styles.table}
+              columns={tableHeaders}
+              dataSource={searchedParticipants}
+              noDataComponent={NoDataMessage}
+              loading={loading}
+            />
+          </div>
 
-        {!loading && searchedParticipants?.length > 0
+          {!loading && searchedParticipants?.length > 0
         && (
         <div style={{ marginTop: 24, marginBottom: 60 }} className="d-flex">
           <CPagination
@@ -122,7 +124,8 @@ const AllParticipantPage = ({ round }) => {
           />
         </div>
         )}
-      </div>
+        </div>
+      </ServerSideLoading>
     </>
   );
 };

@@ -8,6 +8,7 @@ import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import { loginTypes } from 'reducers/user';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
+import ServerSideLoading from 'components/ServerSideLoading';
 import BuyTicketSingle from './BuyTicketSingle';
 import BuyTicketPrivateKey from './BuyTicketPrivateKey';
 import BoardData from './BoardData';
@@ -79,10 +80,11 @@ const RoundDetailsPage = ({ round }) => {
         </Head>
         <LotteryHeader />
       </div>
-      <div className={styles.main}>
-        <div className={classNames(styles.title, 'flex-column flex-md-row')}>
-          <Breadcrumb className={styles.bread} spaceBetween={12} data={breadCrumbData} />
-          {round?.status.toLowerCase() === 'live' && (
+      <ServerSideLoading>
+        <div className={styles.main}>
+          <div className={classNames(styles.title, 'flex-column flex-md-row')}>
+            <Breadcrumb className={styles.bread} spaceBetween={12} data={breadCrumbData} />
+            {round?.status.toLowerCase() === 'live' && (
             <Button
               onClick={handleBuyTicket}
               htmlType="button"
@@ -90,24 +92,25 @@ const RoundDetailsPage = ({ round }) => {
               variant="primary"
               className={styles.button}
             />
-          )}
-        </div>
-        <div className="row mx-0 mt-3">
-          <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-lg-6')}>
-            <RoundPrize round={round} />
+            )}
           </div>
-          <div className={classNames(styles['round-info'], 'col-12 col-lg-6 pr-0')}>
-            <RoundInfo round={round} />
+          <div className="row mx-0 mt-3">
+            <div style={{ paddingLeft: 0 }} className={classNames(styles['round-prize'], 'col-12 col-lg-6')}>
+              <RoundPrize round={round} />
+            </div>
+            <div className={classNames(styles['round-info'], 'col-12 col-lg-6 pr-0')}>
+              <RoundInfo round={round} />
+            </div>
+          </div>
+          <div
+            style={{ marginTop: 24, marginBottom: 55 }}
+            className={styles['table-container']}
+          >
+            <BoardData onTabChange={onTabChange} round={round} />
+            <CSeeAllContentsButton link={generateLink()} content={tab === 'tickets' ? 'See all tickets' : 'See all addresses'} />
           </div>
         </div>
-        <div
-          style={{ marginTop: 24, marginBottom: 55 }}
-          className={styles['table-container']}
-        >
-          <BoardData onTabChange={onTabChange} round={round} />
-          <CSeeAllContentsButton link={generateLink()} content={tab === 'tickets' ? 'See all tickets' : 'See all addresses'} />
-        </div>
-      </div>
+      </ServerSideLoading>
     </>
   );
 };

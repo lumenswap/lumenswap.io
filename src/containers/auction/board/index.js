@@ -2,6 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import bannerSrc from 'assets/images/auction-banner.png';
 import urlMaker from 'helpers/urlMaker';
+import ServerSideLoading from 'components/ServerSideLoading';
 import AuctionHeader from '../AuctionHeader';
 import AuctionBoardItem from './AuctionBoardItem';
 import styles from './styles.module.scss';
@@ -39,14 +40,16 @@ const AuctionBoard = () => {
 
   return (
     <Container>
-      <div className={classNames('layout main', styles.layout)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <h1 className={styles.title}>Auction Board</h1>
-            {boards.map((board, i) => <AuctionBoardItem board={board} key={i} />)}
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.layout)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+              <h1 className={styles.title}>Auction Board</h1>
+              {boards.map((board, i) => <AuctionBoardItem board={board} key={i} />)}
+            </div>
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </Container>
   );
 };

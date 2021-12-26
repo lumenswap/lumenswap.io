@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { getAllRounds, searchTikcets } from 'api/lottery';
 import urlMaker from 'helpers/urlMaker';
+import ServerSideLoading from 'components/ServerSideLoading';
 import tableHeaders from './tableHeaders';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
@@ -97,35 +98,36 @@ const MyTicketsPage = () => {
         </Head>
         <LotteryHeader />
       </div>
-      <div className={styles.main}>
-        <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
-          <h1 className={styles.board}>My Tickets</h1>
-          <TableDropDown defaultOption={selectedRound} onChange={handleSelectRound} items={rounds} placeholder="All Tickets" />
-        </div>
-        <div className={styles.tableContainer}>
-          <div className={styles.inputContainer}>
-            <div className={styles.input}>
-              <Input
-                type="text"
-                placeholder="Enter your ticket ID"
-                onChange={handleSearch}
-                height={40}
-                fontSize={15}
-                className={styles.input}
-              />
-            </div>
+      <ServerSideLoading>
+        <div className={styles.main}>
+          <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
+            <h1 className={styles.board}>My Tickets</h1>
+            <TableDropDown defaultOption={selectedRound} onChange={handleSelectRound} items={rounds} placeholder="All Tickets" />
           </div>
-          <CTable
-            rowFix={{ rowNumbers: 10, rowHeight: 55, headerRowHeight: 49 }}
-            className={styles.table}
-            columns={tableHeaders}
-            dataSource={searchedTickets}
-            noDataComponent={NoDataMessage}
-            loading={loading}
-          />
-        </div>
+          <div className={styles.tableContainer}>
+            <div className={styles.inputContainer}>
+              <div className={styles.input}>
+                <Input
+                  type="text"
+                  placeholder="Enter your ticket ID"
+                  onChange={handleSearch}
+                  height={40}
+                  fontSize={15}
+                  className={styles.input}
+                />
+              </div>
+            </div>
+            <CTable
+              rowFix={{ rowNumbers: 10, rowHeight: 55, headerRowHeight: 49 }}
+              className={styles.table}
+              columns={tableHeaders}
+              dataSource={searchedTickets}
+              noDataComponent={NoDataMessage}
+              loading={loading}
+            />
+          </div>
 
-        {!loading && searchedTickets.length > 0
+          {!loading && searchedTickets.length > 0
         && (
         <div style={{ marginTop: 24 }} className="d-flex">
           <CPagination
@@ -137,7 +139,8 @@ const MyTicketsPage = () => {
           />
         </div>
         )}
-      </div>
+        </div>
+      </ServerSideLoading>
     </>
   );
 };

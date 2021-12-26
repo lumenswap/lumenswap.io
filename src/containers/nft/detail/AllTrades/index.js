@@ -12,6 +12,7 @@ import { fetchTradeAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
+import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../../NFTHeader';
 import styles from './styles.module.scss';
 
@@ -161,33 +162,35 @@ function AllTradesPage({ id }) {
         <title>Lusi#{id} | All trades | Lumenswap</title>
       </Head>
       <NFTHeader />
-      <div className={classNames('layout main', styles.main)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <Breadcrumb data={headerData} className={styles.header} />
-            <div className={styles['table-container']}>
-              <div className={styles['table-header']}>
-                <span>Trades</span>
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.main)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+              <Breadcrumb data={headerData} className={styles.header} />
+              <div className={styles['table-container']}>
+                <div className={styles['table-header']}>
+                  <span>Trades</span>
+                </div>
+                <CTable
+                  columns={tableHeaders}
+                  noDataComponent={NoDataMessage}
+                  dataSource={tradesData}
+                  className={styles.table}
+                  loading={!tradesData}
+                  rowFix={{ rowHeight: 53, rowNumbers: 20, headerRowHeight: 46 }}
+                />
               </div>
-              <CTable
-                columns={tableHeaders}
-                noDataComponent={NoDataMessage}
-                dataSource={tradesData}
-                className={styles.table}
-                loading={!tradesData}
-                rowFix={{ rowHeight: 53, rowNumbers: 20, headerRowHeight: 46 }}
+              <InfinitePagination
+                hasNextPage={!!nextPageToken}
+                hasPreviousPage={pagingTokens.length > 0}
+                onNextPage={handleNextPage}
+                onPrevPage={handlePrevPage}
+                className={styles.pagination}
               />
             </div>
-            <InfinitePagination
-              hasNextPage={!!nextPageToken}
-              hasPreviousPage={pagingTokens.length > 0}
-              onNextPage={handleNextPage}
-              onPrevPage={handlePrevPage}
-              className={styles.pagination}
-            />
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </div>
   );
 }

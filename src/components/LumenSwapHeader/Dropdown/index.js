@@ -64,7 +64,7 @@ const CustomDropdown = ({ className }) => {
         >
           <span className="icon-copy" />Copy address
         </NavDropdown.Item>
-        <NavDropdown.Item eventKey={1} href={`${process.env.REACT_APP_LUMENSCAN_URL}/account/${userAddress}`} target="_blank">
+        <NavDropdown.Item eventKey={1} href={`${process.env.REACT_APP_LUMENSCAN_URL}account/${userAddress}`} target="_blank">
           <span className="icon-earth" />
           Open in lumenscan
           <span className="icon-external" />

@@ -11,6 +11,7 @@ import moment from 'moment';
 import useIsLogged from 'hooks/useIsLogged';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
+import ServerSideLoading from 'components/ServerSideLoading';
 import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
 
@@ -96,44 +97,46 @@ const AuctionTickets = () => {
 
   return (
     <Container>
-      <div className={classNames('layout main', styles.layout)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <div className="d-flex justify-content-between align-items-center">
-              <h1 className={styles.title}>My Bids</h1>
-              <SelectOption
-                items={dropdownItems}
-                defaultValue={selectedItem}
-                setValue={setSelectedItem}
-                className={styles.filter}
-                isSearchable={false}
-              />
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <div className={styles.card}>
-                  <CTable
-                    columns={columns}
-                    noDataMessage="There is no bid"
-                    className={styles.table}
-                    dataSource={tickets}
-                    loading={!tickets}
-                  />
-                </div>
-                <div className="d-flex justify-content-end mt-4">
-                  <CPagination
-                    pages={pages}
-                    currentPage={page}
-                    onPageClick={(newPage) => {
-                      setPage(newPage);
-                    }}
-                  />
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.layout)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+              <div className="d-flex justify-content-between align-items-center">
+                <h1 className={styles.title}>My Bids</h1>
+                <SelectOption
+                  items={dropdownItems}
+                  defaultValue={selectedItem}
+                  setValue={setSelectedItem}
+                  className={styles.filter}
+                  isSearchable={false}
+                />
+              </div>
+              <div className="row">
+                <div className="col-12">
+                  <div className={styles.card}>
+                    <CTable
+                      columns={columns}
+                      noDataMessage="There is no bid"
+                      className={styles.table}
+                      dataSource={tickets}
+                      loading={!tickets}
+                    />
+                  </div>
+                  <div className="d-flex justify-content-end mt-4">
+                    <CPagination
+                      pages={pages}
+                      currentPage={page}
+                      onPageClick={(newPage) => {
+                        setPage(newPage);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </Container>
   );
 };

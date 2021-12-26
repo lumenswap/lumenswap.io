@@ -319,22 +319,22 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
               </ModalDialog>
             </div>
             {showAdvanced && (
-            <div className={styles['swap-info']}>
-              <Controller
-                name="priceSpread"
-                control={control}
-                render={(props) => (
-                  <LPriceSpreadSection
-                    {...props}
-                    ref={null}
-                    control={control}
-                    estimatedPrice={estimatedPrice}
-                    paths={paths}
-                    upperLoading={loading}
-                  />
-                )}
-              />
-            </div>
+              <div className={styles['swap-info']}>
+                <Controller
+                  name="priceSpread"
+                  control={control}
+                  render={(props) => (
+                    <LPriceSpreadSection
+                      {...props}
+                      ref={null}
+                      control={control}
+                      estimatedPrice={estimatedPrice}
+                      paths={paths}
+                      upperLoading={loading}
+                    />
+                  )}
+                />
+              </div>
             )}
           </form>
         </div>

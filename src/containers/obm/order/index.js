@@ -7,6 +7,7 @@ import generateBulkCancelOrderTRX from 'stellar-trx/generateBulkCancelOrderTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import orderConnectIcon from 'assets/images/orderNotConnected.png';
+import ServerSideLoading from 'components/ServerSideLoading';
 import OrderData from './OrderData';
 import styles from './styles.module.scss';
 
@@ -46,32 +47,34 @@ function OrderPage() {
         </Head>
         <ObmHeader />
       </div>
-      <div className={styles.main}>
-        <div className={styles.title}>
-          <h1 className={styles.order}>Order</h1>
-          {isLogged && showCancel && openOrderList?.length > 0 && (
+      <ServerSideLoading>
+        <div className={styles.main}>
+          <div className={styles.title}>
+            <h1 className={styles.order}>Order</h1>
+            {isLogged && showCancel && openOrderList?.length > 0 && (
             <span
               className={styles['cancel-btn']}
               onClick={cancelAllOrders}
             >
               Cancel all open orders
             </span>
-          )}
-        </div>
-        {isLogged ? (
-          <OrderData
-            setShowCancel={setShowCancel}
-            openOrderList={openOrderList}
-            setOpenOrderList={setOpenOrderList}
-          />
-        )
-          : (
-            <LoginRequired
-              text="To see the orders and trades, please connect your account"
-              logo={orderConnectIcon}
+            )}
+          </div>
+          {isLogged ? (
+            <OrderData
+              setShowCancel={setShowCancel}
+              openOrderList={openOrderList}
+              setOpenOrderList={setOpenOrderList}
             />
-          )}
-      </div>
+          )
+            : (
+              <LoginRequired
+                text="To see the orders and trades, please connect your account"
+                logo={orderConnectIcon}
+              />
+            )}
+        </div>
+      </ServerSideLoading>
     </>
   );
 }
