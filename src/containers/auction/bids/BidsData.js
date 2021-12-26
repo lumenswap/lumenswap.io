@@ -1,25 +1,20 @@
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
-import numeral from 'numeral';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import fetchAuctionBids from 'api/AuctionBids';
+import { getAuctionBids } from 'api/auction';
+import BN from 'helpers/BN';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 function BidsData({
-  page, setTotalPages, searchQuery, assetCode, tab,
+  page, setTotalPages, searchQuery, auction,
 }) {
   const [bids, setBids] = useState(null);
 
-  let filteredBids = bids && [...bids];
-
-  if (searchQuery) {
-    if (tab === 'bids') {
-      filteredBids = filteredBids?.filter((bid) => bid.address.search(searchQuery) !== -1);
-    }
-  }
+  const filteredBids = bids && [...bids];
 
   const columns = [
     {
@@ -38,7 +33,7 @@ function BidsData({
       key: 2,
       render: (data) => (
         <span>
-          {moment(data.date).fromNow()}
+          {moment(data.bidDate).fromNow()}
         </span>
       ),
     },
@@ -48,7 +43,7 @@ function BidsData({
       key: 3,
       render: (data) => (
         <span>
-          {numeral(data.amount).format('0,0')} {data.amountAssetCode}
+          {humanAmount(new BN(data.amount).div(10 ** 7))} {auction.assetCode}
         </span>
       ),
     },
@@ -58,7 +53,7 @@ function BidsData({
       key: 4,
       render: (data) => (
         <span>
-          {data.price} {data.baseAssetCode}
+          {data.price} XLM
         </span>
       ),
     },
@@ -68,7 +63,7 @@ function BidsData({
       key: 5,
       render: (data) => (
         <span>
-          {numeral(data.total).format('0,0')} {data.baseAssetCode}
+          {humanAmount(new BN(data.total).div(10 ** 7))} XLM
         </span>
       ),
     },
@@ -76,12 +71,11 @@ function BidsData({
 
   useEffect(() => {
     setBids(null);
-    const query = { currentPage: page, number: 10 };
-    fetchAuctionBids(query, assetCode).then((data) => {
-      setBids(data.bidsData);
+    getAuctionBids(auction.id, { page, searchQuery }).then((data) => {
+      setBids(data.data);
       setTotalPages(data.totalPages);
     });
-  }, [page]);
+  }, [page, searchQuery]);
 
   return (
     <>
