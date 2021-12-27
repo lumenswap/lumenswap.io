@@ -14,11 +14,15 @@ const textColor = '#656872';
 
 const convertor = (value) => numeral(value).format('0a');
 
-const tooltipFormatter = (values) => `<div class="${styles.tooltip}">
-    LSP-XLM <br/>
-    BID PRICE: <span>${values[0].value[0]}</span> XLM <br/>
-    VOLUME: <span>${numeral(values[0].value[1]).format('0,0')}</span> LSP
+const tooltipFormatter = (values) => {
+  const assetName = values[0].seriesName.split('Step')[1];
+
+  return `<div class="${styles.tooltip}">
+    ${assetName}-XLM <br/>
+    BID PRICE: <span>${values[0].axisValue}</span> XLM <br/>
+    VOLUME: <span>${numeral(values[0].value).format('0,0')}</span> ${assetName}
   </div>`;
+};
 
 const LineChart = ({ chartData, height }) => {
   const [isFullScreen, setFullScreen] = useState(false);
