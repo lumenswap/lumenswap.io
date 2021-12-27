@@ -7,7 +7,20 @@ async function auctionPageGetServerSideProps({ params }) {
     pageName.lastIndexOf(')'),
   );
 
+  if (assetCode.length <= 0) {
+    return {
+      notFound: true,
+    };
+  }
+
   const infoData = await getAllAuctions({ assetCode });
+
+  if (infoData.length <= 0) {
+    return {
+      notFound: true,
+    };
+  }
+
   const sumBids = await getTotalBids(infoData[0].id);
   infoData[0].totalBids = sumBids[0].totalBid;
 
