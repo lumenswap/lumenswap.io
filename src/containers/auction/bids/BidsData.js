@@ -43,7 +43,7 @@ function BidsData({
       key: 3,
       render: (data) => (
         <span>
-          {humanAmount(new BN(data.amount).div(10 ** 7))} {auction.assetCode}
+          {humanAmount(new BN(data.amount).div(10 ** 7).toFixed(7))} {auction.assetCode}
         </span>
       ),
     },
@@ -63,7 +63,7 @@ function BidsData({
       key: 5,
       render: (data) => (
         <span>
-          {humanAmount(new BN(data.total).div(10 ** 7))} XLM
+          {humanAmount(new BN(data.total).div(10 ** 7).toFixed(7))} XLM
         </span>
       ),
     },
