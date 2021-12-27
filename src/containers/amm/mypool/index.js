@@ -15,6 +15,7 @@ import { fetchAccountDetails } from 'api/stellar';
 import { getPoolDetailsById } from 'api/stellarPool';
 import USDC from 'tokens/USDC';
 import BN from 'helpers/BN';
+import ServerSideLoading from 'components/ServerSideLoading';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
@@ -140,22 +141,27 @@ function MyPoolPage() {
         <title>My Pool | Lumenswap</title>
       </Head>
       <AMMHeader />
-      <div className={classNames('layout main', styles.main)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12 px-xl-5 px-lg-3 px-md-3 px-sm-3 px-3">
-            <div className={styles['header-table']}>
-              <h1 className={styles.title}>My pools</h1>
-              <Button
-                variant="primary"
-                content="New Pool"
-                className={styles.btn}
-                onClick={openModal}
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.main)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12 px-xl-5 px-lg-3 px-md-3 px-sm-3 px-3">
+              <div className={styles['header-table']}>
+                <h1 className={styles.title}>My pools</h1>
+                <Button
+                  variant="primary"
+                  content="New Pool"
+                  className={styles.btn}
+                  onClick={openModal}
+                />
+              </div>
+              <MyPoolData
+                pools={pools}
+                afterWAD={() => fetchData(userAddress, xlmPrice, setPools)}
               />
             </div>
-            <MyPoolData pools={pools} afterWAD={() => fetchData(userAddress, xlmPrice, setPools)} />
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import ObmHeader from 'containers/obm/ObmHeader';
 import topPairIcon from 'assets/images/top-pair.svg';
 import Image from 'next/image';
 import { extractInfoByToken } from 'helpers/asset';
+import ServerSideLoading from 'components/ServerSideLoading';
 import MarketData from './MarketData';
 import styles from './styles.module.scss';
 import TopPair from './TopPair';
@@ -31,34 +32,36 @@ const MarketPage = ({ assets }) => {
         </Head>
         <ObmHeader />
       </div>
-      <div className={styles.main}>
-        <div className={styles['top-pair-details']}>
-          <div className="row">
-            <div className="col-lg-2 col-md-3 col-12 pr-0">
-              <div className={styles['top-pair-details-info']}>
-                <div className={styles['top-pair-details-image']}><Image src={topPairIcon} width={22} height={22} /></div>
-                <span className={styles['top-pair-details-text']}>Top Pair Gainers</span>
+      <ServerSideLoading>
+        <div className={styles.main}>
+          <div className={styles['top-pair-details']}>
+            <div className="row">
+              <div className="col-lg-2 col-md-3 col-12 pr-0">
+                <div className={styles['top-pair-details-info']}>
+                  <div className={styles['top-pair-details-image']}><Image src={topPairIcon} width={22} height={22} /></div>
+                  <span className={styles['top-pair-details-text']}>Top Pair Gainers</span>
+                </div>
               </div>
-            </div>
-            <div className="col-12 col-lg-10 col-md-12">
-              <div className="row">
-                {topChangeAssets.map((pair, i) => (
-                  <TopPair
-                    info={`${pair.baseAssetCode}/${pair.counterAssetCode}`}
-                    number={i + 1}
-                    images={[pair.baseLogo, pair.counterLogo]}
-                    percentage={pair.change24h}
-                  />
-                ))}
+              <div className="col-12 col-lg-10 col-md-12">
+                <div className="row">
+                  {topChangeAssets.map((pair, i) => (
+                    <TopPair
+                      info={`${pair.baseAssetCode}/${pair.counterAssetCode}`}
+                      number={i + 1}
+                      images={[pair.baseLogo, pair.counterLogo]}
+                      percentage={pair.change24h}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+          <div className={styles.title}>
+            <h1 className={styles.market}>Market</h1>
+          </div>
+          <MarketData assets={assets} />
         </div>
-        <div className={styles.title}>
-          <h1 className={styles.market}>Market</h1>
-        </div>
-        <MarketData assets={assets} />
-      </div>
+      </ServerSideLoading>
     </>
   );
 };

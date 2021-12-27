@@ -5,6 +5,7 @@ import Loading from 'components/Loading';
 import SelectOption from 'components/SelectOption';
 import fetchAllLusi from 'api/AllLusiAPI';
 import BN from 'helpers/BN';
+import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from './NFTHeader';
 import AllLusiData from './allLusiData';
 import styles from './styles.module.scss';
@@ -63,23 +64,25 @@ const NftPage = () => {
 
   return (
     <Container>
-      <div className={classNames('layout main', styles.main)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <div className="d-flex justify-content-between align-items-center">
-              <h1 className={styles.title}>All Lusi’s</h1>
-              <SelectOption
-                items={dropdownItems}
-                defaultValue={select}
-                setValue={setSelect}
-                className={styles.filter}
-                isSearchable={false}
-              />
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.main)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+              <div className="d-flex justify-content-between align-items-center">
+                <h1 className={styles.title}>All Lusi’s</h1>
+                <SelectOption
+                  items={dropdownItems}
+                  defaultValue={select}
+                  setValue={setSelect}
+                  className={styles.filter}
+                  isSearchable={false}
+                />
+              </div>
+              <AllLusiData allLusi={filteredLusi} />
             </div>
-            <AllLusiData allLusi={filteredLusi} />
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </Container>
   );
 };

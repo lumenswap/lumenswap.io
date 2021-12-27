@@ -2,6 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
+import ServerSideLoading from 'components/ServerSideLoading';
 import { useCallback, useState, useEffect } from 'react';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
@@ -145,15 +146,16 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
 
   return (
     <Container>
-      <div className={classNames('layout main', styles.layout)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <div className="d-flex justify-content-between align-items-center">
-              <Breadcrumb
-                data={breadCrumbData}
-                spaceBetween={8}
-              />
-              {isLogged
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.layout)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+              <div className="d-flex justify-content-between align-items-center">
+                <Breadcrumb
+                  data={breadCrumbData}
+                  spaceBetween={8}
+                />
+                {isLogged
               && (
               <Button
                 className={styles.btn}
@@ -162,19 +164,20 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
                 onClick={handleSendBid}
               />
               )}
-            </div>
-            <div className="row mt-3">
-              <div className="col-lg-6 col-md-12 col-sm-12 col-12">
-                <div className={classNames(styles.card, styles.chart)}>
-                  <LineChart chartData={chartData} height={300} />
-                </div>
               </div>
-              <div className="col-lg-6 col-md-12 col-sm-12 col-12">
-                <div className={classNames(styles.card, 'mt-lg-0 mt-md-4 mt-sm-4 mt-4')}>
-                  <InfoBox title="Asset info" rows={assetInfo} data={infoData} />
+              <div className="row mt-3">
+                <div className="col-lg-6 col-md-12 col-sm-12 col-12">
+                  <div className={classNames(styles.card, styles.chart)}>
+                    <LineChart chartData={chartData} height={300} />
+                  </div>
                 </div>
-                <div className={classNames(styles.card, 'mt-4')}>
-                  <InfoBox title="Auction info" rows={auctionInfo} data={infoData} />
+                <div className="col-lg-6 col-md-12 col-sm-12 col-12">
+                  <div className={classNames(styles.card, 'mt-lg-0 mt-md-4 mt-sm-4 mt-4')}>
+                    <InfoBox title="Asset info" rows={assetInfo} data={infoData} />
+                  </div>
+                  <div className={classNames(styles.card, 'mt-4')}>
+                    <InfoBox title="Auction info" rows={auctionInfo} data={infoData} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -208,7 +211,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
             </div>
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </Container>
   );
 };

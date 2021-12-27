@@ -9,6 +9,7 @@ import moment from 'moment';
 import useIsLogged from 'hooks/useIsLogged';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
+import ServerSideLoading from 'components/ServerSideLoading';
 import { getAuctionWinners } from 'api/auction';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOfferAPI } from 'api/stellar';
@@ -173,29 +174,31 @@ const AuctionTickets = ({ auctions }) => {
 
   return (
     <Container>
-      <div className={classNames('layout main', styles.layout)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <div className="d-flex justify-content-between align-items-center">
-              <h1 className={styles.title}>My Bids</h1>
-              <TableDropDown defaultOption={dropdownItems[0]} onChange={() => {}} items={dropdownItems} placeholder="Select Auction" />
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <div className={styles.card}>
-                  <CTable
-                    columns={columns}
-                    noDataMessage="There is no bid"
-                    className={styles.table}
-                    dataSource={tickets}
-                    loading={!tickets}
-                  />
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.layout)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+              <div className="d-flex justify-content-between align-items-center">
+                <h1 className={styles.title}>My Bids</h1>
+                <TableDropDown defaultOption={dropdownItems[0]} onChange={() => {}} items={dropdownItems} placeholder="Select Auction" />
+              </div>
+              <div className="row">
+                <div className="col-12">
+                  <div className={styles.card}>
+                    <CTable
+                      columns={columns}
+                      noDataMessage="There is no bid"
+                      className={styles.table}
+                      dataSource={tickets}
+                      loading={!tickets}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </Container>
   );
 };

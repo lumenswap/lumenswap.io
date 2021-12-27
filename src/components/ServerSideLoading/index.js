@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import LoadingComponent from 'components/Loading';
+import styles from './styles.module.scss';
 
 function ServerSideLoading({ children }) {
   const router = useRouter();
@@ -8,8 +9,8 @@ function ServerSideLoading({ children }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const handleStart = (url) => setLoading(true);
-    const handleComplete = (url) => setLoading(false);
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => setLoading(false);
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
@@ -24,8 +25,8 @@ function ServerSideLoading({ children }) {
 
   if (loading) {
     return (
-      <div style={{ height: '100vh' }} className="d-flex align-items-center justify-content-center">
-        <LoadingComponent size={50} />
+      <div className={styles['loading-container']}>
+        <LoadingComponent size={48} />
       </div>
     );
   }

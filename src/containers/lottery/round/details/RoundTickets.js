@@ -14,6 +14,7 @@ import eyeShowIcon from 'assets/images/eye-show-icon.png';
 import Image from 'next/image';
 import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
 import { useDispatch } from 'react-redux';
+import ServerSideLoading from 'components/ServerSideLoading';
 import ShowTicketInfo from '../ShowTicketInfo';
 import LotteryHeader from '../../LotteryHeader';
 import styles from '../../style.module.scss';
@@ -149,38 +150,39 @@ const AllTicketsPage = ({ round }) => {
         </Head>
         <LotteryHeader />
       </div>
-      <div className={styles.main}>
-        <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
-          <Breadcrumb
-            className={styles.bread}
-            spaceBetween={12}
-            data={breadCrumbData}
-          />
-        </div>
-        <div className={styles.tableContainer}>
-          <div className={classNames(styles.inputContainer, 'd-flex justify-content-between align-items-center')}>
-            <div className={styles.input}>
-              <Input
-                type="text"
-                placeholder="Enter your ticket Id"
-                onChange={handleSearch}
-                height={40}
-                fontSize={15}
-                className={styles.input}
-              />
-            </div>
-            <div className={styles['table-title']}>Tickets</div>
+      <ServerSideLoading>
+        <div className={styles.main}>
+          <div style={{ marginBottom: 24 }} className={classNames(styles.title, 'd-flex justify-content-between')}>
+            <Breadcrumb
+              className={styles.bread}
+              spaceBetween={12}
+              data={breadCrumbData}
+            />
           </div>
-          <CTable
-            className={styles.table}
-            columns={tableHeaders}
-            dataSource={searchedTickets}
-            noDataComponent={NoDataMessage}
-            loading={loading}
-          />
-        </div>
+          <div className={styles.tableContainer}>
+            <div className={classNames(styles.inputContainer, 'd-flex justify-content-between align-items-center')}>
+              <div className={styles.input}>
+                <Input
+                  type="text"
+                  placeholder="Enter your ticket Id"
+                  onChange={handleSearch}
+                  height={40}
+                  fontSize={15}
+                  className={styles.input}
+                />
+              </div>
+              <div className={styles['table-title']}>Tickets</div>
+            </div>
+            <CTable
+              className={styles.table}
+              columns={tableHeaders}
+              dataSource={searchedTickets}
+              noDataComponent={NoDataMessage}
+              loading={loading}
+            />
+          </div>
 
-        {!loading && searchedTickets.length > 0
+          {!loading && searchedTickets.length > 0
         && (
         <div style={{ marginTop: 24, marginBottom: 60 }} className="d-flex">
           <CPagination
@@ -192,7 +194,8 @@ const AllTicketsPage = ({ round }) => {
           />
         </div>
         )}
-      </div>
+        </div>
+      </ServerSideLoading>
     </>
   );
 };

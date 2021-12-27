@@ -18,6 +18,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
 import NLSP from 'tokens/NLSP';
 import humanAmount from 'helpers/humanAmount';
+import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
@@ -182,22 +183,24 @@ const NFTOrder = () => {
         <title>My offers | Lumenswap</title>
       </Head>
       <NFTHeader />
-      <div className={classNames('layout main', styles.main)}>
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <h1 className={styles.title}>My Offers</h1>
-            <div className={styles['table-container']}>
-              <CTable
-                className={styles.table}
-                columns={tableHeaders}
-                dataSource={orders}
-                noDataMessage="You have no offers"
-                loading={!orders}
-              />
+      <ServerSideLoading>
+        <div className={classNames('layout main', styles.main)}>
+          <div className="row justify-content-center">
+            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+              <h1 className={styles.title}>My Offers</h1>
+              <div className={styles['table-container']}>
+                <CTable
+                  className={styles.table}
+                  columns={tableHeaders}
+                  dataSource={orders}
+                  noDataMessage="You have no offers"
+                  loading={!orders}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </ServerSideLoading>
     </div>
   );
 };
