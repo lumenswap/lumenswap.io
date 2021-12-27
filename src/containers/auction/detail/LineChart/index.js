@@ -6,6 +6,7 @@ import Loading from 'components/Loading';
 import CCard from 'components/CCard';
 
 import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const lineColor = '#e3e9ff';
@@ -47,8 +48,10 @@ const LineChart = ({ chartData, height }) => {
       trigger: 'axis',
       formatter: (params) => tooltipFormatter(params),
     },
+    responsive: true,
+    maintainAspectRatio: false,
     grid: {
-      left: '20px',
+      left: '5px',
       // top: '60px',
       right: '0',
       bottom: '0',
@@ -84,13 +87,13 @@ const LineChart = ({ chartData, height }) => {
     },
     yAxis: {
       type: 'value',
-      name: `Amount ${chartData?.assetCode}`,
+      name: `Amount(${chartData?.assetCode})`,
       min: 0,
       nameTextStyle: {
         color: '#1d1d1d',
         fontSize: '14',
         fontFamily: '"SofiaPro", sans-serif',
-        padding: [0, 0, 10, 0],
+        padding: [0, 0, 10, 50],
       },
       axisLabel: {
         color: textColor,
@@ -190,7 +193,7 @@ const LineChart = ({ chartData, height }) => {
   }
   return (
     <div className="row">
-      <div className="col-12">
+      <div className={classNames('col-12', styles['chart-container'])}>
         {
           isFullScreen ? (
             <div

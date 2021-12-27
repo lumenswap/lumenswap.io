@@ -58,8 +58,11 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
 
   useEffect(() => {
     getAuctionStats(infoData.id).then((res) => {
-      const amounts = res.data.steps.map((item) => new BN(item.amount).div(10 ** 7).toString());
-      const prices = res.data.steps.map((item) => item.price);
+      let amounts = res?.data.steps.map((item) => new BN(item.amount).div(10 ** 7).toString());
+      const prices = res?.data.steps.map((item) => item.price);
+      if (!amounts) {
+        amounts = [0, 0];
+      }
 
       setChartData({ amounts, prices, assetCode });
     });
@@ -180,33 +183,34 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="row mt-4">
-              <div className="col-12">
-                <div className={classNames(styles.card, styles['card-table'])}>
-                  <CTabs
-                    tabs={tabs}
-                    tabContent={AuctionDetailTabContent}
-                    className={styles.tabs}
-                    onChange={handleTabChange}
-                    extraComponent={SearchInput}
-                    customTabProps={{
-                      searchQuery,
-                      assetCode,
-                      auctionId: infoData.id,
-                      assetIssuer: infoData.assetIssuer,
-                      basePrice: infoData.basePrice,
-                      refreshData,
-                      setRefreshData,
-                    }}
-                  />
+
+              <div className="row mt-4">
+                <div className="col-12">
+                  <div className={classNames(styles.card, styles['card-table'])}>
+                    <CTabs
+                      tabs={tabs}
+                      tabContent={AuctionDetailTabContent}
+                      className={styles.tabs}
+                      onChange={handleTabChange}
+                      extraComponent={SearchInput}
+                      customTabProps={{
+                        searchQuery,
+                        assetCode,
+                        auctionId: infoData.id,
+                        assetIssuer: infoData.assetIssuer,
+                        basePrice: infoData.basePrice,
+                        refreshData,
+                        setRefreshData,
+                      }}
+                    />
+                  </div>
+                  <Link href={generateLink()}>
+                    <a className={styles['link-see-all']}>
+                      See all {currentTab === 'bid' ? 'bids' : 'winners'}
+                      <ArrowRight />
+                    </a>
+                  </Link>
                 </div>
-                <Link href={generateLink()}>
-                  <a className={styles['link-see-all']}>
-                    See all {currentTab === 'bid' ? 'bids' : 'winners'}
-                    <ArrowRight />
-                  </a>
-                </Link>
               </div>
             </div>
           </div>

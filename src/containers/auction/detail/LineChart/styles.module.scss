@@ -18,6 +18,11 @@
     }
   }
 }
+.chart-container {
+  canvas {
+    width: 100% !important;
+  }
+}
 
 .fullScreenMask {
   position: fixed;
