@@ -1,32 +1,66 @@
 import { fetchTradesOfAccount } from 'api/stellar';
-import Table from 'components/Table';
 import moment from 'moment';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
+import CTable from 'components/CTable';
 import humanAmount from 'helpers/humanAmount';
 import FetchDataLoading from 'components/FetchDataLoading';
 import styles from '../styles.module.scss';
 
-const tableRows = (rows) => rows.map((row, index) => (
-  <tr key={index}>
-    <td className="color-gray">
-      <div className={styles['td-outside']}>
-        {row.time}
-      </div>
-    </td>
-    <td>{row.sellAmount} {row.sellAsset}</td>
-    <td>{row.buyAmount} {row.buyAsset}</td>
-    <td>{row.price} {row.pair.counter} / {row.otherPrice} {row.pair.base}</td>
-  </tr>
-));
-
-const tableHeader = ['Date', 'Sold', 'Bought', 'Price'];
+const noDataComponent = () => (
+  <p className={styles['centralize-content']}>
+    You have not trade history
+  </p>
+);
 
 export default function TradeHistory() {
   const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
+
+  const tableHeaders = [
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 1,
+      render: (data) => (
+        <div className={styles['td-outside']}>
+          {data.time}
+        </div>
+      ),
+    },
+    {
+      title: 'Sold',
+      dataIndex: 'sold',
+      key: 2,
+      render: (data) => (
+        <span>
+          {data.sellAmount} {data.sellAsset}
+        </span>
+      ),
+    },
+    {
+      title: 'Bought',
+      dataIndex: 'bought',
+      key: 3,
+      render: (data) => (
+        <span>
+          {data.buyAmount} {data.buyAsset}
+        </span>
+      ),
+    },
+    {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 4,
+      render: (data) => (
+        <span className={styles['price-td']}>
+          {data.price} {data.pair.counter} / {data.otherPrice} {data.pair.base}
+        </span>
+      ),
+    },
+  ];
 
   function loadData() {
     fetchTradesOfAccount(userAddress, { limit: 200 }).then((res) => {
@@ -80,22 +114,21 @@ export default function TradeHistory() {
     };
   }, [userAddress]);
 
-  if (rowData?.length === 0) {
-    return (
-      <p className={styles['centralize-content']}>
-        You have not trade history
-      </p>
-    );
-  }
-
   return (
     <div className={styles['container-table']}>
-      {rowData === null ? <FetchDataLoading /> : (
-        <Table
-          tableRows={tableRows(rowData)}
-          tableHead={tableHeader}
-        />
-      )}
+      <CTable
+        className={styles.table}
+        columns={tableHeaders}
+        dataSource={rowData}
+        customLoading={() => <FetchDataLoading />}
+        loading={!rowData}
+        noDataComponent={noDataComponent}
+        rowFix={{
+          rowHeight: 40,
+          headerRowHeight: 40,
+          rowNumbers: rowData?.length,
+        }}
+      />
     </div>
   );
 }

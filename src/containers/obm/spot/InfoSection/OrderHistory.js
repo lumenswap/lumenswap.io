@@ -1,5 +1,4 @@
 import { fetchOffersOfAccount } from 'api/stellar';
-import Table from 'components/Table';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import moment from 'moment';
@@ -11,55 +10,87 @@ import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
 import FetchDataLoading from 'components/FetchDataLoading';
 import { initializeStore } from 'store';
+import CTable from 'components/CTable';
 import styles from '../styles.module.scss';
 
-const tableRows = (rows) => rows.map((row) => (
-  <tr key={row.id}>
-    <td className="color-gray">
-      <div className={styles['td-outside']}>
-        {row.time}
-      </div>
-    </td>
-    <td>{row.sellAmount} {row.baseAsset.getCode()}</td>
-    <td>{row.buyAmount} {row.counterAsset.getCode()}</td>
-    <td>{row.price} {row.counterAsset.getCode()} / {row.otherPrice} {row.baseAsset.getCode()}</td>
-    <td>
-      <span
-        onClick={async () => {
-          const store = initializeStore();
-          function func() {
-            const address = store.getState().user.detail.address;
-            return generateManageSellTRX(
-              address,
-              row.counterAsset,
-              row.baseAsset,
-              '0',
-              '1',
-              row.id,
-            );
-          }
-
-          showGenerateTrx(func, store.dispatch)
-            .then((trx) => showSignResponse(trx, store.dispatch))
-            .catch(console.error);
-        }}
-        style={{
-          cursor: 'pointer',
-          color: '#0e41f5',
-        }}
-      >
-        Cancel
-      </span>
-    </td>
-  </tr>
-));
-
-const tableHeader = ['Date', 'Sell', 'Buy', 'Price', 'Action'];
+const noDataComponent = () => (
+  <p className={styles['centralize-content']}>
+    You have no open orders
+  </p>
+);
 
 export default function OrderHistory({ setOrderCounter }) {
   const [rowData, setRowData] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const intervalRef = useRef(null);
+
+  const tableHeaders = [
+    {
+      title: 'Date',
+      key: 1,
+      dataIndex: 'date',
+      render: (data) => (
+        <span className={styles['td-outside']}>
+          {data.time}
+        </span>
+      ),
+    },
+    {
+      title: 'Sell',
+      key: 2,
+      dataIndex: 'sell',
+      render: (data) => <span>{data.sellAmount} {data.baseAsset.getCode()}</span>,
+    },
+    {
+      title: 'Buy',
+      key: 3,
+      dataIndex: 'buy',
+      render: (data) => <span>{data.buyAmount} {data.counterAsset.getCode()}</span>,
+    },
+    {
+      title: 'Price',
+      key: 4,
+      dataIndex: 'price',
+      render: (data) => (
+        <span>
+          {data.price} {data.counterAsset.getCode()} / {data.otherPrice} {data.baseAsset.getCode()}
+        </span>
+      ),
+    },
+    {
+      title: 'Action',
+      key: 5,
+      dataIndex: 'action',
+      render: (data) => (
+        <span
+          onClick={async () => {
+            const store = initializeStore();
+            function func() {
+              const address = store.getState().user.detail.address;
+              return generateManageSellTRX(
+                address,
+                data.counterAsset,
+                data.baseAsset,
+                '0',
+                '1',
+                data.id,
+              );
+            }
+
+            showGenerateTrx(func, store.dispatch)
+              .then((trx) => showSignResponse(trx, store.dispatch))
+              .catch(console.error);
+          }}
+          style={{
+            cursor: 'pointer',
+            color: '#0e41f5',
+          }}
+        >
+          Cancel
+        </span>
+      ),
+    },
+  ];
 
   function loadData() {
     fetchOffersOfAccount(userAddress, { limit: 200 }).then((res) => {
@@ -99,22 +130,21 @@ export default function OrderHistory({ setOrderCounter }) {
     };
   }, []);
 
-  if (rowData?.length === 0) {
-    return (
-      <p className={styles['centralize-content']}>
-        You have no open orders
-      </p>
-    );
-  }
-
   return (
     <div className={styles['container-table']}>
-      {rowData === null ? <FetchDataLoading /> : (
-        <Table
-          tableRows={tableRows(rowData)}
-          tableHead={tableHeader}
-        />
-      )}
+      <CTable
+        className={styles.table}
+        columns={tableHeaders}
+        dataSource={rowData}
+        customLoading={() => <FetchDataLoading />}
+        loading={!rowData}
+        noDataComponent={noDataComponent}
+        rowFix={{
+          rowHeight: 40,
+          headerRowHeight: 40,
+          rowNumbers: rowData?.length,
+        }}
+      />
     </div>
   );
 }
