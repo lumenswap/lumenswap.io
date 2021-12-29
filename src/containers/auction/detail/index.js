@@ -176,8 +176,32 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         </>
       ),
     },
-    { title: 'Base price', tooltip: 'some data', render: (data) => `${data.basePrice} XLM` },
-    { title: 'Bids', tooltip: 'some data', render: (data) => `${humanAmount(new BN(data.totalBids).div(10 ** 7).toFixed(7))} XLM` },
+    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.basePrice} XLM` },
+    {
+      title: 'Bids',
+      tooltip: 'some data',
+      render: (data) => {
+        const [base, setBase] = useState('XLM');
+        let valueToShow = '';
+
+        if (base === 'XLM') {
+          valueToShow = `${humanAmount(new BN(data.totalBids).div(10 ** 7).toFixed(7))} XLM`;
+        } else {
+          valueToShow = `${humanAmount(new BN(data.totalAmount).div(10 ** 7))} ${data.assetCode}`;
+        }
+
+        return (
+          <span>
+            {valueToShow}
+            <span
+              className="icon-arrow-repeat"
+              style={{ cursor: 'pointer', marginLeft: 3, color: '#8d8f9a' }}
+              onClick={() => setBase((old) => (old === 'XLM' ? data.assetCode : 'XLM'))}
+            />
+          </span>
+        );
+      },
+    },
   ];
 
   const tabs = [

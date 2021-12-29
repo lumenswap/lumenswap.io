@@ -70,7 +70,7 @@ const LineChart = ({ chartData, height }) => {
     },
     xAxis: {
       type: 'category',
-      name: 'price(XLM)',
+      name: 'Price(XLM)',
       nameGap: -10,
       nameTextStyle: {
         color: '#1d1d1d',
@@ -79,7 +79,7 @@ const LineChart = ({ chartData, height }) => {
         align: 'right',
         verticalAlign: 'buttom',
         backgroundColor: '#fff',
-        padding: [6, 0, 10, 50],
+        padding: [8, 0, 10, 50],
       },
       data: prices,
       boundaryGap: false,

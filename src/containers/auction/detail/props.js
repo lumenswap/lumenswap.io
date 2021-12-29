@@ -23,6 +23,7 @@ async function auctionPageGetServerSideProps({ params }) {
 
   const sumBids = await getTotalBids(infoData[0].id);
   infoData[0].totalBids = sumBids[0].totalBid;
+  infoData[0].totalAmount = sumBids[0].totalAmount;
 
   return {
     props: {
