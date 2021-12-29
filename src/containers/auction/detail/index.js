@@ -129,7 +129,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         if (base === 'XLM') {
           valueToShow = `${humanAmount(new BN(data.totalBids).div(10 ** 7).toFixed(7))} XLM`;
         } else {
-          valueToShow = `${humanAmount(new BN(data.totalBids).div(10 ** 7).div(data.basePrice).toFixed(7))} ${data.assetCode}`;
+          valueToShow = `${humanAmount(new BN(data.totalAmount).div(10 ** 7))} ${data.assetCode}`;
         }
 
         return (
