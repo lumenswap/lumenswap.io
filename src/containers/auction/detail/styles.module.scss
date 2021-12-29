@@ -9,6 +9,21 @@
   width: 129px;
   height: 40px;
 }
+.asset-link {
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $BlueRibbon;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: $BlueRibbon;
+  }
+}
 
 .card {
   border-radius: 4px;
@@ -86,6 +101,12 @@
   &:hover {
     color: $ShuttleGray;
   }
+}
+.cricle-icon {
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 4px;
+  color: $Manatee;
 }
 
 .input {

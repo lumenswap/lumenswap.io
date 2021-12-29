@@ -3,6 +3,7 @@
 .table {
     margin-top: 10px;
   
+    overflow: hidden !important;
     tr:first-child {
       line-height: 38px !important;
       height: 38px !important;

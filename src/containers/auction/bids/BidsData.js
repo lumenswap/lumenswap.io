@@ -85,6 +85,11 @@ function BidsData({
         className={styles.table}
         dataSource={filteredBids}
         loading={!bids}
+        rowFix={{
+          rowHeight: 53,
+          rowNumbers: 20,
+          headerRowHeight: 40,
+        }}
       />
     </>
   );
