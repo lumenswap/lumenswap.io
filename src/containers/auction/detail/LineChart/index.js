@@ -35,7 +35,6 @@ const LineChart = ({ chartData, height }) => {
   if (slicedPrices) {
     prices = [...slicedPrices, '', ''];
   }
-  console.log(prices);
 
   const fullScreenView = {
     myTool: {
