@@ -29,6 +29,12 @@ const LineChart = ({ chartData, height }) => {
 
   const initialSize = { CHeight: `${height + 60}px`, CWidth: 'auto' };
   const [size, setSize] = useState(initialSize);
+  const slicedPrices = chartData?.prices.slice(0, chartData.prices.length - 2);
+  let prices;
+
+  if (slicedPrices) {
+    prices = [...slicedPrices, '', ''];
+  }
 
   const fullScreenView = {
     myTool: {
@@ -63,7 +69,18 @@ const LineChart = ({ chartData, height }) => {
     },
     xAxis: {
       type: 'category',
-      data: chartData?.prices,
+      name: 'Price(XLM)',
+      nameGap: -10,
+      nameTextStyle: {
+        color: '#1d1d1d',
+        fontSize: '14',
+        fontFamily: '"SofiaPro", sans-serif',
+        align: 'right',
+        verticalAlign: 'buttom',
+        backgroundColor: '#fff',
+        padding: [8, 0, 10, 50],
+      },
+      data: prices,
       boundaryGap: false,
       axisLabel: {
         color: textColor,

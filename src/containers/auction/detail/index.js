@@ -3,7 +3,9 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import ServerSideLoading from 'components/ServerSideLoading';
-import { useCallback, useState, useEffect } from 'react';
+import {
+  useCallback, useState, useEffect, useRef,
+} from 'react';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
@@ -39,11 +41,46 @@ const Container = ({ children }) => (
   </div>
 );
 
+function generatePeriod(data, period, showCountdown) {
+  if (showCountdown) {
+    if (period?.days() === 0 && period?.hours() === 0) {
+      return (
+        <div className={styles.period}>
+          {period?.minutes()}m {period?.seconds()}s
+        </div>
+      );
+    }
+    if (period?.days() === 0) {
+      return (
+        <div className={styles.period}>
+          {period?.hours()}h {period?.minutes()}m
+        </div>
+      );
+    }
+    return (
+      <div className={styles.period}>
+        {period?.days()}d {period?.hours()}h
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.period}>
+      {moment(data.startDate).format('D MMM Y')}
+      <div className={styles['arrow-icon']}><ArrowRight /></div>
+      {moment(data.endDate).format('D MMM Y')}
+    </div>
+  );
+}
+
 const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const [currentTab, setCurrentTab] = useState('bid');
   const [searchQuery, setSearchQuery] = useState(null);
   const [chartData, setChartData] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [period, setPeriod] = useState(null);
+  const interValRef = useRef(null);
 
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
@@ -103,22 +140,42 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         </>
       ),
     },
-    { title: 'Asset issuer', render: (data) => <a href={generateAddressURL(data.assetIssuer)} target="_blank" rel="noreferrer">{minimizeAddress(data.assetIssuer)}</a> },
+    { title: 'Asset issuer', render: (data) => <a className={styles['asset-link']} href={generateAddressURL(data.assetIssuer)} target="_blank" rel="noreferrer">{minimizeAddress(data.assetIssuer)}</a> },
     { title: 'Amount to sell', tooltip: 'some data', render: (data) => `${numeral(data.amountToSell).format('0,0')} ${data.assetCode}` },
   ];
+
+  useEffect(() => {
+    function setCountTime() {
+      const countDownTime = moment(infoData.endDate).valueOf() - new Date().getTime();
+      setPeriod(moment.duration(countDownTime));
+    }
+    if (!interValRef.current) {
+      interValRef.current = setInterval(setCountTime, 1000);
+    }
+
+    return () => {
+      clearInterval(interValRef.current);
+    };
+  }, []);
+
+  const handleShowCountdown = () => {
+    setShowCountdown((prev) => !prev);
+  };
 
   const auctionInfo = [
     {
       title: 'Period',
       render: (data) => (
-        <div className={styles.period}>
-          {moment(data.startDate).format('D MMM Y')}
-          <div className={styles['arrow-icon']}><ArrowRight /></div>
-          {moment(data.endDate).format('D MMM Y')}
-        </div>
+        <>
+          {generatePeriod(data, period, showCountdown)}
+          <span
+            className={classNames('icon-arrow-repeat', styles['cricle-icon'])}
+            onClick={handleShowCountdown}
+          />
+        </>
       ),
     },
-    { title: 'Base price', render: (data) => `${data.basePrice} XLM` },
+    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.basePrice} XLM` },
     {
       title: 'Bids',
       tooltip: 'some data',

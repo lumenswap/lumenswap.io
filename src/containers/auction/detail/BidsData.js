@@ -101,6 +101,11 @@ const BidsData = ({
       className={styles.table}
       dataSource={filteredBids}
       loading={!bids}
+      rowFix={{
+        rowHeight: 53,
+        rowNumbers: 10,
+        headerRowHeight: 40,
+      }}
     />
   );
 };

@@ -74,6 +74,11 @@ const WinnersData = ({
       className={styles.table}
       dataSource={filteredWinners?.slice(0, 6)}
       loading={!winners}
+      rowFix={{
+        rowHeight: 53,
+        rowNumbers: 10,
+        headerRowHeight: 40,
+      }}
     />
   );
 };

@@ -73,6 +73,11 @@ function WinnersData({
         className={styles.table}
         dataSource={filteredWinners}
         loading={!winners}
+        rowFix={{
+          rowHeight: 53,
+          rowNumbers: 20,
+          headerRowHeight: 40,
+        }}
       />
     </>
   );
