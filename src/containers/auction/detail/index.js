@@ -42,7 +42,6 @@ const Container = ({ children }) => (
 );
 
 function generatePeriod(data, period, showCountdown) {
-  console.log(period?.days() === 0 && period?.hours() === 0);
   if (showCountdown) {
     if (period?.days() === 0 && period?.hours() === 0) {
       return (
