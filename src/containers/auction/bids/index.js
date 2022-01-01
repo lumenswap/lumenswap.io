@@ -27,6 +27,7 @@ function Bids({ pageName, assetCode, auction }) {
   const handleTabChange = (newPage) => {
     setPage(newPage);
   };
+
   const SearchInput = useCallback(() => (
     <div className={styles.input}>
       <Input
@@ -38,9 +39,11 @@ function Bids({ pageName, assetCode, auction }) {
       />
     </div>
   ), []);
+
   const tabs = [
     { title: 'Bids', id: 'bids' },
   ];
+
   const crumbData = [
     { url: urlMaker.auction.root(), name: 'Auction' },
     { url: urlMaker.auction.singleAuction.root(pageName), name: `${pageName}` },

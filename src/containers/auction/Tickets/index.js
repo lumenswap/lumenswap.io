@@ -20,7 +20,6 @@ import humanAmount from 'helpers/humanAmount';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
-import { closeModalAction } from 'actions/modal';
 import styles from './styles.module.scss';
 import AuctionHeader from '../AuctionHeader';
 
@@ -90,7 +89,6 @@ const AuctionTickets = ({ auctions }) => {
       .then((trx) => showSignResponse(trx, dispatch))
       .catch(console.log)
       .then(fetchData);
-    dispatch(closeModalAction());
   }
 
   useEffect(() => {

@@ -7,8 +7,8 @@ import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ConfirmBid from 'blocks/ConfirmBid';
 import { openModalAction } from 'actions/modal';
+import ConfirmBid from './ConfirmBid';
 import styles from './styles.module.scss';
 
 const SendBid = ({ tokenA, basePrice, reloadData }) => {

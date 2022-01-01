@@ -15,7 +15,6 @@ import InfoBox from 'components/InfoBox';
 import ArrowRight from 'assets/images/arrowRight';
 import CTabs from 'components/CTabs';
 import Input from 'components/Input';
-import SendBid from 'blocks/SendBid';
 import { getAuctionStats } from 'api/auction';
 import { openModalAction } from 'actions/modal';
 import { useDispatch } from 'react-redux';
@@ -26,6 +25,7 @@ import useIsLogged from 'hooks/useIsLogged';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
+import SendBid from './SendBid';
 import AuctionHeader from '../AuctionHeader';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
 
@@ -221,6 +221,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
     </div>
     )
   ), [currentTab]);
+
   function generateLink() {
     if (currentTab === 'bid') {
       return urlMaker.auction.singleAuction.bids(pageName);

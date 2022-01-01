@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button from 'components/Button';
-import { closeModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import { getAssetDetails } from 'helpers/asset';
@@ -31,8 +30,8 @@ const ConfirmBid = ({ data, tokenA, reloadData }) => {
       .then((trx) => showSignResponse(trx, dispatch))
       .catch(console.log)
       .then(reloadData);
-    dispatch(closeModalAction());
   };
+
   return (
     <div>
       <div className={styles.text}>
