@@ -60,8 +60,6 @@
   top: 12px;
   right: 12px;
   font-size: 14px;
-  color: $BlueRibbon;
-  background-color: $Zumthor;
   border-radius: 4px;
   padding: 0 6px;
   z-index: 1;
@@ -75,7 +73,33 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color:  $BlueRibbon;
     margin-right: 3px;
+  }
+}
+
+.status-live {
+    color: $BlueRibbon;
+    background-color: $Zumthor;  
+
+    .status-circle {
+      background-color: $BlueRibbon;
+    }
+}
+
+.status-ended {
+  color: $Manatee;
+  background: $CatskillWhite;
+
+  .status-circle {
+    background-color: $Manatee;
+  }
+}
+
+.status-not-started {
+  color: $Punch;
+  background: $CatskillWhite;
+
+  .status-circle {
+    background-color: $Punch;
   }
 }

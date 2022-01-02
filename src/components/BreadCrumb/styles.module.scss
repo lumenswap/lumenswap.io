@@ -23,4 +23,8 @@
         margin-top: 2px;
       }
     }
+
+    @media (max-width: $sm) {
+      font-size: 14px;
+    }
   }

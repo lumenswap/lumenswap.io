@@ -38,13 +38,27 @@
 
   .input {
     margin-right: 16px;
-  
+    display: flex;
+    align-items: center;
+    span {
+      font-family: SofiaPro;
+      margin-left: 24px;
+      font-size: 16px;
+      color: $CodGray;
+      font-weight: 600;      
+    }
     input {
       border-radius: 6px;
+      margin-left: auto;
       width: 290px !important;
   
       @media(max-width: $lg) {
         width: 100% !important;
+      }
+      @media (max-width: $sm) {
+        width: 150px !important;
+        font-size: 12px !important;
+        height: 30px !important;
       }
     }
   }
