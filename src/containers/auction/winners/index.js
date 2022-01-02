@@ -2,14 +2,13 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import Input from 'components/Input';
 import { useState, useCallback, useRef } from 'react';
-import CTabs from 'components/CTabs';
 import CPagination from 'components/CPagination';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import ServerSideLoading from 'components/ServerSideLoading';
 import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
-import WinnersTabContent from './WinnersTabContent';
+import WinnersData from './WinnersData';
 
 function Winners({ pageName, assetCode, auction }) {
   const [page, setPage] = useState(1);
@@ -24,11 +23,11 @@ function Winners({ pageName, assetCode, auction }) {
     }, 700);
   };
 
-  const handleTabChange = (newPage) => {
-    setPage(newPage);
-  };
-  const SearchInput = useCallback(() => (
+  const TableHeader = useCallback(() => (
     <div className={styles.input}>
+      <span>
+        Winners
+      </span>
       <Input
         type="text"
         placeholder="Enter your address"
@@ -38,9 +37,7 @@ function Winners({ pageName, assetCode, auction }) {
       />
     </div>
   ), []);
-  const tabs = [
-    { title: 'Winners', id: 'winners' },
-  ];
+
   const crumbData = [
     { url: urlMaker.auction.root(), name: 'Auction' },
     { url: urlMaker.auction.singleAuction.root(pageName), name: `${pageName}` },
@@ -64,16 +61,15 @@ function Winners({ pageName, assetCode, auction }) {
                 />
               </div>
               <div className={classNames(styles.card, styles['card-table'])}>
-                <CTabs
-                  tabs={tabs}
-                  tabContent={WinnersTabContent}
-                  className={styles.tabs}
-                  onChange={handleTabChange}
-                  extraComponent={SearchInput}
-                  customTabProps={{
-                    page, setTotalPages, assetCode, searchQuery, auction,
-                  }}
+                <TableHeader />
+                <WinnersData
+                  page={page}
+                  assetCode={assetCode}
+                  searchQuery={searchQuery}
+                  setTotalPages={setTotalPages}
+                  auction={auction}
                 />
+
               </div>
               <div style={{ marginBottom: '60px' }} className="d-flex justify-content-end mt-4">
                 <CPagination
