@@ -5,6 +5,12 @@ import humanAmount from 'helpers/humanAmount';
 import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 
+const STATUS_CLASSNAMES = {
+  live: styles['status-live'],
+  ended: styles['status-ended'],
+  'not started': styles['status-not-started'],
+};
+
 const AuctionBoardItem = ({ board }) => (
   <Link href={urlMaker.auction.singleAuction.root(`${board.title}(${board.assetCode})`)} passHref>
     <a className="text-decoration-none">
@@ -12,12 +18,14 @@ const AuctionBoardItem = ({ board }) => (
         <div className="row">
           <div className="col-lg-4 col-md-12 col-sm-12 col-12 pr-lg-0 pr-md-3 pr-sm-3 pr-3">
             <div className={styles.banner}>
-              {board.status === 'Live' && (
-              <div className={styles.status}>
+              <div
+                className={
+                  classNames(styles.status, STATUS_CLASSNAMES[board.status.toLowerCase()])
+                }
+              >
                 <span className={styles['status-circle']} />
-                <span>Live</span>
+                <span>{board.status}</span>
               </div>
-              )}
               {board.image && <Image src={board.image} layout="fill" objectFit="cover" objectPosition="center" />}
             </div>
           </div>
