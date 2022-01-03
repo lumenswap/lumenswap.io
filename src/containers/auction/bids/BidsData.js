@@ -8,6 +8,7 @@ import { getAuctionBids } from 'api/auction';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
+import { STATUS_NAMES } from '../consts/board';
 
 function BidsData({
   page, setTotalPages, searchQuery, auction,
@@ -71,10 +72,15 @@ function BidsData({
 
   useEffect(() => {
     setBids(null);
-    getAuctionBids(auction.id, { page, searchQuery }).then((data) => {
-      setBids(data.data);
-      setTotalPages(data.totalPages);
-    });
+    if (auction.status === STATUS_NAMES['not-started']) {
+      setBids([]);
+      setTotalPages(1);
+    } else {
+      getAuctionBids(auction.id, { page, searchQuery }).then((data) => {
+        setBids(data.data);
+        setTotalPages(data.totalPages);
+      });
+    }
   }, [page, searchQuery]);
 
   return (

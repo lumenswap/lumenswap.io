@@ -3,13 +3,10 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import humanAmount from 'helpers/humanAmount';
 import urlMaker from 'helpers/urlMaker';
+import { statusClassNames } from 'containers/auction/consts/board';
 import styles from './styles.module.scss';
 
-const STATUS_CLASSNAMES = {
-  live: styles['status-live'],
-  ended: styles['status-ended'],
-  'not started': styles['status-not-started'],
-};
+const STATUS_CLASSNAMES = statusClassNames(styles);
 
 const AuctionBoardItem = ({ board }) => (
   <Link href={urlMaker.auction.singleAuction.root(`${board.title}(${board.assetCode})`)} passHref>

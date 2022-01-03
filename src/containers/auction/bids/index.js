@@ -9,6 +9,7 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
 import BidsData from './BidsData';
+import { STATUS_NAMES } from '../consts/board';
 
 function Bids({ pageName, assetCode, auction }) {
   const timeOutRef = useRef(null);
@@ -30,6 +31,7 @@ function Bids({ pageName, assetCode, auction }) {
       </span>
       <Input
         type="text"
+        disabled={auction.status !== STATUS_NAMES.live}
         placeholder="Enter your address"
         height={40}
         fontSize={14}

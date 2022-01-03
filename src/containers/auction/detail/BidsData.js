@@ -9,10 +9,12 @@ import { getAssetDetails } from 'helpers/asset';
 import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
+import { getAuctionBids } from 'api/auction';
 import styles from './styles.module.scss';
+import { STATUS_NAMES } from '../consts/board';
 
 const BidsData = ({
-  searchQuery, tab, assetCode, assetIssuer, basePrice, refreshData,
+  searchQuery, tab, assetCode, assetIssuer, basePrice, refreshData, auctionStatus, auctionId,
 }) => {
   const [bids, setBids] = useState(null);
 
@@ -77,21 +79,36 @@ const BidsData = ({
   ];
 
   useEffect(() => {
-    fetchOfferAPI(
-      getAssetDetails(
-        { code: assetCode, issuer: assetIssuer },
-      ), getAssetDetails(XLM),
-      { order: 'desc', limit: 200 },
-    )
-      .then((data) => {
-        const offers = data.data._embedded.records;
-        const theBids = offers.filter((offer) => new BN(1)
-          .div(offer.price)
-          .isGreaterThanOrEqualTo(basePrice));
+    if (auctionStatus === STATUS_NAMES['not-started']) {
+      setBids([]);
+    } else if (auctionStatus === STATUS_NAMES.ended) {
+      getAuctionBids(auctionId, {}).then((data) => {
+        const mappedBids = data.data.map((bid) => ({
+          price: new BN(1).div(new BN(bid.price)).toFixed(7),
+          amount: new BN(bid.total).div(10 ** 7).toFixed(7),
+          seller: bid.address,
+          last_modified_time: bid.bidDate,
+        }));
 
-        setBids(theBids.slice(0, 10));
-      })
-      .catch((err) => console.log(err));
+        setBids(mappedBids);
+      });
+    } else {
+      fetchOfferAPI(
+        getAssetDetails(
+          { code: assetCode, issuer: assetIssuer },
+        ), getAssetDetails(XLM),
+        { order: 'desc', limit: 200 },
+      )
+        .then((data) => {
+          const offers = data.data._embedded.records;
+          const theBids = offers.filter((offer) => new BN(1)
+            .div(offer.price)
+            .isGreaterThanOrEqualTo(basePrice));
+
+          setBids(theBids.slice(0, 10));
+        })
+        .catch((err) => console.log(err));
+    }
   }, [refreshData]);
 
   return (

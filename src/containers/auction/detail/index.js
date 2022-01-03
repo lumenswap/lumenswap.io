@@ -278,6 +278,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
                       customTabProps={{
                         searchQuery,
                         assetCode,
+                        auctionStatus: infoData.status,
                         auctionId: infoData.id,
                         assetIssuer: infoData.assetIssuer,
                         basePrice: infoData.basePrice,

@@ -2,7 +2,7 @@ import BidsData from './BidsData';
 import WinnersData from './WinnersData';
 
 const AuctionDetailContent = ({
-  tab, searchQuery, assetCode, assetIssuer, auctionId, basePrice, refreshData,
+  tab, searchQuery, assetCode, assetIssuer, auctionId, basePrice, refreshData, auctionStatus,
 }) => {
   if (tab === 'bid') {
     return (
@@ -13,6 +13,8 @@ const AuctionDetailContent = ({
         assetIssuer={assetIssuer}
         basePrice={basePrice}
         refreshData={refreshData}
+        auctionId={auctionId}
+        auctionStatus={auctionStatus}
       />
     );
   }
