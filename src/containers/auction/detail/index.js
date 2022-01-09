@@ -43,23 +43,16 @@ const Container = ({ children }) => (
 
 function generatePeriod(data, period, showCountdown) {
   if (showCountdown) {
-    if (period?.days() === 0 && period?.hours() === 0) {
-      return (
-        <div className={styles.period}>
-          {period?.minutes()}m {period?.seconds()}s
-        </div>
-      );
-    }
-    if (period?.days() === 0) {
-      return (
-        <div className={styles.period}>
-          {period?.hours()}h {period?.minutes()}m
-        </div>
-      );
-    }
+    const fullTime = {
+      days: period?.days() > 0 ? `${period.days()}d` : null,
+      hours: period?.hours() > 0 ? `${period.hours()}h` : null,
+      minutes: period?.minutes() > 0 ? `${period.minutes()}m` : null,
+      seconds: `${period?.seconds()}s`,
+    };
+
     return (
       <div className={styles.period}>
-        {period?.days()}d {period?.hours()}h
+        {fullTime?.days} {fullTime?.hours} {fullTime?.minutes} {fullTime?.seconds}
       </div>
     );
   }
