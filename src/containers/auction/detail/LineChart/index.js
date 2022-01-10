@@ -57,20 +57,12 @@ const LineChart = ({ chartData, height }) => {
     grid: {
       left: '5px',
       // top: '60px',
-      right: '84px',
+      right: '0',
       bottom: '0',
       containLabel: true,
     },
     xAxis: {
       type: 'category',
-      name: 'Price(XLM)',
-      nameTextStyle: {
-        color: '#1d1d1d',
-        fontSize: '14',
-        fontFamily: '"SofiaPro", sans-serif',
-        backgroundColor: '#fff',
-        padding: [0, 0, 0, -8],
-      },
       data: chartData?.prices,
       boundaryGap: false,
       axisLabel: {
