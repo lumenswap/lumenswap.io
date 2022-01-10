@@ -38,9 +38,7 @@ function MyApp({ Component, pageProps }) {
       store.dispatch(setUserBalance(filterUserBalance(accountDetail.balances)));
 
       store.dispatch(closeModalAction());
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   }
 
   useEffect(() => {
