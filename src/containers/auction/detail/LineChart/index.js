@@ -4,8 +4,7 @@ import ReactECharts from 'echarts-for-react';
 import numeral from 'numeral';
 import Loading from 'components/Loading';
 import CCard from 'components/CCard';
-
-import { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
@@ -47,7 +46,7 @@ const LineChart = ({ chartData, height }) => {
   };
   const [tool, setTool] = useState(fullScreenView);
 
-  const option = {
+  const option = useMemo(() => ({
     tooltip: {
       trigger: 'axis',
       formatter: (params) => tooltipFormatter(params),
@@ -143,7 +142,7 @@ const LineChart = ({ chartData, height }) => {
       top: 15,
       feature: { ...tool },
     },
-  };
+  }));
 
   useEffect(() => {
     if (isFullScreen) {
@@ -225,4 +224,4 @@ const LineChart = ({ chartData, height }) => {
   );
 };
 
-export default LineChart;
+export default React.memo(LineChart);
