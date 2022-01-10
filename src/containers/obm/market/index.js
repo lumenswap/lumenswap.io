@@ -12,7 +12,6 @@ import TopPair from './TopPair';
 const MarketPage = ({ assets }) => {
   const sortedAssets = assets?.data.sort((a, b) => b.change24h - a.change24h);
   const topChangeAssets = sortedAssets.slice(0, 3).map((pair) => {
-    console.log(pair);
     const mainPair = {
       ...pair,
       baseLogo: extractInfoByToken({ code: pair.baseAssetCode, issuer: pair.baseAssetIssuer }).logo,
