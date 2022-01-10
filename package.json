@@ -12,6 +12,7 @@
         "@ledgerhq/hw-app-str": "^6.11.2",
         "@ledgerhq/hw-transport-webusb": "^6.11.2",
         "@optimizely/optimizely-sdk": "^4.6.2",
+        "@sentry/nextjs": "^6.13.3",
         "@stellar/freighter-api": "^1.0.0-beta.0",
         "@svgr/webpack": "^5.5.0",
         "@testing-library/jest-dom": "^5.11.9",
