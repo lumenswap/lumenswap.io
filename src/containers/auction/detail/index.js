@@ -30,6 +30,7 @@ import AuctionHeader from '../AuctionHeader';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
 
 import styles from './styles.module.scss';
+import { STATUS_NAMES } from '../consts/board';
 
 const Container = ({ children }) => (
   <div className="container-fluid">
@@ -168,7 +169,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         </>
       ),
     },
-    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.basePrice} XLM` },
+    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.status === STATUS_NAMES['not-started'] ? '-' : `${data.basePrice} XLM`}` },
     {
       title: 'Bids',
       tooltip: 'some data',
@@ -233,7 +234,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
                   data={breadCrumbData}
                   spaceBetween={8}
                 />
-                {isLogged
+                {isLogged && infoData.status === STATUS_NAMES.live
               && (
               <Button
                 className={styles.btn}
