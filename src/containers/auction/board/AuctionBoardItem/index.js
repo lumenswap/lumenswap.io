@@ -23,7 +23,16 @@ const AuctionBoardItem = ({ board }) => (
                 <span className={styles['status-circle']} />
                 <span>{board.status}</span>
               </div>
-              {board.image && <Image src={board.image} layout="fill" objectFit="cover" objectPosition="center" />}
+              {board.image && (
+                <div className={styles['title-container']}>
+                  <div className={styles['img-container']}>
+                    <Image src={board.image} width={82} height={82} />
+                    <span className={styles['img-container-title']}>
+                      {board.assetCode}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="col-lg-8 col-md-12 col-sm-12 col-12 pl-lg-0 pl-md-3 pl-sm-3 pl-3">

@@ -12,6 +12,33 @@
   position: relative;
 }
 
+.title-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.img-container {
+  padding-top: 37px;
+  width: 82px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  &-title {
+    height: 42px;
+    margin-top: 1px;
+    font-family: SofiaPro;
+    font-size: 32px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 185%;
+    letter-spacing: normal;
+    text-align: center;
+    color: $CodGray;
+  }
+}
+
 .info {
   padding: 12px 24px 16px 24px;
 
