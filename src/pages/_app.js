@@ -20,6 +20,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rc-slider/assets/index.css';
 import 'react-circular-progressbar/dist/styles.css';
 
+async function fullRabetLogin(dispatch) {
+  try {
+    const address = await loginWithRabet();
+
+    const accountDetail = await fetchAccountDetails(address);
+    dispatch(userLogin(loginTypes.RABET, { address, subentry: accountDetail.subentry }));
+    dispatch(setUserBalance(filterUserBalance(accountDetail.balances)));
+
+    dispatch(closeModalAction());
+  } catch (e) {}
+}
+
 function MyApp({ Component, pageProps }) {
   const updateUserDetailIntervalRef = useRef(null);
   const xlmPriceIntervalRef = useRef(null);
@@ -28,18 +40,6 @@ function MyApp({ Component, pageProps }) {
   const persistor = persistStore(store, {}, () => {
     persistor.persist();
   });
-
-  async function fullRabetLogin() {
-    try {
-      const address = await loginWithRabet();
-
-      const accountDetail = await fetchAccountDetails(address);
-      store.dispatch(userLogin(loginTypes.RABET, { address, subentry: accountDetail.subentry }));
-      store.dispatch(setUserBalance(filterUserBalance(accountDetail.balances)));
-
-      store.dispatch(closeModalAction());
-    } catch (e) {}
-  }
 
   useEffect(() => {
     updateUserDetailIntervalRef.current = setInterval(() => {
@@ -68,12 +68,11 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    console.log('run shod');
     setTimeout(() => {
       if (validateRabetPresent()) {
-        fullRabetLogin();
+        fullRabetLogin(store.dispatch);
         global.rabet?.on('accountChanged', () => {
-          fullRabetLogin();
+          fullRabetLogin(store.dispatch);
         });
       }
     }, 1000);
