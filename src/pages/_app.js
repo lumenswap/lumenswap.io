@@ -6,13 +6,31 @@ import { setUserBalance } from 'actions/userBalance';
 import { fetchAccountDetails, fetchXLMCoingeckoPrice } from 'api/stellar';
 import { updateXLMPrice } from 'actions/xlmPrice';
 import { filterUserBalance } from 'helpers/balanceMapper';
+import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
+import { loginTypes } from 'reducers/user';
+import userLogin from 'actions/user/login';
+import { closeModalAction } from 'actions/modal';
+import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent';
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
 import LModal from '../containers/LModal';
+
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rc-slider/assets/index.css';
 import 'react-circular-progressbar/dist/styles.css';
+
+async function fullRabetLogin(dispatch) {
+  try {
+    const address = await loginWithRabet();
+
+    const accountDetail = await fetchAccountDetails(address);
+    dispatch(userLogin(loginTypes.RABET, { address, subentry: accountDetail.subentry }));
+    dispatch(setUserBalance(filterUserBalance(accountDetail.balances)));
+
+    dispatch(closeModalAction());
+  } catch (e) {}
+}
 
 function MyApp({ Component, pageProps }) {
   const updateUserDetailIntervalRef = useRef(null);
@@ -47,6 +65,17 @@ function MyApp({ Component, pageProps }) {
       clearInterval(updateUserDetailIntervalRef.current);
       clearInterval(xlmPriceIntervalRef.current);
     };
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (validateRabetPresent()) {
+        fullRabetLogin(store.dispatch);
+        global.rabet?.on('accountChanged', () => {
+          fullRabetLogin(store.dispatch);
+        });
+      }
+    }, 1000);
   }, []);
 
   return process.browser ? (
