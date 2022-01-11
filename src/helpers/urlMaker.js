@@ -5,6 +5,7 @@ const rootUrl = {
   lottery: '/lottery',
   nft: '/nft',
   auction: '/auction',
+  dao: '/dao',
 };
 
 if (process.env.REACT_APP_MODE === 'OBM') {
@@ -92,6 +93,7 @@ const urlMaker = {
       participants: (round) => `${urlMaker.lottery.round.root(round)}/participants`,
     },
   },
+
   nft: {
     root: () => `${rootUrl.nft}/`,
     orders: () => `${rootUrl.nft}/offers`,
@@ -103,6 +105,7 @@ const urlMaker = {
       offers: (number) => `${urlMaker.nft.lusi.root(number)}/offers`,
     },
   },
+
   auction: {
     root: () => `${rootUrl.auction}`,
     bids: () => `${rootUrl.auction}/bids`,
@@ -110,6 +113,17 @@ const urlMaker = {
       root: (name) => `${rootUrl.auction}/${name}`,
       bids: (name) => `${rootUrl.auction}/${name}/bids`,
       winners: (name) => `${rootUrl.auction}/${name}/winners`,
+    },
+  },
+
+  dao: {
+    root: () => `${rootUrl.dao}`,
+    activity: () => `${rootUrl.dao}/activity`,
+    singleDao: {
+      root: (name) => `${rootUrl.dao}/${name}`,
+      createProposal: (name) => `${urlMaker.dao.singleDao.root(name)}/create-proposal`,
+      proposalInfo: (name) => `${urlMaker.dao.singleDao.root(name)}/proposal-info`,
+      allVotes: (name) => `${urlMaker.dao.singleDao.proposalInfo(name)}/all-votes`,
     },
   },
 };

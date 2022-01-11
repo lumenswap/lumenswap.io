@@ -2,6 +2,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 
 import ServerSideLoading from 'components/ServerSideLoading';
+import DAOHeader from 'containers/dao/DAOHeader';
 
 import styles from './styles.module.scss';
 
@@ -11,7 +12,7 @@ const DaoBoard = (props) => {
       <Head>
         <title>Board | Lumenswap</title>
       </Head>
-      header
+      <DAOHeader />
       {children}
     </div>
   );
