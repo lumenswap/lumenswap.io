@@ -30,7 +30,12 @@ const BidsData = ({
       dataIndex: 'address',
       key: 1,
       render: (data) => (
-        <a href={generateAddressURL(data.seller)} className={styles.link}>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={generateAddressURL(data.seller)}
+          className={styles.link}
+        >
           {minimizeAddress(data.seller)}
         </a>
       ),

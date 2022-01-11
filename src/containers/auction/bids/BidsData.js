@@ -23,7 +23,12 @@ function BidsData({
       dataIndex: 'address',
       key: 1,
       render: (data) => (
-        <a href={generateAddressURL(data.address)} className={styles.link}>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={generateAddressURL(data.address)}
+          className={styles.link}
+        >
           {minimizeAddress(data.address)}
         </a>
       ),
