@@ -72,7 +72,7 @@ const WinnersData = ({
       columns={columns}
       noDataComponent={() => <NoData message="There is no winner" />}
       className={styles.table}
-      dataSource={filteredWinners?.slice(0, 6)}
+      dataSource={filteredWinners?.slice(0, 10)}
       loading={!winners}
       rowFix={{
         rowHeight: 53,
