@@ -33,7 +33,7 @@ const MdBoard = ({ item, button }) => {
       <div className={styles.info}>
         <div className={styles['info-col']}>
           <div className={styles.value}>{member}</div>
-          <div className={styles.subject}>Comminuty member</div>
+          <div className={styles.subject}>Community member</div>
         </div>
         <div className={styles['info-col']}>
           <div className={styles.value}>{tiker}</div>

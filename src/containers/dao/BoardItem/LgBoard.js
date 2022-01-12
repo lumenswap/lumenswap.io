@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Image from 'next/image';
 import classNames from 'classnames';
 
-import ExternalBlueArrow from '../../../assets/images/ExternalBlueArrow';
+import ExternalBlueArrow from 'assets/images/ExternalBlueArrow';
 
 import styles from './styles.module.scss';
 
