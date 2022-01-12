@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from 'containers/dao/DAOHeader';
 import sampleLogo from 'assets/images/btc-logo.png';
-import DaoBoardItem from './DaoBoardItem';
+import BoardItem from './BoardItem';
 
 import styles from './styles.module.scss';
 
@@ -38,7 +38,7 @@ const DaoBoard = () => {
               <div className="row mt-4">
                 {items.map((item) => (
                   <div key={item.name} className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
-                    <DaoBoardItem item={item} />
+                    <BoardItem item={item} />
                   </div>
                 ))}
               </div>

@@ -8,7 +8,7 @@ import Button from 'components/Button';
 
 import styles from './styles.module.scss';
 
-const DaoBoardItem = ({ item }) => {
+const BoardItem = ({ item }) => {
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const {
@@ -65,8 +65,8 @@ const DaoBoardItem = ({ item }) => {
   );
 };
 
-DaoBoardItem.propTypes = {
+BoardItem.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default DaoBoardItem;
+export default BoardItem;
