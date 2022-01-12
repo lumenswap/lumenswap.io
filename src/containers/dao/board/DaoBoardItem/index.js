@@ -2,21 +2,25 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
 import Button from 'components/Button';
 
 import styles from './styles.module.scss';
 
 const DaoBoardItem = ({ item }) => {
+  const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const {
     logo, name, desc, proposals, member, tiker,
   } = item;
 
-  const onToggle = () => setToggle(!toggle);
+  const onToggle = (ev) => { setToggle(!toggle); ev.stopPropagation(); };
+
+  const onChangeRoute = () => router.push(`${router.pathname}/${name}`);
 
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={onChangeRoute}>
       <div className="px-3">
         <div className="d-flex align-items-center justify-content-between">
           <div className={styles.img}>
