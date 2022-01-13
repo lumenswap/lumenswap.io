@@ -1,0 +1,28 @@
+@import "styles/vars";
+
+.item {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+  padding: 18px 24px 26px 24px;
+}
+
+.img {
+  border-radius: 50%;
+  margin-right: 6px;
+  display: flex;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.56;
+  color: $CodGray;
+  margin: 10px 0 0 0;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ShuttleGray;
+}

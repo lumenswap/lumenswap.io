@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from 'containers/dao/DAOHeader';
 import BoardItem from 'containers/dao/BoardItem';
+import ProposalItem from 'containers/dao/proposals/ProposalItem';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
 import sampleLogo from 'assets/images/btc-logo.png';
@@ -43,9 +44,24 @@ const Proposals = () => {
                 spaceBetween={8}
                 data={crumbData}
               />
+
               <div className="mt-4">
                 <BoardItem item={bordItem} size="lg" />
               </div>
+
+              <div className={styles['container-proposals']}>
+                <div className="row justify-content-between">
+                  <div className="col-auto">
+                    <h2 className={styles.title}>Proposals</h2>
+                  </div>
+                  <div className="col-auto" />
+                </div>
+
+                <div className="mt-4">
+                  <ProposalItem />
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
