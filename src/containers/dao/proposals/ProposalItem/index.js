@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import Badge from 'components/Badge';
 import SuccessIcon from 'assets/images/success-tick';
@@ -8,6 +9,8 @@ import SuccessIcon from 'assets/images/success-tick';
 import styles from './styles.module.scss';
 
 const ProposalItem = ({ item }) => {
+  const router = useRouter();
+
   const {
     title, desc, detail, address, logo, status,
   } = item;
@@ -24,8 +27,10 @@ const ProposalItem = ({ item }) => {
     return <Badge variant="danger" content="Not started" />;
   };
 
+  const onChangeRoute = () => router.push(`${router.asPath}/proposal-info`);
+
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={onChangeRoute}>
       <div className="d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center">
           <div className={styles.img}>
