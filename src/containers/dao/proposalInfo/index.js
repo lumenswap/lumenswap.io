@@ -6,6 +6,7 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
 import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
+import Progressbar from 'components/Progressbar';
 
 import styles from './styles.module.scss';
 
@@ -39,7 +40,17 @@ const ProposalInfo = () => {
                 data={crumbData}
               />
 
-              hiii
+              <div className={classNames(styles.card, 'mt-4')}>
+                <h3 className={styles['card-title']}>Will Joe Biden win the 2020 United
+                  States presidential election?
+                </h3>
+                <div className="mt-4">
+                  <Progressbar label="Yes" value={80} />
+                </div>
+                <div className="mt-4">
+                  <Progressbar label="No" value={20} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

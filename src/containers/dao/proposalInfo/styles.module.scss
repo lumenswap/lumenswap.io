@@ -4,3 +4,17 @@
   padding-top: 75px;
   padding-bottom: 200px;
 }
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  padding: 20px 24px 24px 24px;
+
+  &-title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.56;
+    color: $CodGray;
+    margin: 0;
+  }
+}
