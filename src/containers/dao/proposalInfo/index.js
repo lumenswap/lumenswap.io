@@ -7,6 +7,8 @@ import Breadcrumb from 'components/BreadCrumb';
 import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
 import Progressbar from 'components/Progressbar';
+import Button from 'components/Button';
+import ArrowIcon from 'assets/images/angleRight';
 
 import styles from './styles.module.scss';
 
@@ -50,6 +52,13 @@ const ProposalInfo = () => {
                 <div className="mt-4">
                   <Progressbar label="No" value={20} />
                 </div>
+
+                <Button
+                  variant="primary"
+                  className={styles.btn}
+                >
+                  Vote <ArrowIcon />
+                </Button>
               </div>
             </div>
           </div>
