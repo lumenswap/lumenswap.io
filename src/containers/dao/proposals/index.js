@@ -34,6 +34,18 @@ const Proposals = () => {
     logo: sampleLogo, web: 'Rabet.io', webLink: '/', assetLink: '/', name: 'Lumenswap', desc: 'Lumenswap is a decentralized exchange built on the Stellar network that allows you to swap and trade assets using a friendly, minimal interface.', proposals: '1', member: '110,000', tiker: 'LSP',
   };
 
+  const proposals = [
+    {
+      id: 1, logo: sampleLogo, status: 'active', detail: 'End in 2 days', address: 'By 0x7384…6trs47', title: 'Will Joe Biden win the 2020 United States presidential election?', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
+    },
+    {
+      id: 2, logo: sampleLogo, status: 'ended', detail: 'Look marketing tokens', address: 'By 0x7384…6trs47', title: 'Will Joe Biden win the 2020 United States presidential election?', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
+    },
+    {
+      id: 3, logo: sampleLogo, status: 'Not started', detail: 'Look marketing tokens', address: 'By 0x7384…6trs47', title: 'Will Joe Biden win the 2020 United States presidential election?', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
+    },
+  ];
+
   return (
     <Container>
       <ServerSideLoading>
@@ -57,9 +69,11 @@ const Proposals = () => {
                   <div className="col-auto" />
                 </div>
 
-                <div className="mt-4">
-                  <ProposalItem />
-                </div>
+                {proposals.map((proposal) => (
+                  <div className="mt-4" key={proposal.id}>
+                    <ProposalItem item={proposal} />
+                  </div>
+                ))}
               </div>
 
             </div>

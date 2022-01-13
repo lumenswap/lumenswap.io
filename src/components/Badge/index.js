@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
-// error | success | info
+// danger | success | info
 const Badge = ({ variant, content }) => (
   <div className={classNames(styles.badge, styles[`badge-${variant}`])}>
     {content}

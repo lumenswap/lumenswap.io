@@ -26,3 +26,12 @@
   line-height: 1.5;
   color: $ShuttleGray;
 }
+
+.detail {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 6px;
+  }
+}
