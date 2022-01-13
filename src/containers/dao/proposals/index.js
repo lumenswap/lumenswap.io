@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -10,10 +10,20 @@ import ProposalItem from 'containers/dao/proposals/ProposalItem';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
 import sampleLogo from 'assets/images/btc-logo.png';
+import Button from 'components/Button';
+import SelectOption from 'components/SelectOption';
 
 import styles from './styles.module.scss';
 
+const dropdownItems = [
+  { value: 'all', label: 'All' },
+  { value: 'active', label: 'Active' },
+  { value: 'not-started', label: 'Not Started' },
+  { value: 'ended', label: 'Ended' },
+];
+
 const Proposals = () => {
+  const [select, setSelect] = useState(dropdownItems[0]);
   const router = useRouter();
   const Container = ({ children }) => (
     <div className="container-fluid">
@@ -66,7 +76,22 @@ const Proposals = () => {
                   <div className="col-auto">
                     <h2 className={styles.title}>Proposals</h2>
                   </div>
-                  <div className="col-auto" />
+                  <div className="col-auto">
+                    <div className="d-flex align-items-center">
+                      <SelectOption
+                        items={dropdownItems}
+                        defaultValue={select}
+                        setValue={setSelect}
+                        className={styles.filter}
+                        isSearchable={false}
+                      />
+                      <Button
+                        variant="primary"
+                        content="Create proposal"
+                        className={styles.btn}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 {proposals.map((proposal) => (
