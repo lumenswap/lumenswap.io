@@ -16,6 +16,22 @@
     line-height: 1.56;
     color: $CodGray;
     margin: 0;
+
+    &-small {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: $CodGray;
+      margin: 0;
+    }
+  }
+
+  &-desc {
+    font-size: 16px;
+    line-height: 1.5;
+    color: $ShuttleGray;
+    margin: 16px 0 0 0;
+    font-weight: normal;
   }
 }
 
