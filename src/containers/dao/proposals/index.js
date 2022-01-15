@@ -89,6 +89,9 @@ const Proposals = () => {
                         variant="primary"
                         content="Create proposal"
                         className={styles.btn}
+                        onClick={() => {
+                          router.push(urlMaker.dao.singleDao.createProposal(router.query.name));
+                        }}
                       />
                     </div>
                   </div>
