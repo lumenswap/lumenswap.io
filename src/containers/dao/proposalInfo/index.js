@@ -12,15 +12,11 @@ import Button from 'components/Button';
 import ArrowIcon from 'assets/images/angleRight';
 import InfoBox from 'components/InfoBox';
 import sampleLogo from 'assets/images/btc-logo.png';
+import CTable from 'components/CTable';
+import NoData from 'components/NoData';
+import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 
-import moment from 'moment';
 import styles from './styles.module.scss';
-import CTable from '../../../components/CTable';
-import { generateAddressURL, generateTransactionURL } from '../../../helpers/explorerURLGenerator';
-import minimizeAddress from '../../../helpers/minimizeAddress';
-import eyeShowIcon from '../../../assets/images/eye-show-icon.png';
-import NoData from '../../../components/NoData';
-import CSeeAllContentsButton from '../../../components/CSeeAllContentsButton';
 
 const ProposalInfo = () => {
   const router = useRouter();
@@ -37,7 +33,7 @@ const ProposalInfo = () => {
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.root()}/${router.query.name}`, name: router.query.name },
+    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: router.query.name },
     { name: 'Proposal info' },
   ];
 
@@ -195,7 +191,10 @@ const ProposalInfo = () => {
               </div>
 
               <div className="mt-3">
-                <CSeeAllContentsButton link="/" content="See all Votes" />
+                <CSeeAllContentsButton
+                  link={`${urlMaker.dao.singleDao.allVotes(router.query.name)}`}
+                  content="See all Votes"
+                />
               </div>
 
             </div>

@@ -123,7 +123,7 @@ const urlMaker = {
       root: (name) => `${rootUrl.dao}/${name}`,
       createProposal: (name) => `${urlMaker.dao.singleDao.root(name)}/create-proposal`,
       proposalInfo: (name) => `${urlMaker.dao.singleDao.root(name)}/proposal-info`,
-      allVotes: (name) => `${urlMaker.dao.singleDao.proposalInfo(name)}/all-votes`,
+      allVotes: (name) => `${urlMaker.dao.singleDao.proposalInfo(name)}/votes`,
     },
   },
 };
