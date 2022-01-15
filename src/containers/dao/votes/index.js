@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from 'containers/dao/DAOHeader';
@@ -8,11 +9,14 @@ import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
+import CPagination from 'components/CPagination';
 
 import styles from './styles.module.scss';
 
 const Votes = () => {
   const router = useRouter();
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(10);
 
   const Container = ({ children }) => (
     <div className="container-fluid">
@@ -81,6 +85,16 @@ const Votes = () => {
                   dataSource={Array(20).fill({})}
                   noDataComponent={NoDataMessage}
                   rowFix={{ rowNumbers: 20, rowHeight: 53, headerRowHeight: 25 }}
+                />
+              </div>
+
+              <div className="d-flex mt-4">
+                <CPagination
+                  pages={pages}
+                  currentPage={page}
+                  onPageClick={(newPage) => {
+                    setPage(newPage);
+                  }}
                 />
               </div>
             </div>
