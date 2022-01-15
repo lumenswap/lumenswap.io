@@ -4,3 +4,50 @@
   padding-top: 75px;
   padding-bottom: 200px;
 }
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+  margin-top: 25px;
+  padding: 21px 24px 40px 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input , .textarea {
+  border: none;
+  width: 100%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+}
+
+.input {
+  padding-top: 6px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.42;
+  color: $CodGray;
+
+  &::placeholder {
+    color: $Bombay;
+  }
+}
+
+.textarea {
+  resize: none;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ShuttleGray;
+
+  &::placeholder {
+    color: $Bombay;
+  }
+}
