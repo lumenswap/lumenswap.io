@@ -37,7 +37,7 @@ const ProposalInfo = () => {
     { name: 'Proposal info' },
   ];
 
-  const roundInfo = [
+  const proposalInfo = [
     {
       title: 'Proposal ID',
       externalLink: {
@@ -167,7 +167,7 @@ const ProposalInfo = () => {
 
               <div className="mt-4">
                 <InfoBox
-                  rows={roundInfo}
+                  rows={proposalInfo}
                   data={[{}, {}, {}]}
                   className={styles['row-box']}
                   sidePadding={24}
