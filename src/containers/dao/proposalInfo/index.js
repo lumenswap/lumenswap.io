@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
@@ -9,6 +10,8 @@ import urlMaker from 'helpers/urlMaker';
 import Progressbar from 'components/Progressbar';
 import Button from 'components/Button';
 import ArrowIcon from 'assets/images/angleRight';
+import InfoBox from 'components/InfoBox';
+import sampleLogo from 'assets/images/btc-logo.png';
 
 import styles from './styles.module.scss';
 
@@ -29,6 +32,48 @@ const ProposalInfo = () => {
     { url: urlMaker.dao.root(), name: 'Board' },
     { url: `${urlMaker.dao.root()}/${router.query.name}`, name: router.query.name },
     { name: 'Proposal info' },
+  ];
+
+  const roundInfo = [
+    {
+      title: 'Proposal ID',
+      externalLink: {
+        title: 'CBhQN1FK…ARGv8CWH',
+        url: '/',
+      },
+    },
+    {
+      title: 'Duration',
+      render: () => (<>14 days</>),
+    },
+    {
+      title: 'Start time',
+      render: () => (<>Dec-08-2020 11:31 AM +UTC</>),
+    },
+    {
+      title: 'End time',
+      render: () => (<>Dec-08-2020 11:31 AM +UTC</>),
+    },
+    {
+      title: 'Total voter',
+      render: () => (<>743,386</>),
+    },
+    {
+      title: 'Proposer',
+      externalLink: {
+        title: '3P2p…rb4P',
+        url: '/',
+      },
+    },
+    {
+      title: 'Govermant',
+      render: () => (
+        <div className="d-flex align-items-center">
+          <Image src={sampleLogo} height={24} width={24} />
+          <div className="ml-1">Rabet</div>
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -85,6 +130,16 @@ const ProposalInfo = () => {
                   to be claimed by each of the 12,619 accounts held by users of
                   the following projects:
                 </p>
+              </div>
+
+              <div className="mt-4">
+                <InfoBox
+                  rows={roundInfo}
+                  data={[{}, {}, {}]}
+                  className={styles['row-box']}
+                  sidePadding={24}
+                  bordered
+                />
               </div>
             </div>
           </div>

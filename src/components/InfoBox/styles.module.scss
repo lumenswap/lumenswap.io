@@ -16,8 +16,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-right: 16px;
-  padding-left: 16px;
   width: 100%;
 }
 
@@ -73,4 +71,12 @@
 .align-center {
   display: flex;
   align-items: center;
+}
+
+.bordered {
+  height: 48px;
+}
+
+.bordered:not(:last-child) {
+  border-bottom: 1px solid $CatskillWhite;
 }

@@ -1,17 +1,25 @@
 import Image from 'next/image';
-import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
-import styles from './styles.module.scss';
-import InfoBoxLink from './InfoBoxLink';
-import QuestionIcon from '../../assets/images/question-icon.png';
 
-function InfoBoxItem({ item, data }) {
+import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
+import classNames from 'classnames';
+import QuestionIcon from 'assets/images/question-icon.png';
+import InfoBoxLink from './InfoBoxLink';
+
+import styles from './styles.module.scss';
+
+function InfoBoxItem({
+  item, data, bordered, sidePadding,
+}) {
   let url = false;
   if (item.externalLink || item.internalLink) {
     url = true;
   }
 
   return (
-    <div className={styles.row}>
+    <div
+      className={(classNames(styles.row, bordered && styles.bordered, 'row-info'))}
+      style={{ padding: `${sidePadding}px` }}
+    >
       <div className={styles.title}>
         <span className={styles['align-center']}>
           {item.title}
