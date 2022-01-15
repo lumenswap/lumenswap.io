@@ -13,7 +13,14 @@ import ArrowIcon from 'assets/images/angleRight';
 import InfoBox from 'components/InfoBox';
 import sampleLogo from 'assets/images/btc-logo.png';
 
+import moment from 'moment';
 import styles from './styles.module.scss';
+import CTable from '../../../components/CTable';
+import { generateAddressURL, generateTransactionURL } from '../../../helpers/explorerURLGenerator';
+import minimizeAddress from '../../../helpers/minimizeAddress';
+import eyeShowIcon from '../../../assets/images/eye-show-icon.png';
+import NoData from '../../../components/NoData';
+import CSeeAllContentsButton from '../../../components/CSeeAllContentsButton';
 
 const ProposalInfo = () => {
   const router = useRouter();
@@ -75,6 +82,36 @@ const ProposalInfo = () => {
       ),
     },
   ];
+
+  const tableInfo = [
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: '1',
+      render: () => (
+        <a
+          className="text-decoration-none"
+          target="_blank"
+          rel="noreferrer"
+        >3P2p…rb4P
+        </a>
+      ),
+    },
+    {
+      title: 'Vote',
+      dataIndex: 'vote',
+      key: '2',
+      render: () => (<>Yes</>),
+    },
+    {
+      title: 'Amount',
+      dataIndex: 'amount',
+      key: '3',
+      render: () => (<>100 RBT</>),
+    },
+  ];
+
+  const NoDataMessage = () => (<NoData message="There is no votes" />);
 
   return (
     <Container>
@@ -141,6 +178,26 @@ const ProposalInfo = () => {
                   bordered
                 />
               </div>
+
+              <div className={classNames(styles.card, 'mt-4 p-0')}>
+                <h4 className={classNames(
+                  styles['card-title-small'],
+                  styles['card-title-table'],
+                )}
+                >Votes
+                </h4>
+                <CTable
+                  className={styles.table}
+                  columns={tableInfo}
+                  dataSource={Array(10).fill({})}
+                  noDataComponent={NoDataMessage}
+                />
+              </div>
+
+              <div className="mt-3">
+                <CSeeAllContentsButton link="/" content="See all Votes" />
+              </div>
+
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 .layout {
   padding-top: 75px;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
 }
 
 .card {
@@ -24,6 +24,10 @@
       line-height: 1.5;
       color: $CodGray;
       margin: 0;
+    }
+
+    &-table {
+      padding: 20px 24px 16px 24px;
     }
   }
 
@@ -50,4 +54,9 @@
 
 .row-box {
   height: auto !important;
+}
+
+.table tr:first-child {
+  height: 25px !important;
+  line-height: 25px;
 }
