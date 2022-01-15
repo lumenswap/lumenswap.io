@@ -1,0 +1,45 @@
+@import "styles/vars";
+
+.layout {
+  padding-top: 75px;
+  padding-bottom: 100px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.42;
+  color: $CodGray;
+}
+
+
+.filter {
+  :global(.select__control) {
+    width: 137px;
+    height: 40px;
+    border: solid 1px $CatskillWhite;
+    border-radius: 4px;
+
+    :global(.select__value-container) {
+      padding: 0 14px;
+    }
+  }
+
+  :global(.select__control):hover {
+    border: solid 1px $CatskillWhite;
+  }
+
+  :global(.select__value-container),
+  :global(.select__option) {
+    font-size: 14px;
+    font-weight: normal;
+    padding: 8px 14px;
+    color: $CodGray !important;
+  }
+
+  :global(.select__menu-list) {
+    border-radius: 4px;
+    box-shadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
+    padding: 10px 0;
+  }
+}
