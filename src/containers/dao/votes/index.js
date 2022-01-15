@@ -15,7 +15,7 @@ const Votes = () => {
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
-        <title>Proposal Info | Lumenswap</title>
+        <title>All Votes | Lumenswap</title>
       </Head>
       <DAOHeader />
       {children}
