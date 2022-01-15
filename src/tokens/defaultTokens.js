@@ -22,6 +22,7 @@ import NUNA from './NUNA';
 import AQUA from './AQUA';
 import NLSP from './NLSP';
 import YBX from './YBX';
+import RBT from './RBT';
 
 const defaultTokens = [
   XLM,
@@ -48,6 +49,7 @@ const defaultTokens = [
   NUNA,
   AQUA,
   YBX,
+  RBT,
 ];
 
 export default defaultTokens;

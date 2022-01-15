@@ -45,7 +45,7 @@ const CAddCustomToken = ({ onAddToken }) => {
       const res = await checkAssetAPI(code, issuer);
       if (res) {
         const pured = pureTokens([
-          ...defaultTokens.map((i) => getAssetDetails(i)),
+          ...defaultTokens.filter((i) => !i.isHide).map((i) => getAssetDetails(i)),
           ...userCustomTokens,
         ]);
         const found = pured.find((i) => isSameAsset(getAssetDetails({ issuer, code }), i));

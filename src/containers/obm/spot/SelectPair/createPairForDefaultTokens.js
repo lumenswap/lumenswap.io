@@ -9,22 +9,26 @@ export default function createPairForDefaultTokens() {
   const result = [];
 
   for (const token of defaultTokens) {
-    if (!isSameAsset(getAssetDetails(USDC), getAssetDetails(token))
-    && !isSameAsset(getAssetDetails(NLSP), getAssetDetails(token))) {
-      result.push({
-        base: getAssetDetails(token),
-        counter: getAssetDetails(USDC),
-      });
+    if (!token.isHide) {
+      if (!isSameAsset(getAssetDetails(USDC), getAssetDetails(token))
+      && !isSameAsset(getAssetDetails(NLSP), getAssetDetails(token))) {
+        result.push({
+          base: getAssetDetails(token),
+          counter: getAssetDetails(USDC),
+        });
+      }
     }
   }
 
   for (const token of defaultTokens) {
-    if (!isSameAsset(getAssetDetails(XLM), getAssetDetails(token))
-    && !isSameAsset(getAssetDetails(NLSP), getAssetDetails(token))) {
-      result.push({
-        base: getAssetDetails(token),
-        counter: getAssetDetails(XLM),
-      });
+    if (!token.isHide) {
+      if (!isSameAsset(getAssetDetails(XLM), getAssetDetails(token))
+      && !isSameAsset(getAssetDetails(NLSP), getAssetDetails(token))) {
+        result.push({
+          base: getAssetDetails(token),
+          counter: getAssetDetails(XLM),
+        });
+      }
     }
   }
 

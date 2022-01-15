@@ -31,7 +31,7 @@ const SelectAsset = ({
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([
       getAssetDetails(XLM),
-      ...defaultTokens.map((i) => getAssetDetails(i)),
+      ...defaultTokens.filter((i) => !i.isHide).map((i) => getAssetDetails(i)),
       ...userCustomTokens,
     ]).map((item) => {
       const foundToken = defaultTokens.find((tok) => isSameAsset(getAssetDetails(tok), item));
