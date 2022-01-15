@@ -14,7 +14,7 @@ const CreateProposal = () => {
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
-        <title>Proposal Info | Lumenswap</title>
+        <title>Create Proposal | Lumenswap</title>
       </Head>
       <DAOHeader />
       {children}
