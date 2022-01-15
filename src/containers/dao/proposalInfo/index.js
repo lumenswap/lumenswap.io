@@ -187,6 +187,7 @@ const ProposalInfo = () => {
                   columns={tableInfo}
                   dataSource={Array(10).fill({})}
                   noDataComponent={NoDataMessage}
+                  rowFix={{ rowNumbers: 10, rowHeight: 53, headerRowHeight: 25 }}
                 />
               </div>
 
