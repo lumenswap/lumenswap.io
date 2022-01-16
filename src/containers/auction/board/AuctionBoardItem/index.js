@@ -3,7 +3,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import humanAmount from 'helpers/humanAmount';
 import urlMaker from 'helpers/urlMaker';
-import { statusClassNames, STATUS_NAMES } from 'containers/auction/consts/board';
+import { statusClassNames } from 'containers/auction/consts/board';
 import styles from './styles.module.scss';
 
 const STATUS_CLASSNAMES = statusClassNames(styles);
@@ -46,7 +46,7 @@ const AuctionBoardItem = ({ board }) => (
                   <span className={styles['badge-subject']}>Amount to sell</span>{humanAmount(board.amountToSell)} {board.assetCode}
                 </div>
                 <div className={styles.badge}>
-                  <span className={styles['badge-subject']}>Base price</span>{board.status === STATUS_NAMES['not-started'] ? '-' : `${board.basePrice} XLM`}
+                  <span className={styles['badge-subject']}>Base price</span>{`${board.basePrice} XLM`}
                 </div>
               </div>
             </div>

@@ -59,7 +59,7 @@ function BidsData({
       key: 4,
       render: (data) => (
         <span>
-          {data.price} XLM
+          {humanAmount(data.price)} XLM
         </span>
       ),
     },
