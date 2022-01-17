@@ -120,7 +120,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
       url: urlMaker.auction.root(),
     },
     {
-      render: () => (<div>{pageName}</div>),
+      render: () => (<div>{`${pageName.charAt(0).toUpperCase() + pageName.slice(1)}(${assetCode})`}</div>),
     },
   ];
 
