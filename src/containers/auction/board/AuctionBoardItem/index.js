@@ -9,7 +9,7 @@ import styles from './styles.module.scss';
 const STATUS_CLASSNAMES = statusClassNames(styles);
 
 const AuctionBoardItem = ({ board }) => (
-  <Link href={urlMaker.auction.singleAuction.root(`${board.title}(${board.assetCode})`)} passHref>
+  <Link href={urlMaker.auction.singleAuction.root(`${board.title.toLowerCase()}`)} passHref>
     <a className="text-decoration-none">
       <div className={classNames(styles.box, 'mt-4')}>
         <div className="row">
