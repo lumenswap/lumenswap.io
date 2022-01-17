@@ -2,12 +2,16 @@ import { getAllAuctions } from 'api/auction';
 
 async function WinnersPageGetServerSideProps({ params }) {
   const pageName = params.name;
-  const assetCode = pageName.substring(
-    pageName.indexOf('(') + 1,
-    pageName.lastIndexOf(')'),
-  );
 
-  const infoData = await getAllAuctions({ assetCode });
+  const infoData = await getAllAuctions({ title: pageName });
+
+  if (infoData.length <= 0) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const assetCode = infoData[0].assetCode;
 
   return {
     props: {
