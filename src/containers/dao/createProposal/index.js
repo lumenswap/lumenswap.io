@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
@@ -15,9 +15,11 @@ const CreateProposal = () => {
   const router = useRouter();
   const [result, setResult] = useState('');
   const {
-    register,
     handleSubmit,
-  } = useForm();
+    control,
+  } = useForm({
+    mode: 'onChange',
+  });
 
   const Container = ({ children }) => (
     <div className="container-fluid">
@@ -54,17 +56,35 @@ const CreateProposal = () => {
 
               <div className={styles.card}>
                 <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-                  <input
-                    type="text"
-                    className={styles.input}
-                    placeholder="Ask a question…"
-                    {...register('question')}
+                  <Controller
+                    name="question"
+                    control={control}
+                    render={(props) => (
+                      <div>
+                        <input
+                          type="text"
+                          className={styles.input}
+                          placeholder="Ask a question…"
+                          value={props.value}
+                          onChange={props.onChange}
+                        />
+                        {/* {props.value && props.value.length} */}
+                      </div>
+                    )}
                   />
-                  <textarea
-                    className={styles.textarea}
-                    placeholder="Tell more about your proposal (optional)"
-                    {...register('proposal')}
+                  <Controller
+                    name="proposal"
+                    control={control}
+                    render={(props) => (
+                      <textarea
+                        className={styles.textarea}
+                        placeholder="Tell more about your proposal (optional)"
+                        value={props.value}
+                        onChange={props.onChange}
+                      />
+                    )}
                   />
+                  {/* <button type="submit">test</button> */}
                 </form>
               </div>
             </div>
