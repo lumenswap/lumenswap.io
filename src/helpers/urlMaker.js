@@ -17,6 +17,8 @@ if (process.env.REACT_APP_MODE === 'OBM') {
   rootUrl.lottery = '';
 } else if (process.env.REACT_APP_MODE === 'NFT') {
   rootUrl.nft = '';
+} else if (process.env.REACT_APP_MODE === 'AUCTION') {
+  rootUrl.auction = '';
 }
 
 const urlMaker = {
@@ -104,7 +106,7 @@ const urlMaker = {
     },
   },
   auction: {
-    root: () => `${rootUrl.auction}`,
+    root: () => `${rootUrl.auction}/`,
     bids: () => `${rootUrl.auction}/bids`,
     singleAuction: {
       root: (name) => `${rootUrl.auction}/${name}`,
