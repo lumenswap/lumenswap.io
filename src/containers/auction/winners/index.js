@@ -47,7 +47,7 @@ function Winners({ pageName, assetCode, auction }) {
   return (
     <div className="container-fluid">
       <Head>
-        <title>Auction Winners | Lumenswap</title>
+        <title>{auction.title} auction | All winners | Lumenswap</title>
       </Head>
       <AuctionHeader />
       <ServerSideLoading>

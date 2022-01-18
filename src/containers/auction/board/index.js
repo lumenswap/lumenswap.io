@@ -12,7 +12,7 @@ const AuctionBoard = () => {
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
-        <title>Auction Board | Lumenswap</title>
+        <title>Auction board | Lumenswap</title>
       </Head>
       <AuctionHeader />
       {children}
