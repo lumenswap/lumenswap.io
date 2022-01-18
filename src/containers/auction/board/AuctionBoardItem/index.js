@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import classNames from 'classnames';
 import humanAmount from 'helpers/humanAmount';
@@ -26,7 +25,7 @@ const AuctionBoardItem = ({ board }) => (
               {board.image && (
                 <div className={styles['title-container']}>
                   <div className={styles['img-container']}>
-                    <Image src={board.image} width={82} height={82} />
+                    <img src={board.image} width={82} height={82} />
                     <span className={styles['img-container-title']}>
                       {board.assetCode}
                     </span>

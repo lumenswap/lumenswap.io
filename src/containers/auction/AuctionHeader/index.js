@@ -10,7 +10,7 @@ const AuctionHeader = () => {
     },
     {
       name: 'Learn about auction',
-      link: '/',
+      link: 'https://medium.com/lumenswap/eighth-milestone-auction-fa307d4b50e3',
       disableMainHref: true,
       external: true,
     },

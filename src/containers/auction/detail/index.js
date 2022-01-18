@@ -169,10 +169,14 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         </>
       ),
     },
-    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.basePrice} XLM` },
+    {
+      title: 'Base price',
+      tooltip: 'You must set the price of your bid equal to or higher than this number. Otherwise, your bid will not be valid.',
+      render: (data) => `${data.basePrice} XLM`,
+    },
     {
       title: 'Bids',
-      tooltip: 'some data',
+      tooltip: 'This shows the total amount of bids',
       render: (data) => {
         const [base, setBase] = useState('XLM');
         let valueToShow = '';
