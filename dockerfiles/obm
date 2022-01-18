@@ -10,6 +10,7 @@ RUN rm -r ./src/pages/reward
 RUN rm -r ./src/pages/amm
 RUN rm -r ./src/pages/nft
 RUN rm -r ./src/pages/lottery
+RUN rm -r ./src/pages/auction
 RUN mv ./src/pages/obm/* ./src/pages
 RUN rm -r ./src/pages/obm
 
