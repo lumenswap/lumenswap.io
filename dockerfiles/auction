@@ -13,9 +13,9 @@ RUN rm -r ./src/pages/lottery
 RUN rm -r ./src/pages/nft
 RUN rm -r ./src/pages/amm
 RUN mv ./src/pages/auction/* ./src/pages
-RUN mv -r ./src/pages/auction
+RUN rm -r ./src/pages/auction
 
-ENV REACT_APP_MODE=AMM
+ENV REACT_APP_MODE=AUCTION
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
 ENV REACT_APP_LUMENSCAN_URL=https://lumenscan.io
 ENV REACT_APP_HOST=https://amm.lumenswap.io
