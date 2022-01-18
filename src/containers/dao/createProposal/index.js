@@ -60,15 +60,21 @@ const CreateProposal = () => {
                     name="question"
                     control={control}
                     render={(props) => (
-                      <div>
+                      <div className="d-flex align-items-center mb-4">
                         <input
                           type="text"
                           className={styles.input}
                           placeholder="Ask a question…"
                           value={props.value}
                           onChange={props.onChange}
+                          maxLength={30}
                         />
-                        {/* {props.value && props.value.length} */}
+                        {props.value
+                          && (
+                          <div className={styles.length}>
+                            <span>{props.value.length}</span>/30
+                          </div>
+                          )}
                       </div>
                     )}
                   />
@@ -76,12 +82,21 @@ const CreateProposal = () => {
                     name="proposal"
                     control={control}
                     render={(props) => (
-                      <textarea
-                        className={styles.textarea}
-                        placeholder="Tell more about your proposal (optional)"
-                        value={props.value}
-                        onChange={props.onChange}
-                      />
+                      <div className="d-flex flex-column mb-4">
+                        <textarea
+                          className={styles.textarea}
+                          placeholder="Tell more about your proposal (optional)"
+                          value={props.value}
+                          onChange={props.onChange}
+                          maxLength={300}
+                        />
+                        {props.value
+                          && (
+                          <div className={classNames(styles.length, 'text-right mt-2')}>
+                            <span>{props.value.length}</span>/300
+                          </div>
+                          )}
+                      </div>
                     )}
                   />
                   {/* <button type="submit">test</button> */}

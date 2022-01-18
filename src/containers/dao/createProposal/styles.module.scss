@@ -21,7 +21,6 @@
 .input , .textarea {
   border: none;
   width: 100%;
-  margin-bottom: 16px;
   box-sizing: border-box;
 }
 
@@ -46,8 +45,19 @@
   font-size: 16px;
   line-height: 1.5;
   color: $ShuttleGray;
+  min-height: 168px;
 
   &::placeholder {
     color: $Bombay;
+  }
+}
+
+.length {
+  font-size: 14px;
+  line-height: 1.43;
+  color: $Manatee;
+
+  span {
+    color: $ShuttleGray
   }
 }
