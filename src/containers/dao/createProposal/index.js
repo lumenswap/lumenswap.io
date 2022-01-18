@@ -11,6 +11,7 @@ import urlMaker from 'helpers/urlMaker';
 import Options from './Options';
 
 import styles from './styles.module.scss';
+import Button from '../../../components/Button';
 
 const CreateProposal = () => {
   const router = useRouter();
@@ -60,6 +61,7 @@ const CreateProposal = () => {
                   <Controller
                     name="question"
                     control={control}
+                    defaultValue=""
                     render={(props) => (
                       <div className="d-flex align-items-center mb-4">
                         <input
@@ -82,6 +84,7 @@ const CreateProposal = () => {
                   <Controller
                     name="proposal"
                     control={control}
+                    defaultValue=""
                     render={(props) => (
                       <div className="d-flex flex-column mb-4">
                         <textarea
@@ -100,8 +103,13 @@ const CreateProposal = () => {
                       </div>
                     )}
                   />
-                  <Options />
-                  {/* <button type="submit">test</button> */}
+                  <Options control={control} Controller={Controller} />
+                  <Button
+                    htmlType="submit"
+                    variant="primary"
+                    className={styles.submit}
+                  >Create proposal
+                  </Button>
                 </form>
               </div>
             </div>
