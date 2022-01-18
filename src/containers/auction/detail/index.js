@@ -120,7 +120,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
       url: urlMaker.auction.root(),
     },
     {
-      render: () => (<div>{pageName}</div>),
+      render: () => (<div>{`${pageName.charAt(0).toUpperCase() + pageName.slice(1)}(${assetCode})`}</div>),
     },
   ];
 
@@ -135,7 +135,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
       ),
     },
     { title: 'Asset issuer', render: (data) => <a className={styles['asset-link']} href={generateAddressURL(data.assetIssuer)} target="_blank" rel="noreferrer">{minimizeAddress(data.assetIssuer)}</a> },
-    { title: 'Amount to sell', tooltip: 'some data', render: (data) => `${numeral(data.amountToSell).format('0,0')} ${data.assetCode}` },
+    { title: 'Amount to sell', render: (data) => `${numeral(data.amountToSell).format('0,0')} ${data.assetCode}` },
   ];
 
   useEffect(() => {
@@ -169,7 +169,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         </>
       ),
     },
-    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.status === STATUS_NAMES['not-started'] ? '-' : `${data.basePrice} XLM`}` },
+    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.basePrice} XLM` },
     {
       title: 'Bids',
       tooltip: 'some data',

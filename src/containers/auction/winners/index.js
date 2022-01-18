@@ -40,7 +40,7 @@ function Winners({ pageName, assetCode, auction }) {
 
   const crumbData = [
     { url: urlMaker.auction.root(), name: 'Auction' },
-    { url: urlMaker.auction.singleAuction.root(pageName), name: `${pageName}` },
+    { url: urlMaker.auction.singleAuction.root(pageName), name: `${pageName.charAt(0).toUpperCase() + pageName.slice(1)}(${assetCode})` },
     { name: 'Winners' },
   ];
 

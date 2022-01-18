@@ -2,18 +2,8 @@ import { getAllAuctions, getTotalBids } from 'api/auction';
 
 async function auctionPageGetServerSideProps({ params }) {
   const pageName = params.name;
-  const assetCode = pageName.substring(
-    pageName.indexOf('(') + 1,
-    pageName.lastIndexOf(')'),
-  );
 
-  if (assetCode.length <= 0) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const infoData = await getAllAuctions({ assetCode });
+  const infoData = await getAllAuctions({ title: pageName });
 
   if (infoData.length <= 0) {
     return {
@@ -24,6 +14,8 @@ async function auctionPageGetServerSideProps({ params }) {
   const sumBids = await getTotalBids(infoData[0].id);
   infoData[0].totalBids = sumBids[0].totalBid;
   infoData[0].totalAmount = sumBids[0].totalAmount;
+
+  const assetCode = infoData[0].assetCode;
 
   return {
     props: {

@@ -9,16 +9,16 @@ RUN rm .eslintrc.js
 
 RUN rm -r ./src/pages/obm
 RUN rm -r ./src/pages/reward
-RUN rm -r ./src/pages/amm
-RUN rm -r ./src/pages/nft
-RUN rm -r ./src/pages/auction
-RUN mv ./src/pages/lottery/* ./src/pages
 RUN rm -r ./src/pages/lottery
+RUN rm -r ./src/pages/nft
+RUN rm -r ./src/pages/amm
+RUN mv ./src/pages/auction/* ./src/pages
+RUN mv -r ./src/pages/auction
 
-ENV REACT_APP_MODE=LOTTERY
+ENV REACT_APP_MODE=AMM
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
 ENV REACT_APP_LUMENSCAN_URL=https://lumenscan.io
-ENV REACT_APP_HOST=https://lottery.lumenswap.io
+ENV REACT_APP_HOST=https://amm.lumenswap.io
 ENV REACT_APP_LUMEN_API=https://api.lumenswap.io
 ENV REACT_APP_ENV=production
 ENV REACT_APP_LOTTERY_ACCOUNT=GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK
