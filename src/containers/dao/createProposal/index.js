@@ -8,6 +8,7 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
 import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
+import Options from './Options';
 
 import styles from './styles.module.scss';
 
@@ -99,6 +100,7 @@ const CreateProposal = () => {
                       </div>
                     )}
                   />
+                  <Options />
                   {/* <button type="submit">test</button> */}
                 </form>
               </div>

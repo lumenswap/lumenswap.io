@@ -18,7 +18,7 @@
   flex-direction: column;
 }
 
-.input , .textarea {
+.input, .textarea {
   border: none;
   width: 100%;
   box-sizing: border-box;
@@ -59,5 +59,45 @@
 
   span {
     color: $ShuttleGray
+  }
+}
+
+.panel {
+  border: 1px solid $CatskillWhite;
+  border-radius: 8px;
+
+  &-header {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.56;
+    border-bottom: 1px solid $CatskillWhite;
+    padding: 14px 24px;
+  }
+
+  &-body {
+    padding: 32px 24px;
+  }
+}
+
+.group {
+  margin-bottom: 20px;
+  input {
+    border-radius: 4px;
+  }
+}
+
+.btn-dashed {
+  margin-top: 24px;
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px dashed $Bombay;
+
+  &:focus {
+    outline: none;
   }
 }
