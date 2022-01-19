@@ -74,11 +74,11 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const [refreshData, setRefreshData] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
   const [period, setPeriod] = useState(null);
-  // const [live, setLive] = useState(true);
+  const [live, setLive] = useState(true);
   const interValRef = useRef(null);
-  // if (infoData.status.toLowerCase() !== 'live') {
-  //   setLive(false);
-  // }
+  if (infoData.status.toLowerCase() !== 'live') {
+    setLive(false);
+  }
 
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
@@ -165,11 +165,15 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
       title: 'Period',
       render: (data) => (
         <>
-          {generatePeriod(data, period, showCountdown)}
-          <span
-            className={classNames('icon-arrow-repeat', styles['cricle-icon'])}
-            onClick={handleShowCountdown}
-          />
+          {live ? (
+            <>
+              {generatePeriod(data, period, showCountdown)}
+              <span
+                className={classNames('icon-arrow-repeat', styles['cricle-icon'])}
+                onClick={handleShowCountdown}
+              />
+            </>
+          ) : infoData.status}
         </>
       ),
     },
