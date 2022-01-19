@@ -52,9 +52,14 @@ function generatePeriod(data, period, showCountdown) {
     };
 
     return (
-      <div className={styles.period}>
-        {fullTime?.days} {fullTime?.hours} {fullTime?.minutes} {fullTime?.seconds}
-      </div>
+      <>
+        {data.status === 'Live'
+          ? (
+            <div className={styles.period}>
+              {fullTime?.days} {fullTime?.hours} {fullTime?.minutes} {fullTime?.seconds}
+            </div>
+          ) : data.status}
+      </>
     );
   }
 
@@ -161,15 +166,11 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
       title: 'Period',
       render: (data) => (
         <>
-          {infoData.status === 'Live' ? (
-            <>
-              {generatePeriod(data, period, showCountdown)}
-              <span
-                className={classNames('icon-arrow-repeat', styles['cricle-icon'])}
-                onClick={handleShowCountdown}
-              />
-            </>
-          ) : infoData.status}
+          {generatePeriod(data, period, showCountdown)}
+          <span
+            className={classNames('icon-arrow-repeat', styles['cricle-icon'])}
+            onClick={handleShowCountdown}
+          />
         </>
       ),
     },
