@@ -32,10 +32,10 @@ import AuctionDetailTabContent from './AuctionDetailTabContent';
 import styles from './styles.module.scss';
 import { STATUS_NAMES } from '../consts/board';
 
-const Container = ({ children }) => (
+const Container = ({ children, title }) => (
   <div className="container-fluid">
     <Head>
-      <title>Auction Board | Lumenswap</title>
+      <title>{title} auction | Lumenswap</title>
     </Head>
     <AuctionHeader />
     {children}
@@ -74,7 +74,11 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const [refreshData, setRefreshData] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
   const [period, setPeriod] = useState(null);
+  // const [live, setLive] = useState(true);
   const interValRef = useRef(null);
+  // if (infoData.status.toLowerCase() !== 'live') {
+  //   setLive(false);
+  // }
 
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
@@ -169,10 +173,14 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
         </>
       ),
     },
-    { title: 'Base price', tooltip: 'some data!', render: (data) => `${data.basePrice} XLM` },
+    {
+      title: 'Base price',
+      tooltip: 'You must set the price of your bid equal to or higher than this number. Otherwise, your bid will not be valid.',
+      render: (data) => `${data.basePrice} XLM`,
+    },
     {
       title: 'Bids',
-      tooltip: 'some data',
+      tooltip: 'This shows the total amount of bids',
       render: (data) => {
         const [base, setBase] = useState('XLM');
         let valueToShow = '';
@@ -224,7 +232,9 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   }
 
   return (
-    <Container>
+    <Container
+      title={infoData.title}
+    >
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">

@@ -107,7 +107,7 @@ const AuctionTickets = ({ auctions }) => {
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
-        <title>Auction Bids | Lumenswap</title>
+        <title>My ​activity | Lumenswap</title>
       </Head>
       <AuctionHeader />
       {children}

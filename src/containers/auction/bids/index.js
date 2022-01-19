@@ -49,7 +49,7 @@ function Bids({ pageName, assetCode, auction }) {
   return (
     <div className="container-fluid">
       <Head>
-        <title>Auction Bids | Lumenswap</title>
+        <title>{auction.title} auction | All offers | Lumenswap</title>
       </Head>
       <AuctionHeader />
       <ServerSideLoading>
