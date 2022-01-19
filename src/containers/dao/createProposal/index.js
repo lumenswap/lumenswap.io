@@ -3,18 +3,25 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useForm, Controller } from 'react-hook-form';
+import dynamic from 'next/dynamic';
 
 import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
 import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
+import Button from 'components/Button';
 import Options from './Options';
 
 import styles from './styles.module.scss';
-import Button from '../../../components/Button';
+
+const Datepicker = dynamic(() => import('components/Datepicker'), {
+  ssr: false,
+});
 
 const CreateProposal = () => {
   const router = useRouter();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndtDate] = useState(new Date());
   const [result, setResult] = useState('');
   const {
     handleSubmit,
@@ -104,6 +111,17 @@ const CreateProposal = () => {
                     )}
                   />
                   <Options control={control} Controller={Controller} />
+
+                  <div className="d-flex mt-4">
+                    <div className="flex flex-column">
+                      <label className="label-primary">Start date</label>
+                      <Datepicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                      />
+                    </div>
+                  </div>
+
                   <Button
                     htmlType="submit"
                     variant="primary"
