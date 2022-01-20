@@ -39,3 +39,20 @@
   font-weight: 500;
   margin-top: 24px;
 }
+
+.value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  padding-bottom: 12px;
+
+  &-name {
+    color: $ShuttleGray;
+  }
+
+  &-value {
+    color: $CodGray;
+  }
+}

@@ -1,14 +1,18 @@
 import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
 import RadioGroup from 'components/RadioGroup';
+import { closeModalAction, openModalAction } from 'actions/modal';
 
 import styles from './styles.module.scss';
+import ConfirmVote from './ConfirmVote';
 
 const Vote = () => {
+  const dispatch = useDispatch();
   const items = [
     { value: 'yes', label: 'Yes' },
     { value: 'no', label: 'No' },
@@ -18,7 +22,18 @@ const Vote = () => {
     handleSubmit, control,
   } = useForm({ mode: 'onChange' });
 
-  async function onSubmit(data) { console.warn(data); }
+  async function onSubmit(data) {
+    console.warn(data);
+    dispatch(closeModalAction());
+
+    dispatch(openModalAction({
+      modalProps: {
+        title: 'Confirm vote',
+        mainClassName: 'modal-br8',
+      },
+      content: <ConfirmVote />,
+    }));
+  }
 
   function onChange(value) {
     setRadioValue(value);
@@ -62,6 +77,7 @@ const Vote = () => {
           aliqua Egestas purus viverra accumsan in nisl nisi
         </div>
         <Button
+          htmlType="submit"
           variant="primary"
           content="Vote"
           className={styles.btn}
