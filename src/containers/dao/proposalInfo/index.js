@@ -117,8 +117,7 @@ const ProposalInfo = () => {
     dispatch(openModalAction({
       modalProps: {
         title: 'Vote',
-        className: styles['show-modal'],
-        mainClassName: styles['show-modal-main'],
+        mainClassName: 'modal-br8',
       },
       content: <Vote />,
     }));
