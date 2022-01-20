@@ -1,0 +1,114 @@
+@import "styles/vars";
+
+.alert {
+  border: 1px solid $CatskillWhite;
+  border-radius: 4px;
+  color: $ShuttleGray;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+
+  span {
+    color: $CodGray;
+  }
+
+  svg {
+    margin-right: 6px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input, .textarea {
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+}
+
+.input {
+  padding-top: 6px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.42;
+  color: $CodGray;
+
+  &::placeholder {
+    color: $Bombay;
+  }
+}
+
+.textarea {
+  resize: none;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ShuttleGray;
+  min-height: 168px;
+
+  &::placeholder {
+    color: $Bombay;
+  }
+}
+
+.length {
+  font-size: 14px;
+  line-height: 1.43;
+  color: $Manatee;
+
+  span {
+    color: $ShuttleGray
+  }
+}
+
+.panel {
+  border: 1px solid $CatskillWhite;
+  border-radius: 8px;
+
+  &-header {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.56;
+    border-bottom: 1px solid $CatskillWhite;
+    padding: 14px 24px;
+  }
+
+  &-body {
+    padding: 32px 24px;
+  }
+}
+
+.group {
+  margin-bottom: 20px;
+  input {
+    border-radius: 4px;
+  }
+}
+
+.btn-dashed {
+  margin-top: 24px;
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px dashed $Bombay;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.submit {
+  margin-top: 40px;
+  width: 160px;
+  height: 40px;
+  border-radius: 4px;
+}
