@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
 
 import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
@@ -15,11 +16,14 @@ import sampleLogo from 'assets/images/btc-logo.png';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
+import { openModalAction } from 'actions/modal';
+import Vote from './Vote';
 
 import styles from './styles.module.scss';
 
 const ProposalInfo = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const Container = ({ children }) => (
     <div className="container-fluid">
@@ -109,6 +113,17 @@ const ProposalInfo = () => {
 
   const NoDataMessage = () => (<NoData message="There is no votes" />);
 
+  const handleModal = () => {
+    dispatch(openModalAction({
+      modalProps: {
+        title: 'Vote',
+        className: styles['show-modal'],
+        mainClassName: styles['show-modal-main'],
+      },
+      content: <Vote />,
+    }));
+  };
+
   return (
     <Container>
       <ServerSideLoading>
@@ -134,6 +149,7 @@ const ProposalInfo = () => {
                 <Button
                   variant="primary"
                   className={styles.btn}
+                  onClick={handleModal}
                 >
                   Vote <ArrowIcon />
                 </Button>
