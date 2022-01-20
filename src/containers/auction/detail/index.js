@@ -52,9 +52,14 @@ function generatePeriod(data, period, showCountdown) {
     };
 
     return (
-      <div className={styles.period}>
-        {fullTime?.days} {fullTime?.hours} {fullTime?.minutes} {fullTime?.seconds}
-      </div>
+      <>
+        {data.status === 'Live'
+          ? (
+            <div className={styles.period}>
+              {fullTime?.days} {fullTime?.hours} {fullTime?.minutes} {fullTime?.seconds}
+            </div>
+          ) : data.status}
+      </>
     );
   }
 
@@ -74,11 +79,7 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const [refreshData, setRefreshData] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
   const [period, setPeriod] = useState(null);
-  // const [live, setLive] = useState(true);
   const interValRef = useRef(null);
-  // if (infoData.status.toLowerCase() !== 'live') {
-  //   setLive(false);
-  // }
 
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
