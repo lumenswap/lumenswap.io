@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
 // import dynamic from 'next/dynamic';
+import { useDispatch } from 'react-redux';
 
 import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
+import { openModalAction } from 'actions/modal';
 import Options from './Options';
 
 import styles from './styles.module.scss';
+import ConfirmProposal from '../Confirm';
 
 // const Datepicker = dynamic(() => import('components/Datepicker'), {
 //     ssr: false,
@@ -18,6 +21,7 @@ const ProposalForm = ({ setStatus }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndtDate] = useState(new Date());
   const [result, setResult] = useState('');
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
@@ -28,11 +32,13 @@ const ProposalForm = ({ setStatus }) => {
   const onSubmit = (data) => {
     console.log(data);
     setResult(data);
-    setStatus('loading');
 
-    setTimeout(() => {
-      setStatus('success');
-    }, 3000);
+    dispatch(openModalAction({
+      modalProps: {
+        mainClassName: 'modal-br8',
+      },
+      content: <ConfirmProposal setStatus={setStatus} />,
+    }));
   };
 
   return (
@@ -113,7 +119,7 @@ const ProposalForm = ({ setStatus }) => {
 };
 
 ProposalForm.propTypes = {
-
+  setStatus: PropTypes.func.isRequired,
 };
 
 export default ProposalForm;

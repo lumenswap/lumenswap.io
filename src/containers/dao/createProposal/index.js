@@ -63,14 +63,6 @@ const CreateProposal = () => {
       );
     }
 
-    if (status === 'confirm') {
-      return (
-        <div className={classNames(styles.card, styles['card-regular'])}>
-          <ProposalForm setStatus={setStatus} />
-        </div>
-      );
-    }
-
     return (
       <div className={classNames(styles.card, styles['card-regular'])}>
         <ProposalForm setStatus={setStatus} />
