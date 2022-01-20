@@ -13,6 +13,23 @@
   padding: 21px 24px 40px 24px;
 }
 
+.alert {
+  border: 1px solid $CatskillWhite;
+  border-radius: 4px;
+  color: $ShuttleGray;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+
+  span {
+    color: $CodGray;
+  }
+
+  svg {
+    margin-right: 6px;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;

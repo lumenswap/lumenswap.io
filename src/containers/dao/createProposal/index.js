@@ -10,6 +10,7 @@ import Breadcrumb from 'components/BreadCrumb';
 import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
 import Button from 'components/Button';
+import AlertIcon from 'assets/images/alert';
 import Options from './Options';
 
 import styles from './styles.module.scss';
@@ -64,6 +65,12 @@ const CreateProposal = () => {
               />
 
               <div className={styles.card}>
+                <div className={classNames(styles.alert, 'mb-4')}>
+                  <AlertIcon />
+                  You need to have a minimum of
+                  <span className="mx-1">10K RBT</span>
+                  in order to submit a proposal.
+                </div>
                 <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                   <Controller
                     name="question"
@@ -115,10 +122,10 @@ const CreateProposal = () => {
                   <div className="d-flex mt-4">
                     <div className="flex flex-column">
                       <label className="label-primary">Start date</label>
-                      <Datepicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                      />
+                      {/* <Datepicker */}
+                      {/*  selected={startDate} */}
+                      {/*  onChange={(date) => setStartDate(date)} */}
+                      {/* /> */}
                     </div>
                   </div>
 
