@@ -8,7 +8,7 @@ import RadioGroup from 'components/RadioGroup';
 
 import styles from './styles.module.scss';
 
-const Index = () => {
+const Vote = () => {
   const items = [
     { value: 'yes', label: 'Yes' },
     { value: 'no', label: 'No' },
@@ -71,8 +71,8 @@ const Index = () => {
   );
 };
 
-Index.propTypes = {
+Vote.propTypes = {
 
 };
 
-export default Index;
+export default Vote;
