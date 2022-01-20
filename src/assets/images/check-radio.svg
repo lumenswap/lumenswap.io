@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 3</title>
+    <g id="Dao" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dao--Vote-confirm-modal" transform="translate(-555.000000, -300.000000)">
+            <g id="Group-2" transform="translate(540.000000, 173.000000)">
+                <g id="Group" transform="translate(15.000000, 120.000000)">
+                    <g id="Group-3" transform="translate(0.000000, 7.000000)">
+                        <circle id="Oval" fill="#0E41F5" cx="10" cy="10" r="10"></circle>
+                        <g id="done-check.3" transform="translate(4.000000, 5.500000)" fill="#FFFFFF" fill-rule="nonzero">
+                            <path d="M11.1220594,0.158162338 C11.3229004,-0.0527207794 11.6485281,-0.0527207794 11.8493692,0.158162338 C12.031952,0.349874263 12.0485504,0.649872115 11.8991645,0.86127239 L11.8493692,0.921837662 L4.30651206,8.84183766 C4.12392927,9.03354959 3.83821703,9.05097794 3.63688344,8.89412273 L3.57920223,8.84183766 L0.150630798,5.24183766 C-0.0502102661,5.03095454 -0.0502102661,4.68904546 0.150630798,4.47816234 C0.333213584,4.28645041 0.618925824,4.26902206 0.820259419,4.42587727 L0.87794063,4.47816234 L3.94285714,7.69608 L11.1220594,0.158162338 Z" id="Path"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
