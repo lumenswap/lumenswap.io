@@ -1,0 +1,52 @@
+@import "styles/vars";
+
+$accent-color: $BlueRibbon;
+
+.radio-group {
+
+  label {
+    display: block;
+    cursor: pointer;
+    font-size: 16px;
+    color: $CodGray;
+
+    > span:before {
+      content: "";
+      display: inline-block;
+      vertical-align: -.25em;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      border: 1px solid $Bombay;
+      margin-right: 5px;
+    }
+
+    > input:checked + span:before {
+      border-color: $accent-color;
+      background-color: $accent-color;
+      color: white;
+      background-image: url("../../assets/images/check.png");
+      background-size: cover;
+    }
+
+    > input:disabled + span {
+      opacity: .5;
+    }
+
+    > input:disabled:checked + span:before {
+      opacity: 0.8;
+    }
+
+    > input {
+      display: none;
+    }
+  }
+
+  label:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  label:last-child {
+    margin-bottom: 0;
+  }
+}
