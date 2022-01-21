@@ -31,12 +31,12 @@ const ProposalForm = ({ setStatus }) => {
     console.log(data);
     setResult(data);
 
-    // dispatch(openModalAction({
-    //   modalProps: {
-    //     mainClassName: 'modal-br8',
-    //   },
-    //   content: <ConfirmProposal setStatus={setStatus} />,
-    // }));
+    dispatch(openModalAction({
+      modalProps: {
+        mainClassName: 'modal-br8',
+      },
+      content: <ConfirmProposal setStatus={setStatus} />,
+    }));
   };
 
   return (

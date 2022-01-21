@@ -81,10 +81,8 @@ const CreateProposal = () => {
                 spaceBetween={8}
                 data={crumbData}
               />
-              <div className={classNames(styles.card, styles['card-regular'])}>
-                <ProposalForm setStatus={setStatus} />
-              </div>
-              {/* {renderContent()} */}
+
+              {renderContent()}
             </div>
           </div>
         </div>
