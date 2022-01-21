@@ -2,29 +2,26 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
-// import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 
 import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
+import Datepicker from 'components/Datepicker';
 import Options from './Options';
 
 import styles from './styles.module.scss';
 import ConfirmProposal from '../Confirm';
 
-// const Datepicker = dynamic(() => import('components/Datepicker'), {
-//     ssr: false,
-// });
-
 const ProposalForm = ({ setStatus }) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const startDate = new Date();
   const [endDate, setEndtDate] = useState(new Date());
   const [result, setResult] = useState('');
   const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
+    setValue,
   } = useForm({
     mode: 'onChange',
   });
@@ -33,12 +30,12 @@ const ProposalForm = ({ setStatus }) => {
     console.log(data);
     setResult(data);
 
-    dispatch(openModalAction({
-      modalProps: {
-        mainClassName: 'modal-br8',
-      },
-      content: <ConfirmProposal setStatus={setStatus} />,
-    }));
+    // dispatch(openModalAction({
+    //   modalProps: {
+    //     mainClassName: 'modal-br8',
+    //   },
+    //   content: <ConfirmProposal setStatus={setStatus} />,
+    // }));
   };
 
   return (
@@ -100,10 +97,19 @@ const ProposalForm = ({ setStatus }) => {
         <div className="d-flex mt-4">
           <div className="flex flex-column">
             <label className="label-primary">Start date</label>
-            {/* <Datepicker */}
-            {/*  selected={startDate} */}
-            {/*  onChange={(date) => setStartDate(date)} */}
-            {/* /> */}
+
+            <Controller
+              name="startDate"
+              control={control}
+              defaultValue=""
+              render={() => (
+                <Datepicker
+                  startDate={startDate}
+                  valueName="startDate"
+                  setValue={setValue}
+                />
+              )}
+            />
           </div>
         </div>
 
