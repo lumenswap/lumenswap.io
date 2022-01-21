@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Input from 'components/Input';
 
 import styles from './styles.module.scss';
+import CharCounter from '../../../../components/CharCounter';
 
 const Options = ({ control, Controller }) => {
   const initialOptions = [1, 2];
@@ -31,7 +32,10 @@ const Options = ({ control, Controller }) => {
               defaultValue=""
               render={(props) => (
                 <div className={styles.group}>
-                  <label className="label-primary">Option {option}</label>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <label className="label-primary">Option {option}</label>
+                    <CharCounter length={25} char={props.value} />
+                  </div>
                   <Input
                     type="text"
                     placeholder="Enter your address"
@@ -39,6 +43,7 @@ const Options = ({ control, Controller }) => {
                     fontSize={16}
                     value={props.value}
                     onChange={props.onChange}
+                    maxLength={25}
                   />
                 </div>
               )}

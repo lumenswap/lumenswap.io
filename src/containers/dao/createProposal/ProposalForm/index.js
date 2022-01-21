@@ -8,10 +8,11 @@ import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
 import Datepicker from 'components/Datepicker';
+import CharCounter from 'components/CharCounter';
+import ConfirmProposal from 'containers/dao/createProposal/Confirm';
 import Options from './Options';
 
 import styles from './styles.module.scss';
-import ConfirmProposal from '../Confirm';
 
 const ProposalForm = ({ setStatus }) => {
   const startDate = new Date();
@@ -61,12 +62,7 @@ const ProposalForm = ({ setStatus }) => {
                 onChange={props.onChange}
                 maxLength={30}
               />
-              {props.value
-                && (
-                <div className={styles.length}>
-                  <span>{props.value.length}</span>/30
-                </div>
-                )}
+              <CharCounter length={30} char={props.value} />
             </div>
           )}
         />
@@ -83,12 +79,9 @@ const ProposalForm = ({ setStatus }) => {
                 onChange={props.onChange}
                 maxLength={300}
               />
-              {props.value
-                && (
-                <div className={classNames(styles.length, 'text-right mt-2')}>
-                  <span>{props.value.length}</span>/300
-                </div>
-                )}
+              <div className="text-right mt-2">
+                <CharCounter length={300} char={props.value} />
+              </div>
             </div>
           )}
         />

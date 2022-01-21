@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 const Input = ({
   type, value, size, height, fontSize, disabled, placeholder,
-  name, input, autoFocus, innerRef, onChange, onClick,
+  name, input, autoFocus, innerRef, onChange, onClick, maxLength,
 }) => (
   <input
     type={type}
@@ -19,6 +19,7 @@ const Input = ({
     onChange={onChange}
     onClick={onClick}
     autoComplete="off"
+    maxLength={maxLength}
     {...input}
   />
 );
