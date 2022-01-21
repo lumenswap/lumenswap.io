@@ -15,7 +15,7 @@ import ConfirmProposal from '../Confirm';
 
 const ProposalForm = ({ setStatus }) => {
   const startDate = new Date();
-  const [endDate, setEndtDate] = useState(new Date());
+  const endDate = new Date();
   const [result, setResult] = useState('');
   const dispatch = useDispatch();
   const {
@@ -94,10 +94,9 @@ const ProposalForm = ({ setStatus }) => {
         />
         <Options control={control} Controller={Controller} />
 
-        <div className="d-flex mt-4">
-          <div className="flex flex-column">
+        <div className="row mt-4">
+          <div className="col-lg-5 col-md-6 col-sm-6 col-12">
             <label className="label-primary">Start date</label>
-
             <Controller
               name="startDate"
               control={control}
@@ -106,6 +105,21 @@ const ProposalForm = ({ setStatus }) => {
                 <Datepicker
                   startDate={startDate}
                   valueName="startDate"
+                  setValue={setValue}
+                />
+              )}
+            />
+          </div>
+          <div className="col-lg-5 col-md-6 col-sm-6 col-12 mt-sm-0 mt-4">
+            <label className="label-primary">End date</label>
+            <Controller
+              name="endDate"
+              control={control}
+              defaultValue=""
+              render={() => (
+                <Datepicker
+                  startDate={endDate}
+                  valueName="endDate"
                   setValue={setValue}
                 />
               )}
