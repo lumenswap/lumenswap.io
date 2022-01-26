@@ -4,7 +4,7 @@ nodeVersion="14.16.0-slim"
 
 
 for app in applicationList:
-    f = open("./dockerfiles/"+app, "w")
+    f = open(app, "w")
 
     tempList = applicationList.copy()
     tempList.remove(app)
