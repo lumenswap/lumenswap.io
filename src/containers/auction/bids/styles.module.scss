@@ -1,64 +1,64 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .table {
-    margin-top: 10px;
-    overflow: hidden !important;
-  
-    tr:first-child {
-      line-height: 38px !important;
-      height: 38px !important;
-    }
-  }
+  margin-top: 10px;
+  overflow-y: hidden !important;
 
-  .link {
-    text-decoration: none !important;
+  tr:first-child {
+    line-height: 38px !important;
+    height: 38px !important;
+  }
+}
+
+.link {
+  text-decoration: none !important;
+  color: $BlueRibbon;
+
+  &:hover {
     color: $BlueRibbon;
-  
-    &:hover {
-      color: $BlueRibbon;
-    }
   }
-  .bread-crumb {
-      margin-top: 29px;
-      margin-bottom: 24px;
-  }
+}
+.bread-crumb {
+  margin-top: 29px;
+  margin-bottom: 24px;
+}
 .card {
-    border-radius: 4px;
-    box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-    background-color: white;
-  
-    &-table {
-      padding-top: 10px;
-    }
-  }
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
 
-  .tabs nav {
+  &-table {
+    padding-top: 10px;
+  }
+}
+
+.tabs nav {
+  margin-left: 24px;
+}
+
+.input {
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  span {
+    font-family: SofiaPro;
     margin-left: 24px;
+    font-size: 16px;
+    color: $CodGray;
+    font-weight: 600;
   }
+  input {
+    border-radius: 6px;
+    margin-left: auto;
+    width: 290px !important;
 
-  .input {
-    margin-right: 16px;
-    display: flex;
-    align-items: center;
-    span {
-      font-family: SofiaPro;
-      margin-left: 24px;
-      font-size: 16px;
-      color: $CodGray;
-      font-weight: 600;      
+    @media (max-width: $lg) {
+      width: 100% !important;
     }
-    input {
-      border-radius: 6px;
-      margin-left: auto;
-      width: 290px !important;
-  
-      @media(max-width: $lg) {
-        width: 100% !important;
-      }
-      @media (max-width: $sm) {
-        width: 150px !important;
-        font-size: 12px !important;
-        height: 30px !important;
-      }
+    @media (max-width: $sm) {
+      width: 150px !important;
+      font-size: 12px !important;
+      height: 30px !important;
     }
   }
+}

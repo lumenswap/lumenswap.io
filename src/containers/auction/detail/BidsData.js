@@ -115,6 +115,9 @@ const BidsData = ({
         .catch((err) => console.log(err));
     }
   }, [refreshData]);
+  filteredBids = filteredBids?.map((item, i) => (
+    { ...item, key: item.address + i }
+  ));
 
   return (
     <CTable
