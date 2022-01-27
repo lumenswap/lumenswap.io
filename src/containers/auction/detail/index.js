@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ServerSideLoading from 'components/ServerSideLoading';
 import {
-  useCallback, useState, useEffect, useRef,
+  useCallback, useState, useEffect,
 } from 'react';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
@@ -19,7 +19,6 @@ import { getAuctionStats } from 'api/auction';
 import { openModalAction } from 'actions/modal';
 import { useDispatch } from 'react-redux';
 import numeral from 'numeral';
-import moment from 'moment';
 import minimizeAddress from 'helpers/minimizeAddress';
 import useIsLogged from 'hooks/useIsLogged';
 import BN from 'helpers/BN';
@@ -28,6 +27,7 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import SendBid from './SendBid';
 import AuctionHeader from '../AuctionHeader';
 import AuctionDetailTabContent from './AuctionDetailTabContent';
+import CountdownComponent from './Countdown';
 
 import styles from './styles.module.scss';
 import { STATUS_NAMES } from '../consts/board';
@@ -42,45 +42,11 @@ const Container = ({ children, title }) => (
   </div>
 );
 
-function generatePeriod(data, period, showCountdown) {
-  if (showCountdown) {
-    const fullTime = {
-      days: period?.days() > 0 ? `${period.days()}d` : null,
-      hours: period?.hours() > 0 ? `${period.hours()}h` : null,
-      minutes: period?.minutes() > 0 ? `${period.minutes()}m` : null,
-      seconds: `${period?.seconds()}s`,
-    };
-
-    return (
-      <>
-        {data.status === 'Live'
-          ? (
-            <div className={styles.period}>
-              {fullTime?.days} {fullTime?.hours} {fullTime?.minutes} {fullTime?.seconds}
-            </div>
-          ) : data.status}
-      </>
-    );
-  }
-
-  return (
-    <div className={styles.period}>
-      {moment(data.startDate).format('D MMM Y')}
-      <div className={styles['arrow-icon']}><ArrowRight /></div>
-      {moment(data.endDate).format('D MMM Y')}
-    </div>
-  );
-}
-
 const AuctionDetail = ({ infoData, pageName, assetCode }) => {
   const [currentTab, setCurrentTab] = useState('bid');
   const [searchQuery, setSearchQuery] = useState(null);
   const [chartData, setChartData] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
-  const [showCountdown, setShowCountdown] = useState(false);
-  const [period, setPeriod] = useState(null);
-  const interValRef = useRef(null);
-
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
 
@@ -143,35 +109,11 @@ const AuctionDetail = ({ infoData, pageName, assetCode }) => {
     { title: 'Amount to sell', render: (data) => `${numeral(data.amountToSell).format('0,0')} ${data.assetCode}` },
   ];
 
-  useEffect(() => {
-    function setCountTime() {
-      const countDownTime = moment(infoData.endDate).valueOf() - new Date().getTime();
-      setPeriod(moment.duration(countDownTime));
-    }
-    if (!interValRef.current) {
-      interValRef.current = setInterval(setCountTime, 1000);
-    }
-
-    return () => {
-      clearInterval(interValRef.current);
-    };
-  }, []);
-
-  const handleShowCountdown = () => {
-    setShowCountdown((prev) => !prev);
-  };
-
   const auctionInfo = [
     {
       title: 'Period',
       render: (data) => (
-        <>
-          {generatePeriod(data, period, showCountdown)}
-          <span
-            className={classNames('icon-arrow-repeat', styles['cricle-icon'])}
-            onClick={handleShowCountdown}
-          />
-        </>
+        <CountdownComponent data={data} />
       ),
     },
     {

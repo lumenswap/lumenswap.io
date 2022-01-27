@@ -72,6 +72,12 @@ const WinnersData = ({
     getAuctionWinners(auctionId).then((data) => setWinners(data.data));
   }, []);
 
+  filteredWinners = filteredWinners?.map((item, i) => (
+    {
+      ...item,
+      key: item.address + i,
+    }
+  ));
   return (
     <CTable
       columns={columns}
