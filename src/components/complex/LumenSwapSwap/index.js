@@ -231,7 +231,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
             ? null
             : isFromCustomToken.issuer,
           isToCustomToken.code,
-          isToCustomToken.issuer === 'native' ? null : isFromCustomToken.issuer,
+          isToCustomToken.issuer === 'native' ? null : isToCustomToken.issuer,
         ),
       );
     } else {

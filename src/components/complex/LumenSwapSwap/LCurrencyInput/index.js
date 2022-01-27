@@ -71,7 +71,7 @@ export default function LCurrencyInput({
             ? null
             : isFromCustomToken.issuer,
           isToCustomToken.code,
-          isToCustomToken.issuer === 'native' ? null : isFromCustomToken.issuer,
+          isToCustomToken.issuer === 'native' ? null : isToCustomToken.issuer,
         ),
       );
     } else {
