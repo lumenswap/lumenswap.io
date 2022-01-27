@@ -102,7 +102,7 @@ const LineChart = ({ chartData, height }) => {
         color: textColor,
         fontSize: '14',
         fontFamily: '"SofiaPro", sans-serif',
-        formatter: (value) => convertor(value),
+        formatter: (value) => numeral(value).format('0.0a'),
         showMinLabel: false,
       },
       axisLine: {
