@@ -2,15 +2,18 @@ import classNames from 'classnames';
 import AssetBox from 'components/LumenSwapHeader/AssetBox';
 import { useSelector } from 'react-redux';
 import MobileMenu from 'components/LumenSwapHeader/MobileMenu';
+import { useRouter } from 'next/router';
 import LogoLink from './LogoLink';
 import ConnectButton from './ConnectButton';
 import SideBarLink from './SideBarLink';
 import styles from './styles.module.scss';
 
 const LumenSwapHeader = ({
-  showAssetBox, assetBoxProps, leftSide, rightSide, extraRightComponent, extraLeftComponent,
+  showAssetBox, assetBoxProps, leftSide,
+  rightSide, extraRightComponent, extraLeftComponent, hideAssetShowBox,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
+  const router = useRouter();
 
   let mobileMenu = [];
   if (leftSide) {
@@ -37,7 +40,8 @@ const LumenSwapHeader = ({
           </div>
         </ul>
         {extraRightComponent?.map((Component, index) => <Component key={index} />)}
-        {(isLogged && showAssetBox) && <AssetBox {...assetBoxProps} />}
+        {(isLogged && showAssetBox && !hideAssetShowBox?.find((i) => i === router.asPath))
+         && <AssetBox {...assetBoxProps} />}
         <ConnectButton />
       </div>
       <div className="d-md-none d-sm-block d-block w-100">

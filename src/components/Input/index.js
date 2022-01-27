@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const Input = ({
   type, value, size, height, fontSize, disabled, placeholder,
-  name, input, autoFocus, innerRef, onChange, onClick, maxLength,
+  name, input, autoFocus, innerRef, onChange, onClick, maxLength, onFocus, onBlur, className,
 }) => (
   <input
     type={type}
-    className={styles.input}
+    className={classNames(styles.input, className)}
     value={value}
     disabled={disabled}
     placeholder={placeholder}
@@ -20,6 +21,8 @@ const Input = ({
     onClick={onClick}
     autoComplete="off"
     maxLength={maxLength}
+    onFocus={onFocus}
+    onBlur={onBlur}
     {...input}
   />
 );

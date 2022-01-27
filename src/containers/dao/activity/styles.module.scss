@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .layout {
   padding-top: 75px;
@@ -11,7 +11,6 @@
   line-height: 1.42;
   color: $CodGray;
 }
-
 
 .filter {
   :global(.select__control) {
@@ -51,7 +50,9 @@
   padding-top: 18px;
   margin-top: 15px;
 }
-
+.table {
+  overflow: hidden;
+}
 .table tr:first-child {
   line-height: 25px;
 }

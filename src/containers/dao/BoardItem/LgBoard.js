@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import classNames from 'classnames';
-
 import ExternalBlueArrow from 'assets/images/ExternalBlueArrow';
 
+import numeral from 'numeral';
 import styles from './styles.module.scss';
 
 const LgBoard = ({ item, button }) => {
   const {
-    logo, name, desc, member, tiker, web, webLink, assetLink,
+    logo, name, desc, members, tiker, web, webLink, assetLink,
   } = item;
 
   return (
@@ -20,7 +20,7 @@ const LgBoard = ({ item, button }) => {
           </div>
           <div className="d-flex flex-column">
             <div className={styles.title}>{name}</div>
-            <div className={styles.text}>{member} member</div>
+            <div className={styles.text}>{numeral(members).format('0,0')} member</div>
           </div>
         </div>
         <div>

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const RadioGroup = ({
@@ -25,10 +24,6 @@ const RadioGroup = ({
       ))}
     </div>
   );
-};
-
-RadioGroup.propTypes = {
-
 };
 
 export default RadioGroup;

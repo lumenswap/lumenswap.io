@@ -1,29 +1,39 @@
-import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
 import RadioGroup from 'components/RadioGroup';
 import { closeModalAction, openModalAction } from 'actions/modal';
 
+import BN from 'helpers/BN';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import styles from './styles.module.scss';
 import ConfirmVote from './ConfirmVote';
 
-const Vote = () => {
+const Vote = ({ info }) => {
   const dispatch = useDispatch();
-  const items = [
-    { value: 'yes', label: 'Yes' },
-    { value: 'no', label: 'No' },
-  ];
+  const items = info.votes.map((vote) => ({
+    ...vote,
+    value: vote.title.toLowerCase(),
+    label: vote.title,
+  }));
   const [radioValue, setRadioValue] = useState(items[0].value);
+  const userBalances = useSelector((state) => state.userBalance);
+
+  const userCurrentAssetBalance = userBalances
+    .find((i) => isSameAsset(getAssetDetails(i.asset), getAssetDetails(info.asset)))?.balance ?? '0';
   const {
-    handleSubmit, control,
+    handleSubmit, control, errors, trigger, formState,
   } = useForm({ mode: 'onChange' });
 
+  useEffect(() => {
+    trigger();
+  }, []);
+
   async function onSubmit(data) {
-    console.warn(data);
+    console.log(data);
     dispatch(closeModalAction());
 
     dispatch(openModalAction({
@@ -31,19 +41,42 @@ const Vote = () => {
         title: 'Confirm vote',
         mainClassName: 'modal-br8',
       },
-      content: <ConfirmVote />,
+      content: <ConfirmVote info={{
+        ...info,
+        radioValue,
+        amount: data.tokenAmount,
+      }}
+      />,
     }));
+  }
+
+  function submitContentGenerator() {
+    for (const err of Object.values(errors)) {
+      if (err) {
+        return err.message;
+      }
+    }
+    return 'Vote';
   }
 
   function onChange(value) {
     setRadioValue(value);
     console.log(value);
   }
+  const validateAmount = (value) => {
+    if (new BN(0).gte(value)) {
+      return 'Amount is not valid';
+    }
+    if (new BN(value).gt(userCurrentAssetBalance)) {
+      return `Insufficient ${info.asset.code} balance`;
+    }
+    return true;
+  };
 
   return (
     <div className="pb-4 main">
       <p className={styles.title}>
-        Will Joe Biden win the 2020 United States presidential election?
+        {info.title}
       </p>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className="my-4">
@@ -61,11 +94,15 @@ const Vote = () => {
           name="tokenAmount"
           control={control}
           defaultValue=""
+          rules={{
+            required: 'Amount is required',
+            validate: validateAmount,
+          }}
           render={(props) => (
             <InputGroup
               variant="primary"
               placeholder="100"
-              rightLabel="LSP"
+              rightLabel={info.asset.code}
               value={props.value}
               onChange={props.onChange}
             />
@@ -79,16 +116,13 @@ const Vote = () => {
         <Button
           htmlType="submit"
           variant="primary"
-          content="Vote"
+          content={submitContentGenerator()}
           className={styles.btn}
+          disabled={formState.isValidating || !formState.isValid}
         />
       </form>
     </div>
   );
-};
-
-Vote.propTypes = {
-
 };
 
 export default Vote;

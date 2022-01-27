@@ -4,11 +4,10 @@ import classNames from 'classnames';
 import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from 'containers/dao/DAOHeader';
 import BoardItem from 'containers/dao/BoardItem';
-import sampleLogo from 'assets/images/btc-logo.png';
 
 import styles from './styles.module.scss';
 
-const DaoBoard = () => {
+const DaoBoard = ({ boards }) => {
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
@@ -19,15 +18,6 @@ const DaoBoard = () => {
     </div>
   );
 
-  const items = [
-    {
-      logo: sampleLogo, name: 'Lumenswap', desc: 'Lumenswap is a decentralized exchange built on the Stellar network that allows you to swap and trade assets using a friendly, minimal interface.', proposals: '1', member: '110,000', tiker: 'LSP',
-    },
-    {
-      logo: sampleLogo, name: 'Rabet', desc: 'Rabet is an integrated set of open-source wallets for the Stellar network, allowing everyone around the world to interact with Stellar.', proposals: '2', member: '20,000', tiker: 'RBT',
-    },
-  ];
-
   return (
     <Container>
       <ServerSideLoading>
@@ -36,7 +26,7 @@ const DaoBoard = () => {
             <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
               <h1 className={styles.title}>Board</h1>
               <div className="row mt-4">
-                {items.map((item) => (
+                {boards.map((item) => (
                   <div key={item.name} className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
                     <BoardItem item={item} size="md" />
                   </div>

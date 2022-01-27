@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { generateAddressURL } from 'helpers/explorerURLGenerator';
+import minimizeAddress from 'helpers/minimizeAddress';
 import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from 'containers/dao/DAOHeader';
 import Breadcrumb from 'components/BreadCrumb';
@@ -10,28 +11,30 @@ import urlMaker from 'helpers/urlMaker';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
 import CPagination from 'components/CPagination';
-
+import humanAmount from 'helpers/humanAmount';
+import { getProposalVotes } from 'api/mockAPI/proposalInfo';
 import styles from './styles.module.scss';
 
-const Votes = () => {
+const Votes = ({ info }) => {
   const router = useRouter();
+  const [votes, setVotes] = useState(null);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(10);
+  const [pages, setPages] = useState(1);
 
   const Container = ({ children }) => (
     <div className="container-fluid">
       <Head>
         <title>All Votes | Lumenswap</title>
       </Head>
-      <DAOHeader />
+      <DAOHeader asset={info.asset} />
       {children}
     </div>
   );
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: router.query.name },
-    { url: `${urlMaker.dao.singleDao.proposalInfo(router.query.name)}`, name: 'Proposal info' },
+    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: info.name },
+    { url: `${urlMaker.dao.singleDao.proposalInfo(router.query.name, router.query.id)}`, name: 'Proposal info' },
     { name: 'All votes' },
   ];
 
@@ -40,12 +43,13 @@ const Votes = () => {
       title: 'Address',
       dataIndex: 'address',
       key: '1',
-      render: () => (
+      render: (data) => (
         <a
-          className="text-decoration-none"
+          href={generateAddressURL(data.address)}
+          className={styles.url}
           target="_blank"
           rel="noreferrer"
-        >3P2p…rb4P
+        >{minimizeAddress(data.address)}
         </a>
       ),
     },
@@ -53,15 +57,25 @@ const Votes = () => {
       title: 'Vote',
       dataIndex: 'vote',
       key: '2',
-      render: () => (<>Yes</>),
+      render: (data) => (<>{data.vote}</>),
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: () => (<>100 RBT</>),
+      render: (data) => (<>{humanAmount(data.amount)} {data.asset.code}</>),
     },
   ];
+
+  useEffect(() => {
+    setVotes(null);
+    getProposalVotes(router.query.id, {
+      page,
+    }).then((data) => {
+      setVotes(data.votes);
+      setPages(data.totalPages);
+    });
+  }, [page]);
 
   const NoDataMessage = () => (<NoData message="There is no votes" />);
 
@@ -82,8 +96,9 @@ const Votes = () => {
                 <CTable
                   className={styles.table}
                   columns={tableInfo}
-                  dataSource={Array(20).fill({})}
+                  dataSource={votes}
                   noDataComponent={NoDataMessage}
+                  loading={!votes}
                   rowFix={{ rowNumbers: 20, rowHeight: 53, headerRowHeight: 25 }}
                 />
               </div>

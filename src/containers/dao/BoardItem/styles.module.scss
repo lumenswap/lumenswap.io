@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .item {
   background-color: white;
@@ -108,7 +108,7 @@
   }
 
   .text {
-    font-size: 16px;;
+    font-size: 16px;
     line-height: 1.5;
     color: $ShuttleGray;
   }
@@ -137,10 +137,9 @@
   .btn {
     margin-top: 4px;
   }
-
 }
 
-@media(max-width: $md) {
+@media (max-width: $md) {
   .info-col {
     padding: 12px 16px;
   }

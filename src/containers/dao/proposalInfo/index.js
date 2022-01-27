@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-
+import numeral from 'numeral';
 import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
 import DAOHeader from 'containers/dao/DAOHeader';
@@ -12,32 +12,43 @@ import Progressbar from 'components/Progressbar';
 import Button from 'components/Button';
 import ArrowIcon from 'assets/images/angleRight';
 import InfoBox from 'components/InfoBox';
-import sampleLogo from 'assets/images/btc-logo.png';
+import { useState, useEffect } from 'react';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import { openModalAction } from 'actions/modal';
+import useIsLogged from 'hooks/useIsLogged';
+import minimizeAddress from 'helpers/minimizeAddress';
+import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLGenerator';
+import moment from 'moment';
+import humanAmount from 'helpers/humanAmount';
+import { extractLogoByToken } from 'helpers/asset';
+
+import { getProposalVotes } from 'api/mockAPI/proposalInfo';
 import Vote from './Vote';
 
 import styles from './styles.module.scss';
 
-const ProposalInfo = () => {
+const Container = ({ children, info }) => (
+  <div className="container-fluid">
+    <Head>
+      <title>Proposal Info | Lumenswap</title>
+    </Head>
+    <DAOHeader asset={info.asset} />
+    {children}
+  </div>
+);
+
+const ProposalInfo = ({ info }) => {
+  const [votes, setVotes] = useState(null);
+
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const Container = ({ children }) => (
-    <div className="container-fluid">
-      <Head>
-        <title>Proposal Info | Lumenswap</title>
-      </Head>
-      <DAOHeader />
-      {children}
-    </div>
-  );
+  const isLogged = useIsLogged();
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: router.query.name },
+    { url: `${urlMaker.dao.singleDao.root(info.officialName)}`, name: info.govermant },
     { name: 'Proposal info' },
   ];
 
@@ -45,39 +56,43 @@ const ProposalInfo = () => {
     {
       title: 'Proposal ID',
       externalLink: {
-        title: 'CBhQN1FK…ARGv8CWH',
-        url: '/',
+        title: minimizeAddress(info.proposalID, 8),
+        url: generateTransactionURL(info.proposalID),
       },
     },
     {
       title: 'Duration',
-      render: () => (<>14 days</>),
+      render: () => <>{Math.floor(moment.duration(info.endDate - info.startDate).asDays())} days</>,
     },
     {
       title: 'Start time',
-      render: () => (<>Dec-08-2020 11:31 AM +UTC</>),
+      render: () => (<>{moment(info.startDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}</>),
     },
     {
       title: 'End time',
-      render: () => (<>Dec-08-2020 11:31 AM +UTC</>),
+      render: () => (<>{moment(info.endDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}</>),
     },
     {
       title: 'Total voter',
-      render: () => (<>743,386</>),
+      render: () => (<>{numeral(info.totalVoters).format('0,0')}</>),
+    },
+    {
+      title: 'Total votes',
+      render: () => (<>{humanAmount(info.totalVotes)} {info.asset.code}</>),
     },
     {
       title: 'Proposer',
       externalLink: {
-        title: '3P2p…rb4P',
-        url: '/',
+        title: minimizeAddress(info.proposerAddress),
+        url: generateAddressURL(info.proposerAddress),
       },
     },
     {
       title: 'Govermant',
       render: () => (
         <div className="d-flex align-items-center">
-          <Image src={sampleLogo} height={24} width={24} />
-          <div className="ml-1">Rabet</div>
+          <Image src={extractLogoByToken(info.asset)} height={24} width={24} />
+          <div className="ml-1">{info.govermant}</div>
         </div>
       ),
     },
@@ -88,12 +103,13 @@ const ProposalInfo = () => {
       title: 'Address',
       dataIndex: 'address',
       key: '1',
-      render: () => (
+      render: (data) => (
         <a
-          className="text-decoration-none"
+          href={generateAddressURL(data.address)}
+          className={styles.url}
           target="_blank"
           rel="noreferrer"
-        >3P2p…rb4P
+        >{minimizeAddress(data.address)}
         </a>
       ),
     },
@@ -101,13 +117,13 @@ const ProposalInfo = () => {
       title: 'Vote',
       dataIndex: 'vote',
       key: '2',
-      render: () => (<>Yes</>),
+      render: (data) => (<>{data.vote}</>),
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: () => (<>100 RBT</>),
+      render: (data) => (<>{humanAmount(data.amount)} {data.asset.code}</>),
     },
   ];
 
@@ -119,12 +135,23 @@ const ProposalInfo = () => {
         title: 'Vote',
         mainClassName: 'modal-br8',
       },
-      content: <Vote />,
+      content: <Vote info={{
+        votes: info.votes,
+        asset: info.asset,
+        title: info.title,
+      }}
+      />,
     }));
   };
 
+  useEffect(() => {
+    getProposalVotes(router.query.id).then((v) => (
+      setVotes(v)
+    ));
+  }, []);
+
   return (
-    <Container>
+    <Container info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
@@ -135,16 +162,16 @@ const ProposalInfo = () => {
               />
 
               <div className={classNames(styles.card, 'mt-4')}>
-                <h3 className={styles['card-title']}>Will Joe Biden win the 2020 United
-                  States presidential election?
+                <h3 className={styles['card-title']}>
+                  {info.title}
                 </h3>
-                <div className="mt-4">
-                  <Progressbar label="Yes" value={80} />
-                </div>
-                <div className="mt-4">
-                  <Progressbar label="No" value={20} />
-                </div>
+                {info.votes.map((vote) => (
+                  <div className="mt-4">
+                    <Progressbar label={vote.title} value={vote.percentage} />
+                  </div>
+                ))}
 
+                {isLogged && (
                 <Button
                   variant="primary"
                   className={styles.btn}
@@ -152,31 +179,13 @@ const ProposalInfo = () => {
                 >
                   Vote <ArrowIcon />
                 </Button>
+                )}
               </div>
 
               <div className={classNames(styles.card, 'mt-4')}>
                 <h4 className={styles['card-title-small']}>Description</h4>
                 <p className={styles['card-desc']}>
-                  This proposal brings to a formal vote the Retroactive Distribution,
-                  discussed at length in the above links.
-                  <div className="d-block my-3" />
-                  This proposal retroactively distributes 400 UNI to 12,619 distinct
-                  addresses who interacted with Uniswap via a proxy contract. These
-                  12,619 users are "Phase 1" of the Retroactive Distribution,
-                  encompassing users of application-integrations. All of these
-                  12,619 addresses were excluded from the original airdrop.
-                  <div className="d-block my-3" />
-                  The Phase determination was made based on how easy it is to
-                  programmatically hook a trading bot into them, as this is a
-                  proxy for what portion of these cohorts risk representing multiple
-                  addresses per end-user. Phase 1 is the less programmatically
-                  accessible cohort, indicating a lower likelihood of multiple
-                  addresses per end-user.
-                  <div className="d-block my-3" />
-                  Specifically, this proposal transfers 5,047,600 UNI to a new
-                  MerkleDistributor contract, which will then allow for 400 UNI
-                  to be claimed by each of the 12,619 accounts held by users of
-                  the following projects:
+                  {info.desc}
                 </p>
               </div>
 
@@ -200,7 +209,8 @@ const ProposalInfo = () => {
                 <CTable
                   className={styles.table}
                   columns={tableInfo}
-                  dataSource={Array(10).fill({})}
+                  dataSource={votes}
+                  loading={!votes}
                   noDataComponent={NoDataMessage}
                   rowFix={{ rowNumbers: 10, rowHeight: 53, headerRowHeight: 25 }}
                 />
@@ -208,7 +218,7 @@ const ProposalInfo = () => {
 
               <div className="mt-3">
                 <CSeeAllContentsButton
-                  link={`${urlMaker.dao.singleDao.allVotes(router.query.name)}`}
+                  link={`${urlMaker.dao.singleDao.allVotes(router.query.name, router.query.id)}`}
                   content="See all Votes"
                 />
               </div>

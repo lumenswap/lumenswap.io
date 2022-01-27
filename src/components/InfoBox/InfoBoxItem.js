@@ -18,7 +18,7 @@ function InfoBoxItem({
   return (
     <div
       className={(classNames(styles.row, bordered && styles.bordered, 'row-info'))}
-      style={{ padding: `${sidePadding}px` }}
+      style={sidePadding && { padding: `${sidePadding}px` }}
     >
       <div className={styles.title}>
         <span className={styles['align-center']}>

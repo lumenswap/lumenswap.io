@@ -1,41 +1,40 @@
-import { useState } from 'react';
-
 import RadioGroup from 'components/RadioGroup';
 import Button from 'components/Button';
-
+import { useDispatch } from 'react-redux';
+import { closeModalAction } from 'actions/modal';
+import numeral from 'numeral';
 import styles from './styles.module.scss';
 
-const ConfirmVote = () => {
-  const items = [
-    { value: 'yes', label: 'Yes' },
-    { value: 'no', label: 'No' },
-  ];
-  const [radioValue, setRadioValue] = useState(items[0].value);
+const ConfirmVote = ({ info }) => {
+  const items = info.votes.map((vote) => ({
+    ...vote,
+    value: vote.title.toLowerCase(),
+    label: vote.title,
+  }));
+  const dispatch = useDispatch();
 
-  function onChange(value) {
-    setRadioValue(value);
-    console.log(value);
-  }
-
+  const handleConfirm = () => {
+    dispatch(closeModalAction());
+  };
   return (
     <div className="pb-4 main">
       <p className={styles.title}>
-        Will Joe Biden win the 2020 United States presidential election?
+        {info.title}
       </p>
       <form className={styles.form}>
         <div className="my-4">
           <RadioGroup
             items={items}
             name="opt-group"
-            value={radioValue}
+            value={info.radioValue}
             className="radio-group"
-            onUpdate={onChange}
+            onUpdate={() => {}}
           />
         </div>
 
         <div className={styles.value}>
           <div className={styles['value-name']}>Amount</div>
-          <div className={styles['value-amount']}>100K LSP</div>
+          <div className={styles['value-amount']}>{numeral(info.amount).format('0.00a')} {info.asset.code}</div>
         </div>
 
         <div className={styles.msg}>
@@ -47,6 +46,7 @@ const ConfirmVote = () => {
           variant="primary"
           content="Confirm"
           className={styles.btn}
+          onClick={handleConfirm}
         />
       </form>
     </div>

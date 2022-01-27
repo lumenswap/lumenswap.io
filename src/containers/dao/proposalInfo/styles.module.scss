@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .layout {
   padding-top: 75px;
@@ -10,6 +10,7 @@
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   padding: 20px 24px 24px 24px;
   background-color: white;
+  overflow: hidden;
 
   &-title {
     font-size: 18px;
@@ -37,6 +38,8 @@
     color: $ShuttleGray;
     margin: 16px 0 0 0;
     font-weight: normal;
+    display: block;
+    white-space: pre;
   }
 }
 
@@ -58,4 +61,13 @@
 
 .table tr:first-child {
   line-height: 25px;
+}
+
+.url {
+  text-decoration: none;
+  color: $BlueRibbon;
+  &:hover {
+    text-decoration: none;
+    color: $BlueRibbon;
+  }
 }

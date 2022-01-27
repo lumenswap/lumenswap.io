@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
@@ -10,21 +10,30 @@ import { openModalAction } from 'actions/modal';
 import Datepicker from 'components/Datepicker';
 import CharCounter from 'components/CharCounter';
 import ConfirmProposal from 'containers/dao/createProposal/Confirm';
+import BN from 'helpers/BN';
 import Options from './Options';
 
 import styles from './styles.module.scss';
 
 const ProposalForm = ({ setStatus }) => {
-  const startDate = new Date();
-  const endDate = new Date();
+  const date = new Date();
+  const [show, setShow] = useState(null);
   const [result, setResult] = useState('');
   const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
     setValue,
+    getValues,
+    errors,
+    trigger,
+    formState,
   } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      startDate: new Date().setHours(0, 0, 0, 0),
+      endDate: new Date(),
+    },
   });
 
   const onSubmit = (data) => {
@@ -38,7 +47,35 @@ const ProposalForm = ({ setStatus }) => {
       content: <ConfirmProposal setStatus={setStatus} />,
     }));
   };
+  const handleFocus = (name) => {
+    setShow(name);
+  };
+  const validateStartDate = (d) => {
+    console.log(`${new BN(date.setHours(0, 0, 0, 0)).gt(Date.parse(d))} date = ${new BN(date.getTime() - 1000)} s date = ${new BN(Date.parse(d))}`);
+    if (new BN(date.getTime() - 1000).gt(Date.parse(d))) {
+      return 'invalid start date';
+    }
+    return true;
+  };
+  const validateEndDate = (d) => {
+    if (new BN(Date.parse(getValues('startDate'))).gt(Date.parse(d))) {
+      return 'invalid end date';
+    }
+    return true;
+  };
 
+  useEffect(() => {
+    trigger();
+  }, [JSON.stringify(getValues())]);
+
+  function generateBtnContent() {
+    for (const err of Object.values(errors)) {
+      if (err) {
+        return err.message;
+      }
+    }
+    return 'Create proposal';
+  }
   return (
     <div>
       <div className={classNames(styles.alert, 'mb-4')}>
@@ -52,6 +89,9 @@ const ProposalForm = ({ setStatus }) => {
           name="question"
           control={control}
           defaultValue=""
+          rules={{
+            required: 'question requied',
+          }}
           render={(props) => (
             <div className="d-flex align-items-center mb-4">
               <input
@@ -60,9 +100,11 @@ const ProposalForm = ({ setStatus }) => {
                 placeholder="Ask a question…"
                 value={props.value}
                 onChange={props.onChange}
-                maxLength={30}
+                maxLength={50}
+                onFocus={() => { handleFocus(props.name); }}
+                onBlur={() => { setShow(null); }}
               />
-              <CharCounter length={30} char={props.value} />
+              <CharCounter length={50} char={props.value} show={props.name === show} />
             </div>
           )}
         />
@@ -70,6 +112,9 @@ const ProposalForm = ({ setStatus }) => {
           name="proposal"
           control={control}
           defaultValue=""
+          rules={{
+            required: 'description requied',
+          }}
           render={(props) => (
             <div className="d-flex flex-column mb-4">
               <textarea
@@ -77,10 +122,12 @@ const ProposalForm = ({ setStatus }) => {
                 placeholder="Tell more about your proposal (optional)"
                 value={props.value}
                 onChange={props.onChange}
-                maxLength={300}
+                maxLength={500}
+                onFocus={() => { handleFocus(props.name); }}
+                onBlur={() => { setShow(null); }}
               />
               <div className="text-right mt-2">
-                <CharCounter length={300} char={props.value} />
+                <CharCounter length={500} char={props.value} show={props.name === show} />
               </div>
             </div>
           )}
@@ -94,11 +141,17 @@ const ProposalForm = ({ setStatus }) => {
               name="startDate"
               control={control}
               defaultValue=""
+              rules={{
+                validate: { validateStartDate },
+              }}
               render={() => (
                 <Datepicker
-                  startDate={startDate}
+                  startDate={date}
                   valueName="startDate"
                   setValue={setValue}
+                  trigger={() => {
+                    trigger();
+                  }}
                 />
               )}
             />
@@ -109,11 +162,17 @@ const ProposalForm = ({ setStatus }) => {
               name="endDate"
               control={control}
               defaultValue=""
+              rules={{
+                validate: { validateEndDate },
+              }}
               render={() => (
                 <Datepicker
-                  startDate={endDate}
+                  startDate={date}
                   valueName="endDate"
                   setValue={setValue}
+                  trigger={() => {
+                    trigger();
+                  }}
                 />
               )}
             />
@@ -124,7 +183,8 @@ const ProposalForm = ({ setStatus }) => {
           htmlType="submit"
           variant="primary"
           className={styles.submit}
-        >Create proposal
+          disabled={!formState.isValid || formState.isValidating}
+        >{generateBtnContent()}
         </Button>
       </form>
     </div>

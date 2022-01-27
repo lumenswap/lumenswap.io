@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -9,10 +9,12 @@ import BoardItem from 'containers/dao/BoardItem';
 import ProposalItem from 'containers/dao/proposals/ProposalItem';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
-import sampleLogo from 'assets/images/btc-logo.png';
 import Button from 'components/Button';
 import SelectOption from 'components/SelectOption';
 
+import { getProposals } from 'api/mockAPI/proposals';
+import Loading from 'components/Loading';
+import useIsLogged from 'hooks/useIsLogged';
 import styles from './styles.module.scss';
 
 const dropdownItems = [
@@ -22,42 +24,36 @@ const dropdownItems = [
   { value: 'ended', label: 'Ended' },
 ];
 
-const Proposals = () => {
+const Container = ({ children, info }) => (
+  <div className="container-fluid">
+    <Head>
+      <title>proposals | Lumenswap</title>
+    </Head>
+    <DAOHeader asset={info.asset} />
+    {children}
+  </div>
+);
+
+const Proposals = ({ info }) => {
   const [select, setSelect] = useState(dropdownItems[0]);
+  const [proposals, setProposals] = useState(null);
+  const isLogged = useIsLogged();
   const router = useRouter();
-  const Container = ({ children }) => (
-    <div className="container-fluid">
-      <Head>
-        <title>proposals | Lumenswap</title>
-      </Head>
-      <DAOHeader />
-      {children}
-    </div>
-  );
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { name: router.query.name },
+    { name: info.name },
   ];
 
-  const bordItem = {
-    logo: sampleLogo, web: 'Rabet.io', webLink: '/', assetLink: '/', name: 'Lumenswap', desc: 'Lumenswap is a decentralized exchange built on the Stellar network that allows you to swap and trade assets using a friendly, minimal interface.', proposals: '1', member: '110,000', tiker: 'LSP',
-  };
-
-  const proposals = [
-    {
-      id: 1, logo: sampleLogo, status: 'active', detail: 'End in 2 days', address: 'By 0x7384…6trs47', title: 'Will Joe Biden win the 2020 United States presidential election?', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
-    },
-    {
-      id: 2, logo: sampleLogo, status: 'ended', detail: 'Look marketing tokens', address: 'By 0x7384…6trs47', title: 'Will Joe Biden win the 2020 United States presidential election?', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
-    },
-    {
-      id: 3, logo: sampleLogo, status: 'Not started', detail: 'Look marketing tokens', address: 'By 0x7384…6trs47', title: 'Will Joe Biden win the 2020 United States presidential election?', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
-    },
-  ];
+  useEffect(() => {
+    setProposals(null);
+    getProposals(info.name, { status: select.value }).then((data) => {
+      setProposals(data);
+    });
+  }, [select]);
 
   return (
-    <Container>
+    <Container info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
@@ -68,7 +64,7 @@ const Proposals = () => {
               />
 
               <div className="mt-4">
-                <BoardItem item={bordItem} size="lg" />
+                <BoardItem item={info} size="lg" />
               </div>
 
               <div className={styles['container-proposals']}>
@@ -85,6 +81,7 @@ const Proposals = () => {
                         className={styles.filter}
                         isSearchable={false}
                       />
+                      {isLogged && (
                       <Button
                         variant="primary"
                         content="Create proposal"
@@ -93,15 +90,16 @@ const Proposals = () => {
                           router.push(urlMaker.dao.singleDao.createProposal(router.query.name));
                         }}
                       />
+                      )}
                     </div>
                   </div>
                 </div>
 
-                {proposals.map((proposal) => (
+                {proposals ? proposals?.map((proposal) => (
                   <div className="mt-4" key={proposal.id}>
-                    <ProposalItem item={proposal} />
+                    <ProposalItem item={proposal} pageName={info.officialName} />
                   </div>
-                ))}
+                )) : <div className={styles.loading}><Loading size={48} /></div>}
               </div>
 
             </div>

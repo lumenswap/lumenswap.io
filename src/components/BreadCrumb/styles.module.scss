@@ -1,30 +1,30 @@
 @import 'styles/vars';
 
 .main {
-    font-family: SofiaPro;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.5;
-    color: $CodGray;
-    margin-bottom: 0;
+  font-family: SofiaPro;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $CodGray;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  div {
     display: flex;
     flex-direction: row;
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    div {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      svg {
-        width: 18px;
-        height: 18px;
-        margin-top: 2px;
-      }
-    }
-
-    @media (max-width: $sm) {
-      font-size: 14px;
+    align-items: center;
+    svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
     }
   }
+
+  @media (max-width: $sm) {
+    font-size: 14px;
+  }
+}

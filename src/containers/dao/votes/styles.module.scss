@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .layout {
   padding-top: 75px;
@@ -22,4 +22,13 @@
 
 .table tr:first-child {
   line-height: 25px;
+}
+
+.url {
+  text-decoration: none;
+  color: $BlueRibbon;
+  &:hover {
+    text-decoration: none;
+    color: $BlueRibbon;
+  }
 }

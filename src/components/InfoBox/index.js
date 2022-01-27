@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import InfoBoxItem from './InfoBoxItem';
 
 const InfoBox = ({
-  title, rows, data, bordered, className, sidePadding = 16,
+  title, rows, data, bordered, className, sidePadding,
 }) => {
   if (!data) {
     return (
@@ -21,14 +21,14 @@ const InfoBox = ({
 
   return (
     <div className={classNames(styles.main, className)}>
-      <div className={classNames(styles.rows, bordered && 'p-0 h-auto')}>
+      <div style={!sidePadding && { paddingLeft: '16px', paddingRight: '16px' }} className={classNames(styles.rows, bordered && 'p-0 h-auto')}>
         {title && <div className={styles['header-title']}>{title}</div>}
         {rows?.map((row) => (
           <InfoBoxItem
             data={data}
             item={row}
             bordered={bordered}
-            sidePadding={sidePadding}
+            sidePadding={sidePadding ?? null}
           />
         ))}
       </div>

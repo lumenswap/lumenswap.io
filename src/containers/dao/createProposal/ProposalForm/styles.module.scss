@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .alert {
   border: 1px solid $CatskillWhite;
@@ -21,13 +21,15 @@
   flex-direction: column;
 }
 
-.input, .textarea {
+.input,
+.textarea {
   border: none;
   width: 100%;
   box-sizing: border-box;
 }
 
-.input:focus, .textarea:focus {
+.input:focus,
+.textarea:focus {
   outline: none;
 }
 
@@ -77,6 +79,12 @@
   input {
     border-radius: 4px;
   }
+}
+
+.defaultInput {
+  background-color: $AthensGray !important;
+  color: $ShuttleGray !important;
+  cursor: default;
 }
 
 .btn-dashed {

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -11,27 +11,29 @@ import AngleIcon from 'assets/images/angleRight';
 import TickIcon from 'assets/images/tick';
 import Loading from 'components/Loading';
 import Button from 'components/Button';
+import useIsLogged from 'hooks/useIsLogged';
 import ProposalForm from './ProposalForm';
 
 import styles from './styles.module.scss';
 
-const CreateProposal = () => {
+const Container = ({ children, info }) => (
+  <div className="container-fluid">
+    <Head>
+      <title>Create Proposal | Lumenswap</title>
+    </Head>
+    <DAOHeader asset={info.asset} />
+    {children}
+  </div>
+);
+
+const CreateProposal = ({ info }) => {
   const [status, setStatus] = useState('');
   const router = useRouter();
-
-  const Container = ({ children }) => (
-    <div className="container-fluid">
-      <Head>
-        <title>Create Proposal | Lumenswap</title>
-      </Head>
-      <DAOHeader />
-      {children}
-    </div>
-  );
+  const isLogged = useIsLogged();
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: router.query.name },
+    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: info.name },
     { name: 'Create proposal' },
   ];
 
@@ -46,6 +48,12 @@ const CreateProposal = () => {
         </div>
       );
     }
+
+    useEffect(() => {
+      if (!isLogged) {
+        router.push(urlMaker.dao.root());
+      }
+    }, [isLogged]);
 
     if (status === 'success') {
       return (
@@ -71,7 +79,7 @@ const CreateProposal = () => {
   };
 
   return (
-    <Container>
+    <Container info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
