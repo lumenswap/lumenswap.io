@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import Button from 'components/Button';
@@ -8,16 +7,11 @@ import ContractIcon from 'assets/images/contract';
 
 import styles from './styles.module.scss';
 
-const ConfirmProposal = ({ setStatus }) => {
+const ConfirmProposal = ({ formData, setStatus }) => {
   const dispatch = useDispatch();
 
-  const onChangeStatus = () => {
+  const handleConfirm = () => {
     dispatch(closeModalAction());
-    setStatus('loading');
-
-    setTimeout(() => {
-      setStatus('success');
-    }, 3000);
   };
 
   return (
@@ -28,15 +22,11 @@ const ConfirmProposal = ({ setStatus }) => {
       <Button
         variant="primary"
         content="Confirm"
-        onClick={onChangeStatus}
+        onClick={handleConfirm}
         className={styles.btn}
       />
     </div>
   );
-};
-
-ConfirmProposal.propTypes = {
-  setStatus: PropTypes.func.isRequired,
 };
 
 export default ConfirmProposal;

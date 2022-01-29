@@ -1,6 +1,6 @@
 import { useForm, Controller } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
@@ -8,7 +8,8 @@ import RadioGroup from 'components/RadioGroup';
 import { closeModalAction, openModalAction } from 'actions/modal';
 
 import BN from 'helpers/BN';
-import { getAssetDetails, isSameAsset } from 'helpers/asset';
+import { getAssetDetails } from 'helpers/asset';
+import useUserSingleAsset from 'hooks/useUserSingleAsset';
 import styles from './styles.module.scss';
 import ConfirmVote from './ConfirmVote';
 
@@ -19,21 +20,22 @@ const Vote = ({ info }) => {
     value: vote.title.toLowerCase(),
     label: vote.title,
   }));
-  const [radioValue, setRadioValue] = useState(items[0].value);
-  const userBalances = useSelector((state) => state.userBalance);
+  const userAssetBalance = useUserSingleAsset(getAssetDetails(info.asset));
 
-  const userCurrentAssetBalance = userBalances
-    .find((i) => isSameAsset(getAssetDetails(i.asset), getAssetDetails(info.asset)))?.balance ?? '0';
   const {
     handleSubmit, control, errors, trigger, formState,
-  } = useForm({ mode: 'onChange' });
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      vote: items[0].value,
+    },
+  });
 
   useEffect(() => {
     trigger();
   }, []);
 
   async function onSubmit(data) {
-    console.log(data);
     dispatch(closeModalAction());
 
     dispatch(openModalAction({
@@ -43,7 +45,7 @@ const Vote = ({ info }) => {
       },
       content: <ConfirmVote info={{
         ...info,
-        radioValue,
+        vote: data.vote,
         amount: data.tokenAmount,
       }}
       />,
@@ -59,15 +61,11 @@ const Vote = ({ info }) => {
     return 'Vote';
   }
 
-  function onChange(value) {
-    setRadioValue(value);
-    console.log(value);
-  }
   const validateAmount = (value) => {
     if (new BN(0).gte(value)) {
       return 'Amount is not valid';
     }
-    if (new BN(value).gt(userCurrentAssetBalance)) {
+    if (new BN(value).gt(userAssetBalance?.balance ?? '0')) {
       return `Insufficient ${info.asset.code} balance`;
     }
     return true;
@@ -80,12 +78,17 @@ const Vote = ({ info }) => {
       </p>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className="my-4">
-          <RadioGroup
-            items={items}
-            name="opt-group"
-            value={radioValue}
-            className="radio-group"
-            onUpdate={onChange}
+          <Controller
+            control={control}
+            name="vote"
+            render={(props) => (
+              <RadioGroup
+                items={items}
+                value={props.value}
+                className="radio-group"
+                onUpdate={props.onChange}
+              />
+            )}
           />
         </div>
         <hr className={styles.hr} />

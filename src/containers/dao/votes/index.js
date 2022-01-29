@@ -15,21 +15,21 @@ import humanAmount from 'helpers/humanAmount';
 import { getProposalVotes } from 'api/mockAPI/proposalInfo';
 import styles from './styles.module.scss';
 
+const Container = ({ children, info }) => (
+  <div className="container-fluid">
+    <Head>
+      <title>All Votes | Lumenswap</title>
+    </Head>
+    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
+    {children}
+  </div>
+);
+
 const Votes = ({ info }) => {
   const router = useRouter();
   const [votes, setVotes] = useState(null);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
-
-  const Container = ({ children }) => (
-    <div className="container-fluid">
-      <Head>
-        <title>All Votes | Lumenswap</title>
-      </Head>
-      <DAOHeader asset={info.asset} />
-      {children}
-    </div>
-  );
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
@@ -57,20 +57,20 @@ const Votes = ({ info }) => {
       title: 'Vote',
       dataIndex: 'vote',
       key: '2',
-      render: (data) => (<>{data.vote}</>),
+      render: (data) => `${data.vote}`,
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: (data) => (<>{humanAmount(data.amount)} {data.asset.code}</>),
+      render: (data) => `${humanAmount(data.amount)} ${data.asset.code}`,
     },
   ];
 
   useEffect(() => {
     setVotes(null);
     getProposalVotes(router.query.id, {
-      page,
+      page, assetName: info.officialName,
     }).then((data) => {
       setVotes(data.votes);
       setPages(data.totalPages);
@@ -80,7 +80,7 @@ const Votes = ({ info }) => {
   const NoDataMessage = () => (<NoData message="There is no votes" />);
 
   return (
-    <Container>
+    <Container info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">

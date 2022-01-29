@@ -7,26 +7,25 @@ import { useDispatch } from 'react-redux';
 import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
-import Datepicker from 'components/Datepicker';
+import CDatePicker from 'components/CDatePicker/index';
 import CharCounter from 'components/CharCounter';
 import ConfirmProposal from 'containers/dao/createProposal/Confirm';
-import BN from 'helpers/BN';
+import moment from 'moment';
+import numeral from 'numeral';
 import Options from './Options';
 
 import styles from './styles.module.scss';
 
-const ProposalForm = ({ setStatus }) => {
-  const date = new Date();
+const ProposalForm = ({ info, setStatus }) => {
   const [show, setShow] = useState(null);
-  const [result, setResult] = useState('');
   const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
-    setValue,
     getValues,
     errors,
     trigger,
+    setValue,
     formState,
   } = useForm({
     mode: 'onChange',
@@ -38,34 +37,24 @@ const ProposalForm = ({ setStatus }) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    setResult(data);
-
     dispatch(openModalAction({
       modalProps: {
         mainClassName: 'modal-br8',
       },
-      content: <ConfirmProposal setStatus={setStatus} />,
+      content: <ConfirmProposal formData={data} setStatus={setStatus} />,
     }));
   };
   const handleFocus = (name) => {
     setShow(name);
   };
-  const validateStartDate = (d) => {
-    console.log(`${new BN(date.setHours(0, 0, 0, 0)).gt(Date.parse(d))} date = ${new BN(date.getTime() - 1000)} s date = ${new BN(Date.parse(d))}`);
-    if (new BN(date.getTime() - 1000).gt(Date.parse(d))) {
-      return 'invalid start date';
-    }
-    return true;
-  };
-  const validateEndDate = (d) => {
-    if (new BN(Date.parse(getValues('startDate'))).gt(Date.parse(d))) {
-      return 'invalid end date';
-    }
-    return true;
-  };
+
+  const startDateIsAfterEndDate = moment(getValues('startDate')).isAfter(getValues('endDate'));
 
   useEffect(() => {
     trigger();
+    if (startDateIsAfterEndDate) {
+      setValue('endDate', getValues('startDate'), { shouldValidate: true });
+    }
   }, [JSON.stringify(getValues())]);
 
   function generateBtnContent() {
@@ -76,12 +65,13 @@ const ProposalForm = ({ setStatus }) => {
     }
     return 'Create proposal';
   }
+
   return (
     <div>
       <div className={classNames(styles.alert, 'mb-4')}>
         <AlertIcon />
         You need to have a minimum of
-        <span className="mx-1">10K RBT</span>
+        <span className="mx-1">{numeral(info.minValue).format('0a')} {info.asset.code}</span>
         in order to submit a proposal.
       </div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -117,22 +107,24 @@ const ProposalForm = ({ setStatus }) => {
           }}
           render={(props) => (
             <div className="d-flex flex-column mb-4">
-              <textarea
-                className={styles.textarea}
-                placeholder="Tell more about your proposal (optional)"
-                value={props.value}
-                onChange={props.onChange}
-                maxLength={500}
-                onFocus={() => { handleFocus(props.name); }}
-                onBlur={() => { setShow(null); }}
-              />
-              <div className="text-right mt-2">
-                <CharCounter length={500} char={props.value} show={props.name === show} />
+              <div className={styles['text-area-container']}>
+                <textarea
+                  className={styles.textarea}
+                  placeholder="Tell more about your proposal (optional)"
+                  value={props.value}
+                  onChange={props.onChange}
+                  maxLength={500}
+                  onFocus={() => { handleFocus(props.name); }}
+                  onBlur={() => { setShow(null); }}
+                />
+                <div className="text-right mt-2">
+                  <CharCounter length={500} char={props.value} show={props.name === show} />
+                </div>
               </div>
             </div>
           )}
         />
-        <Options control={control} Controller={Controller} />
+        <Options control={control} />
 
         <div className="row mt-4">
           <div className="col-lg-5 col-md-6 col-sm-6 col-12">
@@ -141,17 +133,11 @@ const ProposalForm = ({ setStatus }) => {
               name="startDate"
               control={control}
               defaultValue=""
-              rules={{
-                validate: { validateStartDate },
-              }}
-              render={() => (
-                <Datepicker
-                  startDate={date}
-                  valueName="startDate"
-                  setValue={setValue}
-                  trigger={() => {
-                    trigger();
-                  }}
+              render={(props) => (
+                <CDatePicker
+                  onChange={props.onChange}
+                  value={props.value}
+                  minDate={new Date().setHours(0, 0, 0, 0)}
                 />
               )}
             />
@@ -162,17 +148,11 @@ const ProposalForm = ({ setStatus }) => {
               name="endDate"
               control={control}
               defaultValue=""
-              rules={{
-                validate: { validateEndDate },
-              }}
-              render={() => (
-                <Datepicker
-                  startDate={date}
-                  valueName="endDate"
-                  setValue={setValue}
-                  trigger={() => {
-                    trigger();
-                  }}
+              render={(props) => (
+                <CDatePicker
+                  onChange={props.onChange}
+                  value={props.value}
+                  minDate={getValues('startDate')}
                 />
               )}
             />

@@ -2,17 +2,37 @@ import PropTypes from 'prop-types';
 import Image from 'next/image';
 import classNames from 'classnames';
 import ExternalBlueArrow from 'assets/images/ExternalBlueArrow';
-
+import Button from 'components/Button';
 import numeral from 'numeral';
+import useIsLogged from 'hooks/useIsLogged';
+import useUserSingleAsset from 'hooks/useUserSingleAsset';
+import { useDispatch } from 'react-redux';
+import { openConnectModal } from 'actions/modal';
+import { getAssetDetails } from 'helpers/asset';
+import CCard from 'components/CCard';
 import styles from './styles.module.scss';
 
-const LgBoard = ({ item, button }) => {
+const GovernantInfo = ({ item }) => {
   const {
     logo, name, desc, members, tiker, web, webLink, assetLink,
   } = item;
 
+  const isLogged = useIsLogged();
+  const foundUserAsset = useUserSingleAsset(getAssetDetails(item.asset));
+  const dispatch = useDispatch();
+
+  const handleJoinBtn = (e) => {
+    e.preventDefault();
+    if (isLogged && !foundUserAsset) {
+      // do something
+    }
+    if (!isLogged) {
+      dispatch(openConnectModal());
+    }
+  };
+
   return (
-    <div className={classNames(styles.item, styles['lg-item'])}>
+    <CCard className={classNames(styles.item, styles['lg-item'])}>
       <div className="d-flex justify-content-between">
         <div className="d-flex align-items-center">
           <div className={styles.img}>
@@ -24,7 +44,12 @@ const LgBoard = ({ item, button }) => {
           </div>
         </div>
         <div>
-          {button}
+          <Button
+            variant={(isLogged && foundUserAsset) ? 'basic' : 'primary'}
+            content={(isLogged && foundUserAsset) ? 'Joined' : 'Join'}
+            className={(isLogged && foundUserAsset) ? classNames(styles.btn, styles['btn-basic']) : styles.btn}
+            onClick={handleJoinBtn}
+          />
         </div>
       </div>
       <p className={classNames(styles.text, 'mb-0 mt-2')}>{desc}</p>
@@ -51,13 +76,12 @@ const LgBoard = ({ item, button }) => {
           </a>
         </div>
       </div>
-    </div>
+    </CCard>
   );
 };
 
-LgBoard.propTypes = {
+GovernantInfo.propTypes = {
   item: PropTypes.object.isRequired,
-  button: PropTypes.func.isRequired,
 };
 
-export default LgBoard;
+export default GovernantInfo;

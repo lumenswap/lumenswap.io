@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 
 const LumenSwapHeader = ({
   showAssetBox, assetBoxProps, leftSide,
-  rightSide, extraRightComponent, extraLeftComponent, hideAssetShowBox,
+  rightSide, extraRightComponent, extraLeftComponent,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
@@ -40,7 +40,7 @@ const LumenSwapHeader = ({
           </div>
         </ul>
         {extraRightComponent?.map((Component, index) => <Component key={index} />)}
-        {(isLogged && showAssetBox && !hideAssetShowBox?.find((i) => i === router.asPath))
+        {(isLogged && showAssetBox)
          && <AssetBox {...assetBoxProps} />}
         <ConnectButton />
       </div>

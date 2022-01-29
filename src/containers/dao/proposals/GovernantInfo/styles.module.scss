@@ -1,0 +1,85 @@
+@import 'styles/vars';
+
+.item {
+  padding-top: 14px;
+  cursor: default;
+}
+
+.btn {
+  width: 64px;
+  height: 32px;
+  border-radius: 4px;
+  font-size: 14px;
+  box-shadow: none;
+
+  &-basic {
+    color: $Manatee;
+  }
+}
+
+.img img {
+  border-radius: 50%;
+}
+
+.lg-item {
+  padding: 24px;
+
+  .title {
+    font-size: 22px;
+    font-weight: 500;
+    color: $CodGray;
+    margin-bottom: 2px;
+  }
+
+  .img {
+    margin-right: 12px;
+  }
+
+  .text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: $ShuttleGray;
+  }
+
+  .detail {
+    margin-bottom: 11px;
+
+    a {
+      text-decoration: none !important;
+      margin-left: 4px;
+
+      svg {
+        margin-bottom: 7px;
+      }
+    }
+  }
+
+  .asset-link {
+    color: $CodGray;
+  }
+
+  .web-link {
+    color: $BlueRibbon;
+  }
+
+  .btn {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: $md) {
+  .info-col {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: $sm) {
+  .lg-item {
+    padding: 18px;
+
+    img {
+      width: 55px;
+      height: 55px;
+    }
+  }
+}

@@ -1,7 +1,11 @@
 import urlMaker from 'helpers/urlMaker';
 import LumenSwapHeader from 'components/LumenSwapHeader';
+import AssetBox from 'components/LumenSwapHeader/AssetBox';
+import { useRouter } from 'next/router';
 
-const DAOHeader = ({ asset }) => {
+const ignoredURLS = [urlMaker.dao.root(), urlMaker.dao.activity()];
+
+const DAOHeader = ({ asset, assetBoxColor }) => {
   const leftSideLinks = [
     {
       name: 'Board',
@@ -15,26 +19,18 @@ const DAOHeader = ({ asset }) => {
       restricted: true,
     },
   ];
-  const assetColorGenerator = (code) => {
-    switch (code) {
-      case 'LSP': {
-        return '#0e41f5';
-      }
-      case 'RBT': {
-        return '#1d1d1d';
-      }
-      default: {
-        return null;
-      }
+  const AssetBoxGenerator = () => {
+    const { asPath } = useRouter();
+    if (ignoredURLS.findIndex((url) => url === asPath) !== -1) {
+      return null;
     }
+    return <AssetBox asset={asset} color={assetBoxColor} />;
   };
 
   return (
     <LumenSwapHeader
-      showAssetBox
       leftSide={leftSideLinks}
-      assetBoxProps={{ color: assetColorGenerator(asset?.code), asset }}
-      hideAssetShowBox={[urlMaker.dao.root(), urlMaker.dao.activity()]}
+      extraRightComponent={[AssetBoxGenerator]}
     />
   );
 };

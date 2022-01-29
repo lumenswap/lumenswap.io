@@ -16,6 +16,7 @@ const infos = [
       code: 'RBT',
       issuer: 'GCMSCRWZ3QBOI6AF75B5ZWDBXOSMIRW4FSBZH5OI65Y4H4GVH7LPSOYS',
     },
+    assetColor: '#1d1d1d',
   },
   {
     logo: sampleLogo,
@@ -32,12 +33,14 @@ const infos = [
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
     },
+    assetColor: '#0e41f5',
   },
 ];
 
 const proposals = [
   {
-    id: '1daf81j',
+    id: '1daf815',
+    assetName: 'rabet',
     logo: sampleLogo,
     status: 'active',
     statusType: 'active',
@@ -49,7 +52,8 @@ const proposals = [
     desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
   },
   {
-    id: '2afk13m',
+    id: '2afk13b',
+    assetName: 'rabet',
     logo: sampleLogo,
     status: 'ended',
     statusType: 'ended',
@@ -62,6 +66,7 @@ const proposals = [
   },
   {
     id: 'a4wfg41',
+    assetName: 'rabet',
     logo: sampleLogo,
     status: 'Not started',
     statusType: 'not-started',
@@ -74,6 +79,7 @@ const proposals = [
   },
   {
     id: '1daf81j',
+    assetName: 'lumenswap',
     logo: sampleLogo,
     status: 'active',
     statusType: 'active',
@@ -86,6 +92,7 @@ const proposals = [
   },
   {
     id: '2afk13m',
+    assetName: 'lumenswap',
     logo: sampleLogo,
     status: 'ended',
     statusType: 'ended',
@@ -97,7 +104,8 @@ const proposals = [
     desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Egestas purus viverra accumsan in nisl nisi',
   },
   {
-    id: 'a4wfg41',
+    id: 'a4wfg42',
+    assetName: 'lumenswap',
     logo: sampleLogo,
     status: 'Not started',
     statusType: 'not-started',
@@ -119,10 +127,11 @@ export function getProposalInfo(name) {
 export function getProposals(name, query) {
   if (query.status === 'all') {
     return new Promise((reslove) => setTimeout(reslove, 2000)).then(() => (
-      proposals
+      proposals.filter((proposal) => proposal.assetName === name)
     ));
   }
   return new Promise((reslove) => setTimeout(reslove, 2000)).then(() => (
-    proposals.filter((p) => p.statusType === query.status)
+    proposals.filter((proposal) => proposal.statusType === query.status
+    && proposal.assetName === name)
   ));
 }

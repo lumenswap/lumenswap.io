@@ -21,12 +21,11 @@ const ConfirmVote = ({ info }) => {
       <p className={styles.title}>
         {info.title}
       </p>
-      <form className={styles.form}>
+      <div className={styles.form}>
         <div className="my-4">
           <RadioGroup
             items={items}
-            name="opt-group"
-            value={info.radioValue}
+            value={info.vote}
             className="radio-group"
             onUpdate={() => {}}
           />
@@ -48,7 +47,7 @@ const ConfirmVote = ({ info }) => {
           className={styles.btn}
           onClick={handleConfirm}
         />
-      </form>
+      </div>
     </div>
   );
 };

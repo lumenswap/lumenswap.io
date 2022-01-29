@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -14,29 +14,22 @@ const CustomInput = forwardRef(({ value, onClick },
     </div>
 ));
 
-const Datepicker = ({
-  startDate, valueName, setValue, trigger,
+const CDatePicker = ({
+  onChange, value, minDate,
 }) => {
-  const [date, setDate] = useState(startDate);
-
   const onChangeDate = (selectedDate) => {
-    setDate(selectedDate);
-    console.warn(selectedDate);
-    trigger();
+    onChange(selectedDate);
   };
-
-  useEffect(() => {
-    setValue(valueName, date || startDate);
-  }, [date]);
 
   return (
     <DatePicker
-      selected={date}
+      selected={value ?? new Date()}
       onChange={onChangeDate}
       popperClassName={styles.date}
       customInput={<CustomInput />}
+      minDate={minDate}
     />
   );
 };
 
-export default Datepicker;
+export default CDatePicker;

@@ -21,10 +21,11 @@ const InfoBox = ({
 
   return (
     <div className={classNames(styles.main, className)}>
-      <div style={!sidePadding && { paddingLeft: '16px', paddingRight: '16px' }} className={classNames(styles.rows, bordered && 'p-0 h-auto')}>
+      <div style={!sidePadding ? { paddingLeft: '16px', paddingRight: '16px' } : {}} className={classNames(styles.rows, bordered && 'p-0 h-auto')}>
         {title && <div className={styles['header-title']}>{title}</div>}
-        {rows?.map((row) => (
+        {rows?.map((row, index) => (
           <InfoBoxItem
+            key={index}
             data={data}
             item={row}
             bordered={bordered}

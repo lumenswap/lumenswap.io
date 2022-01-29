@@ -13,8 +13,6 @@ import Button from 'components/Button';
 import ArrowIcon from 'assets/images/angleRight';
 import InfoBox from 'components/InfoBox';
 import { useState, useEffect } from 'react';
-import CTable from 'components/CTable';
-import NoData from 'components/NoData';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import { openModalAction } from 'actions/modal';
 import useIsLogged from 'hooks/useIsLogged';
@@ -25,6 +23,7 @@ import humanAmount from 'helpers/humanAmount';
 import { extractLogoByToken } from 'helpers/asset';
 
 import { getProposalVotes } from 'api/mockAPI/proposalInfo';
+import VotesData from './VotesData';
 import Vote from './Vote';
 
 import styles from './styles.module.scss';
@@ -34,7 +33,7 @@ const Container = ({ children, info }) => (
     <Head>
       <title>Proposal Info | Lumenswap</title>
     </Head>
-    <DAOHeader asset={info.asset} />
+    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
     {children}
   </div>
 );
@@ -62,23 +61,23 @@ const ProposalInfo = ({ info }) => {
     },
     {
       title: 'Duration',
-      render: () => <>{Math.floor(moment.duration(info.endDate - info.startDate).asDays())} days</>,
+      render: () => `${Math.floor(moment.duration(info.endDate - info.startDate).asDays())} days`,
     },
     {
       title: 'Start time',
-      render: () => (<>{moment(info.startDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}</>),
+      render: () => `${moment(info.startDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
     },
     {
       title: 'End time',
-      render: () => (<>{moment(info.endDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}</>),
+      render: () => `${moment(info.endDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
     },
     {
       title: 'Total voter',
-      render: () => (<>{numeral(info.totalVoters).format('0,0')}</>),
+      render: () => `${numeral(info.totalVoters).format('0,0')}`,
     },
     {
       title: 'Total votes',
-      render: () => (<>{humanAmount(info.totalVotes)} {info.asset.code}</>),
+      render: () => `${humanAmount(info.totalVotes)} ${info.asset.code}`,
     },
     {
       title: 'Proposer',
@@ -98,37 +97,6 @@ const ProposalInfo = ({ info }) => {
     },
   ];
 
-  const tableInfo = [
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: '1',
-      render: (data) => (
-        <a
-          href={generateAddressURL(data.address)}
-          className={styles.url}
-          target="_blank"
-          rel="noreferrer"
-        >{minimizeAddress(data.address)}
-        </a>
-      ),
-    },
-    {
-      title: 'Vote',
-      dataIndex: 'vote',
-      key: '2',
-      render: (data) => (<>{data.vote}</>),
-    },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: '3',
-      render: (data) => (<>{humanAmount(data.amount)} {data.asset.code}</>),
-    },
-  ];
-
-  const NoDataMessage = () => (<NoData message="There is no votes" />);
-
   const handleModal = () => {
     dispatch(openModalAction({
       modalProps: {
@@ -145,8 +113,10 @@ const ProposalInfo = ({ info }) => {
   };
 
   useEffect(() => {
-    getProposalVotes(router.query.id).then((v) => (
-      setVotes(v)
+    getProposalVotes(router.query.id, {
+      assetName: info.officialName,
+    }).then((voters) => (
+      setVotes(voters)
     ));
   }, []);
 
@@ -206,14 +176,7 @@ const ProposalInfo = ({ info }) => {
                 )}
                 >Votes
                 </h4>
-                <CTable
-                  className={styles.table}
-                  columns={tableInfo}
-                  dataSource={votes}
-                  loading={!votes}
-                  noDataComponent={NoDataMessage}
-                  rowFix={{ rowNumbers: 10, rowHeight: 53, headerRowHeight: 25 }}
-                />
+                <VotesData votes={votes} />
               </div>
 
               <div className="mt-3">

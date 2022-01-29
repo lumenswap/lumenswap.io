@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from 'containers/dao/DAOHeader';
-import BoardItem from 'containers/dao/BoardItem';
 import ProposalItem from 'containers/dao/proposals/ProposalItem';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
@@ -16,6 +15,7 @@ import { getProposals } from 'api/mockAPI/proposals';
 import Loading from 'components/Loading';
 import useIsLogged from 'hooks/useIsLogged';
 import styles from './styles.module.scss';
+import GovernantInfo from './GovernantInfo';
 
 const dropdownItems = [
   { value: 'all', label: 'All' },
@@ -29,7 +29,7 @@ const Container = ({ children, info }) => (
     <Head>
       <title>proposals | Lumenswap</title>
     </Head>
-    <DAOHeader asset={info.asset} />
+    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
     {children}
   </div>
 );
@@ -47,7 +47,7 @@ const Proposals = ({ info }) => {
 
   useEffect(() => {
     setProposals(null);
-    getProposals(info.name, { status: select.value }).then((data) => {
+    getProposals(info.officialName, { status: select.value }).then((data) => {
       setProposals(data);
     });
   }, [select]);
@@ -64,7 +64,7 @@ const Proposals = ({ info }) => {
               />
 
               <div className="mt-4">
-                <BoardItem item={info} size="lg" />
+                <GovernantInfo item={info} />
               </div>
 
               <div className={styles['container-proposals']}>

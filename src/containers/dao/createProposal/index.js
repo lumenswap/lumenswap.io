@@ -7,13 +7,8 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
 import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
-import AngleIcon from 'assets/images/angleRight';
-import TickIcon from 'assets/images/tick';
-import Loading from 'components/Loading';
-import Button from 'components/Button';
 import useIsLogged from 'hooks/useIsLogged';
-import ProposalForm from './ProposalForm';
-
+import GeneratePAgeWithStatus from './GeneratePageWithStatus';
 import styles from './styles.module.scss';
 
 const Container = ({ children, info }) => (
@@ -21,7 +16,7 @@ const Container = ({ children, info }) => (
     <Head>
       <title>Create Proposal | Lumenswap</title>
     </Head>
-    <DAOHeader asset={info.asset} />
+    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
     {children}
   </div>
 );
@@ -37,46 +32,11 @@ const CreateProposal = ({ info }) => {
     { name: 'Create proposal' },
   ];
 
-  const renderContent = () => {
-    if (status === 'loading') {
-      return (
-        <div className={classNames(styles.card, styles['card-small'], styles.loading)}>
-          <Loading size={48} />
-          <p className={styles['loading-msg']}>
-            Please wait, This operation may take a few minutes.
-          </p>
-        </div>
-      );
+  useEffect(() => {
+    if (!isLogged) {
+      router.push(urlMaker.dao.root());
     }
-
-    useEffect(() => {
-      if (!isLogged) {
-        router.push(urlMaker.dao.root());
-      }
-    }, [isLogged]);
-
-    if (status === 'success') {
-      return (
-        <div className={classNames(styles.card, styles['card-small'], styles.success)}>
-          <TickIcon />
-          <div className={styles['success-title']}>It’s done</div>
-          <p className={styles['success-msg']}>
-            Your proposal was successfully created.
-          </p>
-          <Button variant="primary" className={styles['success-btn']}>
-            Proposal page
-            <AngleIcon />
-          </Button>
-        </div>
-      );
-    }
-
-    return (
-      <div className={classNames(styles.card, styles['card-regular'])}>
-        <ProposalForm setStatus={setStatus} />
-      </div>
-    );
-  };
+  }, [isLogged]);
 
   return (
     <Container info={info}>
@@ -90,7 +50,7 @@ const CreateProposal = ({ info }) => {
                 data={crumbData}
               />
 
-              {renderContent()}
+              <GeneratePAgeWithStatus status={status} setStatus={setStatus} info={info} />
             </div>
           </div>
         </div>

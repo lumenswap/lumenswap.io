@@ -6,7 +6,6 @@ import Image from 'next/image';
 import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from 'containers/dao/DAOHeader';
 import SelectOption from 'components/SelectOption';
-import NoData from 'components/NoData';
 import CPagination from 'components/CPagination';
 import CTable from 'components/CTable';
 
@@ -27,6 +26,32 @@ const dropdownItems = [
   { value: 'in-progress', label: 'In progress' },
 ];
 
+function ActivityTableAction(data) {
+  const handleClaim = () => {
+    // do something
+  };
+  if (data.type === 'claimed') {
+    return <div className={styles.claimed}>claimed</div>;
+  }
+  if (data.type === 'not-claimed') {
+    return <div onClick={handleClaim} className="color-primary cursor-pointer">Claim</div>;
+  }
+  if (data.type === 'in-progress') {
+    return <>In progress</>;
+  }
+  return null;
+}
+
+const Container = ({ children }) => (
+  <div className="container-fluid">
+    <Head>
+      <title>My activity | Lumenswap</title>
+    </Head>
+    <DAOHeader />
+    {children}
+  </div>
+);
+
 const Activity = () => {
   const [select, setSelect] = useState(dropdownItems[0]);
   const [userActivities, setUserActivities] = useState(null);
@@ -37,32 +62,6 @@ const Activity = () => {
   const router = useRouter();
 
   const userAddress = useSelector((state) => state.user.detail.address);
-
-  const Container = ({ children }) => (
-    <div className="container-fluid">
-      <Head>
-        <title>My activity | Lumenswap</title>
-      </Head>
-      <DAOHeader />
-      {children}
-    </div>
-  );
-
-  function renderTableAction(data) {
-    const handleClaim = () => {
-      console.log('claimed !');
-    };
-    if (data.type === 'claimed') {
-      return <div className={styles.claimed}>claimed</div>;
-    }
-    if (data.type === 'not-claimed') {
-      return <div onClick={handleClaim} className="color-primary cursor-pointer">Claim</div>;
-    }
-    if (data.type === 'in-progress') {
-      return <>In progress</>;
-    }
-    return null;
-  }
 
   useEffect(() => {
     setUserActivities(null);
@@ -100,31 +99,29 @@ const Activity = () => {
       title: 'Date',
       dataIndex: 'date',
       key: '2',
-      render: (data) => (<>{moment(data.date).fromNow()}</>),
+      render: (data) => `${moment(data.date).fromNow()}`,
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: (data) => (<>{humanAmount(data.amount)} {data.asset.code}</>),
+      render: (data) => `${humanAmount(data.amount)} ${data.asset.code}`,
     },
     {
       title: 'Info',
       dataIndex: 'info',
       key: '3',
-      render: (data) => (<>{data.info}</>),
+      render: (data) => `${data.info}`,
     },
     {
       title: '',
       dataIndex: 'action',
       key: '4',
       render: (data) => (
-        renderTableAction(data)
+        ActivityTableAction(data)
       ),
     },
   ];
-
-  const NoDataMessage = () => (<NoData message="There is no activity" />);
 
   return (
     <Container>
@@ -151,8 +148,8 @@ const Activity = () => {
                   columns={tableInfo}
                   dataSource={userActivities}
                   loading={!userActivities}
-                  noDataComponent={NoDataMessage}
-                  rowFix={{ rowNumbers: 10, rowHeight: 51, headerRowHeight: 25 }}
+                  noDataMessage="There is no activity"
+                  rowFix={{ rowNumbers: 10, rowHeight: 51, headerRowHeight: 43 }}
                 />
               </div>
 

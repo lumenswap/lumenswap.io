@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .select {
   border: 1px solid $CatskillWhite;
@@ -20,7 +20,6 @@
 }
 
 .date {
-
   :global(.react-datepicker__current-month) {
     font-weight: 500;
   }
@@ -76,5 +75,11 @@
 
   :global(.react-datepicker__navigation) {
     top: 9px;
+  }
+  :global(.react-datepicker__day--disabled) {
+    color: #ccc;
+    &:hover {
+      background-color: inherit;
+    }
   }
 }
