@@ -2,7 +2,7 @@ import RadioGroup from 'components/RadioGroup';
 import Button from 'components/Button';
 import { useDispatch } from 'react-redux';
 import { closeModalAction } from 'actions/modal';
-import numeral from 'numeral';
+import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const ConfirmVote = ({ info }) => {
@@ -33,7 +33,7 @@ const ConfirmVote = ({ info }) => {
 
         <div className={styles.value}>
           <div className={styles['value-name']}>Amount</div>
-          <div className={styles['value-amount']}>{numeral(info.amount).format('0.00a')} {info.asset.code}</div>
+          <div className={styles['value-amount']}>{humanAmount(info.amount, true)} {info.asset.code}</div>
         </div>
 
         <div className={styles.msg}>

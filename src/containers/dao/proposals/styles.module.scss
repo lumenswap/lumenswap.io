@@ -62,3 +62,10 @@
     padding: 10px 0;
   }
 }
+
+.no-data-container {
+  background-color: $White;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  margin-top: 16px;
+}

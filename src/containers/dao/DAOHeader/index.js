@@ -5,6 +5,14 @@ import { useRouter } from 'next/router';
 
 const ignoredURLS = [urlMaker.dao.root(), urlMaker.dao.activity()];
 
+const GovernanceAssetBox = ({ asset, assetBoxColor }) => {
+  const { asPath } = useRouter();
+  if (ignoredURLS.findIndex((url) => url === asPath) !== -1) {
+    return null;
+  }
+  return <AssetBox asset={asset} color={assetBoxColor} />;
+};
+
 const DAOHeader = ({ asset, assetBoxColor }) => {
   const leftSideLinks = [
     {
@@ -19,18 +27,11 @@ const DAOHeader = ({ asset, assetBoxColor }) => {
       restricted: true,
     },
   ];
-  const AssetBoxGenerator = () => {
-    const { asPath } = useRouter();
-    if (ignoredURLS.findIndex((url) => url === asPath) !== -1) {
-      return null;
-    }
-    return <AssetBox asset={asset} color={assetBoxColor} />;
-  };
 
   return (
     <LumenSwapHeader
       leftSide={leftSideLinks}
-      extraRightComponent={[AssetBoxGenerator]}
+      extraRightComponent={[<GovernanceAssetBox asset={asset} assetBoxColor={assetBoxColor} />]}
     />
   );
 };

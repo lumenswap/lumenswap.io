@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
-
 import ServerSideLoading from 'components/ServerSideLoading';
-import DAOHeader from 'containers/dao/DAOHeader';
-import ProposalItem from 'containers/dao/proposals/ProposalItem';
 import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
 import SelectOption from 'components/SelectOption';
-
 import { getProposals } from 'api/mockAPI/proposals';
-import Loading from 'components/Loading';
 import useIsLogged from 'hooks/useIsLogged';
+import DAOProposals from './DAOProposals';
+import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
-import GovernantInfo from './GovernantInfo';
+import GovernanceInfo from './GovernanceInfo';
 
 const dropdownItems = [
   { value: 'all', label: 'All' },
@@ -23,16 +19,6 @@ const dropdownItems = [
   { value: 'not-started', label: 'Not Started' },
   { value: 'ended', label: 'Ended' },
 ];
-
-const Container = ({ children, info }) => (
-  <div className="container-fluid">
-    <Head>
-      <title>proposals | Lumenswap</title>
-    </Head>
-    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
-    {children}
-  </div>
-);
 
 const Proposals = ({ info }) => {
   const [select, setSelect] = useState(dropdownItems[0]);
@@ -53,7 +39,7 @@ const Proposals = ({ info }) => {
   }, [select]);
 
   return (
-    <Container info={info}>
+    <DAOContainer title="Proposals | Lumenswap" info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
@@ -64,7 +50,7 @@ const Proposals = ({ info }) => {
               />
 
               <div className="mt-4">
-                <GovernantInfo item={info} />
+                <GovernanceInfo item={info} />
               </div>
 
               <div className={styles['container-proposals']}>
@@ -94,19 +80,14 @@ const Proposals = ({ info }) => {
                     </div>
                   </div>
                 </div>
-
-                {proposals ? proposals?.map((proposal) => (
-                  <div className="mt-4" key={proposal.id}>
-                    <ProposalItem item={proposal} pageName={info.officialName} />
-                  </div>
-                )) : <div className={styles.loading}><Loading size={48} /></div>}
+                <DAOProposals proposals={proposals} info={info} />
               </div>
 
             </div>
           </div>
         </div>
       </ServerSideLoading>
-    </Container>
+    </DAOContainer>
   );
 };
 

@@ -1,17 +1,25 @@
 import { useForm, Controller } from 'react-hook-form';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
 import RadioGroup from 'components/RadioGroup';
 import { closeModalAction, openModalAction } from 'actions/modal';
-
 import BN from 'helpers/BN';
 import { getAssetDetails } from 'helpers/asset';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
 import styles from './styles.module.scss';
 import ConfirmVote from './ConfirmVote';
+
+const validateAmount = (value, userAssetBalance, info) => {
+  if (new BN(0).gte(value)) {
+    return 'Amount must be above 0';
+  }
+  if (new BN(value).gt(userAssetBalance?.balance ?? '0')) {
+    return `Insufficient ${info.asset.code} balance`;
+  }
+  return true;
+};
 
 const Vote = ({ info }) => {
   const dispatch = useDispatch();
@@ -61,16 +69,6 @@ const Vote = ({ info }) => {
     return 'Vote';
   }
 
-  const validateAmount = (value) => {
-    if (new BN(0).gte(value)) {
-      return 'Amount is not valid';
-    }
-    if (new BN(value).gt(userAssetBalance?.balance ?? '0')) {
-      return `Insufficient ${info.asset.code} balance`;
-    }
-    return true;
-  };
-
   return (
     <div className="pb-4 main">
       <p className={styles.title}>
@@ -99,7 +97,7 @@ const Vote = ({ info }) => {
           defaultValue=""
           rules={{
             required: 'Amount is required',
-            validate: validateAmount,
+            validate: (value) => (validateAmount(value, userAssetBalance, info)),
           }}
           render={(props) => (
             <InputGroup

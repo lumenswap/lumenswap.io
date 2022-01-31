@@ -1,11 +1,9 @@
 import classNames from 'classnames';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import ServerSideLoading from 'components/ServerSideLoading';
-import DAOHeader from 'containers/dao/DAOHeader';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import CTable from 'components/CTable';
@@ -13,17 +11,10 @@ import NoData from 'components/NoData';
 import CPagination from 'components/CPagination';
 import humanAmount from 'helpers/humanAmount';
 import { getProposalVotes } from 'api/mockAPI/proposalInfo';
+import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 
-const Container = ({ children, info }) => (
-  <div className="container-fluid">
-    <Head>
-      <title>All Votes | Lumenswap</title>
-    </Head>
-    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
-    {children}
-  </div>
-);
+const NoDataMessage = () => (<NoData message="There is no votes" />);
 
 const Votes = ({ info }) => {
   const router = useRouter();
@@ -77,10 +68,8 @@ const Votes = ({ info }) => {
     });
   }, [page]);
 
-  const NoDataMessage = () => (<NoData message="There is no votes" />);
-
   return (
-    <Container info={info}>
+    <DAOContainer title="All Votes | Lumenswap" info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
@@ -116,7 +105,7 @@ const Votes = ({ info }) => {
           </div>
         </div>
       </ServerSideLoading>
-    </Container>
+    </DAOContainer>
   );
 };
 

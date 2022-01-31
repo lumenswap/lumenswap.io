@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-
 import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
 import CDatePicker from 'components/CDatePicker/index';
-import CharCounter from 'components/CharCounter';
-import ConfirmProposal from 'containers/dao/createProposal/Confirm';
+import ConfirmProposal from 'containers/dao/createProposal/ProposalForm/Confirm';
 import moment from 'moment';
 import numeral from 'numeral';
-import Options from './Options';
-
+import FormOptions from './FormOptions/index';
+import CreateProposalTextArea from './CreateProposalTextArea';
+import CreateProposalInput from './CreateProposalInput';
 import styles from './styles.module.scss';
+
+const nextDay = new Date(new Date().setDate(new Date().getDate() + 1));
 
 const ProposalForm = ({ info, setStatus }) => {
   const [show, setShow] = useState(null);
@@ -30,13 +31,12 @@ const ProposalForm = ({ info, setStatus }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      startDate: new Date().setHours(0, 0, 0, 0),
-      endDate: new Date(),
+      startDate: new Date(nextDay.setHours(0, 0, 0, 0)),
+      endDate: nextDay,
     },
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(openModalAction({
       modalProps: {
         mainClassName: 'modal-br8',
@@ -83,19 +83,13 @@ const ProposalForm = ({ info, setStatus }) => {
             required: 'question requied',
           }}
           render={(props) => (
-            <div className="d-flex align-items-center mb-4">
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Ask a question…"
-                value={props.value}
-                onChange={props.onChange}
-                maxLength={50}
-                onFocus={() => { handleFocus(props.name); }}
-                onBlur={() => { setShow(null); }}
-              />
-              <CharCounter length={50} char={props.value} show={props.name === show} />
-            </div>
+            <CreateProposalInput data={{
+              props,
+              show,
+              setShow,
+              handleFocus,
+            }}
+            />
           )}
         />
         <Controller
@@ -106,25 +100,16 @@ const ProposalForm = ({ info, setStatus }) => {
             required: 'description requied',
           }}
           render={(props) => (
-            <div className="d-flex flex-column mb-4">
-              <div className={styles['text-area-container']}>
-                <textarea
-                  className={styles.textarea}
-                  placeholder="Tell more about your proposal (optional)"
-                  value={props.value}
-                  onChange={props.onChange}
-                  maxLength={500}
-                  onFocus={() => { handleFocus(props.name); }}
-                  onBlur={() => { setShow(null); }}
-                />
-                <div className="text-right mt-2">
-                  <CharCounter length={500} char={props.value} show={props.name === show} />
-                </div>
-              </div>
-            </div>
+            <CreateProposalTextArea data={{
+              props,
+              show,
+              setShow,
+              handleFocus,
+            }}
+            />
           )}
         />
-        <Options control={control} />
+        <FormOptions control={control} />
 
         <div className="row mt-4">
           <div className="col-lg-5 col-md-6 col-sm-6 col-12">
@@ -137,7 +122,7 @@ const ProposalForm = ({ info, setStatus }) => {
                 <CDatePicker
                   onChange={props.onChange}
                   value={props.value}
-                  minDate={new Date().setHours(0, 0, 0, 0)}
+                  minDate={nextDay.setHours(0, 0, 0, 0)}
                 />
               )}
             />

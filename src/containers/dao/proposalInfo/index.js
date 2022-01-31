@@ -1,12 +1,9 @@
 import classNames from 'classnames';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import numeral from 'numeral';
 import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
-import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
 import Progressbar from 'components/Progressbar';
 import Button from 'components/Button';
@@ -21,22 +18,57 @@ import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLG
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
 import { extractLogoByToken } from 'helpers/asset';
-
 import { getProposalVotes } from 'api/mockAPI/proposalInfo';
+import DAOContainer from '../DAOContainer';
 import VotesData from './VotesData';
 import Vote from './Vote';
-
 import styles from './styles.module.scss';
 
-const Container = ({ children, info }) => (
-  <div className="container-fluid">
-    <Head>
-      <title>Proposal Info | Lumenswap</title>
-    </Head>
-    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
-    {children}
-  </div>
-);
+const proposalSummary = (info) => ([
+  {
+    title: 'Proposal ID',
+    externalLink: {
+      title: minimizeAddress(info.proposalID, 8),
+      url: generateTransactionURL(info.proposalID),
+    },
+  },
+  {
+    title: 'Duration',
+    render: () => `${Math.floor(moment.duration(info.endDate - info.startDate).asDays())} days`,
+  },
+  {
+    title: 'Start time',
+    render: () => `${moment(info.startDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
+  },
+  {
+    title: 'End time',
+    render: () => `${moment(info.endDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
+  },
+  {
+    title: 'Total voter',
+    render: () => `${humanAmount(info.totalVoters)}`,
+  },
+  {
+    title: 'Total votes',
+    render: () => `${humanAmount(info.totalVotes)} ${info.asset.code}`,
+  },
+  {
+    title: 'Proposer',
+    externalLink: {
+      title: minimizeAddress(info.proposerAddress),
+      url: generateAddressURL(info.proposerAddress),
+    },
+  },
+  {
+    title: 'Governance',
+    render: () => (
+      <div className="d-flex align-items-center">
+        <Image src={extractLogoByToken(info.asset)} height={24} width={24} />
+        <div className="ml-1">{info.governance}</div>
+      </div>
+    ),
+  },
+]);
 
 const ProposalInfo = ({ info }) => {
   const [votes, setVotes] = useState(null);
@@ -47,57 +79,11 @@ const ProposalInfo = ({ info }) => {
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.singleDao.root(info.officialName)}`, name: info.govermant },
+    { url: `${urlMaker.dao.singleDao.root(info.officialName)}`, name: info.governance },
     { name: 'Proposal info' },
   ];
 
-  const proposalInfo = [
-    {
-      title: 'Proposal ID',
-      externalLink: {
-        title: minimizeAddress(info.proposalID, 8),
-        url: generateTransactionURL(info.proposalID),
-      },
-    },
-    {
-      title: 'Duration',
-      render: () => `${Math.floor(moment.duration(info.endDate - info.startDate).asDays())} days`,
-    },
-    {
-      title: 'Start time',
-      render: () => `${moment(info.startDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
-    },
-    {
-      title: 'End time',
-      render: () => `${moment(info.endDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
-    },
-    {
-      title: 'Total voter',
-      render: () => `${numeral(info.totalVoters).format('0,0')}`,
-    },
-    {
-      title: 'Total votes',
-      render: () => `${humanAmount(info.totalVotes)} ${info.asset.code}`,
-    },
-    {
-      title: 'Proposer',
-      externalLink: {
-        title: minimizeAddress(info.proposerAddress),
-        url: generateAddressURL(info.proposerAddress),
-      },
-    },
-    {
-      title: 'Govermant',
-      render: () => (
-        <div className="d-flex align-items-center">
-          <Image src={extractLogoByToken(info.asset)} height={24} width={24} />
-          <div className="ml-1">{info.govermant}</div>
-        </div>
-      ),
-    },
-  ];
-
-  const handleModal = () => {
+  const handleOpenVoteModal = () => {
     dispatch(openModalAction({
       modalProps: {
         title: 'Vote',
@@ -121,7 +107,7 @@ const ProposalInfo = ({ info }) => {
   }, []);
 
   return (
-    <Container info={info}>
+    <DAOContainer title="Proposal Info | Lumenswap" info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
@@ -145,7 +131,7 @@ const ProposalInfo = ({ info }) => {
                 <Button
                   variant="primary"
                   className={styles.btn}
-                  onClick={handleModal}
+                  onClick={handleOpenVoteModal}
                 >
                   Vote <ArrowIcon />
                 </Button>
@@ -161,8 +147,8 @@ const ProposalInfo = ({ info }) => {
 
               <div className="mt-4">
                 <InfoBox
-                  rows={proposalInfo}
-                  data={[{}, {}, {}]}
+                  rows={proposalSummary(info)}
+                  data={[]}
                   className={styles['row-box']}
                   sidePadding={24}
                   bordered
@@ -190,7 +176,7 @@ const ProposalInfo = ({ info }) => {
           </div>
         </div>
       </ServerSideLoading>
-    </Container>
+    </DAOContainer>
   );
 };
 

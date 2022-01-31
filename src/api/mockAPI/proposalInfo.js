@@ -19,7 +19,7 @@ end-user.
 
 Specifically, this proposal transfers 5,047,600 UNI to a new MerkleDistributor contract, which will then allow
 for 400 UNI to be claimed by each of the 12,619 accounts held by users of the following projects:`,
-    govermant: 'Rabet',
+    governance: 'Rabet',
     asset: {
       code: 'RBT',
       issuer: 'GCMSCRWZ3QBOI6AF75B5ZWDBXOSMIRW4FSBZH5OI65Y4H4GVH7LPSOYS',
@@ -53,7 +53,7 @@ end-user.
 
 Specifically, this proposal transfers 5,047,600 UNI to a new MerkleDistributor contract, which will then allow
 for 400 UNI to be claimed by each of the 12,619 accounts held by users of the following projects:`,
-    govermant: 'Lumenswap',
+    governance: 'Lumenswap',
     asset: {
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
@@ -87,7 +87,7 @@ end-user.
 
 Specifically, this proposal transfers 5,047,600 UNI to a new MerkleDistributor contract, which will then allow
 for 400 UNI to be claimed by each of the 12,619 accounts held by users of the following projects:`,
-    govermant: 'Rabet',
+    governance: 'Rabet',
     asset: {
       code: 'RBT',
       issuer: 'GCMSCRWZ3QBOI6AF75B5ZWDBXOSMIRW4FSBZH5OI65Y4H4GVH7LPSOYS',
@@ -121,7 +121,7 @@ end-user.
 
 Specifically, this proposal transfers 5,047,600 UNI to a new MerkleDistributor contract, which will then allow
 for 400 UNI to be claimed by each of the 12,619 accounts held by users of the following projects:`,
-    govermant: 'Lumenswap',
+    governance: 'Lumenswap',
     asset: {
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',
@@ -155,7 +155,7 @@ end-user.
 
 Specifically, this proposal transfers 5,047,600 UNI to a new MerkleDistributor contract, which will then allow
 for 400 UNI to be claimed by each of the 12,619 accounts held by users of the following projects:`,
-    govermant: 'Rabet',
+    governance: 'Rabet',
     asset: {
       code: 'RBT',
       issuer: 'GCMSCRWZ3QBOI6AF75B5ZWDBXOSMIRW4FSBZH5OI65Y4H4GVH7LPSOYS',
@@ -189,7 +189,7 @@ end-user.
 
 Specifically, this proposal transfers 5,047,600 UNI to a new MerkleDistributor contract, which will then allow
 for 400 UNI to be claimed by each of the 12,619 accounts held by users of the following projects:`,
-    govermant: 'Lumenswap',
+    governance: 'Lumenswap',
     asset: {
       code: 'LSP',
       issuer: 'GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK',

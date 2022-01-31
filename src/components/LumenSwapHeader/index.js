@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import AssetBox from 'components/LumenSwapHeader/AssetBox';
 import { useSelector } from 'react-redux';
 import MobileMenu from 'components/LumenSwapHeader/MobileMenu';
-import { useRouter } from 'next/router';
 import LogoLink from './LogoLink';
 import ConnectButton from './ConnectButton';
 import SideBarLink from './SideBarLink';
@@ -13,7 +12,6 @@ const LumenSwapHeader = ({
   rightSide, extraRightComponent, extraLeftComponent,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
-  const router = useRouter();
 
   let mobileMenu = [];
   if (leftSide) {
@@ -28,7 +26,11 @@ const LumenSwapHeader = ({
         <ul className={styles.list}>
           <div>
             <li><LogoLink /></li>
-            {extraLeftComponent?.map((Component, index) => <Component key={index} />)}
+            {extraLeftComponent?.map((Component, index) => (
+              <div key={index}>
+                {Component}
+              </div>
+            ))}
             {leftSide?.map((menu, index) => (!menu.restricted || isLogged) && (
             <SideBarLink key={index} link={menu} />
             ))}
@@ -39,7 +41,11 @@ const LumenSwapHeader = ({
             ))}
           </div>
         </ul>
-        {extraRightComponent?.map((Component, index) => <Component key={index} />)}
+        {extraRightComponent?.map((Component, index) => (
+          <div key={index}>
+            {Component}
+          </div>
+        ))}
         {(isLogged && showAssetBox)
          && <AssetBox {...assetBoxProps} />}
         <ConnectButton />

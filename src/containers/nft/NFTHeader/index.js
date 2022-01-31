@@ -25,14 +25,13 @@ const NFTHeader = () => {
       link: urlMaker.nft.stats(),
     },
   ];
-  const extraRightComponent = [ClaimLusiBtn];
 
   return (
     <LumenSwapHeader
       showAssetBox
       assetBoxProps={{ color: '#DF4886', asset: NLSP }}
       leftSide={leftSideLinks}
-      extraRightComponent={extraRightComponent}
+      extraRightComponent={[<ClaimLusiBtn />]}
     />
   );
 };

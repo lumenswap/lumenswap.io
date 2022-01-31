@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-
+import sendProposal from 'api/mockAPI/createProposal';
 import Button from 'components/Button';
 import { closeModalAction } from 'actions/modal';
 import ContractIcon from 'assets/images/contract';
@@ -11,6 +11,10 @@ const ConfirmProposal = ({ formData, setStatus }) => {
   const dispatch = useDispatch();
 
   const handleConfirm = () => {
+    setStatus('loading');
+    sendProposal(formData).then((res) => {
+      setStatus(res.status);
+    });
     dispatch(closeModalAction());
   };
 

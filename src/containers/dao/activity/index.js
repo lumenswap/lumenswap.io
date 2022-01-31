@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Head from 'next/head';
 import Image from 'next/image';
-
 import ServerSideLoading from 'components/ServerSideLoading';
-import DAOHeader from 'containers/dao/DAOHeader';
 import SelectOption from 'components/SelectOption';
 import CPagination from 'components/CPagination';
 import CTable from 'components/CTable';
-
+import useRequiredLogin from 'hooks/useRequiredLogin';
 import { getMyActivity } from 'api/mockAPI/daoMyActivity';
 import { useSelector } from 'react-redux';
 import { extractLogoByToken } from 'helpers/asset';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
-import useIsLogged from 'hooks/useIsLogged';
-import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
+import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 
 const dropdownItems = [
@@ -26,7 +22,7 @@ const dropdownItems = [
   { value: 'in-progress', label: 'In progress' },
 ];
 
-function ActivityTableAction(data) {
+function ActivityTableAction({ data }) {
   const handleClaim = () => {
     // do something
   };
@@ -37,29 +33,17 @@ function ActivityTableAction(data) {
     return <div onClick={handleClaim} className="color-primary cursor-pointer">Claim</div>;
   }
   if (data.type === 'in-progress') {
-    return <>In progress</>;
+    return 'In progress';
   }
   return null;
 }
-
-const Container = ({ children }) => (
-  <div className="container-fluid">
-    <Head>
-      <title>My activity | Lumenswap</title>
-    </Head>
-    <DAOHeader />
-    {children}
-  </div>
-);
 
 const Activity = () => {
   const [select, setSelect] = useState(dropdownItems[0]);
   const [userActivities, setUserActivities] = useState(null);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
-
-  const isLogged = useIsLogged();
-  const router = useRouter();
+  const loginRequired = useRequiredLogin(urlMaker.dao.root());
 
   const userAddress = useSelector((state) => state.user.detail.address);
 
@@ -76,12 +60,6 @@ const Activity = () => {
       }
     });
   }, [select, page]);
-
-  useEffect(() => {
-    if (!isLogged) {
-      router.push(urlMaker.dao.root());
-    }
-  }, [isLogged]);
 
   const tableInfo = [
     {
@@ -118,13 +96,13 @@ const Activity = () => {
       dataIndex: 'action',
       key: '4',
       render: (data) => (
-        ActivityTableAction(data)
+        <ActivityTableAction data={data} />
       ),
     },
   ];
 
   return (
-    <Container>
+    <DAOContainer title="My activity | Lumenswap">
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
@@ -167,7 +145,7 @@ const Activity = () => {
           </div>
         </div>
       </ServerSideLoading>
-    </Container>
+    </DAOContainer>
   );
 };
 

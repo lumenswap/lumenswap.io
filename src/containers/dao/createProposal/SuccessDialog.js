@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
 
-function SuccessMessage() {
+function SuccessDialog() {
   const router = useRouter();
   const pageName = router.query.name;
   const handleRouterPush = () => {
@@ -31,4 +31,4 @@ function SuccessMessage() {
   );
 }
 
-export default SuccessMessage;
+export default SuccessDialog;

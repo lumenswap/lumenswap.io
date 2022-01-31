@@ -1,45 +1,26 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-
 import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
-import DAOHeader from 'containers/dao/DAOHeader';
 import urlMaker from 'helpers/urlMaker';
-import useIsLogged from 'hooks/useIsLogged';
-import GeneratePAgeWithStatus from './GeneratePageWithStatus';
+import useRequiredLogin from 'hooks/useRequiredLogin';
+import Loading from 'components/Loading';
+import DAOContainer from '../DAOContainer';
+import SuccessDialog from './SuccessDialog';
+import ProposalForm from './ProposalForm';
 import styles from './styles.module.scss';
 
-const Container = ({ children, info }) => (
-  <div className="container-fluid">
-    <Head>
-      <title>Create Proposal | Lumenswap</title>
-    </Head>
-    <DAOHeader asset={info.asset} assetBoxColor={info.assetColor} />
-    {children}
-  </div>
-);
-
-const CreateProposal = ({ info }) => {
-  const [status, setStatus] = useState('');
+const DAOCreateProposalContainer = ({ info, children }) => {
   const router = useRouter();
-  const isLogged = useIsLogged();
-
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
     { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: info.name },
     { name: 'Create proposal' },
   ];
 
-  useEffect(() => {
-    if (!isLogged) {
-      router.push(urlMaker.dao.root());
-    }
-  }, [isLogged]);
-
   return (
-    <Container info={info}>
+    <DAOContainer title="Create Proposal | Lumenswap" info={info}>
       <ServerSideLoading>
         <div className={classNames('layout main', styles.layout)}>
           <div className="row justify-content-center">
@@ -50,12 +31,46 @@ const CreateProposal = ({ info }) => {
                 data={crumbData}
               />
 
-              <GeneratePAgeWithStatus status={status} setStatus={setStatus} info={info} />
+              {children}
             </div>
           </div>
         </div>
       </ServerSideLoading>
-    </Container>
+    </DAOContainer>
+  );
+};
+
+const CreateProposal = ({ info }) => {
+  const [status, setStatus] = useState('');
+  const loginRequired = useRequiredLogin(urlMaker.dao.root());
+
+  if (status === 'loading') {
+    return (
+      <DAOCreateProposalContainer info={info}>
+        <div className={classNames(styles.card, styles['card-small'], styles.loading)}>
+          <Loading size={48} />
+          <p className={styles['loading-msg']}>
+            Please wait, This operation may take a few minutes.
+          </p>
+        </div>
+      </DAOCreateProposalContainer>
+    );
+  }
+
+  if (status === 'success') {
+    return (
+      <DAOCreateProposalContainer info={info}>
+        <SuccessDialog />
+      </DAOCreateProposalContainer>
+    );
+  }
+
+  return (
+    <DAOCreateProposalContainer info={info}>
+      <div className={classNames(styles.card, styles['card-regular'])}>
+        <ProposalForm setStatus={setStatus} info={info} />
+      </div>
+    </DAOCreateProposalContainer>
   );
 };
 

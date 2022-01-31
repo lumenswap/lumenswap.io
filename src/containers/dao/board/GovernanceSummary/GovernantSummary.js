@@ -13,7 +13,7 @@ import { getAssetDetails } from 'helpers/asset';
 import CCard from 'components/CCard';
 import styles from './styles.module.scss';
 
-const GovernantSummary = ({ item }) => {
+const GovernanceSummary = ({ item }) => {
   const {
     logo, officialName, name, desc, proposals, members, tiker,
   } = item;
@@ -73,8 +73,8 @@ const GovernantSummary = ({ item }) => {
   );
 };
 
-GovernantSummary.propTypes = {
+GovernanceSummary.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default GovernantSummary;
+export default GovernanceSummary;
