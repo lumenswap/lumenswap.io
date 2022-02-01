@@ -23,7 +23,7 @@ const validateAmount = (value, userAssetBalance, info) => {
 
 const Vote = ({ proposalInfo }) => {
   const dispatch = useDispatch();
-  const items = proposalInfo.votes.map((vote) => ({
+  const radioGroupOptions = proposalInfo.votes.map((vote) => ({
     ...vote,
     value: vote.title.toLowerCase(),
     label: vote.title,
@@ -35,7 +35,7 @@ const Vote = ({ proposalInfo }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      vote: items[0].value,
+      vote: radioGroupOptions[0].value,
     },
   });
 
@@ -79,7 +79,7 @@ const Vote = ({ proposalInfo }) => {
             name="vote"
             render={(props) => (
               <RadioGroup
-                items={items}
+                options={radioGroupOptions}
                 value={props.value}
                 className="radio-group"
                 onUpdate={props.onChange}

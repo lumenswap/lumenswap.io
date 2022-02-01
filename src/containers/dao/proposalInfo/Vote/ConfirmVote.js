@@ -6,7 +6,7 @@ import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
 const ConfirmVote = ({ proposalInfo }) => {
-  const items = proposalInfo.votes.map((vote) => ({
+  const radioGroupOptions = proposalInfo.votes.map((vote) => ({
     ...vote,
     value: vote.title.toLowerCase(),
     label: vote.title,
@@ -24,7 +24,7 @@ const ConfirmVote = ({ proposalInfo }) => {
       <div className={styles.form}>
         <div className="my-4">
           <RadioGroup
-            items={items}
+            options={radioGroupOptions}
             value={proposalInfo.vote}
             className="radio-group"
             onUpdate={() => {}}

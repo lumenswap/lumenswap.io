@@ -2,18 +2,15 @@ import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
 import useIsLogged from './useIsLogged';
 
-function useRequiredLogin(path) {
+function useRequiredLogin(redirectPath) {
   const isLogged = useIsLogged();
   const router = useRouter();
 
   useEffect(() => {
     if (!isLogged) {
-      router.push(path);
+      router.push(redirectPath);
     }
-    return null;
   }, [isLogged]);
-
-  return null;
 }
 
 export default useRequiredLogin;

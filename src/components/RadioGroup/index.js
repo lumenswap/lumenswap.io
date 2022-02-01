@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 
 const RadioGroup = ({
-  value, onUpdate, items, name,
+  value, onUpdate, options, name,
 }) => {
   const onChange = (e) => {
     onUpdate(e.target.value);
@@ -9,7 +9,7 @@ const RadioGroup = ({
 
   return (
     <div className={styles['radio-group']}>
-      {items.map((item) => (
+      {options.map((item) => (
         <label key={item.value}>
           <input
             type="radio"
