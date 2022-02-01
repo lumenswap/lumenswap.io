@@ -10,6 +10,7 @@ import CDatePicker from 'components/CDatePicker/index';
 import ConfirmProposal from 'containers/dao/createProposal/ProposalForm/Confirm';
 import moment from 'moment';
 import numeral from 'numeral';
+import CreateProposalError from './CreateProposalError';
 import FormOptions from './FormOptions/index';
 import CreateProposalTextArea from './CreateProposalTextArea';
 import CreateProposalInput from './CreateProposalInput';
@@ -47,6 +48,14 @@ const ProposalForm = ({ info, setStatus }) => {
   const handleFocus = (name) => {
     setShow(name);
   };
+  function generateFormErrorText() {
+    for (const err of Object.values(errors)) {
+      if (err) {
+        return err.message;
+      }
+    }
+    return null;
+  }
 
   useEffect(() => {
     trigger();
@@ -58,15 +67,6 @@ const ProposalForm = ({ info, setStatus }) => {
         { shouldValidate: true });
     }
   }, [JSON.stringify(getValues())]);
-
-  function generateBtnContent() {
-    for (const err of Object.values(errors)) {
-      if (err) {
-        return err.message;
-      }
-    }
-    return 'Create proposal';
-  }
 
   return (
     <div>
@@ -82,7 +82,7 @@ const ProposalForm = ({ info, setStatus }) => {
           control={control}
           defaultValue=""
           rules={{
-            required: 'question requied',
+            required: 'question required',
           }}
           render={(props) => (
             <CreateProposalInput
@@ -98,7 +98,7 @@ const ProposalForm = ({ info, setStatus }) => {
           control={control}
           defaultValue=""
           rules={{
-            required: 'description requied',
+            required: 'description required',
           }}
           render={(props) => (
             <CreateProposalTextArea
@@ -143,13 +143,14 @@ const ProposalForm = ({ info, setStatus }) => {
             />
           </div>
         </div>
+        {generateFormErrorText() && <CreateProposalError error={generateFormErrorText()} />}
 
         <Button
           htmlType="submit"
           variant="primary"
           className={styles.submit}
           disabled={!formState.isValid || formState.isValidating}
-        >{generateBtnContent()}
+        >Create proposal
         </Button>
       </form>
     </div>

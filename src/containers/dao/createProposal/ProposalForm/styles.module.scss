@@ -118,3 +118,29 @@
   margin-right: 5px;
   height: 18px;
 }
+
+.error-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 40px;
+  border-radius: 4px;
+  background-color: $LightRed;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 32px;
+  &-icon {
+    margin-right: 6px;
+    margin-left: 8px;
+  }
+  &-text {
+    color: $Punch;
+    font-family: SofiaPro;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+  }
+}
