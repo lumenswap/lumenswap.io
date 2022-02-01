@@ -100,6 +100,10 @@ const SendAsset = ({ selectedAsset }) => {
         return true;
       }
 
+      if (getAssetDetails(selectedAsset).getIssuer() === value) {
+        return true;
+      }
+
       let found;
       for (const asset of destinationAddressInfo.balances) {
         const isAssetMatchSelectedAsset = isSameAsset(
