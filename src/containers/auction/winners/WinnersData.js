@@ -5,6 +5,7 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { useEffect, useState } from 'react';
 import { getAuctionWinners } from 'api/auction';
+import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 function WinnersData({
@@ -36,7 +37,7 @@ function WinnersData({
       key: 3,
       render: (data) => (
         <span>
-          {numeral(data.amount).format('0,0')} {assetCode}
+          {numeral(new BN(data.amount).div(10 ** 7).toFixed(7)).format('0,0')} {assetCode}
         </span>
       ),
     },
@@ -56,7 +57,7 @@ function WinnersData({
       key: 5,
       render: (data) => (
         <span>
-          {numeral(data.total).format('0,0')} XLM
+          {numeral(new BN(data.total).div(10 ** 7).toFixed(7)).format('0,0')} XLM
         </span>
       ),
     },

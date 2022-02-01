@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
 import NoData from 'components/NoData';
-
+import BN from 'helpers/BN';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import numeral from 'numeral';
@@ -42,7 +42,7 @@ const WinnersData = ({
       key: 3,
       render: (data) => (
         <span>
-          {numeral(data.amount).format('0,0')} {assetCode}
+          {numeral(new BN(data.amount).div(10 ** 7).toFixed(7)).format('0,0')} {assetCode}
         </span>
       ),
     },
@@ -62,7 +62,7 @@ const WinnersData = ({
       key: 5,
       render: (data) => (
         <span>
-          {numeral(data.total).format('0,0')} XLM
+          {numeral(new BN(data.total).div(10 ** 7).toFixed(7)).format('0,0')} XLM
         </span>
       ),
     },
