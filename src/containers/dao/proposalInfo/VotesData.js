@@ -8,18 +8,18 @@ import styles from './styles.module.scss';
 const NoDataMessage = () => (<NoData message="There is no votes" />);
 
 function VotesData({ votes }) {
-  const tableInfo = [
+  const votesTableHeaders = [
     {
       title: 'Address',
       dataIndex: 'address',
       key: '1',
-      render: (data) => (
+      render: (voteDetails) => (
         <a
-          href={generateAddressURL(data.address)}
+          href={generateAddressURL(voteDetails.address)}
           className={styles.url}
           target="_blank"
           rel="noreferrer"
-        >{minimizeAddress(data.address)}
+        >{minimizeAddress(voteDetails.address)}
         </a>
       ),
     },
@@ -27,20 +27,20 @@ function VotesData({ votes }) {
       title: 'Vote',
       dataIndex: 'vote',
       key: '2',
-      render: (data) => `${data.vote}`,
+      render: (voteDetails) => `${voteDetails.vote}`,
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: (data) => `${humanAmount(data.amount)} ${data.asset.code}`,
+      render: (voteDetails) => `${humanAmount(voteDetails.amount)} ${voteDetails.asset.code}`,
     },
   ];
 
   return (
     <CTable
       className={styles.table}
-      columns={tableInfo}
+      columns={votesTableHeaders}
       dataSource={votes}
       loading={!votes}
       noDataComponent={NoDataMessage}

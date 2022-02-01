@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
-import ServerSideLoading from 'components/ServerSideLoading';
 import SelectOption from 'components/SelectOption';
 import CPagination from 'components/CPagination';
 import CTable from 'components/CTable';
@@ -22,17 +21,17 @@ const dropdownItems = [
   { value: 'in-progress', label: 'In progress' },
 ];
 
-function ActivityTableAction({ data }) {
+function ActivityTableAction({ activityInfo }) {
   const handleClaim = () => {
     // do something
   };
-  if (data.type === 'claimed') {
+  if (activityInfo.type === 'claimed') {
     return <div className={styles.claimed}>claimed</div>;
   }
-  if (data.type === 'not-claimed') {
+  if (activityInfo.type === 'not-claimed') {
     return <div onClick={handleClaim} className="color-primary cursor-pointer">Claim</div>;
   }
-  if (data.type === 'in-progress') {
+  if (activityInfo.type === 'in-progress') {
     return 'In progress';
   }
   return null;
@@ -43,7 +42,8 @@ const Activity = () => {
   const [userActivities, setUserActivities] = useState(null);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
-  const loginRequired = useRequiredLogin(urlMaker.dao.root());
+
+  useRequiredLogin(urlMaker.dao.root());
 
   const userAddress = useSelector((state) => state.user.detail.address);
 
@@ -52,24 +52,24 @@ const Activity = () => {
     getMyActivity(userAddress, {
       page,
       type: select.value,
-    }).then((data) => {
-      setUserActivities(data.data);
-      setPages(data.totalPages);
-      if (data.totalPages < page) {
+    }).then((activities) => {
+      setUserActivities(activities.data);
+      setPages(activities.totalPages);
+      if (activities.totalPages < page) {
         setPage(1);
       }
     });
   }, [select, page]);
 
-  const tableInfo = [
+  const activityTableHeaders = [
     {
       title: 'Governance',
       dataIndex: 'governance',
       key: '1',
-      render: (data) => (
+      render: (activity) => (
         <div className="d-flex align-items-center">
-          <Image src={extractLogoByToken(data.asset)} width={24} height={24} />
-          <div className="ml-1">{data.asset.code}</div>
+          <Image src={extractLogoByToken(activity.asset)} width={24} height={24} />
+          <div className="ml-1">{activity.asset.code}</div>
         </div>
       ),
     },
@@ -77,74 +77,72 @@ const Activity = () => {
       title: 'Date',
       dataIndex: 'date',
       key: '2',
-      render: (data) => `${moment(data.date).fromNow()}`,
+      render: (activity) => `${moment(activity.date).fromNow()}`,
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: (data) => `${humanAmount(data.amount)} ${data.asset.code}`,
+      render: (activity) => `${humanAmount(activity.amount)} ${activity.asset.code}`,
     },
     {
       title: 'Info',
       dataIndex: 'info',
       key: '3',
-      render: (data) => `${data.info}`,
+      render: (activity) => `${activity.info}`,
     },
     {
       title: '',
       dataIndex: 'action',
       key: '4',
-      render: (data) => (
-        <ActivityTableAction data={data} />
+      render: (activity) => (
+        <ActivityTableAction activityInfo={activity} />
       ),
     },
   ];
 
   return (
     <DAOContainer title="My activity | Lumenswap">
-      <ServerSideLoading>
-        <div className={classNames('layout main', styles.layout)}>
-          <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-              <div className="d-flex justify-content-between align-items-center">
-                <h1 className={styles.title}>My activity</h1>
-                <div>
-                  <SelectOption
-                    items={dropdownItems}
-                    defaultValue={select}
-                    setValue={setSelect}
-                    className={styles.filter}
-                    isSearchable={false}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.card}>
-                <CTable
-                  className={styles.table}
-                  columns={tableInfo}
-                  dataSource={userActivities}
-                  loading={!userActivities}
-                  noDataMessage="There is no activity"
-                  rowFix={{ rowNumbers: 10, rowHeight: 51, headerRowHeight: 43 }}
+      <div className={classNames('layout main', styles.layout)}>
+        <div className="row justify-content-center">
+          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+            <div className="d-flex justify-content-between align-items-center">
+              <h1 className={styles.title}>My activity</h1>
+              <div>
+                <SelectOption
+                  items={dropdownItems}
+                  defaultValue={select}
+                  setValue={setSelect}
+                  className={styles.filter}
+                  isSearchable={false}
                 />
               </div>
-
-              <div className="d-flex mt-4">
-                <CPagination
-                  pages={pages}
-                  currentPage={page}
-                  onPageClick={(newPage) => {
-                    setPage(newPage);
-                  }}
-                />
-              </div>
-
             </div>
+
+            <div className={styles.card}>
+              <CTable
+                className={styles.table}
+                columns={activityTableHeaders}
+                dataSource={userActivities}
+                loading={!userActivities}
+                noDataMessage="There is no activity"
+                rowFix={{ rowNumbers: 10, rowHeight: 51, headerRowHeight: 43 }}
+              />
+            </div>
+
+            <div className="d-flex mt-4">
+              <CPagination
+                pages={pages}
+                currentPage={page}
+                onPageClick={(newPage) => {
+                  setPage(newPage);
+                }}
+              />
+            </div>
+
           </div>
         </div>
-      </ServerSideLoading>
+      </div>
     </DAOContainer>
   );
 };

@@ -5,8 +5,8 @@ import { closeModalAction } from 'actions/modal';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-const ConfirmVote = ({ info }) => {
-  const items = info.votes.map((vote) => ({
+const ConfirmVote = ({ proposalInfo }) => {
+  const items = proposalInfo.votes.map((vote) => ({
     ...vote,
     value: vote.title.toLowerCase(),
     label: vote.title,
@@ -19,13 +19,13 @@ const ConfirmVote = ({ info }) => {
   return (
     <div className="pb-4 main">
       <p className={styles.title}>
-        {info.title}
+        {proposalInfo.title}
       </p>
       <div className={styles.form}>
         <div className="my-4">
           <RadioGroup
             items={items}
-            value={info.vote}
+            value={proposalInfo.vote}
             className="radio-group"
             onUpdate={() => {}}
           />
@@ -33,7 +33,7 @@ const ConfirmVote = ({ info }) => {
 
         <div className={styles.value}>
           <div className={styles['value-name']}>Amount</div>
-          <div className={styles['value-amount']}>{humanAmount(info.amount, true)} {info.asset.code}</div>
+          <div className={styles['value-amount']}>{humanAmount(proposalInfo.amount, true)} {proposalInfo.asset.code}</div>
         </div>
 
         <div className={styles.msg}>

@@ -48,12 +48,14 @@ const ProposalForm = ({ info, setStatus }) => {
     setShow(name);
   };
 
-  const startDateIsAfterEndDate = moment(getValues('startDate')).isAfter(getValues('endDate'));
-
   useEffect(() => {
     trigger();
-    if (startDateIsAfterEndDate) {
-      setValue('endDate', getValues('startDate'), { shouldValidate: true });
+    const startDate = new Date(getValues('startDate'));
+    const startDateIsAfterEndDate = moment(startDate).isAfter(getValues('endDate'));
+    const startDateIsSameWithEndDate = moment(startDate).isSame(getValues('endDate'));
+    if (startDateIsAfterEndDate || startDateIsSameWithEndDate) {
+      setValue('endDate', new Date(startDate.setDate(startDate.getDate() + 1)),
+        { shouldValidate: true });
     }
   }, [JSON.stringify(getValues())]);
 
@@ -83,12 +85,11 @@ const ProposalForm = ({ info, setStatus }) => {
             required: 'question requied',
           }}
           render={(props) => (
-            <CreateProposalInput data={{
-              props,
-              show,
-              setShow,
-              handleFocus,
-            }}
+            <CreateProposalInput
+              props={props}
+              show={show}
+              setShow={setShow}
+              handleFocus={handleFocus}
             />
           )}
         />
@@ -100,12 +101,11 @@ const ProposalForm = ({ info, setStatus }) => {
             required: 'description requied',
           }}
           render={(props) => (
-            <CreateProposalTextArea data={{
-              props,
-              show,
-              setShow,
-              handleFocus,
-            }}
+            <CreateProposalTextArea
+              props={props}
+              show={show}
+              setShow={setShow}
+              handleFocus={handleFocus}
             />
           )}
         />
@@ -137,7 +137,7 @@ const ProposalForm = ({ info, setStatus }) => {
                 <CDatePicker
                   onChange={props.onChange}
                   value={props.value}
-                  minDate={getValues('startDate')}
+                  minDate={new Date(getValues('startDate')).setDate(new Date(getValues('startDate')).getDate() + 1)}
                 />
               )}
             />

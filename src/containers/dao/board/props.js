@@ -1,12 +1,12 @@
-import getDAOBorads from '../../../api/mockAPI/daoBoards';
+import getDAOGovernances from '../../../api/mockAPI/daoGovernances';
 
 export async function daoBoardsGetServerSideProps() {
   try {
-    const boards = await getDAOBorads();
+    const governances = await getDAOGovernances();
 
     return {
       props: {
-        boards,
+        governances,
       },
     };
   } catch (e) {

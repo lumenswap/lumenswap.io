@@ -11,22 +11,22 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import styles from './styles.module.scss';
 
+const ProposalItemBadge = ({ status }) => {
+  if (status === 'active') {
+    return <Badge variant="success" content="Active" />;
+  }
+
+  if (status === 'ended') {
+    return <Badge variant="info" content="Ended" />;
+  }
+
+  return <Badge variant="danger" content="Not started" />;
+};
+
 const ProposalItem = ({ item, pageName }) => {
   const {
     title, desc, detail, address, logo, status, endDate, id,
   } = item;
-
-  const renderBadge = () => {
-    if (status === 'active') {
-      return <Badge variant="success" content="Active" />;
-    }
-
-    if (status === 'ended') {
-      return <Badge variant="info" content="Ended" />;
-    }
-
-    return <Badge variant="danger" content="Not started" />;
-  };
 
   return (
     <Link href={urlMaker.dao.singleDao.proposalInfo(pageName, id)}>
@@ -46,7 +46,7 @@ const ProposalItem = ({ item, pageName }) => {
                 <div className={styles.text}>By {minimizeAddress(address)}</div>
               </div>
               <div>
-                {renderBadge()}
+                <ProposalItemBadge status={status} />
               </div>
             </div>
             <h4 className={styles.title}>{title}</h4>

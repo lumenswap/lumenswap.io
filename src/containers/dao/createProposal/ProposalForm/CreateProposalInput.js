@@ -2,7 +2,7 @@ import CharCounter from 'components/CharCounter';
 import styles from './styles.module.scss';
 
 function CreateProposalInput({
-  data,
+  show, setShow, handleFocus, props,
 }) {
   return (
     <div className="d-flex align-items-center mb-4">
@@ -10,13 +10,13 @@ function CreateProposalInput({
         type="text"
         className={styles.input}
         placeholder="Ask a question…"
-        value={data.props.value}
-        onChange={data.props.onChange}
+        value={props.value}
+        onChange={props.onChange}
         maxLength={50}
-        onFocus={() => { data.handleFocus(data.props.name); }}
-        onBlur={() => { data.setShow(null); }}
+        onFocus={() => { handleFocus(props.name); }}
+        onBlur={() => { setShow(null); }}
       />
-      <CharCounter length={50} char={data.props.value} show={data.props.name === data.show} />
+      {props.name === show && <CharCounter length={50} char={props.value} />}
     </div>
   );
 }

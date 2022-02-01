@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import ServerSideLoading from 'components/ServerSideLoading';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import useRequiredLogin from 'hooks/useRequiredLogin';
@@ -21,32 +20,30 @@ const DAOCreateProposalContainer = ({ info, children }) => {
 
   return (
     <DAOContainer title="Create Proposal | Lumenswap" info={info}>
-      <ServerSideLoading>
-        <div className={classNames('layout main', styles.layout)}>
-          <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+      <div className={classNames('layout main', styles.layout)}>
+        <div className="row justify-content-center">
+          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
 
-              <Breadcrumb
-                spaceBetween={8}
-                data={crumbData}
-              />
+            <Breadcrumb
+              spaceBetween={8}
+              data={crumbData}
+            />
 
-              {children}
-            </div>
+            {children}
           </div>
         </div>
-      </ServerSideLoading>
+      </div>
     </DAOContainer>
   );
 };
 
-const CreateProposal = ({ info }) => {
+const CreateProposal = ({ pageInfo }) => {
   const [status, setStatus] = useState('');
-  const loginRequired = useRequiredLogin(urlMaker.dao.root());
+  useRequiredLogin(urlMaker.dao.root());
 
   if (status === 'loading') {
     return (
-      <DAOCreateProposalContainer info={info}>
+      <DAOCreateProposalContainer info={pageInfo}>
         <div className={classNames(styles.card, styles['card-small'], styles.loading)}>
           <Loading size={48} />
           <p className={styles['loading-msg']}>
@@ -59,16 +56,16 @@ const CreateProposal = ({ info }) => {
 
   if (status === 'success') {
     return (
-      <DAOCreateProposalContainer info={info}>
+      <DAOCreateProposalContainer info={pageInfo}>
         <SuccessDialog />
       </DAOCreateProposalContainer>
     );
   }
 
   return (
-    <DAOCreateProposalContainer info={info}>
+    <DAOCreateProposalContainer info={pageInfo}>
       <div className={classNames(styles.card, styles['card-regular'])}>
-        <ProposalForm setStatus={setStatus} info={info} />
+        <ProposalForm setStatus={setStatus} info={pageInfo} />
       </div>
     </DAOCreateProposalContainer>
   );

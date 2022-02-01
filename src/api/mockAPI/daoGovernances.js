@@ -1,6 +1,6 @@
 import sampleLogo from 'assets/images/btc-logo.png';
 
-const boards = [
+const governances = [
   {
     logo: sampleLogo,
     name: 'Lumenswap',
@@ -29,8 +29,8 @@ const boards = [
   },
 ];
 
-function getDAOBorads() {
-  return new Promise((resolve) => setTimeout(resolve, 2000)).then(() => (boards));
+function getDAOGovernances() {
+  return new Promise((resolve) => setTimeout(resolve, 2000)).then(() => (governances));
 }
 
-export default getDAOBorads;
+export default getDAOGovernances;

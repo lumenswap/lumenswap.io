@@ -13,21 +13,22 @@ const FormOptions = ({ control }) => {
     },
     {
       name: 2,
+      id: 10,
       defaultValue: "I'm disagree",
-      id: 5,
     },
     ],
   );
   const [show, setShow] = useState(null);
 
   const onAddOption = () => {
-    if (options.length <= 4) {
+    if (options.length <= 9) {
       const newOptions = [...options];
       newOptions[newOptions.length - 1].name = newOptions.length + 1;
-      setOptions([...newOptions, {
-        name: options[options.length - 2].name + 1,
-        id: options[options.length - 2].id + 1,
-      }]);
+      newOptions.splice(newOptions.length - 1, 0, {
+        name: newOptions[newOptions.length - 2].name + 1,
+        id: newOptions[newOptions.length - 2].id + 1,
+      });
+      setOptions(newOptions);
     }
   };
 
@@ -35,7 +36,7 @@ const FormOptions = ({ control }) => {
     <div className={styles.panel}>
       <div className={styles['panel-header']}>Options</div>
       <div className={styles['panel-body']}>
-        {options.sort((a, b) => a.id - b.id).map((option) => (
+        {options.map((option) => (
           <div key={option.id}>
             <Controller
               name={`option${option.name}`}
@@ -45,18 +46,18 @@ const FormOptions = ({ control }) => {
                 required: `${option.name === 1 ? 'At least 2 options are required' : 'Please fill out all options'}`,
               }}
               render={(props) => (
-                <Option data={{
-                  props,
-                  show,
-                  setShow,
-                  option,
-                }}
+                <Option
+                  props={props}
+                  show={show}
+                  setShow={setShow}
+                  option={option}
                 />
               )}
             />
           </div>
         ))}
 
+        {options.length <= 9 && (
         <button
           type="button"
           className={styles['btn-dashed']}
@@ -65,6 +66,7 @@ const FormOptions = ({ control }) => {
           <div className={styles['plus-icon-container']}><Image src={plusIcon} height={18} width={18} /></div>
           Add option
         </button>
+        )}
       </div>
     </div>
   );

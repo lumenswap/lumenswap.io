@@ -2,10 +2,10 @@ import { getProposalAsset } from 'api/mockAPI/proposalInfo';
 
 export async function daoCreateProposalGetServerSideProps({ params }) {
   try {
-    const info = await getProposalAsset(params.name);
+    const pageInfo = await getProposalAsset(params.name);
     return {
       props: {
-        info,
+        pageInfo,
       },
     };
   } catch (e) {

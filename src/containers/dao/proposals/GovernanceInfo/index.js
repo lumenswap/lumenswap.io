@@ -12,13 +12,13 @@ import { getAssetDetails } from 'helpers/asset';
 import CCard from 'components/CCard';
 import styles from './styles.module.scss';
 
-const GovernanceInfo = ({ item }) => {
+const GovernanceInfo = ({ governance }) => {
   const {
     logo, name, desc, members, tiker, web, webLink, assetLink,
-  } = item;
+  } = governance;
 
   const isLogged = useIsLogged();
-  const foundUserAsset = useUserSingleAsset(getAssetDetails(item.asset));
+  const foundUserAsset = useUserSingleAsset(getAssetDetails(governance.asset));
   const dispatch = useDispatch();
 
   const handleJoinBtn = (e) => {
@@ -81,7 +81,7 @@ const GovernanceInfo = ({ item }) => {
 };
 
 GovernanceInfo.propTypes = {
-  item: PropTypes.object.isRequired,
+  governance: PropTypes.object.isRequired,
 };
 
 export default GovernanceInfo;

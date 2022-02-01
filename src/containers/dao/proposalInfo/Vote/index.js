@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
 import RadioGroup from 'components/RadioGroup';
-import { closeModalAction, openModalAction } from 'actions/modal';
+import { openModalAction } from 'actions/modal';
 import BN from 'helpers/BN';
 import { getAssetDetails } from 'helpers/asset';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
@@ -21,14 +21,14 @@ const validateAmount = (value, userAssetBalance, info) => {
   return true;
 };
 
-const Vote = ({ info }) => {
+const Vote = ({ proposalInfo }) => {
   const dispatch = useDispatch();
-  const items = info.votes.map((vote) => ({
+  const items = proposalInfo.votes.map((vote) => ({
     ...vote,
     value: vote.title.toLowerCase(),
     label: vote.title,
   }));
-  const userAssetBalance = useUserSingleAsset(getAssetDetails(info.asset));
+  const userAssetBalance = useUserSingleAsset(getAssetDetails(proposalInfo.asset));
 
   const {
     handleSubmit, control, errors, trigger, formState,
@@ -44,15 +44,13 @@ const Vote = ({ info }) => {
   }, []);
 
   async function onSubmit(data) {
-    dispatch(closeModalAction());
-
     dispatch(openModalAction({
       modalProps: {
         title: 'Confirm vote',
         mainClassName: 'modal-br8',
       },
-      content: <ConfirmVote info={{
-        ...info,
+      content: <ConfirmVote proposalInfo={{
+        ...proposalInfo,
         vote: data.vote,
         amount: data.tokenAmount,
       }}
@@ -72,7 +70,7 @@ const Vote = ({ info }) => {
   return (
     <div className="pb-4 main">
       <p className={styles.title}>
-        {info.title}
+        {proposalInfo.title}
       </p>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className="my-4">
@@ -97,13 +95,13 @@ const Vote = ({ info }) => {
           defaultValue=""
           rules={{
             required: 'Amount is required',
-            validate: (value) => (validateAmount(value, userAssetBalance, info)),
+            validate: (value) => (validateAmount(value, userAssetBalance, proposalInfo)),
           }}
           render={(props) => (
             <InputGroup
               variant="primary"
               placeholder="100"
-              rightLabel={info.asset.code}
+              rightLabel={proposalInfo.asset.code}
               value={props.value}
               onChange={props.onChange}
             />

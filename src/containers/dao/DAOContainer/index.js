@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import ServerSideLoading from 'components/ServerSideLoading';
 import DAOHeader from '../DAOHeader';
 
 const DAOContainer = ({ children, title, info }) => (
@@ -7,7 +8,9 @@ const DAOContainer = ({ children, title, info }) => (
       <title>{title}</title>
     </Head>
     <DAOHeader asset={info && info.asset} assetBoxColor={info && info.assetColor} />
-    {children}
+    <ServerSideLoading>
+      {children}
+    </ServerSideLoading>
   </div>
 );
 

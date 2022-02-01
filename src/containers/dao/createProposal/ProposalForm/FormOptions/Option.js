@@ -3,25 +3,28 @@ import Input from 'components/Input';
 import styles from '../styles.module.scss';
 
 function Option({
-  data,
+  props,
+  show,
+  setShow,
+  option,
 }) {
   return (
     <div className={styles.group}>
       <div className="d-flex justify-content-between align-items-center">
-        <label className="label-primary">Option {data.option.name}</label>
-        <CharCounter length={50} char={data.props.value} show={data.option === data.show} />
+        <label className="label-primary">Option {option.name}</label>
+        {option === show && <CharCounter length={50} char={props.value} />}
       </div>
       <Input
         type="text"
         placeholder="Enter your address"
         height={40}
         fontSize={16}
-        value={data.props.value}
-        onChange={!data.option.defaultValue ? data.props.onChange : () => {}}
+        value={props.value}
+        onChange={!option.defaultValue ? props.onChange : () => {}}
         maxLength={50}
-        onFocus={() => { data.setShow(data.option); }}
-        onBlur={() => { data.setShow(null); }}
-        className={data.option.defaultValue && styles.defaultInput}
+        onFocus={() => { setShow(option); }}
+        onBlur={() => { setShow(null); }}
+        className={option.defaultValue && styles.defaultInput}
       />
     </div>
   );

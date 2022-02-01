@@ -8,7 +8,7 @@ function useRequiredLogin(path) {
 
   useEffect(() => {
     if (!isLogged) {
-      return router.push(path);
+      router.push(path);
     }
     return null;
   }, [isLogged]);
