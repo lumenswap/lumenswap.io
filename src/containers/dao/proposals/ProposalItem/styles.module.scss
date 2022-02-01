@@ -1,0 +1,35 @@
+@import 'styles/vars';
+
+.item {
+  padding: 18px 24px 24px 24px;
+  cursor: pointer;
+}
+
+.img {
+  border-radius: 50%;
+  margin-right: 6px;
+  display: flex;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.56;
+  color: $CodGray;
+  margin: 10px 0 0 0;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ShuttleGray;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 6px;
+  }
+}

@@ -1,0 +1,58 @@
+@import "styles/vars";
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $CodGray;
+  margin: 0;
+}
+
+.hr {
+  margin: 24px -17px;
+  border-top: 1px solid $CatskillWhite;
+}
+
+.form {
+  :global(.input-group-text),
+  :global(.form-control) {
+    height: 47px;
+  }
+}
+
+.msg {
+  border: 1px solid $CatskillWhite;
+  background-color: $AthensGray;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: $ShuttleGray;
+  font-size: 14px;
+  line-height: 1.43;
+  margin-top: 12px;
+}
+
+.btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 24px;
+}
+
+.value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  padding-bottom: 12px;
+
+  &-name {
+    color: $ShuttleGray;
+  }
+
+  &-value {
+    color: $CodGray;
+  }
+}

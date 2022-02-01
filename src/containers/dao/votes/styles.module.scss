@@ -1,0 +1,34 @@
+@import 'styles/vars';
+
+.layout {
+  padding-top: 75px;
+  padding-bottom: 100px;
+}
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+  margin-top: 25px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $CodGray;
+  padding: 20px 24px 14px 24px;
+}
+
+.table tr:first-child {
+  line-height: 25px;
+}
+
+.url {
+  text-decoration: none;
+  color: $BlueRibbon;
+  &:hover {
+    text-decoration: none;
+    color: $BlueRibbon;
+  }
+}

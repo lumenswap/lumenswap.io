@@ -8,7 +8,8 @@ import SideBarLink from './SideBarLink';
 import styles from './styles.module.scss';
 
 const LumenSwapHeader = ({
-  showAssetBox, assetBoxProps, leftSide, rightSide, extraRightComponent, extraLeftComponent,
+  showAssetBox, assetBoxProps, leftSide,
+  rightSide, extraRightComponent, extraLeftComponent,
 }) => {
   const isLogged = useSelector((state) => state.user.logged);
 
@@ -25,7 +26,11 @@ const LumenSwapHeader = ({
         <ul className={styles.list}>
           <div>
             <li><LogoLink /></li>
-            {extraLeftComponent?.map((Component, index) => <Component key={index} />)}
+            {extraLeftComponent?.map((Component, index) => (
+              <div key={index}>
+                {Component}
+              </div>
+            ))}
             {leftSide?.map((menu, index) => (!menu.restricted || isLogged) && (
             <SideBarLink key={index} link={menu} />
             ))}
@@ -36,8 +41,13 @@ const LumenSwapHeader = ({
             ))}
           </div>
         </ul>
-        {extraRightComponent?.map((Component, index) => <Component key={index} />)}
-        {(isLogged && showAssetBox) && <AssetBox {...assetBoxProps} />}
+        {extraRightComponent?.map((Component, index) => (
+          <div key={index}>
+            {Component}
+          </div>
+        ))}
+        {(isLogged && showAssetBox)
+         && <AssetBox {...assetBoxProps} />}
         <ConnectButton />
       </div>
       <div className="d-md-none d-sm-block d-block w-100">

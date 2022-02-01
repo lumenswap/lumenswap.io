@@ -1,0 +1,70 @@
+@import "styles/vars";
+
+.layout {
+  padding-top: 75px;
+  padding-bottom: 200px;
+}
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+  margin-top: 25px;
+}
+
+.card-regular {
+  padding: 21px 24px 40px 24px;
+}
+
+.card-small {
+  padding: 68px 24px 68px 24px;
+}
+
+.success, .loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-msg, .success-msg {
+  font-size: 14px;
+  line-height: 1.43;
+  color: $ShuttleGray;
+  margin-bottom: 0;
+}
+
+.loading {
+  &-msg {
+    margin-top: 34px;
+    margin-bottom: 0;
+  }
+}
+
+.success {
+  &-title {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.56;
+    color: $CodGray;
+  }
+
+  &-msg {
+    margin-top: 8px;
+  }
+
+  &-btn {
+    width: 146px;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 32px;
+
+    svg {
+      margin-top: 2px;
+      margin-left: 6px;
+      width: 6px;
+    }
+  }
+}
