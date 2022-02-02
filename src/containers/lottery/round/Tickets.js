@@ -11,12 +11,6 @@ import { openModalAction } from 'actions/modal';
 import ShowTicketInfo from './ShowTicketInfo';
 import styles from '../style.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no ticket</div>
-  </div>
-);
-
 const Tickets = ({
   searchQuery, round,
 }) => {
@@ -110,7 +104,7 @@ const Tickets = ({
         className={styles.table}
         columns={tableHeaders}
         dataSource={searchedTickets}
-        noDataComponent={NoDataMessage}
+        noDataMessage="There is no ticket"
         loading={searchedTickets === null}
       />
     </div>

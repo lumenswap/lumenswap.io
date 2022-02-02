@@ -1,5 +1,4 @@
 import CTable from 'components/CTable';
-import NoData from 'components/NoData';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
@@ -11,7 +10,7 @@ import styles from './styles.module.scss';
 import { STATUS_NAMES } from '../consts/board';
 
 function BidsData({
-  page, setTotalPages, searchQuery, auction,
+  page, setTotalPages, auction,
 }) {
   const [bids, setBids] = useState(null);
 
@@ -81,18 +80,18 @@ function BidsData({
       setBids([]);
       setTotalPages(1);
     } else {
-      getAuctionBids(auction.id, { page, searchQuery }).then((data) => {
+      getAuctionBids(auction.id, { page, searchQuery: '' }).then((data) => {
         setBids(data.data);
         setTotalPages(data.totalPages);
       });
     }
-  }, [page, searchQuery]);
+  }, [page]);
 
   return (
     <>
       <CTable
         columns={columns}
-        noDataComponent={() => <NoData message="There is no bid" />}
+        noDataMessage="There is no bid"
         className={styles.table}
         dataSource={filteredBids}
         loading={!bids}

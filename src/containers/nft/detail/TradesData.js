@@ -10,12 +10,6 @@ import moment from 'moment';
 import LoadingWithContainer from './LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles['no-data-container']}>
-    <span>There is no trade</span>
-  </div>
-);
-
 const tableHeaders = [
   {
     title: 'Buyer',
@@ -77,7 +71,7 @@ function TradesData({ lusiData }) {
     <div>
       <CTable
         columns={tableHeaders}
-        noDataComponent={NoDataMessage}
+        noDataMessage="There is no trade"
         dataSource={tradesData}
         className={styles.table}
         loading={!tradesData}

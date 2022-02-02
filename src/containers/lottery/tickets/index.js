@@ -14,12 +14,6 @@ import tableHeaders from './tableHeaders';
 import LotteryHeader from '../LotteryHeader';
 import styles from '../style.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>You have no ticket</div>
-  </div>
-);
-
 const MyTicketsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [rounds, setRounds] = useState(null);
@@ -122,7 +116,7 @@ const MyTicketsPage = () => {
               className={styles.table}
               columns={tableHeaders}
               dataSource={searchedTickets}
-              noDataComponent={NoDataMessage}
+              noDataMessage="You have no ticket"
               loading={loading}
             />
           </div>

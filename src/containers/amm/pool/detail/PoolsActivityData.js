@@ -7,12 +7,6 @@ import { useEffect, useState } from 'react';
 import { getPoolOperationsAPI } from 'api/stellarPool';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles['no-data-message-container']}>
-    <span>There is no activity</span>
-  </div>
-);
-
 function PoolsActivityData({ poolId }) {
   const [poolOperations, setOperations] = useState(null);
 
@@ -86,10 +80,10 @@ function PoolsActivityData({ poolId }) {
   return (
     <CTable
       columns={tableHeaders}
-      noDataComponent={NoDataMessage}
+      noDataMessage="There is no activity"
       dataSource={poolOperations}
       className={styles.table}
-      loading={poolOperations === null}
+      loading={!poolOperations}
     />
   );
 }

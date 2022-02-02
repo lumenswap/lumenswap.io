@@ -6,12 +6,6 @@ import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 import LoadingWithContainer from './LoadingWithContainer/LoadingWithContainer';
 
-const NoDataMessage = () => (
-  <div className={styles['no-data-container']}>
-    <span>There is no offer</span>
-  </div>
-);
-
 const tableHeaders = [
   {
     title: 'Address',
@@ -42,7 +36,7 @@ function OffersData({ offers }) {
     <div>
       <CTable
         columns={tableHeaders}
-        noDataComponent={NoDataMessage}
+        noDataMessage="There is no offer"
         dataSource={offers}
         className={styles.table}
         loading={!offers}

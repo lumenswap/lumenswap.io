@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import Input from 'components/Input';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import CPagination from 'components/CPagination';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
@@ -9,34 +8,16 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import AuctionHeader from '../AuctionHeader';
 import styles from './styles.module.scss';
 import BidsData from './BidsData';
-import { STATUS_NAMES } from '../consts/board';
 
 function Bids({ pageName, assetCode, auction }) {
-  const timeOutRef = useRef(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
-  const [searchQuery, setSearchQuery] = useState(null);
-
-  const handleSearch = (e) => {
-    clearTimeout(timeOutRef.current);
-    timeOutRef.current = setTimeout(async () => {
-      setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
-    }, 700);
-  };
 
   const TableHeader = useCallback(() => (
-    <div className={styles.input}>
+    <div className={styles['bids-header']}>
       <span>
         Bids
       </span>
-      <Input
-        type="text"
-        disabled={auction.status !== STATUS_NAMES.live}
-        placeholder="Enter your address"
-        height={40}
-        fontSize={14}
-        onChange={handleSearch}
-      />
     </div>
   ), []);
 
@@ -67,7 +48,6 @@ function Bids({ pageName, assetCode, auction }) {
                 <BidsData
                   page={page}
                   assetCode={assetCode}
-                  searchQuery={searchQuery}
                   setTotalPages={setTotalPages}
                   auction={auction}
                 />

@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .main {
   margin-top: 76px;
@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
- 
+
   span {
     font-family: SofiaPro;
     font-size: 18px;
@@ -183,8 +183,8 @@
 }
 
 .pool-info-container {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 .dot {
   width: 5px;
@@ -247,7 +247,8 @@
   }
 }
 
-.btn-primary, .btn-basic {
+.btn-primary,
+.btn-basic {
   font-size: 16px;
   border-radius: 4px;
   min-height: 40px;
@@ -296,7 +297,8 @@
     padding: 5px 8px 0 10px;
     height: calc(100% - 15px);
 
-    canvas, :global(.echarts-for-react) {
+    canvas,
+    :global(.echarts-for-react) {
       height: 340px !important;
     }
   }
@@ -334,7 +336,6 @@
 .box-btn {
   padding: 0 14px;
 }
-
 
 .pair {
   width: 50%;
@@ -378,7 +379,6 @@
   }
 }
 
-
 .table {
   border-radius: 4px;
   overflow-y: auto;
@@ -409,8 +409,8 @@
 }
 
 .table::-webkit-scrollbar {
-  width: 0;  
-  background: transparent;  
+  width: 0;
+  background: transparent;
 }
 
 .tx-link {
@@ -465,7 +465,6 @@
 }
 
 .tabs {
-
   nav {
     a:first-child {
       margin-left: 24px;
@@ -527,22 +526,22 @@
   background-color: $White;
   &-active {
     padding-right: 14px;
-  padding-left: 14px;
-  font-family: SofiaPro;
-  font-size: 10px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.4;
-  letter-spacing: normal;
-  color: $ShuttleGray;
-  cursor: pointer;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  background-color: $BlueRibbon;
-  border-radius: 4px;
-  color: $White;
+    padding-left: 14px;
+    font-family: SofiaPro;
+    font-size: 10px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.4;
+    letter-spacing: normal;
+    color: $ShuttleGray;
+    cursor: pointer;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    background-color: $BlueRibbon;
+    border-radius: 4px;
+    color: $White;
   }
 }
 

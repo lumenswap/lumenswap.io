@@ -68,7 +68,7 @@ function MyPoolData({ pools }) {
         dataSource={pools}
         columns={tableHeaders}
         noDataMessage="You have no pool"
-        loading={pools === null}
+        loading={!pools}
         rowLink={rowURLGenerator}
       />
     </div>

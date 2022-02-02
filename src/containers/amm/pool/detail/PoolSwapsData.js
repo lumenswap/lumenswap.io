@@ -9,12 +9,6 @@ import humanAmount from 'helpers/humanAmount';
 import RightArrowIcon from 'assets/images/arrowRight';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles['no-data-message-container']}>
-    <span>There is no swaps</span>
-  </div>
-);
-
 function PoolSwapsData({ poolId }) {
   const [poolSwaps, setPoolSwaps] = useState(null);
 
@@ -105,10 +99,10 @@ function PoolSwapsData({ poolId }) {
   return (
     <CTable
       columns={tableHeaders}
-      noDataComponent={NoDataMessage}
+      noDataMessage="There is no swaps"
       dataSource={poolSwaps}
       className={styles.table}
-      loading={poolSwaps === null}
+      loading={!poolSwaps}
     />
   );
 }

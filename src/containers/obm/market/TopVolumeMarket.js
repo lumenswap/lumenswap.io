@@ -9,12 +9,6 @@ import urlMaker from 'helpers/urlMaker';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no asset</div>
-  </div>
-);
-
 function TopVolumeMarket({ searchQuery }) {
   const [topVolumeList, setTopVolumeList] = useState(null);
   const [assets, setAssets] = useState(null);
@@ -158,7 +152,7 @@ function TopVolumeMarket({ searchQuery }) {
       <CTable
         className={styles.table}
         columns={tableHeaders}
-        noDataComponent={NoDataMessage}
+        noDataMessage="There is no asset"
         dataSource={filteredAssets}
         rowLink={rowLink}
       />
