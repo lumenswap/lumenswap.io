@@ -206,7 +206,7 @@ const AddLiquidity = ({
         const price = new BN(poolData.reserves[1].amount)
           .div(poolData.reserves[0].amount);
         setValue('amountTokenB', new BN(value).times(price).toFixed(7));
-      } else {
+      } else if (value === '' || value === '0') {
         setValue('amountTokenB', '');
       }
 
@@ -220,7 +220,7 @@ const AddLiquidity = ({
         const price = new BN(poolData.reserves[0].amount)
           .div(poolData.reserves[1].amount);
         setValue('amountTokenA', new BN(value).times(price).toFixed(7));
-      } else {
+      } else if (value === '' || value === '0') {
         setValue('amountTokenA', '');
       }
 
