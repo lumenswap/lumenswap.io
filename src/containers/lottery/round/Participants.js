@@ -35,7 +35,7 @@ const Participants = ({ searchQuery, round }) => {
         columns={tableHeaders}
         dataSource={searchedParticipants}
         noDataMessage="There is no address"
-        loading={!searchedParticipants}
+        loading={searchedParticipants === null}
       />
     </div>
   );

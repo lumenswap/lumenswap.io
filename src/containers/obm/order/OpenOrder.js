@@ -125,7 +125,7 @@ function OpenOrder({ openOrderList, setOpenOrderList }) {
           className={styles.table}
           columns={tableHeaders}
           dataSource={openOrderList}
-          loading={!openOrderList}
+          loading={openOrderList === null}
           noDataMessage="You have no open orders"
         />
       </div>

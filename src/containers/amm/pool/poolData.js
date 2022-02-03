@@ -139,7 +139,7 @@ function PoolData() {
         noDataMessage="There is no pool"
         className={styles.table}
         rowLink={rowLink}
-        loading={!knownPools}
+        loading={knownPools === null}
       />
     </div>
   );

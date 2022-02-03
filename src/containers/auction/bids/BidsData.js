@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 import { STATUS_NAMES } from '../consts/board';
 
 function BidsData({
-  page, setTotalPages, auction,
+  page, setTotalPages, searchQuery, auction,
 }) {
   const [bids, setBids] = useState(null);
 
@@ -80,12 +80,12 @@ function BidsData({
       setBids([]);
       setTotalPages(1);
     } else {
-      getAuctionBids(auction.id, { page, searchQuery: '' }).then((data) => {
+      getAuctionBids(auction.id, { page, searchQuery }).then((data) => {
         setBids(data.data);
         setTotalPages(data.totalPages);
       });
     }
-  }, [page]);
+  }, [page, searchQuery]);
 
   return (
     <>

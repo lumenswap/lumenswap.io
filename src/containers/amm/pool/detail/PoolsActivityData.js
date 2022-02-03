@@ -83,7 +83,7 @@ function PoolsActivityData({ poolId }) {
       noDataMessage="There is no activity"
       dataSource={poolOperations}
       className={styles.table}
-      loading={!poolOperations}
+      loading={poolOperations === null}
     />
   );
 }

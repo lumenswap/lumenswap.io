@@ -102,7 +102,7 @@ function PoolSwapsData({ poolId }) {
       noDataMessage="There is no swaps"
       dataSource={poolSwaps}
       className={styles.table}
-      loading={!poolSwaps}
+      loading={poolSwaps === null}
     />
   );
 }

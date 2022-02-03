@@ -105,7 +105,7 @@ function TradeHistory() {
           className={styles.table}
           columns={tableHeaders}
           dataSource={tradeHistoryList}
-          loading={!tradeHistoryList}
+          loading={tradeHistoryList === null}
           noDataMessage="You have no trade history"
         />
       </div>
