@@ -6,18 +6,11 @@ import StellarSDK from 'stellar-sdk';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
-import Loading from 'components/Loading';
 import { initializeStore } from 'store';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import styles from './styles.module.scss';
-
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}> You have no open orders</div>
-  </div>
-);
 
 function cancelSingleOder(data, setOpenOrderList) {
   return async () => {
@@ -125,10 +118,6 @@ function OpenOrder({ openOrderList, setOpenOrderList }) {
     },
   ];
 
-  if (openOrderList === null) {
-    return <div className={styles['loading-container']}><Loading size={48} /></div>;
-  }
-
   return (
     <>
       <div style={{ marginLeft: '-24px' }}>
@@ -136,7 +125,8 @@ function OpenOrder({ openOrderList, setOpenOrderList }) {
           className={styles.table}
           columns={tableHeaders}
           dataSource={openOrderList}
-          noDataComponent={NoDataMessage}
+          loading={openOrderList === null}
+          noDataMessage="You have no open orders"
         />
       </div>
     </>

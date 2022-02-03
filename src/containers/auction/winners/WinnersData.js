@@ -1,5 +1,4 @@
 import CTable from 'components/CTable';
-import NoData from 'components/NoData';
 import numeral from 'numeral';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
@@ -75,7 +74,7 @@ function WinnersData({
     <>
       <CTable
         columns={columns}
-        noDataComponent={() => <NoData message="There is no winner" />}
+        noDataMessage="There is no winner"
         className={styles.table}
         dataSource={filteredWinners}
         loading={!winners}

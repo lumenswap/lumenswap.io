@@ -9,14 +9,6 @@ import { getKnownPools } from 'api/amm';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
-function NoDataMessage() {
-  return (
-    <div className={styles['empty-table-container']}>
-      <span>There is no pool</span>
-    </div>
-  );
-}
-
 function PoolData() {
   const [knownPools, setKnownPools] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -144,7 +136,7 @@ function PoolData() {
       <CTable
         columns={tableHeader}
         dataSource={filteredPools}
-        noDataComponent={NoDataMessage}
+        noDataMessage="There is no pool"
         className={styles.table}
         rowLink={rowLink}
         loading={knownPools === null}

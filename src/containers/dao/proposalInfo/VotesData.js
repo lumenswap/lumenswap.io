@@ -1,11 +1,8 @@
-import NoData from 'components/NoData';
 import CTable from 'components/CTable';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
-
-const NoDataMessage = () => (<NoData message="There is no votes" />);
 
 function VotesData({ votes }) {
   const votesTableHeaders = [
@@ -43,7 +40,7 @@ function VotesData({ votes }) {
       columns={votesTableHeaders}
       dataSource={votes}
       loading={!votes}
-      noDataComponent={NoDataMessage}
+      noDataMessage="There is no votes"
       rowFix={{ rowNumbers: 10, rowHeight: 53, headerRowHeight: 25 }}
     />
   );

@@ -8,12 +8,6 @@ import { extractInfoByToken } from 'helpers/asset';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no asset</div>
-  </div>
-);
-
 function KnownAssets({ assets, searchQuery }) {
   const [knownAssets, setKnownAssets] = useState(null);
   const [filteredAssets, setFilteredAssets] = useState(null);
@@ -151,7 +145,7 @@ function KnownAssets({ assets, searchQuery }) {
         className={styles.table}
         columns={tableHeaders}
         dataSource={filteredAssets}
-        noDataComponent={NoDataMessage}
+        noDataMessage="There is no asset"
         rowLink={rowLink}
       />
     </div>

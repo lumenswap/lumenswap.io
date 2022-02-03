@@ -33,17 +33,16 @@ function MarketData({ assets }) {
   return (
     <>
       <div className={styles['table-container']}>
-        <div className={styles.header}>
-          <div className={styles.ctab}>
-            <CTabs
-              tabs={tabs}
-              tabContent={MarketTabContent}
-              customTabProps={{ assets, searchQuery }}
-              extraComponent={SearchInput}
-              className={`${styles.tabs}`}
-            />
-          </div>
+        <div className={styles.ctab}>
+          <CTabs
+            tabs={tabs}
+            tabContent={MarketTabContent}
+            customTabProps={{ assets, searchQuery }}
+            extraComponent={SearchInput}
+            className={`${styles.tabs}`}
+          />
         </div>
+
       </div>
     </>
   );

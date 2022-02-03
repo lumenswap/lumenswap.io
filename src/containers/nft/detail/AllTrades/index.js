@@ -16,12 +16,6 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../../NFTHeader';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles['no-data-container']}>
-    <span>There is no asset trade</span>
-  </div>
-);
-
 const OFFER_FETCH_LIMIT = 20;
 
 function fetchLusiTrades(cursor, id) {
@@ -173,7 +167,7 @@ function AllTradesPage({ id }) {
                 </div>
                 <CTable
                   columns={tableHeaders}
-                  noDataComponent={NoDataMessage}
+                  noDataMessage="There is no asset trade"
                   dataSource={tradesData}
                   className={styles.table}
                   loading={!tradesData}
