@@ -1,152 +1,124 @@
 @import 'styles/vars';
 .main {
-    margin-left: 82px;
-    margin-right: 82px;
+  margin-left: 82px;
+  margin-right: 82px;
 }
 .tabs {
-   
-    nav {
-        height: 49px;
-        a {
-            font-family: SofiaPro;
-            font-size: 16px;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.5;
-            letter-spacing: normal;
-            color: $Manatee;
-            margin-top: 12px;
-        }
+  nav {
+    height: 49px;
+    a {
+      font-family: SofiaPro;
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      color: $Manatee;
+      margin-top: 12px;
     }
+  }
 }
 .title {
-    margin-top: 29px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    height: 31px;
+  margin-top: 29px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 31px;
 }
 .order {
-    font-family: SofiaPro;
-    font-size: 24px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: $CodGray;
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $CodGray;
 }
 .cancel-btn {
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: right;
-    color: $ShuttleGray;  
-    margin-top: 8px;
-    cursor: pointer;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: $ShuttleGray;
+  margin-top: 8px;
+  cursor: pointer;
 }
 
 .table-container {
-    width: 100%;
-    background-color: $White;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
-    margin-top: 23px;
-    div {
-        height: auto;
-        
-    }
+  width: 100%;
+  background-color: $White;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  margin-top: 23px;
 }
 
 .cancel {
-    cursor: pointer;
-    color: $BlueRibbon;
-    font-family: SofiaPro;
-    font-size: 14px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.43;
-    letter-spacing: normal;
-}
-.header {
-    height: 49px;
-    width: 100%;
+  cursor: pointer;
+  color: $BlueRibbon;
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
 }
 
 .ctab {
-    margin-left: 24px;
+  margin-left: 24px;
 }
 .table {
-    overflow-y: auto;
-    scrollbar-width: none;
-    height: auto;
-    max-height: 593px;
-    table {
-      width: 100% !important;
-      min-width: 712px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: auto;
+  max-height: 593px;
+  table {
+    width: 100% !important;
+    min-width: 712px;
     tr {
       th {
         border-radius: 0px !important;
       }
     }
-    }
   }
-  .table::-webkit-scrollbar {
-    width: 0;  
-    background: transparent;  
-  }
-  
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
 
 .table::-webkit-scrollbar {
-    width: 0;  
-    background: transparent;  
-  }
-.noDataMessageContainer {
-    width: 100%;
-    height: 101px !important;
-    background-color: $White;
-    border-radius: 8px;
+  width: 0;
+  background: transparent;
 }
 
-.noDataMessage {
-    font-family: SofiaPro;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
-    color: $ShuttleGray;
-    margin-top: 40px;
-}
 .sold {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 .amount {
-    margin-right: 3px;
+  margin-right: 3px;
 }
 .loading-container {
-    width: 100%;
-    height: 140px !important;
-    display: flex;
-    justify-content: center;
-    div {
-        margin-top: 28px;
-    }
+  width: 100%;
+  height: 140px !important;
+  display: flex;
+  justify-content: center;
+  div {
+    margin-top: 28px;
+  }
 }
 
 @media (max-width: $md) {
-    .main {
-        margin-right: 15px;
-        margin-left: 15px;
-      }
+  .main {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
 }

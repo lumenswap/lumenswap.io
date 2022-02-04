@@ -4,12 +4,6 @@ import { useEffect, useState } from 'react';
 import tableHeaders from './participantsTableHeaders';
 import styles from '../style.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no address</div>
-  </div>
-);
-
 const Participants = ({ searchQuery, round }) => {
   const [searchedParticipants, setSearchedParticipants] = useState(null);
 
@@ -40,7 +34,7 @@ const Participants = ({ searchQuery, round }) => {
         className={styles.table}
         columns={tableHeaders}
         dataSource={searchedParticipants}
-        noDataComponent={NoDataMessage}
+        noDataMessage="There is no address"
         loading={searchedParticipants === null}
       />
     </div>

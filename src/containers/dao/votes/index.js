@@ -6,14 +6,11 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import CTable from 'components/CTable';
-import NoData from 'components/NoData';
 import CPagination from 'components/CPagination';
 import humanAmount from 'helpers/humanAmount';
 import { getProposalVotes } from 'api/mockAPI/proposalInfo';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
-
-const NoDataMessage = () => (<NoData message="There is no votes" />);
 
 const votesTableHeaders = [
   {
@@ -83,7 +80,7 @@ const Votes = ({ governanceAssetInfo }) => {
                 className={styles.table}
                 columns={votesTableHeaders}
                 dataSource={votes}
-                noDataComponent={NoDataMessage}
+                noDataMessage="There is no votes"
                 loading={!votes}
                 rowFix={{ rowNumbers: 20, rowHeight: 53, headerRowHeight: 25 }}
               />

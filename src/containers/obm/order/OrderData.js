@@ -11,25 +11,23 @@ function OrderData({ setShowCancel, openOrderList, setOpenOrderList }) {
   return (
     <>
       <div className={styles['table-container']}>
-        <div className={styles.header}>
-          <div className={styles.ctab}>
-            <CTabs
-              tabs={tabs}
-              tabContent={OrderTabContent}
-              customTabProps={{
-                openOrderList,
-                setOpenOrderList,
-              }}
-              onChange={(tab) => {
-                if (tab === 'trade') {
-                  setShowCancel(false);
-                } else {
-                  setShowCancel(true);
-                }
-              }}
-              className={styles.tabs}
-            />
-          </div>
+        <div className={styles.ctab}>
+          <CTabs
+            tabs={tabs}
+            tabContent={OrderTabContent}
+            customTabProps={{
+              openOrderList,
+              setOpenOrderList,
+            }}
+            onChange={(tab) => {
+              if (tab === 'trade') {
+                setShowCancel(false);
+              } else {
+                setShowCancel(true);
+              }
+            }}
+            className={styles.tabs}
+          />
         </div>
       </div>
     </>

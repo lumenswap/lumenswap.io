@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import CTable from 'components/CTable';
-import NoData from 'components/NoData';
 import BN from 'helpers/BN';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
@@ -81,7 +80,7 @@ const WinnersData = ({
   return (
     <CTable
       columns={columns}
-      noDataComponent={() => <NoData message="There is no winner" />}
+      noDataMessage="There is no winner"
       className={styles.table}
       dataSource={filteredWinners?.slice(0, 10)}
       loading={!winners}

@@ -16,12 +16,6 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../../NFTHeader';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles['no-data-container']}>
-    <span>There is no asset offer</span>
-  </div>
-);
-
 const OFFER_FETCH_LIMIT = 20;
 
 function fetchLusiOffers(cursor, id) {
@@ -169,7 +163,7 @@ function AllOffersPage({ id }) {
                 </div>
                 <CTable
                   columns={tableHeaders}
-                  noDataComponent={NoDataMessage}
+                  noDataMessage="There is no asset offer"
                   dataSource={offersData}
                   className={styles.table}
                   loading={!offersData}

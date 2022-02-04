@@ -21,12 +21,6 @@ import humanAmount from 'helpers/humanAmount';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no asset</div>
-  </div>
-);
-
 export const walletTypes = {
   OBM: 'obm',
   AMM: 'amm',
@@ -273,7 +267,7 @@ function WalletData({ type }) {
           columns={tableHeaders}
           dataSource={filteredBalances}
           className={styles.table}
-          noDataComponent={NoDataMessage}
+          noDataMessage="There is no asset"
         />
       </div>
     </>

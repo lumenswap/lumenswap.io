@@ -12,12 +12,6 @@ import tableHeaders from '../participantsTableHeaders';
 import LotteryHeader from '../../LotteryHeader';
 import styles from '../../style.module.scss';
 
-const NoDataMessage = () => (
-  <div className={styles.noDataMessageContainer}>
-    <div className={styles.noDataMessage}>There is no address</div>
-  </div>
-);
-
 const AllParticipantPage = ({ round }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -107,7 +101,7 @@ const AllParticipantPage = ({ round }) => {
               className={styles.table}
               columns={tableHeaders}
               dataSource={searchedParticipants}
-              noDataComponent={NoDataMessage}
+              noDataMessage="There is no address"
               loading={loading}
             />
           </div>

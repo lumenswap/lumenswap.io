@@ -1,5 +1,4 @@
 import CTable from 'components/CTable';
-import NoData from 'components/NoData';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
@@ -92,7 +91,7 @@ function BidsData({
     <>
       <CTable
         columns={columns}
-        noDataComponent={() => <NoData message="There is no bid" />}
+        noDataMessage="There is no bid"
         className={styles.table}
         dataSource={filteredBids}
         loading={!bids}
