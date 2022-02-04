@@ -23,6 +23,7 @@ import AQUA from './AQUA';
 import NLSP from './NLSP';
 import YBX from './YBX';
 import RBT from './RBT';
+import DRIFT from './DRIFT';
 
 const defaultTokens = [
   XLM,
@@ -50,6 +51,7 @@ const defaultTokens = [
   AQUA,
   YBX,
   RBT,
+  DRIFT,
 ];
 
 export default defaultTokens;
