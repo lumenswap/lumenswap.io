@@ -1,4 +1,5 @@
 import urlMaker from 'helpers/urlMaker';
+import AssetBox from 'components/LumenSwapHeader/AssetBox';
 import LumenSwapHeader from 'components/LumenSwapHeader';
 
 const LotteryHeader = () => {
@@ -16,10 +17,12 @@ const LotteryHeader = () => {
     },
   ];
 
+  const extraRightSideComponents = [<AssetBox />];
+
   return (
     <LumenSwapHeader
-      showAssetBox
       leftSide={leftSide}
+      extraRightComponent={extraRightSideComponents}
     />
   );
 };

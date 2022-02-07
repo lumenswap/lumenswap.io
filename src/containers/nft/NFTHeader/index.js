@@ -1,4 +1,5 @@
 import LumenSwapHeader from 'components/LumenSwapHeader';
+import AssetBox from 'components/LumenSwapHeader/AssetBox';
 import urlMaker from 'helpers/urlMaker';
 import NLSP from 'tokens/NLSP';
 import ClaimLusiBtn from './ClaimLusiBtn';
@@ -28,10 +29,8 @@ const NFTHeader = () => {
 
   return (
     <LumenSwapHeader
-      showAssetBox
-      assetBoxProps={{ color: '#DF4886', asset: NLSP }}
       leftSide={leftSideLinks}
-      extraRightComponent={[<ClaimLusiBtn />]}
+      extraRightComponent={[<ClaimLusiBtn />, <AssetBox color="#DF4886" asset={NLSP} />]}
     />
   );
 };

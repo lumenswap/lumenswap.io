@@ -26,7 +26,6 @@ const AuctionHeader = () => {
 
   return (
     <LumenSwapHeader
-      showLSP
       leftSide={leftSideLinks}
       rightSide={rightSideLinks}
     />
