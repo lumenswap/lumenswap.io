@@ -1,6 +1,6 @@
 import NoData from 'components/NoData';
 import Loading from 'components/Loading';
-import SingleProposalItem from './SingleProposalItem';
+import ProposalInfo from './ProposalInfo';
 import styles from './styles.module.scss';
 
 function DAOProposalItems({ proposals, governanceInfo }) {
@@ -17,7 +17,7 @@ function DAOProposalItems({ proposals, governanceInfo }) {
   return (
     proposals?.map((proposal) => (
       <div className="mt-4" key={proposal.id}>
-        <SingleProposalItem item={proposal} pageName={governanceInfo.officialName} />
+        <ProposalInfo item={proposal} pageName={governanceInfo.officialName} />
       </div>
     ))
   );
