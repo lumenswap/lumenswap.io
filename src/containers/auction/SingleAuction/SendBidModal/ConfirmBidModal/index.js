@@ -11,14 +11,14 @@ import showSignResponse from 'helpers/showSignResponse';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-const ConfirmBid = ({ data, tokenA, reloadData }) => {
+const ConfirmBidModal = ({ data, baseToken, reloadData }) => {
   const dispatch = useDispatch();
   const userAddress = useSelector((state) => state.user.detail.address);
-  const handleSubmit = () => {
+  const handleConfirm = () => {
     function func() {
       return generateManageBuyTRX(
         userAddress,
-        getAssetDetails(tokenA),
+        getAssetDetails(baseToken),
         getAssetDetails(XLM),
         new BN(data.tokenAmount).toFixed(7),
         new BN(data.price).toFixed(7),
@@ -38,13 +38,13 @@ const ConfirmBid = ({ data, tokenA, reloadData }) => {
         You will buy {' '}
         <span>
           {humanAmount(data.tokenAmount)}
-        </span> {tokenA.code} for {' '}
+        </span> {baseToken.code} for {' '}
         <span>
           {humanAmount(new BN(data.price).times(data.tokenAmount).toFixed(7))}
         </span> XLM
       </div>
       <Button
-        onClick={handleSubmit}
+        onClick={handleConfirm}
         variant="primary"
         content="Confirm"
         className={styles.btn}
@@ -53,4 +53,4 @@ const ConfirmBid = ({ data, tokenA, reloadData }) => {
   );
 };
 
-export default ConfirmBid;
+export default ConfirmBidModal;

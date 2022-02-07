@@ -1,6 +1,6 @@
-import AuctionDetail from 'containers/auction/detail';
-import auctionPageGetServerSideProps from 'containers/auction/detail/props';
+import SingleAuction from 'containers/auction/SingleAuction';
+import auctionPageGetServerSideProps from 'containers/auction/SingleAuction/props';
 
-export default AuctionDetail;
+export default SingleAuction;
 
 export const getServerSideProps = auctionPageGetServerSideProps;

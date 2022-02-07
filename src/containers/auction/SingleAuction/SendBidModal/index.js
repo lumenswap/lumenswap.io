@@ -1,18 +1,18 @@
 import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
-import { calculateMaxXLM, getAssetDetails, isSameAsset } from 'helpers/asset';
+import { calculateMaxXLM, getAssetDetails } from 'helpers/asset';
 import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
-import ConfirmBid from './ConfirmBid';
+import useUserSingleAsset from 'hooks/useUserSingleAsset';
+import ConfirmBidModal from './ConfirmBidModal';
 import styles from './styles.module.scss';
 
-const SendBid = ({ tokenA, basePrice, reloadData }) => {
-  const userBalance = useSelector((state) => state.userBalance);
+const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
   const subEntry = useSelector((state) => state.user.detail.subentry);
 
   const {
@@ -29,7 +29,7 @@ const SendBid = ({ tokenA, basePrice, reloadData }) => {
       openModalAction({
         modalProps: { title: 'Confirm Bid' },
         content: (
-          <ConfirmBid data={data} tokenA={tokenA} reloadData={reloadData} />
+          <ConfirmBidModal data={data} baseToken={baseToken} reloadData={reloadData} />
         ),
       }),
     );
@@ -42,8 +42,7 @@ const SendBid = ({ tokenA, basePrice, reloadData }) => {
     total = new BN(price).times(token);
   }
 
-  const userXlm = userBalance
-    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(XLM)));
+  const userXlm = useUserSingleAsset(getAssetDetails(XLM));
 
   function buttonContent() {
     const errorMessage = formState.errors?.tokenAmount?.message || formState.errors?.price?.message;
@@ -75,7 +74,7 @@ const SendBid = ({ tokenA, basePrice, reloadData }) => {
           <InputGroup
             variant="primary"
             placeholder="100"
-            rightLabel={`${tokenA.code}`}
+            rightLabel={`${baseToken.code}`}
             value={props.value}
             onChange={props.onChange}
           />
@@ -127,4 +126,4 @@ const SendBid = ({ tokenA, basePrice, reloadData }) => {
   );
 };
 
-export default SendBid;
+export default SendBidModal;

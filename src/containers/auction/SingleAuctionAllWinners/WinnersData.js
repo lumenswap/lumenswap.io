@@ -10,23 +10,23 @@ import styles from './styles.module.scss';
 function WinnersData({
   page, setTotalPages, searchQuery, assetCode, auction,
 }) {
-  const [winners, setWinners] = useState(null);
+  const [auctionAllWinners, setAuctionAllWinners] = useState(null);
 
-  const filteredWinners = winners && [...winners];
+  const filteredWinners = auctionAllWinners && [...auctionAllWinners];
 
-  const columns = [
+  const auctionAllWinnersHeaders = [
     {
       title: 'Address',
       dataIndex: 'address',
       key: 1,
-      render: (data) => (
+      render: (winner) => (
         <a
           target="_blank"
           rel="noreferrer"
-          href={generateAddressURL(data.address)}
+          href={generateAddressURL(winner.address)}
           className={styles.link}
         >
-          {minimizeAddress(data.address)}
+          {minimizeAddress(winner.address)}
         </a>
       ),
     },
@@ -34,9 +34,9 @@ function WinnersData({
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => (
+      render: (winner) => (
         <span>
-          {numeral(new BN(data.amount).div(10 ** 7).toFixed(7)).format('0,0')} {assetCode}
+          {numeral(new BN(winner.amount).div(10 ** 7).toFixed(7)).format('0,0')} {assetCode}
         </span>
       ),
     },
@@ -44,9 +44,9 @@ function WinnersData({
       title: 'Price',
       dataIndex: 'price',
       key: 4,
-      render: (data) => (
+      render: (winner) => (
         <span>
-          {data.price} XLM
+          {winner.price} XLM
         </span>
       ),
     },
@@ -54,30 +54,30 @@ function WinnersData({
       title: 'Total',
       dataIndex: 'total',
       key: 5,
-      render: (data) => (
+      render: (winner) => (
         <span>
-          {numeral(new BN(data.total).div(10 ** 7).toFixed(7)).format('0,0')} XLM
+          {numeral(new BN(winner.total).div(10 ** 7).toFixed(7)).format('0,0')} XLM
         </span>
       ),
     },
   ];
 
   useEffect(() => {
-    setWinners(null);
-    getAuctionWinners(auction.id, { page, searchQuery }).then((data) => {
-      setWinners(data.data);
-      setTotalPages(data.totalPages);
+    setAuctionAllWinners(null);
+    getAuctionWinners(auction.id, { page, searchQuery }).then((res) => {
+      setAuctionAllWinners(res.data);
+      setTotalPages(res.totalPages);
     });
   }, [page, searchQuery]);
 
   return (
     <>
       <CTable
-        columns={columns}
+        columns={auctionAllWinnersHeaders}
         noDataMessage="There is no winner"
         className={styles.table}
         dataSource={filteredWinners}
-        loading={!winners}
+        loading={!auctionAllWinners}
         rowFix={{
           rowHeight: 53,
           rowNumbers: 20,

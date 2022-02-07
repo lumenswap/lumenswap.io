@@ -1,5 +1,5 @@
-import Bids from 'containers/auction/bids';
-import BidsPageGetServerSideProps from 'containers/auction/bids/props';
+import SingleAuctionAllBids from 'containers/auction/SingleAuctionAllBids';
+import BidsPageGetServerSideProps from 'containers/auction/SingleAuctionAllBids/props';
 
-export default Bids;
+export default SingleAuctionAllBids;
 export const getServerSideProps = BidsPageGetServerSideProps;

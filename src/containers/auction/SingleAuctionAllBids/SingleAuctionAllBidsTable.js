@@ -6,29 +6,29 @@ import { useEffect, useState } from 'react';
 import { getAuctionBids } from 'api/auction';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
+import { STATUS_NAMES } from 'containers/auction/consts';
 import styles from './styles.module.scss';
-import { STATUS_NAMES } from '../consts/board';
 
-function BidsData({
+function SingleAuctionAllBidsTable({
   page, setTotalPages, searchQuery, auction,
 }) {
-  const [bids, setBids] = useState(null);
+  const [auctionAllBids, setAuctionAllBids] = useState(null);
 
-  const filteredBids = bids && [...bids];
+  const filteredBids = auctionAllBids && [...auctionAllBids];
 
-  const columns = [
+  const auctionAllBidsHeaders = [
     {
       title: 'Address',
       dataIndex: 'address',
       key: 1,
-      render: (data) => (
+      render: (bid) => (
         <a
           target="_blank"
           rel="noreferrer"
-          href={generateAddressURL(data.address)}
+          href={generateAddressURL(bid.address)}
           className={styles.link}
         >
-          {minimizeAddress(data.address)}
+          {minimizeAddress(bid.address)}
         </a>
       ),
     },
@@ -36,9 +36,9 @@ function BidsData({
       title: 'Date',
       dataIndex: 'data',
       key: 2,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {moment(data.bidDate).fromNow()}
+          {moment(bid.bidDate).fromNow()}
         </span>
       ),
     },
@@ -46,9 +46,9 @@ function BidsData({
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {humanAmount(new BN(data.amount).div(10 ** 7).toFixed(7))} {auction.assetCode}
+          {humanAmount(new BN(bid.amount).div(10 ** 7).toFixed(7))} {auction.assetCode}
         </span>
       ),
     },
@@ -56,9 +56,9 @@ function BidsData({
       title: 'Price',
       dataIndex: 'price',
       key: 4,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {humanAmount(data.price)} XLM
+          {humanAmount(bid.price)} XLM
         </span>
       ),
     },
@@ -66,23 +66,23 @@ function BidsData({
       title: 'Total',
       dataIndex: 'total',
       key: 5,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {humanAmount(new BN(data.total).div(10 ** 7).toFixed(7))} XLM
+          {humanAmount(new BN(bid.total).div(10 ** 7).toFixed(7))} XLM
         </span>
       ),
     },
   ];
 
   useEffect(() => {
-    setBids(null);
+    setAuctionAllBids(null);
     if (auction.status === STATUS_NAMES['not-started']) {
-      setBids([]);
+      setAuctionAllBids([]);
       setTotalPages(1);
     } else {
-      getAuctionBids(auction.id, { page, searchQuery }).then((data) => {
-        setBids(data.data);
-        setTotalPages(data.totalPages);
+      getAuctionBids(auction.id, { page, searchQuery }).then((res) => {
+        setAuctionAllBids(res.data);
+        setTotalPages(res.totalPages);
       });
     }
   }, [page, searchQuery]);
@@ -90,11 +90,11 @@ function BidsData({
   return (
     <>
       <CTable
-        columns={columns}
+        columns={auctionAllBidsHeaders}
         noDataMessage="There is no bid"
         className={styles.table}
         dataSource={filteredBids}
-        loading={!bids}
+        loading={!auctionAllBids}
         rowFix={{
           rowHeight: 53,
           rowNumbers: 20,
@@ -105,4 +105,4 @@ function BidsData({
   );
 }
 
-export default BidsData;
+export default SingleAuctionAllBidsTable;

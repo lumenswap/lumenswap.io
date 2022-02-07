@@ -9,33 +9,33 @@ import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
 import humanAmount from 'helpers/humanAmount';
 import { getAuctionBids } from 'api/auction';
+import { STATUS_NAMES } from 'containers/auction/consts';
 import styles from './styles.module.scss';
-import { STATUS_NAMES } from '../consts/board';
 
-const BidsData = ({
+const SingleAuctionBids = ({
   searchQuery, tab, assetCode, assetIssuer, basePrice, refreshData, auctionStatus, auctionId,
 }) => {
-  const [bids, setBids] = useState(null);
+  const [auctionBids, setAuctionBids] = useState(null);
 
-  let filteredBids = bids && [...bids];
+  let filteredBids = auctionBids && [...auctionBids];
   if (searchQuery) {
     if (tab === 'bid') {
       filteredBids = filteredBids?.filter((bid) => bid.seller.search(searchQuery) !== -1);
     }
   }
-  const columns = [
+  const auctionBidsHeaders = [
     {
       title: 'Address',
       dataIndex: 'address',
       key: 1,
-      render: (data) => (
+      render: (bid) => (
         <a
           target="_blank"
           rel="noreferrer"
-          href={generateAddressURL(data.seller)}
+          href={generateAddressURL(bid.seller)}
           className={styles.link}
         >
-          {minimizeAddress(data.seller)}
+          {minimizeAddress(bid.seller)}
         </a>
       ),
     },
@@ -43,9 +43,9 @@ const BidsData = ({
       title: 'Date',
       dataIndex: 'data',
       key: 2,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {moment(data.last_modified_time).fromNow()}
+          {moment(bid.last_modified_time).fromNow()}
         </span>
       ),
     },
@@ -53,10 +53,10 @@ const BidsData = ({
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {humanAmount(new BN(data.amount)
-            .times(data.price).toString())} {assetCode}
+          {humanAmount(new BN(bid.amount)
+            .times(bid.price).toString())} {assetCode}
         </span>
       ),
     },
@@ -64,9 +64,9 @@ const BidsData = ({
       title: 'Price',
       dataIndex: 'price',
       key: 4,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {humanAmount(new BN(1).div(data.price).toFixed(7))} XLM
+          {humanAmount(new BN(1).div(bid.price).toFixed(7))} XLM
         </span>
       ),
     },
@@ -74,9 +74,9 @@ const BidsData = ({
       title: 'Total',
       dataIndex: 'total',
       key: 5,
-      render: (data) => (
+      render: (bid) => (
         <span>
-          {humanAmount(new BN(data.amount))} XLM
+          {humanAmount(new BN(bid.amount))} XLM
         </span>
       ),
     },
@@ -84,17 +84,17 @@ const BidsData = ({
 
   useEffect(() => {
     if (auctionStatus === STATUS_NAMES['not-started']) {
-      setBids([]);
+      setAuctionBids([]);
     } else if (auctionStatus === STATUS_NAMES.ended) {
-      getAuctionBids(auctionId, {}).then((data) => {
-        const mappedBids = data.data.map((bid) => ({
+      getAuctionBids(auctionId, {}).then((bids) => {
+        const mappedBids = bids.data.map((bid) => ({
           price: new BN(1).div(new BN(bid.price)).toFixed(7),
           amount: new BN(bid.total).div(10 ** 7).toFixed(7),
           seller: bid.address,
           last_modified_time: bid.bidDate,
         }));
 
-        setBids(mappedBids);
+        setAuctionBids(mappedBids);
       });
     } else {
       fetchOfferAPI(
@@ -103,13 +103,13 @@ const BidsData = ({
         ), getAssetDetails(XLM),
         { order: 'desc', limit: 200 },
       )
-        .then((data) => {
-          const offers = data.data._embedded.records;
+        .then((res) => {
+          const offers = res.data._embedded.records;
           const theBids = offers.filter((offer) => new BN(1)
             .div(offer.price)
             .isGreaterThanOrEqualTo(basePrice));
 
-          setBids(theBids.slice(0, 10));
+          setAuctionBids(theBids.slice(0, 10));
         })
         .catch((err) => console.log(err));
     }
@@ -120,11 +120,11 @@ const BidsData = ({
 
   return (
     <CTable
-      columns={columns}
+      columns={auctionBidsHeaders}
       noDataMessage="There is no bid"
       className={styles.table}
       dataSource={filteredBids}
-      loading={!bids}
+      loading={!auctionBids}
       rowFix={{
         rowHeight: 53,
         rowNumbers: 10,
@@ -134,4 +134,4 @@ const BidsData = ({
   );
 };
 
-export default BidsData;
+export default SingleAuctionBids;

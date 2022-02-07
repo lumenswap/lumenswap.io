@@ -1,6 +1,4 @@
-// import Loading from 'components/Loading';
 import ReactECharts from 'echarts-for-react';
-// import { CHART_KEYS } from 'pages/Auction/aggregation';
 import numeral from 'numeral';
 import Loading from 'components/Loading';
 import CCard from 'components/CCard';
@@ -10,8 +8,6 @@ import styles from './styles.module.scss';
 
 const lineColor = '#e3e9ff';
 const textColor = '#656872';
-
-const convertor = (value) => numeral(value).format('0a');
 
 const tooltipFormatter = (values) => {
   const assetName = values[0].seriesName.split('Step')[1];
@@ -23,11 +19,11 @@ const tooltipFormatter = (values) => {
   </div>`;
 };
 
-const LineChart = ({ chartData, height }) => {
+const AuctionLineChart = ({ chartData, height }) => {
   const [isFullScreen, setFullScreen] = useState(false);
 
-  const initialSize = { CHeight: `${height + 60}px`, CWidth: 'auto' };
-  const [size, setSize] = useState(initialSize);
+  const initialChartSize = { CHeight: `${height + 60}px`, CWidth: 'auto' };
+  const [chartSize, setChartSize] = useState(initialChartSize);
 
   const fullScreenView = {
     myTool: {
@@ -44,9 +40,9 @@ const LineChart = ({ chartData, height }) => {
       },
     },
   };
-  const [tool, setTool] = useState(fullScreenView);
+  const [chartTools, setChartTools] = useState(fullScreenView);
 
-  const option = useMemo(() => ({
+  const chartOptions = useMemo(() => ({
     tooltip: {
       trigger: 'axis',
       formatter: (params) => tooltipFormatter(params),
@@ -62,7 +58,7 @@ const LineChart = ({ chartData, height }) => {
     },
     xAxis: {
       type: 'category',
-      data: chartData?.prices,
+      data: chartData?.auctionPrices,
       boundaryGap: false,
       axisLabel: {
         color: textColor,
@@ -122,7 +118,7 @@ const LineChart = ({ chartData, height }) => {
         type: 'line',
         step: 'start',
         symbol: 'none',
-        data: chartData?.amounts,
+        data: chartData?.auctionAmounts,
         // CHART_KEYS.map((i) => [i, 0])
         legendHoverLink: false,
         areaStyle: {
@@ -140,14 +136,14 @@ const LineChart = ({ chartData, height }) => {
       showTitle: false,
       right: 10,
       top: 15,
-      feature: { ...tool },
+      feature: { ...chartTools },
     },
   }));
 
   useEffect(() => {
     if (isFullScreen) {
-      setSize({ CHeight: '100%', CWidth: '100%' });
-      setTool({
+      setChartSize({ CHeight: '100%', CWidth: '100%' });
+      setChartTools({
         myTool: {
           show: true,
           title: 'Exit fullscreen',
@@ -163,25 +159,10 @@ const LineChart = ({ chartData, height }) => {
         },
       });
     } else {
-      setSize(initialSize);
-      setTool(fullScreenView);
+      setChartSize(initialChartSize);
+      setChartTools(fullScreenView);
     }
   }, [isFullScreen]);
-
-  // if (!data) {
-  //   return (
-  //     <div
-  //       className="col-xl-11 col-lg-10 col-md-10 col-sm-9 col-12 pr-sm-0 pr-3"
-  //       style={{
-  //         display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300,
-  //       }}
-  //     >
-  //       <Loading size={50} />
-  //     </div>
-  //   );
-  // }
-
-  // option.series[0].data = CHART_KEYS.map((chartKey) => [chartKey, data[chartKey].toFixed(0)]);
 
   if (!chartData) {
     return (
@@ -201,21 +182,21 @@ const LineChart = ({ chartData, height }) => {
           isFullScreen ? (
             <div
               className={styles.fullScreenMask}
-              style={{ height: size.CHeight, width: size.CWidth }}
+              style={{ height: chartSize.CHeight, width: chartSize.CWidth }}
             >
               <ReactECharts
-                option={option}
+                option={chartOptions}
                 notMerge
                 lazyUpdate
-                style={{ height: size.CHeight, width: size.CWidth }}
+                style={{ height: chartSize.CHeight, width: chartSize.CWidth }}
               />
             </div>
           ) : (
             <ReactECharts
-              option={option}
+              option={chartOptions}
               notMerge
               lazyUpdate
-              style={{ height: size.CHeight, width: size.CWidth }}
+              style={{ height: chartSize.CHeight, width: chartSize.CWidth }}
             />
           )
         }
@@ -224,4 +205,4 @@ const LineChart = ({ chartData, height }) => {
   );
 };
 
-export default React.memo(LineChart);
+export default React.memo(AuctionLineChart);

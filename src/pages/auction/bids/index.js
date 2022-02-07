@@ -1,6 +1,6 @@
-import AuctionTickets from 'containers/auction/Tickets';
-import myBidsPageGetServerSideProps from 'containers/auction/Tickets/props';
+import AuctionMyTickets from 'containers/auction/AuctionMyTickets';
+import myBidsPageGetServerSideProps from 'containers/auction/AuctionMyTickets/props';
 
-export default AuctionTickets;
+export default AuctionMyTickets;
 
 export const getServerSideProps = myBidsPageGetServerSideProps;
