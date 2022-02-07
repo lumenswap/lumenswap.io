@@ -19,7 +19,7 @@ import humanAmount from 'helpers/humanAmount';
 import { extractLogoByToken } from 'helpers/asset';
 import { getProposalVotes } from 'api/mockAPI/proposalInfo';
 import DAOContainer from '../DAOContainer';
-import VotesData from './VotesData';
+import DAOSingleProposalVotes from './DAOSingleProposalVotes';
 import VoteModal from './VoteModal';
 import styles from './styles.module.scss';
 
@@ -160,7 +160,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
               )}
               >Votes
               </h4>
-              <VotesData votes={votes} />
+              <DAOSingleProposalVotes votes={votes} />
             </div>
 
             <div className="mt-3">
