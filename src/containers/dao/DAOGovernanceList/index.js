@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import DAOContainer from '../DAOContainer';
-import GovernanceSummary from './GovernanceSummary/GovernantSummary';
+import GovernanceSummary from './GovernanceSummary';
 import styles from './styles.module.scss';
 
-const DaoBoard = ({ governances }) => (
+const DAOGovernanceList = ({ governances }) => (
   <DAOContainer title="Board | Lumenswap">
     <div className={classNames('layout main', styles.layout)}>
       <div className="row justify-content-center">
@@ -22,4 +22,4 @@ const DaoBoard = ({ governances }) => (
   </DAOContainer>
 );
 
-export default DaoBoard;
+export default DAOGovernanceList;

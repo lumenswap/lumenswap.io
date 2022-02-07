@@ -20,10 +20,10 @@ import { extractLogoByToken } from 'helpers/asset';
 import { getProposalVotes } from 'api/mockAPI/proposalInfo';
 import DAOContainer from '../DAOContainer';
 import VotesData from './VotesData';
-import Vote from './Vote';
+import VoteModal from './VoteModal';
 import styles from './styles.module.scss';
 
-const ProposalInfo = ({ proposalInfo }) => {
+const DAOSingleProposal = ({ proposalInfo }) => {
   const [votes, setVotes] = useState(null);
 
   const router = useRouter();
@@ -42,7 +42,7 @@ const ProposalInfo = ({ proposalInfo }) => {
         title: 'Vote',
         mainClassName: 'modal-br8',
       },
-      content: <Vote proposalInfo={{
+      content: <VoteModal proposalInfo={{
         votes: proposalInfo.votes,
         asset: proposalInfo.asset,
         title: proposalInfo.title,
@@ -177,4 +177,4 @@ const ProposalInfo = ({ proposalInfo }) => {
   );
 };
 
-export default ProposalInfo;
+export default DAOSingleProposal;

@@ -21,6 +21,46 @@ const dropdownItems = [
   { value: 'in-progress', label: 'In progress' },
 ];
 
+const activityTableHeaders = [
+  {
+    title: 'Governance',
+    dataIndex: 'governance',
+    key: '1',
+    render: (activity) => (
+      <div className="d-flex align-items-center">
+        <Image src={extractLogoByToken(activity.asset)} width={24} height={24} />
+        <div className="ml-1">{activity.asset.code}</div>
+      </div>
+    ),
+  },
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    key: '2',
+    render: (activity) => `${moment(activity.date).fromNow()}`,
+  },
+  {
+    title: 'Amount',
+    dataIndex: 'amount',
+    key: '3',
+    render: (activity) => `${humanAmount(activity.amount)} ${activity.asset.code}`,
+  },
+  {
+    title: 'Info',
+    dataIndex: 'info',
+    key: '3',
+    render: (activity) => `${activity.info}`,
+  },
+  {
+    title: '',
+    dataIndex: 'action',
+    key: '4',
+    render: (activity) => (
+      <ActivityTableAction activityInfo={activity} />
+    ),
+  },
+];
+
 function ActivityTableAction({ activityInfo }) {
   const handleClaim = () => {
     // do something
@@ -37,7 +77,7 @@ function ActivityTableAction({ activityInfo }) {
   return null;
 }
 
-const Activity = () => {
+const DAOMyActivity = () => {
   const [select, setSelect] = useState(dropdownItems[0]);
   const [userActivities, setUserActivities] = useState(null);
   const [page, setPage] = useState(1);
@@ -60,46 +100,6 @@ const Activity = () => {
       }
     });
   }, [select, page]);
-
-  const activityTableHeaders = [
-    {
-      title: 'Governance',
-      dataIndex: 'governance',
-      key: '1',
-      render: (activity) => (
-        <div className="d-flex align-items-center">
-          <Image src={extractLogoByToken(activity.asset)} width={24} height={24} />
-          <div className="ml-1">{activity.asset.code}</div>
-        </div>
-      ),
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: '2',
-      render: (activity) => `${moment(activity.date).fromNow()}`,
-    },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: '3',
-      render: (activity) => `${humanAmount(activity.amount)} ${activity.asset.code}`,
-    },
-    {
-      title: 'Info',
-      dataIndex: 'info',
-      key: '3',
-      render: (activity) => `${activity.info}`,
-    },
-    {
-      title: '',
-      dataIndex: 'action',
-      key: '4',
-      render: (activity) => (
-        <ActivityTableAction activityInfo={activity} />
-      ),
-    },
-  ];
 
   return (
     <DAOContainer title="My activity | Lumenswap">
@@ -147,4 +147,4 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default DAOMyActivity;

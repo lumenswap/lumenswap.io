@@ -7,9 +7,9 @@ import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
 import CDatePicker from 'components/CDatePicker/index';
-import ConfirmProposal from 'containers/dao/createProposal/ProposalForm/Confirm';
 import moment from 'moment';
 import numeral from 'numeral';
+import ConfirmProposalModal from './ConfirmProposalModal';
 import CreateProposalError from './CreateProposalError';
 import FormOptions from './FormOptions/index';
 import CreateProposalTextArea from './CreateProposalTextArea';
@@ -42,7 +42,7 @@ const ProposalForm = ({ info, setStatus }) => {
       modalProps: {
         mainClassName: 'modal-br8',
       },
-      content: <ConfirmProposal formData={data} setStatus={setStatus} />,
+      content: <ConfirmProposalModal formData={data} setStatus={setStatus} />,
     }));
   };
   const handleFocus = (name) => {

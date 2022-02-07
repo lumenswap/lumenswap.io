@@ -23,7 +23,7 @@ const ProposalItemBadge = ({ status }) => {
   return <Badge variant="danger" content="Not started" />;
 };
 
-const ProposalItem = ({ item, pageName }) => {
+const SingleProposalItem = ({ item, pageName }) => {
   const {
     title, desc, detail, address, logo, status, endDate, id,
   } = item;
@@ -63,8 +63,8 @@ const ProposalItem = ({ item, pageName }) => {
   );
 };
 
-ProposalItem.propTypes = {
+SingleProposalItem.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default ProposalItem;
+export default SingleProposalItem;

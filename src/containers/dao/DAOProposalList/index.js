@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import SelectOption from 'components/SelectOption';
 import { getProposals } from 'api/mockAPI/proposals';
 import useIsLogged from 'hooks/useIsLogged';
-import DAOProposals from './DAOProposals';
+import DAOProposalItems from './DAOProposalItems';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 import GovernanceInfo from './GovernanceInfo';
@@ -19,7 +19,7 @@ const dropdownItems = [
   { value: 'ended', label: 'Ended' },
 ];
 
-const Proposals = ({ governanceInfo }) => {
+const DAOProposalList = ({ governanceInfo }) => {
   const [select, setSelect] = useState(dropdownItems[0]);
   const [proposals, setProposals] = useState(null);
   const isLogged = useIsLogged();
@@ -78,7 +78,7 @@ const Proposals = ({ governanceInfo }) => {
                   </div>
                 </div>
               </div>
-              <DAOProposals proposals={proposals} governanceInfo={governanceInfo} />
+              <DAOProposalItems proposals={proposals} governanceInfo={governanceInfo} />
             </div>
 
           </div>
@@ -88,4 +88,4 @@ const Proposals = ({ governanceInfo }) => {
   );
 };
 
-export default Proposals;
+export default DAOProposalList;

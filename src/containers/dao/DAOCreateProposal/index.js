@@ -37,7 +37,7 @@ const DAOCreateProposalContainer = ({ info, children }) => {
   );
 };
 
-const CreateProposal = ({ pageInfo }) => {
+const DAOCreateProposal = ({ pageInfo }) => {
   const [status, setStatus] = useState('');
   useRequiredLogin(urlMaker.dao.root());
 
@@ -71,4 +71,4 @@ const CreateProposal = ({ pageInfo }) => {
   );
 };
 
-export default CreateProposal;
+export default DAOCreateProposal;

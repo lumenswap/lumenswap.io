@@ -1,9 +1,9 @@
 import NoData from 'components/NoData';
 import Loading from 'components/Loading';
-import ProposalItem from './ProposalItem';
+import SingleProposalItem from './SingleProposalItem';
 import styles from './styles.module.scss';
 
-function DAOProposals({ proposals, governanceInfo }) {
+function DAOProposalItems({ proposals, governanceInfo }) {
   if (!proposals) {
     return <div className={styles.loading}><Loading size={48} /></div>;
   }
@@ -17,10 +17,10 @@ function DAOProposals({ proposals, governanceInfo }) {
   return (
     proposals?.map((proposal) => (
       <div className="mt-4" key={proposal.id}>
-        <ProposalItem item={proposal} pageName={governanceInfo.officialName} />
+        <SingleProposalItem item={proposal} pageName={governanceInfo.officialName} />
       </div>
     ))
   );
 }
 
-export default DAOProposals;
+export default DAOProposalItems;

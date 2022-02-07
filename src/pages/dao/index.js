@@ -1,7 +1,7 @@
-import DaoBoard from 'containers/dao/board';
+import DAOGovernanceList from 'containers/dao/DAOGovernanceList';
 
-import { daoBoardsGetServerSideProps } from 'containers/dao/board/props';
+import { daoBoardsGetServerSideProps } from 'containers/dao/DAOGovernanceList/props';
 
 export const getServerSideProps = daoBoardsGetServerSideProps;
 
-export default DaoBoard;
+export default DAOGovernanceList;
