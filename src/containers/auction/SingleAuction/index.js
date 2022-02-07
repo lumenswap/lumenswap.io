@@ -26,7 +26,7 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { STATUS_NAMES } from 'containers/auction/consts';
 import SendBidModal from './SendBidModal';
 import AuctionDetailTabContent from './SingleAuctionTabContent';
-import CountdownComponent from './Countdown';
+import Countdown from './Countdown';
 import styles from './styles.module.scss';
 
 const SingleAuction = ({ auction, pageName, assetCode }) => {
@@ -101,7 +101,7 @@ const SingleAuction = ({ auction, pageName, assetCode }) => {
     {
       title: 'Period',
       render: (auctionDetails) => (
-        <CountdownComponent countdownDetails={auctionDetails} />
+        <Countdown countdown={auctionDetails} />
       ),
     },
     {

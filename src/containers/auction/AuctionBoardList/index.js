@@ -6,7 +6,7 @@ import AuctionContainer from 'containers/auction/AuctionContainer';
 import AuctionBoardItem from './AuctionBoardItem';
 import styles from './styles.module.scss';
 
-const AuctionBoard = () => {
+const AuctionBoardList = () => {
   const [auctionBoards, setAuctionBoards] = useState(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const AuctionBoard = () => {
               </div>
             )}
             {auctionBoards
-              ?.map((auctionBoard, i) => <AuctionBoardItem auctionBoard={auctionBoard} key={i} />)}
+              ?.map((auctionBoard, i) => <AuctionBoardItem auction={auctionBoard} key={i} />)}
           </div>
         </div>
       </div>
@@ -33,4 +33,4 @@ const AuctionBoard = () => {
   );
 };
 
-export default AuctionBoard;
+export default AuctionBoardList;
