@@ -1,5 +1,5 @@
-import Winners from 'containers/auction/winners';
-import WinnersPageGetServerSideProps from 'containers/auction/winners/props';
+import SingleAuctionAllWinners from 'containers/auction/SingleAuctionAllWinners';
+import WinnersPageGetServerSideProps from 'containers/auction/SingleAuctionAllWinners/props';
 
-export default Winners;
+export default SingleAuctionAllWinners;
 export const getServerSideProps = WinnersPageGetServerSideProps;

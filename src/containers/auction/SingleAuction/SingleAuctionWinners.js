@@ -7,31 +7,31 @@ import numeral from 'numeral';
 import { getAuctionWinners } from 'api/auction';
 import styles from './styles.module.scss';
 
-const WinnersData = ({
+const SingleAuctionWinners = ({
   searchQuery, tab, assetCode, auctionId,
 }) => {
-  const [winners, setWinners] = useState(null);
+  const [auctionWinners, setAuctionWinners] = useState(null);
 
-  let filteredWinners = winners && [...winners];
+  let filteredWinners = auctionWinners && [...auctionWinners];
   if (searchQuery) {
     if (tab === 'winner') {
       filteredWinners = filteredWinners?.filter((bid) => bid.address.search(searchQuery) !== -1);
     }
   }
 
-  const columns = [
+  const auctionWinnersHeaders = [
     {
       title: 'Address',
       dataIndex: 'address',
       key: 1,
-      render: (data) => (
+      render: (winner) => (
         <a
           target="_blank"
           rel="noreferrer"
-          href={generateAddressURL(data.address)}
+          href={generateAddressURL(winner.address)}
           className={styles.link}
         >
-          {minimizeAddress(data.address)}
+          {minimizeAddress(winner.address)}
         </a>
       ),
     },
@@ -39,9 +39,9 @@ const WinnersData = ({
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => (
+      render: (winner) => (
         <span>
-          {numeral(new BN(data.amount).div(10 ** 7).toFixed(7)).format('0,0')} {assetCode}
+          {numeral(new BN(winner.amount).div(10 ** 7).toFixed(7)).format('0,0')} {assetCode}
         </span>
       ),
     },
@@ -49,9 +49,9 @@ const WinnersData = ({
       title: 'Price',
       dataIndex: 'price',
       key: 4,
-      render: (data) => (
+      render: (winner) => (
         <span>
-          {data.price} XLM
+          {winner.price} XLM
         </span>
       ),
     },
@@ -59,16 +59,16 @@ const WinnersData = ({
       title: 'Total',
       dataIndex: 'total',
       key: 5,
-      render: (data) => (
+      render: (winner) => (
         <span>
-          {numeral(new BN(data.total).div(10 ** 7).toFixed(7)).format('0,0')} XLM
+          {numeral(new BN(winner.total).div(10 ** 7).toFixed(7)).format('0,0')} XLM
         </span>
       ),
     },
   ];
 
   useEffect(() => {
-    getAuctionWinners(auctionId).then((data) => setWinners(data.data));
+    getAuctionWinners(auctionId).then((res) => setAuctionWinners(res.data));
   }, []);
 
   filteredWinners = filteredWinners?.map((item, i) => (
@@ -79,11 +79,11 @@ const WinnersData = ({
   ));
   return (
     <CTable
-      columns={columns}
+      columns={auctionWinnersHeaders}
       noDataMessage="There is no winner"
       className={styles.table}
       dataSource={filteredWinners?.slice(0, 10)}
-      loading={!winners}
+      loading={!auctionWinners}
       rowFix={{
         rowHeight: 53,
         rowNumbers: 10,
@@ -93,4 +93,4 @@ const WinnersData = ({
   );
 };
 
-export default WinnersData;
+export default SingleAuctionWinners;

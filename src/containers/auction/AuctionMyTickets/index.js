@@ -1,15 +1,10 @@
-import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-
 import TableDropDown from 'components/TableDropDown';
 import CTable from 'components/CTable';
-
 import moment from 'moment';
-import useIsLogged from 'hooks/useIsLogged';
-import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
-import ServerSideLoading from 'components/ServerSideLoading';
+import AuctionContainer from 'containers/auction/AuctionContainer';
 import { getAuctionWinners } from 'api/auction';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOfferAPI } from 'api/stellar';
@@ -20,20 +15,19 @@ import humanAmount from 'helpers/humanAmount';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import useRequiredLogin from 'hooks/useRequiredLogin';
 import styles from './styles.module.scss';
-import AuctionHeader from '../AuctionHeader';
 
-const AuctionTickets = ({ auctions }) => {
+const AuctionMyTickets = ({ auctions }) => {
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
 
   const [dropdownItems, setDropDownItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [tickets, setTickets] = useState(null);
-  const isLogged = useIsLogged();
-  const router = useRouter();
+  useRequiredLogin(urlMaker.auction.root());
 
-  function fetchData() {
+  function fetchAuctionMyBids() {
     setTickets(null);
     let myTickets = [];
     if (selectedItem && userAddress) {
@@ -88,7 +82,7 @@ const AuctionTickets = ({ auctions }) => {
     showGenerateTrx(func, dispatch)
       .then((trx) => showSignResponse(trx, dispatch))
       .catch(console.log)
-      .then(fetchData);
+      .then(fetchAuctionMyBids);
   }
 
   useEffect(() => {
@@ -104,17 +98,7 @@ const AuctionTickets = ({ auctions }) => {
     setSelectedItem(mappedAuctions[0]);
   }, []);
 
-  const Container = ({ children }) => (
-    <div className="container-fluid">
-      <Head>
-        <title>My ​activity | Lumenswap</title>
-      </Head>
-      <AuctionHeader />
-      {children}
-    </div>
-  );
-
-  const columns = [
+  const MyTicketsTableHeaders = [
     {
       title: 'Amount',
       dataIndex: 'amount',
@@ -160,45 +144,38 @@ const AuctionTickets = ({ auctions }) => {
       ,
     },
   ];
-  useEffect(() => {
-    if (!isLogged) {
-      router.push(urlMaker.auction.root());
-    }
-  }, []);
 
   useEffect(() => {
-    fetchData();
+    fetchAuctionMyBids();
   }, [selectedItem]);
 
   return (
-    <Container>
-      <ServerSideLoading>
-        <div className={classNames('layout main', styles.layout)}>
-          <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-              <div className="d-flex justify-content-between align-items-center">
-                <h1 className={styles.title}>My Bids</h1>
-                <TableDropDown defaultOption={dropdownItems[0]} onChange={() => {}} items={dropdownItems} placeholder="Select Auction" />
-              </div>
-              <div className="row">
-                <div className="col-12">
-                  <div className={styles.card}>
-                    <CTable
-                      columns={columns}
-                      noDataMessage="There is no bid"
-                      className={styles.table}
-                      dataSource={tickets}
-                      loading={!tickets}
-                    />
-                  </div>
+    <AuctionContainer title="My activity | Lumenswap">
+      <div className={classNames('layout main', styles.layout)}>
+        <div className="row justify-content-center">
+          <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
+            <div className="d-flex justify-content-between align-items-center">
+              <h1 className={styles.title}>My Bids</h1>
+              <TableDropDown defaultOption={dropdownItems[0]} onChange={() => {}} items={dropdownItems} placeholder="Select Auction" />
+            </div>
+            <div className="row">
+              <div className="col-12">
+                <div className={styles.card}>
+                  <CTable
+                    columns={MyTicketsTableHeaders}
+                    noDataMessage="There is no bid"
+                    className={styles.table}
+                    dataSource={tickets}
+                    loading={!tickets}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </ServerSideLoading>
-    </Container>
+      </div>
+    </AuctionContainer>
   );
 };
 
-export default AuctionTickets;
+export default AuctionMyTickets;

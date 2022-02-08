@@ -1,3 +1,3 @@
-import AuctionBoard from 'containers/auction/board';
+import AuctionBoardList from 'containers/auction/AuctionBoardList';
 
-export default AuctionBoard;
+export default AuctionBoardList;

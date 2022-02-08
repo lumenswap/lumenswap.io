@@ -1,12 +1,12 @@
-import BidsData from './BidsData';
-import WinnersData from './WinnersData';
+import SingleAuctionBids from './SingleAuctionBids';
+import SingleAuctionWinners from './SingleAuctionWinners';
 
-const AuctionDetailContent = ({
+const SingleAuctionContent = ({
   tab, searchQuery, assetCode, assetIssuer, auctionId, basePrice, refreshData, auctionStatus,
 }) => {
   if (tab === 'bid') {
     return (
-      <BidsData
+      <SingleAuctionBids
         searchQuery={searchQuery}
         tab={tab}
         assetCode={assetCode}
@@ -20,7 +20,7 @@ const AuctionDetailContent = ({
   }
   if (tab === 'winner') {
     return (
-      <WinnersData
+      <SingleAuctionWinners
         searchQuery={searchQuery}
         tab={tab}
         assetCode={assetCode}
@@ -31,4 +31,4 @@ const AuctionDetailContent = ({
   return null;
 };
 
-export default AuctionDetailContent;
+export default SingleAuctionContent;
