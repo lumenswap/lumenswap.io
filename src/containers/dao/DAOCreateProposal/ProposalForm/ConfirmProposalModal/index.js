@@ -7,7 +7,7 @@ import ContractIcon from 'assets/images/contract';
 
 import styles from './styles.module.scss';
 
-const ConfirmProposal = ({ formData, setStatus }) => {
+const ConfirmProposalModal = ({ formData, setStatus }) => {
   const dispatch = useDispatch();
 
   const handleConfirm = () => {
@@ -33,4 +33,4 @@ const ConfirmProposal = ({ formData, setStatus }) => {
   );
 };
 
-export default ConfirmProposal;
+export default ConfirmProposalModal;

@@ -9,7 +9,7 @@ import BN from 'helpers/BN';
 import { getAssetDetails } from 'helpers/asset';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
 import styles from './styles.module.scss';
-import ConfirmVote from './ConfirmVote';
+import ConfirmVoteModal from './ConfirmVoteModal';
 
 const validateAmount = (value, userAssetBalance, info) => {
   if (new BN(0).gte(value)) {
@@ -21,7 +21,7 @@ const validateAmount = (value, userAssetBalance, info) => {
   return true;
 };
 
-const Vote = ({ proposalInfo }) => {
+const VoteModal = ({ proposalInfo }) => {
   const dispatch = useDispatch();
   const radioGroupOptions = proposalInfo.votes.map((vote) => ({
     ...vote,
@@ -49,7 +49,7 @@ const Vote = ({ proposalInfo }) => {
         title: 'Confirm vote',
         mainClassName: 'modal-br8',
       },
-      content: <ConfirmVote proposalInfo={{
+      content: <ConfirmVoteModal proposalInfo={{
         ...proposalInfo,
         vote: data.vote,
         amount: data.tokenAmount,
@@ -124,4 +124,4 @@ const Vote = ({ proposalInfo }) => {
   );
 };
 
-export default Vote;
+export default VoteModal;

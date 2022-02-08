@@ -4,7 +4,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-function VotesData({ votes }) {
+function DAOSingleProposalVotes({ votes }) {
   const votesTableHeaders = [
     {
       title: 'Address',
@@ -46,4 +46,4 @@ function VotesData({ votes }) {
   );
 }
 
-export default VotesData;
+export default DAOSingleProposalVotes;

@@ -1,6 +1,6 @@
-import ProposalInfo from 'containers/dao/proposalInfo';
+import DAOSingleProposal from 'containers/dao/DAOSingleProposal';
 
-import { daoProposalInfoGetServerSideProps } from 'containers/dao/proposalInfo/props';
+import { daoProposalInfoGetServerSideProps } from 'containers/dao/DAOSingleProposal/props';
 
 export const getServerSideProps = daoProposalInfoGetServerSideProps;
-export default ProposalInfo;
+export default DAOSingleProposal;

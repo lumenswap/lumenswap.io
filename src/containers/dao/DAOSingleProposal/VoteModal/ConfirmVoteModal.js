@@ -5,7 +5,7 @@ import { closeModalAction } from 'actions/modal';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-const ConfirmVote = ({ proposalInfo }) => {
+const ConfirmVoteModal = ({ proposalInfo }) => {
   const radioGroupOptions = proposalInfo.votes.map((vote) => ({
     ...vote,
     value: vote.title.toLowerCase(),
@@ -52,4 +52,4 @@ const ConfirmVote = ({ proposalInfo }) => {
   );
 };
 
-export default ConfirmVote;
+export default ConfirmVoteModal;

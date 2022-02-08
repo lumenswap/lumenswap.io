@@ -1,3 +1,3 @@
-import Activity from 'containers/dao/activity';
+import DAOMyActivity from 'containers/dao/DAOMyActivity';
 
-export default Activity;
+export default DAOMyActivity;

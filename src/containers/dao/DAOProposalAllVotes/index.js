@@ -41,7 +41,7 @@ const votesTableHeaders = [
   },
 ];
 
-const Votes = ({ governanceAssetInfo }) => {
+const DAOProposalAllVotes = ({ governanceAssetInfo }) => {
   const router = useRouter();
   const [votes, setVotes] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,4 +103,4 @@ const Votes = ({ governanceAssetInfo }) => {
   );
 };
 
-export default Votes;
+export default DAOProposalAllVotes;
