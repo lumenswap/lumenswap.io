@@ -164,7 +164,7 @@ function WalletData({ type }) {
       sortFunc: (a, b, order) => (order === 'asc' ? compareInOrder(b, a) : compareInOrder(a, b)),
       render: (data) => (
         <span>
-          {humanAmount(new BN(data.rawBalance ?? 0).minus(new BN(data.balance)))}
+          {humanAmount(new BN(data.rawBalance ?? 0).minus(new BN(data.balance)).toFixed(7))}
         </span>
       ),
     },
@@ -183,9 +183,9 @@ function WalletData({ type }) {
               <a className={styles.link}>Swap</a>
             </Link>
             {type === 'obm' && (
-            <Link href={urlMaker.obm.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null)}>
-              <a className={styles.link}>Trade</a>
-            </Link>
+              <Link href={urlMaker.obm.spot.custom(data.asset.code, data.asset.issuer, 'XLM', null)}>
+                <a className={styles.link}>Trade</a>
+              </Link>
             )}
             {new BN(data.balance).isEqualTo('0') ? (
               <div className={styles['disabled-send']}>Send</div>
