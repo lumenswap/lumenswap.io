@@ -11,7 +11,7 @@ const RoundItem = ({ round }) => {
 
   let imageSizes = [330, 180];
   if (isNotStarted) {
-    imageSizes = [270, 150];
+    imageSizes = [52, 81];
   }
   return (
     <div className={styles['round-item-main']}>
@@ -23,13 +23,14 @@ const RoundItem = ({ round }) => {
         <div className={styles.roundImage}>
           {round?.prizeImage && (
             <div style={{
-              width: imageSizes[0], height: imageSizes[1],
+              width: imageSizes[0],
+              height: imageSizes[1],
             }}
             >
               <img
                 src={round?.prizeImage}
                 style={{
-                  width: '100%', height: '100%', objectFit: 'fill', marginTop: `${isNotStarted ? '15px' : '0px'}`,
+                  width: '100%', height: '100%', objectFit: 'fill',
                 }}
               />
             </div>
