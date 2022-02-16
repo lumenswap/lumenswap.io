@@ -23,6 +23,7 @@ const ProposalForm = ({ info, setStatus }) => {
   const [show, setShow] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
+
   const {
     handleSubmit,
     control,
@@ -34,8 +35,8 @@ const ProposalForm = ({ info, setStatus }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      startDate: new Date(nextDay.setHours(0, 0, 0, 0)),
-      endDate: nextDay,
+      startTime: new Date(nextDay).setHours(0, 0, 0, 0),
+      endTime: new Date(nextDay.setDate(nextDay.getDate() + 1)).setHours(0, 0, 0, 0),
     },
   });
 
@@ -86,11 +87,11 @@ const ProposalForm = ({ info, setStatus }) => {
 
   useEffect(() => {
     trigger();
-    const startDate = new Date(getValues('startDate'));
-    const startDateIsAfterEndDate = moment(startDate).isAfter(getValues('endDate'));
-    const startDateIsSameWithEndDate = moment(startDate).isSame(getValues('endDate'));
+    const startDate = new Date(getValues('startTime'));
+    const startDateIsAfterEndDate = moment(startDate).isAfter(getValues('endTime'));
+    const startDateIsSameWithEndDate = moment(startDate).isSame(getValues('endTime'));
     if (startDateIsAfterEndDate || startDateIsSameWithEndDate) {
-      setValue('endDate', new Date(startDate.setDate(startDate.getDate() + 1)),
+      setValue('endTime', new Date(startDate.setDate(startDate.getDate() + 1)),
         { shouldValidate: true });
     }
   }, [JSON.stringify(getValues())]);
@@ -149,7 +150,7 @@ const ProposalForm = ({ info, setStatus }) => {
                 <CDatePicker
                   onChange={props.onChange}
                   value={props.value}
-                  minDate={nextDay.setHours(0, 0, 0, 0)}
+                  minDate={nextDay}
                 />
               )}
             />

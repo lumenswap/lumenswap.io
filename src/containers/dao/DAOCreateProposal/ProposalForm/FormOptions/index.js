@@ -43,10 +43,7 @@ const FormOptions = ({ control }) => {
               control={control}
               defaultValue={option.defaultValue ?? ''}
               rules={{
-                required: {
-                  value: options.length < 2,
-                  message: `${options.length < 2 ? 'At least 2 options are required' : 'Please fill out all options'}`,
-                },
+                required: `${options.length < 3 ? 'At least 2 options are required' : 'Please fill out all options'}`,
               }}
               render={(props) => (
                 <Option

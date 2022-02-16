@@ -39,7 +39,7 @@ const DAOCreateProposalContainer = ({ info, children }) => {
 
 const DAOCreateProposal = ({ pageInfo }) => {
   const [status, setStatus] = useState('');
-  useRequiredLogin(urlMaker.dao.root());
+  // useRequiredLogin(urlMaker.dao.root());
 
   if (status === 'loading') {
     return (
