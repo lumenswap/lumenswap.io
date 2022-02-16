@@ -5,8 +5,8 @@ import urlMaker from 'helpers/urlMaker';
 import Breadcrumb from 'components/BreadCrumb';
 import Button from 'components/Button';
 import SelectOption from 'components/SelectOption';
-import { getProposals } from 'api/mockAPI/proposals';
 import useIsLogged from 'hooks/useIsLogged';
+import { getGovernanceProposals } from 'api/daoAPI';
 import DAOProposalItems from './DAOProposalItems';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
@@ -15,13 +15,13 @@ import GovernanceInfo from './GovernanceInfo';
 const dropdownItems = [
   { value: 'all', label: 'All' },
   { value: 'active', label: 'Active' },
-  { value: 'not-started', label: 'Not Started' },
+  { value: 'not started', label: 'Not Started' },
   { value: 'ended', label: 'Ended' },
 ];
 
-const DAOProposalList = ({ governanceInfo }) => {
+const DAOProposalList = ({ governanceInfo, proposals: fetchedProposals }) => {
   const [select, setSelect] = useState(dropdownItems[0]);
-  const [proposals, setProposals] = useState(null);
+  const [proposals, setProposals] = useState(fetchedProposals);
   const isLogged = useIsLogged();
   const router = useRouter();
 
@@ -31,8 +31,7 @@ const DAOProposalList = ({ governanceInfo }) => {
   ];
 
   useEffect(() => {
-    setProposals(null);
-    getProposals(governanceInfo.officialName, { status: select.value }).then((proposalData) => {
+    getGovernanceProposals(governanceInfo.id, { status: select.value }).then((proposalData) => {
       setProposals(proposalData);
     });
   }, [select]);

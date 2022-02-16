@@ -1,15 +1,16 @@
-import { getProposalInfo } from '../../../api/mockAPI/proposalInfo';
+import { getSingleProposal } from 'api/daoAPI';
 
 export async function daoProposalInfoGetServerSideProps({ params }) {
   try {
-    const proposalInfo = await getProposalInfo(params.id);
+    const proposalInfo = await getSingleProposal(params.id);
+
     return {
       props: {
         proposalInfo,
       },
     };
   } catch (e) {
-    if (e.response.status === 404) {
+    if (e.response?.status === 404) {
       return {
         notFound: true,
       };

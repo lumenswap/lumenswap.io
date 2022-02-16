@@ -8,7 +8,6 @@ import Progressbar from 'components/Progressbar';
 import Button from 'components/Button';
 import ArrowIcon from 'assets/images/angleRight';
 import InfoBox from 'components/InfoBox';
-import { useState, useEffect } from 'react';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import { openModalAction } from 'actions/modal';
 import useIsLogged from 'hooks/useIsLogged';
@@ -16,8 +15,9 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLGenerator';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
-import { extractLogoByToken } from 'helpers/asset';
-import { getProposalVotes } from 'api/mockAPI/proposalInfo';
+import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
+import { useEffect, useState } from 'react';
+import { getVotesForProposal } from 'api/daoAPI';
 import DAOContainer from '../DAOContainer';
 import DAOSingleProposalVotes from './DAOSingleProposalVotes';
 import VoteModal from './VoteModal';
@@ -30,9 +30,14 @@ const DAOSingleProposal = ({ proposalInfo }) => {
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
 
+  const asset = getAssetDetails({
+    code: proposalInfo.Governance.assetCode,
+    issuer: proposalInfo.Governance.assetIssuer,
+  });
+
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.singleDao.root(proposalInfo.officialName)}`, name: proposalInfo.governance },
+    { url: `${urlMaker.dao.singleDao.root(proposalInfo.Governance.name.toLowerCase())}`, name: proposalInfo.Governance.name },
     { name: 'Proposal info' },
   ];
 
@@ -43,8 +48,10 @@ const DAOSingleProposal = ({ proposalInfo }) => {
         mainClassName: 'modal-br8',
       },
       content: <VoteModal proposalInfo={{
-        votes: proposalInfo.votes,
-        asset: proposalInfo.asset,
+        endTime: proposalInfo.endTime,
+        id: proposalInfo.id,
+        votes: proposalInfo.options,
+        asset,
         title: proposalInfo.title,
       }}
       />,
@@ -52,10 +59,8 @@ const DAOSingleProposal = ({ proposalInfo }) => {
   };
 
   useEffect(() => {
-    getProposalVotes(router.query.id, {
-      assetName: proposalInfo.officialName,
-    }).then((voters) => (
-      setVotes(voters)
+    getVotesForProposal(router.query.id, { page: 1, limit: 10 }).then((fetchedVotes) => (
+      setVotes(fetchedVotes.data)
     ));
   }, []);
 
@@ -63,13 +68,13 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     {
       title: 'Proposal ID',
       externalLink: {
-        title: minimizeAddress(proposalInfo.proposalID, 8),
-        url: generateTransactionURL(proposalInfo.proposalID),
+        title: minimizeAddress(proposalInfo.id, 8),
+        url: generateTransactionURL(proposalInfo.id),
       },
     },
     {
       title: 'Duration',
-      render: (proposalDetails) => `${Math.floor(moment.duration(proposalDetails.endDate - proposalDetails.startDate).asDays())} days`,
+      render: (proposalDetails) => `${Math.floor(moment.duration(new Date(proposalDetails.endTime) - new Date(proposalDetails.startTime)).asDays())} days`,
     },
     {
       title: 'Start time',
@@ -77,7 +82,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     },
     {
       title: 'End time',
-      render: (proposalDetails) => `${moment(proposalDetails.endDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
+      render: (proposalDetails) => `${moment(proposalDetails.endTime).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
     },
     {
       title: 'Total voter',
@@ -85,28 +90,28 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     },
     {
       title: 'Total votes',
-      render: (proposalDetails) => `${humanAmount(proposalDetails.totalVotes)} ${proposalDetails.asset.code}`,
+      render: (proposalDetails) => `${humanAmount(proposalDetails.totalVotes)} ${asset.code}`,
     },
     {
       title: 'Proposer',
       externalLink: {
-        title: minimizeAddress(proposalInfo.proposerAddress),
-        url: generateAddressURL(proposalInfo.proposerAddress),
+        title: minimizeAddress(proposalInfo.proposer),
+        url: generateAddressURL(proposalInfo.proposer),
       },
     },
     {
       title: 'Governance',
       render: (proposalDetails) => (
         <div className="d-flex align-items-center">
-          <Image src={extractLogoByToken(proposalDetails.asset)} height={24} width={24} />
-          <div className="ml-1">{proposalDetails.governance}</div>
+          <Image src={extractLogoByToken(asset)} height={24} width={24} />
+          <div className="ml-1">{proposalDetails.Governance.name}</div>
         </div>
       ),
     },
   ];
 
   return (
-    <DAOContainer title="Proposal Info | Lumenswap" info={proposalInfo}>
+    <DAOContainer title="Proposal Info | Lumenswap" info={proposalInfo.Governance}>
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
@@ -119,9 +124,9 @@ const DAOSingleProposal = ({ proposalInfo }) => {
               <h3 className={styles['card-title']}>
                 {proposalInfo.title}
               </h3>
-              {proposalInfo.votes.map((vote, index) => (
+              {proposalInfo.options.map((vote, index) => (
                 <div key={index} className="mt-4">
-                  <Progressbar label={vote.title} value={vote.percentage} />
+                  <Progressbar label={vote.value} value={vote.percentage} />
                 </div>
               ))}
 
@@ -139,7 +144,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
             <div className={classNames(styles.card, 'mt-4')}>
               <h4 className={styles['card-title-small']}>Description</h4>
               <p className={styles['card-desc']}>
-                {proposalInfo.desc}
+                {proposalInfo.description}
               </p>
             </div>
 
@@ -160,7 +165,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
               )}
               >Votes
               </h4>
-              <DAOSingleProposalVotes votes={votes} />
+              <DAOSingleProposalVotes asset={asset} votes={votes} />
             </div>
 
             <div className="mt-3">

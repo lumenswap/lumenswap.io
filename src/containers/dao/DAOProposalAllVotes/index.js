@@ -8,7 +8,7 @@ import urlMaker from 'helpers/urlMaker';
 import CTable from 'components/CTable';
 import CPagination from 'components/CPagination';
 import humanAmount from 'helpers/humanAmount';
-import { getProposalVotes } from 'api/mockAPI/proposalInfo';
+import { getVotesForProposal } from 'api/daoAPI';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 
@@ -19,11 +19,11 @@ const votesTableHeaders = [
     key: '1',
     render: (voteDetails) => (
       <a
-        href={generateAddressURL(voteDetails.address)}
+        href={generateAddressURL(voteDetails.voter)}
         className={styles.url}
         target="_blank"
         rel="noreferrer"
-      >{minimizeAddress(voteDetails.address)}
+      >{minimizeAddress(voteDetails.voter)}
       </a>
     ),
   },
@@ -31,17 +31,17 @@ const votesTableHeaders = [
     title: 'Vote',
     dataIndex: 'vote',
     key: '2',
-    render: (voteDetails) => `${voteDetails.vote}`,
+    render: (voteDetails) => `${voteDetails.voteText}`,
   },
   {
     title: 'Amount',
     dataIndex: 'amount',
     key: '3',
-    render: (voteDetails) => `${humanAmount(voteDetails.amount)} ${voteDetails.asset.code}`,
+    render: (voteDetails) => `${humanAmount(voteDetails.amount)} ${voteDetails.Proposal.Governance.assetCode}`,
   },
 ];
 
-const DAOProposalAllVotes = ({ governanceAssetInfo }) => {
+const DAOProposalAllVotes = ({ proposalVotes, proposalInfo }) => {
   const router = useRouter();
   const [votes, setVotes] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,22 +49,22 @@ const DAOProposalAllVotes = ({ governanceAssetInfo }) => {
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: governanceAssetInfo.name },
+    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: proposalVotes.proposalData },
     { url: `${urlMaker.dao.singleDao.proposalInfo(router.query.name, router.query.id)}`, name: 'Proposal info' },
     { name: 'All votes' },
   ];
 
   useEffect(() => {
-    getProposalVotes(router.query.id,
-      { page: currentPage, assetName: governanceAssetInfo.officialName })
+    getVotesForProposal(router.query.id,
+      { page: currentPage })
       .then((res) => {
-        setVotes(res.votes);
+        setVotes(res.data);
         setPages(res.totalPages);
       });
   }, [currentPage]);
 
   return (
-    <DAOContainer title="All Votes | Lumenswap" info={governanceAssetInfo}>
+    <DAOContainer title="All Votes | Lumenswap" info={proposalInfo}>
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">

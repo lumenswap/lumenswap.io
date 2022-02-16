@@ -14,7 +14,7 @@ const FormOptions = ({ control }) => {
     {
       name: 2,
       id: 10,
-      defaultValue: "I'm disagree",
+      defaultValue: 'Revoke Proposal',
     },
     ],
   );
@@ -43,11 +43,15 @@ const FormOptions = ({ control }) => {
               control={control}
               defaultValue={option.defaultValue ?? ''}
               rules={{
-                required: `${option.name === 1 ? 'At least 2 options are required' : 'Please fill out all options'}`,
+                required: {
+                  value: options.length < 2,
+                  message: `${options.length < 2 ? 'At least 2 options are required' : 'Please fill out all options'}`,
+                },
               }}
               render={(props) => (
                 <Option
                   props={props}
+                  ß
                   show={show}
                   setShow={setShow}
                   option={option}

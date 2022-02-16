@@ -4,7 +4,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import humanAmount from 'helpers/humanAmount';
 import styles from './styles.module.scss';
 
-function DAOSingleProposalVotes({ votes }) {
+function DAOSingleProposalVotes({ votes, asset }) {
   const votesTableHeaders = [
     {
       title: 'Address',
@@ -12,11 +12,11 @@ function DAOSingleProposalVotes({ votes }) {
       key: '1',
       render: (voteDetails) => (
         <a
-          href={generateAddressURL(voteDetails.address)}
+          href={generateAddressURL(voteDetails.voter)}
           className={styles.url}
           target="_blank"
           rel="noreferrer"
-        >{minimizeAddress(voteDetails.address)}
+        >{minimizeAddress(voteDetails.voter)}
         </a>
       ),
     },
@@ -24,13 +24,17 @@ function DAOSingleProposalVotes({ votes }) {
       title: 'Vote',
       dataIndex: 'vote',
       key: '2',
-      render: (voteDetails) => `${voteDetails.vote}`,
+      render: (voteDetails) => (
+        <span style={{ width: 250 }} className="truncate">
+          {voteDetails.voteText}
+        </span>
+      ),
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: (voteDetails) => `${humanAmount(voteDetails.amount)} ${voteDetails.asset.code}`,
+      render: (voteDetails) => `${humanAmount(voteDetails.amount)} ${asset.code}`,
     },
   ];
 

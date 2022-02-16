@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
-import SelectOption from 'components/SelectOption';
 import CPagination from 'components/CPagination';
 import CTable from 'components/CTable';
 import useRequiredLogin from 'hooks/useRequiredLogin';
-import { getMyActivity } from 'api/mockAPI/daoMyActivity';
-import { useSelector } from 'react-redux';
-import { extractLogoByToken } from 'helpers/asset';
+import { useDispatch, useSelector } from 'react-redux';
+import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
 import urlMaker from 'helpers/urlMaker';
+import generateClaimClaimableBalanceTRX from 'stellar-trx/generateClaimClaimableBalanceTRX';
+import { getAddressActivity } from 'api/daoAPI';
+import { fetchClaimableBalances } from 'api/stellar';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 
-const dropdownItems = [
-  { value: 'all', label: 'All' },
-  { value: 'not-claimed', label: 'Claim' },
-  { value: 'claimed', label: 'Claimed' },
-  { value: 'in-progress', label: 'In progress' },
-];
+const ACTIVITY_TEXTS = {
+  CREATE_PROPOSAL: 'Create Proposal',
+  CAST_VOTE: 'Vote',
+};
+
+const ACTIVITY_TYPES = {
+  CREATE_PROPOSAL: 'CREATE_PROPOSAL',
+  CAST_VOTE: 'CAST_VOTE',
+};
+
+function calcualateActivityAmount(activity) {
+  if (activity.Proposal) {
+    return `${humanAmount(activity.Proposal.Governance.minimumCreateProposalAmount)} ${activity.Proposal.Governance.assetCode}`;
+  }
+
+  return `${humanAmount(activity.Vote.amount)} ${activity.Vote.assetCode}`;
+}
 
 const activityTableHeaders = [
   {
@@ -28,8 +42,19 @@ const activityTableHeaders = [
     key: '1',
     render: (activity) => (
       <div className="d-flex align-items-center">
-        <Image src={extractLogoByToken(activity.asset)} width={24} height={24} />
-        <div className="ml-1">{activity.asset.code}</div>
+        <Image
+          src={
+            extractLogoByToken(getAssetDetails(
+              {
+                code: activity.Proposal.Governance.assetCode,
+                issuer: activity.Proposal.Governance.assetIssuer,
+              },
+            ))
+          }
+          width={24}
+          height={24}
+        />
+        <div className="ml-1">{activity.Proposal.Governance.assetCode}</div>
       </div>
     ),
   },
@@ -37,19 +62,19 @@ const activityTableHeaders = [
     title: 'Date',
     dataIndex: 'date',
     key: '2',
-    render: (activity) => `${moment(activity.date).fromNow()}`,
+    render: (activity) => `${moment(activity.createdAt).fromNow()}`,
   },
   {
     title: 'Amount',
     dataIndex: 'amount',
     key: '3',
-    render: (activity) => `${humanAmount(activity.amount)} ${activity.asset.code}`,
+    render: (activity) => calcualateActivityAmount(activity),
   },
   {
     title: 'Info',
     dataIndex: 'info',
     key: '3',
-    render: (activity) => `${activity.info}`,
+    render: (activity) => ACTIVITY_TEXTS[activity.activityType],
   },
   {
     title: '',
@@ -62,24 +87,48 @@ const activityTableHeaders = [
 ];
 
 function ActivityTableAction({ activityInfo }) {
-  const handleClaim = () => {
-    // do something
+  const dispatch = useDispatch();
+  const handleClaim = async () => {
+    if (activityInfo.activityType === ACTIVITY_TYPES.CREATE_PROPOSAL) {
+      // eslint-disable-next-line no-inner-declarations
+      function func() {
+        return generateClaimClaimableBalanceTRX(
+          activityInfo.userAddress,
+          activityInfo.Proposal.claimableBalanceId,
+        );
+      }
+
+      const trx = await showGenerateTrx(func, dispatch);
+      await showSignResponse(trx, dispatch);
+    } else {
+      // eslint-disable-next-line no-inner-declarations
+      function func() {
+        return generateClaimClaimableBalanceTRX(
+          activityInfo.userAddress,
+          activityInfo.Vote.claimableBalanceId,
+        );
+      }
+
+      const trx = await showGenerateTrx(func, dispatch);
+      await showSignResponse(trx, dispatch);
+    }
   };
   if (activityInfo.type === 'claimed') {
-    return <div className={styles.claimed}>claimed</div>;
+    return <div className={styles.claimed}>Claimed</div>;
   }
   if (activityInfo.type === 'not-claimed') {
     return <div onClick={handleClaim} className="color-primary cursor-pointer">Claim</div>;
   }
   if (activityInfo.type === 'in-progress') {
-    return 'In progress';
+    return 'In Progress';
   }
   return null;
 }
 
 const DAOMyActivity = () => {
-  const [select, setSelect] = useState(dropdownItems[0]);
   const [userActivities, setUserActivities] = useState(null);
+  const [userClaimableBalances, setUserClaimableBalances] = useState(null);
+
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
@@ -88,10 +137,17 @@ const DAOMyActivity = () => {
   const userAddress = useSelector((state) => state.user.detail.address);
 
   useEffect(() => {
+    if (userAddress) {
+      fetchClaimableBalances(userAddress).then((balances) => {
+        setUserClaimableBalances(balances._embedded.records);
+      });
+    }
+  }, [userAddress]);
+
+  useEffect(() => {
     setUserActivities(null);
-    getMyActivity(userAddress, {
+    getAddressActivity(userAddress, {
       page,
-      type: select.value,
     }).then((activities) => {
       setUserActivities(activities.data);
       setPages(activities.totalPages);
@@ -99,7 +155,53 @@ const DAOMyActivity = () => {
         setPage(1);
       }
     });
-  }, [select, page]);
+  }, [page]);
+
+  const enrichedDataSource = [];
+  if (userActivities && userClaimableBalances) {
+    for (const activity of userActivities) {
+      let claimType = 'not-claimed';
+      if (activity.activityType === ACTIVITY_TYPES.CREATE_PROPOSAL) {
+        const balanceExists = userClaimableBalances
+          .find((balance) => balance.id === activity.Proposal.id);
+        if (balanceExists) {
+          if (
+            new Date(activity.Proposal.endTime).getTime() + 5 * 60 * 1000
+            > new Date().getTime()
+          ) {
+            claimType = 'not-claimed';
+          } else {
+            claimType = 'in-progress';
+          }
+        } else {
+          claimType = 'claimed';
+        }
+      }
+
+      if (activity.activityType === ACTIVITY_TYPES.CAST_VOTE) {
+        const balanceExists = userClaimableBalances
+          .find((balance) => balance.id === activity.Vote.id);
+
+        if (balanceExists) {
+          if (
+            new Date(activity.Vote.Proposal.endTime).getTime() + 5 * 60 * 1000
+            > new Date().getTime()
+          ) {
+            claimType = 'not-claimed';
+          } else {
+            claimType = 'in-progress';
+          }
+        } else {
+          claimType = 'claimed';
+        }
+      }
+
+      enrichedDataSource.push({
+        ...activity,
+        type: claimType,
+      });
+    }
+  }
 
   return (
     <DAOContainer title="My activity | Lumenswap">
@@ -108,22 +210,13 @@ const DAOMyActivity = () => {
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
             <div className="d-flex justify-content-between align-items-center">
               <h1 className={styles.title}>My activity</h1>
-              <div>
-                <SelectOption
-                  items={dropdownItems}
-                  defaultValue={select}
-                  setValue={setSelect}
-                  className={styles.filter}
-                  isSearchable={false}
-                />
-              </div>
             </div>
 
             <div className={styles.card}>
               <CTable
                 className={styles.table}
                 columns={activityTableHeaders}
-                dataSource={userActivities}
+                dataSource={enrichedDataSource}
                 loading={!userActivities}
                 noDataMessage="There is no activity"
                 rowFix={{ rowNumbers: 10, rowHeight: 51, headerRowHeight: 43 }}

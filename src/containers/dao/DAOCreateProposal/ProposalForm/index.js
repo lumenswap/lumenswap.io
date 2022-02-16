@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Controller, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
 import CDatePicker from 'components/CDatePicker/index';
 import moment from 'moment';
 import numeral from 'numeral';
+import { getAssetDetails } from 'helpers/asset';
 import ConfirmProposalModal from './ConfirmProposalModal';
 import CreateProposalError from './CreateProposalError';
 import FormOptions from './FormOptions/index';
@@ -20,6 +21,7 @@ const nextDay = new Date(new Date().setDate(new Date().getDate() + 1));
 
 const ProposalForm = ({ info, setStatus }) => {
   const [show, setShow] = useState(null);
+  const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
   const {
     handleSubmit,
@@ -38,11 +40,36 @@ const ProposalForm = ({ info, setStatus }) => {
   });
 
   const onSubmit = (data) => {
+    const options = [];
+    let sanitizedData = { ...data };
+
+    for (const [key, value] of Object.entries(sanitizedData)) {
+      if (key.startsWith('option')) {
+        options.push(value);
+        delete sanitizedData[key];
+      }
+    }
+
+    sanitizedData = {
+      ...sanitizedData,
+      startTime: moment(data.startTime).utc().set({
+        hour: 24, minute: 0, second: 0, millisecond: 0,
+      }).valueOf(),
+      endTime: moment(data.endTime).utc().set({
+        hour: 24, minute: 0, second: 0, millisecond: 0,
+      }).valueOf(),
+      options,
+      asset: getAssetDetails({ code: info.assetCode, issuer: info.assetIssuer }),
+      amount: info.minValue,
+      proposer: userAddress,
+      governantId: info.id,
+    };
+
     dispatch(openModalAction({
       modalProps: {
         mainClassName: 'modal-br8',
       },
-      content: <ConfirmProposalModal formData={data} setStatus={setStatus} />,
+      content: <ConfirmProposalModal formData={sanitizedData} setStatus={setStatus} />,
     }));
   };
   const handleFocus = (name) => {
@@ -73,16 +100,16 @@ const ProposalForm = ({ info, setStatus }) => {
       <div className={classNames(styles.alert, 'mb-4')}>
         <AlertIcon />
         You need to have a minimum of
-        <span className="mx-1">{numeral(info.minValue).format('0a')} {info.asset.code}</span>
+        <span className="mx-1">{numeral(info.minValue).format('0a')} {info.assetCode}</span>
         in order to submit a proposal.
       </div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="question"
+          name="title"
           control={control}
           defaultValue=""
           rules={{
-            required: 'question required',
+            required: 'Question required',
           }}
           render={(props) => (
             <CreateProposalInput
@@ -94,11 +121,11 @@ const ProposalForm = ({ info, setStatus }) => {
           )}
         />
         <Controller
-          name="proposal"
+          name="description"
           control={control}
           defaultValue=""
           rules={{
-            required: 'description required',
+            required: 'Description required',
           }}
           render={(props) => (
             <CreateProposalTextArea
@@ -115,7 +142,7 @@ const ProposalForm = ({ info, setStatus }) => {
           <div className="col-lg-5 col-md-6 col-sm-6 col-12">
             <label className="label-primary">Start date</label>
             <Controller
-              name="startDate"
+              name="startTime"
               control={control}
               defaultValue=""
               render={(props) => (
@@ -130,14 +157,14 @@ const ProposalForm = ({ info, setStatus }) => {
           <div className="col-lg-5 col-md-6 col-sm-6 col-12 mt-sm-0 mt-4">
             <label className="label-primary">End date</label>
             <Controller
-              name="endDate"
+              name="endTime"
               control={control}
               defaultValue=""
               render={(props) => (
                 <CDatePicker
                   onChange={props.onChange}
                   value={props.value}
-                  minDate={new Date(getValues('startDate')).setDate(new Date(getValues('startDate')).getDate() + 1)}
+                  minDate={new Date(getValues('startTime')).setDate(new Date(getValues('startTime')).getDate() + 1)}
                 />
               )}
             />

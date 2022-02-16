@@ -1,20 +1,52 @@
 import RadioGroup from 'components/RadioGroup';
 import Button from 'components/Button';
-import { useDispatch } from 'react-redux';
-import { closeModalAction } from 'actions/modal';
+import { useDispatch, useSelector } from 'react-redux';
 import humanAmount from 'helpers/humanAmount';
+import { Claimant } from 'stellar-sdk';
+import { getAssetDetails } from 'helpers/asset';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimClaimableBalanceTRX';
+import showSignResponse from 'helpers/showSignResponse';
 import styles from './styles.module.scss';
 
 const ConfirmVoteModal = ({ proposalInfo }) => {
   const radioGroupOptions = proposalInfo.votes.map((vote) => ({
     ...vote,
-    value: vote.title.toLowerCase(),
-    label: vote.title,
+    value: vote.value.toLowerCase(),
+    label: vote.value,
   }));
   const dispatch = useDispatch();
+  const userAddress = useSelector((state) => state.user.detail.address);
 
   const handleConfirm = () => {
-    dispatch(closeModalAction());
+    const claimants = [
+      new Claimant(userAddress, Claimant
+        .predicateNot(Claimant
+          .predicateBeforeAbsoluteTime(
+            (new Date(proposalInfo.endTime).getTime() + 5 * 60 * 1000).toString(),
+          ))),
+      new Claimant(process.env.REACT_APP_DAO_LOCKER_ADDRESS, Claimant
+        .predicateNot(Claimant
+          .predicateBeforeAbsoluteTime(
+            (new Date(proposalInfo.endTime).getTime() + 30 * 24 * 60 * 60 * 1000).toString(),
+          ))),
+    ];
+
+    async function generateClaimableBalance() {
+      return generateClaimableBalanceForDaoTRX(
+        userAddress,
+        proposalInfo.amount,
+        getAssetDetails(proposalInfo.asset),
+        claimants,
+        'L_DAO_P',
+        `${proposalInfo.id}-${proposalInfo.vote}`,
+      );
+    }
+
+    showGenerateTrx(generateClaimableBalance, dispatch)
+      .then(async (claimableBalanceTRX) => {
+        await showSignResponse(claimableBalanceTRX, dispatch);
+      });
   };
   return (
     <div className="pb-4 main">

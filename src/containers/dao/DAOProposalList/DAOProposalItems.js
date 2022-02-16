@@ -14,10 +14,11 @@ function DAOProposalItems({ proposals, governanceInfo }) {
       </div>
     );
   }
+
   return (
     proposals?.map((proposal) => (
       <div className="mt-4" key={proposal.id}>
-        <ProposalInfo item={proposal} pageName={governanceInfo.officialName} />
+        <ProposalInfo item={proposal} pageName={governanceInfo.name.toLowerCase()} />
       </div>
     ))
   );
