@@ -18,6 +18,7 @@ import humanAmount from 'helpers/humanAmount';
 import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import { useEffect, useState } from 'react';
 import { getVotesForProposal } from 'api/daoAPI';
+import BN from 'helpers/BN';
 import DAOContainer from '../DAOContainer';
 import DAOSingleProposalVotes from './DAOSingleProposalVotes';
 import VoteModal from './VoteModal';
@@ -90,7 +91,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     },
     {
       title: 'Total votes',
-      render: (proposalDetails) => `${humanAmount(proposalDetails.totalVotes)} ${asset.code}`,
+      render: (proposalDetails) => `${humanAmount(new BN(proposalDetails.totalVotes).div(10 ** 7).toFixed(7))} ${asset.code}`,
     },
     {
       title: 'Proposer',
@@ -124,9 +125,12 @@ const DAOSingleProposal = ({ proposalInfo }) => {
               <h3 className={styles['card-title']}>
                 {proposalInfo.title}
               </h3>
-              {proposalInfo.options.map((vote, index) => (
+              {proposalInfo.options.map((option, index) => (
                 <div key={index} className="mt-4">
-                  <Progressbar label={vote.value} value={vote.percentage} />
+                  <Progressbar
+                    label={option.value}
+                    value={new BN(option.amount).div(proposalInfo.totalVotes).times(100).toString()}
+                  />
                 </div>
               ))}
 

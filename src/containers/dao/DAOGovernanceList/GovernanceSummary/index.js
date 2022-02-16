@@ -34,7 +34,7 @@ const GovernanceSummary = ({ item }) => {
       return generateAddTrustLineTRX(userAddress, asset);
     }
     if (isLogged && !foundUserAsset) {
-      const trx = showGenerateTrx(func, dispatch);
+      const trx = await showGenerateTrx(func, dispatch);
       await showSignResponse(trx, dispatch);
     }
     if (!isLogged) {

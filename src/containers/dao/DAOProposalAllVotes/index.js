@@ -9,6 +9,7 @@ import CTable from 'components/CTable';
 import CPagination from 'components/CPagination';
 import humanAmount from 'helpers/humanAmount';
 import { getVotesForProposal } from 'api/daoAPI';
+import BN from 'helpers/BN';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 
@@ -37,7 +38,7 @@ const votesTableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: '3',
-    render: (voteDetails) => `${humanAmount(voteDetails.amount)} ${voteDetails.Proposal.Governance.assetCode}`,
+    render: (voteDetails) => `${humanAmount(new BN(voteDetails.amount).div(10 ** 7).toFixed(7))} ${voteDetails.Proposal.Governance.assetCode}`,
   },
 ];
 

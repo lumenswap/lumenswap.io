@@ -22,12 +22,13 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
         new Claimant(formData.proposer, Claimant
           .predicateNot(Claimant
             .predicateBeforeAbsoluteTime(
-              (new Date(formData.endTime).getTime() + 5 * 60 * 1000).toString(),
+              ((new Date(formData.endTime).getTime() + 5 * 60 * 1000) / 1000).toString(),
             ))),
-        new Claimant(process.env.REACT_APP_DAO_LOCKER_ADDRESS, Claimant
+        new Claimant('GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK', Claimant
           .predicateNot(Claimant
             .predicateBeforeAbsoluteTime(
-              (new Date(formData.endTime).getTime() + 30 * 24 * 60 * 60 * 1000).toString(),
+              ((new Date(formData.endTime)
+                .getTime() + 3 * 30 * 24 * 60 * 60 * 1000) / 1000).toString(),
             ))),
       ];
 

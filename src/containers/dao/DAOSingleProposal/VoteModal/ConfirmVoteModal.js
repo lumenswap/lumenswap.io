@@ -5,14 +5,14 @@ import humanAmount from 'helpers/humanAmount';
 import { Claimant } from 'stellar-sdk';
 import { getAssetDetails } from 'helpers/asset';
 import showGenerateTrx from 'helpers/showGenerateTrx';
-import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimClaimableBalanceTRX';
+import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimableBalanceForDaoTRX';
 import showSignResponse from 'helpers/showSignResponse';
 import styles from './styles.module.scss';
 
 const ConfirmVoteModal = ({ proposalInfo }) => {
   const radioGroupOptions = proposalInfo.votes.map((vote) => ({
     ...vote,
-    value: vote.value.toLowerCase(),
+    value: vote.optionNumber.toString(),
     label: vote.value,
   }));
   const dispatch = useDispatch();
@@ -23,12 +23,13 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
       new Claimant(userAddress, Claimant
         .predicateNot(Claimant
           .predicateBeforeAbsoluteTime(
-            (new Date(proposalInfo.endTime).getTime() + 5 * 60 * 1000).toString(),
+            ((new Date(proposalInfo.endTime).getTime() + 5 * 60 * 1000) / 1000).toString(),
           ))),
       new Claimant(process.env.REACT_APP_DAO_LOCKER_ADDRESS, Claimant
         .predicateNot(Claimant
           .predicateBeforeAbsoluteTime(
-            (new Date(proposalInfo.endTime).getTime() + 30 * 24 * 60 * 60 * 1000).toString(),
+            ((new Date(proposalInfo.endTime).getTime() + 3 * 30 * 24 * 60 * 60 * 1000) / 1000)
+              .toString(),
           ))),
     ];
 
@@ -38,7 +39,7 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
         proposalInfo.amount,
         getAssetDetails(proposalInfo.asset),
         claimants,
-        'L_DAO_P',
+        'L_DAO_V',
         `${proposalInfo.id}-${proposalInfo.vote}`,
       );
     }

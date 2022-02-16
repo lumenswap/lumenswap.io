@@ -13,7 +13,7 @@ const RadioGroup = ({
         <label key={item.value}>
           <input
             type="radio"
-            checked={value === item.value}
+            checked={value.toString() === item.value.toString()}
             disabled={item.disabled}
             value={item.value}
             name={name}

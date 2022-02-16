@@ -14,6 +14,7 @@ import { getAddressActivity } from 'api/daoAPI';
 import { fetchClaimableBalances } from 'api/stellar';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import BN from 'helpers/BN';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 
@@ -29,10 +30,10 @@ const ACTIVITY_TYPES = {
 
 function calcualateActivityAmount(activity) {
   if (activity.Proposal) {
-    return `${humanAmount(activity.Proposal.Governance.minimumCreateProposalAmount)} ${activity.Proposal.Governance.assetCode}`;
+    return `${humanAmount(new BN(activity.Proposal.Governance.minimumCreateProposalAmount).toFixed(7))} ${activity.Proposal.Governance.assetCode}`;
   }
 
-  return `${humanAmount(activity.Vote.amount)} ${activity.Vote.assetCode}`;
+  return `${humanAmount(new BN(activity.Vote.amount).div(10 ** 7).toFixed(7))} ${activity.Vote.Proposal.Governance.assetCode}`;
 }
 
 const activityTableHeaders = [
@@ -40,23 +41,39 @@ const activityTableHeaders = [
     title: 'Governance',
     dataIndex: 'governance',
     key: '1',
-    render: (activity) => (
-      <div className="d-flex align-items-center">
-        <Image
-          src={
-            extractLogoByToken(getAssetDetails(
-              {
-                code: activity.Proposal.Governance.assetCode,
-                issuer: activity.Proposal.Governance.assetIssuer,
-              },
-            ))
-          }
-          width={24}
-          height={24}
-        />
-        <div className="ml-1">{activity.Proposal.Governance.assetCode}</div>
-      </div>
-    ),
+    render: (activity) => {
+      let logo = '';
+      let assetCode = '';
+
+      if (activity.Proposal) {
+        logo = extractLogoByToken(
+          getAssetDetails({
+            code: activity.Proposal.Governance.assetCode,
+            issuer: activity.Proposal.Governance.assetIssuer,
+          }),
+        );
+        assetCode = activity.Proposal.Governance.assetCode;
+      } else if (activity.Vote) {
+        logo = extractLogoByToken(
+          getAssetDetails({
+            code: activity.Vote.Proposal.Governance.assetCode,
+            issuer: activity.Vote.Proposal.Governance.assetIssuer,
+          }),
+        );
+        assetCode = activity.Vote.Proposal.Governance.assetCode;
+      }
+
+      return (
+        <div className="d-flex align-items-center">
+          <Image
+            src={logo}
+            width={24}
+            height={24}
+          />
+          <div className="ml-1">{assetCode}</div>
+        </div>
+      );
+    },
   },
   {
     title: 'Date',
@@ -73,13 +90,13 @@ const activityTableHeaders = [
   {
     title: 'Info',
     dataIndex: 'info',
-    key: '3',
+    key: '4',
     render: (activity) => ACTIVITY_TEXTS[activity.activityType],
   },
   {
     title: '',
     dataIndex: 'action',
-    key: '4',
+    key: '5',
     render: (activity) => (
       <ActivityTableAction activityInfo={activity} />
     ),
@@ -138,7 +155,7 @@ const DAOMyActivity = () => {
 
   useEffect(() => {
     if (userAddress) {
-      fetchClaimableBalances(userAddress).then((balances) => {
+      fetchClaimableBalances({ claimant: userAddress }).then((balances) => {
         setUserClaimableBalances(balances._embedded.records);
       });
     }
@@ -163,11 +180,11 @@ const DAOMyActivity = () => {
       let claimType = 'not-claimed';
       if (activity.activityType === ACTIVITY_TYPES.CREATE_PROPOSAL) {
         const balanceExists = userClaimableBalances
-          .find((balance) => balance.id === activity.Proposal.id);
+          .find((balance) => balance.id === activity.Proposal.claimableBalanceId);
+
         if (balanceExists) {
           if (
-            new Date(activity.Proposal.endTime).getTime() + 5 * 60 * 1000
-            > new Date().getTime()
+            new Date(activity.Proposal.endTime).getTime() + 5 * 60 * 1000 < new Date().getTime()
           ) {
             claimType = 'not-claimed';
           } else {
@@ -180,7 +197,7 @@ const DAOMyActivity = () => {
 
       if (activity.activityType === ACTIVITY_TYPES.CAST_VOTE) {
         const balanceExists = userClaimableBalances
-          .find((balance) => balance.id === activity.Vote.id);
+          .find((balance) => balance.id === activity.Vote.claimableBalanceId);
 
         if (balanceExists) {
           if (
@@ -199,6 +216,7 @@ const DAOMyActivity = () => {
       enrichedDataSource.push({
         ...activity,
         type: claimType,
+        key: activity.id,
       });
     }
   }
