@@ -17,7 +17,7 @@ import CreateProposalTextArea from './CreateProposalTextArea';
 import CreateProposalInput from './CreateProposalInput';
 import styles from './styles.module.scss';
 
-const nextDay = new Date(new Date().setDate(new Date().getDate() + 1));
+const nextDayMoment = moment().utc().startOf('day').add(2, 'day');
 
 const ProposalForm = ({ info, setStatus }) => {
   const [show, setShow] = useState(null);
@@ -35,8 +35,8 @@ const ProposalForm = ({ info, setStatus }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      startTime: new Date(nextDay).setHours(0, 0, 0, 0),
-      endTime: new Date(nextDay.setDate(nextDay.getDate() + 1)).setHours(0, 0, 0, 0),
+      startTime: nextDayMoment.toDate(),
+      endTime: nextDayMoment.clone().add(1, 'day').toDate(),
     },
   });
 
@@ -73,9 +73,11 @@ const ProposalForm = ({ info, setStatus }) => {
       content: <ConfirmProposalModal formData={sanitizedData} setStatus={setStatus} />,
     }));
   };
+
   const handleFocus = (name) => {
     setShow(name);
   };
+
   function generateFormErrorText() {
     for (const err of Object.values(errors)) {
       if (err) {
@@ -91,7 +93,7 @@ const ProposalForm = ({ info, setStatus }) => {
     const startDateIsAfterEndDate = moment(startDate).isAfter(getValues('endTime'));
     const startDateIsSameWithEndDate = moment(startDate).isSame(getValues('endTime'));
     if (startDateIsAfterEndDate || startDateIsSameWithEndDate) {
-      setValue('endTime', new Date(startDate.setDate(startDate.getDate() + 1)),
+      setValue('endTime', moment(getValues('startTime')).add(1, 'day').toDate(),
         { shouldValidate: true });
     }
   }, [JSON.stringify(getValues())]);
@@ -150,7 +152,7 @@ const ProposalForm = ({ info, setStatus }) => {
                 <CDatePicker
                   onChange={props.onChange}
                   value={props.value}
-                  minDate={nextDay}
+                  minDate={nextDayMoment.toDate()}
                 />
               )}
             />
@@ -165,7 +167,7 @@ const ProposalForm = ({ info, setStatus }) => {
                 <CDatePicker
                   onChange={props.onChange}
                   value={props.value}
-                  minDate={new Date(getValues('startTime')).setDate(new Date(getValues('startTime')).getDate() + 1)}
+                  minDate={moment(getValues('startTime')).add(1, 'day').toDate()}
                 />
               )}
             />
