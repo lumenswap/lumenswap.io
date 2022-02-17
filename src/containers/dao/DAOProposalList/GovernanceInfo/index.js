@@ -13,6 +13,7 @@ import generateAddTrustLineTRX from 'stellar-trx/generateAddTrustLineTRX';
 import CCard from 'components/CCard';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import { assetGenerator } from 'helpers/explorerURLGenerator';
 import styles from './styles.module.scss';
 
 const GovernanceInfo = ({ governance }) => {
@@ -67,7 +68,7 @@ const GovernanceInfo = ({ governance }) => {
         <div className={styles.detail}>
           <span className={styles.text}>Asset:</span>
           <a
-            href=""
+            href={assetGenerator(asset.code, asset.issuer)}
             target="_blank"
             rel="noreferrer"
             className={styles['asset-link']}

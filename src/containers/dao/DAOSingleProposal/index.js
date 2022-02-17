@@ -12,7 +12,7 @@ import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
 import { openModalAction } from 'actions/modal';
 import useIsLogged from 'hooks/useIsLogged';
 import minimizeAddress from 'helpers/minimizeAddress';
-import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLGenerator';
+import { generateAddressURL, ipfsHashGenerator } from 'helpers/explorerURLGenerator';
 import moment from 'moment';
 import humanAmount from 'helpers/humanAmount';
 import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
@@ -70,7 +70,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
       title: 'Proposal ID',
       externalLink: {
         title: minimizeAddress(proposalInfo.id, 8),
-        url: generateTransactionURL(proposalInfo.id),
+        url: ipfsHashGenerator(proposalInfo.id),
       },
     },
     {
