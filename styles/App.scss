@@ -169,6 +169,12 @@ input[type='number'] {
   border-right-color: $DarkGray !important;
 }
 
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .tooltip-inner {
   border: none !important;
   box-shadow: none !important;

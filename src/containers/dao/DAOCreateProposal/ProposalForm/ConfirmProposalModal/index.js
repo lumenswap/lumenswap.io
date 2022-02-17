@@ -1,10 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import sendProposal from 'api/mockAPI/createProposal';
 import Button from 'components/Button';
 import { closeModalAction } from 'actions/modal';
 import ContractIcon from 'assets/images/contract';
 
+import { createPendingProposal } from 'api/daoAPI';
+import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimableBalanceForDaoTRX';
+import { getAssetDetails } from 'helpers/asset';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
+import { Claimant } from 'stellar-sdk';
 import styles from './styles.module.scss';
 
 const ConfirmProposalModal = ({ formData, setStatus }) => {
@@ -12,8 +17,39 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
 
   const handleConfirm = () => {
     setStatus('loading');
-    sendProposal(formData).then((res) => {
-      setStatus(res.status);
+    createPendingProposal(formData).then(async (res) => {
+      const claimants = [
+        new Claimant(formData.proposer, Claimant
+          .predicateNot(Claimant
+            .predicateBeforeAbsoluteTime(
+              ((new Date(formData.endTime).getTime() + 5 * 60 * 1000) / 1000).toString(),
+            ))),
+        new Claimant('GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK', Claimant
+          .predicateNot(Claimant
+            .predicateBeforeAbsoluteTime(
+              ((new Date(formData.endTime)
+                .getTime() + 3 * 30 * 24 * 60 * 60 * 1000) / 1000).toString(),
+            ))),
+      ];
+
+      async function generateClaimableBalance() {
+        return generateClaimableBalanceForDaoTRX(
+          formData.proposer,
+          formData.amount,
+          getAssetDetails(formData.asset),
+          claimants,
+          'L_DAO_P',
+          res.IpfsHash,
+        );
+      }
+
+      showGenerateTrx(generateClaimableBalance, dispatch)
+        .then(async (claimableBalanceTRX) => {
+          await showSignResponse(claimableBalanceTRX, dispatch);
+          setStatus('success');
+        });
+    }).catch((err) => {
+      console.log(err);
     });
     dispatch(closeModalAction());
   };

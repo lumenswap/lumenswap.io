@@ -7,7 +7,10 @@ const DAOContainer = ({ children, title, info }) => (
     <Head>
       <title>{title}</title>
     </Head>
-    <DAOHeader asset={info && info.asset} assetBoxColor={info && info.assetColor} />
+    <DAOHeader
+      asset={info && { code: info.assetCode, issuer: info.assetIssuer }}
+      assetBoxColor={info && info.assetColor}
+    />
     <ServerSideLoading>
       {children}
     </ServerSideLoading>

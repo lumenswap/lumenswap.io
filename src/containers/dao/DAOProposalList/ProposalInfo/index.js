@@ -9,14 +9,15 @@ import Link from 'next/link';
 
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
+import { extractLogoByToken } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 const ProposalItemBadge = ({ status }) => {
-  if (status === 'active') {
+  if (status.toLowerCase() === 'active') {
     return <Badge variant="success" content="Active" />;
   }
 
-  if (status === 'ended') {
+  if (status.toLowerCase() === 'ended') {
     return <Badge variant="info" content="Ended" />;
   }
 
@@ -25,7 +26,7 @@ const ProposalItemBadge = ({ status }) => {
 
 const ProposalInfo = ({ item, pageName }) => {
   const {
-    title, desc, detail, address, logo, status, endDate, id,
+    title, description, proposer, status, endTime, id, Governance,
   } = item;
 
   return (
@@ -37,24 +38,28 @@ const ProposalInfo = ({ item, pageName }) => {
               <div className="d-flex align-items-center">
                 <div className={styles.img}>
                   <Image
-                    src={logo}
+                    src={
+                      extractLogoByToken(
+                        { code: Governance.assetCode, issuer: Governance.assetIssuer },
+                      )
+                    }
                     width={24}
                     height={24}
                     alt="sample"
                   />
                 </div>
-                <div className={styles.text}>By {minimizeAddress(address)}</div>
+                <div className={styles.text}>By {minimizeAddress(proposer)}</div>
               </div>
               <div>
                 <ProposalItemBadge status={status} />
               </div>
             </div>
             <h4 className={styles.title}>{title}</h4>
-            <p className={classNames(styles.text, 'mt-2 mb-0')}>{desc}</p>
+            <p className={classNames(styles.text, 'mt-2 mb-0')}>{description}</p>
 
             <div className={classNames(styles.text, styles.detail, 'mt-4')}>
               {status !== 'active' && <SuccessIcon />}
-              {status === 'active' ? `End in ${Math.floor(moment.duration(endDate - new Date().getTime()).asDays())} days` : detail}
+              {status === 'active' ? `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days` : 'Testing'}
             </div>
           </div>
         </CCard>

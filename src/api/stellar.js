@@ -191,3 +191,11 @@ export function fetchAssetHolderList(asset) {
     },
   }).then((res) => res.data);
 }
+
+export function listAssets(query) {
+  return axios.get(`${process.env.REACT_APP_HORIZON}/assets`, {
+    params: {
+      ...query,
+    },
+  }).then((res) => res.data);
+}

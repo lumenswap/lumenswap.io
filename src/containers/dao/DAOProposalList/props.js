@@ -1,15 +1,27 @@
-import { getProposalInfo } from '../../../api/mockAPI/proposals';
+import { getGovernanceProposals, getGovernances } from 'api/daoAPI';
 
 export async function daoProposalsGetServerSideProps({ params }) {
   try {
-    const governanceInfo = await getProposalInfo(params.name);
+    const governanceInfoResponse = await getGovernances({ name: params.name });
+
+    if (!governanceInfoResponse || !governanceInfoResponse.length) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const governanceInfo = governanceInfoResponse[0];
+
+    const proposals = await getGovernanceProposals(governanceInfo.id);
+
     return {
       props: {
+        proposals,
         governanceInfo,
       },
     };
   } catch (e) {
-    if (e.response.status === 404) {
+    if (e.response?.status === 404) {
       return {
         notFound: true,
       };

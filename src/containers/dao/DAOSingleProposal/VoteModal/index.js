@@ -25,8 +25,8 @@ const VoteModal = ({ proposalInfo }) => {
   const dispatch = useDispatch();
   const radioGroupOptions = proposalInfo.votes.map((vote) => ({
     ...vote,
-    value: vote.title.toLowerCase(),
-    label: vote.title,
+    value: vote.optionNumber,
+    label: vote.value,
   }));
   const userAssetBalance = useUserSingleAsset(getAssetDetails(proposalInfo.asset));
 
