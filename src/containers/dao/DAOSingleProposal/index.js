@@ -140,7 +140,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
                   <Progressbar
                     label={option.value}
                     value={option.amount && proposalInfo.totalVotes
-                      ? new BN(option.amount).div(proposalInfo.totalVotes).times(100).toString()
+                      ? new BN(option.amount).div(proposalInfo.totalVotes).times(100).toFixed(1)
                       : 0}
                   />
                 </div>
