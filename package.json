@@ -55,6 +55,7 @@
         "redux-devtools-extension": "^2.13.9",
         "redux-persist": "^6.0.0",
         "redux-thunk": "^2.3.0",
+        "slugify": "^1.6.5",
         "stellar-sdk": "^9.0.1",
         "trezor-connect": "^8.1.25",
         "use-breakpoint": "^2.0.1",

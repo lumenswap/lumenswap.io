@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
+import slugify from 'slugify';
 import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
 import numeral from 'numeral';
 import Button from 'components/Button';
 import urlMaker from 'helpers/urlMaker';
-import toSlug from 'helpers/slug';
 import generateAddTrustLineTRX from 'stellar-trx/generateAddTrustLineTRX';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal } from 'actions/modal';
@@ -43,7 +43,7 @@ const GovernanceSummary = ({ item }) => {
   };
 
   return (
-    <Link href={urlMaker.dao.singleDao.root(toSlug(name))} passHref>
+    <Link href={urlMaker.dao.singleDao.root(slugify(name).toLowerCase())} passHref>
       <a className="text-decoration-none">
         <CCard className={classNames(styles.item, styles['md-item'])}>
           <div className="px-3">
