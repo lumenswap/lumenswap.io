@@ -15,18 +15,37 @@ import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import CCard from 'components/CCard';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import { useEffect, useState } from 'react';
+import { listAssets } from 'api/stellar';
 import styles from './styles.module.scss';
 
 const GovernanceSummary = ({ item }) => {
   const {
-    name, description, proposalCount = 0, communityMembersCount, assetCode, assetIssuer,
+    name, description, proposalCount = 0, assetCode, assetIssuer,
   } = item;
+  const [communityMembersCount, setCommunityMembersCount] = useState(0);
   const isLogged = useIsLogged();
   const userAddress = useSelector((state) => state.user.detail.address);
   const asset = getAssetDetails({ code: assetCode, issuer: assetIssuer });
   const foundUserAsset = useUserSingleAsset(asset);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function fetchCommunityMemberCount() {
+      const assets = await listAssets({ asset_code: asset.code });
+
+      const assetData = assets._embedded.records.find(
+        (fetchedAsset) => fetchedAsset.asset_code
+        === item.assetCode && fetchedAsset.asset_issuer
+        === item.assetIssuer,
+      );
+
+      setCommunityMembersCount(assetData?.num_accounts || 0);
+    }
+
+    fetchCommunityMemberCount();
+  }, [item]);
 
   const handleJoinBtn = async (e) => {
     e.preventDefault();
