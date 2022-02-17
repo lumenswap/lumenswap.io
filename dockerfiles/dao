@@ -12,11 +12,11 @@ RUN rm -r ./src/pages/auction
 RUN rm -r ./src/pages/lottery
 RUN rm -r ./src/pages/nft
 RUN rm -r ./src/pages/obm
-RUN rm -r ./src/pages/dao
-RUN mv ./src/pages/reward/* ./src/pages
 RUN rm -r ./src/pages/reward
+RUN mv ./src/pages/dao/* ./src/pages
+RUN rm -r ./src/pages/dao
 
-ENV REACT_APP_MODE=REWARD
+ENV REACT_APP_MODE=DAO
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
 ENV REACT_APP_LUMENSCAN_URL=https://lumenscan.io
 ENV REACT_APP_HOST=https://amm.lumenswap.io

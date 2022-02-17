@@ -12,6 +12,7 @@ RUN rm -r ./src/pages/lottery
 RUN rm -r ./src/pages/nft
 RUN rm -r ./src/pages/obm
 RUN rm -r ./src/pages/reward
+RUN rm -r ./src/pages/dao
 RUN mv ./src/pages/auction/* ./src/pages
 RUN rm -r ./src/pages/auction
 
@@ -24,5 +25,5 @@ ENV REACT_APP_ENV=production
 ENV REACT_APP_LOTTERY_ACCOUNT=GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK
 ENV REACT_APP_LUSI_ISSUER=GCXSMVCOFOINEEETRTVVGGZRQTVMWT6JSLTR6DXBXZLNYGZSHFXI6V2V
 
-RUN npm run build
+ENV REACT_APP_DAO_LOCKER_ADDRESS=GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WKRUN npm run build
 CMD ["npm", "run", "start"]
