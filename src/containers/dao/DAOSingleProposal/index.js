@@ -26,6 +26,7 @@ import styles from './styles.module.scss';
 
 const DAOSingleProposal = ({ proposalInfo }) => {
   const [votes, setVotes] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -65,6 +66,15 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     ));
   }, []);
 
+  useEffect(() => {
+    if (moment(proposalInfo.endTime).isAfter(moment())
+     && moment(proposalInfo.startTime).isBefore(moment())) {
+      setStatus('active');
+    } else {
+      setStatus('inactive');
+    }
+  }, []);
+
   const proposalSummary = [
     {
       title: 'Proposal ID',
@@ -79,7 +89,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     },
     {
       title: 'Start time',
-      render: (proposalDetails) => `${moment(proposalDetails.startDate).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
+      render: (proposalDetails) => `${moment(proposalDetails.startTime).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
     },
     {
       title: 'End time',
@@ -129,12 +139,14 @@ const DAOSingleProposal = ({ proposalInfo }) => {
                 <div key={index} className="mt-4">
                   <Progressbar
                     label={option.value}
-                    value={new BN(option.amount).div(proposalInfo.totalVotes).times(100).toString()}
+                    value={option.amount && proposalInfo.totalVotes
+                      ? new BN(option.amount).div(proposalInfo.totalVotes).times(100).toString()
+                      : 0}
                   />
                 </div>
               ))}
 
-              {isLogged && (
+              {isLogged && status === 'active' && (
                 <Button
                   variant="primary"
                   className={styles.btn}

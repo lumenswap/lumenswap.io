@@ -43,7 +43,7 @@ const activityTableHeaders = [
     key: '1',
     render: (activity) => {
       let logo = '';
-      let assetCode = '';
+      let governanceName = '';
 
       if (activity.Proposal) {
         logo = extractLogoByToken(
@@ -52,7 +52,7 @@ const activityTableHeaders = [
             issuer: activity.Proposal.Governance.assetIssuer,
           }),
         );
-        assetCode = activity.Proposal.Governance.assetCode;
+        governanceName = activity.Proposal.Governance.name;
       } else if (activity.Vote) {
         logo = extractLogoByToken(
           getAssetDetails({
@@ -60,7 +60,7 @@ const activityTableHeaders = [
             issuer: activity.Vote.Proposal.Governance.assetIssuer,
           }),
         );
-        assetCode = activity.Vote.Proposal.Governance.assetCode;
+        governanceName = activity.Vote.Proposal.Governance.name;
       }
 
       return (
@@ -70,7 +70,7 @@ const activityTableHeaders = [
             width={24}
             height={24}
           />
-          <div className="ml-1">{assetCode}</div>
+          <div className="ml-1">{governanceName}</div>
         </div>
       );
     },

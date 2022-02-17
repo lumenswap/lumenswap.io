@@ -55,11 +55,17 @@ const ProposalInfo = ({ item, pageName }) => {
               </div>
             </div>
             <h4 className={styles.title}>{title}</h4>
-            <p className={classNames(styles.text, 'mt-2 mb-0')}>{description}</p>
+            <p className={classNames(styles.text, 'mt-2 mb-0')}> {
+                description.length > 162 ? `${description.slice(0, 162)}...`
+                  : description
+            }
+            </p>
 
             <div className={classNames(styles.text, styles.detail, 'mt-4')}>
               {status !== 'active' && <SuccessIcon />}
-              {status === 'active' ? `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days` : 'Testing'}
+              {status === 'active'
+                ? `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
+                : `Starts in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`}
             </div>
           </div>
         </CCard>
