@@ -155,7 +155,7 @@ const DAOMyActivity = () => {
 
   useEffect(() => {
     if (userAddress) {
-      fetchClaimableBalances({ claimant: userAddress }).then((balances) => {
+      fetchClaimableBalances({ claimant: 'GCERZDUAVEF4M4RVTDZBEKLI3ECYWBBDUU57IIQSHRYDBMU2OUUJNJ2Z' }).then((balances) => {
         setUserClaimableBalances(balances._embedded.records);
       });
     }
@@ -163,7 +163,7 @@ const DAOMyActivity = () => {
 
   useEffect(() => {
     setUserActivities(null);
-    getAddressActivity(userAddress, {
+    getAddressActivity('GCERZDUAVEF4M4RVTDZBEKLI3ECYWBBDUU57IIQSHRYDBMU2OUUJNJ2Z', {
       page,
     }).then((activities) => {
       setUserActivities(activities.data);
@@ -202,7 +202,7 @@ const DAOMyActivity = () => {
         if (balanceExists) {
           if (
             new Date(activity.Vote.Proposal.endTime).getTime() + 5 * 60 * 1000
-            > new Date().getTime()
+            < new Date().getTime()
           ) {
             claimType = 'not-claimed';
           } else {
