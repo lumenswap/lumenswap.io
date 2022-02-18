@@ -144,6 +144,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
                 <div key={index} className="mt-4">
                   <Progressbar
                     label={option.value}
+                    amount={`${new BN(option.amount).div(10 ** 7).toFixed(2)} LSP`}
                     value={option.amount && proposalInfo.totalVotes
                       ? new BN(option.amount).div(proposalInfo.totalVotes).times(100).toFixed(1)
                       : 0}
