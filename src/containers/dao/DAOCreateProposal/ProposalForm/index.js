@@ -36,7 +36,7 @@ const ProposalForm = ({ info, setStatus }) => {
     mode: 'onChange',
     defaultValues: {
       startTime: nextDayMoment.toDate(),
-      endTime: nextDayMoment.clone().add(1, 'day').toDate(),
+      endTime: nextDayMoment.clone().add(5, 'day').toDate(),
     },
   });
 
@@ -89,11 +89,10 @@ const ProposalForm = ({ info, setStatus }) => {
 
   useEffect(() => {
     trigger();
-    const startDate = new Date(getValues('startTime'));
-    const startDateIsAfterEndDate = moment(startDate).isAfter(getValues('endTime'));
-    const startDateIsSameWithEndDate = moment(startDate).isSame(getValues('endTime'));
-    if (startDateIsAfterEndDate || startDateIsSameWithEndDate) {
-      setValue('endTime', moment(getValues('startTime')).add(1, 'day').toDate(),
+    const startTime = getValues('startTime');
+    const endTime = getValues('endTime');
+    if (!moment(endTime).isSame(moment(startTime).add(5, 'day'))) {
+      setValue('endTime', moment(startTime).add(5, 'day').toDate(),
         { shouldValidate: true });
     }
   }, [JSON.stringify(getValues())]);
@@ -167,7 +166,7 @@ const ProposalForm = ({ info, setStatus }) => {
                 <CDatePicker
                   onChange={props.onChange}
                   value={props.value}
-                  minDate={moment(getValues('startTime')).add(1, 'day').toDate()}
+                  disabled
                 />
               )}
             />

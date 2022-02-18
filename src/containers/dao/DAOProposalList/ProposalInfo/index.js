@@ -6,7 +6,7 @@ import CCard from 'components/CCard';
 import Badge from 'components/Badge';
 import SuccessIcon from 'assets/images/success-tick';
 import Link from 'next/link';
-
+import truncateText from 'helpers/truncateText';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { extractLogoByToken } from 'helpers/asset';
@@ -55,15 +55,13 @@ const ProposalInfo = ({ item, pageName }) => {
               </div>
             </div>
             <h4 className={styles.title}>{title}</h4>
-            <p className={classNames(styles.text, 'mt-2 mb-0')}> {
-                description.length > 162 ? `${description.slice(0, 162)}...`
-                  : description
-            }
+            <p className={classNames(styles.text, 'mt-2 mb-0')}>
+              {truncateText(description, 162)}
             </p>
 
             <div className={classNames(styles.text, styles.detail, 'mt-4')}>
-              {status !== 'active' && <SuccessIcon />}
-              {status === 'active'
+              {status.toLowerCase() === 'ended' && <SuccessIcon />}
+              {status.toLowerCase() === 'active'
                 ? `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
                 : `Starts in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`}
             </div>

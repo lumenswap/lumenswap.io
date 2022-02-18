@@ -12,12 +12,12 @@ function CreateProposalTextArea({
           placeholder="Tell more about your proposal (optional)"
           value={props.value}
           onChange={props.onChange}
-          maxLength={500}
+          maxLength={1500}
           onFocus={() => { handleFocus(props.name); }}
           onBlur={() => { setShow(null); }}
         />
         <div className="text-right mt-2">
-          {props.name === show && <CharCounter length={500} char={props.value} />}
+          {props.name === show && <CharCounter length={1500} char={props.value} />}
         </div>
       </div>
     </div>
