@@ -6,6 +6,7 @@ import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import Progressbar from 'components/Progressbar';
 import Button from 'components/Button';
+import Link from 'next/link';
 import ArrowIcon from 'assets/images/angleRight';
 import InfoBox from 'components/InfoBox';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
@@ -113,10 +114,14 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     {
       title: 'Governance',
       render: (proposalDetails) => (
-        <div className="d-flex align-items-center">
-          <Image src={extractLogoByToken(asset)} height={24} width={24} />
-          <div className="ml-1">{proposalDetails.Governance.name}</div>
-        </div>
+        <Link href={urlMaker.dao.singleDao.root(proposalInfo.Governance.name.toLowerCase())}>
+          <a className={styles['governance-link']}>
+            <div className="d-flex align-items-center">
+              <Image src={extractLogoByToken(asset)} height={24} width={24} />
+              <div className="ml-1">{proposalDetails.Governance.name}</div>
+            </div>
+          </a>
+        </Link>
       ),
     },
   ];
