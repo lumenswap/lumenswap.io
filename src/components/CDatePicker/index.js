@@ -6,16 +6,16 @@ import CalenderIcon from 'assets/images/calender';
 
 import styles from './styles.module.scss';
 
-const CustomInput = forwardRef(({ value, onClick },
+const CustomInput = forwardRef(({ value, onClick, disabled },
   ref) => (
-    <div className={styles.select} ref={ref} onClick={onClick}>
+    <div className={disabled ? styles['disabled-select'] : styles.select} ref={ref} onClick={onClick}>
       {moment(value).format('DD MMM YYYY')}
       <CalenderIcon />
     </div>
 ));
 
 const CDatePicker = ({
-  onChange, value, minDate,
+  onChange, value, minDate, disabled,
 }) => {
   const onChangeDate = (selectedDate) => {
     onChange(selectedDate);
@@ -26,8 +26,9 @@ const CDatePicker = ({
       selected={value ?? new Date()}
       onChange={onChangeDate}
       popperClassName={styles.date}
-      customInput={<CustomInput />}
+      customInput={<CustomInput disabled={disabled} />}
       minDate={minDate}
+      disabled={disabled}
     />
   );
 };

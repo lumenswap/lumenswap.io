@@ -17,6 +17,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { useEffect, useState } from 'react';
 import { listAssets } from 'api/stellar';
+import truncateText from 'helpers/truncateText';
 import styles from './styles.module.scss';
 
 const GovernanceSummary = ({ item }) => {
@@ -85,7 +86,7 @@ const GovernanceSummary = ({ item }) => {
               </div>
             </div>
             <h3 className={styles.title}>{name}</h3>
-            <p className={styles.para}>{description}</p>
+            <p className={styles.para}>{truncateText(description, 162)}</p>
             <div className={styles.proposal}>
               <div className={styles.badge}>{proposalCount}</div>
               Active proposal
@@ -94,11 +95,11 @@ const GovernanceSummary = ({ item }) => {
           <div className={styles.info}>
             <div className={styles['info-col']}>
               <div className={styles.value}>{numeral(communityMembersCount).format('0,0')}</div>
-              <div className={styles.subject}>Community member</div>
+              <div className={styles.subject}>Community members</div>
             </div>
             <div className={styles['info-col']}>
               <div className={styles.value}>{assetCode}</div>
-              <div className={styles.subject}>Tiker</div>
+              <div className={styles.subject}>Asset</div>
             </div>
           </div>
         </CCard>

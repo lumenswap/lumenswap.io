@@ -6,6 +6,7 @@ import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import Progressbar from 'components/Progressbar';
 import Button from 'components/Button';
+import Link from 'next/link';
 import ArrowIcon from 'assets/images/angleRight';
 import InfoBox from 'components/InfoBox';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
@@ -113,10 +114,14 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     {
       title: 'Governance',
       render: (proposalDetails) => (
-        <div className="d-flex align-items-center">
-          <Image src={extractLogoByToken(asset)} height={24} width={24} />
-          <div className="ml-1">{proposalDetails.Governance.name}</div>
-        </div>
+        <Link href={urlMaker.dao.singleDao.root(proposalInfo.Governance.name.toLowerCase())}>
+          <a className={styles['governance-link']}>
+            <div className="d-flex align-items-center">
+              <Image src={extractLogoByToken(asset)} height={24} width={24} />
+              <div className="ml-1">{proposalDetails.Governance.name}</div>
+            </div>
+          </a>
+        </Link>
       ),
     },
   ];
@@ -139,6 +144,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
                 <div key={index} className="mt-4">
                   <Progressbar
                     label={option.value}
+                    amount={`${new BN(option.amount).div(10 ** 7).toFixed(2)} LSP`}
                     value={option.amount && proposalInfo.totalVotes
                       ? new BN(option.amount).div(proposalInfo.totalVotes).times(100).toFixed(1)
                       : 0}

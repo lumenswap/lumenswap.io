@@ -3,11 +3,14 @@ import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
-const Progressbar = ({ label, value }) => (
+const Progressbar = ({ label, value, amount }) => (
   <div className={styles.box}>
     <div className="d-flex justify-content-between align-items-center">
       <div className={styles.label}>{label}</div>
-      <div className={styles.value}>%{value}</div>
+      <div className={styles.value}>
+        {amount && `${amount} | `}
+        {value}%
+      </div>
     </div>
     <div className={classNames(styles.progress, 'progress')}>
       <div
