@@ -107,11 +107,6 @@ const VoteModal = ({ proposalInfo }) => {
             />
           )}
         />
-        <div className={styles.msg}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua Egestas purus viverra accumsan in nisl nisi
-        </div>
         <Button
           htmlType="submit"
           variant="primary"
