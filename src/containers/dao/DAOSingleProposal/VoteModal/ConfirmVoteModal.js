@@ -66,7 +66,7 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
 
         <div className={styles.value}>
           <div className={styles['value-name']}>Amount</div>
-          <div className={styles['value-amount']}>{humanAmount(proposalInfo.amount, true)} {proposalInfo.asset.code}</div>
+          <div className={styles['value-amount']}>{humanAmount(proposalInfo.amount)} {proposalInfo.asset.code}</div>
         </div>
 
         <Button
