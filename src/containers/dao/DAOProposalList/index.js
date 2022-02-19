@@ -37,7 +37,13 @@ const DAOProposalList = ({ governanceInfo, proposals: fetchedProposals }) => {
   }, [select]);
 
   return (
-    <DAOContainer title="Proposals | Lumenswap" info={governanceInfo}>
+    <DAOContainer
+      title={
+      `${governanceInfo.name} DAO | Lumenswap
+      `
+    }
+      info={governanceInfo}
+    >
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">

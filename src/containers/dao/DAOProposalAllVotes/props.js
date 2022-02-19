@@ -1,20 +1,17 @@
-import { getVotesForProposal } from 'api/daoAPI';
+import { getSingleProposal } from 'api/daoAPI';
 
 export async function daoProposalVotesGetServerSideProps({ params }) {
   try {
-    const proposalVotes = await getVotesForProposal(params.id);
-
-    const singleProposal = proposalVotes.data[0];
+    const proposalDetails = await getSingleProposal(params.id);
 
     return {
       props: {
-        proposalVotes: proposalVotes.data,
         proposalInfo: {
-          title: singleProposal?.Proposal.title,
-          info: {
-            assetCode: singleProposal?.Proposal.Governance.assetCode,
-            assetIssuer: singleProposal?.Proposal.Governance.assetIssuer,
+          assetInfo: {
+            assetCode: proposalDetails?.Governance.assetCode,
+            assetIssuer: proposalDetails?.Governance.assetIssuer,
           },
+          governanceName: proposalDetails.Governance.name,
         },
       },
     };

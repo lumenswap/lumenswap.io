@@ -11,6 +11,7 @@
   padding: 20px 24px 24px 24px;
   background-color: white;
   overflow: hidden;
+  margin-top: 20px;
 
   &-title {
     font-size: 18px;
@@ -78,4 +79,12 @@
     text-decoration: none;
     color: inherit;
   }
+}
+.bread-crumb {
+  &-container {
+    display: flex;
+    flex-direction: row;
+  }
+  margin-left: 7px;
+  margin-top: 3px;
 }
