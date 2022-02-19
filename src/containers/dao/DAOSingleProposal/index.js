@@ -133,7 +133,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
 
   return (
     <DAOContainer
-      title={`${proposalInfo.Governance.name} proposal info | Lumenswap`}
+      title={`${proposalInfo.Governance.name} DAO | Proposal info | Lumenswap`}
       info={proposalInfo.Governance}
     >
       <div className={classNames('layout main', styles.layout)}>

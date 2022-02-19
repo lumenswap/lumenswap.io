@@ -21,7 +21,7 @@ const DAOCreateProposalContainer = ({ info, children }) => {
   return (
     <DAOContainer
       title={
-      `${info.name} create proposal | Lumenswap`
+      `${info.name} DAO | Create proposal | Lumenswap`
     }
       info={info}
     >

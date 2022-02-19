@@ -65,7 +65,12 @@ const DAOProposalAllVotes = ({ proposalInfo }) => {
   }, [currentPage]);
 
   return (
-    <DAOContainer title="All Votes | Lumenswap" info={proposalInfo.assetInfo}>
+    <DAOContainer
+      title={`
+    ${proposalInfo.governanceName} DAO | All votes | Lumenswap
+    `}
+      info={proposalInfo.assetInfo}
+    >
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
