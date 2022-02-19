@@ -132,7 +132,10 @@ const DAOSingleProposal = ({ proposalInfo }) => {
   ];
 
   return (
-    <DAOContainer title="Proposal Info | Lumenswap" info={proposalInfo.Governance}>
+    <DAOContainer
+      title={`${proposalInfo.Governance.name} proposal info | Lumenswap`}
+      info={proposalInfo.Governance}
+    >
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">

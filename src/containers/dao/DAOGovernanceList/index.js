@@ -4,7 +4,7 @@ import GovernanceSummary from './GovernanceSummary';
 import styles from './styles.module.scss';
 
 const DAOGovernanceList = ({ governances }) => (
-  <DAOContainer title="Board | Lumenswap">
+  <DAOContainer title="Dao board | Lumenswap">
     <div className={classNames('layout main', styles.layout)}>
       <div className="row justify-content-center">
         <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
