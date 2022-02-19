@@ -69,11 +69,6 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
           <div className={styles['value-amount']}>{humanAmount(proposalInfo.amount, true)} {proposalInfo.asset.code}</div>
         </div>
 
-        <div className={styles.msg}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua Egestas purus viverra accumsan in nisl nisi
-        </div>
         <Button
           variant="primary"
           content="Confirm"
