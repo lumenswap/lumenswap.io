@@ -6,7 +6,7 @@ import { extractInfoByToken, getAssetDetails } from 'helpers/asset';
 import { getTopVolume } from 'api/market';
 import BN from 'helpers/BN';
 import urlMaker from 'helpers/urlMaker';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
 function TopVolumeMarket({ searchQuery }) {
@@ -95,7 +95,7 @@ function TopVolumeMarket({ searchQuery }) {
       sortFunc: (a, b, order) => (order === 'desc'
         ? a.lastPrice - b.lastPrice
         : b.lastPrice - a.lastPrice),
-      render: (data) => `${humanAmount(data.lastPrice)} ${data.pair.base.code}`,
+      render: (data) => `${humanizeAmount(data.lastPrice)} ${data.pair.base.code}`,
     },
     {
       title: '24 change',

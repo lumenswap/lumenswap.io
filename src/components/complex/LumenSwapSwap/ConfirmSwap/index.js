@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Button from 'components/Button';
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import { useEffect, useState } from 'react';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'api/fetchMarketPrice';
 import { isSameAsset } from 'helpers/asset';
@@ -96,14 +96,14 @@ const ConfirmSwap = ({ data }) => {
       </div>
       <p className={styles.message}>
         output is estimated. you will receive at least{' '}
-        {humanAmount(calculatedMin.toString())}{' '}
+        {humanizeAmount(calculatedMin.toString())}{' '}
         {data.to.asset.details.getCode()} or the transaction will revert.
       </p>
       <div className={styles.info}>
         <div className={styles.container}>
           <div className={styles.label}>Price
           </div>
-          <div className={styles.value}>1 {leftSide} = {humanAmount(pricePer)} {rightSide}
+          <div className={styles.value}>1 {leftSide} = {humanizeAmount(pricePer)} {rightSide}
             <span className="icon-arrow-repeat" style={{ cursor: 'pointer' }} onClick={() => setReverse((i) => !i)} />
           </div>
         </div>
@@ -111,7 +111,7 @@ const ConfirmSwap = ({ data }) => {
           <div className={styles.label}>Minimum received
             <Tooltips id="minimum" text={<PrimaryTooltip text={appConsts.tooltip.min} />}><span className="icon-question-circle" /></Tooltips>
           </div>
-          <div className={classNames(styles.value)}>{loading ? 'Loading' : humanAmount(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
+          <div className={classNames(styles.value)}>{loading ? 'Loading' : humanizeAmount(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Price impact

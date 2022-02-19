@@ -7,7 +7,7 @@ import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import CTable from 'components/CTable';
 import CPagination from 'components/CPagination';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { getVotesForProposal } from 'api/daoAPI';
 import BN from 'helpers/BN';
 import DAOContainer from '../DAOContainer';
@@ -38,7 +38,7 @@ const votesTableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: '3',
-    render: (voteDetails) => `${humanAmount(new BN(voteDetails.amount).div(10 ** 7).toFixed(7))} ${voteDetails.Proposal.Governance.assetCode}`,
+    render: (voteDetails) => `${humanizeAmount(new BN(voteDetails.amount).div(10 ** 7).toFixed(7))} ${voteDetails.Proposal.Governance.assetCode}`,
   },
 ];
 

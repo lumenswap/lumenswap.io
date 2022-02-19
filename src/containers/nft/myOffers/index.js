@@ -17,7 +17,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
 import NLSP from 'tokens/NLSP';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
@@ -159,7 +159,7 @@ const NFTOrder = () => {
       key: 3,
       render: (data) => (
         <div>
-          {humanAmount(data.amount)} NLSP
+          {humanizeAmount(data.amount)} NLSP
         </div>
       ),
     },

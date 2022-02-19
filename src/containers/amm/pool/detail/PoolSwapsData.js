@@ -5,7 +5,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import { useEffect, useState } from 'react';
 import { getPoolSwapsAPI } from 'api/stellarPool';
 import { getAssetDetails } from 'helpers/asset';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import RightArrowIcon from 'assets/images/arrowRight';
 import styles from './styles.module.scss';
 
@@ -62,8 +62,8 @@ function PoolSwapsData({ poolId }) {
         }
 
         return (
-          <span className={styles['info-tx']}>{humanAmount(base.amount)}{' '}
-            {base.token.getCode()} <div className={styles['arrow-icon']}><RightArrowIcon /></div> {humanAmount(counter.amount)}{' '}
+          <span className={styles['info-tx']}>{humanizeAmount(base.amount)}{' '}
+            {base.token.getCode()} <div className={styles['arrow-icon']}><RightArrowIcon /></div> {humanizeAmount(counter.amount)}{' '}
             {counter.token.getCode()}
           </span>
         );

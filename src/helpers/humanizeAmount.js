@@ -29,7 +29,7 @@ export function sevenDigit(number) {
   }
 }
 
-export default function humanAmount(amount, big = false) {
+export default function humanizeAmount(amount, big = false) {
   if (new BN(amount).isEqualTo(0)) {
     return 0;
   }

@@ -14,7 +14,7 @@ import useIsLogged from 'hooks/useIsLogged';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { generateAddressURL, ipfsHashGenerator } from 'helpers/explorerURLGenerator';
 import moment from 'moment';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import { useEffect, useState } from 'react';
 import { getVotesForProposal } from 'api/daoAPI';
@@ -97,11 +97,11 @@ const DAOSingleProposal = ({ proposalInfo }) => {
     },
     {
       title: 'Total voter',
-      render: (proposalDetails) => `${humanAmount(proposalDetails.totalVoters)}`,
+      render: (proposalDetails) => `${humanizeAmount(proposalDetails.totalVoters)}`,
     },
     {
       title: 'Total votes',
-      render: (proposalDetails) => `${humanAmount(new BN(proposalDetails.totalVotes).div(10 ** 7).toFixed(7))} ${asset.code}`,
+      render: (proposalDetails) => `${humanizeAmount(new BN(proposalDetails.totalVotes).div(10 ** 7).toFixed(7))} ${asset.code}`,
     },
     {
       title: 'Proposer',

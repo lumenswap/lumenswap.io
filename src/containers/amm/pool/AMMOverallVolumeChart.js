@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
 import CChart from 'components/CChart';
 import Loading from 'components/Loading';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
@@ -19,7 +19,7 @@ const PageWrapper = ({ children, currentVolume }) => (
       <div className={styles['chart-info-container']}>
         <div className={styles['volume-chart']}>
           <div className={styles['volume-chart-info']}>
-            <span className={styles['volume-chart-number']}>${humanAmount(new BN(currentVolume.volume).div(10 ** 7).toString(), true)}</span>
+            <span className={styles['volume-chart-number']}>${humanizeAmount(new BN(currentVolume.volume).div(10 ** 7).toString(), true)}</span>
             <span className={styles['volume-chart-text']}>Volume 24h</span>
           </div>
           <span className={styles['volume-chart-time']}>{moment(currentVolume.periodTime).utc().format('MMM, DD')}</span>

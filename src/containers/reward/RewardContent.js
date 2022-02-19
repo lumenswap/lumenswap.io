@@ -10,12 +10,12 @@ import { useEffect, useState } from 'react';
 import { fetchAddressReward, fetchAddressRewardStats } from 'api/rewards';
 import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import LSP from 'tokens/LSP';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 function rewardAmountHumanize(amount) {
-  return numeral(humanAmount(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0.0');
+  return numeral(humanizeAmount(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0.0');
 }
 
 const RewardContent = () => {
@@ -75,7 +75,7 @@ const RewardContent = () => {
     {
       title: 'Wallet balance',
       tooltip: 'This shows your wallet’s LSP balance.',
-      content: <Info text="LSP" number={numeral(humanAmount(foundLSP ? foundLSP.balance : '0')).format('0,0.0')} />,
+      content: <Info text="LSP" number={numeral(humanizeAmount(foundLSP ? foundLSP.balance : '0')).format('0,0.0')} />,
     },
     {
       title: 'Holder reward earned',

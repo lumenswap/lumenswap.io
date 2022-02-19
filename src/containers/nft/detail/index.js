@@ -26,7 +26,7 @@ import urlMaker from 'helpers/urlMaker';
 import Submitting from 'components/Submitting';
 import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import { fetchOfferAPI, fetchOffersOfAccount, fetchOrderBookAPI } from 'api/stellar';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import NLSP from 'tokens/NLSP';
 import numeral from 'numeral';
 import ServerSideLoading from 'components/ServerSideLoading';
@@ -175,7 +175,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
       return (
         <>
           <div className={styles.logo}><BigLogo color="#DF4886" />
-          </div>{humanAmount(new BN(lusiPrice).div(10 ** 7).toFixed(7))} NLSP
+          </div>{humanizeAmount(new BN(lusiPrice).div(10 ** 7).toFixed(7))} NLSP
         </>
       );
     }
@@ -183,7 +183,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
     return (
       <>
         <div className={styles.logo}><BigLogo color="#0e41f5" />
-        </div>{numeral(humanAmount(new BN(lusiPrice))).format('0,0')} LSP
+        </div>{numeral(humanizeAmount(new BN(lusiPrice))).format('0,0')} LSP
       </>
     );
   };

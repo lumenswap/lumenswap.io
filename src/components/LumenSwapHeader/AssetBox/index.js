@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import LSP from 'tokens/LSP';
 import styles from './style.module.scss';
@@ -13,7 +13,7 @@ const AssetBox = ({ color, asset }) => {
 
   return (
     <p className={styles.lsp} style={{ color: color ?? '#0e41f5', border: `1px solid ${color ?? '#0e41f5'}` }}>
-      {humanAmount(userAssetBalance?.balance || 0)} {asset?.code ?? 'LSP'}
+      {humanizeAmount(userAssetBalance?.balance || 0)} {asset?.code ?? 'LSP'}
     </p>
   );
 };

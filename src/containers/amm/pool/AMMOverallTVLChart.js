@@ -3,7 +3,7 @@ import CChart from 'components/CChart';
 import * as echarts from 'echarts';
 import React, { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
@@ -17,7 +17,7 @@ const PageWrapper = ({ children, currentTVL }) => (
   <div className={classNames('col-md-6 col-12 pr-0', styles['chart-main-container-left'])}>
     <div className={styles['chart-container']}>
       <div className={styles['chart-info-container']}>
-        <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>${humanAmount(currentTVL.tvl, true)}</span>
+        <div className={styles['tvl-chart']}><span className={styles['volume-chart-number']}>${humanizeAmount(currentTVL.tvl, true)}</span>
           <span className={styles['tvl-chart-text']}>TVL</span>
         </div>
         <span className={styles['tvl-chart-time']}>{moment(currentTVL.periodTime).utc().format('MMM, DD')}</span>

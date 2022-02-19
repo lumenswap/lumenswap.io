@@ -7,7 +7,7 @@ import useRequiredLogin from 'hooks/useRequiredLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import moment from 'moment';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import urlMaker from 'helpers/urlMaker';
 import generateClaimClaimableBalanceTRX from 'stellar-trx/generateClaimClaimableBalanceTRX';
 import { getAddressActivity } from 'api/daoAPI';
@@ -30,10 +30,10 @@ const ACTIVITY_TYPES = {
 
 function calcualateActivityAmount(activity) {
   if (activity.Proposal) {
-    return `${humanAmount(new BN(activity.Proposal.Governance.minimumCreateProposalAmount).toFixed(7))} ${activity.Proposal.Governance.assetCode}`;
+    return `${humanizeAmount(new BN(activity.Proposal.Governance.minimumCreateProposalAmount).toFixed(7))} ${activity.Proposal.Governance.assetCode}`;
   }
 
-  return `${humanAmount(new BN(activity.Vote.amount).div(10 ** 7).toFixed(7))} ${activity.Vote.Proposal.Governance.assetCode}`;
+  return `${humanizeAmount(new BN(activity.Vote.amount).div(10 ** 7).toFixed(7))} ${activity.Vote.Proposal.Governance.assetCode}`;
 }
 
 const activityTableHeaders = [

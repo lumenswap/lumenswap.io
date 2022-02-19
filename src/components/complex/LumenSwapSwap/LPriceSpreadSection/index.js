@@ -4,7 +4,7 @@ import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'api/fetchMarketPrice';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import ColorizedPriceImpact from 'components/complex/LumenSwapSwap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
 import styles from './styles.module.scss';
@@ -61,7 +61,7 @@ export default function LPriceSpreadSection({
             ? 'Loading'
             : (
               <>
-                {`${humanAmount(calculatedMin.toString())} ${formValues.to?.asset?.details?.getCode()}`}
+                {`${humanizeAmount(calculatedMin.toString())} ${formValues.to?.asset?.details?.getCode()}`}
               </>
             )}
         </div>

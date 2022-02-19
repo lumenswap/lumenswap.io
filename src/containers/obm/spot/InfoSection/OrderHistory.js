@@ -7,7 +7,7 @@ import StellarSDK from 'stellar-sdk';
 import { useSelector } from 'react-redux';
 import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import FetchDataLoading from 'components/FetchDataLoading';
 import { initializeStore } from 'store';
 import CTable from 'components/CTable';
@@ -107,10 +107,10 @@ export default function OrderHistory({ setOrderCounter }) {
 
         return {
           time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-          sellAmount: humanAmount(item.amount),
-          buyAmount: humanAmount(buyAmount.toString()),
-          otherPrice: humanAmount(new BN(item.amount).div(buyAmount).toString()),
-          price: humanAmount(item.price),
+          sellAmount: humanizeAmount(item.amount),
+          buyAmount: humanizeAmount(buyAmount.toString()),
+          otherPrice: humanizeAmount(new BN(item.amount).div(buyAmount).toString()),
+          price: humanizeAmount(item.price),
           counterAsset,
           baseAsset,
           id: item.id,

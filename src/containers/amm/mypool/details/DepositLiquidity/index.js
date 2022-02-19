@@ -12,7 +12,7 @@ import {
 } from 'helpers/asset';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import styles from './styles.module.scss';
 // import Tolerance from '../Tolerance';
@@ -25,7 +25,7 @@ function Inpool({ token, isLoading }) {
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{isLoading ? '' : humanAmount(token.balance, true)}</div>
+      <div>{isLoading ? '' : humanizeAmount(token.balance, true)}</div>
     </div>
   );
 }

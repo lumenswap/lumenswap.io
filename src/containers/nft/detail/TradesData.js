@@ -5,7 +5,7 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { fetchTradeAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import moment from 'moment';
 import LoadingWithContainer from './LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
@@ -39,7 +39,7 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
+    render: (data) => <span>{humanizeAmount(data.counter_amount)} NLSP</span>,
   },
   {
     title: 'Date',

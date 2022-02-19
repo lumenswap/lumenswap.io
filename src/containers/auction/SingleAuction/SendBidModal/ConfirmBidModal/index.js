@@ -8,7 +8,7 @@ import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
 const ConfirmBidModal = ({ data, baseToken, reloadData }) => {
@@ -37,10 +37,10 @@ const ConfirmBidModal = ({ data, baseToken, reloadData }) => {
       <div className={styles.text}>
         You will buy {' '}
         <span>
-          {humanAmount(data.tokenAmount)}
+          {humanizeAmount(data.tokenAmount)}
         </span> {baseToken.code} for {' '}
         <span>
-          {humanAmount(new BN(data.price).times(data.tokenAmount).toFixed(7))}
+          {humanizeAmount(new BN(data.price).times(data.tokenAmount).toFixed(7))}
         </span> XLM
       </div>
       <Button

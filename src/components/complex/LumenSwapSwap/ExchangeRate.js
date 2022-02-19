@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
 export default function ExchangeRate({ estimatedPrice, control, loading }) {
@@ -34,7 +34,7 @@ export default function ExchangeRate({ estimatedPrice, control, loading }) {
     <p className={styles.info}>
       {loading ? 'Loading' : (
         <>
-          1 {leftSide} = {humanAmount(pricePer)} {rightSide}
+          1 {leftSide} = {humanizeAmount(pricePer)} {rightSide}
           <span
             className="icon-arrow-repeat"
             style={{ cursor: 'pointer' }}

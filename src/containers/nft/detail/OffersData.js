@@ -2,7 +2,7 @@ import CTable from 'components/CTable';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 import LoadingWithContainer from './LoadingWithContainer/LoadingWithContainer';
 
@@ -27,7 +27,7 @@ const tableHeaders = [
     title: 'Amount',
     dataIndex: 'amount',
     key: 3,
-    render: (data) => <span>{humanAmount(data.amount)} NLSP</span>,
+    render: (data) => <span>{humanizeAmount(data.amount)} NLSP</span>,
   },
 ];
 

@@ -9,7 +9,7 @@ import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import { useState } from 'react';
 import CTabs from 'components/CTabs';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import urlMaker from 'helpers/urlMaker';
 import PoolMultiCharts from './PoolMultiCharts';
@@ -110,20 +110,20 @@ const Details = ({ poolDetail }) => {
                     <span className={styles['tvl-info-header-number']}>${usdTvl ?? '-'}</span>
                   </div>
                   <div className={styles['tvl-info-items']}>
-                    <div className={styles['tvl-info-item']}><span><span className={styles['tvl-info-item-number']}>{humanAmount(poolDetail.reserves[0].amount, true)}</span> {refinedA.getCode()}</span></div>
-                    <div className={styles['tvl-info-item']}><span><span className={styles['tvl-info-item-number']}>{humanAmount(poolDetail.reserves[1].amount, true)}</span> {refinedB.getCode()}</span></div>
+                    <div className={styles['tvl-info-item']}><span><span className={styles['tvl-info-item-number']}>{humanizeAmount(poolDetail.reserves[0].amount, true)}</span> {refinedA.getCode()}</span></div>
+                    <div className={styles['tvl-info-item']}><span><span className={styles['tvl-info-item-number']}>{humanizeAmount(poolDetail.reserves[1].amount, true)}</span> {refinedB.getCode()}</span></div>
                   </div>
                 </div>
                 <div className={styles['volume-info-container']}>
                   <div className={styles['volume-info-item']}>
                     <span>24h fees</span>
-                    <span>${humanAmount(new BN(poolDetail.volume24).times(0.003)
+                    <span>${humanizeAmount(new BN(poolDetail.volume24).times(0.003)
                       .div(10 ** 7).toString(), true)}
                     </span>
                   </div>
                   <div className={styles['volume-info-item']}>
                     <span>24h Volume</span>
-                    <span>${humanAmount(new BN(poolDetail.volume24)
+                    <span>${humanizeAmount(new BN(poolDetail.volume24)
                       .div(10 ** 7).toString(), true)}
                     </span>
                   </div>

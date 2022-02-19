@@ -3,7 +3,7 @@ import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import { useEffect, useState } from 'react';
 import { extractLogoByToken, getAssetFromLPAsset } from 'helpers/asset';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import Input from 'components/Input';
 import { getKnownPools } from 'api/amm';
 import BN from 'helpers/BN';
@@ -68,7 +68,7 @@ function PoolData() {
       sortFunc: (a, b, order) => (order === 'asc' ? new BN(a.tvl).comparedTo(b.tvl) : new BN(b.tvl).comparedTo(a.tvl)),
       render: (data) => (
         <span className={styles.balance}>
-          ${humanAmount(data.tvl, true)}
+          ${humanizeAmount(data.tvl, true)}
         </span>
       ),
     },
@@ -79,7 +79,7 @@ function PoolData() {
       sortFunc: (a, b, order) => (order === 'asc' ? new BN(a.volume_24h).comparedTo(b.volume_24h) : new BN(b.volume_24h).comparedTo(a.volume_24h)),
       render: (data) => (
         <span>
-          ${humanAmount(new BN(data.volume_24h).div(10 ** 7).toString(), true)}
+          ${humanizeAmount(new BN(data.volume_24h).div(10 ** 7).toString(), true)}
         </span>
       ),
     },

@@ -13,7 +13,7 @@ import { initializeStore } from 'store';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import XLM from 'tokens/XLM';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from '../styles.module.scss';
 
 function showBalance(isLogged, foundBalance) {
@@ -25,7 +25,7 @@ function showBalance(isLogged, foundBalance) {
     return '0';
   }
 
-  return humanAmount(foundBalance);
+  return humanizeAmount(foundBalance);
 }
 
 function isNumber(text) {

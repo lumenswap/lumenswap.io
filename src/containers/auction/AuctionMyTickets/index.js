@@ -11,7 +11,7 @@ import { fetchOfferAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import BN from 'helpers/BN';
 import XLM from 'tokens/XLM';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
@@ -103,19 +103,19 @@ const AuctionMyTickets = ({ auctions }) => {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{humanAmount(data.amount)} {selectedItem.assetCode}</span>,
+      render: (data) => <span>{humanizeAmount(data.amount)} {selectedItem.assetCode}</span>,
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 4,
-      render: (data) => <span>{humanAmount(data.price)} XLM</span>,
+      render: (data) => <span>{humanizeAmount(data.price)} XLM</span>,
     },
     {
       title: 'Total',
       dataIndex: 'total',
       key: 5,
-      render: (data) => <span>{humanAmount(data.total)} XLM</span>,
+      render: (data) => <span>{humanizeAmount(data.total)} XLM</span>,
     },
     {
       title: 'Date',

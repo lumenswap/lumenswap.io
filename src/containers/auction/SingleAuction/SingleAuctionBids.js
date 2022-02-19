@@ -7,7 +7,7 @@ import { fetchOfferAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { getAuctionBids } from 'api/auction';
 import { STATUS_NAMES } from 'containers/auction/consts';
 import styles from './styles.module.scss';
@@ -55,7 +55,7 @@ const SingleAuctionBids = ({
       key: 3,
       render: (bid) => (
         <span>
-          {humanAmount(new BN(bid.amount)
+          {humanizeAmount(new BN(bid.amount)
             .times(bid.price).toString())} {assetCode}
         </span>
       ),
@@ -66,7 +66,7 @@ const SingleAuctionBids = ({
       key: 4,
       render: (bid) => (
         <span>
-          {humanAmount(new BN(1).div(bid.price).toFixed(7))} XLM
+          {humanizeAmount(new BN(1).div(bid.price).toFixed(7))} XLM
         </span>
       ),
     },
@@ -76,7 +76,7 @@ const SingleAuctionBids = ({
       key: 5,
       render: (bid) => (
         <span>
-          {humanAmount(new BN(bid.amount))} XLM
+          {humanizeAmount(new BN(bid.amount))} XLM
         </span>
       ),
     },

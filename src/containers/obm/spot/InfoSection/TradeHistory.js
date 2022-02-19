@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import BN from 'helpers/BN';
 import CTable from 'components/CTable';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import FetchDataLoading from 'components/FetchDataLoading';
 import styles from '../styles.module.scss';
 
@@ -74,22 +74,22 @@ export default function TradeHistory() {
         let buyAmount;
         if (item.base_account === userAddress) {
           sellAsset = item.base_asset_code || 'XLM';
-          sellAmount = humanAmount(item.base_amount);
+          sellAmount = humanizeAmount(item.base_amount);
 
           buyAsset = item.counter_asset_code || 'XLM';
-          buyAmount = humanAmount(item.counter_amount);
+          buyAmount = humanizeAmount(item.counter_amount);
         } else {
           sellAsset = item.counter_asset_code || 'XLM';
-          sellAmount = humanAmount(item.counter_amount);
+          sellAmount = humanizeAmount(item.counter_amount);
 
           buyAsset = item.base_asset_code || 'XLM';
-          buyAmount = humanAmount(item.base_amount);
+          buyAmount = humanizeAmount(item.base_amount);
         }
 
         return {
           time: moment(time.valueOf()).utc().format('MM-DD  hh:mm:ss'),
-          price: humanAmount(price.toFixed(7)),
-          otherPrice: humanAmount(otherPrice.toFixed(7)),
+          price: humanizeAmount(price.toFixed(7)),
+          otherPrice: humanizeAmount(otherPrice.toFixed(7)),
           sellAsset,
           buyAsset,
           sellAmount,

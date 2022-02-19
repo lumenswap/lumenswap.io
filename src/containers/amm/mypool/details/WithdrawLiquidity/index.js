@@ -8,7 +8,7 @@ import WithdrawLiquidityConfirm from 'containers/amm/mypool/details/WithdrawLiqu
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPool';
 import { getAssetDetails, extractLogoByToken } from 'helpers/asset';
 import { getPoolDetailsById } from 'api/stellarPool';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
 import WithdrawLiquiditySliderInput from '../WithdrawLiquiditySliderInput';
@@ -21,7 +21,7 @@ function Inpool({ token, isLoading }) {
         <div><Image src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
-      <div>{isLoading ? '' : humanAmount(token.balance)}</div>
+      <div>{isLoading ? '' : humanizeAmount(token.balance)}</div>
     </div>
   );
 }
