@@ -3,26 +3,14 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import urlMaker from 'helpers/urlMaker';
 import CCard from 'components/CCard';
-import Badge from 'components/Badge';
 import SuccessIcon from 'assets/images/success-tick';
 import Link from 'next/link';
 import truncateText from 'helpers/truncateText';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { extractLogoByToken } from 'helpers/asset';
+import DAOPRoposalStatusBadge from '../../DAOProposalStatusBadge';
 import styles from './styles.module.scss';
-
-const ProposalItemBadge = ({ status }) => {
-  if (status.toLowerCase() === 'active') {
-    return <Badge variant="success" content="Active" />;
-  }
-
-  if (status.toLowerCase() === 'ended') {
-    return <Badge variant="info" content="Ended" />;
-  }
-
-  return <Badge variant="danger" content="Not started" />;
-};
 
 const ProposalInfo = ({ item, pageName }) => {
   const {
@@ -51,7 +39,7 @@ const ProposalInfo = ({ item, pageName }) => {
                 <div className={styles.text}>By {minimizeAddress(proposer)}</div>
               </div>
               <div>
-                <ProposalItemBadge status={status} />
+                <DAOPRoposalStatusBadge status={status} />
               </div>
             </div>
             <h4 className={styles.title}>{title}</h4>

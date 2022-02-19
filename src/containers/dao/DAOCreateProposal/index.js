@@ -19,7 +19,12 @@ const DAOCreateProposalContainer = ({ info, children }) => {
   ];
 
   return (
-    <DAOContainer title="Create Proposal | Lumenswap" info={info}>
+    <DAOContainer
+      title={
+      `${info.name} DAO | Create proposal | Lumenswap`
+    }
+      info={info}
+    >
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">

@@ -42,7 +42,7 @@ const votesTableHeaders = [
   },
 ];
 
-const DAOProposalAllVotes = ({ proposalVotes, proposalInfo }) => {
+const DAOProposalAllVotes = ({ proposalInfo }) => {
   const router = useRouter();
   const [votes, setVotes] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,14 +50,14 @@ const DAOProposalAllVotes = ({ proposalVotes, proposalInfo }) => {
 
   const crumbData = [
     { url: urlMaker.dao.root(), name: 'Board' },
-    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: proposalVotes.proposalData },
+    { url: `${urlMaker.dao.singleDao.root(router.query.name)}`, name: proposalInfo.governanceName },
     { url: `${urlMaker.dao.singleDao.proposalInfo(router.query.name, router.query.id)}`, name: 'Proposal info' },
     { name: 'All votes' },
   ];
 
   useEffect(() => {
     getVotesForProposal(router.query.id,
-      { page: currentPage })
+      { page: currentPage, limit: 20 })
       .then((res) => {
         setVotes(res.data);
         setPages(res.totalPages);
@@ -65,7 +65,12 @@ const DAOProposalAllVotes = ({ proposalVotes, proposalInfo }) => {
   }, [currentPage]);
 
   return (
-    <DAOContainer title="All Votes | Lumenswap" info={proposalInfo}>
+    <DAOContainer
+      title={`
+    ${proposalInfo.governanceName} DAO | All votes | Lumenswap
+    `}
+      info={proposalInfo.assetInfo}
+    >
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">

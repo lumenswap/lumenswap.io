@@ -222,7 +222,7 @@ const DAOMyActivity = () => {
   }
 
   return (
-    <DAOContainer title="My activity | Lumenswap">
+    <DAOContainer title="My DAO activities | Lumenswap">
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">

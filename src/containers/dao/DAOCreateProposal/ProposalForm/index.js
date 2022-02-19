@@ -10,6 +10,8 @@ import CDatePicker from 'components/CDatePicker/index';
 import moment from 'moment';
 import numeral from 'numeral';
 import { getAssetDetails } from 'helpers/asset';
+import useUserSingleAsset from 'hooks/useUserSingleAsset';
+import BN from 'helpers/BN';
 import ConfirmProposalModal from './ConfirmProposalModal';
 import CreateProposalError from './CreateProposalError';
 import FormOptions from './FormOptions/index';
@@ -23,6 +25,10 @@ const ProposalForm = ({ info, setStatus }) => {
   const [show, setShow] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
+  const userAssetBalance = useUserSingleAsset(getAssetDetails({
+    code: info.assetCode,
+    issuer: info.assetIssuer,
+  }))?.balance ?? '0';
 
   const {
     handleSubmit,
@@ -79,6 +85,9 @@ const ProposalForm = ({ info, setStatus }) => {
   };
 
   function generateFormErrorText() {
+    if (new BN(info.minValue).gt(userAssetBalance)) {
+      return 'You dont have enough balance to create a proposal';
+    }
     for (const err of Object.values(errors)) {
       if (err) {
         return err.message;
@@ -178,7 +187,7 @@ const ProposalForm = ({ info, setStatus }) => {
           htmlType="submit"
           variant="primary"
           className={styles.submit}
-          disabled={!formState.isValid || formState.isValidating}
+          disabled={!formState.isValid || formState.isValidating || generateFormErrorText()}
         >Create proposal
         </Button>
       </form>

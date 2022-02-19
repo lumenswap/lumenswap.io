@@ -24,6 +24,7 @@ import DAOContainer from '../DAOContainer';
 import DAOSingleProposalVotes from './DAOSingleProposalVotes';
 import VoteModal from './VoteModal';
 import styles from './styles.module.scss';
+import DAOProposalStatusBadge from '../DAOProposalStatusBadge';
 
 const DAOSingleProposal = ({ proposalInfo }) => {
   const [votes, setVotes] = useState(null);
@@ -89,6 +90,10 @@ const DAOSingleProposal = ({ proposalInfo }) => {
       render: (proposalDetails) => `${Math.floor(moment.duration(new Date(proposalDetails.endTime) - new Date(proposalDetails.startTime)).asDays())} days`,
     },
     {
+      title: 'Status',
+      render: (proposalDetails) => <DAOProposalStatusBadge status={proposalDetails.status} />,
+    },
+    {
       title: 'Start time',
       render: (proposalDetails) => `${moment(proposalDetails.startTime).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
     },
@@ -127,16 +132,24 @@ const DAOSingleProposal = ({ proposalInfo }) => {
   ];
 
   return (
-    <DAOContainer title="Proposal Info | Lumenswap" info={proposalInfo.Governance}>
+    <DAOContainer
+      title={`${proposalInfo.Governance.name} DAO | Proposal info | Lumenswap`}
+      info={proposalInfo.Governance}
+    >
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">
           <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-            <Breadcrumb
-              spaceBetween={8}
-              data={crumbData}
-            />
+            <div className={styles['bread-crumb-container']}>
+              <Breadcrumb
+                spaceBetween={8}
+                data={crumbData}
+              />
+              <div className={styles['bread-crumb']}>
+                <DAOProposalStatusBadge status={proposalInfo.status} />
+              </div>
+            </div>
 
-            <div className={classNames(styles.card, 'mt-4')}>
+            <div className={classNames(styles.card)}>
               <h3 className={styles['card-title']}>
                 {proposalInfo.title}
               </h3>

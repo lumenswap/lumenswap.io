@@ -13,10 +13,13 @@ import generateAddTrustLineTRX from 'stellar-trx/generateAddTrustLineTRX';
 import CCard from 'components/CCard';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
-import { assetGenerator } from 'helpers/explorerURLGenerator';
 import { listAssets } from 'api/stellar';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
+
+function stellarExpertURLGenerator(code, issuer) {
+  return `https://stellar.expert/explorer/public/asset/${code}-${issuer}`;
+}
 
 const GovernanceInfo = ({ governance }) => {
   const {
@@ -87,7 +90,7 @@ const GovernanceInfo = ({ governance }) => {
         <div className={styles.detail}>
           <span className={styles.text}>Asset:</span>
           <a
-            href={assetGenerator(asset.code, asset.issuer)}
+            href={stellarExpertURLGenerator(asset.code, asset.issuer)}
             target="_blank"
             rel="noreferrer"
             className={styles['asset-link']}

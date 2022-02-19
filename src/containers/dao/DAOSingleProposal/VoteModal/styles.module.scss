@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .title {
   font-size: 16px;
@@ -18,17 +18,6 @@
   :global(.form-control) {
     height: 47px;
   }
-}
-
-.msg {
-  border: 1px solid $CatskillWhite;
-  background-color: $AthensGray;
-  border-radius: 8px;
-  padding: 8px 16px;
-  color: $ShuttleGray;
-  font-size: 14px;
-  line-height: 1.43;
-  margin-top: 12px;
 }
 
 .btn {
