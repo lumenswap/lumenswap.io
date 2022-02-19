@@ -27,5 +27,9 @@ export default async function showSignResponse(trx, dispatch, onAfterClose = () 
         title="Failed"
       />,
     }));
+
+    return Promise.reject(e);
   }
+
+  return Promise.resolve();
 }
