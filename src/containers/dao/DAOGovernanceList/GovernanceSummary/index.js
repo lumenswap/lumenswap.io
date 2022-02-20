@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import slugify from 'slugify';
-import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
 import numeral from 'numeral';
@@ -69,7 +68,7 @@ const GovernanceSummary = ({ item }) => {
           <div className="px-3">
             <div className="d-flex align-items-center justify-content-between">
               <div className={styles.img}>
-                <Image
+                <img
                   src={extractLogoByToken(asset)}
                   width={40}
                   height={40}
@@ -95,7 +94,7 @@ const GovernanceSummary = ({ item }) => {
           <div className={styles.info}>
             <div className={styles['info-col']}>
               <div className={styles.value}>{numeral(communityMembersCount).format('0,0')}</div>
-              <div className={styles.subject}>Community members</div>
+              <div className={styles.subject}>Members</div>
             </div>
             <div className={styles['info-col']}>
               <div className={styles.value}>{assetCode}</div>

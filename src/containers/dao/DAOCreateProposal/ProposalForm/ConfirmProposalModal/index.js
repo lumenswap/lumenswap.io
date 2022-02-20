@@ -16,7 +16,7 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
   const dispatch = useDispatch();
 
   const handleConfirm = () => {
-    setStatus('loading');
+    setStatus({ value: 'loading', message: '' });
     createPendingProposal(formData).then(async (res) => {
       const claimants = [
         new Claimant(formData.proposer, Claimant
@@ -46,10 +46,12 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
       showGenerateTrx(generateClaimableBalance, dispatch)
         .then(async (claimableBalanceTRX) => {
           await showSignResponse(claimableBalanceTRX, dispatch);
-          setStatus('success');
+          setStatus({ value: 'success', message: '' });
+        }).catch((err) => {
+          setStatus({ value: 'error', message: err.message });
         });
     }).catch((err) => {
-      console.log(err);
+      setStatus({ value: 'error', message: err.response.message || err.message });
     });
     dispatch(closeModalAction());
   };
