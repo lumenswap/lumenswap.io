@@ -155,7 +155,7 @@ const DAOMyActivity = () => {
 
   useEffect(() => {
     if (userAddress) {
-      fetchClaimableBalances({ claimant: userAddress }).then((balances) => {
+      fetchClaimableBalances({ claimant: userAddress, limit: 200 }).then((balances) => {
         setUserClaimableBalances(balances._embedded.records);
       });
     }
