@@ -155,7 +155,7 @@ const DAOMyActivity = () => {
 
   useEffect(() => {
     if (userAddress) {
-      fetchClaimableBalances({ claimant: 'GCERZDUAVEF4M4RVTDZBEKLI3ECYWBBDUU57IIQSHRYDBMU2OUUJNJ2Z' }).then((balances) => {
+      fetchClaimableBalances({ claimant: userAddress }).then((balances) => {
         setUserClaimableBalances(balances._embedded.records);
       });
     }
@@ -163,7 +163,7 @@ const DAOMyActivity = () => {
 
   useEffect(() => {
     setUserActivities(null);
-    getAddressActivity('GCERZDUAVEF4M4RVTDZBEKLI3ECYWBBDUU57IIQSHRYDBMU2OUUJNJ2Z', {
+    getAddressActivity(userAddress, {
       page,
     }).then((activities) => {
       setUserActivities(activities.data);
