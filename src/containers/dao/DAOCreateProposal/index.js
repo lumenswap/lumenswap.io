@@ -7,6 +7,7 @@ import useRequiredLogin from 'hooks/useRequiredLogin';
 import Loading from 'components/Loading';
 import DAOContainer from '../DAOContainer';
 import SuccessDialog from './SuccessDialog';
+import FailDialog from './FailDialog';
 import ProposalForm from './ProposalForm';
 import styles from './styles.module.scss';
 
@@ -43,10 +44,10 @@ const DAOCreateProposalContainer = ({ info, children }) => {
 };
 
 const DAOCreateProposal = ({ pageInfo }) => {
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState({ value: '', message: '' });
   useRequiredLogin(urlMaker.dao.root());
 
-  if (status === 'loading') {
+  if (status.value === 'loading') {
     return (
       <DAOCreateProposalContainer info={pageInfo}>
         <div className={classNames(styles.card, styles['card-small'], styles.loading)}>
@@ -59,10 +60,18 @@ const DAOCreateProposal = ({ pageInfo }) => {
     );
   }
 
-  if (status === 'success') {
+  if (status.value === 'success') {
     return (
       <DAOCreateProposalContainer info={pageInfo}>
         <SuccessDialog />
+      </DAOCreateProposalContainer>
+    );
+  }
+
+  if (status.value === 'error') {
+    return (
+      <DAOCreateProposalContainer info={pageInfo}>
+        <FailDialog setStatus={setStatus} message={status.message} />
       </DAOCreateProposalContainer>
     );
   }

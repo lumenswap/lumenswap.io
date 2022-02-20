@@ -52,7 +52,7 @@ const ProposalForm = ({ info, setStatus }) => {
 
     for (const [key, value] of Object.entries(sanitizedData)) {
       if (key.startsWith('option')) {
-        options.push(value);
+        options.push({ optionNumber: key.replace('option', ''), value });
         delete sanitizedData[key];
       }
     }
