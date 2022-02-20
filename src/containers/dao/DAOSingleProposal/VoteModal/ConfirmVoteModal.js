@@ -1,7 +1,7 @@
 import RadioGroup from 'components/RadioGroup';
 import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { Claimant } from 'stellar-sdk';
 import { getAssetDetails } from 'helpers/asset';
 import showGenerateTrx from 'helpers/showGenerateTrx';
@@ -66,7 +66,7 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
 
         <div className={styles.value}>
           <div className={styles['value-name']}>Amount</div>
-          <div className={styles['value-amount']}>{humanAmount(proposalInfo.amount)} {proposalInfo.asset.code}</div>
+          <div className={styles['value-amount']}>{humanizeAmount(proposalInfo.amount)} {proposalInfo.asset.code}</div>
         </div>
 
         <Button

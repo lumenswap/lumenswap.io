@@ -1,4 +1,4 @@
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import moment from 'moment';
 import styles from './styles.module.scss';
@@ -7,15 +7,15 @@ export default function ChartDetail({ currentValue, currentChart }) {
   let val = '-';
   if (currentValue) {
     if (currentChart === 'tvl') {
-      val = humanAmount(currentValue?.tvl);
+      val = humanizeAmount(currentValue?.tvl);
     }
 
     if (currentChart === 'volume') {
-      val = humanAmount(new BN(currentValue?.volume).div(10 ** 7).toString());
+      val = humanizeAmount(new BN(currentValue?.volume).div(10 ** 7).toString());
     }
 
     if (currentChart === 'fee') {
-      val = humanAmount(new BN(currentValue?.volume).div(10 ** 7).times(0.003).toString());
+      val = humanizeAmount(new BN(currentValue?.volume).div(10 ** 7).times(0.003).toString());
     }
   }
 

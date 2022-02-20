@@ -3,7 +3,7 @@ import Image from 'next/image';
 import AMMCurrentPrice from 'containers/amm/mypool/AMMCurrentPrice';
 import Button from 'components/Button';
 import { getAssetDetails, extractLogoByToken } from 'helpers/asset';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import { initializeStore } from 'store';
 import generateWithdrawPoolTRX from 'stellar-trx/generateWithdrawPoolTRX';
@@ -45,7 +45,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
           <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
-        <div>{humanAmount(data.tokenA.balance)}</div>
+        <div>{humanizeAmount(data.tokenA.balance)}</div>
       </div>
 
       <div className={styles.inpool}>
@@ -53,7 +53,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
           <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
-        <div>{humanAmount(data.tokenB.balance)}</div>
+        <div>{humanizeAmount(data.tokenB.balance)}</div>
       </div>
 
       <div className={styles.current}><AMMCurrentPrice poolData={data.poolData} /></div>

@@ -5,7 +5,7 @@ import CTable from 'components/CTable';
 import Loading from 'components/Loading';
 import urlMaker from 'helpers/urlMaker';
 import { extractInfoByToken } from 'helpers/asset';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
 function KnownAssets({ assets, searchQuery }) {
@@ -36,8 +36,8 @@ function KnownAssets({ assets, searchQuery }) {
         },
         lastPrice: asset.lastPrice,
         change24h: Number(asset.change24h).toFixed(2),
-        high24h: humanAmount(asset.high24h),
-        low24h: humanAmount(asset.low24h),
+        high24h: humanizeAmount(asset.high24h),
+        low24h: humanizeAmount(asset.low24h),
         volume24h: asset.volume24h,
       };
     });
@@ -67,7 +67,7 @@ function KnownAssets({ assets, searchQuery }) {
       dataIndex: 'lastPrice',
       key: '2',
       sortFunc: (a, b, order) => (order === 'asc' ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice),
-      render: (data) => `${humanAmount(data.lastPrice)}  ${data.pair.counter.code}`,
+      render: (data) => `${humanizeAmount(data.lastPrice)}  ${data.pair.counter.code}`,
     },
     {
       title: '24 change',

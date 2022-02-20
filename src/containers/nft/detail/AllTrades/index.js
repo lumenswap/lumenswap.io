@@ -11,7 +11,7 @@ import InfinitePagination from 'containers/nft/detail/InfinitePagination';
 import { fetchTradeAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../../NFTHeader';
 import styles from './styles.module.scss';
@@ -77,7 +77,7 @@ function AllTradesPage({ id }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: 3,
-      render: (data) => <span>{humanAmount(data.counter_amount)} NLSP</span>,
+      render: (data) => <span>{humanizeAmount(data.counter_amount)} NLSP</span>,
     },
     {
       title: 'Date',

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
 import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { openModalAction } from 'actions/modal';
 import AddAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset/AddAsset';
 import { removeCustomTokenAction } from 'actions/userCustomTokens';
@@ -135,7 +135,7 @@ const SelectAsset = ({
                 </div>
               </div>
               <div className={styles.text}>
-                {isLogged && humanAmount(asset.balance)}
+                {isLogged && humanizeAmount(asset.balance)}
               </div>
             </div>
           ))

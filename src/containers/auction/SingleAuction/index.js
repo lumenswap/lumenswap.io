@@ -21,7 +21,7 @@ import numeral from 'numeral';
 import minimizeAddress from 'helpers/minimizeAddress';
 import useIsLogged from 'hooks/useIsLogged';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { STATUS_NAMES } from 'containers/auction/consts';
 import SendBidModal from './SendBidModal';
@@ -117,9 +117,9 @@ const SingleAuction = ({ auction, pageName, assetCode }) => {
         let valueToShow = '';
 
         if (baseAuctionAssetCode === 'XLM') {
-          valueToShow = `${humanAmount(new BN(auctionDetails.totalBids).div(10 ** 7).toFixed(7))} XLM`;
+          valueToShow = `${humanizeAmount(new BN(auctionDetails.totalBids).div(10 ** 7).toFixed(7))} XLM`;
         } else {
-          valueToShow = `${humanAmount(new BN(auctionDetails.totalAmount).div(10 ** 7))} ${auctionDetails.assetCode}`;
+          valueToShow = `${humanizeAmount(new BN(auctionDetails.totalAmount).div(10 ** 7))} ${auctionDetails.assetCode}`;
         }
 
         return (

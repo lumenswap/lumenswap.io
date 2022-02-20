@@ -1,7 +1,7 @@
 import CTable from 'components/CTable';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
@@ -35,7 +35,7 @@ function DAOSingleProposalVotes({ votes, asset }) {
       title: 'Amount',
       dataIndex: 'amount',
       key: '3',
-      render: (voteDetails) => `${humanAmount(new BN(voteDetails.amount).div(10 ** 7).toFixed(7))} ${asset.code}`,
+      render: (voteDetails) => `${humanizeAmount(new BN(voteDetails.amount).div(10 ** 7).toFixed(7))} ${asset.code}`,
     },
   ];
 

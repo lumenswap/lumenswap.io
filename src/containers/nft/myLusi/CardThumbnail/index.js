@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BN from 'helpers/BN';
 import Link from 'next/link';
 import Logo from 'assets/images/logo';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
 const CardThumbnail = ({
@@ -47,7 +47,7 @@ const CardThumbnail = ({
             {!new BN(price).isZero() ? (
               <>
                 <Logo color="#DF4886" />
-                {humanAmount(new BN(price).div(10 ** 7).toFixed(7))}
+                {humanizeAmount(new BN(price).div(10 ** 7).toFixed(7))}
               </>
             ) : '- -'}
           </div>

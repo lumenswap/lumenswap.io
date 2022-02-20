@@ -15,7 +15,7 @@ import useIsLogged from 'hooks/useIsLogged';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { generateAddressURL, ipfsHashGenerator } from 'helpers/explorerURLGenerator';
 import moment from 'moment';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import { useEffect, useState } from 'react';
 import { getVotesForProposal } from 'api/daoAPI';
@@ -102,12 +102,12 @@ const DAOSingleProposal = ({ proposalInfo }) => {
       render: (proposalDetails) => `${moment(proposalDetails.endTime).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
     },
     {
-      title: 'Total voters',
-      render: (proposalDetails) => `${humanAmount(proposalDetails.totalVoters)}`,
+      title: 'Total voter',
+      render: (proposalDetails) => `${humanizeAmount(proposalDetails.totalVoters)}`,
     },
     {
       title: 'Total votes',
-      render: (proposalDetails) => `${humanAmount(new BN(proposalDetails.totalVotes).div(10 ** 7).toFixed(7))} ${asset.code}`,
+      render: (proposalDetails) => `${humanizeAmount(new BN(proposalDetails.totalVotes).div(10 ** 7).toFixed(7))} ${asset.code}`,
     },
     {
       title: 'Proposer',
@@ -157,7 +157,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
                 <div key={index} className="mt-4">
                   <Progressbar
                     label={option.value}
-                    amount={`${new BN(option.amount).div(10 ** 7).toFixed(2)} LSP`}
+                    amount={`${humanizeAmount(new BN(option.amount).div(10 ** 7))} LSP`}
                     value={option.amount && proposalInfo.totalVotes
                       ? new BN(option.amount).div(proposalInfo.totalVotes).times(100).toFixed(1)
                       : 0}

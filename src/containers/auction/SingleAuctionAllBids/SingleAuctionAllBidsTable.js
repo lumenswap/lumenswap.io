@@ -5,7 +5,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { getAuctionBids } from 'api/auction';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { STATUS_NAMES } from 'containers/auction/consts';
 import styles from './styles.module.scss';
 
@@ -48,7 +48,7 @@ function SingleAuctionAllBidsTable({
       key: 3,
       render: (bid) => (
         <span>
-          {humanAmount(new BN(bid.amount).div(10 ** 7).toFixed(7))} {auction.assetCode}
+          {humanizeAmount(new BN(bid.amount).div(10 ** 7).toFixed(7))} {auction.assetCode}
         </span>
       ),
     },
@@ -58,7 +58,7 @@ function SingleAuctionAllBidsTable({
       key: 4,
       render: (bid) => (
         <span>
-          {humanAmount(bid.price)} XLM
+          {humanizeAmount(bid.price)} XLM
         </span>
       ),
     },
@@ -68,7 +68,7 @@ function SingleAuctionAllBidsTable({
       key: 5,
       render: (bid) => (
         <span>
-          {humanAmount(new BN(bid.total).div(10 ** 7).toFixed(7))} XLM
+          {humanizeAmount(new BN(bid.total).div(10 ** 7).toFixed(7))} XLM
         </span>
       ),
     },

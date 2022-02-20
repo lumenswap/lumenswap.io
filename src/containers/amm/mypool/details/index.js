@@ -8,7 +8,7 @@ import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import { fetchAccountDetails } from 'api/stellar';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import CCricularProgressBar from 'containers/amm/mypool/details/CCricularProgressBar';
 import WithdrawLiquidity from 'containers/amm/mypool/details/WithdrawLiquidity';
 import DepositLiquidity from 'containers/amm/mypool/details/DepositLiquidity';
@@ -175,9 +175,9 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                       <span className={styles['share-info-text']}>This is your share of the pool</span>
                     </div>
                     <CCricularProgressBar
-                      value={isLessThan0 ? 0.01 : humanAmount(new BN(userShare).times(100)
+                      value={isLessThan0 ? 0.01 : humanizeAmount(new BN(userShare).times(100)
                         .div(poolDetail.total_shares).toFixed(2))}
-                      text={isLessThan0 ? '<0.01%' : `%${humanAmount(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
+                      text={isLessThan0 ? '<0.01%' : `%${humanizeAmount(new BN(userShare).times(100).div(poolDetail.total_shares).toFixed(2))}`}
                       size={110}
                       strokeWidth={5}
                       className={styles.progressbar}
@@ -217,7 +217,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                     <div className={styles['liquidity-info-items']}>
                       <div className={styles['liquidity-info-item']}>
                         <span>
-                          {humanAmount(shareA.toFixed(7))}
+                          {humanizeAmount(shareA.toFixed(7))}
                         </span>
                         <span>
                           {getAssetFromLPAsset(poolDetail.reserves[0].asset).code}
@@ -225,7 +225,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                       </div>
                       <div className={styles['liquidity-info-item']}>
                         <span>
-                          {humanAmount(shareB.toFixed(7))}
+                          {humanizeAmount(shareB.toFixed(7))}
                         </span>
                         <span>
                           {getAssetFromLPAsset(poolDetail.reserves[1].asset).code}

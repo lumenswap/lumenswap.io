@@ -2,7 +2,7 @@ import CTable from 'components/CTable';
 import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
 import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
 function MyPoolData({ pools }) {
@@ -40,8 +40,8 @@ function MyPoolData({ pools }) {
       key: 2,
       render: (data) => (
         <span>
-          {humanAmount(data.calculateUserBalance(data.reserves[0].amount), true)} {getAssetFromLPAsset(data.reserves[0].asset).code}{' / '}
-          {humanAmount(data.calculateUserBalance(data.reserves[1].amount), true)}{' '}
+          {humanizeAmount(data.calculateUserBalance(data.reserves[0].amount), true)} {getAssetFromLPAsset(data.reserves[0].asset).code}{' / '}
+          {humanizeAmount(data.calculateUserBalance(data.reserves[1].amount), true)}{' '}
           {getAssetFromLPAsset(data.reserves[1].asset).code}
         </span>
       ),
@@ -53,7 +53,7 @@ function MyPoolData({ pools }) {
       sortFunc: (a, b, order) => (order === 'asc' ? a.balanceUSD - b.balanceUSD : b.balanceUSD - a.balanceUSD),
       render: (data) => (
         <span>
-          {data.balanceUSD !== '-' && '$'}{humanAmount(data.balanceUSD, true)}
+          {data.balanceUSD !== '-' && '$'}{humanizeAmount(data.balanceUSD, true)}
         </span>
       ),
     },

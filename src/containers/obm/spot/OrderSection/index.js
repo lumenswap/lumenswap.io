@@ -1,7 +1,7 @@
 import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
 import { fetchOrderBookAPI } from 'api/stellar';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import LeftSideAppLumen from './SpotList/LeftSideAppLumen';
@@ -29,7 +29,8 @@ const OrderSection = ({ appSpotPair, price, setPrice }) => {
 
   useEffect(() => {
     if (orderBookData?.asks[0] && orderBookData?.bids[0]) {
-      setPrice(humanAmount((new BN(orderBookData.asks[0].price).plus(orderBookData.bids[0].price))
+      setPrice(humanizeAmount((new BN(orderBookData.asks[0].price)
+        .plus(orderBookData.bids[0].price))
         .div(2)
         .toFixed(7)));
     } else {

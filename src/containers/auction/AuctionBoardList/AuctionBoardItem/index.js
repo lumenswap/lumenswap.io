@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import classNames from 'classnames';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import urlMaker from 'helpers/urlMaker';
 import { statusClassNames } from 'containers/auction/consts';
 import styles from './styles.module.scss';
@@ -42,7 +42,7 @@ const AuctionBoardItem = ({ auction }) => (
               </p>
               <div className={styles.badges}>
                 <div className={styles.badge}>
-                  <span className={styles['badge-subject']}>Amount to sell</span>{humanAmount(auction.amountToSell)} {auction.assetCode}
+                  <span className={styles['badge-subject']}>Amount to sell</span>{humanizeAmount(auction.amountToSell)} {auction.assetCode}
                 </div>
                 <div className={styles.badge}>
                   <span className={styles['badge-subject']}>Base price</span>{`${auction.basePrice} XLM`}

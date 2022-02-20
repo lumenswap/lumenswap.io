@@ -4,7 +4,7 @@ import InputGroup from 'components/InputGroup';
 import { calculateMaxXLM, getAssetDetails } from 'helpers/asset';
 import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
@@ -113,7 +113,7 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
       />
       <div className={styles.total}>
         <div>Total</div>
-        <div>{humanAmount(total.toFixed(7))} XLM</div>
+        <div>{humanizeAmount(total.toFixed(7))} XLM</div>
       </div>
       <Button
         htmlType="submit"

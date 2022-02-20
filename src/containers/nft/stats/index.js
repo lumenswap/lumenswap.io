@@ -7,7 +7,7 @@ import fetchNFTStats from 'api/nftStatsAPI';
 import { useState, useEffect } from 'react';
 import Loading from 'components/Loading';
 import moment from 'moment';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from '../NFTHeader';
@@ -33,11 +33,11 @@ const NFTStats = () => {
   const statsInfo = [
     {
       title: 'Volume 24h',
-      content: <Info text="NLSP" number={humanAmount(new BN(statsData?.info.volume24h).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
+      content: <Info text="NLSP" number={humanizeAmount(new BN(statsData?.info.volume24h).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
     },
     {
       title: 'Volume 7d',
-      content: <Info text="NLSP" number={humanAmount(new BN(statsData?.info.volume7d).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
+      content: <Info text="NLSP" number={humanizeAmount(new BN(statsData?.info.volume7d).div(10 ** 7).toFixed(7))} className={styles['statistics-info']} />,
     },
     {
       title: 'Total number of trades',
@@ -72,7 +72,7 @@ const NFTStats = () => {
               <div className={classNames(styles.card, styles['card-chart'])}>
                 <div className={styles['chart-header-info']}>
                   <div className={styles['volume-info']}>
-                    <span className={styles['volume-info-number']}>{humanAmount(new BN(statsVolumeInfo.currentVolume).div(10 ** 7).toFixed(7))} NLSP</span>
+                    <span className={styles['volume-info-number']}>{humanizeAmount(new BN(statsVolumeInfo.currentVolume).div(10 ** 7).toFixed(7))} NLSP</span>
                     <span className={styles['volume-info-text']}>Volume 24h</span>
                   </div>
                   <span className={styles['date-chart']}>

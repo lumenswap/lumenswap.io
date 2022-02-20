@@ -17,7 +17,7 @@ import BN from 'helpers/BN';
 import Link from 'next/link';
 import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
-import humanAmount from 'helpers/humanAmount';
+import humanizeAmount from 'helpers/humanizeAmount';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
@@ -145,7 +145,7 @@ function WalletData({ type }) {
       key: '2',
       sortFunc: (a, b, order) => (order === 'asc' ? new BN(b.rawBalance).comparedTo(a.rawBalance) : new BN(a.rawBalance).comparedTo(b.rawBalance)),
       render: (data) => (
-        <span>{data.rawBalance ? humanAmount(data.rawBalance) : 0}</span>
+        <span>{data.rawBalance ? humanizeAmount(data.rawBalance) : 0}</span>
       ),
     },
     {
@@ -154,7 +154,7 @@ function WalletData({ type }) {
       key: '3',
       sortFunc: (a, b, order) => (order === 'asc' ? new BN(b.balance).comparedTo(a.balance) : new BN(a.balance).comparedTo(b.balance)),
       render: (data) => (
-        <span>{humanAmount(data.balance)}</span>
+        <span>{humanizeAmount(data.balance)}</span>
       ),
     },
     {
@@ -164,7 +164,7 @@ function WalletData({ type }) {
       sortFunc: (a, b, order) => (order === 'asc' ? compareInOrder(b, a) : compareInOrder(a, b)),
       render: (data) => (
         <span>
-          {humanAmount(new BN(data.rawBalance ?? 0).minus(new BN(data.balance)).toFixed(7))}
+          {humanizeAmount(new BN(data.rawBalance ?? 0).minus(new BN(data.balance)).toFixed(7))}
         </span>
       ),
     },
