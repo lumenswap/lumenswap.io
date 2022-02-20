@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import Image from 'next/image';
 import classNames from 'classnames';
 import ExternalBlueArrow from 'assets/images/ExternalBlueArrow';
 import Button from 'components/Button';
@@ -69,11 +68,11 @@ const GovernanceInfo = ({ governance }) => {
       <div className="d-flex justify-content-between">
         <div className="d-flex align-items-center">
           <div className={styles.img}>
-            <Image src={extractLogoByToken(asset)} width={80} height={80} alt={name} />
+            <img src={extractLogoByToken(asset)} width={80} height={80} alt={name} />
           </div>
-          <div className="d-flex flex-column">
+          <div className={classNames('d-flex flex-column', styles['title-info'])}>
             <div className={styles.title}>{name}</div>
-            <div className={styles.text}>{numeral(communityMembersCount).format('0,0')} member</div>
+            <div className={styles['text-title']}>{numeral(communityMembersCount).format('0,0')} members</div>
           </div>
         </div>
         <div>
@@ -85,7 +84,7 @@ const GovernanceInfo = ({ governance }) => {
           />
         </div>
       </div>
-      <p className={classNames(styles.text, 'mb-0 mt-2')}>{description}</p>
+      <p className={classNames(styles.text, 'mb-0')}>{description}</p>
       <div className="mt-4">
         <div className={styles.detail}>
           <span className={styles.text}>Asset:</span>

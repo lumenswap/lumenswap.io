@@ -102,7 +102,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
       render: (proposalDetails) => `${moment(proposalDetails.endTime).utc().format('MMM-DD-YYYY hh:mm A +UTC')}`,
     },
     {
-      title: 'Total voter',
+      title: 'Total voters',
       render: (proposalDetails) => `${humanAmount(proposalDetails.totalVoters)}`,
     },
     {
