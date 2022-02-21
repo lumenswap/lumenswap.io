@@ -9,6 +9,7 @@ import truncateText from 'helpers/truncateText';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { extractLogoByToken } from 'helpers/asset';
+import BN from 'helpers/BN';
 import DAOPRoposalStatusBadge from '../../DAOProposalStatusBadge';
 import styles from './styles.module.scss';
 
@@ -16,6 +17,19 @@ const ProposalInfo = ({ item, pageName }) => {
   const {
     title, description, proposer, status, endTime, id, Governance,
   } = item;
+
+  function findOptionWithMostVotes() {
+    let mostAmount = 0;
+    let mostAmountIndex = 0;
+    item.options?.forEach((option, index) => {
+      if (new BN(option.amount).isGreaterThan(mostAmount)) {
+        mostAmount = option.amount;
+        mostAmountIndex = index;
+      }
+    });
+
+    return item.options[mostAmountIndex]?.value;
+  }
 
   return (
     <Link href={urlMaker.dao.singleDao.proposalInfo(pageName, id)}>
@@ -49,9 +63,15 @@ const ProposalInfo = ({ item, pageName }) => {
 
             <div className={classNames(styles.text, styles.detail, 'mt-4')}>
               {status.toLowerCase() === 'ended' && <SuccessIcon />}
-              {status.toLowerCase() === 'active'
-                ? `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
-                : `Starts in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`}
+              {
+                status.toLowerCase() === 'active' && `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
+              }
+              {
+                status === 'not started' && `Starts in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
+              }
+              {
+                status === 'ended' && `${findOptionWithMostVotes()}`
+              }
             </div>
           </div>
         </CCard>
