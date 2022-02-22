@@ -1,0 +1,51 @@
+@import "styles/vars";
+
+.card {
+  width: 360px;
+  height: auto;
+  padding: 24px 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  background-color: white;
+  margin: 82px 0;
+
+  @media (max-width: $sm) {
+    margin: 45px 0;
+  }
+}
+
+.container {
+  border-radius: 8px;
+  background-color: $AthensGray;
+  border: 1px solid $CatskillWhite;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.convert-btn {
+  box-shadow: none;
+  padding: 0 16px;
+  justify-content: space-between;
+
+  :global(.icon-angle-down) {
+    font-size: 10px;
+    color: $CodGray;
+  }
+}
+
+.currency {
+  font-size: 18px;
+  font-weight: 500;
+  color: $CodGray;
+  margin-left: 6px;
+}
+
+.icon {
+ text-align: center;
+  padding: 14px 0;
+
+  span {
+    font-size: 14px;
+  }
+}
