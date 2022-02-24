@@ -26,3 +26,7 @@ export function getAccounts(assetCode, cursor) {
     },
   });
 }
+
+export function fetchNFTActivity() {
+  return axios.get(`${process.env.REACT_APP_LUMEN_API}/nft/activity`);
+}
