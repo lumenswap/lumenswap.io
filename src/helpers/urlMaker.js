@@ -133,7 +133,10 @@ const urlMaker = {
   bridge: {
     root: () => `${rootUrl.bridge}`,
     convert: () => `${rootUrl.bridge}/convert`,
-    activity: () => `${rootUrl.bridge}/activity`,
+    activity: {
+      root: () => `${rootUrl.bridge}/activity`,
+      detail: (id) => `${urlMaker.bridge.activity.root()}/${id}`,
+    },
   },
 };
 

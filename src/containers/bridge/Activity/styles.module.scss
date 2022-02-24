@@ -40,6 +40,16 @@
   th:first-child, th:nth-child(2), th:last-child {
     width: 17% !important;
   }
+
+  td {
+    vertical-align: middle;
+  }
+}
+
+.status-success,
+.status-expired,
+.status-pending {
+  font-size: 16px;
 }
 
 .status-success {

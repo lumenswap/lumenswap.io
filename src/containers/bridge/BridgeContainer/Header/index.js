@@ -10,7 +10,7 @@ const BridgeHeader = () => {
 
   const rightSide = [
     {
-      name: 'My activities', link: urlMaker.bridge.activity(), disableMainHref: true,
+      name: 'My activities', link: urlMaker.bridge.activity.root(), disableMainHref: true,
     },
   ];
 
