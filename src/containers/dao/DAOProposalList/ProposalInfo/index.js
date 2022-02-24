@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 
 const ProposalInfo = ({ item, pageName }) => {
   const {
-    title, description, proposer, status, endTime, id, Governance,
+    title, description, proposer, status, endTime, id, Governance, startTime,
   } = item;
 
   function findOptionWithMostVotes() {
@@ -67,7 +67,7 @@ const ProposalInfo = ({ item, pageName }) => {
                 status.toLowerCase() === 'active' && `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
               }
               {
-                status === 'not started' && `Starts in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
+                status === 'not started' && `Starts in ${Math.floor(moment.duration(new Date(startTime) - new Date().getTime()).asDays())} days`
               }
               {
                 status === 'ended' && `${findOptionWithMostVotes()}`
