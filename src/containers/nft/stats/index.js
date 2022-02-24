@@ -103,7 +103,7 @@ const NFTStats = () => {
                   className={styles.table}
                   columns={tableHeaders}
                   dataSource={activity}
-                  noDataMessage="You have no ticket"
+                  noDataMessage="There is no activity"
                   loading={tableLoading}
                 />
               </div>
