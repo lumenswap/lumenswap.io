@@ -10,7 +10,7 @@ import { STATUS_NAMES } from 'containers/auction/consts';
 import styles from './styles.module.scss';
 
 function SingleAuctionAllBidsTable({
-  page, setTotalPages, searchQuery, auction,
+  page, setTotalPages, searchQuery, auction, sortBy,
 }) {
   const [auctionAllBids, setAuctionAllBids] = useState(null);
 
@@ -80,12 +80,12 @@ function SingleAuctionAllBidsTable({
       setAuctionAllBids([]);
       setTotalPages(1);
     } else {
-      getAuctionBids(auction.id, { page, searchQuery }).then((res) => {
+      getAuctionBids(auction.id, { page, searchQuery, sortBy }).then((res) => {
         setAuctionAllBids(res.data);
         setTotalPages(res.totalPages);
       });
     }
-  }, [page, searchQuery]);
+  }, [page, searchQuery, sortBy]);
 
   return (
     <>
