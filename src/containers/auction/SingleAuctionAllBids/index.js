@@ -1,18 +1,37 @@
 import classNames from 'classnames';
 import Input from 'components/Input';
-import { useState, useCallback, useRef } from 'react';
+import {
+  useState, useCallback, useRef,
+} from 'react';
 import CPagination from 'components/CPagination';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
+import TableDropDown from 'components/TableDropDown';
 import styles from './styles.module.scss';
 import SingleAuctionAllBidsTable from './SingleAuctionAllBidsTable';
 import AuctionContainer from '../AuctionContainer';
+
+const dropDownItems = [
+  {
+    text: 'Date',
+    value: 'bidDate',
+  },
+  {
+    text: 'Price',
+    value: 'price',
+  },
+  {
+    text: 'Amount',
+    value: 'amount',
+  },
+];
 
 function SingleAuctionAllBids({ pageName, assetCode, auction }) {
   const timeOutRef = useRef(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
   const [searchQuery, setSearchQuery] = useState(null);
+  const [sortBy, setSortBy] = useState(dropDownItems[0].value);
 
   const handleSearch = (e) => {
     clearTimeout(timeOutRef.current);
@@ -52,6 +71,11 @@ function SingleAuctionAllBids({ pageName, assetCode, auction }) {
                 spaceBetween={8}
                 data={crumbData}
               />
+
+              <div className="d-flex align-items-center">
+                <span className="mr-3">Sort By</span>
+                <TableDropDown defaultOption={dropDownItems[0]} onChange={(filter) => setSortBy(filter.value)} items={dropDownItems} placeholder="Sort by" />
+              </div>
             </div>
             <div className={classNames(styles.card, styles['card-table'])}>
               <TableHeader />
@@ -61,6 +85,7 @@ function SingleAuctionAllBids({ pageName, assetCode, auction }) {
                 searchQuery={searchQuery}
                 setTotalPages={setTotalPages}
                 auction={auction}
+                sortBy={sortBy}
               />
 
             </div>
