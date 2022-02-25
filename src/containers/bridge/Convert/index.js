@@ -6,6 +6,7 @@ import Button from 'components/Button';
 import btcSrc from 'assets/images/btc-logo.png';
 import Input from 'components/Input';
 import SelectAsset from './SelectAsset';
+import BridgeOne from './BridgeOne';
 
 import styles from './styles.module.scss';
 
@@ -18,7 +19,17 @@ const BridgeConvert = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = (data) => { console.warn(data); };
+  const onSubmit = (data) => {
+    dispatch(
+      openModalAction({
+        modalProps: {
+          className: 'main p-0',
+          hasClose: false,
+        },
+        content: <BridgeOne />,
+      }),
+    );
+  };
 
   const onOpenModal = () => {
     dispatch(

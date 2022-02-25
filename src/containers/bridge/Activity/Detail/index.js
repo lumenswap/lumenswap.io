@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import classNames from 'classnames';
@@ -8,6 +8,10 @@ import InfoBox from 'components/InfoBox';
 import StatusLabel from 'containers/bridge/Activity/StatusLabel';
 import ArrowRight from 'assets/images/arrowRight';
 import styles from './styles.module.scss';
+import NextStep from '../../../../components/NextStep';
+import Step1 from '../../Convert/BridgeOne/Step1';
+import Step2 from '../../Convert/BridgeOne/Step2';
+import Step3 from '../../Convert/BridgeOne/Step3';
 
 const ActivityDetail = () => {
   const router = useRouter();
@@ -57,6 +61,18 @@ const ActivityDetail = () => {
     },
   ];
 
+  const [currentStep, setCurrentStep] = useState(0);
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const steps = [
+    { content: <Step1 nextStep={nextStep} /> },
+    { content: <Step2 nextStep={nextStep} /> },
+    { content: <Step3 nextStep={nextStep} /> },
+    { content: <Step3 nextStep={nextStep} /> },
+  ];
+
   return (
     <BridgeContainer title="Bridge Activity Detail | Lumenswap">
       <div className={classNames('layout main', styles.layout)}>
@@ -69,6 +85,8 @@ const ActivityDetail = () => {
               rows={roundInfo}
               className={styles.info}
             />
+
+            <NextStep currentStep={currentStep} steps={steps} />
           </div>
         </div>
       </div>
