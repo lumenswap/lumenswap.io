@@ -10,6 +10,9 @@ import moment from 'moment';
 import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import ServerSideLoading from 'components/ServerSideLoading';
+import { fetchNFTActivity } from 'api/nft';
+import CTable from 'components/CTable';
+import tableHeaders from './tableHeaders';
 import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
@@ -24,6 +27,7 @@ const Container = ({ children }) => (
 );
 
 const NFTStats = () => {
+  const [activity, setActivity] = useState(null);
   const [statsData, setStatsData] = useState(null);
   const [statsVolumeInfo, setStatsVolumeInfo] = useState({
     currentTime: Date.now(),
@@ -45,8 +49,11 @@ const NFTStats = () => {
     },
   ];
 
+  const tableLoading = activity === null;
+
   useEffect(() => {
     fetchNFTStats().then((data) => setStatsData(data));
+    fetchNFTActivity().then((data) => setActivity(data.data));
   }, []);
 
   if (!statsData) {
@@ -87,6 +94,18 @@ const NFTStats = () => {
                     />
                   </div>
                 </div>
+              </div>
+
+              <p className={styles.activityTitle}>Last Activity</p>
+              <div className={styles.tableContainer}>
+                <CTable
+                  rowFix={{ rowNumbers: 10, rowHeight: 55, headerRowHeight: 49 }}
+                  className={styles.table}
+                  columns={tableHeaders}
+                  dataSource={activity}
+                  noDataMessage="There is no activity"
+                  loading={tableLoading}
+                />
               </div>
             </div>
           </div>
