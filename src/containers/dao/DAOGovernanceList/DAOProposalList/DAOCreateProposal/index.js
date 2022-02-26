@@ -5,7 +5,7 @@ import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import useRequiredLogin from 'hooks/useRequiredLogin';
 import Loading from 'components/Loading';
-import DAOContainer from '../DAOContainer';
+import DAOContainer from 'containers/dao/DAOContainer';
 import SuccessDialog from './SuccessDialog';
 import FailDialog from './FailDialog';
 import ProposalForm from './ProposalForm';

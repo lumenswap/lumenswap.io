@@ -10,7 +10,7 @@ import CPagination from 'components/CPagination';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { getVotesForProposal } from 'api/daoAPI';
 import BN from 'helpers/BN';
-import DAOContainer from '../DAOContainer';
+import DAOContainer from 'containers/dao/DAOContainer';
 import styles from './styles.module.scss';
 
 const votesTableHeaders = [

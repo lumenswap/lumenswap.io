@@ -8,7 +8,7 @@ import SelectOption from 'components/SelectOption';
 import useIsLogged from 'hooks/useIsLogged';
 import { getGovernanceProposals } from 'api/daoAPI';
 import DAOProposalItems from './DAOProposalItems';
-import DAOContainer from '../DAOContainer';
+import DAOContainer from '../../DAOContainer';
 import styles from './styles.module.scss';
 import GovernanceInfo from './GovernanceInfo';
 

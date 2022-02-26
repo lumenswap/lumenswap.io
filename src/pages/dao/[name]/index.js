@@ -1,6 +1,6 @@
-import DAOProposalList from 'containers/dao/DAOProposalList';
+import DAOProposalList from 'containers/dao/DAOGovernanceList/DAOProposalList';
 
-import { daoProposalsGetServerSideProps } from 'containers/dao/DAOProposalList/props';
+import { daoProposalsGetServerSideProps } from 'containers/dao/DAOGovernanceList/DAOProposalList/props';
 
 export const getServerSideProps = daoProposalsGetServerSideProps;
 
