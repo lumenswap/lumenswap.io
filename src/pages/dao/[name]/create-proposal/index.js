@@ -1,6 +1,6 @@
-import DAOCreateProposal from 'containers/dao/DAOCreateProposal';
+import DAOCreateProposal from 'containers/dao/DAOGovernanceList/DAOProposalList/DAOCreateProposal';
 
-import { daoCreateProposalGetServerSideProps } from 'containers/dao/DAOCreateProposal/props';
+import { daoCreateProposalGetServerSideProps } from 'containers/dao/DAOGovernanceList/DAOProposalList/DAOCreateProposal/props';
 
 export const getServerSideProps = daoCreateProposalGetServerSideProps;
 

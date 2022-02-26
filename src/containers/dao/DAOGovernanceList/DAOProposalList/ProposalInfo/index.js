@@ -10,7 +10,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { extractLogoByToken } from 'helpers/asset';
 import BN from 'helpers/BN';
-import DAOPRoposalStatusBadge from '../../DAOProposalStatusBadge';
+import DAOPRoposalStatusBadge from '../../../DAOProposalStatusBadge';
 import styles from './styles.module.scss';
 
 const ProposalInfo = ({ item, pageName }) => {

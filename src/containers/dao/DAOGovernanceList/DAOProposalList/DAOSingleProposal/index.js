@@ -20,11 +20,11 @@ import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import { useEffect, useState } from 'react';
 import { getVotesForProposal } from 'api/daoAPI';
 import BN from 'helpers/BN';
-import DAOContainer from '../DAOContainer';
+import DAOContainer from '../../../DAOContainer';
 import DAOSingleProposalVotes from './DAOSingleProposalVotes';
 import VoteModal from './VoteModal';
 import styles from './styles.module.scss';
-import DAOProposalStatusBadge from '../DAOProposalStatusBadge';
+import DAOProposalStatusBadge from '../../../DAOProposalStatusBadge';
 
 const DAOSingleProposal = ({ proposalInfo }) => {
   const [votes, setVotes] = useState(null);
