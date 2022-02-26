@@ -6,7 +6,7 @@ import Logo from 'assets/images/logo';
 import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
-const CardThumbnail = ({
+const LusiThumbnail = ({
   name, imgSrc, price, url,
 }) => {
   const divRef = useRef(null);
@@ -57,10 +57,10 @@ const CardThumbnail = ({
   );
 };
 
-CardThumbnail.propTypes = {
+LusiThumbnail.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.any.isRequired,
   imgSrc: PropTypes.string.isRequired,
 };
 
-export default CardThumbnail;
+export default LusiThumbnail;

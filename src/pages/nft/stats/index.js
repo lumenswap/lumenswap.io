@@ -1,3 +1,3 @@
-import NFTStats from 'containers/nft/stats';
+import NFTStats from 'containers/nft/NFTStats';
 
 export default NFTStats;

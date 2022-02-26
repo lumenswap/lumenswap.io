@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import classNames from 'classnames';
 import numeral from 'numeral';
-import NftStatsChart from 'containers/nft/stats/NftStatsChart';
 import CStatistics, { Info } from 'components/CStatistics';
 import fetchNFTStats from 'api/nftStatsAPI';
 import { useState, useEffect } from 'react';
@@ -12,6 +11,7 @@ import BN from 'helpers/BN';
 import ServerSideLoading from 'components/ServerSideLoading';
 import { fetchNFTActivity } from 'api/nft';
 import CTable from 'components/CTable';
+import NftStatsChart from './NftStatsChart';
 import tableHeaders from './tableHeaders';
 import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';

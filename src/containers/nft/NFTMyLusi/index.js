@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import classNames from 'classnames';
-import CardThumbnail from 'containers/nft/myLusi/CardThumbnail';
+import LusiThumbnail from 'containers/nft/LusiThumbnail';
 import Loading from 'components/Loading';
 import urlMaker from 'helpers/urlMaker';
 import { useState, useEffect } from 'react';
@@ -78,7 +78,7 @@ const NFTCollections = () => {
                     key={item.id}
                     className={classNames('col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12', styles.col, styles['no-data-card'])}
                   >
-                    <CardThumbnail
+                    <LusiThumbnail
                       name={`Lusi ${item.number}`}
                       imgSrc={item.imageUrl}
                       price={item.price}
