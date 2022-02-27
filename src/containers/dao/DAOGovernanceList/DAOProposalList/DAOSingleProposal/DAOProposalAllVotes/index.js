@@ -11,6 +11,7 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import { getVotesForProposal } from 'api/daoAPI';
 import BN from 'helpers/BN';
 import DAOContainer from 'containers/dao/DAOContainer';
+import moment from 'moment';
 import styles from './styles.module.scss';
 
 const votesTableHeaders = [
@@ -39,6 +40,12 @@ const votesTableHeaders = [
     dataIndex: 'amount',
     key: '3',
     render: (voteDetails) => `${humanizeAmount(new BN(voteDetails.amount).div(10 ** 7).toFixed(7))} ${voteDetails.Proposal.Governance.assetCode}`,
+  },
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    key: '4',
+    render: (voteDetails) => `${moment(voteDetails.voteTime).fromNow()}`,
   },
 ];
 
