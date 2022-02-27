@@ -1,5 +1,6 @@
 import StellarSDK from 'stellar-sdk';
 import USDC from 'tokens/USDC';
+import LSP from 'tokens/LSP';
 import { getAssetDetails, isSameAsset, getAssetFromLPAsset } from 'helpers/asset';
 import humanizeAmount from './humanizeAmount';
 import BN from './BN';
@@ -31,7 +32,7 @@ export function lexoOrderTokenWithDetails(A, B) {
   return [B, A];
 }
 
-export function getTVLInUSD(reserves, xlmPrice) {
+export function getTVLInUSD(reserves, xlmPrice, lspPrice) {
   let balance = '-';
   const tokenA = getAssetFromLPAsset(reserves[0].asset);
   const tokenB = getAssetFromLPAsset(reserves[1].asset);
@@ -56,6 +57,14 @@ export function getTVLInUSD(reserves, xlmPrice) {
       new BN(reserves[1].amount).times(xlmPrice).times(2).toFixed(7),
       true,
     );
+  }
+
+  if (isSameAsset(tokenA, LSP)) {
+    balance = humanizeAmount(new BN(reserves[0].amount).times(lspPrice).times(2).toFixed(7), true);
+  }
+
+  if (isSameAsset(tokenB, LSP)) {
+    balance = humanizeAmount(new BN(reserves[1].amount).times(lspPrice).times(2).toFixed(7), true);
   }
 
   return balance;
