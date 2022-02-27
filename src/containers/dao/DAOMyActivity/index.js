@@ -17,6 +17,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
+import { TIME_AFTER_PROPOSAL_END_TIME } from '../consts';
 
 const ACTIVITY_TEXTS = {
   CREATE_PROPOSAL: 'Create Proposal',
@@ -184,7 +185,9 @@ const DAOMyActivity = () => {
 
         if (balanceExists) {
           if (
-            new Date(activity.Proposal.endTime).getTime() + 5 * 60 * 1000 < new Date().getTime()
+            new Date(activity.Proposal.endTime).getTime()
+             + TIME_AFTER_PROPOSAL_END_TIME < new Date()
+              .getTime()
           ) {
             claimType = 'not-claimed';
           } else {
@@ -201,7 +204,7 @@ const DAOMyActivity = () => {
 
         if (balanceExists) {
           if (
-            new Date(activity.Vote.Proposal.endTime).getTime() + 5 * 60 * 1000
+            new Date(activity.Vote.Proposal.endTime).getTime() + TIME_AFTER_PROPOSAL_END_TIME
             < new Date().getTime()
           ) {
             claimType = 'not-claimed';
