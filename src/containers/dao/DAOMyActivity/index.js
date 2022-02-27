@@ -15,6 +15,7 @@ import { fetchClaimableBalances } from 'api/stellar';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
+import CountDown from './Countdown';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
 import { TIME_AFTER_PROPOSAL_END_TIME } from '../consts';
@@ -28,6 +29,13 @@ const ACTIVITY_TYPES = {
   CREATE_PROPOSAL: 'CREATE_PROPOSAL',
   CAST_VOTE: 'CAST_VOTE',
 };
+
+function getActivityProposalEndTime(activity) {
+  if (activity.Proposal) {
+    return activity.Proposal.endTime;
+  }
+  return activity.Vote.Proposal.endTime;
+}
 
 function calcualateActivityAmount(activity) {
   if (activity.Proposal) {
@@ -138,7 +146,8 @@ function ActivityTableAction({ activityInfo }) {
     return <div onClick={handleClaim} className="color-primary cursor-pointer">Claim</div>;
   }
   if (activityInfo.type === 'in-progress') {
-    return 'In Progress';
+    const endTime = getActivityProposalEndTime(activityInfo);
+    return <CountDown endTime={endTime} />;
   }
   return null;
 }
