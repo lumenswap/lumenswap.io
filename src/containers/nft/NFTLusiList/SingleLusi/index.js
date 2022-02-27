@@ -9,7 +9,6 @@ import refreshIcon from 'assets/images/refresh-icon-nft.svg';
 import CTabs from 'components/CTabs';
 import { openModalAction, openConnectModal } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import PlaceNFTOrder from 'containers/nft/detail/PlaceNFTOrder';
 import useIsLogged from 'hooks/useIsLogged';
 import minimizeAddress from 'helpers/minimizeAddress';
 import CSeeAllContentsButton from 'components/CSeeAllContentsButton';
@@ -30,9 +29,10 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import NLSP from 'tokens/NLSP';
 import numeral from 'numeral';
 import ServerSideLoading from 'components/ServerSideLoading';
-import NFTHeader from '../NFTHeader';
+import NFTHeader from 'containers/nft/NFTHeader';
+import PlaceNFTOrder from './PlaceNFTOrder';
 import styles from './styles.module.scss';
-import NFTDetailsTabContent from './NFTDetailsTabContent';
+import SingleLusiTabContent from './SingleLusiTabContent';
 import SetOrUpdateNFTPrice from './SetOrUpdateNFTPrice';
 import getLusiOwner from './getLusiOwner';
 
@@ -400,7 +400,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
                   <div className={classNames(styles['card-2'], styles['card-tabs'])}>
                     <CTabs
                       tabs={tabs}
-                      tabContent={NFTDetailsTabContent}
+                      tabContent={SingleLusiTabContent}
                       className={styles.tabs}
                       onChange={handleChangeTab}
                       customTabProps={{

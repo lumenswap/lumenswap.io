@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import urlMaker from 'helpers/urlMaker';
-import CardThumbnail from './myLusi/CardThumbnail';
+import LusiThumbnail from 'containers/nft/LusiThumbnail';
 import styles from './styles.module.scss';
 
 function AllLusiData({ allLusi }) {
@@ -11,7 +11,7 @@ function AllLusiData({ allLusi }) {
           key={item.number}
           className={classNames('col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12', styles.col, styles['m-t-col'])}
         >
-          <CardThumbnail
+          <LusiThumbnail
             name={`Lusi-${item.number}`}
             imgSrc={item.imageUrl}
             price={item.price}

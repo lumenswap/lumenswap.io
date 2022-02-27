@@ -7,13 +7,13 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { useState, useEffect } from 'react';
 import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
-import InfinitePagination from 'containers/nft/detail/InfinitePagination';
 import { fetchTradeAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import NLSP from 'tokens/NLSP';
 import humanizeAmount from 'helpers/humanizeAmount';
 import ServerSideLoading from 'components/ServerSideLoading';
-import NFTHeader from '../../NFTHeader';
+import NFTHeader from 'containers/nft/NFTHeader';
+import InfinitePagination from '../InfinitePagination';
 import styles from './styles.module.scss';
 
 const OFFER_FETCH_LIMIT = 20;
@@ -30,7 +30,7 @@ function fetchLusiTrades(cursor, id) {
   );
 }
 
-function AllTradesPage({ id }) {
+function SingleLusiAllTrades({ id }) {
   const [nextPageToken, setNextPageToken] = useState(null);
   const [currentPagingToken, setCurrentPagingToken] = useState(null);
   const [pagingTokens, setPagingTokens] = useState([]);
@@ -189,4 +189,4 @@ function AllTradesPage({ id }) {
   );
 }
 
-export default AllTradesPage;
+export default SingleLusiAllTrades;

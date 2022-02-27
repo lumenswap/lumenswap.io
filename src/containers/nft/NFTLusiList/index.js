@@ -6,7 +6,7 @@ import SelectOption from 'components/SelectOption';
 import fetchAllLusi from 'api/AllLusiAPI';
 import BN from 'helpers/BN';
 import ServerSideLoading from 'components/ServerSideLoading';
-import NFTHeader from './NFTHeader';
+import NFTHeader from 'containers/nft/NFTHeader';
 import AllLusiData from './allLusiData';
 import styles from './styles.module.scss';
 

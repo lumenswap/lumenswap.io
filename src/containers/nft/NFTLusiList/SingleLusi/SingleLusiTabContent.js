@@ -1,7 +1,7 @@
 import OffersData from './OffersData';
 import TradesData from './TradesData';
 
-const NFTDetailsTabContent = ({ tab, lusiData, offers }) => {
+const SingleLusiTabContent = ({ tab, lusiData, offers }) => {
   if (tab === 'offer') {
     return (
       <OffersData offers={offers} />
@@ -12,4 +12,4 @@ const NFTDetailsTabContent = ({ tab, lusiData, offers }) => {
   );
 };
 
-export default NFTDetailsTabContent;
+export default SingleLusiTabContent;

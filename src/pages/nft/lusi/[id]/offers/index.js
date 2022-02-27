@@ -1,6 +1,6 @@
-import AllOffersPage from 'containers/nft/detail/AllOffers';
+import SingleLusiAllOffers from 'containers/nft/NFTLusiList/SingleLusi/SingleLusiAllOffers';
 
-import { AllOffersPageGetServerSideProps } from 'containers/nft/detail/AllOffers/props';
+import { AllOffersPageGetServerSideProps } from 'containers/nft/NFTLusiList/SingleLusi/SingleLusiAllOffers/props';
 
-export default AllOffersPage;
+export default SingleLusiAllOffers;
 export const getServerSideProps = AllOffersPageGetServerSideProps;
