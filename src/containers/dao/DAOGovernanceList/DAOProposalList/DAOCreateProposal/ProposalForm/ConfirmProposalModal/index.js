@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Button from 'components/Button';
 import { closeModalAction } from 'actions/modal';
 import ContractIcon from 'assets/images/contract';
+import { TIME_AFTER_PROPOSAL_END_TIME } from 'containers/dao/consts';
 
 import { createPendingProposal } from 'api/daoAPI';
 import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimableBalanceForDaoTRX';
@@ -22,7 +23,8 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
         new Claimant(formData.proposer, Claimant
           .predicateNot(Claimant
             .predicateBeforeAbsoluteTime(
-              ((new Date(formData.endTime).getTime() + 5 * 60 * 1000) / 1000).toString(),
+              ((new Date(formData.endTime).getTime() + TIME_AFTER_PROPOSAL_END_TIME) / 1000)
+                .toString(),
             ))),
         new Claimant('GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK', Claimant
           .predicateNot(Claimant

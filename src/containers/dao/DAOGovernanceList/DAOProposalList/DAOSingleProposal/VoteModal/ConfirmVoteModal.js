@@ -7,6 +7,7 @@ import { getAssetDetails } from 'helpers/asset';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimableBalanceForDaoTRX';
 import showSignResponse from 'helpers/showSignResponse';
+import { TIME_AFTER_PROPOSAL_END_TIME } from 'containers/dao/consts';
 import styles from './styles.module.scss';
 
 const ConfirmVoteModal = ({ proposalInfo }) => {
@@ -23,7 +24,8 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
       new Claimant(userAddress, Claimant
         .predicateNot(Claimant
           .predicateBeforeAbsoluteTime(
-            ((new Date(proposalInfo.endTime).getTime() + 5 * 60 * 1000) / 1000).toString(),
+            ((new Date(proposalInfo.endTime).getTime() + TIME_AFTER_PROPOSAL_END_TIME) / 1000)
+              .toString(),
           ))),
       new Claimant(process.env.REACT_APP_DAO_LOCKER_ADDRESS, Claimant
         .predicateNot(Claimant
