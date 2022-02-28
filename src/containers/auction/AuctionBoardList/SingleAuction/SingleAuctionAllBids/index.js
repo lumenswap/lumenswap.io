@@ -7,9 +7,9 @@ import CPagination from 'components/CPagination';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import TableDropDown from 'components/TableDropDown';
+import AuctionContainer from 'containers/auction/AuctionContainer';
 import styles from './styles.module.scss';
 import SingleAuctionAllBidsTable from './SingleAuctionAllBidsTable';
-import AuctionContainer from '../AuctionContainer';
 
 const dropDownItems = [
   {
