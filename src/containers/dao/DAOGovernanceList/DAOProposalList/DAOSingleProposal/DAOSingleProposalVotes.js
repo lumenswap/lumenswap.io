@@ -3,6 +3,7 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
+import moment from 'moment';
 import styles from './styles.module.scss';
 
 function DAOSingleProposalVotes({ votes, asset }) {
@@ -36,6 +37,12 @@ function DAOSingleProposalVotes({ votes, asset }) {
       dataIndex: 'amount',
       key: '3',
       render: (voteDetails) => `${humanizeAmount(new BN(voteDetails.amount).div(10 ** 7).toFixed(7))} ${asset.code}`,
+    },
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: '4',
+      render: (voteDetails) => `${moment(voteDetails.voteTime).fromNow()}`,
     },
   ];
 
