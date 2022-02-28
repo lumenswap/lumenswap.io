@@ -59,11 +59,11 @@ export function getTVLInUSD(reserves, xlmPrice, lspPrice) {
     );
   }
 
-  if (isSameAsset(tokenA, LSP)) {
+  if (isSameAsset(tokenA, getAssetDetails(LSP))) {
     balance = humanizeAmount(new BN(reserves[0].amount).times(lspPrice).times(2).toFixed(7), true);
   }
 
-  if (isSameAsset(tokenB, LSP)) {
+  if (isSameAsset(tokenB, getAssetDetails(LSP))) {
     balance = humanizeAmount(new BN(reserves[1].amount).times(lspPrice).times(2).toFixed(7), true);
   }
 
