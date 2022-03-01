@@ -52,6 +52,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
   const xlmPrice = useSelector((state) => state.xlmPrice);
+  const lspPrice = useSelector((state) => state.lspPrice);
   const isLogged = useIsLogged();
   const [poolDetail, setPoolDetail] = useState(initPoolDetail);
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
@@ -211,6 +212,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                           },
                         ],
                         xlmPrice,
+                        lspPrice,
                       )}
                       </span>
                     </div>

@@ -4,6 +4,7 @@ import CoinGecko from 'coingecko-api';
 import { getAssetDetails } from 'helpers/asset';
 import USDC from 'tokens/USDC';
 import XLM from 'tokens/XLM';
+import LSP from 'tokens/LSP';
 
 export function getSendEstimatedValueAPI(params) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/paths/strict-send`, { params }).then((res) => res.data._embedded.records[0]);
@@ -166,6 +167,12 @@ export function checkAssetAPI(assetCode, assetIssuer) {
 
 export function fetchXLMPrice() {
   return fetchOrderBookAPI(getAssetDetails(XLM), getAssetDetails(USDC), { limit: 1 })
+    .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2));
+}
+
+export function fetchLSPPriceFromHorizon() {
+  // eslint-disable-next-line new-cap
+  return fetchOrderBookAPI(getAssetDetails(LSP), getAssetDetails(USDC), { limit: 1 })
     .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2));
 }
 
