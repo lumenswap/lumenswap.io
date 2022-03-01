@@ -19,7 +19,7 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
-function calculateBalanceUSD(data, xlmPrice) {
+function calculateBalanceUSD(data, xlmPrice, lspPrice) {
   let balance = '-';
   const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
   const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
@@ -50,10 +50,24 @@ function calculateBalanceUSD(data, xlmPrice) {
       .toFixed(7);
   }
 
+  if (isSameAsset(tokenA, getAssetDetails(LSP))) {
+    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+      .times(lspPrice)
+      .times(2)
+      .toFixed(7);
+  }
+
+  if (isSameAsset(tokenB, getAssetDetails(LSP))) {
+    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+      .times(lspPrice)
+      .times(2)
+      .toFixed(7);
+  }
+
   return balance;
 }
 
-async function fetchData(userAddress, xlmPrice, setPools) {
+async function fetchData(userAddress, xlmPrice, setPools, lspPrice) {
   const result = await fetchAccountDetails(userAddress);
   const filteredBalances = result.balances
     .filter((balance) => balance.asset_type === 'liquidity_pool_shares')
@@ -72,7 +86,7 @@ async function fetchData(userAddress, xlmPrice, setPools) {
   );
 
   const poolsWithBalances = fetchedPools.map((pool) => {
-    const balanceUSD = calculateBalanceUSD(pool, xlmPrice);
+    const balanceUSD = calculateBalanceUSD(pool, xlmPrice, lspPrice);
     return {
       ...pool,
       balanceUSD,
@@ -86,6 +100,7 @@ function MyPoolPage() {
   const [pools, setPools] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const xlmPrice = useSelector((state) => state.xlmPrice);
+  const lspPrice = useSelector((state) => state.lspPrice);
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -100,7 +115,7 @@ function MyPoolPage() {
         content: <AddLiquidity
           selectAsset={handleSelectAsset}
           {...newSelectTokens}
-          afterAdd={() => fetchData(userAddress, xlmPrice, setPools)}
+          afterAdd={() => fetchData(userAddress, xlmPrice, setPools, lspPrice)}
         />,
       }),
     );

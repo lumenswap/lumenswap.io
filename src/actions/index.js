@@ -30,6 +30,9 @@ const actionTypes = {
   xlmPrice: {
     UPDATE: 'xlmPrice/UPDATE',
   },
+  lspPrice: {
+    UPDATE: 'lspPrice/UPDATE',
+  },
 };
 
 export default actionTypes;
