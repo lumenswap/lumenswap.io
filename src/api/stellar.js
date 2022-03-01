@@ -173,7 +173,7 @@ export function fetchXLMPrice() {
 export function fetchLSPPriceFromHorizon() {
   // eslint-disable-next-line new-cap
   return fetchOrderBookAPI(getAssetDetails(LSP), getAssetDetails(USDC), { limit: 1 })
-    .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2));
+    .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2).toFixed(3));
 }
 
 export function fetchXLMCoingeckoPrice() {
