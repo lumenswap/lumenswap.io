@@ -3,7 +3,8 @@ import { useStore } from 'store';
 import { persistStore } from 'redux-persist';
 import { useRef, useEffect } from 'react';
 import { setUserBalance } from 'actions/userBalance';
-import { fetchAccountDetails, fetchXLMCoingeckoPrice } from 'api/stellar';
+import { fetchAccountDetails, fetchLSPPriceFromHorizon, fetchXLMCoingeckoPrice } from 'api/stellar';
+import { updateLSPPrice } from 'actions/lspPrice';
 import { updateXLMPrice } from 'actions/xlmPrice';
 import { filterUserBalance } from 'helpers/balanceMapper';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
@@ -52,6 +53,10 @@ function MyApp({ Component, pageProps }) {
         }).catch(() => { });
       }
     }, 2000);
+
+    fetchLSPPriceFromHorizon().then((price) => {
+      store.dispatch(updateLSPPrice(price));
+    }).catch(() => {});
 
     fetchXLMCoingeckoPrice().then((price) => {
       store.dispatch(updateXLMPrice(price));
