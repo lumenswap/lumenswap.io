@@ -9,9 +9,9 @@ import StatusLabel from 'containers/bridge/Activity/StatusLabel';
 import ArrowRight from 'assets/images/arrowRight';
 import styles from './styles.module.scss';
 import NextStep from '../../../../components/NextStep';
-import Step1 from '../../Convert/BridgeOne/Step1';
-import Step2 from '../../Convert/BridgeOne/Step2';
-import Step3 from '../../Convert/BridgeOne/Step3';
+import Step1 from '../../Convert/BridgeTwo/Step1';
+import Step2 from '../../Convert/BridgeTwo/Step2';
+import Step3 from '../../Convert/SuccessStep';
 
 const ActivityDetail = () => {
   const router = useRouter();

@@ -1,10 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
+
 import Button from 'components/Button';
 import CopyIcon from 'assets/images/copy';
 import QrIcon from 'assets/images/qr';
 import copyText from 'helpers/copyText';
-import styles from './styles.module.scss';
+
+import styles from '../step.module.scss';
 
 const Step1 = ({ nextStep }) => (
   <>
@@ -44,7 +46,7 @@ const Step1 = ({ nextStep }) => (
       </div>
     </div>
 
-    <div className={styles.note}>
+    <div className={classNames(styles.note, styles['note-base'])}>
       When the Ethereum network approval the transaction,
       you will automatically be redirected to the next step.
     </div>

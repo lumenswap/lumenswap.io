@@ -37,43 +37,39 @@
   border-radius: 8px;
   font-size: 14px;
   line-height: 1.43;
+}
+
+.note-base {
   color: $ShuttleGray;
   margin-top: 24px;
+}
+
+.note-link {
+  color: $CodGray;
+  margin-top: 30px;
+
+  a {
+    text-decoration: none !important;
+    word-break: break-all;
+
+    svg {
+      margin-top: -4px;
+    }
+  }
 }
 
 
 .loading {
   display: flex;
   justify-content: center;
+}
+
+.loading-one {
   height: 388px;
   padding-top: 167px;
 }
 
-.status-title {
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.56;
-  color: $CodGray;
-  margin-top: 10px;
-  margin-bottom: 0;
+.loading-two {
+  margin: 45px auto 45px auto;
 }
 
-.status-desc {
-  font-size: 14px;
-  line-height: 1.43;
-  color: $ShuttleGray;
-  margin-top: 10px;
-  margin-bottom: 0;
-
-  span {
-    color: $CodGray;
-  }
-}
-
-.detail-btn {
-  width: 143px;
-  height: 40px;
-  border-radius: 4px;
-  display: block;
-  margin: 32px auto 0 auto;
-}

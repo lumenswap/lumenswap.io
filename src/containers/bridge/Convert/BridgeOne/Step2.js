@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
+import classNames from 'classnames';
+
 import Loading from 'components/Loading';
-import styles from './styles.module.scss';
+
+import styles from '../step.module.scss';
 
 const Step2 = ({ nextStep }) => {
   useEffect(() => {
@@ -15,7 +18,7 @@ const Step2 = ({ nextStep }) => {
         PWe are sending 2 LBTC to your address. Please be patient.
       </p>
 
-      <div className={styles.loading}>
+      <div className={classNames(styles.loading, styles['loading-one'])}>
         <Loading size={40} />
       </div>
     </>

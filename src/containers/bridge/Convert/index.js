@@ -7,6 +7,7 @@ import btcSrc from 'assets/images/btc-logo.png';
 import Input from 'components/Input';
 import SelectAsset from './SelectAsset';
 import BridgeOne from './BridgeOne';
+import BridgeTwo from './BridgeTwo';
 
 import styles from './styles.module.scss';
 
@@ -26,7 +27,8 @@ const BridgeConvert = () => {
           className: 'main p-0',
           hasClose: false,
         },
-        content: <BridgeOne />,
+        // content: <BridgeOne />,
+        content: <BridgeTwo />,
       }),
     );
   };
