@@ -70,7 +70,6 @@ const ActivityDetail = () => {
     { content: <Step1 nextStep={nextStep} /> },
     { content: <Step2 nextStep={nextStep} /> },
     { content: <Step3 nextStep={nextStep} /> },
-    { content: <Step3 nextStep={nextStep} /> },
   ];
 
   return (
