@@ -1,6 +1,6 @@
-import DAOProposalAllVotes from 'containers/dao/DAOProposalAllVotes';
+import DAOProposalAllVotes from 'containers/dao/DAOGovernanceList/DAOProposalList/DAOSingleProposal/DAOProposalAllVotes';
 
-import { daoProposalVotesGetServerSideProps } from 'containers/dao/DAOProposalAllVotes/props';
+import { daoProposalVotesGetServerSideProps } from 'containers/dao/DAOGovernanceList/DAOProposalList/DAOSingleProposal/DAOProposalAllVotes/props';
 
 export const getServerSideProps = daoProposalVotesGetServerSideProps;
 export default DAOProposalAllVotes;

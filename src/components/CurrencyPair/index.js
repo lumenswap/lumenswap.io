@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import Image from 'next/image';
 
 import styles from './styles.module.scss';
 
@@ -9,14 +8,14 @@ const CurrencyPair = ({ size, source }) => {
   return (
     <div className={styles.images} style={{ width: `${imagesSize}px` }}>
       <div className={styles.container}>
-        <Image
+        <img
           src={source[0]}
           width={size}
           height={size}
         />
       </div>
       <div className={styles.container} style={{ marginLeft: `-${margin}px` }}>
-        <Image
+        <img
           src={source[1]}
           width={size}
           height={size}
