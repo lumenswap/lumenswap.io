@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .main {
   margin-top: 63px;
@@ -13,6 +13,21 @@
 
 .link-blue {
   color: $BlueRibbon;
+}
+.link {
+  color: $BlueRibbon;
+  text-decoration: none;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  &:hover {
+    text-decoration: none;
+    color: $BlueRibbon;
+  }
 }
 
 .activityTitle {
@@ -58,14 +73,14 @@
 .block {
   padding-left: 32px;
 
-  @media(max-width: $md) {
+  @media (max-width: $md) {
     padding: 12px 24px;
   }
 
   &-col:not(:last-child) {
     border-right: 1px solid $CatskillWhite;
 
-    @media(max-width: $md) {
+    @media (max-width: $md) {
       border-right: none;
       border-bottom: 1px solid $CatskillWhite;
     }
@@ -89,8 +104,6 @@
     }
   }
 }
-
-
 
 .statistics {
   width: 100%;
@@ -170,13 +183,13 @@
 }
 
 .date-chart {
-    font-family: SofiaPro;
-    font-size: 14px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.43;
-    letter-spacing: normal;
-    color: $ShuttleGray;
-    margin-top: 6px;
+  font-family: SofiaPro;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: $ShuttleGray;
+  margin-top: 6px;
 }

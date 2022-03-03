@@ -3,6 +3,8 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import classNames from 'classnames';
 import BN from 'helpers/BN';
+import urlMaker from 'helpers/urlMaker';
+import Link from 'next/link';
 import styles from './styles.module.scss';
 
 export default [
@@ -10,7 +12,13 @@ export default [
     title: 'Name',
     dataIndex: 'lusiName',
     key: '1',
-    render: (data) => `Lusi#${data.Lusi.number}`,
+    render: (data) => (
+      <Link href={urlMaker.nft.lusi.root(data.lusi.number)}>
+        <a className={styles.link}>
+          Lusi#${data.Lusi.number}
+        </a>
+      </Link>
+    ),
   },
   {
     title: 'Seller',
