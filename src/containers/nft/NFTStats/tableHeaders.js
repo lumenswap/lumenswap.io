@@ -24,7 +24,7 @@ export default [
         rel="noreferrer"
         className={classNames(styles['link-blue'], 'd-flex w-100 align-items-center')}
       >
-        {minimizeAddress(data.sellerAddress, 8)}
+        {minimizeAddress(data.sellerAddress, 4)}
       </a>
     ),
   },
@@ -40,7 +40,7 @@ export default [
         rel="noreferrer"
         className={classNames(styles['link-blue'], 'd-flex w-100 align-items-center')}
       >
-        {minimizeAddress(data.buyerAddress, 8)}
+        {minimizeAddress(data.buyerAddress, 4)}
       </a>
     ),
   },
