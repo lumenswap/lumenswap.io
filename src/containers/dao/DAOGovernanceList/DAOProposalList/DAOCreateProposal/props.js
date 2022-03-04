@@ -3,7 +3,7 @@ import BN from 'helpers/BN';
 
 export async function daoCreateProposalGetServerSideProps({ params }) {
   try {
-    let governance = await getGovernances(params.name);
+    let governance = await getGovernances({ name: params.name });
 
     governance = governance[0];
 
