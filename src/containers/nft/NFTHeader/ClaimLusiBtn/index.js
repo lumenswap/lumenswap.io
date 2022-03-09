@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
@@ -50,7 +49,7 @@ function ClaimLusiBtn() {
     <div onClick={handleOpenModal} className={styles.main}>
       <div className={styles.items}>
         <div className={styles.logo}>
-          <Image src={rewardLusi.imageUrl} width={28} height={28} />
+          <img src={rewardLusi.imageUrl} width={28} height={28} />
         </div>
         <span>Claim my lusi</span>
       </div>

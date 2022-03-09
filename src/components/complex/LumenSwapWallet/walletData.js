@@ -7,7 +7,6 @@ import defaultTokens from 'tokens/defaultTokens';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import minimizeAddress from 'helpers/minimizeAddress';
-import Image from 'next/image';
 import CStatistics, { Info } from 'components/CStatistics';
 import { useEffect, useState } from 'react';
 import {
@@ -129,7 +128,7 @@ function WalletData({ type }) {
       render: (data) => (
         <div className={styles.asset}>
           <div className={styles['asset-logo']}>
-            <Image src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
+            <img src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
           </div>
           <div className={styles['asset-div']}>
             <span className={styles['asset-code']}>{data.asset.code}</span>

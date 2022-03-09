@@ -1,4 +1,3 @@
-// import Image from 'next/image';
 import numeral from 'numeral';
 import Status from '../Status';
 import styles from './style.module.scss';

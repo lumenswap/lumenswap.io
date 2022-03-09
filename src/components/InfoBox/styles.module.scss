@@ -80,3 +80,7 @@
 .bordered:not(:last-child) {
   border-bottom: 1px solid $CatskillWhite;
 }
+
+.icon {
+  margin-top: -8px;
+}

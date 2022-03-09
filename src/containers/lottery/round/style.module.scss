@@ -1,6 +1,12 @@
-@import "styles/vars";
+@import 'styles/vars';
 
-
+.arrow-icon {
+  img {
+    margin-top: -4px;
+  }
+  margin-left: 6px;
+  margin-right: 6px;
+}
 .description-overlay {
   position: absolute;
   border-radius: 4px;
@@ -46,8 +52,6 @@
   margin: 67px 0;
   justify-content: center;
 }
-
-
 
 .buy-ticket {
   padding-bottom: 24px;
@@ -290,4 +294,3 @@
   letter-spacing: normal;
   color: $CodGray;
 }
-

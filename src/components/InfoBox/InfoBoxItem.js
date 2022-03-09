@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import classNames from 'classnames';
 import QuestionIcon from 'assets/images/question-icon.png';
@@ -26,7 +24,12 @@ function InfoBoxItem({
           {item.tooltip && (
           <Tooltips placement="top" id="price" text={<PrimaryTooltip text={item.tooltip} />}>
             <span style={{ marginLeft: 2, height: 18 }}>
-              <Image src={QuestionIcon} width={16} height={16} />
+              <img
+                className={styles.icon}
+                src={QuestionIcon}
+                width={16}
+                height={16}
+              />
             </span>
           </Tooltips>
           )}

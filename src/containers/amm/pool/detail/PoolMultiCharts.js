@@ -1,7 +1,6 @@
 import CChart from 'components/CChart';
 import * as echarts from 'echarts';
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import moment from 'moment';
 import Loading from 'components/Loading';
 import { getOneDayPoolStatsForPoolId } from 'api/amm';
@@ -273,7 +272,7 @@ function PoolMultiCharts({ poolId }) {
   if (!currentValue) {
     return (
       <div className={styles['chart-pool']}>
-        <div className={styles['chart-icon-container']}><Image src={chartIcon} width={32} height={27} /></div>
+        <div className={styles['chart-icon-container']}><img src={chartIcon} width={32} height={27} /></div>
         <span>The chart is not available for this pool</span>
       </div>
     );
@@ -282,7 +281,7 @@ function PoolMultiCharts({ poolId }) {
   if (chartData === []) {
     return (
       <div className={styles['chart-pool']}>
-        <div className={styles['chart-icon-container']}><Image src={chartIcon} width={32} height={27} /></div>
+        <div className={styles['chart-icon-container']}><img src={chartIcon} width={32} height={27} /></div>
         <span>The chart is not available for this pool</span>
       </div>
     );

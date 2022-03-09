@@ -1,5 +1,4 @@
 import numeral from 'numeral';
-import Image from 'next/image';
 import ArrowIcon from 'assets/images/arrow-right-icon.png';
 import moment from 'moment';
 import { useState } from 'react';
@@ -14,8 +13,8 @@ const RoundInfo = ({ round }) => {
   const PeriodInfo = (info) => (
     <span className={styles.infos}>
       {endPeriod ? moment(info.startDate).format('D MMM Y') : `${+info.startLedger + 1} Ledger`}
-      <span style={{ marginLeft: 6, marginRight: 6 }}>
-        <Image src={ArrowIcon} width={12} height={12} />
+      <span className={styles['arrow-icon']}>
+        <img src={ArrowIcon} width={12} height={12} />
       </span>
       <span className="d-inline-flex align-items-center">
         {endPeriod ? moment(info.endDate).format('D MMM Y') : `${+info.endLedger - 1} Ledger`}

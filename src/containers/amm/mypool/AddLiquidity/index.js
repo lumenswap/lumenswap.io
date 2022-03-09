@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import BN from 'helpers/BN';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +19,7 @@ import styles from './styles.module.scss';
 
 const setLabel = (name, src) => (
   <div className="d-flex align-items-center">
-    <Image src={src} width={20} height={20} alt={name} />
+    <img src={src} width={20} height={20} alt={name} />
     <span className="ml-2">{name}</span>
   </div>
 );

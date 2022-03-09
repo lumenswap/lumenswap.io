@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import ArrowDown from 'assets/images/arrow-down.svg';
 import ArrowDownFill from 'assets/images/arrow-down-fill.svg';
-import Image from 'next/image';
 import Link from 'next/link';
 import Loading from 'components/Loading';
 import classNames from 'classnames';
@@ -103,13 +102,13 @@ const CTable = ({
                     className={styles.sort}
                     onClick={() => handleSort(title.dataIndex)}
                   >
-                    <Image
+                    <img
                       src={sortIndex === title.dataIndex && sortOrder === 'asc' ? ArrowDownFill : ArrowDown}
                       width={8}
                       height={5}
                       className={styles.sort_icon}
                     />
-                    <Image
+                    <img
                       src={sortIndex === title.dataIndex && sortOrder === 'desc' ? ArrowDownFill : ArrowDown}
                       width={8}
                       height={5}

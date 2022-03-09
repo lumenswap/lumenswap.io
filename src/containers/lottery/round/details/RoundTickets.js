@@ -11,7 +11,6 @@ import Breadcrumb from 'components/BreadCrumb';
 import moment from 'moment';
 import minimizeAddress from 'helpers/minimizeAddress';
 import eyeShowIcon from 'assets/images/eye-show-icon.png';
-import Image from 'next/image';
 import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
 import { useDispatch } from 'react-redux';
 import ServerSideLoading from 'components/ServerSideLoading';
@@ -119,7 +118,7 @@ const AllTicketsPage = ({ round }) => {
       render: (data) => (
         <div className={styles['show-eye-icon-container']}>
           <div>
-            <Image
+            <img
               onClick={() => handleShowTicketInfo(data)}
               className={styles['show-eye-icon']}
               src={eyeShowIcon}

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import classNames from 'classnames';
 import GiftIcon from 'assets/images/gift-icon.svg';
 import styles from './style.module.scss';
@@ -13,7 +12,7 @@ const Status = ({ round }) => {
 
   return (
     <span className="d-flex align-items-center">
-      {round.status.toLowerCase() === 'live' && <Image src={GiftIcon} width={20} height={20} />}
+      {round.status.toLowerCase() === 'live' && <img src={GiftIcon} width={20} height={20} />}
       <div
         style={{ marginLeft: 14 }}
         className={classNames(

@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import ObmHeader from 'containers/obm/ObmHeader';
 import topPairIcon from 'assets/images/top-pair.svg';
-import Image from 'next/image';
 import { extractInfoByToken } from 'helpers/asset';
 import ServerSideLoading from 'components/ServerSideLoading';
 import MarketData from './MarketData';
@@ -37,7 +36,7 @@ const MarketPage = ({ assets }) => {
             <div className="row">
               <div className="col-lg-2 col-md-3 col-12 pr-0">
                 <div className={styles['top-pair-details-info']}>
-                  <div className={styles['top-pair-details-image']}><Image src={topPairIcon} width={22} height={22} /></div>
+                  <div className={styles['top-pair-details-image']}><img src={topPairIcon} width={22} height={22} /></div>
                   <span className={styles['top-pair-details-text']}>Top Pair Gainers</span>
                 </div>
               </div>

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import classNames from 'classnames';
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import questionIcon from 'assets/images/question.svg';
@@ -27,7 +26,7 @@ const CStatistics = ({ blocks, className }) => (
             <div
               className={styles.icons}
             >
-              <Image
+              <img
                 height="14"
                 width="14"
                 src={questionIcon}

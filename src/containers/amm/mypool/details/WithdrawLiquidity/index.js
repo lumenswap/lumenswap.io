@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
@@ -18,7 +17,7 @@ function Inpool({ token, isLoading }) {
   return (
     <div className={styles.inpool}>
       <div>
-        <div><Image src={token.logo} width={20} height={20} /></div>
+        <div><img src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
       <div>{isLoading ? '' : humanizeAmount(token.balance)}</div>
@@ -205,7 +204,13 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
               {inpoolData.map((inpool) => (
                 <div className={styles['footer-item']}>
                   <div className={styles['footer-first-section']}>
-                    <div className={styles['footer-img']}><Image src={inpool.logo} width={20} height={20} /></div>
+                    <div className={styles['footer-img']}><img
+                      className={styles['inpool-logo']}
+                      src={inpool.logo}
+                      width={20}
+                      height={20}
+                    />
+                    </div>
                     <span className={styles['footer-code']}>{inpool.code}</span>
                   </div>
                   <span className={styles['footer-balance']}>

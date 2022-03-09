@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import NumberOnlyInput from 'components/NumberOnlyInput';
@@ -34,7 +33,7 @@ const LiquidityInput = ({
           <div className={styles.btns}>
             {maxValue && value !== maxValue && <div onClick={handleSetMaxValue} className={classNames(styles['max-btn'], secondStyles['button-secondary'])}>MAX</div>}
             <div className={styles.badge}>
-              <Image src={currencySrc} width={20} height={20} alt={currency} />
+              <img src={currencySrc} width={20} height={20} alt={currency} />
               <span className="ml-2">{currency}</span>
             </div>
           </div>

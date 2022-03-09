@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .label {
   font-size: 16px;
@@ -41,7 +41,6 @@
   margin-top: 24px;
 }
 
-
 .footer-section {
   width: 100%;
   height: 78px;
@@ -70,32 +69,31 @@
   justify-content: space-between;
 }
 .inpool {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  height: 28px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  color: $CodGray;
+  div {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-    height: 28px;
-    align-items: center;
-    margin-bottom: 10px;
-    font-family: SofiaPro;
-    font-size: 18px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.56;
-    letter-spacing: normal;
-    color: $CodGray;
-    div {
-        display: flex;
-        flex-direction: row;
-        div:first-child {
-            width: 20px;
-            height: 20px;
-            margin-right: 6px;
-            margin-top: 3px;
-        }
+    div:first-child {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+      margin-top: 3px;
     }
-    
+  }
 }
 
 .footer-first-section {
@@ -103,26 +101,30 @@
   flex-direction: row;
 }
 .footer {
- &-code { font-family: SofiaPro;
-  font-size: 14px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.43;
-  letter-spacing: normal;
-  color: $CodGray;
-  margin-left: 3px;
- }
+  &-code {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $CodGray;
+    margin-left: 3px;
+  }
 
- &-balance {
-  font-family: SofiaPro;
-  font-size: 14px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.43;
-  letter-spacing: normal;
-  text-align: right;
-  color: $CodGray;
- }
+  &-balance {
+    font-family: SofiaPro;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: right;
+    color: $CodGray;
+  }
+}
+.inpool-logo {
+  margin-top: -10px;
 }

@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .inpool {
   display: flex;
@@ -19,6 +19,9 @@
   &-img {
     height: 20px;
     margin-right: 6px;
+    img {
+      margin-top: -12px;
+    }
   }
 }
 

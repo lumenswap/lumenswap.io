@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
@@ -122,7 +121,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
         <Link href={urlMaker.dao.singleDao.root(proposalInfo.Governance.name.toLowerCase())}>
           <a className={styles['governance-link']}>
             <div className="d-flex align-items-center">
-              <Image src={extractLogoByToken(asset)} height={24} width={24} />
+              <img src={extractLogoByToken(asset)} height={24} width={24} />
               <div className="ml-1">{proposalDetails.Governance.name}</div>
             </div>
           </a>

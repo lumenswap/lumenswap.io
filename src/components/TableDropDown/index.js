@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import DropDownToggle from 'assets/images/drop-down-toggle.svg';
 import { useState } from 'react';
 import classNames from 'classnames';
@@ -32,7 +31,7 @@ const TableDropDown = ({
       className={styles['dropdown-container']}
     >
       {selectedItem ? selectedItem.text : placeholder}
-      <Image className={styles['dropdown-icon']} src={DropDownToggle} width={10} height={10} />
+      <img className={styles['dropdown-icon']} src={DropDownToggle} width={10} height={10} />
       <div className={classNames(styles['dropdown-content'], isOpen && styles.active)}>
         {items?.map((item, i) => (
           <div key={i} onClick={() => handleSelect(item)} className={styles['dropdown-item']}>

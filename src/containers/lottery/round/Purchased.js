@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Loading from 'components/Loading';
 import Ticket from 'assets/images/ticket.svg';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
@@ -72,7 +71,7 @@ const Purchased = ({ numTickets }) => {
   return (
     <div className={styles['purchased-modal']}>
       <span className={styles['ticket-icon']}>
-        <Image src={Ticket} width={36} height={36} />
+        <img src={Ticket} width={36} height={36} />
       </span>
       <p className={styles.bold}>{message}</p>
       {loading && (
