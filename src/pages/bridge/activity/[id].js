@@ -1,3 +1,5 @@
-import ActivityDetail from 'containers/bridge/Activity/Detail';
+import SingleActivityDetails from 'containers/bridge/MyActivities/SingleActiviyDetails';
+import SingleActivityDetailsGetServerSideProps from 'containers/bridge/MyActivities/SingleActiviyDetails/props';
 
-export default ActivityDetail;
+export const getServerSideProps = SingleActivityDetailsGetServerSideProps;
+export default SingleActivityDetails;

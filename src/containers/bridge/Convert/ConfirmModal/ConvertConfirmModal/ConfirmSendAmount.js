@@ -1,14 +1,12 @@
-import React from 'react';
 import classNames from 'classnames';
-
 import Button from 'components/Button';
-import CopyIcon from 'assets/images/copy';
 import QrIcon from 'assets/images/qr';
-import copyText from 'helpers/copyText';
+import humanizeAmount from 'helpers/humanizeAmount';
+import minimizeAddress from 'helpers/minimizeAddress';
+import CustomCopyText from './CustomCopyText';
+import styles from '../styles.module.scss';
 
-import styles from '../step.module.scss';
-
-const Step1 = ({ nextStep }) => (
+const ConfirmSendAmount = ({ sendConvertRequest, convertInfo }) => (
   <>
     <p className={styles.text}>
       Please send the specified amount to the specified address.
@@ -16,38 +14,24 @@ const Step1 = ({ nextStep }) => (
 
     <label className="label-primary mt-4 mb-0">Amount</label>
     <div className={styles['copy-box']}>
-      1100 USDT
-      <span
-        className={styles.icon}
-        onClick={() => {
-          copyText('1100 USDT');
-        }}
-      >
-        <CopyIcon />
-      </span>
+      {humanizeAmount(convertInfo.amount)} {convertInfo.selectedTokens.tokenA.code}
+      <CustomCopyText content={humanizeAmount(convertInfo.amount)} />
     </div>
 
     <label className="label-primary mt-4 mb-0">Address</label>
     <div className={styles['copy-box']}>
-      GCHE….2FK0
+      {minimizeAddress(convertInfo.destination)}
       <div className="d-flex">
         <span className={styles.icon}>
           <QrIcon />
         </span>
 
-        <span
-          className={classNames(styles.icon, 'ml-2')}
-          onClick={() => {
-            copyText('GCHE….2FK0');
-          }}
-        >
-          <CopyIcon />
-        </span>
+        <CustomCopyText className="ml-2" content={convertInfo.destination} />
       </div>
     </div>
 
     <div className={classNames(styles.note, styles['note-base'])}>
-      When the Ethereum network approval the transaction,
+      When the {convertInfo.selectedTokens.tokenB.network} network approval the transaction,
       you will automatically be redirected to the next step.
     </div>
 
@@ -56,9 +40,9 @@ const Step1 = ({ nextStep }) => (
       content="Confirm"
       className="mt-4"
       size="100%"
-      onClick={nextStep}
+      onClick={sendConvertRequest()}
     />
   </>
 );
 
-export default Step1;
+export default ConfirmSendAmount;

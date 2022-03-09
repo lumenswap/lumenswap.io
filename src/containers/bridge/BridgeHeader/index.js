@@ -4,13 +4,18 @@ import urlMaker from 'helpers/urlMaker';
 const BridgeHeader = () => {
   const leftSide = [
     {
-      name: 'Convert', link: urlMaker.bridge.convert(), disableMainHref: true,
+      name: 'Convert',
+      link: urlMaker.bridge.root(),
+      disableMainHref: true,
     },
   ];
 
   const rightSide = [
     {
-      name: 'My activities', link: urlMaker.bridge.activity.root(), disableMainHref: true,
+      name: 'My activities',
+      restricted: true,
+      link: urlMaker.bridge.activity.root(),
+      disableMainHref: true,
     },
   ];
 

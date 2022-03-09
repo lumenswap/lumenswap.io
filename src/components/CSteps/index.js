@@ -2,7 +2,7 @@ import React from 'react';
 import Steps, { Step } from 'rc-steps';
 import styles from './styles.module.scss';
 
-const NextStep = ({ currentStep, steps }) => (
+const CSteps = ({ currentStep, steps }) => (
   <>
     <div className={styles.step}>
       <Steps size="small" current={currentStep}>
@@ -18,4 +18,4 @@ const NextStep = ({ currentStep, steps }) => (
   </>
 );
 
-export default NextStep;
+export default CSteps;

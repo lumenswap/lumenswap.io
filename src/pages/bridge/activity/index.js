@@ -1,3 +1,3 @@
-import BridgeActivity from 'containers/bridge/activity';
+import MyActivities from 'containers/bridge/MyActivities';
 
-export default BridgeActivity;
+export default MyActivities;

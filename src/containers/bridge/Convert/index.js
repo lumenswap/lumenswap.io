@@ -1,17 +1,57 @@
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { openModalAction } from 'actions/modal';
+import { closeModalAction, openConnectModal, openModalAction } from 'actions/modal';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
-import btcSrc from 'assets/images/btc-logo.png';
 import Input from 'components/Input';
+import questionLogo from 'assets/images/question.png';
+import { useState } from 'react';
+import useIsLogged from 'hooks/useIsLogged';
 import SelectAsset from './SelectAsset';
-import BridgeOne from './BridgeOne';
-import BridgeTwo from './BridgeTwo';
+import ConvertConfirmModal from './ConfirmModal/ConvertConfirmModal';
+import LTokensConvertCofirmModal from './ConfirmModal/LTokensConvertConfirmModal';
 
 import styles from './styles.module.scss';
 
-const BridgeConvert = () => {
+const AssetLabel = ({ logo, code, onClick }) => (
+  <Button
+    variant="basic"
+    size="100%"
+    className={styles['convert-btn']}
+    onClick={onClick}
+  >
+    <div className="d-flex align-items-center">
+      <img src={logo} width={30} height={30} alt="assetLogo" />
+      <div className={styles.currency}>{code}</div>
+    </div>
+    <div className="icon-angle-down color-base" />
+  </Button>
+);
+
+const ConfirmModalContent = ({ convertInfo }) => {
+  if (convertInfo.selectedTokens.tokenA.type === 'l-asset') {
+    return (
+      <LTokensConvertCofirmModal
+        convertInfo={convertInfo}
+      />
+    );
+  }
+  if (convertInfo.selectedTokens.tokenA.type === 'default') {
+    return (
+      <ConvertConfirmModal
+        convertInfo={convertInfo}
+      />
+    );
+  }
+  return null;
+};
+
+const BridgeConvert = ({ defaultSelectedTokens }) => {
+  const [selectedTokens, setSelectedTokens] = useState({
+    tokenA: defaultSelectedTokens.tokenA,
+    tokenB: defaultSelectedTokens.tokenB,
+  });
+  const isLoggedIn = useIsLogged();
   const dispatch = useDispatch();
   const {
     handleSubmit,
@@ -21,25 +61,56 @@ const BridgeConvert = () => {
   });
 
   const onSubmit = (data) => {
-    dispatch(
-      openModalAction({
-        modalProps: {
-          className: 'main p-0',
-          hasClose: false,
-        },
-        // content: <BridgeOne />,
-        content: <BridgeTwo />,
-      }),
-    );
+    console.log(selectedTokens.tokenA);
+    if (isLoggedIn) {
+      dispatch(
+        openModalAction({
+          modalProps: {
+            className: 'main p-0',
+            hasClose: false,
+          },
+          content: <ConfirmModalContent convertInfo={{
+            ...data,
+            selectedTokens,
+          }}
+          />,
+        }),
+      );
+    } else {
+      dispatch(openConnectModal());
+    }
   };
 
-  const onOpenModal = () => {
+  const onSelectAsset = (token) => () => {
+    const handleSelectAsset = (selectedToken) => () => {
+      if (token === 'tokenA') {
+        if (selectedToken.code === selectedTokens.tokenB.code) {
+          setSelectedTokens((prev) => ({
+            tokenB: prev.tokenA,
+            tokenA: selectedToken,
+          }));
+        } else {
+          setSelectedTokens({ ...selectedTokens, tokenA: selectedToken });
+        }
+      }
+      if (token === 'tokenB') {
+        if (selectedToken.code === selectedTokens.tokenA.code) {
+          setSelectedTokens((prev) => ({
+            tokenA: prev.tokenB,
+            tokenB: selectedToken,
+          }));
+        } else {
+          setSelectedTokens({ ...selectedTokens, tokenB: selectedToken });
+        }
+      }
+      dispatch(closeModalAction());
+    };
     dispatch(
       openModalAction({
         modalProps: {
           className: 'main',
         },
-        content: <SelectAsset />,
+        content: <SelectAsset onSelectAsset={handleSelectAsset} />,
       }),
     );
   };
@@ -49,35 +120,21 @@ const BridgeConvert = () => {
       <div className="layout main d-flex justify-content-center">
         <div className={styles.card}>
           <div className={styles.container}>
-            <Button
-              variant="basic"
-              size="100%"
-              className={styles['convert-btn']}
-              onClick={onOpenModal}
-            >
-              <div className="d-flex align-items-center">
-                <img src={btcSrc} width={30} height={30} alt="logo" />
-                <div className={styles.currency}>BTC</div>
-              </div>
-              <div className="icon-angle-down color-base" />
-            </Button>
+            <AssetLabel
+              code={selectedTokens.tokenA.code}
+              logo={selectedTokens.tokenA.logo ?? questionLogo}
+              onClick={onSelectAsset('tokenA')}
+            />
 
             <div className={styles.icon}>
               <span className="icon-arrow-down color-primary" />
             </div>
 
-            <Button
-              variant="basic"
-              size="100%"
-              className={styles['convert-btn']}
-              onClick={onOpenModal}
-            >
-              <div className="d-flex align-items-center">
-                <img src={btcSrc} width={30} height={30} alt="logo" />
-                <div className={styles.currency}>ETH</div>
-              </div>
-              <div className="icon-angle-down color-base" />
-            </Button>
+            <AssetLabel
+              code={selectedTokens.tokenB.code}
+              logo={selectedTokens.tokenB.logo ?? questionLogo}
+              onClick={onSelectAsset('tokenB')}
+            />
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +147,7 @@ const BridgeConvert = () => {
                   type="number"
                   placeholder="1"
                   value={props.value}
-                  onChange={props.onchange}
+                  onChange={props.onChange}
                 />
               )}
             />
@@ -104,7 +161,7 @@ const BridgeConvert = () => {
                   type="text"
                   placeholder="G …"
                   value={props.value}
-                  onChange={props.onchange}
+                  onChange={props.onChange}
                 />
               )}
             />
