@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .container {
   padding: 30px 0 24px 0;
@@ -58,7 +58,6 @@
   }
 }
 
-
 .loading {
   display: flex;
   justify-content: center;
@@ -72,4 +71,3 @@
 .loading-two {
   margin: 45px auto 45px auto;
 }
-

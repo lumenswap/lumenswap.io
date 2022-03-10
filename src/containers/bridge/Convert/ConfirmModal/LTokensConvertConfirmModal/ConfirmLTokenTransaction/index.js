@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
 import humanizeAmount from 'helpers/humanizeAmount';
-import styles from '../styles.module.scss';
+import styles from '../../styles.module.scss';
 
 const ConfirmLTokenTransaction = ({ sendConvertRequest, convertInfo }) => {
   const [loading, setLoading] = useState(false);

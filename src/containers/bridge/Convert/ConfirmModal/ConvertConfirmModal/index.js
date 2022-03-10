@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import CSteps from 'components/CSteps';
 import { sendConvertReq } from 'api/mockAPI/convertMockAPI';
-import SuccessDialog from '../SuccessDialog';
-import ConfirmSendAmount from './ConfirmSendAmount';
+import SuccessDialog from 'containers/bridge/Convert/ConfirmModal/SuccessDialog';
 import SendAmountLoading from './SendAmountLoading';
-
+import ConfirmSendAmount from './ConfirmSendAmount';
 import styles from '../styles.module.scss';
 
 const ConvertConfirmModal = ({ convertInfo }) => {

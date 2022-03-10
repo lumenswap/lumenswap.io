@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Loading from 'components/Loading';
 import humanizeAmount from 'helpers/humanizeAmount';
-import styles from '../styles.module.scss';
+import styles from '../../styles.module.scss';
 
 const SendAmountLoading = ({ convertInfo }) => (
   <>

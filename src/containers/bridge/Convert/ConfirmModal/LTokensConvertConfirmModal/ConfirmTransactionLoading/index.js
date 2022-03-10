@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import ExternalIcon from 'assets/images/external';
 
-import styles from '../styles.module.scss';
+import styles from '../../styles.module.scss';
 
 const ConfirmTransactionLoading = ({ convertInfo, transactionInfo }) => (
   <>

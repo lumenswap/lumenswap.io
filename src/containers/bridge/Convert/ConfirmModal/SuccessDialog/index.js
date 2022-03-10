@@ -1,7 +1,6 @@
 import TickIcon from 'assets/images/tick';
 import AngleRightIcon from 'assets/images/angleRight';
 import Button from 'components/Button';
-
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import { useDispatch } from 'react-redux';

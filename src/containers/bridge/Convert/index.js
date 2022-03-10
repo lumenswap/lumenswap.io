@@ -61,7 +61,6 @@ const BridgeConvert = ({ defaultSelectedTokens }) => {
   });
 
   const onSubmit = (data) => {
-    console.log(selectedTokens.tokenA);
     if (isLoggedIn) {
       dispatch(
         openModalAction({
