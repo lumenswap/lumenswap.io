@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import AMMHeader from 'containers/amm/AMMHeader';
 import Breadcrumb from 'components/BreadCrumb';
 import CurrencyPair from 'components/CurrencyPair';
-import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import { useState } from 'react';
@@ -92,9 +91,9 @@ const Details = ({ poolDetail }) => {
                   {HeaderInfoAsset && (
                   <div className={styles['header-info-container']}>
                     <span className={styles['header-info-container-texts']}>1 {reverseHeaderInfo ? refinedA.getCode() : refinedB.getCode()}</span>
-                    <div className={styles['equal-icon']}><Image src={equalIcon} width={14} height={8} /></div>
+                    <div className={styles['equal-icon']}><img src={equalIcon} width={14} height={8} /></div>
                     <span className={styles['header-info-container-texts']}>{HeaderInfoAsset} {reverseHeaderInfo ? refinedB.getCode() : refinedA.getCode()}</span>
-                    <div onClick={handleReverseHeaderInfo} className={styles['refresh-icon']}><Image src={refreshIcon} width={18} height={18} /></div>
+                    <div onClick={handleReverseHeaderInfo} className={styles['refresh-icon']}><img src={refreshIcon} width={18} height={18} /></div>
                   </div>
                   )}
                 </div>

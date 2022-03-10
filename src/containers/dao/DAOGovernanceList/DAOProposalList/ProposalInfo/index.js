@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Image from 'next/image';
 import urlMaker from 'helpers/urlMaker';
 import CCard from 'components/CCard';
 import SuccessIcon from 'assets/images/success-tick';
@@ -39,7 +38,7 @@ const ProposalInfo = ({ item, pageName }) => {
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center">
                 <div className={styles.img}>
-                  <Image
+                  <img
                     src={
                       extractLogoByToken(
                         { code: Governance.assetCode, issuer: Governance.assetIssuer },

@@ -1,26 +1,29 @@
 @import 'styles/vars';
 
 .address-link {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-top: 14px;
-    font-family: SofiaPro;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 14px;
+  font-family: SofiaPro;
+  color: $ShuttleGray;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+
+  &:hover {
     color: $ShuttleGray;
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-  
-    &:hover {
-      color: $ShuttleGray;
-    }
-  
-    span {
-      margin-left: 8px;
-      margin-top: 6px;
-    }
   }
+
+  span {
+    margin-left: 8px;
+    margin-top: 6px;
+  }
+}
+.icon {
+  margin-top: -8px;
+}

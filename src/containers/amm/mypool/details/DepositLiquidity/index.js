@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
@@ -22,7 +21,7 @@ function Inpool({ token, isLoading }) {
   return (
     <div className={styles.inpool}>
       <div>
-        <div><Image src={token.logo} width={20} height={20} /></div>
+        <div><img src={token.logo} width={20} height={20} /></div>
         <span>{token.code}</span>
       </div>
       <div>{isLoading ? '' : humanizeAmount(token.balance, true)}</div>

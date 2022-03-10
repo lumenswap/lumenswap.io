@@ -1,10 +1,8 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .main {
   margin-top: 76px;
 }
-
-
 
 .btn {
   width: 135px;
@@ -24,11 +22,11 @@
     height: 380px;
     div {
       width: 100% !important;
-      position: relative  !important;
+      position: relative !important;
       border-radius: 4px !important;
     }
     img {
-      position: relative  !important;
+      position: relative !important;
     }
   }
 
@@ -67,14 +65,12 @@
   margin-left: -12px !important;
 }
 
-
 .col {
   padding-right: 12px !important;
   padding-left: 12px !important;
 }
 
 .tabs {
-
   nav {
     a:first-child {
       margin-left: 24px;
@@ -188,25 +184,25 @@
   }
 }
 .info-link {
-    color: $BlueRibbon;
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
+  color: $BlueRibbon;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
 }
 
 .no-link {
-    color: $CodGray;
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
+  color: $CodGray;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
 }
 
 .bread {
@@ -217,5 +213,6 @@
   margin-top: 3px;
   img {
     cursor: pointer;
+    margin-top: -10px;
   }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import AMMCurrentPrice from 'containers/amm/mypool/AMMCurrentPrice';
 import Button from 'components/Button';
 import { getAssetDetails, extractLogoByToken } from 'helpers/asset';
@@ -42,7 +41,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
     <div className="pb-4">
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
         <div>{humanizeAmount(data.tokenA.balance)}</div>
@@ -50,7 +49,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
 
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
         <div>{humanizeAmount(data.tokenB.balance)}</div>

@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import Image from 'next/image';
 import ArrowPagination from 'assets/images/arrow-pagination.svg';
 import { useEffect, useState } from 'react';
 import { generateRange } from './helpers';
@@ -36,11 +35,9 @@ const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
   return (
     <div className={styles['pagination-container']}>
       <button disabled={currentPage <= 1} type="button" onClick={() => onPageClick(currentPage - 1)}>
-        <Image
+        <img
           className={classNames(styles.arrowLeft, currentPage <= 1 && styles.disabled)}
           src={ArrowPagination}
-          width={20}
-          height={10}
           objectFit="contain"
         />
       </button>
@@ -59,11 +56,9 @@ const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
         ))}
       </div>
       <button type="button" disabled={currentPage >= pages} onClick={() => onPageClick(currentPage + 1)}>
-        <Image
+        <img
           className={classNames(styles.arrowRight, currentPage >= pages && styles.disabled)}
           src={ArrowPagination}
-          width={20}
-          height={10}
           objectFit="contain"
         />
       </button>

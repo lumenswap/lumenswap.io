@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import generateDepositPoolTRX from 'stellar-trx/generateDepositPoolTRX';
 import AMMCurrentPrice from 'containers/amm/mypool/AMMCurrentPrice';
 import Button from 'components/Button';
@@ -50,7 +49,7 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
     <div className="pb-4">
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
         <div>{data.tokenA.amount}</div>
@@ -58,7 +57,7 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
 
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><Image src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
         <div>{data.tokenB.amount}</div>

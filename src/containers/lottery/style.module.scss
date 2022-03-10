@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .main {
   margin-left: 20.625%;
@@ -132,8 +132,6 @@
   }
 }
 
-
-
 .table {
   overflow-y: auto;
   scrollbar-width: none;
@@ -173,7 +171,6 @@
         td {
           vertical-align: middle;
         }
-        
       }
     }
   }
@@ -263,6 +260,9 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    div {
+      margin-top: -5px;
+    }
   }
 }
 
@@ -290,8 +290,6 @@
     letter-spacing: normal;
   }
 }
-
- 
 
 @media (max-width: $sm) {
   .input {

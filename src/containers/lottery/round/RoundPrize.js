@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import GiftIcon from 'assets/images/gift.svg';
 import moment from 'moment';
 import Status from '../Status';
@@ -9,7 +8,7 @@ const RoundPrize = ({ round }) => (
     <div className={styles['description-overlay']}>
       <p className="position-relative">
         <span className={styles['gift-icon']}>
-          <Image src={GiftIcon} width={30} height={32} />
+          <img src={GiftIcon} width={30} height={32} />
         </span>
         {round.status === 'Not started'
           ? `The round information will be released on ${moment.utc(round.startDate).format('MMMM DD')}.`

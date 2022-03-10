@@ -5,7 +5,6 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import { useDispatch } from 'react-redux';
 import Tooltips from 'components/Tooltip';
-import Image from 'next/image';
 import avgPriceIcon from 'assets/images/avg.price.png';
 import styles from '../../styles.module.scss';
 
@@ -43,7 +42,7 @@ const OrderItem = ({
       number:
   <div className={styles['avg-info']}>
     <div className={styles['avg-icon']}>
-      <Image
+      <img
         width={8}
         height={6}
         src={avgPriceIcon}

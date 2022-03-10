@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import classNames from 'classnames';
 import BN from 'helpers/BN';
 import Button from 'components/Button';
@@ -198,7 +197,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
             <span className={styles.infos}>
               <PriceInfo />
               <div className={styles['refresh-icon']}>
-                <Image
+                <img
                   src={refreshIcon}
                   height={18}
                   width={18}

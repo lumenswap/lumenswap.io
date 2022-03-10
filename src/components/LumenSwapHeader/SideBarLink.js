@@ -1,5 +1,4 @@
 import NavLink from 'components/LumenSwapHeader/NavLink';
-import Image from 'next/image';
 import arrowHeaderIcon from '../../assets/images/arrow-header.svg';
 import styles from './styles.module.scss';
 
@@ -14,7 +13,7 @@ function SideBarLink({ link }) {
           rel="noreferrer"
         >
           {link.name}
-          <div><Image src={arrowHeaderIcon} width={12} height={12} /></div>
+          <div><img src={arrowHeaderIcon} width={14} height={14} /></div>
         </a>
       </li>
     );

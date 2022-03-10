@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import Image from 'next/image';
 import Link from 'next/link';
 import AuctionContainer from 'containers/auction/AuctionContainer';
 import {
@@ -88,7 +87,7 @@ const SingleAuction = ({ auction, pageName, assetCode }) => {
       title: 'Asset code',
       render: (auctionDetails) => (
         <>
-          <Image src={extractLogoByToken({ code: auctionDetails.assetCode, issuer: auctionDetails.assetIssuer })} height={22} width={22} className="rounded-circle" alt="logo" />
+          <img src={extractLogoByToken({ code: auctionDetails.assetCode, issuer: auctionDetails.assetIssuer })} height={22} width={22} className="rounded-circle" alt="logo" />
           <div className="ml-1">{auctionDetails.assetCode}</div>
         </>
       ),

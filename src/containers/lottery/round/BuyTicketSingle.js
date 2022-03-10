@@ -1,7 +1,6 @@
 import Button from 'components/Button';
 import BN from 'helpers/BN';
 import { getAssetDetails, isSameAsset } from 'helpers/asset';
-import Image from 'next/image';
 import Ticket from 'assets/images/ticket.svg';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +41,7 @@ const BuyTicketSingle = () => {
   return (
     <div className={styles['single-ticket-modal']}>
       <span className={styles['ticket-icon']}>
-        <Image src={Ticket} width={36} height={36} />
+        <img src={Ticket} width={36} height={36} />
       </span>
       <p className={styles['text-normal']}>
         The cost of buying a ticket is <span className={styles['text-bold']}>1 LSP</span>

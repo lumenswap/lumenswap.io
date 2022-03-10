@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Image from 'next/image';
 import CPagination from 'components/CPagination';
 import CTable from 'components/CTable';
 import useRequiredLogin from 'hooks/useRequiredLogin';
@@ -74,7 +73,7 @@ const activityTableHeaders = [
 
       return (
         <div className="d-flex align-items-center">
-          <Image
+          <img
             src={logo}
             width={24}
             height={24}

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { generateTransactionURL, generateAddressURL } from 'helpers/explorerURLGenerator';
 import moment from 'moment';
-import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import eyeShowIcon from 'assets/images/eye-show-icon.png';
 import { openModalAction } from 'actions/modal';
@@ -66,7 +65,7 @@ const Tickets = ({
       render: (data) => (
         <div className={styles['show-eye-icon-container']}>
           <div>
-            <Image
+            <img
               onClick={() => handleShowTicketInfo(data)}
               className={styles['show-eye-icon']}
               src={eyeShowIcon}

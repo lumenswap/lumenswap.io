@@ -3,7 +3,6 @@ import leftMiniArrow from 'assets/images/left-mini-arrow.svg';
 import blueRightMiniArrow from 'assets/images/blue-right-mini-arrow.svg';
 import blueLeftMiniArrow from 'assets/images/blue-left-mini-arrow.svg';
 import classNames from 'classnames';
-import Image from 'next/image';
 import Button from 'components/Button';
 import styles from './styles.module.scss';
 
@@ -17,9 +16,10 @@ function InfinitePagination({
         className={hasNextPage ? styles['next-btn'] : styles['next-btn-disabled']}
       >
         <span>Next Page</span>
-        <div><Image
+        <div><img
           width={10}
           height={11}
+          className={styles['arrow-icon']}
           src={hasNextPage ? blueRightMiniArrow : rightMiniArrow}
         />
         </div>
@@ -28,9 +28,10 @@ function InfinitePagination({
         onClick={onPrevPage}
         className={hasPreviousPage ? styles['prev-btn'] : styles['prev-btn-disabled']}
       >
-        <div><Image
+        <div><img
           width={10}
           height={11}
+          className={styles['arrow-icon']}
           src={hasPreviousPage ? blueLeftMiniArrow : leftMiniArrow}
         />
         </div>
