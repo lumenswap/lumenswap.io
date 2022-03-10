@@ -18,6 +18,7 @@ export default function LCurrencyInput({
   getFormValues,
   swapFromWithTo,
   changeToAsset,
+  type,
 }) {
   const isLogged = useSelector((state) => state.user.logged);
   const userBalance = useSelector((state) => state.userBalance);
@@ -121,6 +122,7 @@ export default function LCurrencyInput({
       getFormValues={getFormValues}
       swapFromWithTo={swapFromWithTo}
       changeToAsset={changeToAsset}
+      type={type}
     >
       <input
         placeholder="0.0"

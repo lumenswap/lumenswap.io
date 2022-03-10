@@ -278,6 +278,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
                     originChange={changeFromInput}
                     getFormValues={getValues}
                     swapFromWithTo={swapFromWithTo}
+                    type={type}
                     changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
                   />
                 )}
@@ -304,6 +305,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
                     originChange={changeFromInput}
                     getFormValues={getValues}
                     swapFromWithTo={swapFromWithTo}
+                    type={type}
                     changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
                   />
                 )}

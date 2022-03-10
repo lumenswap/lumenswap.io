@@ -16,6 +16,7 @@ const CurrencyInput = ({
   getFormValues,
   swapFromWithTo,
   changeToAsset,
+  type,
 }) => {
   const [show, setShow] = useState(false);
   const userBalance = useSelector((state) => state.userBalance);
@@ -70,6 +71,7 @@ const CurrencyInput = ({
             changeToAsset={changeToAsset}
             currentFrom={getFormValues()?.from?.asset}
             currentTo={getFormValues()?.to?.asset}
+            type={type}
           />
         </ModalDialog>
       </div>

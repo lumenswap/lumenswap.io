@@ -16,7 +16,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import styles from './styles.module.scss';
 
-const AddAsset = ({ changeToAsset, currentFrom, currentTo }) => {
+const AddAsset = ({
+  changeToAsset, currentFrom, currentTo, type,
+}) => {
   const router = useRouter();
   const [loadingTimer, setLoadingTimer] = useState(false);
   const {
@@ -41,9 +43,13 @@ const AddAsset = ({ changeToAsset, currentFrom, currentTo }) => {
       web: minimizeAddress(asset.getIssuer()),
       logo: questionLogo,
     });
+    let swapBaseURL = urlMaker.obm.swap;
+    if (type === 'amm') {
+      swapBaseURL = urlMaker.amm.swap;
+    }
 
     router.push(
-      urlMaker.obm.swap.custom(
+      swapBaseURL.custom(
         currentFrom?.details?.code,
         currentFrom?.issuer,
         asset.code,

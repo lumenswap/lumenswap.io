@@ -21,6 +21,7 @@ const SelectAsset = ({
   changeToAsset,
   currentFrom,
   currentTo,
+  type,
 }) => {
   const userBalance = useSelector((state) => state.userBalance);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
@@ -154,6 +155,7 @@ const SelectAsset = ({
                   currentFrom={currentFrom}
                   currentTo={currentTo}
                   changeToAsset={changeToAsset}
+                  type={type}
                 />
               ),
             }),
