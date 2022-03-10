@@ -1,28 +1,10 @@
 import QRCode from 'qrcode';
-import { useDispatch } from 'react-redux';
-import { openModalAction } from 'actions/modal';
 import Button from 'components/Button';
 import { useEffect, useState } from 'react';
-import ConvertConfirmModal from '..';
 import styles from './styles.module.scss';
 
-function CreateQRCodeModal({ value, convertInfo, sendConvertRequest }) {
-  const dispatch = useDispatch();
+function CreateQRCodeModal({ value, openPreviousModal }) {
   const [qrCodeSrc, setQrCodeSrc] = useState(null);
-  const handleCloseModal = () => () => {
-    dispatch(
-      openModalAction({
-        modalProps: {
-          className: 'main',
-          hasClose: false,
-        },
-        content: <ConvertConfirmModal
-          convertInfo={convertInfo}
-          sendConvertRequest={sendConvertRequest}
-        />,
-      }),
-    );
-  };
 
   useEffect(() => {
     QRCode.toDataURL(value, { version: 8 })
@@ -41,7 +23,7 @@ function CreateQRCodeModal({ value, convertInfo, sendConvertRequest }) {
         content="Continue"
         className="mt-4"
         size="100%"
-        onClick={handleCloseModal()}
+        onClick={openPreviousModal()}
       />
     </div>
   );

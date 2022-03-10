@@ -9,7 +9,7 @@ import CustomCopyText from '../CustomCopyText';
 import styles from '../../styles.module.scss';
 import CreateQRCodeModal from '../CreateQRCodeModal';
 
-const ConfirmSendAmount = ({ sendConvertRequest, convertInfo }) => {
+const ConfirmSendAmount = ({ sendConvertRequest, convertInfo, openPreviousModal }) => {
   const dispatch = useDispatch();
   const handleShowQRCodeModal = () => () => {
     dispatch(
@@ -19,8 +19,7 @@ const ConfirmSendAmount = ({ sendConvertRequest, convertInfo }) => {
           hasClose: false,
         },
         content: <CreateQRCodeModal
-          convertInfo={convertInfo}
-          sendConvertRequest={sendConvertRequest}
+          openPreviousModal={openPreviousModal}
           value={convertInfo.destination}
         />,
       }),
