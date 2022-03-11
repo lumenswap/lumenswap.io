@@ -6,9 +6,10 @@ export function PrimaryTooltip({ text }) {
 }
 
 const Tooltips = ({
-  placement = 'top', id, text, children,
+  placement = 'top', id, text, children, customProps,
 }) => (
   <OverlayTrigger
+    {...customProps}
     key={placement}
     placement={placement}
     overlay={(<Tooltip id={'tooltip-'.concat(id)} className={styles.tooltip}>{text}</Tooltip>)}

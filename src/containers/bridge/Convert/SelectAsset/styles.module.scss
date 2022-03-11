@@ -1,0 +1,38 @@
+@import 'styles/vars';
+
+.input {
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  margin-top: -4px;
+}
+.loading-container {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.list {
+  list-style: none;
+  padding-left: 0;
+  margin: 18px -17px 14px -17px;
+
+  > li {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    transition: 0.1s ease-in;
+    padding: 0 17px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+
+    img {
+      margin-right: 6px;
+    }
+
+    &:hover {
+      background-color: $AthensGray;
+    }
+  }
+}

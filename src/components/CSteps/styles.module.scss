@@ -1,0 +1,51 @@
+@import "styles/vars";
+
+.content {
+  margin-top: 20px;
+}
+
+.step {
+  :global(.rc-steps-icon) {
+    display: none;
+  }
+
+  :global(.rc-steps-item) {
+    width: 14px;
+    height: 14px;
+  }
+
+  :global(.rc-steps-item-icon) {
+    width: 14px;
+    height: 14px;
+    margin-right: 0;
+  }
+
+  :global(.rc-steps-item-process) :global(.rc-steps-item-title):after,
+  :global(.rc-steps-item-wait) :global(.rc-steps-item-title):after {
+    background-color: $Bombay;
+  }
+
+  :global(.rc-steps-item-wait) :global(.rc-steps-item-icon) {
+    border-color: $Bombay;
+    background-color: transparent;
+  }
+
+  :global(.rc-steps-item-process) :global(.rc-steps-item-icon),
+  :global(.rc-steps-item-finish) :global(.rc-steps-item-title):after {
+    background-color: $BlueRibbon;
+    border-color: $BlueRibbon;
+  }
+
+  :global(.rc-steps-item-finish) :global(.rc-steps-item-icon) {
+    background-color: transparent;
+    border-color: $BlueRibbon;
+  }
+
+  :global(.rc-steps-item-title) {
+    padding-right: 5px;
+  }
+
+  :global(.rc-steps-horizontal) :global(.rc-steps-item) {
+    margin-right: 5px;
+  }
+}

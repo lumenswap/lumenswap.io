@@ -21,6 +21,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rc-slider/assets/index.css';
 import 'react-circular-progressbar/dist/styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'rc-steps/assets/index.css';
 
 async function fullRabetLogin(dispatch) {
   try {

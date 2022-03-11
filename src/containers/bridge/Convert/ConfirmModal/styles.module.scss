@@ -1,0 +1,73 @@
+@import 'styles/vars';
+
+.container {
+  padding: 30px 0 24px 0;
+}
+
+.text {
+  font-size: 16px;
+  color: $CodGray;
+  margin-bottom: 0;
+}
+
+.copy-box {
+  font-size: 20px;
+  color: $CodGray;
+  border: solid 1px $CatskillWhite;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 16px;
+  height: 48px;
+  margin-top: 6px;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+
+.note {
+  background-color: $AthensGray;
+  border: 1px solid $CatskillWhite;
+  padding: 5px 8px 15px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+.note-base {
+  color: $ShuttleGray;
+  margin-top: 24px;
+}
+
+.note-link {
+  color: $CodGray;
+  margin-top: 30px;
+
+  a {
+    text-decoration: none !important;
+    word-break: break-all;
+
+    svg {
+      margin-top: -4px;
+    }
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.loading-one {
+  height: 388px;
+  padding-top: 167px;
+}
+
+.loading-two {
+  margin: 45px auto 45px auto;
+}

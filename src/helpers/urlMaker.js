@@ -6,6 +6,7 @@ const rootUrl = {
   nft: '/nft',
   auction: '/auction',
   dao: '/dao',
+  bridge: '/bridge',
 };
 
 if (process.env.REACT_APP_MODE === 'OBM') {
@@ -126,6 +127,14 @@ const urlMaker = {
       createProposal: (name) => `${urlMaker.dao.singleDao.root(name)}/create-proposal`,
       proposalInfo: (name, id) => `${urlMaker.dao.singleDao.root(name)}/proposal/${id}`,
       allVotes: (name, id) => `${urlMaker.dao.singleDao.proposalInfo(name, id)}/votes`,
+    },
+  },
+
+  bridge: {
+    root: () => `${rootUrl.bridge}/convert`,
+    activity: {
+      root: () => `${rootUrl.bridge}/activity`,
+      detail: (id) => `${urlMaker.bridge.activity.root()}/${id}`,
     },
   },
 };

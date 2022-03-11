@@ -1,0 +1,73 @@
+@import "styles/vars";
+
+.layout {
+  padding-top: 61px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.42;
+  color: $CodGray;
+}
+
+.card {
+  margin-top: 20px;
+  padding-top: 18px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  overflow: hidden;
+}
+
+.col-amount {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+
+  svg {
+    width: 14px;
+    height: auto;
+    margin: 0 6px;
+  }
+}
+
+.table {
+  tr:first-child {
+    line-height: initial;
+  }
+
+  th:first-child, th:nth-child(2), th:last-child {
+    width: 17% !important;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
+
+.status-success,
+.status-expired,
+.status-pending {
+  font-size: 16px;
+}
+
+.status-success {
+  color: $SuccessGreen;
+}
+
+.status-expired {
+  color: $Manatee;
+}
+
+.status-pending {
+  color: $TanHide;
+
+  svg:last-child {
+    width: 14px;
+  }
+
+  svg use {
+    fill: $TanHide;
+  }
+}
