@@ -13,7 +13,7 @@ export default [
     dataIndex: 'lusiName',
     key: '1',
     render: (data) => (
-      <Link href={urlMaker.nft.lusi.root(data.lusi.number)}>
+      <Link href={urlMaker.nft.lusi.root(data.Lusi.number)}>
         <a className={styles.link}>
           Lusi#${data.Lusi.number}
         </a>
