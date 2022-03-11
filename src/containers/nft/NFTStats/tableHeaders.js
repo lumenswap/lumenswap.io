@@ -15,7 +15,7 @@ export default [
     render: (data) => (
       <Link href={urlMaker.nft.lusi.root(data.Lusi.number)}>
         <a className={styles.link}>
-          Lusi#${data.Lusi.number}
+          Lusi#{data.Lusi.number}
         </a>
       </Link>
     ),
@@ -62,6 +62,6 @@ export default [
     title: 'Date',
     dataIndex: 'date',
     key: '5',
-    render: (data) => moment(data).utc().fromNow(),
+    render: (data) => moment(data.createdAt).utc().fromNow(),
   },
 ];
