@@ -1,4 +1,4 @@
-import BridgeConvert from 'containers/bridge/convert';
+import BridgeConvert from 'containers/bridge/Convert';
 import { bridgeConvertGetServerSideProps } from 'containers/bridge/Convert/props';
 
 export const getServerSideProps = bridgeConvertGetServerSideProps;
