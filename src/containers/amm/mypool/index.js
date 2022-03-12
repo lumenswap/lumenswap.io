@@ -20,51 +20,50 @@ import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
 function calculateBalanceUSD(data, xlmPrice, lspPrice) {
-  let balance = '-';
   const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
   const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
 
   if (isSameAsset(tokenA, getAssetDetails(USDC))) {
-    balance = new BN(data.calculateUserBalance(data.reserves[0].amount))
+    return new BN(data.calculateUserBalance(data.reserves[0].amount))
       .times(2)
       .toFixed(7);
   }
 
   if (isSameAsset(tokenB, getAssetDetails(USDC))) {
-    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+    return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(2)
       .toFixed(7);
   }
 
   if (tokenA.isNative()) {
-    balance = new BN(data.calculateUserBalance(data.reserves[0].amount))
+    return new BN(data.calculateUserBalance(data.reserves[0].amount))
       .times(xlmPrice)
       .times(2)
       .toFixed(7);
   }
 
   if (tokenB.isNative()) {
-    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+    return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(xlmPrice)
       .times(2)
       .toFixed(7);
   }
 
   if (isSameAsset(tokenA, getAssetDetails(LSP))) {
-    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+    return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(lspPrice)
       .times(2)
       .toFixed(7);
   }
 
   if (isSameAsset(tokenB, getAssetDetails(LSP))) {
-    balance = new BN(data.calculateUserBalance(data.reserves[1].amount))
+    return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(lspPrice)
       .times(2)
       .toFixed(7);
   }
 
-  return balance;
+  return '-';
 }
 
 async function fetchData(userAddress, xlmPrice, setPools, lspPrice) {
