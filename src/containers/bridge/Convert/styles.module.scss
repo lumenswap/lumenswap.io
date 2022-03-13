@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .card {
   width: 360px;
@@ -28,6 +28,18 @@
   padding: 0 16px;
   justify-content: space-between;
 
+  &-disabled {
+    cursor: default !important;
+    box-shadow: none;
+    padding: 0 16px;
+    justify-content: space-between;
+
+    :global(.icon-angle-down) {
+      font-size: 10px;
+      color: $CodGray;
+    }
+  }
+
   :global(.icon-angle-down) {
     font-size: 10px;
     color: $CodGray;
@@ -42,7 +54,7 @@
 }
 
 .icon {
- text-align: center;
+  text-align: center;
   padding: 14px 0;
 
   span {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import { useDispatch } from 'react-redux';
 import { closeModalAction } from 'actions/modal';
+import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import styles from './styles.module.scss';
 
 const SuccessDialog = ({ responseInfo, convertInfo }) => {
@@ -19,11 +20,11 @@ const SuccessDialog = ({ responseInfo, convertInfo }) => {
       <TickIcon />
       <h6 className={styles.title}>Successful</h6>
       <p className={styles.desc}>
-        Your {convertInfo.selectedTokens.tokenA.code} conversion operation from
+        Your {convertInfo.selectedTokens.tokenA.name} conversion operation from
         <br />
-        <span className="mx-1">{convertInfo.selectedTokens.tokenA.network}</span>
+        <span className="mx-1">{capitalizeFirstLetter(convertInfo.selectedTokens.tokenA.network)}</span>
         {'->'}
-        <span className="mx-1">{convertInfo.selectedTokens.tokenB.network}</span>
+        <span className="mx-1">{capitalizeFirstLetter(convertInfo.selectedTokens.tokenB.network)}</span>
         was successful.
       </p>
       <Button

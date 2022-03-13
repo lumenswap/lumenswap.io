@@ -5,7 +5,7 @@ import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import questionLogo from 'assets/images/question.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useIsLogged from 'hooks/useIsLogged';
 import SelectAsset from './SelectAsset';
 import ConvertConfirmModal from './ConfirmModal/ConvertConfirmModal';
@@ -13,43 +13,43 @@ import LTokensConvertCofirmModal from './ConfirmModal/LTokensConvertConfirmModal
 
 import styles from './styles.module.scss';
 
-const AssetLabel = ({ logo, code, onClick }) => (
+const AssetLabel = ({
+  logo, name, onClick,
+}) => (
   <Button
     variant="basic"
     size="100%"
-    className={styles['convert-btn']}
-    onClick={onClick}
+    className={onClick ? styles['convert-btn'] : styles['convert-btn-disabled']}
+    onClick={onClick ?? (() => {})}
   >
     <div className="d-flex align-items-center">
       <img src={logo} width={30} height={30} alt="assetLogo" />
-      <div className={styles.currency}>{code}</div>
+      <div className={styles.currency}>{name}</div>
     </div>
     <div className="icon-angle-down color-base" />
   </Button>
 );
 
 const ConfirmModalContent = ({ convertInfo }) => {
-  if (convertInfo.selectedTokens.tokenA.type === 'l-asset') {
+  if (convertInfo.selectedTokens.tokenA.name.charAt(0) === 'L') {
     return (
       <LTokensConvertCofirmModal
         convertInfo={convertInfo}
       />
     );
   }
-  if (convertInfo.selectedTokens.tokenA.type === 'default') {
-    return (
-      <ConvertConfirmModal
-        convertInfo={convertInfo}
-      />
-    );
-  }
-  return null;
+
+  return (
+    <ConvertConfirmModal
+      convertInfo={convertInfo}
+    />
+  );
 };
 
-const BridgeConvert = ({ defaultSelectedTokens }) => {
+const BridgeConvert = ({ bridgeTokens }) => {
   const [selectedTokens, setSelectedTokens] = useState({
-    tokenA: defaultSelectedTokens.tokenA,
-    tokenB: defaultSelectedTokens.tokenB,
+    tokenA: bridgeTokens[0],
+    tokenB: null,
   });
   const isLoggedIn = useIsLogged();
   const dispatch = useDispatch();
@@ -80,28 +80,19 @@ const BridgeConvert = ({ defaultSelectedTokens }) => {
     }
   };
 
-  const onSelectAsset = (token) => () => {
+  useEffect(() => {
+    setSelectedTokens({
+      ...selectedTokens,
+      tokenB: bridgeTokens.find((token) => token.name === selectedTokens.tokenA.ported_asset),
+    });
+  }, []);
+
+  const onSelectAsset = () => () => {
     const handleSelectAsset = (selectedToken) => () => {
-      if (token === 'tokenA') {
-        if (selectedToken.code === selectedTokens.tokenB.code) {
-          setSelectedTokens((prev) => ({
-            tokenB: prev.tokenA,
-            tokenA: selectedToken,
-          }));
-        } else {
-          setSelectedTokens({ ...selectedTokens, tokenA: selectedToken });
-        }
-      }
-      if (token === 'tokenB') {
-        if (selectedToken.code === selectedTokens.tokenA.code) {
-          setSelectedTokens((prev) => ({
-            tokenA: prev.tokenB,
-            tokenB: selectedToken,
-          }));
-        } else {
-          setSelectedTokens({ ...selectedTokens, tokenB: selectedToken });
-        }
-      }
+      setSelectedTokens({
+        tokenA: selectedToken,
+        tokenB: bridgeTokens.find((token) => token.name === selectedToken.ported_asset),
+      });
       dispatch(closeModalAction());
     };
     dispatch(
@@ -109,7 +100,10 @@ const BridgeConvert = ({ defaultSelectedTokens }) => {
         modalProps: {
           className: 'main',
         },
-        content: <SelectAsset onSelectAsset={handleSelectAsset} />,
+        content: <SelectAsset
+          assets={bridgeTokens}
+          onSelectAsset={handleSelectAsset}
+        />,
       }),
     );
   };
@@ -120,9 +114,9 @@ const BridgeConvert = ({ defaultSelectedTokens }) => {
         <div className={styles.card}>
           <div className={styles.container}>
             <AssetLabel
-              code={selectedTokens.tokenA.code}
-              logo={selectedTokens.tokenA.logo ?? questionLogo}
-              onClick={onSelectAsset('tokenA')}
+              name={selectedTokens.tokenA?.name}
+              logo={selectedTokens.tokenA?.logo ?? questionLogo}
+              onClick={onSelectAsset()}
             />
 
             <div className={styles.icon}>
@@ -130,9 +124,8 @@ const BridgeConvert = ({ defaultSelectedTokens }) => {
             </div>
 
             <AssetLabel
-              code={selectedTokens.tokenB.code}
-              logo={selectedTokens.tokenB.logo ?? questionLogo}
-              onClick={onSelectAsset('tokenB')}
+              name={selectedTokens.tokenB?.name}
+              logo={selectedTokens.tokenB?.logo ?? questionLogo}
             />
           </div>
 

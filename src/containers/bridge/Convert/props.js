@@ -1,11 +1,11 @@
-import { getBridgeDefaultSelectedTokens } from 'api/mockAPI/bridgeTokens';
+import getBridgeTokens from 'api/birdgeAPI/bridgeTokens';
 
 export async function bridgeConvertGetServerSideProps() {
   try {
-    const defaultSelectedTokens = await getBridgeDefaultSelectedTokens();
+    const bridgeTokens = await getBridgeTokens();
     return {
       props: {
-        defaultSelectedTokens,
+        bridgeTokens,
       },
     };
   } catch (e) {
