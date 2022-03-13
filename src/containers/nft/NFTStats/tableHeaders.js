@@ -62,6 +62,6 @@ export default [
     title: 'Date',
     dataIndex: 'date',
     key: '5',
-    render: (data) => moment(data.createdAt).utc().fromNow(),
+    render: (data) => moment(data.ledgerCloseTime).utc().fromNow(),
   },
 ];
