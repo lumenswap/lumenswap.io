@@ -6,10 +6,14 @@ import Button from 'components/Button';
 import Input from 'components/Input';
 import questionLogo from 'assets/images/question.png';
 import useIsLogged from 'hooks/useIsLogged';
+import NumberOnlyInput from 'components/NumberOnlyInput';
 import SelectAsset from './SelectAsset';
 import ConvertAssetLabel from './ConvertAssetLabel';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
+
+const TOKEN_A_FORM_NAME = 'tokenA';
+const TOKEN_B_FORM_NAME = 'tokenB';
 
 const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
@@ -29,9 +33,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
     },
   });
   const handleReverseTokens = () => () => {
-    const currentSelectedTokens = getValues(['tokenA', 'tokenB']);
-    setValue('tokenA', currentSelectedTokens.tokenB);
-    setValue('tokenB', currentSelectedTokens.tokenA);
+    const currentSelectedTokens = getValues([TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME]);
+    setValue(TOKEN_A_FORM_NAME, currentSelectedTokens.tokenB);
+    setValue(TOKEN_B_FORM_NAME, currentSelectedTokens.tokenA);
   };
 
   const onSubmit = (data) => {
@@ -55,15 +59,19 @@ const BridgeConvert = ({ bridgeTokens }) => {
 
   const onSelectAsset = (selectedTokenButton) => () => {
     const handleSelectAsset = (selectedToken) => () => {
-      if (selectedTokenButton === 'tokenA') {
-        setValue('tokenA', selectedToken);
-        setValue('tokenB', bridgeTokens.find((token) => token.name === selectedToken.ported_asset));
+      if (selectedTokenButton === TOKEN_A_FORM_NAME) {
+        setValue(TOKEN_A_FORM_NAME, selectedToken);
+        setValue(TOKEN_B_FORM_NAME, bridgeTokens
+          .find((token) => token.name === selectedToken.ported_asset));
+        return dispatch(closeModalAction());
       }
-      if (selectedTokenButton === 'tokenB') {
-        setValue('tokenB', selectedToken);
-        setValue('tokenA', bridgeTokens.find((token) => token.name === selectedToken.ported_asset));
+      if (selectedTokenButton === TOKEN_B_FORM_NAME) {
+        setValue(TOKEN_B_FORM_NAME, selectedToken);
+        setValue(TOKEN_A_FORM_NAME, bridgeTokens
+          .find((token) => token.name === selectedToken.ported_asset));
+        return dispatch(closeModalAction());
       }
-      dispatch(closeModalAction());
+      throw new Error(`${selectedTokenButton} is not handled`);
     };
     dispatch(
       openModalAction({
@@ -85,12 +93,12 @@ const BridgeConvert = ({ bridgeTokens }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.container}>
               <Controller
-                name="tokenA"
+                name={TOKEN_A_FORM_NAME}
                 control={control}
                 render={(props) => (
                   <ConvertAssetLabel
                     {...props}
-                    onClick={onSelectAsset('tokenA')}
+                    onClick={onSelectAsset(TOKEN_A_FORM_NAME)}
                     name={props.value?.name}
                     logo={props.value?.logo ?? questionLogo}
                   />
@@ -103,12 +111,12 @@ const BridgeConvert = ({ bridgeTokens }) => {
                 />
               </div>
               <Controller
-                name="tokenB"
+                name={TOKEN_B_FORM_NAME}
                 control={control}
                 render={(props) => (
                   <ConvertAssetLabel
                     {...props}
-                    onClick={onSelectAsset('tokenB')}
+                    onClick={onSelectAsset(TOKEN_B_FORM_NAME)}
                     name={props.value?.name}
                     logo={props.value?.logo ?? questionLogo}
                   />
@@ -121,11 +129,12 @@ const BridgeConvert = ({ bridgeTokens }) => {
               name="amount"
               control={control}
               render={(props) => (
-                <Input
+                <NumberOnlyInput
                   type="number"
                   placeholder="1"
                   value={props.value}
                   onChange={props.onChange}
+                  className={styles.input}
                 />
               )}
             />
