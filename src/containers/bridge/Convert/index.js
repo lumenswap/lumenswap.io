@@ -19,8 +19,8 @@ const AssetLabel = ({
   <Button
     variant="basic"
     size="100%"
-    className={onClick ? styles['convert-btn'] : styles['convert-btn-disabled']}
-    onClick={onClick ?? (() => {})}
+    className={styles['convert-btn']}
+    onClick={onClick}
   >
     <div className="d-flex align-items-center">
       <img src={logo} width={30} height={30} alt="assetLogo" />
@@ -59,6 +59,12 @@ const BridgeConvert = ({ bridgeTokens }) => {
   } = useForm({
     mode: 'onChange',
   });
+  const handleReverseTokens = () => () => {
+    setSelectedTokens((prev) => ({
+      tokenA: prev.tokenB,
+      tokenB: prev.tokenA,
+    }));
+  };
 
   const onSubmit = (data) => {
     if (isLoggedIn) {
@@ -87,12 +93,20 @@ const BridgeConvert = ({ bridgeTokens }) => {
     });
   }, []);
 
-  const onSelectAsset = () => () => {
+  const onSelectAsset = (selectedTokenButton) => () => {
     const handleSelectAsset = (selectedToken) => () => {
-      setSelectedTokens({
-        tokenA: selectedToken,
-        tokenB: bridgeTokens.find((token) => token.name === selectedToken.ported_asset),
-      });
+      if (selectedTokenButton === 'tokenA') {
+        setSelectedTokens({
+          tokenA: selectedToken,
+          tokenB: bridgeTokens.find((token) => token.name === selectedToken.ported_asset),
+        });
+      }
+      if (selectedTokenButton === 'tokenB') {
+        setSelectedTokens({
+          tokenA: bridgeTokens.find((token) => token.name === selectedToken.ported_asset),
+          tokenB: selectedToken,
+        });
+      }
       dispatch(closeModalAction());
     };
     dispatch(
@@ -116,16 +130,20 @@ const BridgeConvert = ({ bridgeTokens }) => {
             <AssetLabel
               name={selectedTokens.tokenA?.name}
               logo={selectedTokens.tokenA?.logo ?? questionLogo}
-              onClick={onSelectAsset()}
+              onClick={onSelectAsset('tokenA')}
             />
 
             <div className={styles.icon}>
-              <span className="icon-arrow-down color-primary" />
+              <span
+                onClick={handleReverseTokens()}
+                className="icon-arrow-down color-primary"
+              />
             </div>
 
             <AssetLabel
               name={selectedTokens.tokenB?.name}
               logo={selectedTokens.tokenB?.logo ?? questionLogo}
+              onClick={onSelectAsset('tokenB')}
             />
           </div>
 
