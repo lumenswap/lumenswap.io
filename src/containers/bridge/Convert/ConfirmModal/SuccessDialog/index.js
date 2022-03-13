@@ -20,11 +20,11 @@ const SuccessDialog = ({ responseInfo, convertInfo }) => {
       <TickIcon />
       <h6 className={styles.title}>Successful</h6>
       <p className={styles.desc}>
-        Your {convertInfo.selectedTokens.tokenA.name} conversion operation from
+        Your {convertInfo.tokenA.name} conversion operation from
         <br />
-        <span className="mx-1">{capitalizeFirstLetter(convertInfo.selectedTokens.tokenA.network)}</span>
+        <span className="mx-1">{capitalizeFirstLetter(convertInfo.tokenA.network)}</span>
         {'->'}
-        <span className="mx-1">{capitalizeFirstLetter(convertInfo.selectedTokens.tokenB.network)}</span>
+        <span className="mx-1">{capitalizeFirstLetter(convertInfo.tokenB.network)}</span>
         was successful.
       </p>
       <Button

@@ -6,7 +6,7 @@ import styles from '../../styles.module.scss';
 const SendAmountLoading = ({ convertInfo }) => (
   <>
     <p className={styles.text}>
-      PWe are sending {humanizeAmount(convertInfo.amount)} {convertInfo.selectedTokens.tokenA.name}
+      PWe are sending {humanizeAmount(convertInfo.amount)} {convertInfo.tokenA.name}
       {' '}to your address. Please be patient.
     </p>
 
