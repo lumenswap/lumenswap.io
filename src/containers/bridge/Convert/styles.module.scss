@@ -28,18 +28,6 @@
   padding: 0 16px;
   justify-content: space-between;
 
-  &-disabled {
-    cursor: default !important;
-    box-shadow: none;
-    padding: 0 16px;
-    justify-content: space-between;
-
-    :global(.icon-angle-down) {
-      font-size: 10px;
-      color: $CodGray;
-    }
-  }
-
   :global(.icon-angle-down) {
     font-size: 10px;
     color: $CodGray;
