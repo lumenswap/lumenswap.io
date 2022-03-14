@@ -4,11 +4,10 @@ import { closeModalAction, openConnectModal, openModalAction } from 'actions/mod
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
 import Input from 'components/Input';
-import questionLogo from 'assets/images/question.png';
 import useIsLogged from 'hooks/useIsLogged';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import SelectAsset from './SelectAsset';
-import ConvertAssetLabel from './ConvertAssetLabel';
+import ConvertAssetInputLabel from './ConvertAssetLabel';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
 
@@ -92,17 +91,10 @@ const BridgeConvert = ({ bridgeTokens }) => {
         <div className={styles.card}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.container}>
-              <Controller
-                name={TOKEN_A_FORM_NAME}
+              <ConvertAssetInputLabel
+                inputName={TOKEN_A_FORM_NAME}
+                onClick={onSelectAsset(TOKEN_A_FORM_NAME)}
                 control={control}
-                render={(props) => (
-                  <ConvertAssetLabel
-                    {...props}
-                    onClick={onSelectAsset(TOKEN_A_FORM_NAME)}
-                    name={props.value?.name}
-                    logo={props.value?.logo ?? questionLogo}
-                  />
-                )}
               />
               <div className={styles.icon}>
                 <span
@@ -110,19 +102,11 @@ const BridgeConvert = ({ bridgeTokens }) => {
                   className="icon-arrow-down color-primary"
                 />
               </div>
-              <Controller
-                name={TOKEN_B_FORM_NAME}
+              <ConvertAssetInputLabel
+                inputName={TOKEN_B_FORM_NAME}
+                onClick={onSelectAsset(TOKEN_B_FORM_NAME)}
                 control={control}
-                render={(props) => (
-                  <ConvertAssetLabel
-                    {...props}
-                    onClick={onSelectAsset(TOKEN_B_FORM_NAME)}
-                    name={props.value?.name}
-                    logo={props.value?.logo ?? questionLogo}
-                  />
-                )}
               />
-
             </div>
             <label className="label-primary mt-3">Amount</label>
             <Controller
