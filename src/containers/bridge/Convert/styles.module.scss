@@ -1,4 +1,4 @@
-@import "styles/vars";
+@import 'styles/vars';
 
 .card {
   width: 360px;
@@ -42,10 +42,16 @@
 }
 
 .icon {
- text-align: center;
+  text-align: center;
   padding: 14px 0;
 
   span {
     font-size: 14px;
+    cursor: pointer;
   }
+}
+
+.input {
+  height: 48px;
+  font-size: 20px;
 }

@@ -1,19 +1,14 @@
-import { getBridgeDefaultSelectedTokens } from 'api/mockAPI/bridgeTokens';
+import getBridgeTokens from 'api/birdgeAPI/bridgeTokens';
 
 export async function bridgeConvertGetServerSideProps() {
   try {
-    const defaultSelectedTokens = await getBridgeDefaultSelectedTokens();
+    const bridgeTokens = await getBridgeTokens();
     return {
       props: {
-        defaultSelectedTokens,
+        bridgeTokens,
       },
     };
   } catch (e) {
-    if (e.response?.status === 404) {
-      return {
-        notFound: true,
-      };
-    }
-    throw e;
+    throw new Error('failure in network you can try again');
   }
 }

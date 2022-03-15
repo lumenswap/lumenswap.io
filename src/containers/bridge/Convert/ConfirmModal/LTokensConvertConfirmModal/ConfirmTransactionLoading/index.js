@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 import ExternalIcon from 'assets/images/external';
 
+import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import styles from '../../styles.module.scss';
 
 const ConfirmTransactionLoading = ({ convertInfo, transactionInfo }) => (
   <>
     <p className={styles.text}>
       Your transaction has been done.
-      {' '} Please wait for confirmation by {convertInfo.selectedTokens.tokenB.network}.
+      {' '} Please wait for confirmation by {capitalizeFirstLetter(convertInfo.tokenB.network)}.
     </p>
     <div className={classNames(styles.note, styles['note-link'])}>
       Tx hash

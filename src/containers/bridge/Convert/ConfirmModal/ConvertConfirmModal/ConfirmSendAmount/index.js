@@ -5,6 +5,7 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
+import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import CustomCopyText from '../CustomCopyText';
 import styles from '../../styles.module.scss';
 import CreateQRCodeModal from '../CreateQRCodeModal';
@@ -33,7 +34,7 @@ const ConfirmSendAmount = ({ sendConvertRequest, convertInfo, openPreviousModal 
 
       <label className="label-primary mt-4 mb-0">Amount</label>
       <div className={styles['copy-box']}>
-        {humanizeAmount(convertInfo.amount)} {convertInfo.selectedTokens.tokenA.code}
+        {humanizeAmount(convertInfo.amount)} {convertInfo.tokenA.name}
         <CustomCopyText content={humanizeAmount(convertInfo.amount)} />
       </div>
 
@@ -50,7 +51,8 @@ const ConfirmSendAmount = ({ sendConvertRequest, convertInfo, openPreviousModal 
       </div>
 
       <div className={classNames(styles.note, styles['note-base'])}>
-        When the {convertInfo.selectedTokens.tokenB.network} network approval the transaction,
+        When the {capitalizeFirstLetter(convertInfo.tokenB.network)}
+        {' '} network approval the transaction,
         you will automatically be redirected to the next step.
       </div>
 

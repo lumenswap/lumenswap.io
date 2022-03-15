@@ -1,40 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Input from 'components/Input';
 import questionLogo from 'assets/images/question.png';
-
-import { getAllBridgeTokens } from 'api/mockAPI/bridgeTokens';
-import Loading from 'components/Loading';
 import styles from './styles.module.scss';
 
-const LoadingWithContainer = () => (
-  <div className={styles['loading-container']}>
-    <Loading size={40} />
-  </div>
-);
-
-const SelectAsset = ({ onSelectAsset }) => {
+const SelectAsset = ({ onSelectAsset, assets }) => {
   const [searchQuery, setSearchQuery] = useState(null);
-  const [tokens, setTokens] = useState(null);
 
   const handleSetSearchQuery = () => (e) => {
-    setTimeout(() => {
-      setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
-    }, 700);
+    setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
   };
 
-  useEffect(() => {
-    setTokens(null);
-    const query = searchQuery ? { searchQuery } : null;
-    if (query) {
-      getAllBridgeTokens(query).then((recivedTokens) => {
-        setTokens(recivedTokens);
-      });
-    } else {
-      getAllBridgeTokens().then((recivedTokens) => {
-        setTokens(recivedTokens);
-      });
-    }
-  }, [searchQuery]);
+  let filteredAssets = assets;
+  if (searchQuery && searchQuery !== '') {
+    filteredAssets = assets.filter((asset) => asset.name.toLowerCase()
+      .search(searchQuery.toLowerCase()) !== -1);
+  }
+
   return (
     <>
       <Input
@@ -44,17 +25,17 @@ const SelectAsset = ({ onSelectAsset }) => {
         onChange={handleSetSearchQuery()}
       />
       <ul className={styles.list}>
-        {tokens ? tokens.map((token) => (
-          <li key={token.code} onClick={onSelectAsset(token)}>
+        {filteredAssets.map((asset) => (
+          <li key={asset.id} onClick={onSelectAsset(asset)}>
             <img
-              src={token.logo ?? questionLogo}
+              src={asset.logo ?? questionLogo}
               width={24}
               height={24}
-              alt="tokenImage"
+              alt="assetImage"
             />
-            <div>{token.code}</div>
+            <div>{asset.name}</div>
           </li>
-        )) : <LoadingWithContainer />}
+        ))}
       </ul>
     </>
   );

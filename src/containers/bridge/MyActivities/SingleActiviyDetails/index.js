@@ -10,6 +10,7 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
 import StatusLabel from '../StatusLabel';
 import styles from './styles.module.scss';
+import CExternalLink from '../../../../components/CExternalLink';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());
@@ -38,13 +39,10 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Destination',
       render: () => (
-        <a
+        <CExternalLink
           href="/"
-          target="_blank"
-          rel="noreferrer"
-          className="color-primary"
-        >{minimizeAddress(activityInfo.destination)}
-        </a>
+          content={minimizeAddress(activityInfo.destination)}
+        />
       ),
     },
     {
@@ -60,25 +58,19 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Sending TX',
       render: () => (
-        <a
+        <CExternalLink
           href="/"
-          target="_blank"
-          rel="noreferrer"
-          className="color-primary"
-        >{minimizeAddress(activityInfo.sending_tx, 8)}
-        </a>
+          content={minimizeAddress(activityInfo.sending_tx, 8)}
+        />
       ),
     },
     {
       title: 'Receiving TX',
       render: () => (
-        <a
+        <CExternalLink
           href="/"
-          target="_blank"
-          rel="noreferrer"
-          className="color-primary"
-        >{minimizeAddress(activityInfo.reciving_tx, 8)}
-        </a>
+          content={minimizeAddress(activityInfo.reciving_tx, 8)}
+        />
       ),
     },
   ];

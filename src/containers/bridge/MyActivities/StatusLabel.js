@@ -35,7 +35,7 @@ const StatusLabel = ({ status }) => {
       </div>
     );
   }
-  return null;
+  throw new Error(`${status.toLowerCase()} is not handled`);
 };
 
 export default StatusLabel;

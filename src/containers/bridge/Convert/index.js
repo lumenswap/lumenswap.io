@@ -1,64 +1,38 @@
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { closeModalAction, openConnectModal, openModalAction } from 'actions/modal';
+import { openConnectModal, openModalAction } from 'actions/modal';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
 import Input from 'components/Input';
-import questionLogo from 'assets/images/question.png';
-import { useState } from 'react';
 import useIsLogged from 'hooks/useIsLogged';
-import SelectAsset from './SelectAsset';
-import ConvertConfirmModal from './ConfirmModal/ConvertConfirmModal';
-import LTokensConvertCofirmModal from './ConfirmModal/LTokensConvertConfirmModal';
-
+import NumberOnlyInput from 'components/NumberOnlyInput';
+import ConvertAssetInput from './ConvertAssetInput';
+import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
+import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
 
-const AssetLabel = ({ logo, code, onClick }) => (
-  <Button
-    variant="basic"
-    size="100%"
-    className={styles['convert-btn']}
-    onClick={onClick}
-  >
-    <div className="d-flex align-items-center">
-      <img src={logo} width={30} height={30} alt="assetLogo" />
-      <div className={styles.currency}>{code}</div>
-    </div>
-    <div className="icon-angle-down color-base" />
-  </Button>
-);
-
-const ConfirmModalContent = ({ convertInfo }) => {
-  if (convertInfo.selectedTokens.tokenA.type === 'l-asset') {
-    return (
-      <LTokensConvertCofirmModal
-        convertInfo={convertInfo}
-      />
-    );
-  }
-  if (convertInfo.selectedTokens.tokenA.type === 'default') {
-    return (
-      <ConvertConfirmModal
-        convertInfo={convertInfo}
-      />
-    );
-  }
-  return null;
-};
-
-const BridgeConvert = ({ defaultSelectedTokens }) => {
-  const [selectedTokens, setSelectedTokens] = useState({
-    tokenA: defaultSelectedTokens.tokenA,
-    tokenB: defaultSelectedTokens.tokenB,
-  });
+const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
   const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
+    setValue,
+    getValues,
   } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      tokenA: bridgeTokens[0],
+      tokenB: bridgeTokens.find((token) => token.name === bridgeTokens[0].ported_asset),
+      amount: null,
+      destination: null,
+    },
   });
+  const handleReverseTokens = () => () => {
+    const currentSelectedTokens = getValues([TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME]);
+    setValue(TOKEN_A_FORM_NAME, currentSelectedTokens[TOKEN_B_FORM_NAME]);
+    setValue(TOKEN_B_FORM_NAME, currentSelectedTokens[TOKEN_A_FORM_NAME]);
+  };
 
   const onSubmit = (data) => {
     if (isLoggedIn) {
@@ -68,9 +42,8 @@ const BridgeConvert = ({ defaultSelectedTokens }) => {
             className: 'main p-0',
             hasClose: false,
           },
-          content: <ConfirmModalContent convertInfo={{
+          content: <ConvertConfirmModalContent convertInfo={{
             ...data,
-            selectedTokens,
           }}
           />,
         }),
@@ -80,73 +53,42 @@ const BridgeConvert = ({ defaultSelectedTokens }) => {
     }
   };
 
-  const onSelectAsset = (token) => () => {
-    const handleSelectAsset = (selectedToken) => () => {
-      if (token === 'tokenA') {
-        if (selectedToken.code === selectedTokens.tokenB.code) {
-          setSelectedTokens((prev) => ({
-            tokenB: prev.tokenA,
-            tokenA: selectedToken,
-          }));
-        } else {
-          setSelectedTokens({ ...selectedTokens, tokenA: selectedToken });
-        }
-      }
-      if (token === 'tokenB') {
-        if (selectedToken.code === selectedTokens.tokenA.code) {
-          setSelectedTokens((prev) => ({
-            tokenA: prev.tokenB,
-            tokenB: selectedToken,
-          }));
-        } else {
-          setSelectedTokens({ ...selectedTokens, tokenB: selectedToken });
-        }
-      }
-      dispatch(closeModalAction());
-    };
-    dispatch(
-      openModalAction({
-        modalProps: {
-          className: 'main',
-        },
-        content: <SelectAsset onSelectAsset={handleSelectAsset} />,
-      }),
-    );
-  };
-
   return (
     <BridgeContainer title="Bridge Convert | Lumenswap">
       <div className="layout main d-flex justify-content-center">
         <div className={styles.card}>
-          <div className={styles.container}>
-            <AssetLabel
-              code={selectedTokens.tokenA.code}
-              logo={selectedTokens.tokenA.logo ?? questionLogo}
-              onClick={onSelectAsset('tokenA')}
-            />
-
-            <div className={styles.icon}>
-              <span className="icon-arrow-down color-primary" />
-            </div>
-
-            <AssetLabel
-              code={selectedTokens.tokenB.code}
-              logo={selectedTokens.tokenB.logo ?? questionLogo}
-              onClick={onSelectAsset('tokenB')}
-            />
-          </div>
-
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.container}>
+              <ConvertAssetInput
+                inputName={TOKEN_A_FORM_NAME}
+                control={control}
+                bridgeTokens={bridgeTokens}
+                setValue={setValue}
+              />
+              <div className={styles.icon}>
+                <span
+                  onClick={handleReverseTokens()}
+                  className="icon-arrow-down color-primary"
+                />
+              </div>
+              <ConvertAssetInput
+                inputName={TOKEN_B_FORM_NAME}
+                control={control}
+                bridgeTokens={bridgeTokens}
+                setValue={setValue}
+              />
+            </div>
             <label className="label-primary mt-3">Amount</label>
             <Controller
               name="amount"
               control={control}
               render={(props) => (
-                <Input
+                <NumberOnlyInput
                   type="number"
                   placeholder="1"
                   value={props.value}
                   onChange={props.onChange}
+                  className={styles.input}
                 />
               )}
             />
