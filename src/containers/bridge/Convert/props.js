@@ -9,11 +9,6 @@ export async function bridgeConvertGetServerSideProps() {
       },
     };
   } catch (e) {
-    if (e.response?.status === 404) {
-      return {
-        notFound: true,
-      };
-    }
-    throw e;
+    throw new Error('failure in network you can try again');
   }
 }

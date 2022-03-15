@@ -1,18 +1,15 @@
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { closeModalAction, openConnectModal, openModalAction } from 'actions/modal';
+import { openConnectModal, openModalAction } from 'actions/modal';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import useIsLogged from 'hooks/useIsLogged';
 import NumberOnlyInput from 'components/NumberOnlyInput';
-import SelectAsset from './SelectAsset';
-import ConvertAssetInputLabel from './ConvertAssetLabel';
+import ConvertAssetInput from './ConvertAssetInput';
+import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
-
-const TOKEN_A_FORM_NAME = 'tokenA';
-const TOKEN_B_FORM_NAME = 'tokenB';
 
 const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
@@ -33,8 +30,8 @@ const BridgeConvert = ({ bridgeTokens }) => {
   });
   const handleReverseTokens = () => () => {
     const currentSelectedTokens = getValues([TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME]);
-    setValue(TOKEN_A_FORM_NAME, currentSelectedTokens.tokenB);
-    setValue(TOKEN_B_FORM_NAME, currentSelectedTokens.tokenA);
+    setValue(TOKEN_A_FORM_NAME, currentSelectedTokens[TOKEN_B_FORM_NAME]);
+    setValue(TOKEN_B_FORM_NAME, currentSelectedTokens[TOKEN_A_FORM_NAME]);
   };
 
   const onSubmit = (data) => {
@@ -56,45 +53,17 @@ const BridgeConvert = ({ bridgeTokens }) => {
     }
   };
 
-  const onSelectAsset = (selectedTokenButton) => () => {
-    const handleSelectAsset = (selectedToken) => () => {
-      if (selectedTokenButton === TOKEN_A_FORM_NAME) {
-        setValue(TOKEN_A_FORM_NAME, selectedToken);
-        setValue(TOKEN_B_FORM_NAME, bridgeTokens
-          .find((token) => token.name === selectedToken.ported_asset));
-        return dispatch(closeModalAction());
-      }
-      if (selectedTokenButton === TOKEN_B_FORM_NAME) {
-        setValue(TOKEN_B_FORM_NAME, selectedToken);
-        setValue(TOKEN_A_FORM_NAME, bridgeTokens
-          .find((token) => token.name === selectedToken.ported_asset));
-        return dispatch(closeModalAction());
-      }
-      throw new Error(`${selectedTokenButton} is not handled`);
-    };
-    dispatch(
-      openModalAction({
-        modalProps: {
-          className: 'main',
-        },
-        content: <SelectAsset
-          assets={bridgeTokens}
-          onSelectAsset={handleSelectAsset}
-        />,
-      }),
-    );
-  };
-
   return (
     <BridgeContainer title="Bridge Convert | Lumenswap">
       <div className="layout main d-flex justify-content-center">
         <div className={styles.card}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.container}>
-              <ConvertAssetInputLabel
+              <ConvertAssetInput
                 inputName={TOKEN_A_FORM_NAME}
-                onClick={onSelectAsset(TOKEN_A_FORM_NAME)}
                 control={control}
+                bridgeTokens={bridgeTokens}
+                setValue={setValue}
               />
               <div className={styles.icon}>
                 <span
@@ -102,10 +71,11 @@ const BridgeConvert = ({ bridgeTokens }) => {
                   className="icon-arrow-down color-primary"
                 />
               </div>
-              <ConvertAssetInputLabel
+              <ConvertAssetInput
                 inputName={TOKEN_B_FORM_NAME}
-                onClick={onSelectAsset(TOKEN_B_FORM_NAME)}
                 control={control}
+                bridgeTokens={bridgeTokens}
+                setValue={setValue}
               />
             </div>
             <label className="label-primary mt-3">Amount</label>

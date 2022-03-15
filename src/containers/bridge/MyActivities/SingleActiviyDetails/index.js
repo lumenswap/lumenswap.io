@@ -10,7 +10,7 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
 import StatusLabel from '../StatusLabel';
 import styles from './styles.module.scss';
-import CustomOutsideLink from './CustomOutsideLink';
+import CExternalLink from '../../../../components/CExternalLink';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());
@@ -39,7 +39,7 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Destination',
       render: () => (
-        <CustomOutsideLink
+        <CExternalLink
           href="/"
           content={minimizeAddress(activityInfo.destination)}
         />
@@ -58,7 +58,7 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Sending TX',
       render: () => (
-        <CustomOutsideLink
+        <CExternalLink
           href="/"
           content={minimizeAddress(activityInfo.sending_tx, 8)}
         />
@@ -67,7 +67,7 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Receiving TX',
       render: () => (
-        <CustomOutsideLink
+        <CExternalLink
           href="/"
           content={minimizeAddress(activityInfo.reciving_tx, 8)}
         />

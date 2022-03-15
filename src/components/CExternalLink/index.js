@@ -1,4 +1,4 @@
-function CustomOutsideLink({ content, href }) {
+function CExternalLink({ content, href }) {
   return (
     <a
       href={href}
@@ -10,4 +10,4 @@ function CustomOutsideLink({ content, href }) {
   );
 }
 
-export default CustomOutsideLink;
+export default CExternalLink;
