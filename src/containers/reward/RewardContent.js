@@ -1,7 +1,6 @@
 import CTable from 'components/CTable';
 import CStatistics, { Info } from 'components/CStatistics';
 import moment from 'moment';
-import numeral from 'numeral';
 import { generateTransactionURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import Loading from 'components/Loading';
@@ -15,7 +14,7 @@ import BN from 'helpers/BN';
 import styles from './styles.module.scss';
 
 function rewardAmountHumanize(amount) {
-  return numeral(humanizeAmount(new BN(amount ?? '0').div(10 ** 7).toFixed(7))).format('0,0.0');
+  return humanizeAmount(new BN(amount ?? '0').div(10 ** 7).toFixed(7));
 }
 
 const RewardContent = () => {
@@ -75,7 +74,7 @@ const RewardContent = () => {
     {
       title: 'Wallet balance',
       tooltip: 'This shows your wallet’s LSP balance.',
-      content: <Info text="LSP" number={numeral(humanizeAmount(foundLSP ? foundLSP.balance : '0')).format('0,0.0')} />,
+      content: <Info text="LSP" number={humanizeAmount(foundLSP ? foundLSP.balance : '0')} />,
     },
     {
       title: 'Holder reward earned',
