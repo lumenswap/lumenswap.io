@@ -2,6 +2,7 @@ const withTM = require('next-transpile-modules')(['redux-persist']);
 const withImages = require('next-images');
 
 module.exports = withImages(withTM({
+  swcMinify: true,
   env: {
     REACT_APP_HORIZON: process.env.REACT_APP_HORIZON,
     REACT_APP_METRIC_SERVER: process.env.REACT_APP_METRIC_SERVER,
@@ -15,8 +16,9 @@ module.exports = withImages(withTM({
     REACT_APP_LUSI_ISSUER: process.env.REACT_APP_LUSI_ISSUER,
     REACT_APP_DAO_LOCKER_ADDRESS: process.env.REACT_APP_DAO_LOCKER_ADDRESS,
   },
-  webpack5: false,
+  webpack5: true,
   images: {
     domains: ['cdn.lumenswap.io'],
+    disableStaticImages: true,
   },
 }));

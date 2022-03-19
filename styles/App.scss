@@ -14,7 +14,6 @@ body {
   font-family: Roboto, sans-serif !important;
 }
 
-
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -125,7 +124,7 @@ input[type='number'] {
 
 .modal-content {
   border-radius: 12px !important;
-  overflow: hidden ;
+  overflow: hidden;
 }
 
 .CircularProgressbar-text {
@@ -168,9 +167,10 @@ input[type='number'] {
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
 }
 
-.bs-tooltip-auto[x-placement^=right] .arrow::before, .bs-tooltip-right .arrow::before {
+.bs-tooltip-auto[x-placement^='right'] .arrow::before,
+.bs-tooltip-right .arrow::before {
   right: 0;
-  border-width: .4rem .4rem .4rem 0;
+  border-width: 0.4rem 0.4rem 0.4rem 0;
   border-right-color: $DarkGray !important;
 }
 
