@@ -122,7 +122,7 @@ const urlMaker = {
   },
 
   dao: {
-    root: () => `${rootUrl.dao}`,
+    root: () => `${rootUrl.dao}/`,
     activity: () => `${rootUrl.dao}/activity`,
     singleDao: {
       root: (name) => `${rootUrl.dao}/${name}`,
