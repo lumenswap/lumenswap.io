@@ -21,6 +21,8 @@ if (process.env.REACT_APP_MODE === 'OBM') {
   rootUrl.nft = '';
 } else if (process.env.REACT_APP_MODE === 'AUCTION') {
   rootUrl.auction = '';
+} else if (process.env.REACT_APP_MODE === 'DAO') {
+  rootUrl.dao = '';
 }
 
 const urlMaker = {
