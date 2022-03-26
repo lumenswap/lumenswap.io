@@ -100,7 +100,7 @@ const GovernanceInfo = ({ governance }) => {
         <div className={styles.detail}>
           <span className={styles.text}>Website:</span>
           <a
-            href={website}
+            href={`https://${website}`}
             target="_blank"
             rel="noreferrer"
             className={styles['web-link']}
