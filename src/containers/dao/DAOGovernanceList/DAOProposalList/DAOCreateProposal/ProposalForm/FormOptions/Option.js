@@ -16,7 +16,7 @@ function Option({
       </div>
       <Input
         type="text"
-        placeholder="Enter your address"
+        placeholder="Enter option"
         height={40}
         fontSize={16}
         value={props.value}
