@@ -8,7 +8,6 @@ import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
 import CDatePicker from 'components/CDatePicker/index';
 import moment from 'moment';
-import numeral from 'numeral';
 import { getAssetDetails } from 'helpers/asset';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
 import BN from 'helpers/BN';
