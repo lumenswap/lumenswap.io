@@ -12,6 +12,7 @@ import numeral from 'numeral';
 import { getAssetDetails } from 'helpers/asset';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
 import BN from 'helpers/BN';
+import humanizeAmount from 'helpers/humanizeAmount';
 import ConfirmProposalModal from './ConfirmProposalModal';
 import CreateProposalError from './CreateProposalError';
 import FormOptions from './FormOptions/index';
@@ -111,7 +112,7 @@ const ProposalForm = ({ info, setStatus }) => {
       <div className={classNames(styles.alert, 'mb-4')}>
         <AlertIcon />
         You need to have a minimum of
-        <span className="mx-1">{numeral(info.minValue).format('0a')} {info.assetCode}</span>
+        <span className="mx-1">{humanizeAmount(info.minValue, true)} {info.assetCode}</span>
         in order to submit a proposal.
       </div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
