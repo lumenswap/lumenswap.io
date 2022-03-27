@@ -1,6 +1,6 @@
 import moment from 'moment';
 import minimizeAddress from 'helpers/minimizeAddress';
-import { generateTransactionURL } from 'helpers/explorerURLGenerator';
+import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import classNames from 'classnames';
 import BN from 'helpers/BN';
 import urlMaker from 'helpers/urlMaker';
@@ -27,7 +27,7 @@ export default [
     render: (data) => (
       <a
         style={{ textDecoration: 'none' }}
-        href={generateTransactionURL(data.sellerAddress)}
+        href={generateAddressURL(data.sellerAddress)}
         target="_blank"
         rel="noreferrer"
         className={classNames(styles['link-blue'], 'd-flex w-100 align-items-center')}
@@ -43,7 +43,7 @@ export default [
     render: (data) => (
       <a
         style={{ textDecoration: 'none' }}
-        href={generateTransactionURL(data.buyerAddress)}
+        href={generateAddressURL(data.buyerAddress)}
         target="_blank"
         rel="noreferrer"
         className={classNames(styles['link-blue'], 'd-flex w-100 align-items-center')}
