@@ -26,7 +26,7 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
               ((new Date(formData.endTime).getTime() + TIME_AFTER_PROPOSAL_END_TIME) / 1000)
                 .toString(),
             ))),
-        new Claimant('GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK', Claimant
+        new Claimant(process.env.REACT_APP_DAO_LOCKER_ADDRESS, Claimant
           .predicateNot(Claimant
             .predicateBeforeAbsoluteTime(
               ((new Date(formData.endTime)
