@@ -12,11 +12,11 @@ function CreateProposalInput({
         placeholder="Ask a question…"
         value={props.value}
         onChange={props.onChange}
-        maxLength={50}
+        maxLength={80}
         onFocus={() => { handleFocus(props.name); }}
         onBlur={() => { setShow(null); }}
       />
-      {props.name === show && <CharCounter length={50} char={props.value} />}
+      {props.name === show && <CharCounter length={80} char={props.value} />}
     </div>
   );
 }
