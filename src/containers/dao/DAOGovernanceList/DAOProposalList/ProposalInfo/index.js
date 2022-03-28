@@ -12,9 +12,28 @@ import BN from 'helpers/BN';
 import DAOPRoposalStatusBadge from '../../../DAOProposalStatusBadge';
 import styles from './styles.module.scss';
 
+function generateDurationTimeText(item) {
+  let duration;
+  let finalTime;
+  if (item.status.toLowerCase() === 'active') {
+    duration = moment.duration(new Date(item.endTime) - new Date().getTime());
+    finalTime = duration.days() < 1 ? `${duration.hours()} hours` : `${duration.days()} days`;
+    return `End in ${finalTime}`;
+  }
+  if (item.status.toLowerCase() === 'not started') {
+    duration = moment.duration(new Date(item.startTime) - new Date().getTime());
+    finalTime = duration.days() < 1 ? `${duration.hours()} hours` : `${duration.days()} days`;
+    return `Starts in ${finalTime}`;
+  }
+  if (item.status.toLowerCase() === 'ended') {
+    return null;
+  }
+  throw new Error(`${item.status.toLowerCase()} is not defind`);
+}
+
 const ProposalInfo = ({ item, pageName }) => {
   const {
-    title, description, proposer, status, endTime, id, Governance, startTime,
+    title, description, proposer, status, id, Governance,
   } = item;
 
   function findOptionWithMostVotes() {
@@ -62,14 +81,9 @@ const ProposalInfo = ({ item, pageName }) => {
 
             <div className={classNames(styles.text, styles.detail, 'mt-4')}>
               {status.toLowerCase() === 'ended' && <SuccessIcon />}
+              {generateDurationTimeText(item)}
               {
-                status.toLowerCase() === 'active' && `End in ${Math.floor(moment.duration(new Date(endTime) - new Date().getTime()).asDays())} days`
-              }
-              {
-                status === 'not started' && `Starts in ${Math.floor(moment.duration(new Date(startTime) - new Date().getTime()).asDays())} days`
-              }
-              {
-                status === 'ended' && `${findOptionWithMostVotes()}`
+                status.toLowerCase() === 'ended' && `${findOptionWithMostVotes()}`
               }
             </div>
           </div>
