@@ -59,10 +59,10 @@ const ProposalForm = ({ info, setStatus }) => {
     sanitizedData = {
       ...sanitizedData,
       startTime: moment(data.startTime).utc().set({
-        hour: 24, minute: 0, second: 0, millisecond: 0,
+        hour: 0, minute: 0, second: 0, millisecond: 0,
       }).valueOf(),
       endTime: moment(data.endTime).utc().set({
-        hour: 24, minute: 0, second: 0, millisecond: 0,
+        hour: 0, minute: 0, second: 0, millisecond: 0,
       }).valueOf(),
       options,
       asset: getAssetDetails({ code: info.assetCode, issuer: info.assetIssuer }),
