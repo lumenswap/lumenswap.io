@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BN from 'helpers/BN';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
@@ -48,9 +48,7 @@ const AddLiquidity = ({
     handleSubmit,
     control,
     formState,
-    errors,
     trigger,
-    getValues,
     setValue,
   } = useForm({
     mode: 'onChange',
@@ -89,7 +87,7 @@ const AddLiquidity = ({
   };
 
   function errorGenerator() {
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(formState.errors)) {
       if (error.message) {
         return error.message;
       }
@@ -160,7 +158,7 @@ const AddLiquidity = ({
 
   useEffect(() => {
     trigger();
-  }, [JSON.stringify(getValues())]);
+  }, [useWatch({ control })]);
 
   useEffect(() => {
     async function loadData() {
@@ -256,12 +254,12 @@ const AddLiquidity = ({
             required: 'Amount is required',
             validate: validateAmountTokenA,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <LiquidityInput
               balance={`${numeral(tokenABalance).format('0,0.[0000000]')} ${tokenA.code}`}
               currency={tokenA.code}
-              onChange={amountAChange(props.onChange)}
-              value={props.value}
+              onChange={amountAChange(field.onChange)}
+              value={field.value}
               currencySrc={extractLogoByToken(tokenA)}
               disabled={poolData === null}
               maxValue={tokenABalance}
@@ -275,10 +273,10 @@ const AddLiquidity = ({
             required: 'Amount is required',
             validate: validateAmountTokenB,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <LiquidityInput
-              onChange={amountBChange(props.onChange)}
-              value={props.value}
+              onChange={amountBChange(field.onChange)}
+              value={field.value}
               balance={`${numeral(tokenBBalance).format('0,0.[0000000]')} ${tokenB.code}`}
               currency={tokenB.code}
               currencySrc={extractLogoByToken(tokenB)}
@@ -296,10 +294,10 @@ const AddLiquidity = ({
             required: 'Tolerance is required',
           }}
           defaultValue="0.1"
-          render={(props) => (
+          render={({field}) => (
             <Tolerance
-              onChange={props.onChange}
-              value={props.value}
+              onChange={field.onChange}
+              value={field.value}
             />
           )}
         /> */}

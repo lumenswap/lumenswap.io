@@ -20,7 +20,7 @@ const SetOrUpdateNFTPrice = ({
   const userAddress = useSelector((state) => state.user.detail.address);
 
   const {
-    control, handleSubmit, errors, formState, trigger, getValues,
+    control, handleSubmit, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
 
   const onSubmit = (data) => {
@@ -81,7 +81,7 @@ const SetOrUpdateNFTPrice = ({
   };
 
   function generateError() {
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(formState.errors)) {
       if (error) {
         return error.message;
       }
@@ -103,13 +103,13 @@ const SetOrUpdateNFTPrice = ({
             required: 'Price is required',
             validate: validatePrice,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <InputGroup
               variant="primary"
               placeholder="100"
               rightLabel="NLSP"
-              value={props.value}
-              onChange={props.onChange}
+              value={field.value}
+              onChange={field.onChange}
             />
           )}
         />

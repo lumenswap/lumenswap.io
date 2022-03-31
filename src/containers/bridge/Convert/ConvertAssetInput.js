@@ -1,9 +1,9 @@
 import Button from 'components/Button';
 import { Controller } from 'react-hook-form';
-import questionLogo from 'assets/images/question.png';
 import { openModalAction, closeModalAction } from 'actions/modal';
 import { useDispatch } from 'react-redux';
 import SelectAsset from './SelectAsset';
+import generateBridgeAssetLogo from './generateAssetLogo';
 import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import styles from './styles.module.scss';
 
@@ -43,9 +43,9 @@ const ConvertAssetInput = ({
     <Controller
       name={inputName}
       control={control}
-      render={(props) => (
+      render={({ field }) => (
         <Button
-          {...props}
+          {...field}
           variant="basic"
           size="100%"
           className={styles['convert-btn']}
@@ -53,12 +53,12 @@ const ConvertAssetInput = ({
         >
           <div className="d-flex align-items-center">
             <img
-              src={props.value?.logo ?? questionLogo}
+              src={generateBridgeAssetLogo(field.value)}
               width={30}
               height={30}
               alt="assetLogo"
             />
-            <div className={styles.currency}>{props.value?.name}</div>
+            <div className={styles.currency}>{field.value?.name}</div>
           </div>
           <div className="icon-angle-down color-base" />
         </Button>

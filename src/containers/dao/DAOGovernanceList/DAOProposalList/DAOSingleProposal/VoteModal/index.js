@@ -31,7 +31,7 @@ const VoteModal = ({ proposalInfo }) => {
   const userAssetBalance = useUserSingleAsset(getAssetDetails(proposalInfo.asset));
 
   const {
-    handleSubmit, control, errors, trigger, formState,
+    handleSubmit, control, trigger, formState,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -43,7 +43,7 @@ const VoteModal = ({ proposalInfo }) => {
     trigger();
   }, []);
 
-  async function onSubmit(data) {
+  async function onSubmit(formData) {
     dispatch(openModalAction({
       modalProps: {
         title: 'Confirm vote',
@@ -51,15 +51,15 @@ const VoteModal = ({ proposalInfo }) => {
       },
       content: <ConfirmVoteModal proposalInfo={{
         ...proposalInfo,
-        vote: data.vote,
-        amount: data.tokenAmount,
+        vote: formData.vote,
+        amount: formData.tokenAmount,
       }}
       />,
     }));
   }
 
   function submitContentGenerator() {
-    for (const err of Object.values(errors)) {
+    for (const err of Object.values(formState.errors)) {
       if (err) {
         return err.message;
       }
@@ -77,12 +77,12 @@ const VoteModal = ({ proposalInfo }) => {
           <Controller
             control={control}
             name="vote"
-            render={(props) => (
+            render={({ field }) => (
               <RadioGroup
                 options={radioGroupOptions}
-                value={props.value}
+                value={field.value}
                 className="radio-group"
-                onUpdate={props.onChange}
+                onUpdate={field.onChange}
               />
             )}
           />
@@ -97,13 +97,13 @@ const VoteModal = ({ proposalInfo }) => {
             required: 'Amount is required',
             validate: (value) => (validateAmount(value, userAssetBalance, proposalInfo)),
           }}
-          render={(props) => (
+          render={({ field }) => (
             <InputGroup
               variant="primary"
               placeholder="100"
               rightLabel={proposalInfo.asset.code}
-              value={props.value}
-              onChange={props.onChange}
+              value={field.value}
+              onChange={field.onChange}
             />
           )}
         />

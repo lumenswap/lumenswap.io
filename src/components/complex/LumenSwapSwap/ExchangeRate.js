@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
+import { getAssetDetails } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 export default function ExchangeRate({ estimatedPrice, control, loading }) {
@@ -19,12 +20,17 @@ export default function ExchangeRate({ estimatedPrice, control, loading }) {
     pricePer = new BN(formValues.from.amount).div(estimatedPrice).toString();
   }
 
+  const fromAssetDetails = getAssetDetails(formValues.from.asset.details);
+  let toAssetDetails = null;
+  if (formValues.to?.asset?.details) {
+    toAssetDetails = getAssetDetails(formValues.to.asset?.details);
+  }
   const leftSide = !reverse
-    ? formValues.from.asset.details.getCode()
-    : formValues.to.asset?.details?.getCode();
+    ? fromAssetDetails.getCode()
+    : toAssetDetails?.getCode();
   const rightSide = !reverse
-    ? formValues.to.asset?.details?.getCode()
-    : formValues.from.asset.details.getCode();
+    ? toAssetDetails?.getCode()
+    : fromAssetDetails.getCode();
 
   if (formValues.to.asset === null) {
     return null;

@@ -7,6 +7,7 @@ import fetchMarketPrice from 'api/fetchMarketPrice';
 import humanizeAmount from 'helpers/humanizeAmount';
 import ColorizedPriceImpact from 'components/complex/LumenSwapSwap/ColorizedPriceImpact';
 import appConsts from 'appConsts';
+import { getAssetDetails } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 export default function LPriceSpreadSection({
@@ -18,13 +19,19 @@ export default function LPriceSpreadSection({
   const formValues = useWatch({ control });
   const [marketPrice, setMarketPrice] = useState(0);
   const [loading, setLoading] = useState(false);
+  const fromAssetDetails = getAssetDetails(formValues.from.asset.details);
+  let toAssetDetails = null;
+
+  if (formValues.to?.asset?.details) {
+    toAssetDetails = getAssetDetails(formValues.to.asset.details);
+  }
 
   useEffect(() => {
     setLoading(true);
     if (formValues.to.asset) {
       fetchMarketPrice(
-        formValues.from.asset.details,
-        formValues.to.asset.details,
+        fromAssetDetails,
+        toAssetDetails,
       )
         .then((counterPrice) => {
           if (counterPrice) {
@@ -33,10 +40,10 @@ export default function LPriceSpreadSection({
         }).finally(() => setLoading(false));
     }
   }, [
-    formValues.from.asset.details.getCode(),
-    formValues.from.asset.details.getIssuer(),
-    formValues.to?.asset?.details?.getCode(),
-    formValues.to?.asset?.details?.getIssuer(),
+    fromAssetDetails.getCode(),
+    fromAssetDetails.getIssuer(),
+    toAssetDetails.getCode(),
+    toAssetDetails.getIssuer(),
   ]);
 
   const calculatedMin = new BN(estimatedPrice)
@@ -61,7 +68,7 @@ export default function LPriceSpreadSection({
             ? 'Loading'
             : (
               <>
-                {`${humanizeAmount(calculatedMin.toString())} ${formValues.to?.asset?.details?.getCode()}`}
+                {`${humanizeAmount(calculatedMin.toString())} ${toAssetDetails.getCode()}`}
               </>
             )}
         </div>
@@ -123,9 +130,9 @@ export default function LPriceSpreadSection({
         </div>
         <div className={styles.path}>
           {[
-            formValues.from.asset.details.getCode(),
+            fromAssetDetails.getCode(),
             ...paths.map((i) => i.asset_code),
-            formValues.to?.asset?.details?.getCode(),
+            toAssetDetails.getCode(),
           ].map((item, index) => (
             <div className={styles['path-container']} key={index}>
               <span>{item?.toUpperCase() || 'XLM'}</span>

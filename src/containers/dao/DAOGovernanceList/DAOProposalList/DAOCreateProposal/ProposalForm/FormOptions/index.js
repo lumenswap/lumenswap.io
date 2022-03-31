@@ -44,9 +44,9 @@ const FormOptions = ({ control }) => {
               rules={{
                 required: `${options.length < 3 ? 'At least 2 options are required' : 'Please fill out all options'}`,
               }}
-              render={(props) => (
+              render={({ field }) => (
                 <Option
-                  props={props}
+                  props={field}
                   ß
                   show={show}
                   setShow={setShow}

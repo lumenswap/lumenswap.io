@@ -24,12 +24,12 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
     trigger(['tokenAmount', 'price']);
   }, [watch('tokenAmount'), watch('price')]);
 
-  async function onSubmit(data) {
+  async function onSubmit(formData) {
     dispatch(
       openModalAction({
         modalProps: { title: 'Confirm Bid' },
         content: (
-          <ConfirmBidModal data={data} baseToken={baseToken} reloadData={reloadData} />
+          <ConfirmBidModal data={formData} baseToken={baseToken} reloadData={reloadData} />
         ),
       }),
     );
@@ -45,12 +45,35 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
   const userXlm = useUserSingleAsset(getAssetDetails(XLM));
 
   function buttonContent() {
-    const errorMessage = formState.errors?.tokenAmount?.message || formState.errors?.price?.message;
-    if (errorMessage) {
-      return errorMessage;
+    for (const error of Object.values(formState.errors)) {
+      if (error && error.message) {
+        return error.message;
+      }
     }
 
     return 'Send';
+  }
+
+  function validateTokenAmount(val) {
+    if (!(new BN(val).isGreaterThan(0))) {
+      return 'Amount must be greater than 0';
+    }
+
+    return true;
+  }
+
+  function validatePrice(val) {
+    if (new BN(val).isLessThan(basePrice)) {
+      return `Price must be greater than ${basePrice}`;
+    }
+
+    const tokenAmountVal = getValues().tokenAmount;
+    if (tokenAmountVal && new BN(val)
+      .times(tokenAmountVal).isGreaterThan(calculateMaxXLM(userXlm.balance, subEntry))) {
+      return 'Insufficient XLM balance';
+    }
+
+    return true;
   }
 
   return (
@@ -61,22 +84,16 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
         control={control}
         rules={{
           required: 'Amount is required',
-          validate: (val) => {
-            if (!(new BN(val).isGreaterThan(0))) {
-              return 'Amount must be greater than 0';
-            }
-
-            return true;
-          },
+          validate: validateTokenAmount,
         }}
         defaultValue=""
-        render={(props) => (
+        render={({ field }) => (
           <InputGroup
             variant="primary"
             placeholder="100"
             rightLabel={`${baseToken.code}`}
-            value={props.value}
-            onChange={props.onChange}
+            value={field.value}
+            onChange={field.onChange}
           />
         )}
       />
@@ -86,28 +103,16 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
         control={control}
         rules={{
           required: 'Price is required',
-          validate: (val) => {
-            if (new BN(val).isLessThan(basePrice)) {
-              return `Price must be greater than ${basePrice}`;
-            }
-
-            const tokenAmountVal = getValues().tokenAmount;
-            if (tokenAmountVal && new BN(val)
-              .times(tokenAmountVal).isGreaterThan(calculateMaxXLM(userXlm.balance, subEntry))) {
-              return 'Insufficient XLM balance';
-            }
-
-            return true;
-          },
+          validate: validatePrice,
         }}
         defaultValue=""
-        render={(props) => (
+        render={({ field }) => (
           <InputGroup
             variant="primary"
             placeholder={basePrice}
             rightLabel="XLM"
-            value={props.value}
-            onChange={props.onChange}
+            value={field.value}
+            onChange={field.onChange}
           />
         )}
       />

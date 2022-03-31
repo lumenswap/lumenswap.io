@@ -20,7 +20,7 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
   const userAddress = useSelector((state) => state.user.detail.address);
 
   const {
-    control, handleSubmit, errors, formState, trigger, getValues,
+    control, handleSubmit, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
 
   const onSubmit = (data) => {
@@ -71,7 +71,7 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
   };
 
   function generateError() {
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(formState.errors)) {
       if (error) {
         return error.message;
       }
@@ -93,13 +93,13 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
             required: 'Price is required',
             validate: validatePrice,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <InputGroup
               variant="primary"
               placeholder="10"
               rightLabel="NLSP"
-              value={props.value}
-              onChange={props.onChange}
+              value={field.value}
+              onChange={field.onChange}
             />
           )}
         />

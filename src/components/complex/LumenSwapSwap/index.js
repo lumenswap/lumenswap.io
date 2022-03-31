@@ -49,7 +49,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
     defaultValues: {
       from: {
         asset: {
-          details: getAssetDetails(XLM),
+          details: XLM,
           logo: XLM.logo,
           web: XLM.web,
         },
@@ -91,7 +91,6 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
     if (formValues.to.asset === null) {
       return;
     }
-
     if (amount && !new BN(amount).isEqualTo(0)) {
       setLoading(true);
       if (timeoutRef.current) {
@@ -101,8 +100,8 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
       timeoutRef.current = setTimeout(() => {
         calculateSendEstimatedAndPath(
           amount,
-          formValues.from.asset.details,
-          formValues.to.asset.details,
+          getAssetDetails(formValues.from.asset.details),
+          getAssetDetails(formValues.to.asset.details),
         )
           .then((res) => {
             setEstimatedPrice(res.minAmount);
@@ -150,8 +149,8 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
       timeoutRef.current = setTimeout(() => {
         calculateReceiveEstimatedAndPath(
           amount,
-          formValues.from.asset.details,
-          formValues.to.asset.details,
+          getAssetDetails(formValues.from.asset.details),
+          getAssetDetails(formValues.to.asset.details),
         )
           .then((res) => {
             setEstimatedPrice(amount);
@@ -181,6 +180,12 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
 
   function swapFromWithTo() {
     const formValues = getValues();
+    const fromAssetDetails = getAssetDetails(formValues.from.asset?.details);
+    let toAssetDetails = null;
+
+    if (getValues().to?.asset?.details) {
+      toAssetDetails = getAssetDetails(formValues.to?.asset?.details);
+    }
 
     if (formValues.to.asset === null) {
       return;
@@ -190,17 +195,20 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
       asset: formValues.to.asset,
       amount: '',
     });
-    setValue('to', { asset: formValues.from.asset, amount: formValues.from.amount });
+    setValue('to', {
+      asset: formValues.from.asset,
+      amount: formValues.from.amount,
+    });
     changeToInput(formValues.from.amount);
 
     const isFromCustomToken = userCustomTokens
-      .find((token) => isSameAsset(getAssetDetails(token), getValues().from.asset?.details));
+      .find((token) => isSameAsset(getAssetDetails(token), fromAssetDetails));
 
     const isToCustomToken = userCustomTokens
-      .find((token) => isSameAsset(getAssetDetails(token), getValues().to.asset?.details));
+      .find((token) => isSameAsset(getAssetDetails(token), toAssetDetails));
 
     if (isFromCustomToken && !isToCustomToken) {
-      const toAsset = { ...getValues().to.asset.details };
+      const toAsset = { ...toAssetDetails };
       toAsset.isDefault = true;
       router.push(
         swapBaseURL.custom(
@@ -213,7 +221,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
         ),
       );
     } else if (isToCustomToken && !isFromCustomToken) {
-      const fromAsset = { ...getValues().from.asset.details };
+      const fromAsset = { ...fromAssetDetails };
       fromAsset.isDefault = true;
       router.push(
         swapBaseURL.custom(
@@ -267,9 +275,10 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
               <Controller
                 name="from"
                 control={control}
-                render={(props) => (
+                render={({ field }) => (
                   <LCurrencyInput
-                    {...props}
+                    value={field.value}
+                    onChange={field.onChange}
                     baseURL={swapBaseURL}
                     ref={null}
                     showMax
@@ -295,9 +304,10 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
               <Controller
                 name="to"
                 control={control}
-                render={(props) => (
+                render={({ field }) => (
                   <LCurrencyInput
-                    {...props}
+                    value={field.value}
+                    onChange={field.onChange}
                     baseURL={swapBaseURL}
                     ref={null}
                     label="To (estimated)"
@@ -325,9 +335,10 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
                 <Controller
                   name="priceSpread"
                   control={control}
-                  render={(props) => (
+                  render={({ field }) => (
                     <LPriceSpreadSection
-                      {...props}
+                      value={field.value}
+                      onChange={field.onChange}
                       ref={null}
                       control={control}
                       estimatedPrice={estimatedPrice}

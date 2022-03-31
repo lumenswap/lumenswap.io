@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
 import { openModalAction } from 'actions/modal';
@@ -36,7 +36,6 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
     handleSubmit,
     control,
     formState,
-    errors,
     trigger,
     getValues,
   } = useForm({
@@ -84,14 +83,10 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
 
   useEffect(() => {
     trigger();
-  }, []);
-
-  useEffect(() => {
-    trigger();
-  }, [JSON.stringify(getValues())]);
+  }, [useWatch({ control })]);
 
   function errorGenerator() {
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(formState.errors)) {
       if (error.message) {
         return error.message;
       }
@@ -197,7 +192,7 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
             name="withdrawPercent"
             control={control}
             defaultValue={1}
-            render={(props) => <WithdrawLiquiditySliderInput {...props} />}
+            render={({ field }) => <WithdrawLiquiditySliderInput {...field} />}
           />
           <div className={styles['footer-section']}>
             <div className={styles['footer-items']}>

@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import classNames from 'classnames';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Submitting from 'components/Submitting';
-import { checkAssetAPI } from 'api/stellar';
-import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
-import defaultTokens from 'tokens/defaultTokens';
+import { getAssetDetails } from 'helpers/asset';
 import urlMaker from 'helpers/urlMaker';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
 import { closeModalAction } from 'actions/modal';
@@ -14,25 +11,23 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import customValidateAddNewAsset from './customValidateAddAsset';
 import styles from './styles.module.scss';
 
 const AddAsset = ({
-  changeToAsset, currentFrom, currentTo, type,
+  changeToAsset, currentFrom, type,
 }) => {
   const router = useRouter();
-  const [loadingTimer, setLoadingTimer] = useState(false);
+  const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const {
-    register,
+    control,
     handleSubmit,
     formState,
-    getValues,
-    errors,
-    trigger,
   } = useForm({
     mode: 'onChange',
+    resolver: (formValues) => customValidateAddNewAsset(formValues, userCustomTokens),
   });
   const dispatch = useDispatch();
-  const userCustomTokens = useSelector((state) => state.userCustomTokens);
 
   const onSubmit = (data) => {
     const asset = getAssetDetails({ code: data.code, issuer: data.issuer });
@@ -60,37 +55,6 @@ const AddAsset = ({
     dispatch(closeModalAction());
   };
 
-  async function customValidator() {
-    const { issuer, code } = getValues();
-    if (!issuer || issuer === '' || !code || code === '') {
-      return false;
-    }
-
-    setLoadingTimer(true);
-    try {
-      const res = await checkAssetAPI(code, issuer);
-      if (res) {
-        const pured = pureTokens([
-          ...defaultTokens.filter((i) => !i.isHide).map((i) => getAssetDetails(i)),
-          ...userCustomTokens,
-        ]);
-        const found = pured.find((i) => isSameAsset(getAssetDetails({ issuer, code }), i));
-        if (found) {
-          return 'Already Added';
-        }
-        return true;
-      }
-
-      return 'Invalid Asset';
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoadingTimer(false);
-    }
-
-    return false;
-  }
-
   // useEffect(() => {
   //   const extracted = router.query.slice(1).split('-');
   //   if (router.pathname === '/swap' && router.query) {
@@ -100,43 +64,63 @@ const AddAsset = ({
   //   }
   // }, [router.pathname, router.query]);
 
-  const showError = errors?.code?.message || errors?.issuer?.message;
+  function generateErrorMessage() {
+    for (const error of Object.values(formState.errors)) {
+      if (error && error.message) {
+        return error.message;
+      }
+    }
+    return 'Add asset';
+  }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={styles.form}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="form-group mb-3">
         <label htmlFor="code" className="label-primary">
           Asset code
         </label>
-        <Input
-          type="text"
-          placeholder="USD"
+        <Controller
           name="code"
-          id="code"
-          height={48}
-          onChange={() => trigger()}
-          innerRef={register({
+          control={control}
+          rules={{
             required: true,
-            validate: customValidator,
-          })}
-          autoFocus
+          }}
+          render={({ field }) => (
+            <Input
+              type="text"
+              placeholder="USD"
+              value={field.value}
+              id="code"
+              height={48}
+              onChange={field.onChange}
+              autoFocus
+            />
+          )}
         />
       </div>
       <div className="form-group mb-0">
         <label htmlFor="issuer" className="label-primary">
           Asset issuer
         </label>
-        <Input
-          type="text"
-          className="form-control primary-input"
-          placeholder="G …"
+        <Controller
           name="issuer"
-          id="issuer"
-          onChange={() => trigger()}
-          innerRef={register({
+          control={control}
+          rules={{
             required: true,
-            validate: customValidator,
-          })}
+          }}
+          render={({ field }) => (
+            <Input
+              type="text"
+              className="form-control primary-input"
+              placeholder="G …"
+              value={field.value}
+              id="issuer"
+              onChange={field.onChange}
+            />
+          )}
         />
       </div>
       <Button
@@ -144,14 +128,14 @@ const AddAsset = ({
         size="100%"
         variant="primary"
         fontWeight={600}
-        className={classNames(loadingTimer && 'loading-btn', styles.btn)}
-        disabled={!formState.isValid || loadingTimer}
+        className={classNames(formState.isValidating && 'loading-btn', styles.btn)}
+        disabled={!formState.isValid || formState.isValidating}
         onClick={() => {}}
         content={
-          loadingTimer ? (
+          formState.isValidating ? (
             <Submitting loadingSize={21} />
           ) : (
-            showError || 'Add asset'
+            generateErrorMessage()
           )
         }
       />
