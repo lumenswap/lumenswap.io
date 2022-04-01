@@ -57,14 +57,14 @@ const FormOptions = ({ control }) => {
         ))}
 
         {options.length <= 9 && (
-        <button
-          type="button"
-          className={styles['btn-dashed']}
-          onClick={onAddOption}
-        >
-          <div className={styles['plus-icon-container']}><img src={plusIcon} height={18} width={18} /></div>
-          Add option
-        </button>
+          <button
+            type="button"
+            className={styles['btn-dashed']}
+            onClick={onAddOption}
+          >
+            <div className={styles['plus-icon-container']}><img src={plusIcon} height={18} width={18} /></div>
+            Add option
+          </button>
         )}
       </div>
     </div>
