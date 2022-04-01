@@ -6,27 +6,25 @@ import styles from '../styles.module.scss';
 
 const FormOptions = ({ control }) => {
   const [options, setOptions] = useState(
-    [{
-      name: 1,
-      id: 1,
-    },
-    {
-      name: 2,
-      id: 10,
-      defaultValue: 'Revoke Proposal',
-    },
+    [
+      {
+        id: 1,
+      },
+      {
+        id: 10,
+        defaultValue: 'Revoke Proposal',
+      },
     ],
   );
   const [show, setShow] = useState(null);
 
   const onAddOption = () => {
     if (options.length <= 9) {
-      const newOptions = [...options];
-      newOptions[newOptions.length - 1].name = newOptions.length + 1;
-      newOptions.splice(newOptions.length - 1, 0, {
-        name: newOptions[newOptions.length - 2].name + 1,
-        id: newOptions[newOptions.length - 2].id + 1,
-      });
+      const newOptions = [...options.slice(0, -1), {
+        id: options.length,
+      }, {
+        ...options.slice(-1)[0],
+      }];
       setOptions(newOptions);
     }
   };
@@ -35,26 +33,27 @@ const FormOptions = ({ control }) => {
     <div className={styles.panel}>
       <div className={styles['panel-header']}>Options</div>
       <div className={styles['panel-body']}>
-        {options.map((option) => (
-          <div key={option.id}>
-            <Controller
-              name={`option${option.name}`}
-              control={control}
-              defaultValue={option.defaultValue ?? ''}
-              rules={{
-                required: `${options.length < 3 ? 'At least 2 options are required' : 'Please fill out all options'}`,
-              }}
-              render={({ field }) => (
-                <Option
-                  props={field}
-                  ß
-                  show={show}
-                  setShow={setShow}
-                  option={option}
-                />
-              )}
-            />
-          </div>
+        {options.map((option, index) => (
+          <Controller
+            key={option.id}
+            name={`option${option.id}`}
+            control={control}
+            defaultValue={option.defaultValue ?? ''}
+            rules={{
+              required: `${options.length < 3 ? 'At least 2 options are required' : 'Please fill out all options'}`,
+            }}
+            render={({ field }) => (
+              <Option
+                props={field}
+                show={show}
+                setShow={setShow}
+                option={{
+                  ...option,
+                  number: index + 1,
+                }}
+              />
+            )}
+          />
         ))}
 
         {options.length <= 9 && (
