@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ModalDialog from 'components/ModalDialog';
 import SelectAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset';
 import { useSelector } from 'react-redux';
-import { isSameAsset } from 'helpers/asset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import humanizeAmount from 'helpers/humanizeAmount';
 import styles from './styles.module.scss';
 
@@ -21,8 +21,12 @@ const CurrencyInput = ({
   const [show, setShow] = useState(false);
   const userBalance = useSelector((state) => state.userBalance);
   let foundBalance = null;
+  let currentCurrencyDetails = null;
   if (currentCurrency) {
-    foundBalance = userBalance.find((item) => isSameAsset(currentCurrency.details, item.asset));
+    currentCurrencyDetails = getAssetDetails(currentCurrency.details);
+  }
+  if (currentCurrency) {
+    foundBalance = userBalance.find((item) => isSameAsset(currentCurrencyDetails, item.asset));
   }
   const isLogged = useSelector((state) => state.user.logged);
 
@@ -57,7 +61,7 @@ const CurrencyInput = ({
           ) : (
             <>
               <img src={currentCurrency?.logo} alt="logo" />
-              {currentCurrency?.details?.getCode()}
+              {currentCurrencyDetails.getCode()}
               <span className="icon-angle-down" />
             </>
           )}
@@ -70,7 +74,6 @@ const CurrencyInput = ({
             setCurrency={setCurrency}
             changeToAsset={changeToAsset}
             currentFrom={getFormValues()?.from?.asset}
-            currentTo={getFormValues()?.to?.asset}
             type={type}
           />
         </ModalDialog>

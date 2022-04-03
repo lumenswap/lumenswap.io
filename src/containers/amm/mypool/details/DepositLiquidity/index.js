@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/Button';
 import LiquidityInput from 'components/LiquidityInput';
@@ -48,9 +48,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
     handleSubmit,
     control,
     formState,
-    errors,
     trigger,
-    getValues,
     setValue,
   } = useForm({
     mode: 'onChange',
@@ -86,14 +84,10 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
 
   useEffect(() => {
     trigger();
-  }, []);
-
-  useEffect(() => {
-    trigger();
-  }, [JSON.stringify(getValues())]);
+  }, [useWatch({ control })]);
 
   function errorGenerator() {
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(formState.errors)) {
       if (error.message) {
         return error.message;
       }
@@ -265,12 +259,12 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
             required: 'Amount is required',
             validate: validateAmountTokenA,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <LiquidityInput
               balance={`${tokenABalance} ${tokenA.code}`}
               currency={tokenA.code}
-              onChange={amountAChange(props.onChange)}
-              value={props.value}
+              onChange={amountAChange(field.onChange)}
+              value={field.value}
               currencySrc={extractLogoByToken(tokenA)}
               disabled={poolData === null}
               maxValue={tokenABalance}
@@ -285,10 +279,10 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
             required: 'Amount is required',
             validate: validateAmountTokenB,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <LiquidityInput
-              onChange={amountBChange(props.onChange)}
-              value={props.value}
+              onChange={amountBChange(field.onChange)}
+              value={field.value}
               balance={`${tokenBBalance} ${tokenB.code}`}
               currency={tokenB.code}
               currencySrc={extractLogoByToken(tokenB)}
@@ -306,10 +300,10 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
             required: 'Tolerance is required',
           }}
           defaultValue="0.1"
-          render={(props) => (
+          render={({field}) => (
             <Tolerance
-              onChange={props.onChange}
-              value={props.value}
+              onChange={field.onChange}
+              value={field.value}
             />
           )}
         /> */}

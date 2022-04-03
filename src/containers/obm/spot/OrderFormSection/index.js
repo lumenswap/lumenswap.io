@@ -57,7 +57,7 @@ const InnerForm = ({
     setValue(field, val);
   }
 
-  async function onSubmit(data) {
+  async function onSubmit(formData) {
     async function func() {
       const store = initializeStore();
       const address = store.getState().user.detail.address;
@@ -66,8 +66,8 @@ const InnerForm = ({
           address,
           baseAsset,
           counterAsset,
-          data.amount,
-          data.price,
+          formData.amount,
+          formData.price,
           0,
         );
       } if (type === 'sell') {
@@ -75,8 +75,8 @@ const InnerForm = ({
           address,
           counterAsset,
           baseAsset,
-          data.amount,
-          data.price,
+          formData.amount,
+          formData.price,
           0,
         );
       }
@@ -202,10 +202,10 @@ const InnerForm = ({
           control={control}
           rules={{ required: true }}
           defaultValue=""
-          render={(props) => (
+          render={({ field }) => (
             <InputGroup
-              value={props.value}
-              onChange={props.onChange}
+              value={field.value}
+              onChange={field.onChange}
               rightLabel={counterAsset.getCode()}
               leftLabel="Price"
               onChangeInput={onInputChange('price')}
@@ -219,10 +219,10 @@ const InnerForm = ({
           control={control}
           rules={{ required: true }}
           defaultValue=""
-          render={(props) => (
+          render={({ field }) => (
             <InputGroup
-              value={props.value}
-              onChange={props.onChange}
+              value={field.value}
+              onChange={field.onChange}
               rightLabel={baseAsset.getCode()}
               leftLabel="Amount"
               onChangeInput={onInputChange('amount')}
@@ -251,10 +251,10 @@ const InnerForm = ({
               return new BN(toCompare).isLessThanOrEqualTo(foundBalance);
             },
           }}
-          render={(props) => (
+          render={({ field }) => (
             <InputGroup
-              value={props.value}
-              onChange={props.onChange}
+              value={field.value}
+              onChange={field.onChange}
               rightLabel={counterAsset.getCode()}
               leftLabel="Total"
               onChangeInput={onInputChange('total')}

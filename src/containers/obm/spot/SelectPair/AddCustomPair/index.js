@@ -1,47 +1,44 @@
 import Button from 'components/Button';
 import Input from 'components/Input';
 import Checkbox from 'components/Checkbox';
-import { Controller, useForm } from 'react-hook-form';
-import { checkAssetAPI } from 'api/stellar';
-import purePairs from 'containers/obm/spot/SelectPair/purePairs';
-import createPairForDefaultTokens from 'containers/obm/spot/SelectPair/createPairForDefaultTokens';
-import { isSamePair, getAssetDetails } from 'helpers/asset';
+import { Controller, useForm, useWatch } from 'react-hook-form';
+import { getAssetDetails } from 'helpers/asset';
 import StellarSDK from 'stellar-sdk';
 import Submitting from 'components/Submitting';
 import { useEffect } from 'react';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { closeModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
+import customValidateAddNewPair from './customValidateAddNewPair';
 import styles from './styles.module.scss';
 
 const AddCustomPair = () => {
+  const userCustomPairs = useSelector((state) => state.userCustomPairs);
+
   const {
-    register,
     handleSubmit,
     formState,
-    getValues,
-    errors,
     trigger,
     control,
     watch,
   } = useForm({
     mode: 'onChange',
+    resolver: (formValues) => customValidateAddNewPair(formValues, userCustomPairs),
   });
   const dispatch = useDispatch();
-  const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
-  function onSubmit(data) {
+  function onSubmit(formData) {
     let base = getAssetDetails({
-      code: data.baseCode,
-      issuer: data.baseIssuer,
+      code: formData.baseCode,
+      issuer: formData.baseIssuer,
     });
     let counter = getAssetDetails({
-      code: data.counterCode,
-      issuer: data.counterIssuer,
+      code: formData.counterCode,
+      issuer: formData.counterIssuer,
     });
-    if (data.baseNativeCheckbox) {
+    if (formData.baseNativeCheckbox) {
       base = StellarSDK.Asset.native();
-    } else if (data.counterNativeCheckbox) {
+    } else if (formData.counterNativeCheckbox) {
       counter = StellarSDK.Asset.native();
     }
 
@@ -49,115 +46,62 @@ const AddCustomPair = () => {
     dispatch(closeModalAction());
   }
 
-  async function customValidator() {
-    const formValues = getValues();
-    if (formValues.baseNativeCheckbox && formValues.counterNativeCheckbox) {
-      return 'Both side cannot be same';
-    }
-
-    if (!formValues.baseNativeCheckbox && (!formValues.baseCode || !formValues.baseIssuer)) {
-      return 'Base Asset is Required';
-    }
-
-    if (!formValues.baseNativeCheckbox && !!formValues.baseCode && !!formValues.baseIssuer) {
-      const res = await checkAssetAPI(formValues.baseCode, formValues.baseIssuer);
-      if (!res) {
-        return 'Base Asset is Invalid';
-      }
-    }
-
-    if (!formValues.counterNativeCheckbox
-      && (!formValues.counterCode || !formValues.counterIssuer)) {
-      return 'Counter Asset is Required';
-    }
-
-    if (!formValues.counterNativeCheckbox
-      && !!formValues.counterCode && !!formValues.counterIssuer) {
-      const res = await checkAssetAPI(formValues.counterCode, formValues.counterIssuer);
-      if (!res) {
-        return 'Counter Asset is Invalid';
-      }
-    }
-
-    if (!formValues.baseNativeCheckbox && !formValues.counterNativeCheckbox) {
-      if (formValues.baseCode === formValues.counterCode
-        && formValues.baseIssuer === formValues.counterIssuer) {
-        return 'Both side cannot be same';
-      }
-    }
-
-    const pured = purePairs([
-      ...createPairForDefaultTokens(),
-      ...userCustomPairs,
-    ]);
-    let base = getAssetDetails({
-      code: formValues.baseCode,
-      issuer: formValues.baseIssuer,
-    });
-    let counter = getAssetDetails({
-      code: formValues.counterCode,
-      issuer: formValues.counterIssuer,
-    });
-    if (formValues.baseNativeCheckbox) {
-      base = StellarSDK.Asset.native();
-    } else if (formValues.counterNativeCheckbox) {
-      counter = StellarSDK.Asset.native();
-    }
-    const found = pured.find((i) => isSamePair({ base, counter }, i));
-    if (found) {
-      return 'Already exist';
-    }
-
-    return true;
-  }
-
   useEffect(() => {
-    trigger('baseCode');
-  }, [watch('baseNativeCheckbox'), watch('counterNativeCheckbox')]);
+    trigger();
+  }, [useWatch({ control })]);
 
-  function extratError() {
-    for (const value of Object.values(errors)) {
-      if (value.message) {
-        return value.message;
+  function generateSubmitButtonContent() {
+    for (const error of Object.values(formState.errors)) {
+      if (error.message) {
+        return error.message;
       }
     }
 
-    return null;
+    return 'Add Pair';
   }
-
-  const showError = extratError();
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={styles.form}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="form-group mb-3">
         <label htmlFor="code" className="label-secondary">Base asset code</label>
-        <Input
-          type="text"
-          placeholder="USD"
+        <Controller
           name="baseCode"
-          id="code1"
-          height={40}
-          fontSize={16}
-          autoFocus
-          onChange={() => trigger('baseCode')}
-          innerRef={register({
-            validate: customValidator,
-          })}
-          disabled={watch('baseNativeCheckbox')}
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              placeholder="USD"
+              id="code1"
+              height={40}
+              fontSize={16}
+              autoFocus
+              onChange={field.onChange}
+              value={field.value}
+              disabled={watch('baseNativeCheckbox')}
+            />
+          )}
         />
       </div>
       <div className="form-group mb-3">
         <label htmlFor="code" className="label-secondary">Base asset issuer</label>
-        <Input
-          type="text"
-          placeholder="G..."
+        <Controller
           name="baseIssuer"
-          id="issuer1"
-          height={40}
-          fontSize={16}
-          onChange={() => trigger('baseCode')}
-          innerRef={register}
-          disabled={watch('baseNativeCheckbox')}
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              placeholder="G..."
+              id="issuer1"
+              height={40}
+              fontSize={16}
+              onChange={field.onChange}
+              value={field.value}
+              disabled={watch('baseNativeCheckbox')}
+            />
+          )}
         />
       </div>
       <div className="form-group mb-3">
@@ -166,10 +110,10 @@ const AddCustomPair = () => {
             name="baseNativeCheckbox"
             control={control}
             defaultValue={false}
-            render={(props) => (
+            render={({ field }) => (
               <Checkbox
-                value={props.value}
-                onChange={props.onChange}
+                value={field.value}
+                onChange={field.onChange}
                 size={24}
                 label="Base asset is Native (XLM)"
               />
@@ -179,30 +123,40 @@ const AddCustomPair = () => {
       </div>
       <div className="form-group mb-3">
         <label htmlFor="code" className="label-secondary">Counter asset code</label>
-        <Input
-          type="text"
-          placeholder="USD"
+        <Controller
           name="counterCode"
-          id="code2"
-          height={40}
-          fontSize={16}
-          onChange={() => trigger('baseCode')}
-          innerRef={register}
-          disabled={watch('counterNativeCheckbox')}
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              placeholder="USD"
+              id="code2"
+              height={40}
+              fontSize={16}
+              onChange={field.onChange}
+              value={field.value}
+              disabled={watch('counterNativeCheckbox')}
+            />
+          )}
         />
       </div>
       <div className="form-group mb-3">
         <label htmlFor="code" className="label-secondary">Counter asset issuer</label>
-        <Input
-          type="text"
-          placeholder="G..."
+        <Controller
           name="counterIssuer"
-          id="issuer2"
-          height={40}
-          fontSize={16}
-          onChange={() => trigger('baseCode')}
-          innerRef={register}
-          disabled={watch('counterNativeCheckbox')}
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              placeholder="G..."
+              id="issuer2"
+              height={40}
+              fontSize={16}
+              onChange={field.onChange}
+              value={field.value}
+              disabled={watch('counterNativeCheckbox')}
+            />
+          )}
         />
       </div>
       <div className="form-group mb-4">
@@ -211,10 +165,10 @@ const AddCustomPair = () => {
             name="counterNativeCheckbox"
             control={control}
             defaultValue={false}
-            render={(props) => (
+            render={({ field }) => (
               <Checkbox
-                value={props.value}
-                onChange={props.onChange}
+                value={field.value}
+                onChange={field.onChange}
                 size={24}
                 label="Counter asset is Native (XLM)"
               />
@@ -227,7 +181,8 @@ const AddCustomPair = () => {
         fontWeight={600}
         variant="primary"
         className={styles.btn}
-        content={formState.isValidating ? <Submitting loadingSize={21} /> : (showError || 'Add Pair')}
+        content={formState.isValidating ? <Submitting loadingSize={21} />
+          : generateSubmitButtonContent()}
         disabled={!formState.isValid || formState.isValidating}
       />
     </form>

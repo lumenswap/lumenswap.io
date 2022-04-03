@@ -11,7 +11,7 @@ function Option({
   return (
     <div className={styles.group}>
       <div className="d-flex justify-content-between align-items-center">
-        <label className="label-primary">Option {option.name}</label>
+        <label className="label-primary">Option {option.number}</label>
         {option === show && <CharCounter length={50} char={props.value} />}
       </div>
       <Input

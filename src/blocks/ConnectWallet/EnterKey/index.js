@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
 import Input from 'components/Input';
 import Button from 'components/Button';
@@ -13,22 +13,31 @@ import { filterUserBalance } from 'helpers/balanceMapper';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
+const validatePrivateKey = (privateKey) => {
+  const pv = getPubFromPv(privateKey);
+  if (pv) {
+    return true;
+  }
+
+  return false;
+};
+
 const EnterKey = () => {
   const [loadingTimer, setLoadingTimer] = useState(false);
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState } = useForm({
+  const { control, handleSubmit, formState } = useForm({
     mode: 'onChange',
   });
 
-  function onSubmit(data) {
+  function onSubmit(formData) {
     setLoadingTimer(true);
-    const address = getPubFromPv(data.privateKey);
+    const address = getPubFromPv(formData.privateKey);
 
     fetchAccountDetails(address)
       .then((res) => {
         dispatch(userLogin(loginTypes.PV, {
           address,
-          privateKey: data.privateKey,
+          privateKey: formData.privateKey,
           subentry: res.subentry,
         }));
         dispatch(setUserBalance(filterUserBalance(res.balances)));
@@ -43,24 +52,24 @@ const EnterKey = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <div className="form-group mb-0">
         <label htmlFor="code" className="label-primary">Enter Your Private key</label>
-        <Input
-          type="text"
-          placeholder="S…"
+        <Controller
           name="privateKey"
-          id="privateKey"
-          height={48}
-          innerRef={register({
+          control={control}
+          rules={{
             required: true,
-            validate: (text) => {
-              const pv = getPubFromPv(text);
-              if (pv) {
-                return true;
-              }
-
-              return false;
-            },
-          })}
-          input={{ autoComplete: 'off' }}
+            validate: validatePrivateKey,
+          }}
+          render={({ field }) => (
+            <Input
+              type="text"
+              onChange={field.onChange}
+              value={field.value}
+              placeholder="S…"
+              id="privateKey"
+              height={48}
+              input={{ autoComplete: 'off' }}
+            />
+          )}
         />
       </div>
       <Button

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import fetchMarketPrice from 'api/fetchMarketPrice';
-import { isSameAsset } from 'helpers/asset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import generateSwapTRX from 'stellar-trx/generateSwapTRX';
 import { loginTypes } from 'reducers/user';
 import ColorizedPriceImpact from 'components/complex/LumenSwapSwap/ColorizedPriceImpact';
@@ -42,13 +42,19 @@ const ConfirmSwap = ({ data }) => {
   } else {
     pricePer = new BN(data.from.amount).div(data.estimatedPrice).toString();
   }
+  const fromAssetDetails = getAssetDetails(data.from.asset.details);
+  let toAssetDetails = null;
+
+  if (data.to?.asset?.details) {
+    toAssetDetails = getAssetDetails(data.to.asset.details);
+  }
 
   const leftSide = !reverse
-    ? data.from.asset.details.getCode()
-    : data.to.asset.details.getCode();
+    ? fromAssetDetails.getCode()
+    : toAssetDetails.getCode();
   const rightSide = !reverse
-    ? data.to.asset.details.getCode()
-    : data.from.asset.details.getCode();
+    ? toAssetDetails.getCode()
+    : fromAssetDetails.getCode();
 
   const calculatedMin = new BN(data.estimatedPrice)
     .times(new BN(1).minus(new BN(data.priceSpread).div(100)));
@@ -65,7 +71,7 @@ const ConfirmSwap = ({ data }) => {
     function func() {
       const store = initializeStore();
       const storeData = store.getState();
-      const found = storeData.userBalance.find((i) => isSameAsset(i.asset, data.to.asset.details));
+      const found = storeData.userBalance.find((i) => isSameAsset(i.asset, toAssetDetails));
       return generateSwapTRX({
         checkout: {
           ...data,
@@ -87,17 +93,17 @@ const ConfirmSwap = ({ data }) => {
     <div>
       <div className={styles['swap-container']}>
         <div className="d-flex align-items-center"><img src={data.from.asset.logo} width={20} height={20} alt="logo" />{data.from.amount}</div>
-        <div>{data.from.asset.details.getCode()}</div>
+        <div>{fromAssetDetails.getCode()}</div>
       </div>
       <span className={classNames('icon-arrow-down', styles.arrow)} />
       <div className={styles['swap-container']}>
         <div className="d-flex align-items-center"><img src={data.to.asset.logo} width={20} height={20} alt="logo" />{data.estimatedPrice}</div>
-        <div>{data.to.asset.details.getCode()}</div>
+        <div>{toAssetDetails.getCode()}</div>
       </div>
       <p className={styles.message}>
         output is estimated. you will receive at least{' '}
         {humanizeAmount(calculatedMin.toString())}{' '}
-        {data.to.asset.details.getCode()} or the transaction will revert.
+        {toAssetDetails.getCode()} or the transaction will revert.
       </p>
       <div className={styles.info}>
         <div className={styles.container}>
@@ -111,7 +117,7 @@ const ConfirmSwap = ({ data }) => {
           <div className={styles.label}>Minimum received
             <Tooltips id="minimum" text={<PrimaryTooltip text={appConsts.tooltip.min} />}><span className="icon-question-circle" /></Tooltips>
           </div>
-          <div className={classNames(styles.value)}>{loading ? 'Loading' : humanizeAmount(calculatedMin.toString())} {data.to.asset.details.getCode()}</div>
+          <div className={classNames(styles.value)}>{loading ? 'Loading' : humanizeAmount(calculatedMin.toString())} {toAssetDetails.getCode()}</div>
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Price impact

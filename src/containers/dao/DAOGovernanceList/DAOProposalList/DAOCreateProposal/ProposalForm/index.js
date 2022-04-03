@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import AlertIcon from 'assets/images/alert';
 import Button from 'components/Button';
@@ -34,7 +34,6 @@ const ProposalForm = ({ info, setStatus }) => {
     handleSubmit,
     control,
     getValues,
-    errors,
     trigger,
     setValue,
     formState,
@@ -88,7 +87,7 @@ const ProposalForm = ({ info, setStatus }) => {
     if (new BN(info.minValue).gt(userAssetBalance)) {
       return 'You dont have enough balance to create a proposal';
     }
-    for (const err of Object.values(errors)) {
+    for (const err of Object.values(formState.errors)) {
       if (err) {
         return err.message;
       }
@@ -104,7 +103,7 @@ const ProposalForm = ({ info, setStatus }) => {
       setValue('endTime', moment(startTime).add(5, 'day').toDate(),
         { shouldValidate: true });
     }
-  }, [JSON.stringify(getValues())]);
+  }, [useWatch({ control })]);
 
   return (
     <div>
@@ -122,9 +121,9 @@ const ProposalForm = ({ info, setStatus }) => {
           rules={{
             required: 'Question required',
           }}
-          render={(props) => (
+          render={({ field }) => (
             <CreateProposalInput
-              props={props}
+              props={field}
               show={show}
               setShow={setShow}
               handleFocus={handleFocus}
@@ -138,9 +137,9 @@ const ProposalForm = ({ info, setStatus }) => {
           rules={{
             required: 'Description required',
           }}
-          render={(props) => (
+          render={({ field }) => (
             <CreateProposalTextArea
-              props={props}
+              props={field}
               show={show}
               setShow={setShow}
               handleFocus={handleFocus}
@@ -156,10 +155,10 @@ const ProposalForm = ({ info, setStatus }) => {
               name="startTime"
               control={control}
               defaultValue=""
-              render={(props) => (
+              render={({ field }) => (
                 <CDatePicker
-                  onChange={props.onChange}
-                  value={props.value}
+                  onChange={field.onChange}
+                  value={field.value}
                   minDate={nextDayMoment.toDate()}
                 />
               )}
@@ -171,10 +170,10 @@ const ProposalForm = ({ info, setStatus }) => {
               name="endTime"
               control={control}
               defaultValue=""
-              render={(props) => (
+              render={({ field }) => (
                 <CDatePicker
-                  onChange={props.onChange}
-                  value={props.value}
+                  onChange={field.onChange}
+                  value={field.value}
                   disabled
                 />
               )}

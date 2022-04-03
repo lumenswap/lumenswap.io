@@ -9,12 +9,13 @@ export default function SwapButton({ control }) {
   const isLogged = useSelector((state) => state.user.logged);
   const formValues = useWatch({ control });
   const userBalance = useSelector((state) => state.userBalance);
+  const fromAssetDetails = getAssetDetails(formValues.from.asset.details);
   const foundBalance = userBalance
-    .find((item) => isSameAsset(item.asset, formValues.from.asset.details));
+    .find((item) => isSameAsset(item.asset, fromAssetDetails));
   let currentBalance = foundBalance ? foundBalance.balance : '0';
   const userSubentry = useSelector((state) => state.user.detail.subentry);
 
-  if (isSameAsset(formValues.from.asset.details, getAssetDetails(XLM))) {
+  if (isSameAsset(fromAssetDetails, getAssetDetails(XLM))) {
     currentBalance = calculateMaxXLM(currentBalance, userSubentry);
   }
 

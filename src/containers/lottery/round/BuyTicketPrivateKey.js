@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import numeral from 'numeral';
 import BN from 'helpers/BN';
 import Button from 'components/Button';
@@ -17,8 +17,6 @@ const BuyTicketPrivateKey = () => {
     watch,
     handleSubmit,
     trigger,
-    getValues,
-    errors,
     formState,
   } = useForm({
     mode: 'onChange',
@@ -29,7 +27,7 @@ const BuyTicketPrivateKey = () => {
 
   useEffect(() => {
     trigger();
-  }, [JSON.stringify(getValues())]);
+  }, [useWatch({ control })]);
 
   function validateQuantity(value) {
     if (value <= 0) return 'Invalid Amount';
@@ -44,7 +42,7 @@ const BuyTicketPrivateKey = () => {
   }
 
   function buttonContentGenerator() {
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(formState.errors)) {
       if (error.message) {
         return error.message;
       }
@@ -73,10 +71,10 @@ const BuyTicketPrivateKey = () => {
             required: 'Quantity is requried.',
             validate: validateQuantity,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <NumberOnlyInput
-              onChange={props.onChange}
-              value={props.value}
+              onChange={field.onChange}
+              value={field.value}
               placeholder="100"
               autoFocus
             />

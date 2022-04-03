@@ -30,18 +30,23 @@ export default function LCurrencyInput({
   function setCurrency(asset) {
     onChange({ ...value, asset });
     originChange(getFormValues().from.amount);
+    const fromAssetDetails = getAssetDetails(getFormValues().from.asset.details);
+    let toAssetDetails = null;
+    if (getFormValues().to?.asset?.details) {
+      toAssetDetails = getAssetDetails(getFormValues().to.asset.details);
+    }
 
     const isFromCustomToken = userCustomTokens
-      .find((token) => isSameAsset(getAssetDetails(token), getFormValues().from.asset?.details));
+      .find((token) => isSameAsset(getAssetDetails(token), fromAssetDetails));
 
     let isToCustomToken;
     if (getFormValues().to.asset) {
       isToCustomToken = userCustomTokens
-        .find((token) => isSameAsset(getAssetDetails(token), getFormValues().to.asset?.details));
+        .find((token) => isSameAsset(getAssetDetails(token), toAssetDetails));
     }
 
     if (isFromCustomToken && !isToCustomToken) {
-      const toAsset = { ...getFormValues().to.asset.details };
+      const toAsset = { ...toAssetDetails };
       toAsset.isDefault = true;
       router.push(
         baseURL.custom(
@@ -54,7 +59,7 @@ export default function LCurrencyInput({
         ),
       );
     } else if (isToCustomToken && !isFromCustomToken) {
-      const fromAsset = { ...getFormValues().from.asset.details };
+      const fromAsset = { ...fromAssetDetails };
       fromAsset.isDefault = true;
       router.push(
         baseURL.custom(
@@ -88,7 +93,8 @@ export default function LCurrencyInput({
   }
 
   function setMaxBalance() {
-    const found = userBalance.find((i) => isSameAsset(i.asset, value.asset.details));
+    const found = userBalance.find((i) => isSameAsset(i.asset,
+      getAssetDetails(value.asset.details)));
 
     if (found) {
       let amount = found.balance;

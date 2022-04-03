@@ -29,9 +29,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
     },
   });
   const handleReverseTokens = () => () => {
-    const currentSelectedTokens = getValues([TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME]);
-    setValue(TOKEN_A_FORM_NAME, currentSelectedTokens[TOKEN_B_FORM_NAME]);
-    setValue(TOKEN_B_FORM_NAME, currentSelectedTokens[TOKEN_A_FORM_NAME]);
+    const currentValues = getValues();
+    setValue(TOKEN_A_FORM_NAME, currentValues[TOKEN_B_FORM_NAME]);
+    setValue(TOKEN_B_FORM_NAME, currentValues[TOKEN_A_FORM_NAME]);
   };
 
   const onSubmit = (data) => {
@@ -82,12 +82,12 @@ const BridgeConvert = ({ bridgeTokens }) => {
             <Controller
               name="amount"
               control={control}
-              render={(props) => (
+              render={({ field }) => (
                 <NumberOnlyInput
                   type="number"
                   placeholder="1"
-                  value={props.value}
-                  onChange={props.onChange}
+                  value={field.value}
+                  onChange={field.onChange}
                   className={styles.input}
                 />
               )}
@@ -97,12 +97,12 @@ const BridgeConvert = ({ bridgeTokens }) => {
             <Controller
               name="destination"
               control={control}
-              render={(props) => (
+              render={({ field }) => (
                 <Input
                   type="text"
                   placeholder="G …"
-                  value={props.value}
-                  onChange={props.onChange}
+                  value={field.value}
+                  onChange={field.onChange}
                 />
               )}
             />

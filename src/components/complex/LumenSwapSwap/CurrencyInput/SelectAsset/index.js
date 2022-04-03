@@ -20,7 +20,6 @@ const SelectAsset = ({
   swapFromWithTo,
   changeToAsset,
   currentFrom,
-  currentTo,
   type,
 }) => {
   const userBalance = useSelector((state) => state.userBalance);
@@ -74,13 +73,19 @@ const SelectAsset = ({
   function selectAsset(asset) {
     const formValues = getFormValues();
     setShow(false);
+    const fromAssetDetails = getAssetDetails(formValues.from.asset.details);
+    let toAssetDetails = null;
+
+    if (formValues.to?.asset?.details) {
+      toAssetDetails = getAssetDetails(formValues.to.asset.details);
+    }
     if (
       formValues.to.asset
-      && (isSameAsset(formValues.from.asset.details, asset.details)
-        || isSameAsset(formValues.to.asset.details, asset.details))
+      && (isSameAsset(fromAssetDetails, asset.details)
+        || isSameAsset(toAssetDetails, asset.details))
     ) {
       swapFromWithTo();
-    } else if (isSameAsset(formValues.from.asset.details, asset.details)) {
+    } else if (isSameAsset(fromAssetDetails, asset.details)) {
       swapFromWithTo();
     } else {
       setCurrency(asset);
@@ -153,7 +158,6 @@ const SelectAsset = ({
               content: (
                 <AddAsset
                   currentFrom={currentFrom}
-                  currentTo={currentTo}
                   changeToAsset={changeToAsset}
                   type={type}
                 />

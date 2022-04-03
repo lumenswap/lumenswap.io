@@ -21,7 +21,6 @@ const SendAsset = ({ selectedAsset }) => {
     formState,
     control,
     setValue,
-    errors,
     trigger,
     getValues,
   } = useForm({
@@ -41,11 +40,11 @@ const SendAsset = ({ selectedAsset }) => {
     }
   };
 
-  function onSubmit(data) {
+  function onSubmit(formData) {
     dispatch(
       openModalAction({
         modalProps: { title: 'Confirm sending' },
-        content: <ConfirmSendAsset data={{ ...data, selectedAsset }} />,
+        content: <ConfirmSendAsset data={{ ...formData, selectedAsset }} />,
       }),
     );
   }
@@ -54,12 +53,8 @@ const SendAsset = ({ selectedAsset }) => {
     trigger();
   }, []);
 
-  useEffect(() => {
-    trigger();
-  }, [JSON.stringify(getValues('amount', 'destination'))]);
-
   function generateErrors() {
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(formState.errors)) {
       if (error.message) {
         return error.message;
       }
@@ -165,10 +160,10 @@ const SendAsset = ({ selectedAsset }) => {
             required: 'Amount is required',
             validate: validateAmount,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <NumberOnlyInput
-              onChange={props.onChange}
-              value={props.value}
+              onChange={field.onChange}
+              value={field.value}
               placeholder="0.0"
               className={styles.numberInput}
               autoFocus
@@ -189,10 +184,10 @@ const SendAsset = ({ selectedAsset }) => {
             required: 'Destination is required',
             validate: validateDestination,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <Input
-              onChange={props.onChange}
-              value={props.value}
+              onChange={field.onChange}
+              value={field.value}
               placeholder="G ..."
             />
           )}
@@ -207,10 +202,10 @@ const SendAsset = ({ selectedAsset }) => {
           rules={{
             validate: validateMemo,
           }}
-          render={(props) => (
+          render={({ field }) => (
             <Input
-              onChange={props.onChange}
-              value={props.value}
+              onChange={field.onChange}
+              value={field.value}
               className={styles.numberInput}
             />
           )}

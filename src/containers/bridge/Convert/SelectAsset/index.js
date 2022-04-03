@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Input from 'components/Input';
-import questionLogo from 'assets/images/question.png';
 import styles from './styles.module.scss';
+import generateBridgeAssetLogo from '../generateAssetLogo';
 
 const SelectAsset = ({ onSelectAsset, assets }) => {
   const [searchQuery, setSearchQuery] = useState(null);
@@ -28,7 +28,7 @@ const SelectAsset = ({ onSelectAsset, assets }) => {
         {filteredAssets.map((asset) => (
           <li key={asset.id} onClick={onSelectAsset(asset)}>
             <img
-              src={asset.logo ?? questionLogo}
+              src={generateBridgeAssetLogo(asset)}
               width={24}
               height={24}
               alt="assetImage"
