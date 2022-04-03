@@ -8,7 +8,6 @@ import USD from './USD';
 import EURT from './EURT';
 import SLT from './SLT';
 import RMT from './RMT';
-import TERN from './TERN';
 import USDT from './USDT';
 import BTC from './BTC';
 import ETH from './ETH';
@@ -24,6 +23,7 @@ import NLSP from './NLSP';
 import YBX from './YBX';
 import RBT from './RBT';
 import DRIFT from './DRIFT';
+import UNBNK from './UNBNK';
 
 const defaultTokens = [
   XLM,
@@ -38,7 +38,7 @@ const defaultTokens = [
   EURT,
   SLT,
   RMT,
-  TERN,
+  UNBNK,
   USDT,
   USDS,
   BTC,
