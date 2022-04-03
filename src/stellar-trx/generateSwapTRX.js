@@ -30,10 +30,10 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
   transaction = transaction
     .addOperation(
       StellarSDK.Operation.pathPaymentStrictSend({
-        sendAsset: checkout.from.asset.details,
+        sendAsset: getAssetDetails(checkout.from.asset.details),
         sendAmount: new BN(checkout.from.amount).toFixed(7),
         destination: checkout.toAddress,
-        destAsset: checkout.to.asset.details,
+        destAsset: getAssetDetails(checkout.to.asset.details),
         destMin: calculatedMin.toFixed(7),
         path,
       }),
