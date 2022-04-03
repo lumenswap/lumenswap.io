@@ -9,7 +9,7 @@ async function customValidateAddNewPair(formValues, userCustomPairs) {
   if (!formValues.baseNativeCheckbox && !!formValues.baseCode && !!formValues.baseIssuer) {
     const res = await checkAssetAPI(formValues.baseCode, formValues.baseIssuer);
     if (!res) {
-      return { values: formValues, errors: generateFormResolverErrors.setError('baseCode', 'Base Asset is Invalid') };
+      return { values: formValues, errors: generateFormResolverErrors('baseCode', 'Base Asset is Invalid') };
     }
   }
 
@@ -17,27 +17,27 @@ async function customValidateAddNewPair(formValues, userCustomPairs) {
         && !!formValues.counterCode && !!formValues.counterIssuer) {
     const res = await checkAssetAPI(formValues.counterCode, formValues.counterIssuer);
     if (!res) {
-      return { values: formValues, errors: generateFormResolverErrors.setError('baseCode', 'Counter Asset is Invalid') };
+      return { values: formValues, errors: generateFormResolverErrors('baseCode', 'Counter Asset is Invalid') };
     }
   }
 
   if (formValues.baseNativeCheckbox && formValues.counterNativeCheckbox) {
-    return { values: formValues, errors: generateFormResolverErrors.setError('baseCode', 'Both side cannot be same') };
+    return { values: formValues, errors: generateFormResolverErrors('baseCode', 'Both side cannot be same') };
   }
 
   if (!formValues.baseNativeCheckbox && (!formValues.baseCode || !formValues.baseIssuer)) {
-    return { values: formValues, errors: generateFormResolverErrors.setError('baseCode', 'Base Asset is Required') };
+    return { values: formValues, errors: generateFormResolverErrors('baseCode', 'Base Asset is Required') };
   }
 
   if (!formValues.counterNativeCheckbox
         && (!formValues.counterCode || !formValues.counterIssuer)) {
-    return { values: formValues, errors: generateFormResolverErrors.setError('baseCode', 'Counter Asset is Required') };
+    return { values: formValues, errors: generateFormResolverErrors('baseCode', 'Counter Asset is Required') };
   }
 
   if (!formValues.baseNativeCheckbox && !formValues.counterNativeCheckbox) {
     if (formValues.baseCode === formValues.counterCode
           && formValues.baseIssuer === formValues.counterIssuer) {
-      return { values: formValues, errors: generateFormResolverErrors.setError('baseCode', 'Both side cannot be same') };
+      return { values: formValues, errors: generateFormResolverErrors('baseCode', 'Both side cannot be same') };
     }
   }
 
@@ -60,10 +60,10 @@ async function customValidateAddNewPair(formValues, userCustomPairs) {
   }
   const found = pured.find((i) => isSamePair({ base, counter }, i));
   if (found) {
-    return { values: formValues, errors: generateFormResolverErrors.setError('baseCode', 'Already exist') };
+    return { values: formValues, errors: generateFormResolverErrors('baseCode', 'Already exist') };
   }
 
-  return { values: formValues, errors: generateFormResolverErrors.clearErrors() };
+  return { values: formValues, errors: generateFormResolverErrors() };
 }
 
 export default customValidateAddNewPair;
