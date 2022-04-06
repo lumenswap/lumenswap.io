@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CSteps from 'components/CSteps';
 import { sendConvertReq } from 'api/mockAPI/convertMockAPI';
-import SuccessDialog from 'containers/bridge/Convert/ConfirmModal/SuccessDialog';
+import SuccessDialog from 'containers/bridge/ConfirmModal/SuccessDialog';
 import { useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import SendAmountLoading from './SendAmountLoading';

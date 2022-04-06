@@ -1,5 +1,5 @@
-import BridgeConvert from 'containers/bridge/Convert';
-import { bridgeConvertGetServerSideProps } from 'containers/bridge/Convert/props';
+import BridgeConvert from 'containers/bridge';
+import { bridgeConvertGetServerSideProps } from 'containers/bridge/props';
 
 export const getServerSideProps = bridgeConvertGetServerSideProps;
 export default BridgeConvert;

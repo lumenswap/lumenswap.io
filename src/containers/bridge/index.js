@@ -1,4 +1,4 @@
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
@@ -6,6 +6,8 @@ import Button from 'components/Button';
 import Input from 'components/Input';
 import useIsLogged from 'hooks/useIsLogged';
 import NumberOnlyInput from 'components/NumberOnlyInput';
+import { useEffect } from 'react';
+import bridgeFormCustomValidator from './bridgeFormCustomValidator';
 import ConvertAssetInput from './ConvertAssetInput';
 import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
@@ -19,6 +21,8 @@ const BridgeConvert = ({ bridgeTokens }) => {
     control,
     setValue,
     getValues,
+    formState,
+    trigger,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -27,6 +31,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
       amount: null,
       destination: null,
     },
+    resolver: bridgeFormCustomValidator,
   });
   const handleReverseTokens = () => () => {
     const currentValues = getValues();
@@ -52,6 +57,19 @@ const BridgeConvert = ({ bridgeTokens }) => {
       dispatch(openConnectModal());
     }
   };
+
+  function generateSubmitButtonContent() {
+    for (const error of Object.values(formState.errors)) {
+      if (error && error.message) {
+        return error.message;
+      }
+    }
+    return 'Convert';
+  }
+
+  useEffect(() => {
+    trigger();
+  }, [useWatch({ control })]);
 
   return (
     <BridgeContainer title="Bridge Convert | Lumenswap">
@@ -113,9 +131,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
               size="100%"
               fontWeight={500}
               className="mt-4"
-            >
-              Convert
-            </Button>
+              disabled={formState.isValidating || !formState.isValid}
+              content={generateSubmitButtonContent()}
+            />
           </form>
         </div>
       </div>
