@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CSteps from 'components/CSteps';
-import SuccessDialog from 'containers/bridge/Convert/ConfirmModal/SuccessDialog';
+import SuccessDialog from 'containers/bridge/ConfirmModal/SuccessDialog';
 import { confirmTransactionReq, sendLConvertReq } from 'api/mockAPI/convertMockAPI';
 import ConfirmLTokenTransaction from './ConfirmLTokenTransaction';
 import ConfirmTransactionLoading from './ConfirmTransactionLoading';

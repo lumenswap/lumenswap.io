@@ -1,6 +1,6 @@
 const generateFormResolverErrors = (errorName, errorMessage) => {
   let errors = {};
-  if (!errorMessage && !errorMessage) {
+  if (!errorName && !errorMessage) {
     return errors;
   }
   errors = { [errorName]: { type: 'validate', message: errorMessage } };
