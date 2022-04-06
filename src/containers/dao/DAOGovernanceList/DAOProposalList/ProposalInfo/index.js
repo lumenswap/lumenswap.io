@@ -40,8 +40,8 @@ const ProposalInfo = ({ item, pageName }) => {
     let mostAmount = 0;
     let mostAmountIndex = 0;
     item.options?.forEach((option, index) => {
-      if (new BN(option.amount).isGreaterThan(mostAmount)) {
-        mostAmount = option.amount;
+      if (new BN(option.sum).isGreaterThan(mostAmount)) {
+        mostAmount = option.sum;
         mostAmountIndex = index;
       }
     });
