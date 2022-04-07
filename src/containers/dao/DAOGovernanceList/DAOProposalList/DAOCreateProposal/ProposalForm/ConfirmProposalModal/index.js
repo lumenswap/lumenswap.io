@@ -18,7 +18,17 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
 
   const handleConfirm = () => {
     setStatus({ value: 'loading', message: '' });
-    createPendingProposal(formData).then(async (res) => {
+    const modified = { ...formData };
+    modified.options = modified.options.map((option) => ({
+      ...option,
+      optionNumber: parseInt(option.optionNumber, 10),
+    })).sort((a, b) => (a.optionNumber - b.optionNumber))
+      .map((option, index) => ({
+        ...option,
+        optionNumber: index + 1,
+      }));
+
+    createPendingProposal(modified).then(async (res) => {
       const claimants = [
         new Claimant(formData.proposer, Claimant
           .predicateNot(Claimant
