@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
+import BN from 'helpers/BN';
 import Input from 'components/Input';
 import useIsLogged from 'hooks/useIsLogged';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import { useEffect } from 'react';
+import decimalCounter from './decimalCounter';
 import bridgeFormCustomValidator from './bridgeFormCustomValidator';
 import ConvertAssetInput from './ConvertAssetInput';
 import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
@@ -67,6 +69,20 @@ const BridgeConvert = ({ bridgeTokens }) => {
     return 'Convert';
   }
 
+  const customValidateAmount = (value, onChange) => {
+    const formValues = getValues();
+
+    let maxAmountPrecision = formValues[TOKEN_A_FORM_NAME].precision;
+    if (new BN(formValues[TOKEN_A_FORM_NAME].precision)
+      .gt(formValues[TOKEN_B_FORM_NAME].precision)) {
+      maxAmountPrecision = formValues[TOKEN_B_FORM_NAME].precision;
+    }
+    if (new BN(decimalCounter(value)).lte(maxAmountPrecision)) {
+      return onChange(value);
+    }
+    return () => {};
+  };
+
   useEffect(() => {
     trigger();
   }, [useWatch({ control })]);
@@ -105,7 +121,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
                   type="number"
                   placeholder="1"
                   value={field.value}
-                  onChange={field.onChange}
+                  onChange={(value) => {
+                    customValidateAmount(value, field.onChange);
+                  }}
                   className={styles.input}
                 />
               )}
