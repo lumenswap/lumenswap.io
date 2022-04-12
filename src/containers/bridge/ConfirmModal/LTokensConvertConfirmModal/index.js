@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CSteps from 'components/CSteps';
-import SuccessDialog from 'containers/bridge/ConfirmModal/SuccessDialog';
-import { confirmTransactionReq, sendLConvertReq } from 'api/mockAPI/convertMockAPI';
+import FinallDialog from 'containers/bridge/ConfirmModal/FinallDialog';
+import createOrderRequest from 'api/birdgeAPI/createOrder';
 import ConfirmLTokenTransaction from './ConfirmLTokenTransaction';
 import ConfirmTransactionLoading from './ConfirmTransactionLoading';
 import styles from '../styles.module.scss';
@@ -15,18 +15,32 @@ const LTokensConvertCofirmModal = ({ convertInfo }) => {
   };
 
   const sendConvertRequest = () => {
-    sendLConvertReq(convertInfo).then((res) => {
-      if (res.status === 'success') {
-        setTransactionResponseInfo(res);
-        nextStep();
-        confirmTransactionReq(res.transactionID).then((response) => {
-          if (response.status === 'success') {
-            setConvertResponse(response);
-            nextStep();
-          }
-        });
-      }
+    console.log({
+      from_amount: convertInfo.amount,
+      from_asset: convertInfo.tokenA.name,
+      user_destination: convertInfo.destination,
+      by_address: convertInfo.userAddress,
     });
+    createOrderRequest({
+      from_amount: convertInfo.amount,
+      from_asset: convertInfo.tokenA.name,
+      user_destination: convertInfo.destination,
+      by_address: convertInfo.userAddress,
+    }).then((res) => {
+      console.log(res);
+    });
+    // sendLConvertReq(convertInfo).then((res) => {
+    //   if (res.status === 'success') {
+    //     setTransactionResponseInfo(res);
+    //     nextStep();
+    //     confirmTransactionReq(res.transactionID).then((response) => {
+    //       if (response.status === 'success') {
+    //         setConvertResponse(response);
+    //         nextStep();
+    //       }
+    //     });
+    //   }
+    // });
   };
 
   const convertSteps = [
@@ -43,8 +57,7 @@ const LTokensConvertCofirmModal = ({ convertInfo }) => {
       />,
     },
     {
-      content: <SuccessDialog
-        convertInfo={convertInfo}
+      content: <FinallDialog
         responseInfo={convertResponse}
       />,
     },

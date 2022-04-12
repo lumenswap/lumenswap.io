@@ -8,6 +8,7 @@ import Input from 'components/Input';
 import useIsLogged from 'hooks/useIsLogged';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import { useEffect } from 'react';
+import useUserAddress from 'hooks/useUserAddress';
 import decimalCounter from './decimalCounter';
 import bridgeFormCustomValidator from './bridgeFormCustomValidator';
 import ConvertAssetInput from './ConvertAssetInput';
@@ -40,6 +41,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
     setValue(TOKEN_A_FORM_NAME, currentValues[TOKEN_B_FORM_NAME]);
     setValue(TOKEN_B_FORM_NAME, currentValues[TOKEN_A_FORM_NAME]);
   };
+  const userAddress = useUserAddress();
 
   const onSubmit = (data) => {
     if (isLoggedIn) {
@@ -51,6 +53,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
           },
           content: <ConvertConfirmModalContent convertInfo={{
             ...data,
+            userAddress,
           }}
           />,
         }),
