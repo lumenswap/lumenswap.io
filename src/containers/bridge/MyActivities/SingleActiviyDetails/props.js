@@ -1,8 +1,8 @@
-import { getSingleActivityInfo } from 'api/mockAPI/bridgeUserActivities';
+import getSingleOrder from 'api/birdgeAPI/getSingleOrder';
 
 async function SingleActivityDetailsGetServerSideProps({ params }) {
   try {
-    const activityInfo = await getSingleActivityInfo(params.id);
+    const activityInfo = await getSingleOrder(params.id);
     return {
       props: {
         activityInfo,
