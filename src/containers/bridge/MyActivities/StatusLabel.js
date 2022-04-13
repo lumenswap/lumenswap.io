@@ -16,7 +16,7 @@ const StatusLabel = ({ status }) => {
     );
   }
 
-  if (status.toLowerCase() === 'pending') {
+  if (status.toLowerCase() === 'awaiting_user_payment' || status.toLowerCase() === 'user_paid') {
     return (
       <div className={classNames('d-flex align-items-center',
         styles['status-pending'])}
