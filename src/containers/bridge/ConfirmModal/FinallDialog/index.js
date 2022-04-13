@@ -7,6 +7,7 @@ import urlMaker from 'helpers/urlMaker';
 import { useDispatch } from 'react-redux';
 import { closeModalAction } from 'actions/modal';
 import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
+import { orderStates } from 'containers/bridge/orderStates';
 import styles from './styles.module.scss';
 
 const DialogContainer = ({ children }) => (
@@ -26,7 +27,8 @@ const FinallDialog = ({ responseInfo }) => {
     dispatch(closeModalAction());
   };
 
-  if (responseInfo.state === 'awaiting_user_payment' || responseInfo.state === 'user_paid') {
+  if (responseInfo.state === orderStates.AWAITING_USER_PAYMENT
+    || responseInfo.state === orderStates.USER_PAID) {
     return (
       <DialogContainer>
         <TickIcon />

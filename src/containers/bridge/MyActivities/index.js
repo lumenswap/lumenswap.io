@@ -12,7 +12,7 @@ import useRequiredLogin from 'hooks/useRequiredLogin';
 import getUserActivities from 'api/birdgeAPI/getUserActivity';
 import styles from './styles.module.scss';
 import StatusLabel from './StatusLabel';
-import { generateFromAmount, generateToAmount } from './generateFromAndToAmounts';
+import { calculateFromAmount, calculateToAmount } from './calculateFromAndToAmounts';
 
 const userActivityTableHeaders = [
   {
@@ -33,9 +33,9 @@ const userActivityTableHeaders = [
     key: '3',
     render: (activityInfo) => (
       <div className={styles['col-amount']}>
-        {humanizeAmount(generateFromAmount(activityInfo))} {activityInfo.from_asset.name}
+        {humanizeAmount(calculateFromAmount(activityInfo))} {activityInfo.from_asset.name}
         <ArrowRight />
-        {humanizeAmount(generateToAmount(activityInfo))} {activityInfo.to_asset.name}
+        {humanizeAmount(calculateToAmount(activityInfo))} {activityInfo.to_asset.name}
       </div>
     ),
   },

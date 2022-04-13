@@ -12,7 +12,7 @@ import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLG
 import StatusLabel from '../StatusLabel';
 import styles from './styles.module.scss';
 import CExternalLink from '../../../../components/CExternalLink';
-import { generateFromAmount, generateToAmount } from '../generateFromAndToAmounts';
+import { calculateFromAmount, calculateToAmount } from '../calculateFromAndToAmounts';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());
@@ -51,9 +51,9 @@ const SingleActivityDetails = ({ activityInfo }) => {
       title: 'Amount',
       render: () => (
         <div className={styles.amount}>
-          {humanizeAmount(generateFromAmount(activityInfo))} {activityInfo.from_asset.name}
+          {humanizeAmount(calculateFromAmount(activityInfo))} {activityInfo.from_asset.name}
           <ArrowRight />
-          {humanizeAmount(generateToAmount(activityInfo))} {activityInfo.to_asset.name}
+          {humanizeAmount(calculateToAmount(activityInfo))} {activityInfo.to_asset.name}
         </div>
       ),
     },
