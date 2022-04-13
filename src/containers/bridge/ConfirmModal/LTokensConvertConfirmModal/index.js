@@ -15,19 +15,13 @@ const LTokensConvertCofirmModal = ({ convertInfo }) => {
   };
 
   const sendConvertRequest = () => {
-    console.log({
-      from_amount: convertInfo.amount,
-      from_asset: convertInfo.tokenA.name,
-      user_destination: convertInfo.destination,
-      by_address: convertInfo.userAddress,
-    });
     createOrderRequest({
       from_amount: convertInfo.amount,
       from_asset: convertInfo.tokenA.name,
       user_destination: convertInfo.destination,
       by_address: convertInfo.userAddress,
     }).then((res) => {
-      console.log(res);
+
     });
     // sendLConvertReq(convertInfo).then((res) => {
     //   if (res.status === 'success') {
