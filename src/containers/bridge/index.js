@@ -3,15 +3,28 @@ import { useDispatch } from 'react-redux';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
+import BN from 'helpers/BN';
 import Input from 'components/Input';
 import useIsLogged from 'hooks/useIsLogged';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import { useEffect } from 'react';
+import useUserAddress from 'hooks/useUserAddress';
+import decimalCounter from './decimalCounter';
 import bridgeFormCustomValidator from './bridgeFormCustomValidator';
 import ConvertAssetInput from './ConvertAssetInput';
 import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
+
+const customValidateAmount = (value, onChange, formValues) => {
+  const minAmountPrecision = Math.min(formValues[TOKEN_A_FORM_NAME].precision,
+    formValues[TOKEN_B_FORM_NAME].precision);
+
+  if (new BN(decimalCounter(value)).lte(minAmountPrecision)) {
+    return onChange(value);
+  }
+  return () => {};
+};
 
 const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
@@ -38,6 +51,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
     setValue(TOKEN_A_FORM_NAME, currentValues[TOKEN_B_FORM_NAME]);
     setValue(TOKEN_B_FORM_NAME, currentValues[TOKEN_A_FORM_NAME]);
   };
+  const userAddress = useUserAddress();
 
   const onSubmit = (data) => {
     if (isLoggedIn) {
@@ -49,6 +63,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
           },
           content: <ConvertConfirmModalContent convertInfo={{
             ...data,
+            userAddress,
           }}
           />,
         }),
@@ -105,7 +120,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
                   type="number"
                   placeholder="1"
                   value={field.value}
-                  onChange={field.onChange}
+                  onChange={(value) => {
+                    customValidateAmount(value, field.onChange, getValues());
+                  }}
                   className={styles.input}
                 />
               )}

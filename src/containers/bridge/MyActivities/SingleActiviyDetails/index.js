@@ -8,9 +8,11 @@ import ArrowRight from 'assets/images/arrowRight';
 import minimizeAddress from 'helpers/minimizeAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
+import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLGenerator';
 import StatusLabel from '../StatusLabel';
 import styles from './styles.module.scss';
 import CExternalLink from '../../../../components/CExternalLink';
+import { calculateFromAmount, calculateToAmount } from '../calculateFromAndToAmounts';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());
@@ -20,28 +22,28 @@ const SingleActivityDetails = ({ activityInfo }) => {
       name: 'My activities',
       url: urlMaker.bridge.activity.root(),
     }, {
-      name: `${activityInfo.orderID}`,
+      name: `${activityInfo.id}`,
     }];
 
   const singleActivityInfo = [
     {
       title: 'Status',
-      render: () => <StatusLabel status={activityInfo.status} />,
+      render: () => <StatusLabel status={activityInfo.state} />,
     },
     {
       title: 'Order ID',
-      render: () => `${activityInfo.orderID}`,
+      render: () => `${activityInfo.id}`,
     },
     {
       title: 'Date',
-      render: () => `${moment(activityInfo.date).fromNow()}`,
+      render: () => `${moment(activityInfo.created_at).fromNow()}`,
     },
     {
       title: 'Destination',
       render: () => (
         <CExternalLink
-          href="/"
-          content={minimizeAddress(activityInfo.destination)}
+          href={generateAddressURL(activityInfo.user_destination)}
+          content={minimizeAddress(activityInfo.user_destination.toUpperCase())}
         />
       ),
     },
@@ -49,9 +51,9 @@ const SingleActivityDetails = ({ activityInfo }) => {
       title: 'Amount',
       render: () => (
         <div className={styles.amount}>
-          {humanizeAmount(activityInfo.asset1.amount)} {activityInfo.asset1.code}
+          {humanizeAmount(calculateFromAmount(activityInfo))} {activityInfo.from_asset.name}
           <ArrowRight />
-          {humanizeAmount(activityInfo.asset2.amount)} {activityInfo.asset2.code}
+          {humanizeAmount(calculateToAmount(activityInfo))} {activityInfo.to_asset.name}
         </div>
       ),
     },
@@ -59,8 +61,8 @@ const SingleActivityDetails = ({ activityInfo }) => {
       title: 'Sending TX',
       render: () => (
         <CExternalLink
-          href="/"
-          content={minimizeAddress(activityInfo.sending_tx, 8)}
+          href={generateTransactionURL(activityInfo.sending_tx)}
+          content={minimizeAddress(activityInfo.sending_tx.toLowerCase(), 8)}
         />
       ),
     },
@@ -68,8 +70,8 @@ const SingleActivityDetails = ({ activityInfo }) => {
       title: 'Receiving TX',
       render: () => (
         <CExternalLink
-          href="/"
-          content={minimizeAddress(activityInfo.reciving_tx, 8)}
+          href={generateTransactionURL(activityInfo.receiving_tx)}
+          content={minimizeAddress(activityInfo.receiving_tx.toLowerCase(), 8)}
         />
       ),
     },
