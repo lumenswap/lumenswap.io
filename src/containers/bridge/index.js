@@ -15,6 +15,16 @@ import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
 
+const customValidateAmount = (value, onChange, formValues) => {
+  const minAmountPrecision = Math.min(formValues[TOKEN_A_FORM_NAME].precision,
+    formValues[TOKEN_B_FORM_NAME].precision);
+
+  if (new BN(decimalCounter(value)).lte(minAmountPrecision)) {
+    return onChange(value);
+  }
+  return () => {};
+};
+
 const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
   const dispatch = useDispatch();
@@ -69,20 +79,6 @@ const BridgeConvert = ({ bridgeTokens }) => {
     return 'Convert';
   }
 
-  const customValidateAmount = (value, onChange) => {
-    const formValues = getValues();
-
-    let maxAmountPrecision = formValues[TOKEN_A_FORM_NAME].precision;
-    if (new BN(formValues[TOKEN_A_FORM_NAME].precision)
-      .gt(formValues[TOKEN_B_FORM_NAME].precision)) {
-      maxAmountPrecision = formValues[TOKEN_B_FORM_NAME].precision;
-    }
-    if (new BN(decimalCounter(value)).lte(maxAmountPrecision)) {
-      return onChange(value);
-    }
-    return () => {};
-  };
-
   useEffect(() => {
     trigger();
   }, [useWatch({ control })]);
@@ -122,7 +118,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
                   placeholder="1"
                   value={field.value}
                   onChange={(value) => {
-                    customValidateAmount(value, field.onChange);
+                    customValidateAmount(value, field.onChange, getValues());
                   }}
                   className={styles.input}
                 />
