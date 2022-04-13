@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CSteps from 'components/CSteps';
-import { sendConvertReq } from 'api/mockAPI/convertMockAPI';
-import SuccessDialog from 'containers/bridge/ConfirmModal/SuccessDialog';
+import createOrderRequest from 'api/birdgeAPI/createOrder';
+import FinallDialog from 'containers/bridge/ConfirmModal/FinallDialog';
 import { useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import SendAmountLoading from './SendAmountLoading';
@@ -18,11 +18,15 @@ const ConvertConfirmModal = ({ convertInfo }) => {
 
   const sendConvertRequest = () => () => {
     nextStep();
-    sendConvertReq(convertInfo).then((res) => {
-      if (res.status === 'success') {
-        setConvertResponse(res);
-        nextStep();
-      }
+    createOrderRequest({
+      from_amount: convertInfo.amount,
+      from_asset: convertInfo.tokenA.name,
+      user_destination: convertInfo.destination,
+      by_address: convertInfo.userAddress,
+    }).then((res) => {
+      console.log(res);
+      setConvertResponse(res);
+      nextStep();
     });
   };
   const openPreviousModal = () => () => {
@@ -49,8 +53,7 @@ const ConvertConfirmModal = ({ convertInfo }) => {
     },
     { content: <SendAmountLoading convertInfo={convertInfo} /> },
     {
-      content: <SuccessDialog
-        convertInfo={convertInfo}
+      content: <FinallDialog
         responseInfo={convertResponse}
       />,
     },

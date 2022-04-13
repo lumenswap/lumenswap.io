@@ -6,25 +6,26 @@ import CTable from 'components/CTable';
 import ArrowRight from 'assets/images/arrowRight';
 import urlMaker from 'helpers/urlMaker';
 import moment from 'moment';
-import getUserActivities from 'api/mockAPI/bridgeUserActivities';
 import useUserAddress from 'hooks/useUserAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
+import getUserActivities from 'api/birdgeAPI/getUserActivity';
 import styles from './styles.module.scss';
 import StatusLabel from './StatusLabel';
+import { calculateFromAmount, calculateToAmount } from './calculateFromAndToAmounts';
 
 const userActivityTableHeaders = [
   {
     title: 'Order ID',
     dataIndex: 'id',
     key: '1',
-    render: (activityInfo) => `${activityInfo.orderID}`,
+    render: (activityInfo) => `${activityInfo.id}`,
   },
   {
     title: 'Date',
     dataIndex: 'date',
     key: '2',
-    render: (activityInfo) => `${moment(activityInfo.date).fromNow()}`,
+    render: (activityInfo) => `${moment(activityInfo.created_at).fromNow()}`,
   },
   {
     title: 'Amount',
@@ -32,9 +33,9 @@ const userActivityTableHeaders = [
     key: '3',
     render: (activityInfo) => (
       <div className={styles['col-amount']}>
-        {humanizeAmount(activityInfo.asset1.amount)} {activityInfo.asset1.code}
+        {humanizeAmount(calculateFromAmount(activityInfo))} {activityInfo.from_asset.name}
         <ArrowRight />
-        {humanizeAmount(activityInfo.asset2.amount)} {activityInfo.asset2.code}
+        {humanizeAmount(calculateToAmount(activityInfo))} {activityInfo.to_asset.name}
       </div>
     ),
   },
@@ -42,10 +43,10 @@ const userActivityTableHeaders = [
     title: 'Status',
     dataIndex: 'date',
     key: '4',
-    render: (activityInfo) => <StatusLabel status={activityInfo.status} />,
+    render: (activityInfo) => <StatusLabel status={activityInfo.state} />,
   },
 ];
-const singleActivityURLGenerator = (rowData) => urlMaker.bridge.activity.detail(rowData.orderID);
+const singleActivityURLGenerator = (rowData) => urlMaker.bridge.activity.detail(rowData.id);
 
 const MyActivities = () => {
   const [userActivities, setUserActivities] = useState(null);
@@ -56,9 +57,9 @@ const MyActivities = () => {
 
   useEffect(() => {
     setUserActivities(null);
-    getUserActivities(userAddress, { currentPage }).then((activitiyData) => {
-      setUserActivities(activitiyData.activities);
-      setPages(activitiyData.totalPages);
+    getUserActivities(userAddress, { page: currentPage, limit: 10, sort: 'desc' }).then((activitiyData) => {
+      setUserActivities(activitiyData.data);
+      setPages(activitiyData.total_pages);
     });
   }, [currentPage]);
   return (
@@ -80,7 +81,7 @@ const MyActivities = () => {
               />
             </div>
 
-            <div className="d-flex mt-4">
+            <div className={classNames(styles.pagination, 'd-flex mt-4')}>
               <CPagination
                 pages={pages}
                 currentPage={currentPage}
