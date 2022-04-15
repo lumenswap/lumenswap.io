@@ -8,7 +8,7 @@ export function calculateFromAmount(orderInfo) {
 export function calculateToAmount(orderInfo) {
   const minPrecision = Math.min(orderInfo.from_asset.precision, orderInfo.to_asset.precision);
   let feeMinPrecision = orderInfo.from_asset.precision;
-  if (orderInfo.from_asset.network.toLowerCase() !== 'stellar') {
+  if (orderInfo.from_asset.network.toLowerCase() === 'stellar') {
     feeMinPrecision = orderInfo.to_asset.precision;
   }
   const totalFee = new BN(orderInfo.fee.total).div(10 ** feeMinPrecision);
