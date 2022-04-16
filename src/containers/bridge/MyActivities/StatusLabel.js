@@ -18,10 +18,7 @@ const StatusLabel = ({ status, orderInfo }) => {
           className: 'main p-0',
           hasClose: false,
         },
-        content: <ConvertConfirmModalContent convertInfo={{
-          ...orderInfo,
-        }}
-        />,
+        content: <ConvertConfirmModalContent convertInfo={orderInfo} />,
       }),
     );
   };
