@@ -2,10 +2,27 @@ import classNames from 'classnames';
 import EmptyCheckCircle from 'assets/images/emptyCheckCircle';
 import Clock from 'assets/images/clock';
 import ArrowRight from 'assets/images/arrowRight';
+import { useDispatch } from 'react-redux';
+import { openModalAction } from 'actions/modal';
 import styles from './styles.module.scss';
+import ConvertConfirmModalContent from '../ConvertConfirmModalContent';
 import { orderStates } from '../orderStates';
 
-const StatusLabel = ({ status }) => {
+const StatusLabel = ({ status, orderInfo }) => {
+  const dispatch = useDispatch();
+  const handleOpenCurrentStep = (e) => {
+    e.preventDefault();
+    dispatch(
+      openModalAction({
+        modalProps: {
+          className: 'main p-0',
+          hasClose: false,
+        },
+        content: <ConvertConfirmModalContent convertInfo={orderInfo} />,
+      }),
+    );
+  };
+
   if (status.toLowerCase() === 'success') {
     return (
       <div className={classNames('d-flex align-items-center',
@@ -25,7 +42,10 @@ const StatusLabel = ({ status }) => {
       >
         <Clock />
         <div className="mx-1">Pending</div>
-        <ArrowRight />
+        <ArrowRight
+          className={styles['arrow-right']}
+          onClick={(e) => { handleOpenCurrentStep(e); }}
+        />
       </div>
     );
   }

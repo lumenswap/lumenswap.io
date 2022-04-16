@@ -29,7 +29,12 @@ const SingleActivityDetails = ({ activityInfo }) => {
   const singleActivityInfo = [
     {
       title: 'Status',
-      render: () => <StatusLabel status={activityInfo.state} />,
+      render: () => (
+        <StatusLabel
+          status={activityInfo.state}
+          orderInfo={activityInfo}
+        />
+      ),
     },
     {
       title: 'Order ID',

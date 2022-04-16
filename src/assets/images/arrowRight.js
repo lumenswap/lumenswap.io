@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Arrow() {
+function Arrow({ onClick, className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +8,8 @@ function Arrow() {
       width="24"
       height="18"
       viewBox="0 0 24 18"
+      onClick={onClick}
+      className={className}
     >
       <defs>
         <path
