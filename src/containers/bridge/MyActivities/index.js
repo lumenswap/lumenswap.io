@@ -43,7 +43,7 @@ const userActivityTableHeaders = [
     title: 'Status',
     dataIndex: 'date',
     key: '4',
-    render: (activityInfo) => <StatusLabel status={activityInfo.state} />,
+    render: (activityInfo) => <StatusLabel status={activityInfo.state} orderInfo={activityInfo} />,
   },
 ];
 const singleActivityURLGenerator = (rowData) => urlMaker.bridge.activity.detail(rowData.id);
