@@ -10,9 +10,9 @@ import useUserAddress from 'hooks/useUserAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
 import getUserActivities from 'api/birdgeAPI/getUserActivity';
+import { calculateFromAmount, calculateToAmount } from 'containers/bridge/calculateFromAndToAmounts';
 import styles from './styles.module.scss';
 import StatusLabel from './StatusLabel';
-import { calculateFromAmount, calculateToAmount } from '../calculateFromAndToAmounts';
 
 const userActivityTableHeaders = [
   {

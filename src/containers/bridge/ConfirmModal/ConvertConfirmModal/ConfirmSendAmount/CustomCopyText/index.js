@@ -3,7 +3,7 @@ import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import CopyIcon from 'assets/images/copy';
 import classNames from 'classnames';
 import { useState } from 'react';
-import styles from '../../styles.module.scss';
+import styles from '../../../styles.module.scss';
 
 function CustomCopyText({ content, className }) {
   const [tooltipShow, setTooltipShow] = useState(false);

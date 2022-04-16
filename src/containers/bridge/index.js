@@ -17,7 +17,6 @@ import ConvertAssetInput from './ConvertAssetInput';
 import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
-import { orderStates } from './orderStates';
 import FailDialog from './ConfirmModal/FailDialog';
 
 const customValidateAmount = (value, onChange, formValues) => {
@@ -68,17 +67,14 @@ const BridgeConvert = ({ bridgeTokens }) => {
         by_address: userAddress,
       }).then((res) => {
         setCreateOrderLoading(false);
-        if (res.state === orderStates.AWAITING_USER_PAYMENT) {
+        if (res.status === 200) {
           return dispatch(
             openModalAction({
               modalProps: {
                 className: 'main p-0',
                 hasClose: false,
               },
-              content: <ConvertConfirmModalContent convertInfo={{
-                ...res,
-              }}
-              />,
+              content: <ConvertConfirmModalContent convertInfo={res.data} />,
             }),
           );
         }

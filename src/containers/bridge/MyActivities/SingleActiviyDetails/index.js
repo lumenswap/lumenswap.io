@@ -9,10 +9,10 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
 import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLGenerator';
-import StatusLabel from '../StatusLabel';
+import StatusLabel from 'containers/bridge/MyActivities/StatusLabel';
+import CExternalLink from 'components/CExternalLink';
+import { calculateFromAmount, calculateToAmount } from 'containers/bridge/calculateFromAndToAmounts';
 import styles from './styles.module.scss';
-import CExternalLink from '../../../../components/CExternalLink';
-import { calculateFromAmount, calculateToAmount } from '../../calculateFromAndToAmounts';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());

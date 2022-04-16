@@ -6,9 +6,9 @@ import { useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import { calculateFromAmount } from 'containers/bridge/calculateFromAndToAmounts';
-import CustomCopyText from '../CustomCopyText';
+import CustomCopyText from './CustomCopyText';
 import styles from '../../styles.module.scss';
-import CreateQRCodeModal from '../CreateQRCodeModal';
+import CreateQRCodeModal from './CreateQRCodeModal';
 
 const ConfirmSendAmount = ({ convertInfo, openPreviousModal }) => {
   const dispatch = useDispatch();
