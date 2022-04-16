@@ -10,9 +10,9 @@ import useUserAddress from 'hooks/useUserAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
 import getUserActivities from 'api/birdgeAPI/getUserActivity';
+import { calculateFromAmount, calculateToAmount } from 'containers/bridge/calculateFromAndToAmounts';
 import styles from './styles.module.scss';
 import StatusLabel from './StatusLabel';
-import { calculateFromAmount, calculateToAmount } from './calculateFromAndToAmounts';
 
 const userActivityTableHeaders = [
   {
@@ -43,7 +43,7 @@ const userActivityTableHeaders = [
     title: 'Status',
     dataIndex: 'date',
     key: '4',
-    render: (activityInfo) => <StatusLabel status={activityInfo.state} />,
+    render: (activityInfo) => <StatusLabel status={activityInfo.state} orderInfo={activityInfo} />,
   },
 ];
 const singleActivityURLGenerator = (rowData) => urlMaker.bridge.activity.detail(rowData.id);
@@ -81,6 +81,7 @@ const MyActivities = () => {
               />
             </div>
 
+            {(userActivities && userActivities?.length !== 0) && (
             <div className={classNames(styles.pagination, 'd-flex mt-4')}>
               <CPagination
                 pages={pages}
@@ -90,6 +91,7 @@ const MyActivities = () => {
                 }}
               />
             </div>
+            )}
           </div>
         </div>
       </div>

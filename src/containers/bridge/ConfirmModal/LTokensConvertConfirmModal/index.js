@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import CSteps from 'components/CSteps';
-import FinallDialog from 'containers/bridge/ConfirmModal/FinallDialog';
-import createOrderRequest from 'api/birdgeAPI/createOrder';
+import SuccessDialog from 'containers/bridge/ConfirmModal/SuccessDialog';
 import ConfirmLTokenTransaction from './ConfirmLTokenTransaction';
 import ConfirmTransactionLoading from './ConfirmTransactionLoading';
 import styles from '../styles.module.scss';
@@ -15,14 +14,6 @@ const LTokensConvertCofirmModal = ({ convertInfo }) => {
   };
 
   const sendConvertRequest = () => {
-    createOrderRequest({
-      from_amount: convertInfo.amount,
-      from_asset: convertInfo.tokenA.name,
-      user_destination: convertInfo.destination,
-      by_address: convertInfo.userAddress,
-    }).then((res) => {
-
-    });
     // sendLConvertReq(convertInfo).then((res) => {
     //   if (res.status === 'success') {
     //     setTransactionResponseInfo(res);
@@ -51,7 +42,7 @@ const LTokensConvertCofirmModal = ({ convertInfo }) => {
       />,
     },
     {
-      content: <FinallDialog
+      content: <SuccessDialog
         responseInfo={convertResponse}
       />,
     },

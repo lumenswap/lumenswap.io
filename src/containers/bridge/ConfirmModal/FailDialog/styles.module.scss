@@ -1,0 +1,31 @@
+@import 'styles/vars';
+  .title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.56;
+    color: $CodGray;
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-family: SofiaPro;
+  }
+  
+  .desc {
+    font-size: 14px;
+    line-height: 1.43;
+    color: $ShuttleGray;
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-family: SofiaPro;
+  }
+
+  .fail-btn {
+    width: 122px;
+    height: 40px;
+    border-radius: 4px;
+    display: block;
+    margin: 32px auto 0 auto;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 32px;
+    font-family: SofiaPro;
+  }
