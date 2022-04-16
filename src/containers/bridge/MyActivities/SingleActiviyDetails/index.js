@@ -9,10 +9,10 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
-import StatusLabel from '../StatusLabel';
+import CExternalLink from 'components/CExternalLink';
+import { calculateFromAmount, calculateToAmount } from 'containers/bridge/calculateFromAndToAmounts';
+import StatusLabel from 'containers/bridge/MyActivities/StatusLabel';
 import styles from './styles.module.scss';
-import CExternalLink from '../../../../components/CExternalLink';
-import { calculateFromAmount, calculateToAmount } from '../../calculateFromAndToAmounts';
 import TxLinkGenerator from './TxLinkGenerator';
 
 const SingleActivityDetails = ({ activityInfo }) => {

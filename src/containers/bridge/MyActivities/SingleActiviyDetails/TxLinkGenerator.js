@@ -4,7 +4,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 
 const TxLinkGenerator = ({ tx }) => {
   if (tx === '' || !tx) {
-    return <>-</>;
+    return '-';
   }
   return (
     <CExternalLink
