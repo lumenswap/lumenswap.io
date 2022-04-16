@@ -81,6 +81,7 @@ const MyActivities = () => {
               />
             </div>
 
+            {(userActivities && userActivities?.length !== 0) && (
             <div className={classNames(styles.pagination, 'd-flex mt-4')}>
               <CPagination
                 pages={pages}
@@ -90,6 +91,7 @@ const MyActivities = () => {
                 }}
               />
             </div>
+            )}
           </div>
         </div>
       </div>

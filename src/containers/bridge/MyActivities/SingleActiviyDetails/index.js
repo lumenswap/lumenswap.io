@@ -8,11 +8,12 @@ import ArrowRight from 'assets/images/arrowRight';
 import minimizeAddress from 'helpers/minimizeAddress';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useRequiredLogin from 'hooks/useRequiredLogin';
-import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLGenerator';
+import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import StatusLabel from '../StatusLabel';
 import styles from './styles.module.scss';
 import CExternalLink from '../../../../components/CExternalLink';
 import { calculateFromAmount, calculateToAmount } from '../../calculateFromAndToAmounts';
+import TxLinkGenerator from './TxLinkGenerator';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());
@@ -60,19 +61,13 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Sending TX',
       render: () => (
-        <CExternalLink
-          href={generateTransactionURL(activityInfo.sending_tx)}
-          content={minimizeAddress(activityInfo.sending_tx.toLowerCase(), 8)}
-        />
+        <TxLinkGenerator tx={activityInfo.sending_tx} />
       ),
     },
     {
       title: 'Receiving TX',
       render: () => (
-        <CExternalLink
-          href={generateTransactionURL(activityInfo.receiving_tx)}
-          content={minimizeAddress(activityInfo.receiving_tx.toLowerCase(), 8)}
-        />
+        <TxLinkGenerator tx={activityInfo.receiving_tx} />
       ),
     },
   ];
