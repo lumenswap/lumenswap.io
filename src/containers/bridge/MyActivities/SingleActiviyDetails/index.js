@@ -12,7 +12,7 @@ import { generateAddressURL, generateTransactionURL } from 'helpers/explorerURLG
 import StatusLabel from '../StatusLabel';
 import styles from './styles.module.scss';
 import CExternalLink from '../../../../components/CExternalLink';
-import { calculateFromAmount, calculateToAmount } from '../calculateFromAndToAmounts';
+import { calculateFromAmount, calculateToAmount } from '../../calculateFromAndToAmounts';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());

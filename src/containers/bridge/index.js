@@ -1,20 +1,24 @@
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { openConnectModal, openModalAction } from 'actions/modal';
+import createOrderRequest from 'api/birdgeAPI/createOrder';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
 import Button from 'components/Button';
 import BN from 'helpers/BN';
 import Input from 'components/Input';
 import useIsLogged from 'hooks/useIsLogged';
 import NumberOnlyInput from 'components/NumberOnlyInput';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useUserAddress from 'hooks/useUserAddress';
+import Submitting from 'components/Submitting';
 import decimalCounter from './decimalCounter';
 import bridgeFormCustomValidator from './bridgeFormCustomValidator';
 import ConvertAssetInput from './ConvertAssetInput';
 import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
+import { orderStates } from './orderStates';
+import FailDialog from './ConfirmModal/FailDialog';
 
 const customValidateAmount = (value, onChange, formValues) => {
   const minAmountPrecision = Math.min(formValues[TOKEN_A_FORM_NAME].precision,
@@ -29,6 +33,7 @@ const customValidateAmount = (value, onChange, formValues) => {
 const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
   const dispatch = useDispatch();
+  const [createOrderLoading, setCreateOrderLoading] = useState(false);
   const {
     handleSubmit,
     control,
@@ -55,19 +60,34 @@ const BridgeConvert = ({ bridgeTokens }) => {
 
   const onSubmit = (data) => {
     if (isLoggedIn) {
-      dispatch(
-        openModalAction({
+      setCreateOrderLoading(true);
+      createOrderRequest({
+        from_amount: data.amount,
+        from_asset: data[TOKEN_A_FORM_NAME].name,
+        user_destination: data.destination,
+        by_address: userAddress,
+      }).then((res) => {
+        setCreateOrderLoading(false);
+        if (res.state === orderStates.AWAITING_USER_PAYMENT) {
+          return dispatch(
+            openModalAction({
+              modalProps: {
+                className: 'main p-0',
+                hasClose: false,
+              },
+              content: <ConvertConfirmModalContent convertInfo={{
+                ...res,
+              }}
+              />,
+            }),
+          );
+        }
+        return dispatch(openModalAction({
           modalProps: {
-            className: 'main p-0',
-            hasClose: false,
           },
-          content: <ConvertConfirmModalContent convertInfo={{
-            ...data,
-            userAddress,
-          }}
-          />,
-        }),
-      );
+          content: <FailDialog />,
+        }));
+      });
     } else {
       dispatch(openConnectModal());
     }
@@ -148,8 +168,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
               size="100%"
               fontWeight={500}
               className="mt-4"
-              disabled={formState.isValidating || !formState.isValid}
-              content={generateSubmitButtonContent()}
+              disabled={formState.isValidating || !formState.isValid || createOrderLoading}
+              content={createOrderLoading ? <Submitting loadingSize={21} />
+                : generateSubmitButtonContent()}
             />
           </form>
         </div>

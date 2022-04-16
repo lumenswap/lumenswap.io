@@ -12,7 +12,7 @@ import useRequiredLogin from 'hooks/useRequiredLogin';
 import getUserActivities from 'api/birdgeAPI/getUserActivity';
 import styles from './styles.module.scss';
 import StatusLabel from './StatusLabel';
-import { calculateFromAmount, calculateToAmount } from './calculateFromAndToAmounts';
+import { calculateFromAmount, calculateToAmount } from '../calculateFromAndToAmounts';
 
 const userActivityTableHeaders = [
   {
