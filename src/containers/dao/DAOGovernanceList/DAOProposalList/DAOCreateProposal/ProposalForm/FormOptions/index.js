@@ -25,6 +25,11 @@ const FormOptions = ({ control }) => {
       }, {
         ...options.slice(-1)[0],
       }];
+      const i = 0;
+      for (const option of newOptions) {
+        option.id = i + 1;
+        i + 1;
+      }
       setOptions(newOptions);
     }
   };
