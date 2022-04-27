@@ -166,7 +166,8 @@ const BridgeConvert = ({ bridgeTokens }) => {
               fontWeight={500}
               className="mt-4"
               disabled={formState.isValidating || !formState.isValid || createOrderLoading}
-              content={createOrderLoading ? <Submitting loadingSize={21} />
+              content={(createOrderLoading || formState.isValidating)
+                ? <Submitting loadingSize={21} />
                 : generateSubmitButtonContent()}
             />
           </form>
