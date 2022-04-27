@@ -1,5 +1,5 @@
 import { useForm, Controller, useWatch } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import createOrderRequest from 'api/birdgeAPI/createOrder';
 import BridgeContainer from 'containers/bridge/BridgeContainer';
@@ -32,6 +32,7 @@ const customValidateAmount = (value, onChange, formValues) => {
 const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
   const dispatch = useDispatch();
+  const userBalances = useSelector((state) => state.userBalance);
   const [createOrderLoading, setCreateOrderLoading] = useState(false);
   const {
     handleSubmit,
@@ -48,7 +49,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
       amount: null,
       destination: null,
     },
-    resolver: bridgeFormCustomValidator,
+    resolver: (formData) => bridgeFormCustomValidator(formData, userBalances),
   });
   const handleReverseTokens = () => () => {
     const currentValues = getValues();
@@ -165,7 +166,8 @@ const BridgeConvert = ({ bridgeTokens }) => {
               fontWeight={500}
               className="mt-4"
               disabled={formState.isValidating || !formState.isValid || createOrderLoading}
-              content={createOrderLoading ? <Submitting loadingSize={21} />
+              content={(createOrderLoading || formState.isValidating)
+                ? <Submitting loadingSize={21} />
                 : generateSubmitButtonContent()}
             />
           </form>
