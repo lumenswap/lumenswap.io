@@ -37,7 +37,7 @@ async function bridgeFormCustomValidator(formValues, userBalances) {
   if (currentToToken.network === 'stellar' && formValues.destination.length === 56) {
     const destinationFullDetails = await fetchAccountFullDetails(formValues.destination);
     const foundAssetInUserBalances = destinationFullDetails.data.balances
-      .filter((balance) => (balance.asset_type === 'credit_alphanum4' && balance.asset_type === 'credit_alphanum12'))
+      .filter((balance) => (balance.asset_type === 'credit_alphanum4' || balance.asset_type === 'credit_alphanum12'))
       .find((balance) => isSameAsset(getAssetDetails({
         code: balance.asset_code,
         issuer: balance.asset_issuer,
