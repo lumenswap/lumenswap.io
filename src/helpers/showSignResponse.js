@@ -17,6 +17,7 @@ export default async function showSignResponse(trx, dispatch, onAfterClose = () 
         btnLink={generateTransactionURL(trxHash)}
       />,
     }));
+    return Promise.resolve(trxHash);
   } catch (e) {
     console.error(e);
     dispatch(openModalAction({
@@ -30,6 +31,4 @@ export default async function showSignResponse(trx, dispatch, onAfterClose = () 
 
     return Promise.reject(e);
   }
-
-  return Promise.resolve();
 }
