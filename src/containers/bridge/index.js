@@ -211,24 +211,20 @@ const BridgeConvert = ({ bridgeTokens }) => {
               )}
             />
 
-            {getValues().tokenB.network !== 'stellar'
-            && (
-            <>
-              <label className="label-primary mt-3">Destination</label>
-              <Controller
-                name="destination"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    type="text"
-                    placeholder="G …"
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                )}
-              />
-            </>
-            )}
+            <label className="label-primary mt-3">Destination</label>
+            <Controller
+              name="destination"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="text"
+                  disabled={getValues().tokenB.network === 'stellar'}
+                  placeholder="G …"
+                  value={getValues().tokenB.network === 'stellar' ? userAddress : field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
 
             <Button
               variant="primary"

@@ -1,11 +1,19 @@
 import { useState } from 'react';
 import CSteps from 'components/CSteps';
 import SuccessDialog from 'containers/bridge/ConfirmModal/SuccessDialog';
+import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
+import { useDispatch } from 'react-redux';
+import useUserAddress from 'hooks/useUserAddress';
+import { getAssetDetails } from 'helpers/asset';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
 import ConfirmLTokenTransaction from './ConfirmLTokenTransaction';
 import ConfirmTransactionLoading from './ConfirmTransactionLoading';
 import styles from '../styles.module.scss';
 
 const LTokensConvertCofirmModal = ({ convertInfo }) => {
+  const dispatch = useDispatch();
+  const userAddress = useUserAddress();
   const [currentStep, setCurrentStep] = useState(0);
   const [convertResponse, setConvertResponse] = useState(null);
   const [transactionResponseInfo, setTransactionResponseInfo] = useState(null);
@@ -14,18 +22,25 @@ const LTokensConvertCofirmModal = ({ convertInfo }) => {
   };
 
   const sendConvertRequest = () => {
-    // sendLConvertReq(convertInfo).then((res) => {
-    //   if (res.status === 'success') {
-    //     setTransactionResponseInfo(res);
-    //     nextStep();
-    //     confirmTransactionReq(res.transactionID).then((response) => {
-    //       if (response.status === 'success') {
-    //         setConvertResponse(response);
-    //         nextStep();
-    //       }
-    //     });
-    //   }
-    // });
+    async function func() {
+      return generatePaymentTRX(
+        userAddress,
+        '1',
+        getAssetDetails({
+          code: convertInfo.from_asset.name, issuer: process.env.REACT_APP_L_ISSUER,
+        }),
+        convertInfo.wallet.address,
+        convertInfo.memo,
+      );
+    }
+
+    showGenerateTrx(func, dispatch)
+      .then(async (trx) => {
+        const trxHash = await showSignResponse(trx, dispatch);
+        setTransactionResponseInfo({ trx_hash: trxHash });
+        nextStep();
+      })
+      .catch(console.error);
   };
 
   const convertSteps = [
