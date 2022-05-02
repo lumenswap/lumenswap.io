@@ -11,6 +11,11 @@ import NumberOnlyInput from 'components/NumberOnlyInput';
 import { useEffect, useState } from 'react';
 import useUserAddress from 'hooks/useUserAddress';
 import Submitting from 'components/Submitting';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
+import { fetchAccountFullDetails } from 'api/stellar';
+import generateAddTrustLineTRX from 'stellar-trx/generateAddTrustLineTRX';
+import showGenerateTrx from 'helpers/showGenerateTrx';
+import showSignResponse from 'helpers/showSignResponse';
 import decimalCounter from './decimalCounter';
 import bridgeFormCustomValidator from './bridgeFormCustomValidator';
 import ConvertAssetInput from './ConvertAssetInput';
@@ -29,11 +34,22 @@ const customValidateAmount = (value, onChange, formValues) => {
   return () => {};
 };
 
+function userHasTrustLine(currentToToken, balances) {
+  return !!balances
+    .filter((balance) => (balance.asset_type === 'credit_alphanum4' || balance.asset_type === 'credit_alphanum12'))
+    .find((balance) => isSameAsset(getAssetDetails({
+      code: balance.asset_code,
+      issuer: balance.asset_issuer,
+    }),
+    getAssetDetails({ code: currentToToken.name, issuer: process.env.REACT_APP_L_ISSUER })));
+}
+
 const BridgeConvert = ({ bridgeTokens }) => {
   const isLoggedIn = useIsLogged();
   const dispatch = useDispatch();
   const userBalances = useSelector((state) => state.userBalance);
   const [createOrderLoading, setCreateOrderLoading] = useState(false);
+  const [destinationFullDetails, setDestinationFullDetails] = useState(null);
   const {
     handleSubmit,
     control,
@@ -58,13 +74,35 @@ const BridgeConvert = ({ bridgeTokens }) => {
   };
   const userAddress = useUserAddress();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const currentToToken = data[TOKEN_B_FORM_NAME];
+    let generateTrustLineFunction = null;
+    let destination = data.destination;
+
     if (isLoggedIn) {
+      if (currentToToken.network === 'stellar') {
+        destination = userAddress;
+
+        const toAsset = getAssetDetails({
+          code: currentToToken.name, issuer: process.env.REACT_APP_L_ISSUER,
+        });
+
+        generateTrustLineFunction = () => generateAddTrustLineTRX(userAddress, toAsset);
+
+        if (currentToToken.network === 'stellar' && destination?.length === 56 && destinationFullDetails?.data?.balances) {
+          if (!userHasTrustLine(currentToToken, destinationFullDetails.data.balances)) {
+            const trx = await showGenerateTrx(generateTrustLineFunction, dispatch);
+            await showSignResponse(trx, dispatch);
+            setDestinationFullDetails(null);
+          }
+        }
+      }
+
       setCreateOrderLoading(true);
       createOrderRequest({
         from_amount: data.amount,
         from_asset: data[TOKEN_A_FORM_NAME].name,
-        user_destination: data.destination,
+        user_destination: destination,
         by_address: userAddress,
       }).then((res) => {
         setCreateOrderLoading(false);
@@ -96,8 +134,36 @@ const BridgeConvert = ({ bridgeTokens }) => {
         return error.message;
       }
     }
+
+    const formValues = getValues();
+    const currentToToken = formValues[TOKEN_B_FORM_NAME];
+
+    if (currentToToken.network === 'stellar' && userAddress && destinationFullDetails?.data?.balances) {
+      if (!userHasTrustLine(currentToToken, destinationFullDetails.data.balances)) {
+        return `Create trustline for ${currentToToken.name}`;
+      }
+    }
+
     return 'Convert';
   }
+
+  useEffect(() => {
+    const formValues = getValues();
+
+    async function fetchAccountDetails() {
+      const currentToToken = formValues[TOKEN_B_FORM_NAME];
+
+      if (currentToToken.network === 'stellar' && userAddress) {
+        const fetchedDestinationDetails = await fetchAccountFullDetails(userAddress);
+        setDestinationFullDetails(fetchedDestinationDetails);
+      }
+    }
+
+    if (!destinationFullDetails
+       && destinationFullDetails?.data?.account_id !== userAddress) {
+      fetchAccountDetails();
+    }
+  }, [userAddress, useWatch({ control, name: TOKEN_B_FORM_NAME })]);
 
   useEffect(() => {
     trigger();
@@ -145,19 +211,24 @@ const BridgeConvert = ({ bridgeTokens }) => {
               )}
             />
 
-            <label className="label-primary mt-3">Destination</label>
-            <Controller
-              name="destination"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  type="text"
-                  placeholder="G …"
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              )}
-            />
+            {getValues().tokenB.network !== 'stellar'
+            && (
+            <>
+              <label className="label-primary mt-3">Destination</label>
+              <Controller
+                name="destination"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    type="text"
+                    placeholder="G …"
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+            </>
+            )}
 
             <Button
               variant="primary"
