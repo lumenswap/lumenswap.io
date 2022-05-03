@@ -163,8 +163,14 @@ const BridgeConvert = ({ bridgeTokens }) => {
        && destinationFullDetails?.data?.account_id !== userAddress) {
       fetchAccountDetails();
     }
-  }, [userAddress, useWatch({ control, name: TOKEN_B_FORM_NAME })]);
 
+    if (getValues()[TOKEN_B_FORM_NAME].network === 'stellar' && userAddress) {
+      setValue('destination', userAddress);
+    }
+    if (getValues()[TOKEN_B_FORM_NAME].network !== 'stellar' && userAddress) {
+      setValue('destination', '');
+    }
+  }, [userAddress, useWatch({ control, name: TOKEN_B_FORM_NAME })]);
   useEffect(() => {
     trigger();
   }, [useWatch({ control })]);
@@ -218,9 +224,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
               render={({ field }) => (
                 <Input
                   type="text"
-                  disabled={getValues().tokenB.network === 'stellar'}
+                  disabled={getValues()[TOKEN_B_FORM_NAME].network === 'stellar'}
                   placeholder="G …"
-                  value={getValues().tokenB.network === 'stellar' ? userAddress : field.value}
+                  value={field.value}
                   onChange={field.onChange}
                 />
               )}
