@@ -57,7 +57,7 @@ const MyActivities = () => {
 
   useEffect(() => {
     setUserActivities(null);
-    getUserActivities(userAddress, { page: currentPage, limit: 10, sort: 'desc' }).then((activitiyData) => {
+    getUserActivities(userAddress, { page: currentPage, limit: 20, sort: 'desc' }).then((activitiyData) => {
       setUserActivities(activitiyData.data);
       setPages(activitiyData.total_pages);
     });
@@ -76,7 +76,7 @@ const MyActivities = () => {
                 dataSource={userActivities}
                 loading={!userActivities}
                 noDataMessage="There is no activity"
-                rowFix={{ rowNumbers: 10, rowHeight: 53, headerRowHeight: 30 }}
+                rowFix={{ rowNumbers: 20, rowHeight: 53, headerRowHeight: 30 }}
                 rowLink={singleActivityURLGenerator}
               />
             </div>
