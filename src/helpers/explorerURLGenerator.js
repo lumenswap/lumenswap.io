@@ -33,3 +33,15 @@ export function ipfsHashGenerator(hash) {
 export function generateOperationIdURL(operationId) {
   return `${LUMENSCAN_URL}/ops/${operationId}`;
 }
+
+export function generateSolanaTransactionURL(tx) {
+  return `https://solscan.io/tx/${tx}`;
+}
+
+export function generateBTCTransactionURL(tx) {
+  return `https://www.blockchain.com/btc/tx/${tx}`;
+}
+
+export function generateETHTransactionURL(tx) {
+  return `https://etherscan.io/tx/${tx}`;
+}
