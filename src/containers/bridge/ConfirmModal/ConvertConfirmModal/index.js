@@ -34,7 +34,8 @@ const ConvertConfirmModal = ({ convertInfo }) => {
     if (currentConvertInfo.state === orderStates.AWAITING_USER_PAYMENT) {
       setCurrentStep(0);
     }
-    if (currentConvertInfo.state === orderStates.USER_PAID) {
+    if (currentConvertInfo.state === orderStates.USER_PAID
+      || currentConvertInfo.state === orderStates.SENDING) {
       setCurrentStep(1);
     }
     if (currentConvertInfo.state === orderStates.DONE) {
