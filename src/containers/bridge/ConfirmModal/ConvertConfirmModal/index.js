@@ -15,6 +15,11 @@ const ConvertConfirmModal = ({ convertInfo }) => {
   const getConvertInfoIntervalRef = useRef(null);
   const [currentConvertInfo, setCurrentConvertInfo] = useState(convertInfo);
   useEffect(() => {
+    getSingleOrder(convertInfo.id).then((newConvertInfo) => {
+      setCurrentConvertInfo(newConvertInfo);
+    });
+  }, []);
+  useEffect(() => {
     getConvertInfoIntervalRef.current = setInterval(() => {
       getSingleOrder(convertInfo.id).then((newConvertInfo) => {
         setCurrentConvertInfo(newConvertInfo);

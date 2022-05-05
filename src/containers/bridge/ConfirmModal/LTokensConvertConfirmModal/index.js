@@ -23,7 +23,11 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
   const [signLoading, setSignLoading] = useState(defaultSignLoading);
   const [currentStep, setCurrentStep] = useState(0);
   const [transactionResponseInfo, setTransactionResponseInfo] = useState(null);
-
+  useEffect(() => {
+    getSingleOrder(convertInfo.id).then((newConvertInfo) => {
+      setCurrentConvertInfo(newConvertInfo);
+    });
+  }, []);
   useEffect(() => {
     getConvertInfoIntervalRef.current = setInterval(() => {
       getSingleOrder(currentConvertInfo.id).then((newConvertInfo) => {

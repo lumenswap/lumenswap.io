@@ -7,7 +7,7 @@ import styles from '../../styles.module.scss';
 const SendAmountLoading = ({ convertInfo }) => (
   <>
     <p className={styles.text}>
-      PWe are sending {humanizeAmount(
+      We are sending {humanizeAmount(
       calculateFromAmount(convertInfo),
     )} {convertInfo.from_asset.name}
       {' '}to your address. Please be patient.
