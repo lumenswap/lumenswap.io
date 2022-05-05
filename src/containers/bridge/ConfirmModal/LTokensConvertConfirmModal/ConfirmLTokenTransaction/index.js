@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
@@ -7,15 +6,12 @@ import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import { calculateFromAmount } from 'containers/bridge/calculateFromAndToAmounts';
 import styles from '../../styles.module.scss';
 
-const ConfirmLTokenTransaction = ({ sendConvertRequest, convertInfo }) => {
-  const [loading, setLoading] = useState(false);
-
+const ConfirmLTokenTransaction = ({ sendConvertRequest, convertInfo, signLoading }) => {
   const handleSign = () => () => {
     sendConvertRequest();
-    setLoading(true);
   };
 
-  if (loading) {
+  if (signLoading) {
     return (
       <>
         <p className={styles.text}>

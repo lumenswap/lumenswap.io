@@ -8,7 +8,7 @@ const ConfirmTransactionLoading = ({ convertInfo, transactionInfo }) => (
   <>
     <p className={styles.text}>
       Your transaction has been done.
-      {' '} Please wait for confirmation by {capitalizeFirstLetter(convertInfo.tokenB.network)}.
+      {' '} Please wait for confirmation by {capitalizeFirstLetter(convertInfo.to_asset.network)}.
     </p>
     <div className={classNames(styles.note, styles['note-link'])}>
       Tx hash
