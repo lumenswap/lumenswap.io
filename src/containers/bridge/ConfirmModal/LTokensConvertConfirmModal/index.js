@@ -11,6 +11,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import { openModalAction } from 'actions/modal';
 import { orderStates } from 'containers/bridge/orderStates';
 import getSingleOrder from 'api/birdgeAPI/getSingleOrder';
+import { calculateFromAmount } from 'containers/bridge/calculateFromAndToAmounts';
 import ConfirmLTokenTransaction from './ConfirmLTokenTransaction';
 import ConfirmTransactionLoading from './ConfirmTransactionLoading';
 import styles from '../styles.module.scss';
@@ -68,7 +69,7 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
     async function generateTRXHandler() {
       return generatePaymentTRX(
         userAddress,
-        '1',
+        calculateFromAmount(currentConvertInfo),
         getAssetDetails({
           code: currentConvertInfo.from_asset.name, issuer: process.env.REACT_APP_L_ISSUER,
         }),
