@@ -8,19 +8,19 @@ import useUserAddress from 'hooks/useUserAddress';
 import { getAssetDetails } from 'helpers/asset';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
-import openModalAction from 'actions/modal';
+import { openModalAction } from 'actions/modal';
 import { orderStates } from 'containers/bridge/orderStates';
 import getSingleOrder from 'api/birdgeAPI/getSingleOrder';
 import ConfirmLTokenTransaction from './ConfirmLTokenTransaction';
 import ConfirmTransactionLoading from './ConfirmTransactionLoading';
 import styles from '../styles.module.scss';
 
-const LTokensConvertCofirmModal = ({ convertInfo }) => {
+const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) => {
   const dispatch = useDispatch();
   const [currentConvertInfo, setCurrentConvertInfo] = useState(convertInfo);
   const getConvertInfoIntervalRef = useRef(null);
   const userAddress = useUserAddress();
-  const [signLoading, setSignLoading] = useState(false);
+  const [signLoading, setSignLoading] = useState(defaultSignLoading);
   const [currentStep, setCurrentStep] = useState(0);
   const [transactionResponseInfo, setTransactionResponseInfo] = useState(null);
 
@@ -49,16 +49,16 @@ const LTokensConvertCofirmModal = ({ convertInfo }) => {
   }, []);
 
   const handleCloseSignModal = () => {
-    dispatch(
-      openModalAction({
-        modalProps: {
-          className: 'main p-0',
-          hasClose: false,
-        },
-        content: <ConvertConfirmModalContent convertInfo={currentConvertInfo} />,
-      }),
-    );
-    setSignLoading(true);
+    dispatch(openModalAction({
+      modalProps: {
+        className: 'main p-0',
+        hasClose: false,
+      },
+      content: <ConvertConfirmModalContent
+        defaultSignLoading
+        convertInfo={currentConvertInfo}
+      />,
+    }));
   };
 
   const sendConvertRequest = () => {
