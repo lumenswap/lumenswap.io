@@ -4,7 +4,7 @@ import ExternalIcon from 'assets/images/external';
 import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import styles from '../../styles.module.scss';
 
-const ConfirmTransactionLoading = ({ convertInfo, transactionInfo }) => (
+const ConfirmTransactionLoading = ({ convertInfo }) => (
   <>
     <p className={styles.text}>
       Your transaction has been done.
@@ -19,7 +19,7 @@ const ConfirmTransactionLoading = ({ convertInfo, transactionInfo }) => (
         rel="noreferrer"
         className="color-primary"
       >
-        {transactionInfo.tx_hash}
+        {convertInfo.sending_tx}
         <ExternalIcon />
       </a>
     </div>

@@ -22,7 +22,6 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
   const userAddress = useUserAddress();
   const [signLoading, setSignLoading] = useState(defaultSignLoading);
   const [currentStep, setCurrentStep] = useState(0);
-  const [transactionResponseInfo, setTransactionResponseInfo] = useState(null);
   useEffect(() => {
     getSingleOrder(convertInfo.id).then((newConvertInfo) => {
       setCurrentConvertInfo(newConvertInfo);
@@ -79,10 +78,7 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
     }
 
     showGenerateTrx(generateTRXHandler, dispatch)
-      .then(async (trx) => {
-        const trxHash = await showSignResponse(trx, dispatch, handleCloseSignModal);
-        setTransactionResponseInfo({ trx_hash: trxHash });
-      })
+      .then(async (trx) => showSignResponse(trx, dispatch, handleCloseSignModal))
       .catch(console.error);
   };
 
@@ -97,7 +93,6 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
     {
       content: <ConfirmTransactionLoading
         convertInfo={currentConvertInfo}
-        transactionInfo={transactionResponseInfo}
       />,
     },
     {
