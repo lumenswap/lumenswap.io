@@ -167,7 +167,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
     if (getValues()[TOKEN_B_FORM_NAME].network === 'stellar' && userAddress) {
       setValue('destination', userAddress);
     }
-    if (getValues()[TOKEN_B_FORM_NAME].network !== 'stellar' && userAddress) {
+    if (getValues()[TOKEN_B_FORM_NAME].network !== 'stellar' && userAddress === getValues().destination) {
       setValue('destination', '');
     }
   }, [userAddress, useWatch({ control, name: TOKEN_B_FORM_NAME })]);
