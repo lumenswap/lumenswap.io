@@ -23,7 +23,7 @@ const StatusLabel = ({ status, orderInfo }) => {
     );
   };
 
-  if (status.toLowerCase() === 'success') {
+  if (status.toLowerCase() === orderStates.DONE) {
     return (
       <div className={classNames('d-flex align-items-center',
         styles['status-success'])}
@@ -35,7 +35,8 @@ const StatusLabel = ({ status, orderInfo }) => {
   }
 
   if (status.toLowerCase() === orderStates.AWAITING_USER_PAYMENT
-  || status.toLowerCase() === orderStates.USER_PAID) {
+  || status.toLowerCase() === orderStates.USER_PAID
+    || status.toLowerCase() === orderStates.SENDING) {
     return (
       <div className={classNames('d-flex align-items-center',
         styles['status-pending'])}
