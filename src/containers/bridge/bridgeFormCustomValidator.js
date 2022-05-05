@@ -18,9 +18,9 @@ async function bridgeFormCustomValidator(formValues, userBalances) {
   if (!formValues.amount || formValues.amount === '') {
     return { values: formValues, errors: generateFormResolverErrors('amount', 'Amount is required') };
   }
-  // if (new BN(formValues.amount).isEqualTo(0)) {
-  //   return { values: formValues, errors: generateFormResolverErrors('amount', 'Invalid amount') };
-  // }
+  if (new BN(formValues.amount).isEqualTo(0)) {
+    return { values: formValues, errors: generateFormResolverErrors('amount', 'Invalid amount') };
+  }
   if (!new BN(formValues.amount).gte(currentFromToken.minimum_amount)) {
     return { values: formValues, errors: generateFormResolverErrors('amount', `Minimum amount is ${currentFromToken.minimum_amount}`) };
   }
