@@ -46,7 +46,7 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
     if (currentConvertInfo.state === orderStates.DONE) {
       setCurrentStep(2);
     }
-  }, []);
+  }, [currentConvertInfo]);
 
   const handleCloseSignModal = () => {
     dispatch(openModalAction({
