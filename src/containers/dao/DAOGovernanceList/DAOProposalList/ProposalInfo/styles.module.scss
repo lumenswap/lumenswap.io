@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .item {
   padding: 18px 24px 24px 24px;
@@ -23,6 +23,7 @@
   font-size: 16px;
   line-height: 1.5;
   color: $ShuttleGray;
+  overflow-x: auto;
 }
 
 .detail {
