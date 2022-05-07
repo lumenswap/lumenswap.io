@@ -66,13 +66,20 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Sending TX',
       render: () => (
-        <TxLinkGenerator tx={activityInfo.sending_tx} url={generateBridgeTransactionURL(activityInfo, 'to_asset')} />
+        <TxLinkGenerator
+          tx={activityInfo.sending_tx}
+          url={generateBridgeTransactionURL(activityInfo.sending_tx, activityInfo.to_asset.network)}
+        />
       ),
     },
     {
       title: 'Receiving TX',
       render: () => (
-        <TxLinkGenerator tx={activityInfo.receiving_tx} url={generateBridgeTransactionURL(activityInfo, 'from_asset')} />
+        <TxLinkGenerator
+          tx={activityInfo.receiving_tx}
+          url={generateBridgeTransactionURL(activityInfo.receiving_tx,
+            activityInfo.from_asset.network)}
+        />
       ),
     },
   ];

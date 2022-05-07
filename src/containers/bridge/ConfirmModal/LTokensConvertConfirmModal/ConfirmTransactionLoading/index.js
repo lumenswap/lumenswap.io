@@ -15,7 +15,7 @@ const ConfirmTransactionLoading = ({ convertInfo }) => (
       Tx hash
       <br />
       <a
-        href={generateBridgeTransactionURL(convertInfo, 'to_asset')}
+        href={generateBridgeTransactionURL(convertInfo.sending_tx, convertInfo.to_asset.network)}
         target="_blank"
         rel="noreferrer"
         className="color-primary"

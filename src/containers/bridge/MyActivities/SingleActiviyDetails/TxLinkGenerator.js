@@ -5,25 +5,20 @@ import {
 } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 
-const transactionNames = {
-  to_asset: 'sending_tx',
-  from_asset: 'receiving_tx',
-};
-
-export function generateBridgeTransactionURL(convertInfo, selectedAsset) {
-  if (convertInfo[selectedAsset].network === 'stellar') {
-    return generateTransactionURL(convertInfo[transactionNames[selectedAsset]]);
+export function generateBridgeTransactionURL(tx, network) {
+  if (network === 'stellar') {
+    return generateTransactionURL(tx);
   }
-  if (convertInfo[selectedAsset].network === 'bitcoin') {
-    return generateBTCTransactionURL(convertInfo[transactionNames[selectedAsset]]);
+  if (network === 'bitcoin') {
+    return generateBTCTransactionURL(tx);
   }
-  if (convertInfo[selectedAsset].network === 'ethereum') {
-    return generateETHTransactionURL(convertInfo[transactionNames[selectedAsset]]);
+  if (network === 'ethereum') {
+    return generateETHTransactionURL(tx);
   }
-  if (convertInfo[selectedAsset].network === 'solana') {
-    return generateSolanaTransactionURL(convertInfo[transactionNames[selectedAsset]]);
+  if (network === 'solana') {
+    return generateSolanaTransactionURL(tx);
   }
-  throw new Error(`${selectedAsset} network is not handled!`);
+  throw new Error(`${network} network is not handled!`);
 }
 
 const TxLinkGenerator = ({ tx, url }) => {
