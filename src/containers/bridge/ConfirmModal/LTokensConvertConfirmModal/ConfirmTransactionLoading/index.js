@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import ExternalIcon from 'assets/images/external';
 
 import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
+import { generateBridgeTransactionURL } from 'containers/bridge/MyActivities/SingleActiviyDetails/TxLinkGenerator';
 import styles from '../../styles.module.scss';
 
 const ConfirmTransactionLoading = ({ convertInfo }) => (
@@ -14,7 +15,7 @@ const ConfirmTransactionLoading = ({ convertInfo }) => (
       Tx hash
       <br />
       <a
-        href="/"
+        href={generateBridgeTransactionURL(convertInfo.sending_tx, convertInfo.to_asset.network)}
         target="_blank"
         rel="noreferrer"
         className="color-primary"

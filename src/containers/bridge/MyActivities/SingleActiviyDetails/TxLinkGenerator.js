@@ -1,14 +1,33 @@
 import CExternalLink from 'components/CExternalLink';
-import { generateTransactionURL } from 'helpers/explorerURLGenerator';
+import {
+  generateBTCTransactionURL, generateETHTransactionURL,
+  generateSolanaTransactionURL, generateTransactionURL,
+} from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 
-const TxLinkGenerator = ({ tx }) => {
+export function generateBridgeTransactionURL(tx, network) {
+  if (network === 'stellar') {
+    return generateTransactionURL(tx);
+  }
+  if (network === 'bitcoin') {
+    return generateBTCTransactionURL(tx);
+  }
+  if (network === 'ethereum') {
+    return generateETHTransactionURL(tx);
+  }
+  if (network === 'solana') {
+    return generateSolanaTransactionURL(tx);
+  }
+  throw new Error(`${network} network is not handled!`);
+}
+
+const TxLinkGenerator = ({ tx, url }) => {
   if (tx === '' || !tx) {
     return '-';
   }
   return (
     <CExternalLink
-      href={generateTransactionURL(tx)}
+      href={url}
       content={minimizeAddress(tx.toLowerCase(), 8)}
     />
   );
