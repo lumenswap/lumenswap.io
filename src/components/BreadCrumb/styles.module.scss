@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   font-family: SofiaPro;
@@ -22,5 +22,13 @@
       height: 18px;
       margin-top: 2px;
     }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .main {
+    display: flex;
+    flex: 50%;
+    flex-wrap: wrap;
   }
 }

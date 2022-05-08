@@ -1,29 +1,48 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CSteps from 'components/CSteps';
 import SuccessDialog from 'containers/bridge/ConfirmModal/SuccessDialog';
 import { useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import { orderStates } from 'containers/bridge/orderStates';
+import getSingleOrder from 'api/birdgeAPI/getSingleOrder';
 import SendAmountLoading from './SendAmountLoading';
 import ConfirmSendAmount from './ConfirmSendAmount';
 import styles from '../styles.module.scss';
 
 const ConvertConfirmModal = ({ convertInfo }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [convertResponse, setConvertResponse] = useState(null);
   const dispatch = useDispatch();
-  const nextStep = () => {
-    setCurrentStep((prev) => prev + 1);
-  };
+  const getConvertInfoIntervalRef = useRef(null);
+  const [currentConvertInfo, setCurrentConvertInfo] = useState(convertInfo);
   useEffect(() => {
-    if (convertInfo.state === orderStates.AWAITING_USER_PAYMENT) {
-      setCurrentStep(0);
-    }
+    getSingleOrder(convertInfo.id).then((newConvertInfo) => {
+      setCurrentConvertInfo(newConvertInfo);
+    });
+  }, []);
+  useEffect(() => {
+    getConvertInfoIntervalRef.current = setInterval(() => {
+      getSingleOrder(convertInfo.id).then((newConvertInfo) => {
+        setCurrentConvertInfo(newConvertInfo);
+      });
+    }, 5000);
+    return () => {
+      clearInterval(getConvertInfoIntervalRef.current);
+    };
   }, []);
 
-  const sendConvertRequest = () => () => {
-    nextStep();
-  };
+  useEffect(() => {
+    if (currentConvertInfo.state === orderStates.AWAITING_USER_PAYMENT) {
+      setCurrentStep(0);
+    }
+    if (currentConvertInfo.state === orderStates.USER_PAID
+      || currentConvertInfo.state === orderStates.SENDING) {
+      setCurrentStep(1);
+    }
+    if (currentConvertInfo.state === orderStates.DONE) {
+      setCurrentStep(2);
+    }
+  }, [currentConvertInfo]);
+
   const openPreviousModal = () => () => {
     dispatch(
       openModalAction({
@@ -32,7 +51,7 @@ const ConvertConfirmModal = ({ convertInfo }) => {
           hasClose: false,
         },
         content: <ConvertConfirmModal
-          convertInfo={convertInfo}
+          convertInfo={currentConvertInfo}
         />,
       }),
     );
@@ -41,14 +60,14 @@ const ConvertConfirmModal = ({ convertInfo }) => {
   const convertSteps = [
     {
       content: <ConfirmSendAmount
-        convertInfo={convertInfo}
+        convertInfo={currentConvertInfo}
         openPreviousModal={openPreviousModal}
       />,
     },
-    { content: <SendAmountLoading convertInfo={convertInfo} /> },
+    { content: <SendAmountLoading convertInfo={currentConvertInfo} /> },
     {
       content: <SuccessDialog
-        responseInfo={convertResponse}
+        responseInfo={currentConvertInfo}
       />,
     },
   ];

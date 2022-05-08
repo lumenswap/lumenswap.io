@@ -13,7 +13,7 @@ import CExternalLink from 'components/CExternalLink';
 import { calculateFromAmount, calculateToAmount } from 'containers/bridge/calculateFromAndToAmounts';
 import StatusLabel from 'containers/bridge/MyActivities/StatusLabel';
 import styles from './styles.module.scss';
-import TxLinkGenerator from './TxLinkGenerator';
+import TxLinkGenerator, { generateBridgeTransactionURL } from './TxLinkGenerator';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());
@@ -66,13 +66,20 @@ const SingleActivityDetails = ({ activityInfo }) => {
     {
       title: 'Sending TX',
       render: () => (
-        <TxLinkGenerator tx={activityInfo.sending_tx} />
+        <TxLinkGenerator
+          tx={activityInfo.sending_tx}
+          url={generateBridgeTransactionURL(activityInfo.sending_tx, activityInfo.to_asset.network)}
+        />
       ),
     },
     {
       title: 'Receiving TX',
       render: () => (
-        <TxLinkGenerator tx={activityInfo.receiving_tx} />
+        <TxLinkGenerator
+          tx={activityInfo.receiving_tx}
+          url={generateBridgeTransactionURL(activityInfo.receiving_tx,
+            activityInfo.from_asset.network)}
+        />
       ),
     },
   ];
