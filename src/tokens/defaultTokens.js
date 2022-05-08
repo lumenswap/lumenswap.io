@@ -24,6 +24,7 @@ import YBX from './YBX';
 import RBT from './RBT';
 import DRIFT from './DRIFT';
 import UNBNK from './UNBNK';
+import MOBI from './MOBI';
 
 const defaultTokens = [
   XLM,
@@ -52,6 +53,7 @@ const defaultTokens = [
   YBX,
   RBT,
   DRIFT,
+  MOBI,
 ];
 
 export default defaultTokens;
