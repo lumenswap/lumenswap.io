@@ -26,13 +26,13 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
   useEffect(() => {
     getSingleOrder(convertInfo.id).then((newConvertInfo) => {
       setCurrentConvertInfo(newConvertInfo);
-    });
+    }).catch((err) => console.error(err));
   }, []);
   useEffect(() => {
     getConvertInfoIntervalRef.current = setInterval(() => {
       getSingleOrder(currentConvertInfo.id).then((newConvertInfo) => {
         setCurrentConvertInfo(newConvertInfo);
-      });
+      }).catch((err) => console.error(err));
     }, 5000);
     return () => { clearInterval(getConvertInfoIntervalRef.current); };
   }, []);

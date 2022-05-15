@@ -17,13 +17,13 @@ const ConvertConfirmModal = ({ convertInfo }) => {
   useEffect(() => {
     getSingleOrder(convertInfo.id).then((newConvertInfo) => {
       setCurrentConvertInfo(newConvertInfo);
-    });
+    }).catch((err) => console.error(err));
   }, []);
   useEffect(() => {
     getConvertInfoIntervalRef.current = setInterval(() => {
       getSingleOrder(convertInfo.id).then((newConvertInfo) => {
         setCurrentConvertInfo(newConvertInfo);
-      });
+      }).catch((err) => console.error(err));
     }, 5000);
     return () => {
       clearInterval(getConvertInfoIntervalRef.current);
