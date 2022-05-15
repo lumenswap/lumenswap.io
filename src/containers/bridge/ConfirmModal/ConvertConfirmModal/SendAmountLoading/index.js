@@ -9,7 +9,7 @@ const SendAmountLoading = ({ convertInfo }) => (
     <p className={styles.text}>
       We are sending {humanizeAmount(
       calculateFromAmount(convertInfo),
-    )} {convertInfo.from_asset.name}
+    )} {convertInfo.to_asset.name}
       {' '}to your address. Please be patient.
     </p>
 
