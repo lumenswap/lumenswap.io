@@ -41,7 +41,8 @@ const LTokensConvertCofirmModal = ({ convertInfo, defaultSignLoading = false }) 
     if (currentConvertInfo.state === orderStates.AWAITING_USER_PAYMENT) {
       setCurrentStep(0);
     }
-    if (currentConvertInfo.state === orderStates.USER_PAID) {
+    if (currentConvertInfo.state === orderStates.USER_PAID
+    || currentConvertInfo.state === orderStates.PRE_SENDING) {
       setSignLoading(true);
     }
     if (currentConvertInfo.state === orderStates.SENDING) {

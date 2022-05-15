@@ -4,4 +4,5 @@ export const orderStates = {
   EXPIRED: 'expired',
   SENDING: 'sending',
   DONE: 'done',
+  PRE_SENDING: 'pre_sending',
 };

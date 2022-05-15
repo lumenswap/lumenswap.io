@@ -36,7 +36,8 @@ const StatusLabel = ({ status, orderInfo }) => {
 
   if (status.toLowerCase() === orderStates.AWAITING_USER_PAYMENT
   || status.toLowerCase() === orderStates.USER_PAID
-    || status.toLowerCase() === orderStates.SENDING) {
+    || status.toLowerCase() === orderStates.SENDING
+    || status.toLowerCase() === orderStates.PRE_SENDING) {
     return (
       <div className={classNames('d-flex align-items-center',
         styles['status-pending'])}
