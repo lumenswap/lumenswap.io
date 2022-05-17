@@ -22,11 +22,9 @@ function ToggleDarkModeBtn() {
     if (theme === 'light') {
       setTheme('dark');
       localStorage.setItem('theme', 'dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
       setTheme('light');
       localStorage.setItem('theme', 'light');
-      document.documentElement.removeAttribute('data-theme');
     }
   };
   return (
