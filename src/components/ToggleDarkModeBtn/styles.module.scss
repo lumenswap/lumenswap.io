@@ -1,0 +1,59 @@
+.main {
+  cursor: pointer;
+  position: absolute;
+  bottom: 16px;
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: var(--white);
+  right: 0;
+  left: 0;
+  margin: auto;
+  &-relative {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.toggle {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
+  background-color: var(--darkGray);
+  z-index: 1;
+  left: 3px;
+  transition: all 0.4s ease;
+}
+
+.toggled {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
+  background-color: var(--darkGray);
+  z-index: 1;
+  left: 43px;
+  transition: all 0.4s ease;
+}
+
+.icon {
+  z-index: 999;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  &-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px 0 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
