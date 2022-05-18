@@ -14,6 +14,7 @@ import { closeModalAction } from 'actions/modal';
 import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent';
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
+import ToggleDarkModeBtn from 'components/ToggleDarkModeBtn';
 import LModal from '../containers/LModal';
 
 import '../../styles/App.scss';
@@ -22,6 +23,7 @@ import 'rc-slider/assets/index.css';
 import 'react-circular-progressbar/dist/styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-steps/assets/index.css';
+import '../../styles/themeColors.scss';
 
 async function fullRabetLogin(dispatch) {
   try {
@@ -84,13 +86,15 @@ function MyApp({ Component, pageProps }) {
       }
     }, 1000);
   }, []);
-
   return process.browser ? (
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <LModal />
-          <Component {...pageProps} />
+          <div style={{ minHeight: 'calc(100vh - 56px)' }}>
+            <Component {...pageProps} />
+          </div>
+          <ToggleDarkModeBtn />
         </PersistGate>
       </Provider>
     </>
