@@ -91,7 +91,9 @@ function MyApp({ Component, pageProps }) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <LModal />
-          <Component {...pageProps} />
+          <div style={{ minHeight: 'calc(100vh - 56px)' }}>
+            <Component {...pageProps} />
+          </div>
           <ToggleDarkModeBtn />
         </PersistGate>
       </Provider>

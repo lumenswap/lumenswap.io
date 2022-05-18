@@ -1,7 +1,5 @@
 .main {
   cursor: pointer;
-  position: absolute;
-  bottom: 16px;
   width: 80px;
   height: 40px;
   border-radius: 20px;
@@ -9,6 +7,7 @@
   right: 0;
   left: 0;
   margin: auto;
+  margin-bottom: 16px;
   &-relative {
     position: relative;
     width: 100%;
