@@ -94,7 +94,7 @@ function MyApp({ Component, pageProps }) {
           <div style={{ minHeight: 'calc(100vh - 56px)' }}>
             <Component {...pageProps} />
           </div>
-          <ToggleDarkModeBtn />
+          {/* <ToggleDarkModeBtn /> */}
         </PersistGate>
       </Provider>
     </>
