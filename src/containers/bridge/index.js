@@ -220,7 +220,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
               />
             </div>
             <div className={classNames(styles['amount-container'], 'mt-3')}><label className="label-primary">Amount</label>
-              {getValues()[TOKEN_A_FORM_NAME].network === 'stellar' && (
+              {(getValues()[TOKEN_A_FORM_NAME].network === 'stellar' && isLoggedIn) && (
               <div className={styles['max-btn-container']}>
                 <div onClick={handleSetMaxAmount} className={styles['max-btn-area']}>
                   <div className={styles['max-btn']}>Max</div>
