@@ -2,11 +2,12 @@
 
 .label {
   font-size: 18px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   margin-bottom: 2px;
 }
 
-.asset-name, .asset-web {
+.asset-name,
+.asset-web {
   margin-left: 6px;
 }
 
@@ -17,7 +18,7 @@
 
 .asset-web {
   font-size: 16px;
-  color: $RollingStone;
+  color: var(--rollingStone);
 }
 
 .hr {

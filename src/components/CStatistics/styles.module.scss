@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   min-height: 84px;
@@ -14,7 +14,7 @@
 }
 
 .container:not(:last-child) {
-  border-right: 1px solid $SecondaryAthensGray;
+  border-right: 1px solid var(--catsKillWhite);
 }
 
 .block {
@@ -37,7 +37,7 @@
 
 .title-info {
   font-size: 14px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   font-family: SofiaPro;
   font-weight: normal;
   font-stretch: normal;
@@ -79,7 +79,7 @@
   .container:not(:last-child) {
     border-right: none;
     .block {
-      border-bottom: 1px solid $SecondaryAthensGray;
+      border-bottom: 1px solid var(--catsKillWhite);
     }
   }
   .container {

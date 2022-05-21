@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .header-title {
   font-family: SofiaPro;
@@ -41,7 +41,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 }
 

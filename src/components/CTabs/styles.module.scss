@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .tab {
   :global(.nav-tabs) {
@@ -6,7 +6,7 @@
   }
 
   :global(.nav-item) {
-    color: $RollingStone;
+    color: var(--rollingStone);
     background-color: transparent;
   }
 
@@ -47,7 +47,7 @@
   }
 
   :global(.nav-item) {
-    color: $RollingStone;
+    color: var(--rollingStone);
     background-color: transparent;
   }
 

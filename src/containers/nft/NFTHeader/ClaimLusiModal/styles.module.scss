@@ -5,39 +5,39 @@
 }
 
 .info {
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    color: $ShuttleGray;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: var(--rollingStone);
 }
 .img {
-    width: 100%;
-    height: 270px;
-    margin-top: 28px;
-    position: relative;
-    margin-bottom: 24px;
-    img {
-        object-fit: contain;
-    }
+  width: 100%;
+  height: 270px;
+  margin-top: 28px;
+  position: relative;
+  margin-bottom: 24px;
+  img {
+    object-fit: contain;
+  }
 }
 .btn {
-    width: 100%;
-    font-family: SofiaPro;
-    font-size: 18px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.56;
-    letter-spacing: normal;
-    text-align: center;
-    color: $White;
+  width: 100%;
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  color: $White;
 }
 
 .lusi-img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }

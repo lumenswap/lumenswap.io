@@ -6,7 +6,7 @@
   }
 
   input:focus {
-    border: 1px solid $ToreaBay;
+    border: 1px solid var(--highBlue);
   }
 }
 
@@ -41,7 +41,7 @@
 .desc {
   font-size: 14px;
   line-height: 1.29;
-  color: $RollingStone;
+  color: var(--rollingStone);
   margin-bottom: 0;
 }
 
@@ -56,7 +56,7 @@
 
   span {
     font-size: 14px;
-    color: $RollingStone;
+    color: var(--rollingStone);
     margin-top: 1px;
     margin-right: 1px;
   }

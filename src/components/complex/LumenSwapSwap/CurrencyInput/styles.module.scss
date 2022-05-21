@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .card {
   border: 1px solid $CatskillWhite;
@@ -10,7 +10,7 @@
 .balance {
   font-size: 14px;
   line-height: 1.14;
-  color: $RollingStone;
+  color: var(--rollingStone);
 }
 
 .label {
@@ -36,7 +36,7 @@
   }
 
   input::placeholder {
-    color: $Aluminium;
+    color: var(--bombay);
   }
 
   input:focus {
@@ -101,5 +101,5 @@
 }
 
 .no-asset-drop-down:hover {
-  background-color: $ToreaBay;
+  background-color: var(--highBlue);
 }

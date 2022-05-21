@@ -12,11 +12,11 @@
 
   &-info {
     background-color: $CatskillWhite;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 
   &-success {
-    background-color: $SuccessGreen;
+    background-color: var(--successGreen);
     color: white;
   }
 
@@ -25,4 +25,3 @@
     color: $Punch;
   }
 }
-

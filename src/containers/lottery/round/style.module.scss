@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .arrow-icon {
   img {
@@ -120,7 +120,7 @@
     margin-bottom: 6px;
   }
   p {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin: 0 50px;
     text-align: center;
     font-weight: normal;
@@ -168,7 +168,7 @@
 
   .info-title {
     font-size: 16px;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     font-family: SofiaPro;
     display: flex;
     align-items: center;
@@ -193,7 +193,7 @@
     }
 
     p {
-      color: $ShuttleGray;
+      color: var(--rollingStone);
     }
 
     div {
@@ -266,7 +266,7 @@
     line-height: 1.31;
     letter-spacing: normal;
     text-align: center;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
   span {
     font-family: SofiaPro;

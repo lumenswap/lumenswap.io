@@ -2,7 +2,7 @@
 
 .connecting {
   height: 54px;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   padding: 0 16px;
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@
   height: 72px;
   border-radius: 8px;
   background-color: white;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -61,5 +61,5 @@
 .msg {
   margin-top: 7px;
   font-size: 14px;
-  color: $RollingStone;
+  color: var(--rollingStone);
 }

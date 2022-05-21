@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   margin-top: 76px;
@@ -131,7 +131,7 @@
   line-height: 1.56;
   letter-spacing: normal;
   text-align: center;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   span {
     margin-top: 30px;
   }
@@ -151,7 +151,7 @@
   overflow-y: auto;
   scrollbar-width: none;
   th {
-    color: $Manatee;
+    color: var(--manatee);
     padding-top: 15px;
   }
   tr:first-child {

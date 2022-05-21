@@ -11,7 +11,7 @@
     color: $CodGray;
     border-radius: 4px;
     background-color: transparent;
-    border: 1px solid $DarkAthensGray;
+    border: 1px solid var(--catsKillWhite);
     padding-right: 14px;
     padding-left: 14px;
     height: 36px;
@@ -24,7 +24,7 @@
 
   :global(.dropdown-toggle)::after {
     content: "\e900";
-    font-family: 'icomoon' !important;
+    font-family: "icomoon" !important;
     border: none !important;
     font-size: 10px;
     color: $CodGray;
@@ -53,7 +53,7 @@
       span {
         margin-right: 7px;
         font-size: 15px;
-        color: $RollingStone;
+        color: var(--rollingStone);
       }
 
       :global(.icon-external) {

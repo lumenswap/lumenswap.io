@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .title {
   font-size: 16px;
@@ -38,7 +38,7 @@
   padding-bottom: 12px;
 
   &-name {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 
   &-value {

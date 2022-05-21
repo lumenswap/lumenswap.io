@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 .main {
   margin-left: 82px;
   margin-right: 82px;
@@ -14,7 +14,7 @@
       font-style: normal;
       line-height: 1.5;
       letter-spacing: normal;
-      color: $Manatee;
+      color: var(--manatee);
       margin-top: 12px;
     }
   }
@@ -85,7 +85,7 @@
       font-style: normal;
       line-height: 1.5;
       letter-spacing: normal;
-      color: $Manatee;
+      color: var(--manatee);
     }
     span:last-child {
       font-family: SofiaPro;
@@ -116,7 +116,7 @@
       font-style: normal;
       line-height: 1.5;
       letter-spacing: normal;
-      color: $SuccessGreen;
+      color: var(--successGreen);
     }
   }
   &-icon-container {
@@ -161,7 +161,7 @@
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $Manatee;
+    color: var(--manatee);
   }
 }
 

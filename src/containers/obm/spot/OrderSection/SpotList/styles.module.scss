@@ -37,11 +37,11 @@
   height: 97px;
   min-width: 206px;
   width: auto;
-  background-color: $DarkGray;
+  background-color: var(--rollingStone);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   box-shadow: 0 3px 12px 0 rgba(134, 146, 164, 0.11);
 }
 .avg-icon {
@@ -77,17 +77,20 @@
   color: $CodGray;
 }
 
-.row-item:first-child, .row-item:last-child {
+.row-item:first-child,
+.row-item:last-child {
   padding-right: 14px;
   padding-left: 14px;
 }
 
-.sell .row-item:first-child, .sell.total {
-  color: $Rose;
+.sell .row-item:first-child,
+.sell.total {
+  color: var(--rose);
 }
 
-.buy .row-item:first-child, .buy.total {
-  color: $Limeade;
+.buy .row-item:first-child,
+.buy.total {
+  color: var(--limeade);
 }
 
 //header
@@ -96,7 +99,7 @@
 }
 
 .heading .row-item {
-  color: $Manatee;
+  color: var(--manatee);
   font-weight: 500;
   font-size: 12px;
   white-space: nowrap;
@@ -108,11 +111,9 @@
 }
 
 .order-header {
-
 }
 
 .trade-header {
-
 }
 
 //body
@@ -128,7 +129,7 @@
 
 .table-trade {
   .table-row:hover {
-    background-color: $LightAthensGray;
+    background-color: var(--lightAthensGray);
   }
 }
 

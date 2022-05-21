@@ -7,7 +7,7 @@
 
   :global(.nav-item) {
     //font-size: 12px;
-    color: $RollingStone;
+    color: var(--rollingStone);
     background-color: transparent;
   }
 

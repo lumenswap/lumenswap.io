@@ -2,7 +2,7 @@
 
 .form {
   :global(.label-optional) {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 }
 
@@ -19,7 +19,8 @@
   font-size: 20px;
 }
 
-.asset-name, .asset-web {
+.asset-name,
+.asset-web {
   margin-left: 6px;
 }
 
@@ -30,7 +31,7 @@
 
 .asset-web {
   font-size: 16px;
-  color: $RollingStone;
+  color: var(--rollingStone);
 }
 
 .max {

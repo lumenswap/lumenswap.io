@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   display: flex;
@@ -62,7 +62,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
 }
 
 .search-box {
@@ -90,7 +90,7 @@
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $Manatee;
+    color: var(--manatee);
   }
 }
 .send {
@@ -103,7 +103,7 @@
 
 .checkbox {
   font-size: 14px !important;
-  color: $ShuttleGray !important;
+  color: var(--rollingStone) !important;
   margin-right: 24px;
   label {
     span {
@@ -114,16 +114,16 @@
       font-style: normal;
       line-height: 0.71;
       letter-spacing: normal;
-      color: $ShuttleGray;
+      color: var(--rollingStone);
     }
   }
 
   :global(.checkbox) {
-    border: 1px solid $Mischka;
+    border: 1px solid var(--mischka);
   }
 
   label {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin-top: 29px;
   }
 }
@@ -161,7 +161,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   line-height: 110%;
   margin-bottom: 3px;
 }

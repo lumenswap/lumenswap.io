@@ -51,11 +51,11 @@
 }
 
 .status-cancel {
- color: $BlueRibbon;
- cursor: pointer;
+  color: $BlueRibbon;
+  cursor: pointer;
 }
 
 .status-settled {
-  color: $Manatee;
+  color: var(--manatee);
   cursor: not-allowed;
 }

@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .table-container {
   width: 100%;
@@ -40,7 +40,7 @@
   line-height: 47px;
   font-family: SofiaPro;
   font-size: 16px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   th:first-child {
     border-radius: 8px 0px 0px 0px;
   }
@@ -81,7 +81,7 @@
   }
 }
 .rowLink:not(:last-child) {
-  border-bottom: 1px solid $DarkAthensGray;
+  border-bottom: 1px solid var(--catsKillWhite);
   display: table-row-group;
   width: 100%;
   height: 44px;
@@ -140,6 +140,6 @@
     line-height: 1.56;
     letter-spacing: normal;
     text-align: center;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 }

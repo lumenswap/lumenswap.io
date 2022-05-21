@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .row {
   margin-right: -4px;
@@ -62,7 +62,7 @@
 .td-outside {
   margin-left: -20px;
   position: absolute;
-  color: $Manatee;
+  color: var(--manatee);
   margin-top: -6px;
 }
 
@@ -111,7 +111,7 @@
 
   span {
     font-size: 10px;
-    color: $RollingStone;
+    color: var(--rollingStone);
     margin-top: 2px;
     margin-left: auto;
   }
@@ -142,7 +142,7 @@
 .form-value {
   font-size: 14px;
   font-weight: 400;
-  color: $RollingStone;
+  color: var(--rollingStone);
   margin-top: 4px;
 
   span {
@@ -178,7 +178,7 @@
       font-style: normal;
       line-height: 0.83;
       letter-spacing: normal;
-      color: $Manatee;
+      color: var(--manatee);
       span {
         margin-left: 0px !important;
       }

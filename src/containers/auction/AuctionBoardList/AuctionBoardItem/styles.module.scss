@@ -53,7 +53,7 @@
   &-desc {
     font-size: 16px;
     line-height: 1.5;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin: 14px 0 0 0;
   }
 }
@@ -77,7 +77,7 @@
   color: $CodGray;
 
   &-subject {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin-right: 8px;
   }
 }
@@ -105,20 +105,20 @@
 }
 
 .status-live {
-    color: $BlueRibbon;
-    background-color: $Zumthor;  
+  color: $BlueRibbon;
+  background-color: $Zumthor;
 
-    .status-circle {
-      background-color: $BlueRibbon;
-    }
+  .status-circle {
+    background-color: $BlueRibbon;
+  }
 }
 
 .status-ended {
-  color: $Manatee;
+  color: var(--manatee);
   background: $CatskillWhite;
 
   .status-circle {
-    background-color: $Manatee;
+    background-color: var(--manatee);
   }
 }
 

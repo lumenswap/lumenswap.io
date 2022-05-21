@@ -38,7 +38,7 @@
 }
 
 .pagination-item {
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   width: 28px;
   height: 28px;
   display: flex;
@@ -51,7 +51,7 @@
 }
 
 .pagination-spread {
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   width: 28px;
   height: 28px;
   display: flex;

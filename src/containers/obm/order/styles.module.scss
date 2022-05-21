@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 .main {
   margin-left: 82px;
   margin-right: 82px;
@@ -14,7 +14,7 @@
       font-style: normal;
       line-height: 1.5;
       letter-spacing: normal;
-      color: $Manatee;
+      color: var(--manatee);
       margin-top: 12px;
     }
   }
@@ -46,7 +46,7 @@
   line-height: normal;
   letter-spacing: normal;
   text-align: right;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   margin-top: 8px;
   cursor: pointer;
 }

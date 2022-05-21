@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .item {
   padding-top: 14px;
@@ -13,7 +13,7 @@
   box-shadow: none;
   margin-top: 6px;
   &-basic {
-    color: $Manatee;
+    color: var(--manatee);
   }
 }
 
@@ -33,7 +33,7 @@
   .para {
     font-size: 14px;
     line-height: 1.43;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin: 4px 0 0 0;
   }
 
@@ -85,7 +85,7 @@
   .subject {
     font-size: 14px;
     line-height: 1.43;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     white-space: nowrap;
   }
 }

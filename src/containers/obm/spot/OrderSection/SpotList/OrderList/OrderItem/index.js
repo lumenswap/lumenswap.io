@@ -13,7 +13,7 @@ function generateProgressStyle(percent, isSell) {
 }
 
 function generateHoverStyle() {
-  return '#f5f5f7';
+  return '#f8f9fb';
 }
 
 function SumTooltip({ data }) {

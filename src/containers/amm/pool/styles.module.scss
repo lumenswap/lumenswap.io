@@ -53,13 +53,13 @@
   scrollbar-width: none;
 }
 .table-container::-webkit-scrollbar {
-  width: 0;  
-  background: transparent;  
+  width: 0;
+  background: transparent;
 }
 .table {
   height: 100% !important;
   th {
-    color: $Manatee;
+    color: var(--manatee);
     font-family: SofiaPro;
     font-size: 16px;
     font-weight: normal;
@@ -82,13 +82,12 @@
   }
   tr:not(:last-child) {
     height: 47px !important;
-    border-bottom:  1px solid $DarkAthensGray;
+    border-bottom: 1px solid var(--catsKillWhite);
   }
   tr:first-child {
     border: none;
   }
 }
-
 
 .pair {
   margin-left: 6px;
@@ -111,7 +110,7 @@
     line-height: 1.56;
     letter-spacing: normal;
     text-align: center;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 }
 
@@ -173,7 +172,6 @@
   }
 }
 
-
 .chart-container {
   background-color: $White;
   border-radius: 4px;
@@ -222,7 +220,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
   &-time {
     font-family: SofiaPro;
@@ -232,7 +230,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     padding-top: 12px;
   }
 }
@@ -264,7 +262,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
   &-time {
     font-family: SofiaPro;
@@ -274,7 +272,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     padding-top: 12px;
   }
 }
@@ -289,7 +287,6 @@
     margin-bottom: 50px;
   }
 }
-
 
 @media screen and (max-width: 768px) {
   .chart-container {

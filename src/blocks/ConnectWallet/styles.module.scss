@@ -13,7 +13,7 @@
   height: 54px;
   border-radius: 8px;
   background-color: white;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,7 +23,7 @@
   padding: 0 12px;
 
   span {
-    color: $Waterloo;
+    color: var(--manatee);
     transform: scale(-1, 1);
     transition: ease-in;
   }
@@ -47,7 +47,7 @@
   height: 54px;
   border-radius: 8px;
   background-color: white;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,7 +60,7 @@
   margin-bottom: 24px;
 
   span {
-    color: $Waterloo;
+    color: var(--manatee);
     transform: scale(-1, 1);
     transition: ease-in;
   }

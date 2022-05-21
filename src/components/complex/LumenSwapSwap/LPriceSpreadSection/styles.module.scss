@@ -24,7 +24,7 @@
 .label {
   font-size: 14px;
   line-height: 1.29;
-  color: $RollingStone;
+  color: var(--rollingStone);
 
   span {
     font-size: 13px;
@@ -50,7 +50,7 @@
   :global(.icon-arrow-right) {
     margin: 0 4px;
     font-size: 9px;
-    color: $DarkAthensGray;
+    color: var(--catsKillWhite);
   }
 }
 
@@ -68,10 +68,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $RollingStone;
+    color: var(--rollingStone);
     font-size: 12px;
-    background-color: $LightAthensGray;
-    border: 1px solid $LightAthensGray;
+    background-color: var(--lightAthensGray);
+    border: 1px solid var(--lightAthensGray);
     margin-left: 6px;
     transition: ease-in;
   }
@@ -83,11 +83,11 @@
   }
 
   button:global(.active):hover {
-    background-color: $ToreaBay;
-    border: 1px solid $ToreaBay;
+    background-color: var(--highBlue);
+    border: 1px solid var(--highBlue);
 
     input {
-      background-color: $ToreaBay;
+      background-color: var(--highBlue);
     }
   }
 }
@@ -99,8 +99,8 @@
     width: 60px;
     border: none;
     outline: none;
-    background-color: $LightAthensGray;
-    color: $RollingStone;
+    background-color: var(--lightAthensGray);
+    color: var(--rollingStone);
     padding-left: 0;
     transition: ease-in;
   }

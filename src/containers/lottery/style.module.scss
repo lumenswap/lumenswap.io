@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   margin-left: 20.625%;
@@ -52,11 +52,11 @@
   }
 
   &.ended {
-    color: $Manatee;
+    color: var(--manatee);
     background: $CatskillWhite;
 
     .dot {
-      background-color: $Manatee;
+      background-color: var(--manatee);
     }
   }
 
@@ -113,7 +113,7 @@
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $Manatee;
+    color: var(--manatee);
   }
 }
 
@@ -200,7 +200,7 @@
   line-height: normal;
   letter-spacing: normal;
   text-align: center;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   margin-top: 40px;
   padding-bottom: 40px;
 }

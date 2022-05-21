@@ -1,87 +1,97 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .ticket-id-container {
-    background-color: #fff;
-    min-height: 89px;
-    width: 100%;
-    padding: 0 17px;
-    display: flex;
-    flex-direction: column;
+  background-color: #fff;
+  min-height: 89px;
+  width: 100%;
+  padding: 0 17px;
+  display: flex;
+  flex-direction: column;
 }
 
 .address-container {
-    background-color: #fff;
-    min-height: 96px;
-    width: 100%;
-    padding: 0 17px;
-    display: flex;
-    flex-direction: column;
+  background-color: #fff;
+  min-height: 96px;
+  width: 100%;
+  padding: 0 17px;
+  display: flex;
+  flex-direction: column;
 }
 .date-container {
-    background-color: #fff;
-    min-height: 94px;
-    border-radius: 0px 0px 12px 12px;
-    padding: 0 17px;
-    display: flex;
-    flex-direction: column;
+  background-color: #fff;
+  min-height: 94px;
+  border-radius: 0px 0px 12px 12px;
+  padding: 0 17px;
+  display: flex;
+  flex-direction: column;
 }
 
 .between-box {
-    display: flex;
-    flex-direction: row;
-    height: 22px;
-    &-right {
-        height: 100%;
-        width: 50%;
-        background-color: transparent;
-        background-image: radial-gradient(circle at right, transparent, transparent 11px, #fff 12px);
-    }
-    &-left {
-        width: 50%;
-        height: 100%;
-        background-color: transparent;
-        background-image: radial-gradient(circle at left, transparent, transparent 11px, #fff 12px);
-    }
-    &-border {
-        width: 90%;
-        border-top: 2px dashed $CacGray;
-        margin: 0 !important;
-        background-color: #fff;
-        position: absolute;
-        left: 18px;
-        right: 18px;
-        top: 10px;
-    }
+  display: flex;
+  flex-direction: row;
+  height: 22px;
+  &-right {
+    height: 100%;
+    width: 50%;
+    background-color: transparent;
+    background-image: radial-gradient(
+      circle at right,
+      transparent,
+      transparent 11px,
+      #fff 12px
+    );
+  }
+  &-left {
+    width: 50%;
+    height: 100%;
+    background-color: transparent;
+    background-image: radial-gradient(
+      circle at left,
+      transparent,
+      transparent 11px,
+      #fff 12px
+    );
+  }
+  &-border {
+    width: 90%;
+    border-top: 2px dashed var(--bombay);
+    margin: 0 !important;
+    background-color: #fff;
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 10px;
+  }
 }
 
 .info {
+  font-family: SofiaPro;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  color: $CodGray;
+  width: 100%;
+  word-break: break-all;
+  margin-top: 4px;
+  &-date {
+    margin-top: 4px;
     font-family: SofiaPro;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.56;
+    line-height: 1.5;
     letter-spacing: normal;
     color: $CodGray;
-    width: 100%;
-    word-break: break-all;
-    margin-top: 4px;
-    &-date {
-        margin-top: 4px;
-        font-family: SofiaPro;
-        font-size: 20px;
-        font-weight: normal;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.5;
-        letter-spacing: normal;
-        color: $CodGray;
-    }
-   &-title {
+  }
+  &-title {
     font-family: SofiaPro;
     font-size: 18px;
     font-weight: normal;
@@ -89,12 +99,12 @@
     font-style: normal;
     line-height: 1.56;
     letter-spacing: normal;
-    color: $Manatee;
-   }
+    color: var(--manatee);
+  }
 }
 
 .arrow-icon {
-    svg {
-        margin-bottom: 10px;
-    }
+  svg {
+    margin-bottom: 10px;
+  }
 }

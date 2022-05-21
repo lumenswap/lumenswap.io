@@ -1,13 +1,13 @@
-@import 'fonts';
-@import 'vars';
-@import 'mobileMenu';
+@import "fonts";
+@import "vars";
+@import "mobileMenu";
 
 body {
   background-color: $AthensGray !important;
 }
 
 .main {
-  font-family: 'SofiaPro', sans-serif !important;
+  font-family: "SofiaPro", sans-serif !important;
 }
 
 .other {
@@ -22,7 +22,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -50,28 +50,28 @@ input[type='number'] {
   transition: ease-in;
 
   &:hover {
-    color: $ToreaBay;
+    color: var(--highBlue);
   }
 }
 
 .color-buy {
-  color: $Limeade !important;
+  color: var(--limeade) !important;
 }
 
 .background-buy {
-  background-color: $Limeade;
+  background-color: var(--limeade);
 }
 
 .color-sell {
-  color: $Rose !important;
+  color: var(--rose) !important;
 }
 
 .background-sell {
-  background-color: $Rose;
+  background-color: var(--rose);
 }
 
 .color-gray {
-  color: $RollingStone !important;
+  color: var(--rollingStone) !important;
 }
 
 .color-base {
@@ -109,7 +109,7 @@ input[type='number'] {
 }
 
 .modal:before {
-  content: '';
+  content: "";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -147,7 +147,7 @@ input[type='number'] {
 }
 
 .bs-tooltip-top .arrow::before,
-.bs-tooltip-auto[x-placement^='top'] .arrow::before {
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
   border-top-color: white;
   display: none;
 }
@@ -157,7 +157,7 @@ input[type='number'] {
 }
 
 .bs-tooltip-top .arrow::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   z-index: -1;
@@ -167,11 +167,11 @@ input[type='number'] {
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
 }
 
-.bs-tooltip-auto[x-placement^='right'] .arrow::before,
+.bs-tooltip-auto[x-placement^="right"] .arrow::before,
 .bs-tooltip-right .arrow::before {
   right: 0;
   border-width: 0.4rem 0.4rem 0.4rem 0;
-  border-right-color: $DarkGray !important;
+  border-right-color: var(--rollingStone) !important;
 }
 
 .truncate {

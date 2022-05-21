@@ -8,14 +8,13 @@
 
 .title {
   font-size: 10px;
-  color: $Manatee;
+  color: var(--manatee);
 }
 
 .value {
   font-size: 12px;
   color: $CodGray;
 }
-
 
 .bold {
   .title {
@@ -25,7 +24,7 @@
   }
 
   .value {
-    color: $Manatee;
+    color: var(--manatee);
     margin-top: -5px;
   }
 }

@@ -11,7 +11,7 @@
   justify-content: space-between;
   font-size: 14px;
   line-height: 1.43;
-  color: $Manatee;
+  color: var(--manatee);
   margin-bottom: 12px;
 }
 .btns {
@@ -53,7 +53,7 @@
 }
 
 .input::placeholder {
-  color: $Aluminium;
+  color: var(--bombay);
 }
 
 .badge {

@@ -1,9 +1,9 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .alert {
   border: 1px solid $CatskillWhite;
   border-radius: 4px;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   padding: 8px 14px;
 
   span {
@@ -49,7 +49,7 @@
   resize: none;
   font-size: 16px;
   line-height: 1.5;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   min-height: 168px;
 
   &::placeholder {
@@ -86,7 +86,7 @@
 
 .defaultInput {
   background-color: $AthensGray !important;
-  color: $ShuttleGray !important;
+  color: var(--rollingStone) !important;
   cursor: default;
 }
 
@@ -100,7 +100,7 @@
   align-items: center;
   background-color: white;
   border: 1px dashed $Bombay;
-  color: $Manatee;
+  color: var(--manatee);
 
   &:focus {
     outline: none;
@@ -128,7 +128,7 @@
   width: 100%;
   min-height: 40px;
   border-radius: 4px;
-  background-color: $LightRed;
+  background-color: var(--lightRed);
   align-items: center;
   flex-direction: row;
   margin-top: 32px;

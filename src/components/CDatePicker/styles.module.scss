@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .select {
   border: 1px solid $CatskillWhite;
@@ -11,7 +11,7 @@
   cursor: pointer;
   padding: 0 16px;
   font-size: 16px;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
 
   &:focus {
     transition: ease-in;
@@ -30,7 +30,7 @@
   cursor: default;
   padding: 0 16px;
   font-size: 16px;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
 
   &:focus {
     transition: ease-in;
@@ -61,12 +61,12 @@
   :global(.react-datepicker__header) {
     border-bottom: 1px solid $AthensGray;
     background-color: $AthensGray;
-    font-family: 'SofiaPro', sans-serif;
+    font-family: "SofiaPro", sans-serif;
   }
 
   :global(.react-datepicker__day) {
-    color: $ShuttleGray;
-    font-family: 'SofiaPro', sans-serif;
+    color: var(--rollingStone);
+    font-family: "SofiaPro", sans-serif;
 
     &:hover {
       background-color: $AthensGray;
@@ -74,7 +74,7 @@
   }
 
   :global(.react-datepicker__day-name) {
-    color: $Manatee;
+    color: var(--manatee);
   }
 
   :global(.react-datepicker__day--selected),
@@ -84,7 +84,7 @@
 
     &:hover {
       transition: ease-in;
-      background-color: $ToreaBay;
+      background-color: var(--highBlue);
     }
 
     &:focus {

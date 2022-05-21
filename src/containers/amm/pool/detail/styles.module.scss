@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   margin-top: 76px;
@@ -61,7 +61,7 @@
       line-height: 1.5;
       letter-spacing: normal;
       text-align: center;
-      color: $ShuttleGray;
+      color: var(--rollingStone);
       padding-bottom: 4px;
     }
     &-number {
@@ -132,7 +132,7 @@
       line-height: 1.5;
       letter-spacing: normal;
       text-align: center;
-      color: $ShuttleGray;
+      color: var(--rollingStone);
       padding-bottom: 4px;
     }
     span {
@@ -192,7 +192,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: $Cd;
+  background-color: var(--bombay);
   margin-top: 13px;
   margin-left: 6px;
   margin-right: 6px;
@@ -225,7 +225,7 @@
 .c-statistic {
   border-radius: 4px !important;
   div {
-    color: $Manatee !important;
+    color: var(--manatee) !important;
     font-family: SofiaPro;
     font-size: 14px;
     font-weight: normal;
@@ -306,7 +306,7 @@
 .box-title {
   font-size: 16px;
   line-height: 1.5;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
 }
 
 .box-value {
@@ -354,7 +354,7 @@
   overflow-y: auto;
   scrollbar-width: none;
   th {
-    color: $Manatee;
+    color: var(--manatee);
     font-family: SofiaPro;
     font-size: 16px;
     font-weight: normal;
@@ -501,7 +501,7 @@
   font-style: normal;
   line-height: 1.4;
   letter-spacing: normal;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   cursor: pointer;
   height: 24px;
   display: flex;
@@ -517,7 +517,7 @@
     font-style: normal;
     line-height: 1.4;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     cursor: pointer;
     height: 24px;
     display: flex;
@@ -549,7 +549,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $Manatee;
+    color: var(--manatee);
   }
 }
 

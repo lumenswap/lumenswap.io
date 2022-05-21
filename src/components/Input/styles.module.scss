@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .input {
   width: 100%;
@@ -17,5 +17,5 @@
 }
 
 .input::placeholder {
-  color: $Manatee;
+  color: var(--manatee);
 }

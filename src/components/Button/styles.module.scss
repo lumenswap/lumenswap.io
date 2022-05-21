@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .btn {
   border-radius: 8px;
@@ -15,7 +15,8 @@
   outline: none;
 }
 
-.button-primary, .button-primary:focus {
+.button-primary,
+.button-primary:focus {
   background-color: $BlueRibbon;
   border: 1px solid $BlueRibbon;
   color: white;
@@ -23,10 +24,11 @@
 }
 
 .button-primary:hover {
-  background: $ToreaBay;
+  background: var(--highBlue);
 }
 
-.button-secondary, .button-secondary:focus {
+.button-secondary,
+.button-secondary:focus {
   background-color: $Zumthor;
   border: 1px solid $Zumthor;
   color: $BlueRibbon;
@@ -34,9 +36,9 @@
 }
 
 .button-secondary:hover {
-  background: $MediumBlue;
-  border: 1px solid $MediumBlue;
-  color: $ToreaBay;
+  background: var(--zumthor);
+  border: 1px solid var(--zumthor);
+  color: var(--highBlue);
 }
 
 .button-outline {
@@ -48,7 +50,7 @@
 
 .button-basic {
   background-color: white;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   border: 1px solid $CatskillWhite;
 }
 
@@ -75,20 +77,20 @@
 }
 
 .button-sell {
-  background-color: $Rose;
-  border: 1px solid $Rose;
+  background-color: var(--rose);
+  border: 1px solid var(--rose);
   color: white;
 }
 
 .button-buy {
-  background-color: $Limeade;
-  border: 1px solid $Limeade;
+  background-color: var(--limeade);
+  border: 1px solid var(--limeade);
   color: white;
 }
 
 .btn:disabled {
   background-color: $CatskillWhite;
   border: 1px solid $CatskillWhite;
-  color: $RollingStone;
+  color: var(--rollingStone);
   box-shadow: none;
 }
