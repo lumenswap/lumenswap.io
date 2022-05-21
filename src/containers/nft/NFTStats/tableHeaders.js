@@ -27,12 +27,12 @@ export default [
     render: (data) => (
       <a
         style={{ textDecoration: 'none' }}
-        href={generateAddressURL(data.sellerAddress)}
+        href={generateAddressURL(data.sellerAddress || '')}
         target="_blank"
         rel="noreferrer"
         className={classNames(styles['link-blue'], 'd-flex w-100 align-items-center')}
       >
-        {minimizeAddress(data.sellerAddress, 4)}
+        {minimizeAddress(data.sellerAddress || '', 4)}
       </a>
     ),
   },
@@ -43,12 +43,12 @@ export default [
     render: (data) => (
       <a
         style={{ textDecoration: 'none' }}
-        href={generateAddressURL(data.buyerAddress)}
+        href={generateAddressURL(data.buyerAddress || '')}
         target="_blank"
         rel="noreferrer"
         className={classNames(styles['link-blue'], 'd-flex w-100 align-items-center')}
       >
-        {minimizeAddress(data.buyerAddress, 4)}
+        {minimizeAddress(data.buyerAddress || '', 4)}
       </a>
     ),
   },
