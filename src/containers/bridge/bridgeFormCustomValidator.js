@@ -25,7 +25,7 @@ async function bridgeFormCustomValidator(formValues, userBalances) {
     return { values: formValues, errors: generateFormResolverErrors('amount', `Minimum amount is ${currentFromToken.minimum_amount}`) };
   }
   if ((!formValues.destination || formValues.destination === '') && currentToToken.network !== 'stellar') {
-    return { values: formValues, errors: generateFormResolverErrors('destination', 'Address is required') };
+    return { values: formValues, errors: generateFormResolverErrors('destination', 'Destination is required') };
   }
 
   const isValidatedAddress = walletValidator.validate(formValues.destination,
