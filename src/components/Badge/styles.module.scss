@@ -11,7 +11,7 @@
   font-weight: 500;
 
   &-info {
-    background-color: $CatskillWhite;
+    background-color: var(--catsKillWhite);
     color: var(--rollingStone);
   }
 
@@ -21,7 +21,7 @@
   }
 
   &-danger {
-    background-color: $CatskillWhite;
-    color: $Punch;
+    background-color: var(--catsKillWhite);
+    color: var(--punch);
   }
 }

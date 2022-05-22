@@ -19,7 +19,7 @@
   justify-content: space-between;
   transition: ease-in;
   font-size: 20px;
-  color: $CodGray;
+  color: var(--codGray);
   padding: 0 12px;
 
   span {
@@ -35,10 +35,10 @@
 
 .btn:hover {
   background-color: white;
-  border: 1px solid $BlueRibbon;
+  border: 1px solid var(--blueRibbon);
 
   span {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 
@@ -53,7 +53,7 @@
   justify-content: space-between;
   transition: ease-in;
   font-size: 20px;
-  color: $CodGray;
+  color: var(--codGray);
   padding: 0 12px;
 
   text-decoration: none;
@@ -81,10 +81,10 @@
 
 .btnLink:hover {
   background-color: white;
-  border: 1px solid $BlueRibbon;
+  border: 1px solid var(--blueRibbon);
 
   span {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 
@@ -92,7 +92,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background-color: $AthensGray;
+  background-color: var(--lightAthensGray);
   margin-right: 8px;
   display: flex;
   justify-content: center;

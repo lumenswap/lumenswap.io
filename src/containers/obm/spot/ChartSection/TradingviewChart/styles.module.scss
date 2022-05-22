@@ -41,6 +41,6 @@
 
 .active {
   font-weight: 500;
-  color: $CodGray;
-  background-color: $CatskillWhite;
+  color: var(--codGray);
+  background-color: var(--catsKillWhite);
 }

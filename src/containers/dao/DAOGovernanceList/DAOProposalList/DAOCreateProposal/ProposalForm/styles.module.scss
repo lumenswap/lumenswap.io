@@ -1,13 +1,13 @@
 @import "styles/vars";
 
 .alert {
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 4px;
   color: var(--rollingStone);
   padding: 8px 14px;
 
   span {
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   svg {
@@ -38,10 +38,10 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 1.42;
-  color: $CodGray;
+  color: var(--lightAthensGray);
 
   &::placeholder {
-    color: $Bombay;
+    color: var(--bombay);
   }
 }
 
@@ -53,7 +53,7 @@
   min-height: 168px;
 
   &::placeholder {
-    color: $Bombay;
+    color: var(--bombay);
   }
 }
 .text-area-container {
@@ -61,14 +61,14 @@
 }
 
 .panel {
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 8px;
 
   &-header {
     font-size: 18px;
     font-weight: 600;
     line-height: 1.56;
-    border-bottom: 1px solid $CatskillWhite;
+    border-bottom: 1px solid var(--catsKillWhite);
     padding: 14px 24px;
   }
 
@@ -85,7 +85,7 @@
 }
 
 .defaultInput {
-  background-color: $AthensGray !important;
+  background-color: var(--lightAthensGray) !important;
   color: var(--rollingStone) !important;
   cursor: default;
 }
@@ -99,7 +99,7 @@
   justify-content: center;
   align-items: center;
   background-color: white;
-  border: 1px dashed $Bombay;
+  border: 1px dashed var(--bombay);
   color: var(--manatee);
 
   &:focus {
@@ -137,7 +137,7 @@
     margin-left: 8px;
   }
   &-text {
-    color: $Punch;
+    color: var(--punch);
     font-family: SofiaPro;
     font-size: 16px;
     font-weight: normal;

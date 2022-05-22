@@ -4,13 +4,13 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
   margin: 0;
 }
 
 .hr {
   margin: 24px -17px;
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
 }
 
 .form {
@@ -42,6 +42,6 @@
   }
 
   &-value {
-    color: $CodGray;
+    color: var(--codGray);
   }
 }

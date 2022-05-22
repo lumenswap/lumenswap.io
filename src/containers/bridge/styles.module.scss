@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .card {
   width: 360px;
@@ -16,8 +16,8 @@
 
 .container {
   border-radius: 8px;
-  background-color: $AthensGray;
-  border: 1px solid $CatskillWhite;
+  background-color: var(--lightAthensGray);
+  border: 1px solid var(--catsKillWhite);
   padding: 14px;
   display: flex;
   flex-direction: column;
@@ -30,14 +30,14 @@
 
   :global(.icon-angle-down) {
     font-size: 10px;
-    color: $CodGray;
+    color: var(--codGray);
   }
 }
 
 .currency {
   font-size: 18px;
   font-weight: 500;
-  color: $CodGray;
+  color: var(--codGray);
   margin-left: 6px;
 }
 

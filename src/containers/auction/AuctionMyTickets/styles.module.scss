@@ -9,7 +9,7 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 8px;
 }
 
@@ -17,7 +17,7 @@
   :global(.select__control) {
     width: 144px;
     height: 40px;
-    border: solid 1px $CatskillWhite;
+    border: solid 1px var(--catsKillWhite);
     border-radius: 4px;
 
     :global(.select__value-container) {
@@ -26,7 +26,7 @@
   }
 
   :global(.select__control):hover {
-    border: solid 1px $CatskillWhite;
+    border: solid 1px var(--catsKillWhite);
   }
 
   :global(.select__value-container),
@@ -51,7 +51,7 @@
 }
 
 .status-cancel {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   cursor: pointer;
 }
 

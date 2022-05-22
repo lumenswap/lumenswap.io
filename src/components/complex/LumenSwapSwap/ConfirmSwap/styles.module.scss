@@ -6,7 +6,7 @@
   align-items: center;
 
   div {
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   div:first-child {
@@ -40,7 +40,7 @@
 }
 
 .info {
-  background-color: $AthensGray;
+  background-color: var(--lightAthensGray);
   margin: 0 -17px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -65,7 +65,7 @@
   span {
     font-size: 13px;
     margin-left: 4px;
-    color: $Bombay;
+    color: var(--bombay);
     cursor: pointer;
   }
 }
@@ -73,7 +73,7 @@
 .value {
   font-size: 14px;
   line-height: 1.29;
-  color: $CodGray;
+  color: var(--codGray);
   display: flex;
   align-items: center;
 

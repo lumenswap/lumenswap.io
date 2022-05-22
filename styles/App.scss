@@ -3,7 +3,7 @@
 @import "mobileMenu";
 
 body {
-  background-color: $AthensGray !important;
+  background-color: var(--lightAthensGray) !important;
 }
 
 .main {
@@ -46,7 +46,7 @@ input[type="number"] {
 }
 
 .color-primary {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   transition: ease-in;
 
   &:hover {
@@ -75,7 +75,7 @@ input[type="number"] {
 }
 
 .color-base {
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .cursor-pointer {
@@ -84,13 +84,13 @@ input[type="number"] {
 
 .label-primary {
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 8px;
 }
 
 .label-secondary {
   font-size: 16px;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 6px;
 }
 
@@ -135,14 +135,14 @@ input[type="number"] {
   font-style: normal;
   line-height: 1.42;
   letter-spacing: normal;
-  fill: $BlueRibbon !important;
+  fill: var(--blueRibbon) !important;
 }
 
 .tooltip-inner {
   background-color: white !important;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13) !important;
   border: none !important;
-  color: $CodGray !important;
+  color: var(--codGray) !important;
   font-size: 13px;
 }
 
@@ -199,7 +199,7 @@ input[type="number"] {
 .title {
   font-size: 24px;
   font-weight: 600;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .disabled-chart-tooltip {
@@ -229,7 +229,7 @@ input[type="number"] {
 }
 
 .css-1uccc91-singleValue {
-  color: $CodGray !important;
+  color: var(--codGray) !important;
 }
 
 .modal-br8 {

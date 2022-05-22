@@ -9,7 +9,7 @@
 }
 
 .tooltip {
-  color: $White;
+  color: var(--white);
   display: flex;
   flex-direction: column;
   height: 68px;
@@ -74,7 +74,7 @@
   padding: 0;
   align-items: center;
   transition: ease-in-out;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .row-item:first-child,
@@ -148,7 +148,7 @@
 .total {
   display: flex;
   align-items: center;
-  color: $CodGray;
+  color: var(--codGray);
   padding-right: 6px;
   font-size: 16px;
   font-weight: 600;
@@ -161,7 +161,7 @@
 }
 
 .price {
-  color: $Bombay;
+  color: var(--bombay);
   font-size: 14px;
   font-weight: 500;
 }

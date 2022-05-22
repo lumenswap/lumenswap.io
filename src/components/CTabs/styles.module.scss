@@ -26,13 +26,13 @@
   :global(.nav-link.active) {
     background-color: transparent !important;
     border-color: transparent !important;
-    border-bottom: 2px solid $BlueRibbon !important;
-    color: $CodGray;
+    border-bottom: 2px solid var(--blueRibbon) !important;
+    color: var(--codGray);
     font-weight: bold;
   }
 
   :global(.nav-link.active):hover {
-    border-bottom: 2px solid $BlueRibbon !important;
+    border-bottom: 2px solid var(--blueRibbon) !important;
   }
 
   :global(.tab-pane) {
@@ -64,8 +64,8 @@
 
   :global(.nav-link.active) {
     background-color: transparent !important;
-    border: 0.5px solid #aeb1b7;
-    color: $CodGray;
+    border: 0.5px solid var(--bombay);
+    color: var(--codGray);
     font-weight: bold;
   }
 }

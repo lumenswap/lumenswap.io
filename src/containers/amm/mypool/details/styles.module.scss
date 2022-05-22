@@ -33,7 +33,7 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $White;
+  color: var(--white);
 }
 .withdraw-btn {
   width: 120px;
@@ -62,7 +62,7 @@
 
 .shares-info {
   height: 150px;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   display: flex;
@@ -86,7 +86,7 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }
 .share-info-text {
   font-family: SofiaPro;
@@ -105,14 +105,14 @@
 }
 
 .liquidity-info {
-  background-color: $White;
+  background-color: var(--white);
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;
   width: 100%;
   height: 150px;
   &-header {
     height: 102px;
-    border-bottom: 1px solid $CatskillWhite;
+    border-bottom: 1px solid var(--catsKillWhite);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,7 +137,7 @@
       line-height: 1.42;
       letter-spacing: normal;
       text-align: center;
-      color: $CodGray;
+      color: var(--codGray);
       padding-top: 4px;
     }
   }
@@ -159,7 +159,7 @@
       line-height: 1.56;
       letter-spacing: normal;
       text-align: center;
-      color: $CodGray;
+      color: var(--codGray);
       padding-right: 4px;
     }
     span {
@@ -171,11 +171,11 @@
       line-height: 1.56;
       letter-spacing: normal;
       text-align: center;
-      color: $CodGray;
+      color: var(--codGray);
     }
   }
   &-item:first-child {
-    border-right: 1px solid $CatskillWhite;
+    border-right: 1px solid var(--catsKillWhite);
   }
 }
 

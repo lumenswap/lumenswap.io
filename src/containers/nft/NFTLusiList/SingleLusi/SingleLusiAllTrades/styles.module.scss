@@ -7,7 +7,7 @@
 .table-container {
   margin-top: 13px;
   margin-bottom: 24px;
-  background-color: $White;
+  background-color: var(--white);
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;
 }
@@ -61,7 +61,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
     text-decoration: none;
   }
 }
@@ -79,7 +79,7 @@
     font-style: normal;
     line-height: 200%;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
     height: 24px;
     cursor: pointer;
   }

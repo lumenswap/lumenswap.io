@@ -27,13 +27,13 @@
   :global(.nav-link.active) {
     background-color: transparent !important;
     border-color: transparent !important;
-    border-bottom: 2px solid $BlueRibbon !important;
-    color: $CodGray;
+    border-bottom: 2px solid var(--blueRibbon) !important;
+    color: var(--codGray);
     font-weight: bold;
   }
 
   :global(.nav-link.active):hover {
-    border-bottom: 2px solid $BlueRibbon !important;
+    border-bottom: 2px solid var(--blueRibbon) !important;
   }
 
   :global(.tab-pane) {

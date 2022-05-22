@@ -18,6 +18,6 @@
   :global(.checkbox-label) {
     margin-left: 8px !important;
     font-size: 14px;
-    color: $CodGray;
+    color: var(--codGray);
   }
 }

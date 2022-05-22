@@ -18,10 +18,10 @@
 .header_link_active {
   font-size: 16px;
   font-weight: 500;
-  color: $CodGray;
+  color: var(--codGray);
   text-decoration: none !important;
   &:hover {
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   :global(.icon-external) {

@@ -43,17 +43,17 @@
   }
 
   &.live {
-    color: $BlueRibbon;
-    background-color: #e3e9ff;
+    color: var(--blueRibbon);
+    background-color: var(--zumthor);
 
     .dot {
-      background-color: $BlueRibbon;
+      background-color: var(--blueRibbon);
     }
   }
 
   &.ended {
     color: var(--manatee);
-    background: $CatskillWhite;
+    background: var(--catsKillWhite);
 
     .dot {
       background-color: var(--manatee);
@@ -61,11 +61,11 @@
   }
 
   &.notStarted {
-    color: $Punch;
-    background: $CatskillWhite;
+    color: var(--punch);
+    background: var(--catsKillWhite);
 
     .dot {
-      background-color: $Punch;
+      background-color: var(--punch);
     }
   }
 }
@@ -78,7 +78,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .tableContainer {
@@ -91,7 +91,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
 }
 
 .input {
@@ -127,7 +127,7 @@
     font-family: SofiaPro;
     margin-left: 24px;
     font-size: 16px;
-    color: $CodGray;
+    color: var(--codGray);
     font-weight: 600;
   }
 }

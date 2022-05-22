@@ -1,62 +1,58 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .loading-container {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    height: 190px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 190px;
 }
 
-
-
 .table-container {
-    width: 100%;
-    border-radius: 8px !important;
-    background-color: $White;
-    box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  width: 100%;
+  border-radius: 8px !important;
+  background-color: var(--white);
+  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    margin-right: 82px;
-    margin-left: 82px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 82px;
+  margin-left: 82px;
 }
 .info-LSP {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 .page-title {
-    margin-top: 42px;
-    color: $CodGray;
-    font-family: SofiaPro;
-    font-size: 32px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.19;
-    letter-spacing: normal;
-    margin-bottom: 32px;
+  margin-top: 42px;
+  color: var(--codGray);
+  font-family: SofiaPro;
+  font-size: 32px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.19;
+  letter-spacing: normal;
+  margin-bottom: 32px;
 }
 .table-title {
-    font-family: SofiaPro;
-    font-size: 24px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: $CodGray;
-    margin-bottom: 16px;
+  font-family: SofiaPro;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: var(--codGray);
+  margin-bottom: 16px;
 }
 
 @media (max-width: $md) {
-    .main {
-        margin-right: 15px;
-        margin-left: 15px;
-      }
-} 
-
-
+  .main {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+}

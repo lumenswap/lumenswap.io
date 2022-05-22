@@ -20,11 +20,11 @@
 
   .selected,
   .selected > span {
-    background-color: $BlueRibbon;
+    background-color: var(--blueRibbon);
     color: white;
 
     input {
-      background-color: $BlueRibbon;
+      background-color: var(--blueRibbon);
       color: white;
       font-size: 12px;
     }
@@ -33,7 +33,7 @@
 
 .selected {
   input {
-    background-color: $BlueRibbon;
+    background-color: var(--blueRibbon);
   }
 }
 

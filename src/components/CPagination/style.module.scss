@@ -32,8 +32,8 @@
   align-items: center;
   background: white;
   padding: 4px 7px;
-  border-left: $CatskillWhite 1px solid;
-  border-right: $CatskillWhite 1px solid;
+  border-left: var(--catsKillWhite) 1px solid;
+  border-right: var(--catsKillWhite) 1px solid;
   gap: 5px;
 }
 
@@ -65,6 +65,6 @@
 
 .pagination-item:hover,
 .pagination-item.active {
-  background: $Zumthor;
-  color: $BlueRibbon;
+  background: var(--zumthor);
+  color: var(--blueRibbon);
 }

@@ -90,7 +90,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
     text-decoration: none;
   }
 }
@@ -108,10 +108,10 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
   a {
     text-decoration: none;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 .first-info-box {
@@ -184,7 +184,7 @@
   }
 }
 .info-link {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   font-family: SofiaPro;
   font-size: 16px;
   font-weight: normal;
@@ -195,7 +195,7 @@
 }
 
 .no-link {
-  color: $CodGray;
+  color: var(--codGray);
   font-family: SofiaPro;
   font-size: 16px;
   font-weight: normal;

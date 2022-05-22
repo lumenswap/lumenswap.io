@@ -2,7 +2,7 @@
 
 .main {
   min-height: 84px;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -56,7 +56,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
   display: flex;
   flex-direction: row;
   height: 28px;
@@ -69,7 +69,7 @@
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
     margin-left: 6px;
     margin-top: 1px;
   }

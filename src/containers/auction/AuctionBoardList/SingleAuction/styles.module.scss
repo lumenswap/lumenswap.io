@@ -17,11 +17,11 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   text-decoration: none;
   &:hover {
     text-decoration: none;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 
@@ -61,10 +61,10 @@
 
 .link {
   text-decoration: none !important;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
 
   &:hover {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 

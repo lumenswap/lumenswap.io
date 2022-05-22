@@ -30,7 +30,7 @@
 .value {
   font-size: 14px;
   font-weight: 500;
-  color: $CodGray;
+  color: var(--codGray);
   display: flex;
   align-items: center;
   justify-content: flex-end;

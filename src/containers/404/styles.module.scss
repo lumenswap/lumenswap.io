@@ -43,7 +43,7 @@
   font-weight: 600;
   line-height: 1.31;
   text-align: center;
-  color: $CodGray;
+  color: var(--codGray);
   margin: 24px 0 0 0;
 }
 
@@ -67,9 +67,9 @@
 }
 
 .btn {
-  background: $BlueRibbon;
-  border-color: $BlueRibbon;
-  color: $White;
+  background: var(--blueRibbon);
+  border-color: var(--blueRibbon);
+  color: var(--white);
   font-family: SofiaPro;
   font-size: 18px;
   font-weight: 300;

@@ -7,7 +7,7 @@
 .title {
   font-size: 24px;
   font-weight: 600;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 0;
 }
 
@@ -24,7 +24,7 @@
 
 .cancel {
   cursor: pointer;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
 }
 
 .loading-data-container {
@@ -48,7 +48,7 @@
 
 .table {
   max-height: 474px;
-  background-color: $White;
+  background-color: var(--white);
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   overflow-y: auto;
   border-radius: 4px;
@@ -89,22 +89,22 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
     &:hover {
       text-decoration: none;
-      color: $BlueRibbon;
+      color: var(--blueRibbon);
     }
   }
 }
 .table-container {
-  background-color: $White;
+  background-color: var(--white);
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   margin-top: 20px;
   border-radius: 4px;
 }
 
 .cancel-btn {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   cursor: pointer;
   font-family: SofiaPro;
   font-size: 14px;

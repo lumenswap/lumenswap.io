@@ -67,7 +67,7 @@
     align-items: center;
 
     div {
-      border: 1px solid #ecf0f5;
+      border: 1px solid var(--catsKillWhite);
       border-left: 0;
       border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
@@ -80,7 +80,7 @@
       padding: 10px 16px;
       border-radius: 8px;
       height: 48px;
-      border: solid 1px #ecf0f5;
+      border: solid 1px var(--catsKillWhite);
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       outline: none;
@@ -91,7 +91,7 @@
 .ticket-icon {
   width: 64px;
   height: 64px;
-  background: $Zumthor;
+  background: var(--zumthor);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -132,7 +132,7 @@
   font-family: SofiaPro;
   font-weight: normal;
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .text-bold {
@@ -163,7 +163,7 @@
   .box-title {
     font-size: 16px;
     font-weight: 600;
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   .info-title {
@@ -187,7 +187,7 @@
     text-align: center;
 
     p:first-child {
-      color: $CodGray;
+      color: var(--codGray);
       font-size: 16px;
       font-weight: 600;
     }
@@ -199,7 +199,7 @@
     div {
       font-size: 24px;
       font-weight: 600;
-      color: $CodGray;
+      color: var(--codGray);
     }
   }
 }
@@ -231,7 +231,7 @@
 }
 
 .winner-info-about {
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   height: 178px;
   display: flex;
@@ -255,7 +255,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
   }
   p:not(:first-child) {
     font-family: SofiaPro;
@@ -276,7 +276,7 @@
     font-style: normal;
     line-height: 1.42;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
   }
 }
 
@@ -292,5 +292,5 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }

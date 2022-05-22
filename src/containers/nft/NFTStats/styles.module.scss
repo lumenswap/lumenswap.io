@@ -7,15 +7,15 @@
 .title {
   font-size: 24px;
   font-weight: 600;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 0;
 }
 
 .link-blue {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
 }
 .link {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   text-decoration: none;
   font-family: SofiaPro;
   font-size: 16px;
@@ -26,13 +26,13 @@
   letter-spacing: normal;
   &:hover {
     text-decoration: none;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 
 .activityTitle {
   font-size: 22px;
-  color: $CodGray;
+  color: var(--codGray);
   margin-top: 32px;
   font-weight: 600;
 }
@@ -78,11 +78,11 @@
   }
 
   &-col:not(:last-child) {
-    border-right: 1px solid $CatskillWhite;
+    border-right: 1px solid var(--catsKillWhite);
 
     @media (max-width: $md) {
       border-right: none;
-      border-bottom: 1px solid $CatskillWhite;
+      border-bottom: 1px solid var(--catsKillWhite);
     }
   }
 
@@ -94,7 +94,7 @@
   &-info {
     font-size: 20px;
     font-weight: 600;
-    color: $CodGray;
+    color: var(--codGray);
     margin-top: 3px;
 
     span {
@@ -125,7 +125,7 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $CodGray !important;
+  color: var(--codGray) !important;
   span {
     font-family: SofiaPro;
     font-size: 14px;
@@ -161,7 +161,7 @@
     font-style: normal;
     line-height: 1.45;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   &-text {

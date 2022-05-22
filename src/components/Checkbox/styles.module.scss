@@ -22,13 +22,13 @@
   display: inline-block;
   border-radius: 2px;
   transition: all 150ms;
-  border: 1px solid $Bombay;
+  border: 1px solid var(--bombay);
   cursor: pointer;
 }
 
 .svg {
   fill: none;
-  stroke: $BlueRibbon;
+  stroke: var(--blueRibbon);
   stroke-width: 3px;
   vertical-align: top;
 }

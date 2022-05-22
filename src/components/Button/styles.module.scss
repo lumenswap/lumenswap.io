@@ -17,8 +17,8 @@
 
 .button-primary,
 .button-primary:focus {
-  background-color: $BlueRibbon;
-  border: 1px solid $BlueRibbon;
+  background-color: var(--blueRibbon);
+  border: 1px solid var(--blueRibbon);
   color: white;
   transition: ease-in;
 }
@@ -29,9 +29,9 @@
 
 .button-secondary,
 .button-secondary:focus {
-  background-color: $Zumthor;
-  border: 1px solid $Zumthor;
-  color: $BlueRibbon;
+  background-color: var(--zumthor);
+  border: 1px solid var(--zumthor);
+  color: var(--blueRibbon);
   box-shadow: none;
 }
 
@@ -43,35 +43,35 @@
 
 .button-outline {
   background-color: white;
-  color: $CatskillWhite;
-  border: 1px solid $CatskillWhite;
+  color: var(--catsKillWhite);
+  border: 1px solid var(--catsKillWhite);
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.05);
 }
 
 .button-basic {
   background-color: white;
   color: var(--rollingStone);
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
 }
 
 .button-primary-outline {
   background-color: white;
-  color: $BlueRibbon;
-  border: 1px solid $BlueRibbon;
+  color: var(--blueRibbon);
+  border: 1px solid var(--blueRibbon);
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.05);
 }
 
 .button-default {
   background-color: transparent;
   border: 1px solid transparent;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .button-base {
   background: transparent;
   border: transparent;
   padding: 0;
-  color: $CodGray;
+  color: var(--codGray);
   display: flex;
   align-items: center;
 }
@@ -89,8 +89,8 @@
 }
 
 .btn:disabled {
-  background-color: $CatskillWhite;
-  border: 1px solid $CatskillWhite;
+  background-color: var(--catsKillWhite);
+  border: 1px solid var(--catsKillWhite);
   color: var(--rollingStone);
   box-shadow: none;
 }

@@ -8,12 +8,12 @@
   align-items: center;
   font-size: 16px;
   font-weight: 500;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   background-color: white;
   border: none;
   outline: none;
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
   position: absolute;
   bottom: 0;
   right: 0;
@@ -59,5 +59,5 @@
 }
 
 .select-logo:hover {
-  background-color: $AthensGray;
+  background-color: var(--lightAthensGray);
 }

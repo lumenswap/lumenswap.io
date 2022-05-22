@@ -33,7 +33,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 8px;
   height: 47px;
   width: 100%;
@@ -97,7 +97,7 @@
 .row:not(:last-child) {
   width: 100%;
   height: 44px;
-  border-bottom: 1px solid $CatskillWhite;
+  border-bottom: 1px solid var(--catsKillWhite);
   font-family: SofiaPro;
   font-size: 16px;
   font-weight: normal;
@@ -120,7 +120,7 @@
 }
 
 .row:hover {
-  background-color: #f8f9fb;
+  background-color: var(--lightAthensGray);
 }
 
 .no-data-container {
@@ -129,7 +129,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   span {
     font-family: SofiaPro;

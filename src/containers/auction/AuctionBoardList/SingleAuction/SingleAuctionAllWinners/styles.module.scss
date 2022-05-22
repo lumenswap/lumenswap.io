@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .table {
   margin-top: 10px;
@@ -12,10 +12,10 @@
 
 .link {
   text-decoration: none !important;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
 
   &:hover {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 .bread-crumb {
@@ -44,7 +44,7 @@
     font-family: SofiaPro;
     margin-left: 24px;
     font-size: 16px;
-    color: $CodGray;
+    color: var(--codGray);
     font-weight: 600;
   }
   input {

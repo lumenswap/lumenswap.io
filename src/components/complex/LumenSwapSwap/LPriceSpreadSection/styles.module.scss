@@ -29,7 +29,7 @@
   span {
     font-size: 13px;
     margin-left: 4px;
-    color: $Bombay;
+    color: var(--bombay);
     cursor: pointer;
   }
 }
@@ -37,14 +37,14 @@
 .info {
   font-size: 14px;
   line-height: 1.29;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .path {
   display: flex;
   align-items: center;
   font-size: 12px;
-  color: $CodGray;
+  color: var(--codGray);
   font-weight: 500;
 
   :global(.icon-arrow-right) {
@@ -77,8 +77,8 @@
   }
 
   button:global(.active) {
-    background-color: $BlueRibbon;
-    border: 1px solid $BlueRibbon;
+    background-color: var(--blueRibbon);
+    border: 1px solid var(--blueRibbon);
     color: white;
   }
 
@@ -108,7 +108,7 @@
 
 .custom:global(.active) {
   input {
-    background-color: $BlueRibbon;
+    background-color: var(--blueRibbon);
     color: white;
   }
 

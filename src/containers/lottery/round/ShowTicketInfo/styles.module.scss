@@ -76,7 +76,7 @@
   font-style: normal;
   line-height: 1.56;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
   width: 100%;
   word-break: break-all;
   margin-top: 4px;
@@ -89,7 +89,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
   }
   &-title {
     font-family: SofiaPro;

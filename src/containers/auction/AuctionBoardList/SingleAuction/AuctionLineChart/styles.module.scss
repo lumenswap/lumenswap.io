@@ -1,12 +1,12 @@
 @import "styles/vars";
 
 .tooltip {
-  color: $CodGray;
+  color: var(--codGray);
   font-size: 13px;
   font-family: "SofiaPro", sans-serif !important;
 
   span {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
     font-weight: bold;
   }
 }
@@ -28,7 +28,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #ffffff;
+  background-color: var(--white);
   z-index: 1000;
 }
 .CCard {

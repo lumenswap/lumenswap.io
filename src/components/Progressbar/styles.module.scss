@@ -1,7 +1,7 @@
 @import "styles/vars";
 
 .box {
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 4px;
   padding: 18px 24px 23px 24px;
 }
@@ -9,7 +9,7 @@
 .label {
   font-size: 16px;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .value {
@@ -20,7 +20,7 @@
 
 .progress {
   margin-top: 12px;
-  background-color: $CatskillWhite;
+  background-color: var(--catsKillWhite);
   height: 3px;
   overflow: initial;
   display: flex;
@@ -29,7 +29,7 @@
 }
 
 .progress-bar {
-  background-color: $BlueRibbon;
+  background-color: var(--blueRibbon);
   height: 5px;
   overflow: initial;
   border-radius: 15px;

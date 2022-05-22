@@ -4,8 +4,8 @@
   width: 100%;
   height: 114px;
   border-radius: 8px;
-  border: 1px solid $CatskillWhite;
-  background-color: $AthensGray;
+  border: 1px solid var(--catsKillWhite);
+  background-color: var(--lightAthensGray);
 }
 .items {
   padding-left: 15px;
@@ -29,7 +29,7 @@
   line-height: 1.33;
   letter-spacing: normal;
   text-align: center;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,11 +46,11 @@
     line-height: 1.33;
     letter-spacing: normal;
     text-align: center;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $White;
+    color: var(--white);
   }
   &-active:not(:last-child) {
     margin-right: 4px;
@@ -67,7 +67,7 @@
   font-style: normal;
   line-height: 1.31;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }
 .btns {
   display: flex;

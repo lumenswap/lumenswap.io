@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .layout {
   padding-top: 75px;
@@ -16,7 +16,7 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
   padding: 20px 24px 14px 24px;
 }
 
@@ -26,9 +26,9 @@
 
 .url {
   text-decoration: none;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   &:hover {
     text-decoration: none;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }

@@ -13,7 +13,7 @@
 
 .asset-name {
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .asset-web {
@@ -22,14 +22,14 @@
 }
 
 .hr {
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
   margin-top: 11px;
   margin-bottom: 13px;
 }
 
 .value {
   font-size: 20px;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .btn {
