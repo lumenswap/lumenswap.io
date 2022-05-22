@@ -14,6 +14,7 @@ import { calculateFromAmount, calculateToAmount } from 'containers/bridge/calcul
 import StatusLabel from 'containers/bridge/MyActivities/StatusLabel';
 import styles from './styles.module.scss';
 import TxLinkGenerator, { generateBridgeTransactionURL } from './TxLinkGenerator';
+import generateBridgeAddressURL from './generateBridgeAddressURL';
 
 const SingleActivityDetails = ({ activityInfo }) => {
   useRequiredLogin(urlMaker.bridge.root());
@@ -48,7 +49,8 @@ const SingleActivityDetails = ({ activityInfo }) => {
       title: 'Destination',
       render: () => (
         <CExternalLink
-          href={generateAddressURL(activityInfo.user_destination)}
+          href={generateBridgeAddressURL(activityInfo.user_destination,
+            activityInfo.to_asset.network)}
           content={minimizeAddress(activityInfo.user_destination.toUpperCase())}
         />
       ),

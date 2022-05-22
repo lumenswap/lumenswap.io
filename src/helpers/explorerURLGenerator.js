@@ -45,3 +45,15 @@ export function generateBTCTransactionURL(tx) {
 export function generateETHTransactionURL(tx) {
   return `https://etherscan.io/tx/${tx}`;
 }
+
+export function generateBTCAddressURL(address) {
+  return `https://www.blockchain.com/btc/address/${address}`;
+}
+
+export function generateETHAddressURL(address) {
+  return `https://etherscan.io/address/${address}`;
+}
+
+export function generateSolanaAddressURL(address) {
+  return `https://solscan.io/account/${address}`;
+}
