@@ -3,6 +3,9 @@ import SunLightIcon from 'assets/images/sunLight';
 import MoonIcon from 'assets/images/moon';
 import MoonLightIcon from 'assets/images/moonLight';
 import { useEffect, useState, useRef } from 'react';
+import { toggleTheme } from 'actions/theme';
+import { useDispatch } from 'react-redux';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
 function setDocumentElementAttribute(attribute, timeOut) {
@@ -17,6 +20,8 @@ function setDocumentElementAttribute(attribute, timeOut) {
 function ToggleDarkModeBtn() {
   const [theme, setTheme] = useState('light');
   const firstTimeRef = useRef(true);
+  const dispatch = useDispatch();
+  const reduxTheme = useCurrentTheme();
 
   useEffect(() => {
     const currentTheme = localStorage.getItem('theme');
@@ -25,6 +30,9 @@ function ToggleDarkModeBtn() {
     }
   }, []);
   useEffect(() => {
+    if (reduxTheme !== theme) {
+      dispatch(toggleTheme());
+    }
     setDocumentElementAttribute(theme, firstTimeRef.current ? 0 : 400);
   }, [theme]);
   const handleChangeTheme = () => {

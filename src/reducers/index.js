@@ -7,6 +7,7 @@ import userCustomPairsReducer from './userCustomPairs';
 import customOrderPriceReducer from './customOrderPrice';
 import xlmPriceReducer from './xlmPrice';
 import lspPriceReducer from './lspPrice';
+import themeReducer from './theme';
 
 export default combineReducers({
   user,
@@ -17,4 +18,5 @@ export default combineReducers({
   customOrderPrice: customOrderPriceReducer,
   xlmPrice: xlmPriceReducer,
   lspPrice: lspPriceReducer,
+  theme: themeReducer,
 });

@@ -33,6 +33,9 @@ const actionTypes = {
   lspPrice: {
     UPDATE: 'lspPrice/UPDATE',
   },
+  theme: {
+    TOGGLE: 'theme/TOGGLE',
+  },
 };
 
 export default actionTypes;
