@@ -24,6 +24,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-steps/assets/index.css';
 import '../../styles/themeColors.scss';
+import useOptimizely from 'hooks/useOptimizely';
 
 async function fullRabetLogin(dispatch) {
   try {
@@ -76,6 +77,8 @@ function MyApp({ Component, pageProps }) {
     };
   }, []);
 
+  const isDarkModeEnabled = useOptimizely('is_dark_mode');
+
   useEffect(() => {
     setTimeout(() => {
       if (validateRabetPresent()) {
@@ -94,7 +97,7 @@ function MyApp({ Component, pageProps }) {
           <div style={{ minHeight: 'calc(100vh - 56px)' }}>
             <Component {...pageProps} />
           </div>
-          {/* <ToggleDarkModeBtn /> */}
+          {isDarkModeEnabled && <ToggleDarkModeBtn /> }
         </PersistGate>
       </Provider>
     </>
