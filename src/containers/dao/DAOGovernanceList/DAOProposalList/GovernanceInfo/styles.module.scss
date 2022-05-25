@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .item {
   padding-top: 14px;
@@ -12,7 +12,7 @@
   box-shadow: none;
 
   &-basic {
-    color: $Manatee;
+    color: var(--manatee);
   }
 }
 
@@ -26,7 +26,7 @@
   .title {
     font-size: 22px;
     font-weight: 500;
-    color: $CodGray;
+    color: var(--codGray);
     margin-bottom: 2px;
   }
 
@@ -37,13 +37,13 @@
   .text {
     font-size: 16px;
     line-height: 1.5;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin-top: 14px;
   }
   .text-title {
     font-size: 16px;
     line-height: 1.5;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
   .title-info {
     margin-top: 7px;
@@ -63,11 +63,11 @@
   }
 
   .asset-link {
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   .web-link {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 
   .btn {

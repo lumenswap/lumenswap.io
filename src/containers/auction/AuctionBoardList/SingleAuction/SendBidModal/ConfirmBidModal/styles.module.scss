@@ -3,7 +3,7 @@
 .text {
   font-size: 18px;
   line-height: 1.56;
-  color: $CodGray;
+  color: var(--codGray);
 
   span {
     font-weight: bold;

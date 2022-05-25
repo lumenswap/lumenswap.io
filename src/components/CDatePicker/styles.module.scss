@@ -1,7 +1,7 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .select {
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 4px;
   min-width: 260px;
   height: 40px;
@@ -11,16 +11,16 @@
   cursor: pointer;
   padding: 0 16px;
   font-size: 16px;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
 
   &:focus {
     transition: ease-in;
-    border: 1px solid $BlueRibbon;
+    border: 1px solid var(--blueRibbon);
   }
 }
 
 .disabled-select {
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 4px;
   min-width: 260px;
   height: 40px;
@@ -30,11 +30,11 @@
   cursor: default;
   padding: 0 16px;
   font-size: 16px;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
 
   &:focus {
     transition: ease-in;
-    border: 1px solid $BlueRibbon;
+    border: 1px solid var(--blueRibbon);
   }
 }
 
@@ -50,41 +50,41 @@
   }
 
   :global(.react-datepicker__triangle)::before {
-    border-top-color: $AthensGray !important;
-    border-bottom-color: $AthensGray !important;
+    border-top-color: var(--lightAthensGray) !important;
+    border-bottom-color: var(--lightAthensGray) !important;
   }
 
   :global(.react-datepicker__triangle)::after {
-    border-bottom-color: $AthensGray !important;
+    border-bottom-color: var(--lightAthensGray) !important;
   }
 
   :global(.react-datepicker__header) {
-    border-bottom: 1px solid $AthensGray;
-    background-color: $AthensGray;
-    font-family: 'SofiaPro', sans-serif;
+    border-bottom: 1px solid var(--lightAthensGray);
+    background-color: var(--lightAthensGray);
+    font-family: "SofiaPro", sans-serif;
   }
 
   :global(.react-datepicker__day) {
-    color: $ShuttleGray;
-    font-family: 'SofiaPro', sans-serif;
+    color: var(--rollingStone);
+    font-family: "SofiaPro", sans-serif;
 
     &:hover {
-      background-color: $AthensGray;
+      background-color: var(--lightAthensGray);
     }
   }
 
   :global(.react-datepicker__day-name) {
-    color: $Manatee;
+    color: var(--manatee);
   }
 
   :global(.react-datepicker__day--selected),
   :global(.react-datepicker__day--keyboard-selected) {
-    background-color: $BlueRibbon;
+    background-color: var(--blueRibbon);
     color: white;
 
     &:hover {
       transition: ease-in;
-      background-color: $ToreaBay;
+      background-color: var(--highBlue);
     }
 
     &:focus {

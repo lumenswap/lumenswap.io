@@ -4,14 +4,14 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 10px;
 }
 
 .select {
   width: 154px;
   height: 38px;
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -19,7 +19,7 @@
   padding: 0 17px 0 12px;
   cursor: pointer;
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
 
   :global(.icon-angle-down) {
     font-size: 10px;
@@ -28,7 +28,7 @@
 
 .hr {
   margin: 22px -17px 11px;
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
 }
 
 .current {

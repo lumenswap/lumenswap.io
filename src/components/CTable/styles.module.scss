@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .table-container {
   width: 100%;
@@ -33,14 +33,14 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 8px;
   height: 47px;
   width: 100%;
   line-height: 47px;
   font-family: SofiaPro;
   font-size: 16px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   th:first-child {
     border-radius: 8px 0px 0px 0px;
   }
@@ -81,7 +81,7 @@
   }
 }
 .rowLink:not(:last-child) {
-  border-bottom: 1px solid $DarkAthensGray;
+  border-bottom: 1px solid var(--catsKillWhite);
   display: table-row-group;
   width: 100%;
   height: 44px;
@@ -97,7 +97,7 @@
 .row:not(:last-child) {
   width: 100%;
   height: 44px;
-  border-bottom: 1px solid $CatskillWhite;
+  border-bottom: 1px solid var(--catsKillWhite);
   font-family: SofiaPro;
   font-size: 16px;
   font-weight: normal;
@@ -120,7 +120,7 @@
 }
 
 .row:hover {
-  background-color: #f8f9fb;
+  background-color: var(--lightAthensGray);
 }
 
 .no-data-container {
@@ -129,7 +129,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   span {
     font-family: SofiaPro;
@@ -140,6 +140,6 @@
     line-height: 1.56;
     letter-spacing: normal;
     text-align: center;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 }

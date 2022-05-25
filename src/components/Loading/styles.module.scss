@@ -1,7 +1,7 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .loading {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   position: sticky;
   border: 2px solid;
   border-radius: 50%;

@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .container {
   margin-top: 29px;
@@ -10,13 +10,13 @@
   text-align: center;
   margin-top: 24px;
   margin-bottom: 91px;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .loading {
   height: 40px;
   width: 40px;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   position: sticky;
   border: 3px solid;
   border-radius: 50%;

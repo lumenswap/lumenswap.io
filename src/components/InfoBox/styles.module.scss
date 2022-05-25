@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .header-title {
   font-family: SofiaPro;
@@ -8,7 +8,7 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .rows {
@@ -22,7 +22,7 @@
 .main {
   width: 100%;
   height: 178px;
-  background-color: $White;
+  background-color: var(--white);
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;
   display: flex;
@@ -41,7 +41,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 }
 
@@ -54,7 +54,7 @@
   display: flex;
   align-items: center;
   font-family: SofiaPro;
-  color: $BlueRibbon !important;
+  color: var(--blueRibbon) !important;
 }
 
 .infos {
@@ -65,7 +65,7 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .align-center {
@@ -78,7 +78,7 @@
 }
 
 .bordered:not(:last-child) {
-  border-bottom: 1px solid $CatskillWhite;
+  border-bottom: 1px solid var(--catsKillWhite);
 }
 
 .icon {

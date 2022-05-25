@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .item {
   padding-top: 14px;
@@ -13,7 +13,7 @@
   box-shadow: none;
   margin-top: 6px;
   &-basic {
-    color: $Manatee;
+    color: var(--manatee);
   }
 }
 
@@ -26,14 +26,14 @@
     font-size: 18px;
     font-weight: 500;
     line-height: 1.56;
-    color: $CodGray;
+    color: var(--codGray);
     margin: 10px 0 0 0;
   }
 
   .para {
     font-size: 14px;
     line-height: 1.43;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin: 4px 0 0 0;
   }
 
@@ -61,7 +61,7 @@
 
   .info {
     display: flex;
-    border-top: 1px solid $CatskillWhite;
+    border-top: 1px solid var(--catsKillWhite);
 
     &-col {
       padding: 9px 24px;
@@ -71,7 +71,7 @@
     }
 
     &-col:first-child {
-      border-right: 1px solid $CatskillWhite;
+      border-right: 1px solid var(--catsKillWhite);
     }
   }
 
@@ -79,13 +79,13 @@
     font-size: 22px;
     font-weight: 500;
     line-height: 1.45;
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   .subject {
     font-size: 14px;
     line-height: 1.43;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     white-space: nowrap;
   }
 }

@@ -1,11 +1,11 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .layout {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 36px;
-  font-family: 'SofiaPro';
+  font-family: "SofiaPro";
 }
 
 .list {
@@ -42,7 +42,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: $Shamrock;
+  background-color: var(--successGreen);
   margin-left: 4px;
   margin-top: 2px;
 }
@@ -57,33 +57,33 @@
   border-radius: 4px !important;
   margin-left: auto;
   background-color: white;
-  border: 1px solid $BlueRibbon;
-  color: $BlueRibbon;
+  border: 1px solid var(--blueRibbon);
+  color: var(--blueRibbon);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .out-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  font-family: SofiaPro;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: var(--manatee);
+  &:hover {
     text-decoration: none;
-    display: flex;
-    flex-direction: row;
-    font-family: SofiaPro;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    color: $Manatee;
-    &:hover {
-      text-decoration: none;
-      color: $Manatee;
-    }
-    div {
-      margin-left: 2px;
-      margin-bottom: 2px;
-    }
+    color: var(--manatee);
   }
+  div {
+    margin-left: 2px;
+    margin-bottom: 2px;
+  }
+}
 
 @media (max-width: $xl) {
   .list > li {

@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .dropdown-container {
   background: white;
@@ -9,7 +9,7 @@
   justify-content: space-between;
   font-family: SofiaPro;
   font-size: 14px;
-  border: solid 1px #ecf0f5;
+  border: solid 1px var(--catsKillWhite);
   border-radius: 4px;
   cursor: pointer;
   position: relative;

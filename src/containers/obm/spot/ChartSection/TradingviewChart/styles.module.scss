@@ -1,6 +1,6 @@
 @import "styles/vars";
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -17,12 +17,12 @@
   top: 28px;
   font-size: 10px;
   font-weight: 500;
-  color: $Manatee;
+  color: var(--manatee);
   z-index: 10;
 }
 
 .value {
-  // color: $Rose;
+  // color: var(--rose);
 }
 
 .box-time {
@@ -34,13 +34,13 @@
   margin-right: 4px;
   padding: 4px 6px;
   border-radius: 2px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   font-size: 10px;
   cursor: pointer;
 }
 
 .active {
   font-weight: 500;
-  color: $CodGray;
-  background-color: $CatskillWhite;
+  color: var(--codGray);
+  background-color: var(--catsKillWhite);
 }

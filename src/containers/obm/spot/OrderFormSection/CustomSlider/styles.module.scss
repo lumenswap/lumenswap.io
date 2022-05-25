@@ -4,13 +4,13 @@
   margin: 0 6px;
 
   :global(.rc-slider-rail) {
-    background-color: $CatskillWhite;
+    background-color: var(--catsKillWhite);
     height: 2px;
   }
 
   :global(.rc-slider-dot) {
     border: 2px solid white;
-    background-color: $CatskillWhite;
+    background-color: var(--catsKillWhite);
     width: 12px;
     height: 12px;
     bottom: -3px;
@@ -22,18 +22,18 @@
 
   :global(.rc-slider-dot-active),
   :global(.rc-slider-track) {
-    background-color: $RollingStone;
+    background-color: var(--rollingStone);
   }
 
   :global(.rc-slider-handle) {
     background-color: white;
-    border: 2px solid $RollingStone !important;
+    border: 2px solid var(--rollingStone) !important;
     height: 12px;
     width: 12px;
   }
 
   :global(.rc-slider-handle):active {
-    border: 2px solid $RollingStone;
+    border: 2px solid var(--rollingStone);
     box-shadow: none;
   }
 }

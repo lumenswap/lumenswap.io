@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   width: 100%;
@@ -11,7 +11,7 @@
   width: 131px;
   height: 36px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   font-family: SofiaPro;
   font-size: 14px;
@@ -21,7 +21,7 @@
   line-height: 1.43;
   letter-spacing: normal;
   border: none;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   margin-left: 16px;
   span {
     margin-right: 4px;
@@ -34,11 +34,11 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     width: 131px;
     height: 36px;
     box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-    background-color: $White;
+    background-color: var(--white);
     border-radius: 4px;
     border: none;
     margin-left: 16px;
@@ -53,7 +53,7 @@
   width: 131px;
   height: 36px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   font-family: SofiaPro;
   font-size: 14px;
@@ -63,7 +63,7 @@
   line-height: 1.43;
   letter-spacing: normal;
   border: none;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   span {
     margin-left: 4px;
   }
@@ -75,11 +75,11 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     width: 131px;
     height: 36px;
     box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-    background-color: $White;
+    background-color: var(--white);
     border-radius: 4px;
     border: none;
     cursor: default !important;

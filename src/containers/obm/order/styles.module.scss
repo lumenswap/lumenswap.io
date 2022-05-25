@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 .main {
   margin-left: 82px;
   margin-right: 82px;
@@ -14,7 +14,7 @@
       font-style: normal;
       line-height: 1.5;
       letter-spacing: normal;
-      color: $Manatee;
+      color: var(--manatee);
       margin-top: 12px;
     }
   }
@@ -35,7 +35,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }
 .cancel-btn {
   font-family: SofiaPro;
@@ -46,14 +46,14 @@
   line-height: normal;
   letter-spacing: normal;
   text-align: right;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   margin-top: 8px;
   cursor: pointer;
 }
 
 .table-container {
   width: 100%;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
   margin-top: 23px;
@@ -61,7 +61,7 @@
 
 .cancel {
   cursor: pointer;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   font-family: SofiaPro;
   font-size: 14px;
   font-weight: normal;

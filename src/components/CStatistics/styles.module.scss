@@ -1,8 +1,8 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   min-height: 84px;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -14,7 +14,7 @@
 }
 
 .container:not(:last-child) {
-  border-right: 1px solid $SecondaryAthensGray;
+  border-right: 1px solid var(--catsKillWhite);
 }
 
 .block {
@@ -37,7 +37,7 @@
 
 .title-info {
   font-size: 14px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   font-family: SofiaPro;
   font-weight: normal;
   font-stretch: normal;
@@ -56,7 +56,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
   display: flex;
   flex-direction: row;
   height: 28px;
@@ -69,7 +69,7 @@
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
     margin-left: 6px;
     margin-top: 1px;
   }
@@ -79,7 +79,7 @@
   .container:not(:last-child) {
     border-right: none;
     .block {
-      border-bottom: 1px solid $SecondaryAthensGray;
+      border-bottom: 1px solid var(--catsKillWhite);
     }
   }
   .container {

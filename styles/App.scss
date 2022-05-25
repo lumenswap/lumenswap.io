@@ -1,13 +1,13 @@
-@import 'fonts';
-@import 'vars';
-@import 'mobileMenu';
+@import "fonts";
+@import "vars";
+@import "mobileMenu";
 
 body {
-  background-color: $AthensGray !important;
+  background-color: var(--lightAthensGray) !important;
 }
 
 .main {
-  font-family: 'SofiaPro', sans-serif !important;
+  font-family: "SofiaPro", sans-serif !important;
 }
 
 .other {
@@ -22,7 +22,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -46,36 +46,36 @@ input[type='number'] {
 }
 
 .color-primary {
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   transition: ease-in;
 
   &:hover {
-    color: $ToreaBay;
+    color: var(--highBlue);
   }
 }
 
 .color-buy {
-  color: $Limeade !important;
+  color: var(--limeade) !important;
 }
 
 .background-buy {
-  background-color: $Limeade;
+  background-color: var(--limeade);
 }
 
 .color-sell {
-  color: $Rose !important;
+  color: var(--rose) !important;
 }
 
 .background-sell {
-  background-color: $Rose;
+  background-color: var(--rose);
 }
 
 .color-gray {
-  color: $RollingStone !important;
+  color: var(--rollingStone) !important;
 }
 
 .color-base {
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .cursor-pointer {
@@ -84,13 +84,13 @@ input[type='number'] {
 
 .label-primary {
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 8px;
 }
 
 .label-secondary {
   font-size: 16px;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 6px;
 }
 
@@ -109,7 +109,7 @@ input[type='number'] {
 }
 
 .modal:before {
-  content: '';
+  content: "";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -135,19 +135,19 @@ input[type='number'] {
   font-style: normal;
   line-height: 1.42;
   letter-spacing: normal;
-  fill: $BlueRibbon !important;
+  fill: var(--blueRibbon) !important;
 }
 
 .tooltip-inner {
   background-color: white !important;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13) !important;
   border: none !important;
-  color: $CodGray !important;
+  color: var(--codGray) !important;
   font-size: 13px;
 }
 
 .bs-tooltip-top .arrow::before,
-.bs-tooltip-auto[x-placement^='top'] .arrow::before {
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
   border-top-color: white;
   display: none;
 }
@@ -157,7 +157,7 @@ input[type='number'] {
 }
 
 .bs-tooltip-top .arrow::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   z-index: -1;
@@ -167,11 +167,11 @@ input[type='number'] {
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
 }
 
-.bs-tooltip-auto[x-placement^='right'] .arrow::before,
+.bs-tooltip-auto[x-placement^="right"] .arrow::before,
 .bs-tooltip-right .arrow::before {
   right: 0;
   border-width: 0.4rem 0.4rem 0.4rem 0;
-  border-right-color: $DarkGray !important;
+  border-right-color: var(--rollingStone) !important;
 }
 
 .truncate {
@@ -199,7 +199,7 @@ input[type='number'] {
 .title {
   font-size: 24px;
   font-weight: 600;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .disabled-chart-tooltip {
@@ -229,7 +229,7 @@ input[type='number'] {
 }
 
 .css-1uccc91-singleValue {
-  color: $CodGray !important;
+  color: var(--codGray) !important;
 }
 
 .modal-br8 {

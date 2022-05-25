@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   min-height: 100vh;
@@ -38,13 +38,12 @@
   }
 }
 
-
 .title {
   font-size: 32px;
   font-weight: 600;
   line-height: 1.31;
   text-align: center;
-  color: $CodGray;
+  color: var(--codGray);
   margin: 24px 0 0 0;
 }
 
@@ -52,7 +51,7 @@
   font-size: 16px;
   line-height: 1.5;
   text-align: center;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   width: 295px;
   display: block;
   margin: 15px auto 0 auto;
@@ -68,9 +67,9 @@
 }
 
 .btn {
-  background: $BlueRibbon;
-  border-color: $BlueRibbon;
-  color: $White;
+  background: var(--blueRibbon);
+  border-color: var(--blueRibbon);
+  color: var(--white);
   font-family: SofiaPro;
   font-size: 18px;
   font-weight: 300;
@@ -90,7 +89,6 @@
     color: white;
   }
 }
-
 
 @media (max-width: $md) {
   .svg {

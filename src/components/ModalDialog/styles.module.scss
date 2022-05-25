@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .header {
   padding: 21px 17px 24px 17px;
@@ -8,17 +8,15 @@
 
   :global(.icon-arrow-left) {
     cursor: pointer;
-    color: $Bombay;
+    color: var(--bombay);
     font-size: 20px;
   }
 }
 
-
-
 .title {
   font-size: 18px;
   font-weight: 500;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 0;
 }
 
@@ -26,7 +24,7 @@
   border: none;
   background-color: transparent;
   font-size: 16px;
-  color: $Bombay;
+  color: var(--bombay);
   padding: 0;
   z-index: 100;
   outline: none;

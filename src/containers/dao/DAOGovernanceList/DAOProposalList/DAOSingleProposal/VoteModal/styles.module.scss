@@ -1,16 +1,16 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .title {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
   margin: 0;
 }
 
 .hr {
   margin: 24px -17px;
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
 }
 
 .form {
@@ -38,10 +38,10 @@
   padding-bottom: 12px;
 
   &-name {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 
   &-value {
-    color: $CodGray;
+    color: var(--codGray);
   }
 }

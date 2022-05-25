@@ -1,17 +1,17 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .label {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 10px;
 }
 
 .select {
   width: 154px;
   height: 38px;
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -19,7 +19,7 @@
   padding: 0 17px 0 12px;
   cursor: pointer;
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
 
   :global(.icon-angle-down) {
     font-size: 10px;
@@ -28,7 +28,7 @@
 
 .hr {
   margin: 24px -17px 23px;
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
 }
 
 .current {
@@ -44,8 +44,8 @@
 .footer-section {
   width: 100%;
   height: 78px;
-  background-color: $AthensGray;
-  border: 1px solid $CatskillWhite;
+  background-color: var(--lightAthensGray);
+  border: 1px solid var(--catsKillWhite);
   border-radius: 8px;
   margin-top: 24px;
   display: flex;
@@ -83,7 +83,7 @@
   font-style: normal;
   line-height: 1.56;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
   div {
     display: flex;
     flex-direction: row;
@@ -109,7 +109,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
     margin-left: 3px;
   }
 
@@ -122,7 +122,7 @@
     line-height: 1.43;
     letter-spacing: normal;
     text-align: right;
-    color: $CodGray;
+    color: var(--codGray);
   }
 }
 .inpool-logo {

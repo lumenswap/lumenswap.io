@@ -4,20 +4,20 @@
   text-align: center;
   padding: 8px 0;
   border-radius: 8px;
-  border: solid 1px $CatskillWhite;
-  background-color: $AthensGray;
+  border: solid 1px var(--catsKillWhite);
+  background-color: var(--lightAthensGray);
 }
 
 .box-title {
   font-size: 12px;
   font-weight: 500;
   line-height: 1.33;
-  color: $Manatee;
+  color: var(--manatee);
 }
 
 .box-value {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
 }

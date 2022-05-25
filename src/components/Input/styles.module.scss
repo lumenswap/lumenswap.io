@@ -1,21 +1,21 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .input {
   width: 100%;
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   border-radius: 8px;
   outline: none;
-  color: $CodGray;
+  color: var(--codGray);
   padding-right: 16px;
   padding-left: 16px;
   transition: ease-in;
 }
 
 .input:focus {
-  border: 1px solid $BlueRibbon;
+  border: 1px solid var(--blueRibbon);
   outline: none;
 }
 
 .input::placeholder {
-  color: $Manatee;
+  color: var(--manatee);
 }

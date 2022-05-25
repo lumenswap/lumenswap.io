@@ -8,10 +8,10 @@
     display: flex;
     align-items: center;
     font-size: 14px !important;
-    color: $CodGray;
+    color: var(--codGray);
     border-radius: 4px;
     background-color: transparent;
-    border: 1px solid $DarkAthensGray;
+    border: 1px solid var(--catsKillWhite);
     padding-right: 14px;
     padding-left: 14px;
     height: 36px;
@@ -24,10 +24,10 @@
 
   :global(.dropdown-toggle)::after {
     content: "\e900";
-    font-family: 'icomoon' !important;
+    font-family: "icomoon" !important;
     border: none !important;
     font-size: 10px;
-    color: $CodGray;
+    color: var(--codGray);
     margin-left: 15px;
   }
 
@@ -43,7 +43,7 @@
 
     :global(.dropdown-item) {
       font-size: 12px;
-      color: $CodGray;
+      color: var(--codGray);
       padding: 8px 12px !important;
       font-weight: normal;
       display: flex;
@@ -53,7 +53,7 @@
       span {
         margin-right: 7px;
         font-size: 15px;
-        color: $RollingStone;
+        color: var(--rollingStone);
       }
 
       :global(.icon-external) {
@@ -62,7 +62,7 @@
     }
 
     :global(.dropdown-item):hover {
-      background-color: $AthensGray;
+      background-color: var(--lightAthensGray);
     }
 
     :global(.dropdown-item):first-child {
@@ -77,7 +77,7 @@
 
     :global(.dropdown-item):active {
       background: #fff !important;
-      color: $CodGray !important;
+      color: var(--codGray) !important;
     }
   }
 }

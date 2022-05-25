@@ -35,7 +35,7 @@
     line-height: 185%;
     letter-spacing: normal;
     text-align: center;
-    color: $CodGray;
+    color: var(--codGray);
   }
 }
 
@@ -46,14 +46,14 @@
     font-size: 24px;
     font-weight: 600;
     line-height: 1.42;
-    color: $CodGray;
+    color: var(--codGray);
     margin: 0;
   }
 
   &-desc {
     font-size: 16px;
     line-height: 1.5;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin: 14px 0 0 0;
   }
 }
@@ -66,7 +66,7 @@
 }
 
 .badge {
-  background-color: $AthensGray;
+  background-color: var(--lightAthensGray);
   border-radius: 4px;
   margin-right: 14px;
   padding: 8px 12px;
@@ -74,10 +74,10 @@
   font-weight: normal;
   white-space: nowrap;
   margin-top: 8px;
-  color: $CodGray;
+  color: var(--codGray);
 
   &-subject {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     margin-right: 8px;
   }
 }
@@ -105,28 +105,28 @@
 }
 
 .status-live {
-    color: $BlueRibbon;
-    background-color: $Zumthor;  
+  color: var(--blueRibbon);
+  background-color: var(--zumthor);
 
-    .status-circle {
-      background-color: $BlueRibbon;
-    }
+  .status-circle {
+    background-color: var(--blueRibbon);
+  }
 }
 
 .status-ended {
-  color: $Manatee;
-  background: $CatskillWhite;
+  color: var(--manatee);
+  background: var(--catsKillWhite);
 
   .status-circle {
-    background-color: $Manatee;
+    background-color: var(--manatee);
   }
 }
 
 .status-not-started {
-  color: $Punch;
-  background: $CatskillWhite;
+  color: var(--punch);
+  background: var(--catsKillWhite);
 
   .status-circle {
-    background-color: $Punch;
+    background-color: var(--punch);
   }
 }

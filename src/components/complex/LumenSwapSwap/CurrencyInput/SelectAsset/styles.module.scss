@@ -2,11 +2,11 @@
 
 .form {
   input {
-    border: 1px solid $BlueRibbon;
+    border: 1px solid var(--blueRibbon);
   }
 
   input:focus {
-    border: 1px solid $ToreaBay;
+    border: 1px solid var(--highBlue);
   }
 }
 
@@ -24,7 +24,7 @@
 }
 
 .box:hover {
-  background-color: $AthensGray;
+  background-color: var(--lightAthensGray);
 }
 
 .info {
@@ -34,14 +34,14 @@
 .text {
   font-size: 16px;
   font-weight: 500;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 0;
 }
 
 .desc {
   font-size: 14px;
   line-height: 1.29;
-  color: $RollingStone;
+  color: var(--rollingStone);
   margin-bottom: 0;
 }
 
@@ -49,14 +49,14 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background-color: $CatskillWhite;
+  background-color: var(--catsKillWhite);
   display: flex;
   align-items: center;
   justify-content: center;
 
   span {
     font-size: 14px;
-    color: $RollingStone;
+    color: var(--rollingStone);
     margin-top: 1px;
     margin-right: 1px;
   }
@@ -69,12 +69,12 @@
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
   background-color: white;
   border: none;
   outline: none;
   box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
   position: absolute;
   bottom: 0;
   right: 0;

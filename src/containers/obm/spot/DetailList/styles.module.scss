@@ -8,24 +8,23 @@
 
 .title {
   font-size: 10px;
-  color: $Manatee;
+  color: var(--manatee);
 }
 
 .value {
   font-size: 12px;
-  color: $CodGray;
+  color: var(--codGray);
 }
-
 
 .bold {
   .title {
-    color: $CodGray;
+    color: var(--codGray);
     font-size: 16px;
     margin-top: -3.5px;
   }
 
   .value {
-    color: $Manatee;
+    color: var(--manatee);
     margin-top: -5px;
   }
 }
@@ -42,5 +41,5 @@
 }
 
 .link:hover {
-  color: $CodGray;
+  color: var(--codGray);
 }

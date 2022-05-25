@@ -1,7 +1,7 @@
 @import "styles/vars";
 
 .input-group {
-  border: 1px solid $CatskillWhite;
+  border: 1px solid var(--catsKillWhite);
   background-color: white;
   border-radius: 8px;
   transition: ease-in;
@@ -11,14 +11,14 @@
     background-color: transparent;
     padding-right: 16px;
     padding-left: 16px;
-    color: $CodGray;
+    color: var(--codGray);
     font-size: 18px;
     font-weight: 400;
     border-radius: 8px;
   }
 
   input::placeholder {
-    color: $Bombay;
+    color: var(--bombay);
   }
 
   input:focus {
@@ -29,8 +29,8 @@
   :global(.input-group-text) {
     background-color: transparent;
     border: none;
-    border-left: 1px solid $CatskillWhite;
-    color: $CodGray;
+    border-left: 1px solid var(--catsKillWhite);
+    color: var(--codGray);
     font-size: 16px;
     min-width: 64px;
     display: flex;
@@ -40,30 +40,30 @@
 }
 
 .input-group-advance {
-  border: 1px solid $CatskillWhite;
-  background-color: $AthensGray;
+  border: 1px solid var(--catsKillWhite);
+  background-color: var(--lightAthensGray);
   border-radius: 4px;
   transition: ease-in;
 
   input {
     border: none;
-    background-color: $AthensGray;
+    background-color: var(--lightAthensGray);
     padding-right: 0;
     padding-left: 0;
-    color: $CodGray;
+    color: var(--codGray);
     font-weight: 400;
     direction: rtl;
   }
 
   input:focus {
     box-shadow: none;
-    background-color: $AthensGray;
+    background-color: var(--lightAthensGray);
   }
 
   :global(.input-group-text) {
-    background-color: $AthensGray;
+    background-color: var(--lightAthensGray);
     border: none;
-    color: $Bombay;
+    color: var(--bombay);
   }
 
   :global(.input-group-text):first-child {
@@ -77,6 +77,7 @@
   }
 }
 
-.input-group-advance:focus-within, .input-group:focus-within {
-  border: 1px solid $BlueRibbon;
+.input-group-advance:focus-within,
+.input-group:focus-within {
+  border: 1px solid var(--blueRibbon);
 }

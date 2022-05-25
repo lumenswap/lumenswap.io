@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .main {
   width: auto;
@@ -8,9 +8,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  border: 1px solid $BlueRibbon;
-  color: $BlueRibbon;
-  background-color: $White;
+  border: 1px solid var(--blueRibbon);
+  color: var(--blueRibbon);
+  background-color: var(--white);
   margin-right: 16px;
   font-family: SofiaPro;
   font-size: 14px;

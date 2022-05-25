@@ -10,14 +10,14 @@
 .title {
   font-size: 18px;
   font-weight: 500;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 0;
   margin-top: 16px;
 }
 
 .text {
   font-size: 14px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   word-break: break-all;
   margin-top: 8px;
   margin-bottom: 0;
@@ -40,8 +40,8 @@
 }
 
 .btnLink {
-  background-color: $BlueRibbon;
-  border: 1px solid $BlueRibbon;
+  background-color: var(--blueRibbon);
+  border: 1px solid var(--blueRibbon);
   color: white;
   display: flex;
   border-radius: 8px;

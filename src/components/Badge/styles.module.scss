@@ -11,18 +11,17 @@
   font-weight: 500;
 
   &-info {
-    background-color: $CatskillWhite;
-    color: $ShuttleGray;
+    background-color: var(--catsKillWhite);
+    color: var(--rollingStone);
   }
 
   &-success {
-    background-color: $SuccessGreen;
+    background-color: var(--successGreen);
     color: white;
   }
 
   &-danger {
-    background-color: $CatskillWhite;
-    color: $Punch;
+    background-color: var(--catsKillWhite);
+    color: var(--punch);
   }
 }
-

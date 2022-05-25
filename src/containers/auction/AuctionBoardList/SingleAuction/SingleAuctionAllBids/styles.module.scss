@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .table {
   margin-top: 10px;
@@ -12,16 +12,16 @@
 
 .link {
   text-decoration: none !important;
-  color: $BlueRibbon;
+  color: var(--blueRibbon);
 
   &:hover {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 .bread-crumb {
   margin-top: 29px;
   margin-bottom: 24px;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: space-between;
 }
@@ -47,7 +47,7 @@
     font-family: SofiaPro;
     margin-left: 24px;
     font-size: 16px;
-    color: $CodGray;
+    color: var(--codGray);
     font-weight: 600;
   }
   input {

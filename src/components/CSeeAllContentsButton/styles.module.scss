@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .address-link {
   display: flex;
@@ -6,7 +6,7 @@
   justify-content: flex-end;
   margin-top: 14px;
   font-family: SofiaPro;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
   font-family: SofiaPro;
   font-size: 16px;
   font-weight: normal;
@@ -16,7 +16,7 @@
   letter-spacing: normal;
 
   &:hover {
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 
   span {

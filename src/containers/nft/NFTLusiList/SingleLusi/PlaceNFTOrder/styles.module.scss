@@ -7,7 +7,7 @@
 .info {
   font-size: 16px;
   line-height: 1.5;
-  color: $ShuttleGray;
+  color: var(--rollingStone);
 }
 
 .btn {
@@ -28,5 +28,5 @@
   line-height: normal;
   letter-spacing: normal;
   text-align: center;
-  color: $CodGray;
+  color: var(--codGray);
 }

@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .select {
   :global(.select__control) {
@@ -41,7 +41,7 @@
 
   :global(.select__option) {
     padding: 9px 8px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     cursor: pointer;
     font-size: 15px;
     display: flex;
@@ -66,7 +66,7 @@
   :global(.select__indicator) svg {
     width: 17px;
     height: auto;
-    color: $RollingStone;
+    color: var(--rollingStone);
   }
 
   :global(.select__indicator) {

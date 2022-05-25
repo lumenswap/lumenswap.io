@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .roundsList {
   margin-top: 32px;
@@ -7,7 +7,7 @@
 .title {
   font-family: SofiaPro;
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
   font-weight: 500;
 }
 
@@ -21,7 +21,7 @@
 .round-item-main {
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;
-  background-color: $White;
+  background-color: var(--white);
   margin-bottom: 32px;
 }
 
@@ -32,7 +32,7 @@
 }
 .round-item-info {
   height: 71px;
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
   display: flex;
   flex-direction: row;
   &-section {
@@ -41,7 +41,7 @@
     align-items: center;
   }
   &-section:first-child {
-    border-right: 1px solid $CatskillWhite;
+    border-right: 1px solid var(--catsKillWhite);
   }
   &-texts {
     margin-left: 24px;
@@ -55,7 +55,7 @@
       font-style: normal;
       line-height: 1.43;
       letter-spacing: normal;
-      color: $ShuttleGray;
+      color: var(--rollingStone);
     }
     &-number {
       font-family: SofiaPro;
@@ -65,7 +65,7 @@
       font-style: normal;
       line-height: 1.45;
       letter-spacing: normal;
-      color: $CodGray;
+      color: var(--codGray);
     }
   }
 }

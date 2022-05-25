@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .input {
   font-weight: 400 !important;
@@ -32,7 +32,7 @@
     }
 
     &:hover {
-      background-color: $AthensGray;
+      background-color: var(--lightAthensGray);
     }
   }
 }

@@ -12,7 +12,7 @@
   font-style: normal;
   line-height: 1.42;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 14px;
   &-second {
     font-family: SofiaPro;
@@ -22,7 +22,7 @@
     font-style: normal;
     line-height: 1.56;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
     margin-top: 24px;
   }
 }
@@ -46,20 +46,20 @@
 .table-container {
   margin-top: 12px;
   margin-bottom: 34px;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   overflow-y: auto;
   scrollbar-width: none;
 }
 .table-container::-webkit-scrollbar {
-  width: 0;  
-  background: transparent;  
+  width: 0;
+  background: transparent;
 }
 .table {
   height: 100% !important;
   th {
-    color: $Manatee;
+    color: var(--manatee);
     font-family: SofiaPro;
     font-size: 16px;
     font-weight: normal;
@@ -82,13 +82,12 @@
   }
   tr:not(:last-child) {
     height: 47px !important;
-    border-bottom:  1px solid $DarkAthensGray;
+    border-bottom: 1px solid var(--catsKillWhite);
   }
   tr:first-child {
     border: none;
   }
 }
-
 
 .pair {
   margin-left: 6px;
@@ -97,7 +96,7 @@
 .empty-table-container {
   width: 100%;
   height: 190px;
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   display: flex;
   justify-content: center;
@@ -111,7 +110,7 @@
     line-height: 1.56;
     letter-spacing: normal;
     text-align: center;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
 }
 
@@ -127,7 +126,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
   }
 }
 
@@ -139,14 +138,14 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .loading-container {
   margin-top: 12px;
   width: 100%;
   height: 474px;
-  background-color: $White;
+  background-color: var(--white);
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;
   display: flex;
@@ -169,13 +168,12 @@
     line-height: 1.43;
     letter-spacing: normal;
     cursor: pointer;
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 
-
 .chart-container {
-  background-color: $White;
+  background-color: var(--white);
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   width: 100%;
@@ -211,7 +209,7 @@
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
     padding-top: 7px;
   }
   &-text {
@@ -222,7 +220,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
   &-time {
     font-family: SofiaPro;
@@ -232,7 +230,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     padding-top: 12px;
   }
 }
@@ -253,7 +251,7 @@
     font-style: normal;
     line-height: 1.45;
     letter-spacing: normal;
-    color: $CodGray;
+    color: var(--codGray);
     padding-top: 7px;
   }
   &-text {
@@ -264,7 +262,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
   }
   &-time {
     font-family: SofiaPro;
@@ -274,7 +272,7 @@
     font-style: normal;
     line-height: 1.43;
     letter-spacing: normal;
-    color: $ShuttleGray;
+    color: var(--rollingStone);
     padding-top: 12px;
   }
 }
@@ -289,7 +287,6 @@
     margin-bottom: 50px;
   }
 }
-
 
 @media screen and (max-width: 768px) {
   .chart-container {

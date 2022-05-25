@@ -22,23 +22,23 @@
 
   :global(.rc-steps-item-process) :global(.rc-steps-item-title):after,
   :global(.rc-steps-item-wait) :global(.rc-steps-item-title):after {
-    background-color: $Bombay;
+    background-color: var(--bombay);
   }
 
   :global(.rc-steps-item-wait) :global(.rc-steps-item-icon) {
-    border-color: $Bombay;
+    border-color: var(--bombay);
     background-color: transparent;
   }
 
   :global(.rc-steps-item-process) :global(.rc-steps-item-icon),
   :global(.rc-steps-item-finish) :global(.rc-steps-item-title):after {
-    background-color: $BlueRibbon;
-    border-color: $BlueRibbon;
+    background-color: var(--blueRibbon);
+    border-color: var(--blueRibbon);
   }
 
   :global(.rc-steps-item-finish) :global(.rc-steps-item-icon) {
     background-color: transparent;
-    border-color: $BlueRibbon;
+    border-color: var(--blueRibbon);
   }
 
   :global(.rc-steps-item-title) {

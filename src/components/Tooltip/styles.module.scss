@@ -1,12 +1,12 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .tooltip {
   font-size: 13px;
 }
 
 .tooltip-message {
-  border-radius: .25rem;
-  box-shadow: 0 0 4px 0 rgba(0,0,0,.13) !important;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13) !important;
   font-family: SofiaPro;
   font-size: 14px;
   font-weight: normal;
@@ -14,7 +14,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  background-color: $White;
+  background-color: vat(--white);
   padding: 5px;
   max-width: 200px;
 }

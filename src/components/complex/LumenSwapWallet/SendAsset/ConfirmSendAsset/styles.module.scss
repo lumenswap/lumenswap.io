@@ -2,33 +2,34 @@
 
 .label {
   font-size: 18px;
-  color: $RollingStone;
+  color: var(--rollingStone);
   margin-bottom: 2px;
 }
 
-.asset-name, .asset-web {
+.asset-name,
+.asset-web {
   margin-left: 6px;
 }
 
 .asset-name {
   font-size: 18px;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .asset-web {
   font-size: 16px;
-  color: $RollingStone;
+  color: var(--rollingStone);
 }
 
 .hr {
-  border-top: 1px solid $CatskillWhite;
+  border-top: 1px solid var(--catsKillWhite);
   margin-top: 11px;
   margin-bottom: 13px;
 }
 
 .value {
   font-size: 20px;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .btn {

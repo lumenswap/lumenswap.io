@@ -1,52 +1,53 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .tolerance {
-    color: $Manatee;
+  color: var(--manatee);
 }
 
 .tolerance-items {
-    display: flex;
-    span {
-        color: $Manatee;
-        border-radius: 4px;
-        background-color: #f7f8fa;
-        padding: 2px 6px;
-        font-size: 12px;
-    }
+  display: flex;
+  span {
+    color: var(--manatee);
+    border-radius: 4px;
+    background-color: #f7f8fa;
+    padding: 2px 6px;
+    font-size: 12px;
+  }
 
-    span:not(:last-child) {
-        margin-right: 6px;
-    }
+  span:not(:last-child) {
+    margin-right: 6px;
+  }
 
-    .selected , .selected > span {
-        background-color: $BlueRibbon;
-        color: white;
+  .selected,
+  .selected > span {
+    background-color: var(--blueRibbon);
+    color: white;
 
-        input {
-            background-color: $BlueRibbon;
-            color: white;
-            font-size: 12px;
-        }
+    input {
+      background-color: var(--blueRibbon);
+      color: white;
+      font-size: 12px;
     }
+  }
 }
 
 .selected {
-    input {
-        background-color: $BlueRibbon;
-    }
+  input {
+    background-color: var(--blueRibbon);
+  }
 }
 
 .custom {
-    width: 80px;
-    display: inline-flex;
-  
-    input {
-      width: 60px;
-      border: none;
-      outline: none;
-      background-color: $LightAthensGray;
-      color: $RollingStone;
-      padding-left: 0;
-      transition: ease-in;
-    }
+  width: 80px;
+  display: inline-flex;
+
+  input {
+    width: 60px;
+    border: none;
+    outline: none;
+    background-color: var(--lightAthensGray);
+    color: var(--rollingStone);
+    padding-left: 0;
+    transition: ease-in;
+  }
 }

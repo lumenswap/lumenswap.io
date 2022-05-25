@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .row {
   margin-right: -4px;
@@ -62,7 +62,7 @@
 .td-outside {
   margin-left: -20px;
   position: absolute;
-  color: $Manatee;
+  color: var(--manatee);
   margin-top: -6px;
 }
 
@@ -87,7 +87,7 @@
   padding: 14px;
   font-size: 18px;
   font-weight: 500;
-  color: $CodGray;
+  color: var(--codGray);
   min-width: 179px;
 
   img {
@@ -111,7 +111,7 @@
 
   span {
     font-size: 10px;
-    color: $RollingStone;
+    color: var(--rollingStone);
     margin-top: 2px;
     margin-left: auto;
   }
@@ -136,13 +136,13 @@
 .form-title {
   font-size: 16px;
   font-weight: 400;
-  color: $CodGray;
+  color: var(--codGray);
 }
 
 .form-value {
   font-size: 14px;
   font-weight: 400;
-  color: $RollingStone;
+  color: var(--rollingStone);
   margin-top: 4px;
 
   span {
@@ -154,7 +154,7 @@
 .table {
   tr {
     &:hover {
-      background-color: $White !important;
+      background-color: var(--white) !important;
     }
     td {
       font-family: Roboto;
@@ -164,7 +164,7 @@
       font-style: normal;
       line-height: 0.83;
       letter-spacing: normal;
-      color: $CodGray;
+      color: var(--codGray);
       section {
         margin-left: 0px !important;
         margin-top: 3px;
@@ -178,7 +178,7 @@
       font-style: normal;
       line-height: 0.83;
       letter-spacing: normal;
-      color: $Manatee;
+      color: var(--manatee);
       span {
         margin-left: 0px !important;
       }

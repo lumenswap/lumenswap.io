@@ -13,17 +13,17 @@
   height: 54px;
   border-radius: 8px;
   background-color: white;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   display: flex;
   align-items: center;
   justify-content: space-between;
   transition: ease-in;
   font-size: 20px;
-  color: $CodGray;
+  color: var(--codGray);
   padding: 0 12px;
 
   span {
-    color: $Waterloo;
+    color: var(--manatee);
     transform: scale(-1, 1);
     transition: ease-in;
   }
@@ -35,10 +35,10 @@
 
 .btn:hover {
   background-color: white;
-  border: 1px solid $BlueRibbon;
+  border: 1px solid var(--blueRibbon);
 
   span {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 
@@ -47,20 +47,20 @@
   height: 54px;
   border-radius: 8px;
   background-color: white;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   display: flex;
   align-items: center;
   justify-content: space-between;
   transition: ease-in;
   font-size: 20px;
-  color: $CodGray;
+  color: var(--codGray);
   padding: 0 12px;
 
   text-decoration: none;
   margin-bottom: 24px;
 
   span {
-    color: $Waterloo;
+    color: var(--manatee);
     transform: scale(-1, 1);
     transition: ease-in;
   }
@@ -81,10 +81,10 @@
 
 .btnLink:hover {
   background-color: white;
-  border: 1px solid $BlueRibbon;
+  border: 1px solid var(--blueRibbon);
 
   span {
-    color: $BlueRibbon;
+    color: var(--blueRibbon);
   }
 }
 
@@ -92,7 +92,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background-color: $AthensGray;
+  background-color: var(--lightAthensGray);
   margin-right: 8px;
   display: flex;
   justify-content: center;

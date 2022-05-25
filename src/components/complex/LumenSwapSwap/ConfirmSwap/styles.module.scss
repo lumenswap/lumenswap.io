@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .swap-container {
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
 
   div {
-    color: $CodGray;
+    color: var(--codGray);
   }
 
   div:first-child {
@@ -26,7 +26,7 @@
 .arrow {
   font-size: 18px;
   display: block;
-  color: $Manatee;
+  color: var(--manatee);
   margin: 12px 0;
 }
 
@@ -34,13 +34,13 @@
   font-size: 12px;
   margin-top: 20px;
   margin-bottom: 24px;
-  color: $Manatee;
+  color: var(--manatee);
   font-weight: 400;
   font-style: italic;
 }
 
 .info {
-  background-color: $AthensGray;
+  background-color: var(--lightAthensGray);
   margin: 0 -17px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -60,12 +60,12 @@
 .label {
   font-size: 14px;
   line-height: 1.29;
-  color: $RollingStone;
+  color: var(--rollingStone);
 
   span {
     font-size: 13px;
     margin-left: 4px;
-    color: $Bombay;
+    color: var(--bombay);
     cursor: pointer;
   }
 }
@@ -73,17 +73,17 @@
 .value {
   font-size: 14px;
   line-height: 1.29;
-  color: $CodGray;
+  color: var(--codGray);
   display: flex;
   align-items: center;
 
   .icon-arrow-repeat {
-    color: $RollingStone;
+    color: var(--rollingStone);
     font-size: 16px;
     margin-left: 6px;
   }
 }
 
 .important {
-  color: $Shamrock;
+  color: var(--successGreen);
 }

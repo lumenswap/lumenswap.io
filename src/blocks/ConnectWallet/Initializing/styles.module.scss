@@ -2,7 +2,7 @@
 
 .connecting {
   height: 54px;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   padding: 0 16px;
   display: flex;
   align-items: center;
@@ -15,22 +15,22 @@
   }
 
   button {
-    color: $CodGray;
+    color: var(--codGray);
     font-size: 12px;
     font-weight: 500;
     width: 74px;
     height: 32px;
     border-radius: 8px;
     margin-left: 9px;
-    background-color: $CatskillWhite;
-    border: 1px solid $CatskillWhite;
+    background-color: var(--catsKillWhite);
+    border: 1px solid var(--catsKillWhite);
     outline: none;
   }
 }
 
 .error {
-  color: $Punch;
-  border: 1px solid $Punch;
+  color: var(--punch);
+  border: 1px solid var(--punch);
 }
 
 .btn {
@@ -38,12 +38,12 @@
   height: 72px;
   border-radius: 8px;
   background-color: white;
-  border: 1px solid $DarkAthensGray;
+  border: 1px solid var(--catsKillWhite);
   display: flex;
   align-items: center;
   justify-content: space-between;
   transition: ease-in;
-  color: $CodGray;
+  color: var(--codGray);
   padding: 0 16px;
   margin-bottom: 30px;
 
@@ -54,12 +54,12 @@
 
 .name {
   font-size: 16px;
-  color: $CodGray;
+  color: var(--codGray);
   font-weight: 500;
 }
 
 .msg {
   margin-top: 7px;
   font-size: 14px;
-  color: $RollingStone;
+  color: var(--rollingStone);
 }

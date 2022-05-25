@@ -8,16 +8,15 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 1.5;
-  color: $CodGray;
+  color: var(--codGray);
   margin-bottom: 0;
 }
 
 .filter {
-
   :global(.select__control) {
     width: 174px;
     height: 40px;
-    border: solid 1px $CatskillWhite;
+    border: solid 1px var(--catsKillWhite);
     border-radius: 4px;
 
     :global(.select__value-container) {
@@ -26,7 +25,7 @@
   }
 
   :global(.select__control):hover {
-    border: solid 1px $CatskillWhite;
+    border: solid 1px var(--catsKillWhite);
   }
 
   :global(.select__value-container),
@@ -34,7 +33,7 @@
     font-size: 14px;
     font-weight: normal;
     padding: 8px 14px;
-    color: $CodGray !important;
+    color: var(--codGray) !important;
   }
 
   :global(.select__menu-list) {
