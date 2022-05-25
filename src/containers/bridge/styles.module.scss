@@ -28,7 +28,7 @@
   font-stretch: normal;
   font-style: normal;
   letter-spacing: normal;
-  color: $CodGray;
+  color: var(--codGray);
   &-container {
     display: flex;
     align-items: center;
@@ -45,7 +45,7 @@
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 6px solid $CodGray;
+    border-bottom: 6px solid var(--codGray);
     &-container {
       margin-top: 7px;
       margin-left: 2px;
@@ -99,8 +99,8 @@
   width: 330px;
   height: 116px;
   border-radius: 8px;
-  border: 1px solid $CatskillWhite;
-  background-color: $AthensGray;
+  border: 1px solid var(--catsKillWhite);
+  background-color: var(--lightAthensGray);
   margin-top: 24px;
   padding: 0 16px 0 16px;
   &-item:first-child {
@@ -120,7 +120,7 @@
       font-style: normal;
       line-height: 2;
       letter-spacing: normal;
-      color: $ShuttleGray;
+      color: var(--rollingStone);
     }
     &-number {
       font-family: SofiaPro;
@@ -130,7 +130,7 @@
       font-style: normal;
       line-height: 2;
       letter-spacing: normal;
-      color: $CodGray;
+      color: var(--codGray);
     }
   }
 }
