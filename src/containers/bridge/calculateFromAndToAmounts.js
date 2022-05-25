@@ -16,6 +16,10 @@ export function calculateToAmount(orderInfo) {
 }
 
 export function calculateToAmountFee(fee, precision) {
-  const totalFee = new BN(fee).div(10 ** precision);
+  let currectFee = fee;
+  if (currectFee === null || !currectFee) {
+    currectFee = 0;
+  }
+  const totalFee = new BN(currectFee).div(10 ** precision);
   return totalFee;
 }
