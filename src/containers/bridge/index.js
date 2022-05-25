@@ -16,6 +16,7 @@ import { fetchAccountFullDetails } from 'api/stellar';
 import generateAddTrustLineTRX from 'stellar-trx/generateAddTrustLineTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import classNames from 'classnames';
 import decimalCounter from './decimalCounter';
 import bridgeFormCustomValidator from './bridgeFormCustomValidator';
 import ConvertAssetInput from './ConvertAssetInput';
@@ -23,6 +24,7 @@ import { TOKEN_A_FORM_NAME, TOKEN_B_FORM_NAME } from './tokenFormNames';
 import ConvertConfirmModalContent from './ConvertConfirmModalContent';
 import styles from './styles.module.scss';
 import FailDialog from './ConfirmModal/FailDialog';
+import ShowFeeSection from './ShowFeeSection';
 
 const customValidateAmount = (value, onChange, formValues) => {
   const minAmountPrecision = Math.min(formValues[TOKEN_A_FORM_NAME].precision,
@@ -175,6 +177,23 @@ const BridgeConvert = ({ bridgeTokens }) => {
     trigger();
   }, [useWatch({ control })]);
 
+  const handleSetMaxAmount = () => {
+    if (isLoggedIn) {
+      const foundAssetMaxAmount = userBalances.find((balance) => isSameAsset(getAssetDetails({
+        code: balance.asset.code,
+        issuer: balance.asset.issuer,
+      }),
+      getAssetDetails({
+        code: getValues()[TOKEN_A_FORM_NAME].name,
+        issuer: process.env.REACT_APP_L_ISSUER,
+      })));
+
+      if (foundAssetMaxAmount) {
+        setValue('amount', foundAssetMaxAmount.balance);
+      }
+    }
+  };
+
   return (
     <BridgeContainer title="Bridge Convert | Lumenswap">
       <div className="layout main d-flex justify-content-center">
@@ -200,7 +219,16 @@ const BridgeConvert = ({ bridgeTokens }) => {
                 setValue={setValue}
               />
             </div>
-            <label className="label-primary mt-3">Amount</label>
+            <div className={classNames(styles['amount-container'], 'mt-3')}><label className="label-primary">Amount</label>
+              {(getValues()[TOKEN_A_FORM_NAME].network === 'stellar' && isLoggedIn) && (
+              <div className={styles['max-btn-container']}>
+                <div onClick={handleSetMaxAmount} className={styles['max-btn-area']}>
+                  <div className={styles['max-btn']}>Max</div>
+                  <div className={styles['max-btn-arrow-container']}><div className={styles['max-btn-arrow']} /></div>
+                </div>
+              </div>
+              )}
+            </div>
             <Controller
               name="amount"
               control={control}
@@ -231,13 +259,14 @@ const BridgeConvert = ({ bridgeTokens }) => {
                 />
               )}
             />
+            {(getValues().amount && getValues()[TOKEN_A_FORM_NAME].network === 'stellar') && <ShowFeeSection convertInfo={getValues()} />}
 
             <Button
               variant="primary"
               htmlType="submit"
               size="100%"
               fontWeight={500}
-              className="mt-4"
+              className={styles['submit-btn']}
               disabled={formState.isValidating || !formState.isValid || createOrderLoading}
               content={(createOrderLoading || formState.isValidating)
                 ? <Submitting loadingSize={21} />

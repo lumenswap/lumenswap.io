@@ -14,3 +14,12 @@ export function calculateToAmount(orderInfo) {
   const totalFee = new BN(orderInfo.fee.total).div(10 ** feeMinPrecision);
   return new BN(orderInfo.user_amount).div(10 ** minPrecision).minus(totalFee).toString();
 }
+
+export function calculateToAmountFee(fee, precision) {
+  let currectFee = fee;
+  if (currectFee === null || !currectFee) {
+    currectFee = 0;
+  }
+  const totalFee = new BN(currectFee).div(10 ** precision);
+  return totalFee;
+}
