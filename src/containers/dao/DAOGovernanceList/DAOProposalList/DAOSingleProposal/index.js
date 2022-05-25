@@ -178,7 +178,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
             <div className={classNames(styles.card, 'mt-4')}>
               <h4 className={styles['card-title-small']}>Description</h4>
               <p className={styles['card-desc']}>
-                {proposalInfo.description}
+                {proposalInfo.description.split('\n').map((text, index) => <p key={index}>{text}<br /></p>)}
               </p>
             </div>
 

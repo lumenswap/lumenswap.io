@@ -15,17 +15,23 @@ async function bridgeFormCustomValidator(formValues, userBalances) {
       return { values: formValues, errors: generateFormResolverErrors('amount', 'Insufficient amount') };
     }
   }
+
   if (!formValues.amount || formValues.amount === '') {
     return { values: formValues, errors: generateFormResolverErrors('amount', 'Amount is required') };
   }
+
   if (new BN(formValues.amount).isEqualTo(0)) {
     return { values: formValues, errors: generateFormResolverErrors('amount', 'Invalid amount') };
   }
-  if (!new BN(formValues.amount).gte(currentFromToken.minimum_amount)) {
-    return { values: formValues, errors: generateFormResolverErrors('amount', `Minimum amount is ${currentFromToken.minimum_amount}`) };
+
+  if (!new BN(formValues.amount).gte(
+    new BN(currentFromToken.minimum_amount).div(10 ** (currentFromToken.precision)),
+  )) {
+    return { values: formValues, errors: generateFormResolverErrors('amount', `Minimum amount is ${new BN(currentFromToken.minimum_amount).div(10 ** (currentFromToken.precision)).toString()}`) };
   }
+
   if ((!formValues.destination || formValues.destination === '') && currentToToken.network !== 'stellar') {
-    return { values: formValues, errors: generateFormResolverErrors('destination', 'Address is required') };
+    return { values: formValues, errors: generateFormResolverErrors('destination', 'Destination is required') };
   }
 
   const isValidatedAddress = walletValidator.validate(formValues.destination,
