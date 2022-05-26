@@ -77,6 +77,7 @@ const ProposalForm = ({ info, setStatus }) => {
     dispatch(openModalAction({
       modalProps: {
         mainClassName: 'modal-br8',
+        className: `${styles.modal}`,
       },
       content: <ConfirmProposalModal formData={sanitizedData} setStatus={setStatus} />,
     }));

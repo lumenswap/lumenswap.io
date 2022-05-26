@@ -39,7 +39,7 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 1.42;
-  color: var(--lightAthensGray);
+  color: var(--blackToWhite);
   background-color: var(--white);
 
   &::placeholder {
@@ -137,7 +137,7 @@
   width: 100%;
   min-height: 40px;
   border-radius: 4px;
-  background-color: var(--lightRed);
+  background-color: var(--lightRedToDarkGray);
   align-items: center;
   flex-direction: row;
   margin-top: 32px;
@@ -155,4 +155,8 @@
     line-height: 1.5;
     letter-spacing: normal;
   }
+}
+
+.modal {
+  background-color: var(--whiteToDarkGray);
 }

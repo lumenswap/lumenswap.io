@@ -43,6 +43,11 @@
 .date {
   :global(.react-datepicker__current-month) {
     font-weight: 500;
+    color: var(--blackToWhite);
+  }
+
+  :global(.react-datepicker__month-container) {
+    background-color: var(--white);
   }
 
   :global(.react-datepicker) {
@@ -67,7 +72,7 @@
   }
 
   :global(.react-datepicker__day) {
-    color: var(--rollingStone);
+    color: var(--rollingStoneToWhite);
     font-family: "SofiaPro", sans-serif;
 
     &:hover {
@@ -98,7 +103,7 @@
     top: 9px;
   }
   :global(.react-datepicker__day--disabled) {
-    color: #ccc;
+    color: var(--cccToRollingStone);
     &:hover {
       background-color: inherit;
     }

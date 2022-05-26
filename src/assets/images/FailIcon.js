@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Icon() {
+function Icon({ color }) {
   return (
     <svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -11,7 +11,7 @@ function Icon() {
           <use xlinkHref="#ieyvkcdpfa" />
         </mask>
         <use fill="#FF6728" fillRule="nonzero" xlinkHref="#ieyvkcdpfa" />
-        <g mask="url(#1eosrwa1eb)" fill="#DB2F2F">
+        <g mask="url(#1eosrwa1eb)" fill={color ?? '#DB2F2F'}>
           <path d="M-1.75-1.75h42v42h-42z" />
         </g>
       </g>
