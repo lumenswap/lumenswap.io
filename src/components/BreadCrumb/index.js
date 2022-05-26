@@ -11,7 +11,7 @@ function Breadcrumb({ data, className, spaceBetween = 6 }) {
           return <>{item.render()}</>;
         }
         return (
-          <div key={index + item.name} style={{ color: `${index !== data.length - 1 ? '#656872' : '#1d1d1d'}` }}>{item.url ? (
+          <div key={index + item.name} style={{ color: `${index !== data.length - 1 ? '#656872' : 'var(--codGray)'}` }}>{item.url ? (
             <Link href={item.url}>
               <a>
                 {item.name}

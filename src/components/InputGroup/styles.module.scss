@@ -2,7 +2,7 @@
 
 .input-group {
   border: 1px solid var(--catsKillWhite);
-  background-color: white;
+  background-color: var(--whiteToDarkGray);
   border-radius: 8px;
   transition: ease-in;
 
@@ -23,7 +23,7 @@
 
   input:focus {
     box-shadow: none;
-    background-color: white;
+    background-color: var(--whiteToDarkGray);
   }
 
   :global(.input-group-text) {

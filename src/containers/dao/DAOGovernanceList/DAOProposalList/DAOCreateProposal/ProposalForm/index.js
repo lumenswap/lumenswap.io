@@ -12,6 +12,8 @@ import { getAssetDetails } from 'helpers/asset';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
 import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
+import AlertIconDark from 'assets/images/alert-icon-dark';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import ConfirmProposalModal from './ConfirmProposalModal';
 import CreateProposalError from './CreateProposalError';
 import FormOptions from './FormOptions/index';
@@ -29,6 +31,7 @@ const ProposalForm = ({ info, setStatus }) => {
     code: info.assetCode,
     issuer: info.assetIssuer,
   }))?.balance ?? '0';
+  const currentTheme = useCurrentTheme();
 
   const {
     handleSubmit,
@@ -108,7 +111,7 @@ const ProposalForm = ({ info, setStatus }) => {
   return (
     <div>
       <div className={classNames(styles.alert, 'mb-4')}>
-        <AlertIcon />
+        {currentTheme === 'light' ? <AlertIcon /> : <AlertIconDark />}
         You need to have a minimum of
         <span className="mx-1">{humanizeAmount(info.minValue, true)} {info.assetCode}</span>
         in order to submit a proposal.

@@ -35,7 +35,7 @@ function InfoBoxItem({
           )}
         </span>
       </div>
-      <div className={styles['align-center']}>{url ? <InfoBoxLink item={item} /> : item.render(data)}</div>
+      <div style={{ color: 'var(--blackToWhite)' }} className={styles['align-center']}>{url ? <InfoBoxLink item={item} /> : item.render(data)}</div>
     </div>
 
   );

@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import plusIcon from 'assets/images/plus-icon.png';
+import plusIconPurple from 'assets/images/plus-icon-purple.svg';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import Option from './Option';
 import styles from '../styles.module.scss';
 
 const FormOptions = ({ control }) => {
+  const currentTheme = useCurrentTheme();
   const [options, setOptions] = useState(
     [
       {
@@ -67,7 +70,7 @@ const FormOptions = ({ control }) => {
             className={styles['btn-dashed']}
             onClick={onAddOption}
           >
-            <div className={styles['plus-icon-container']}><img src={plusIcon} height={18} width={18} /></div>
+            <div className={styles['plus-icon-container']}><img src={currentTheme === 'light' ? plusIcon : plusIconPurple} height={18} width={18} /></div>
             Add option
           </button>
         )}
