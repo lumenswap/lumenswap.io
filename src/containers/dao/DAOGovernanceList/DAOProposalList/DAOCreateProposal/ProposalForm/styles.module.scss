@@ -5,6 +5,7 @@
   border-radius: 4px;
   color: var(--rollingStone);
   padding: 8px 14px;
+  background-color: var(--whiteToDarkGray);
 
   span {
     color: var(--codGray);
@@ -38,7 +39,8 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 1.42;
-  color: var(--lightAthensGray);
+  color: var(--blackToWhite);
+  background-color: var(--white);
 
   &::placeholder {
     color: var(--bombay);
@@ -51,6 +53,7 @@
   line-height: 1.5;
   color: var(--rollingStone);
   min-height: 168px;
+  background-color: var(--white);
 
   &::placeholder {
     color: var(--bombay);
@@ -63,6 +66,7 @@
 .panel {
   border: 1px solid var(--catsKillWhite);
   border-radius: 8px;
+  background-color: var(--whiteToDarkGray);
 
   &-header {
     font-size: 18px;
@@ -70,6 +74,7 @@
     line-height: 1.56;
     border-bottom: 1px solid var(--catsKillWhite);
     padding: 14px 24px;
+    color: var(--blackToWhite);
   }
 
   &-body {
@@ -90,6 +95,10 @@
   cursor: default;
 }
 
+.option-input {
+  background-color: var(--white);
+}
+
 .btn-dashed {
   margin-top: 24px;
   width: 100%;
@@ -98,7 +107,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: var(--white);
   border: 1px dashed var(--bombay);
   color: var(--manatee);
 
@@ -128,7 +137,7 @@
   width: 100%;
   min-height: 40px;
   border-radius: 4px;
-  background-color: var(--lightRed);
+  background-color: var(--lightRedToDarkGray);
   align-items: center;
   flex-direction: row;
   margin-top: 32px;
@@ -146,4 +155,8 @@
     line-height: 1.5;
     letter-spacing: normal;
   }
+}
+
+.modal {
+  background-color: var(--whiteToDarkGray);
 }

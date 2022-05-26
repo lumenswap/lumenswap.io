@@ -24,7 +24,7 @@ function Option({
         maxLength={50}
         onFocus={() => { setShow(option); }}
         onBlur={() => { setShow(null); }}
-        className={option.defaultValue && styles.defaultInput}
+        className={option.defaultValue ? styles.defaultInput : styles['option-input']}
       />
     </div>
   );

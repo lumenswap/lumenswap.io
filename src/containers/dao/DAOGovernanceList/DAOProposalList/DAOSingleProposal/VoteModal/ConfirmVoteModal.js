@@ -52,7 +52,7 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
       });
   };
   return (
-    <div className="pb-4 main">
+    <div style={{ backgroundColor: 'var(--whiteToDarkGray)' }} className="pb-4 main">
       <p className={styles.title}>
         {proposalInfo.title}
       </p>

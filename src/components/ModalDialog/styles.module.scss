@@ -12,6 +12,11 @@
     font-size: 20px;
   }
 }
+.modal {
+  :global(.modal-content) {
+    background-color: var(--whiteToDarkGray);
+  }
+}
 
 .title {
   font-size: 18px;

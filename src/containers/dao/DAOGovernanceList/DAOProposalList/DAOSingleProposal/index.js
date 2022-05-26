@@ -49,6 +49,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
       modalProps: {
         title: 'Vote',
         mainClassName: 'modal-br8',
+        className: `${styles.modal}`,
       },
       content: <VoteModal proposalInfo={{
         endTime: proposalInfo.endTime,

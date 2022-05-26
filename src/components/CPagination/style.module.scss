@@ -14,15 +14,10 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    background-color: #fff;
+    background-color: var(--white);
 
     .arrowLeft {
       transform: rotateZ(180deg);
-    }
-
-    .disabled {
-      filter: brightness(0);
-      opacity: 0.5;
     }
   }
 }
@@ -30,7 +25,7 @@
 .pagination-items {
   display: flex;
   align-items: center;
-  background: white;
+  background: var(--white);
   padding: 4px 7px;
   border-left: var(--catsKillWhite) 1px solid;
   border-right: var(--catsKillWhite) 1px solid;
@@ -66,5 +61,5 @@
 .pagination-item:hover,
 .pagination-item.active {
   background: var(--zumthor);
-  color: var(--blueRibbon);
+  color: var(--blueRibbonToWhite);
 }

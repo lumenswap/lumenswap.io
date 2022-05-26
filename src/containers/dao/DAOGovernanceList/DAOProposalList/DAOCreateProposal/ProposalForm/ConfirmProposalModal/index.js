@@ -4,17 +4,19 @@ import Button from 'components/Button';
 import { closeModalAction } from 'actions/modal';
 import ContractIcon from 'assets/images/contract';
 import { TIME_AFTER_PROPOSAL_END_TIME } from 'containers/dao/consts';
-
+import ContractDarkIcon from 'assets/images/contract-dark';
 import { createPendingProposal } from 'api/daoAPI';
 import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimableBalanceForDaoTRX';
 import { getAssetDetails } from 'helpers/asset';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { Claimant } from 'stellar-sdk';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
 const ConfirmProposalModal = ({ formData, setStatus }) => {
   const dispatch = useDispatch();
+  const currentTheme = useCurrentTheme();
 
   const handleConfirm = () => {
     setStatus({ value: 'loading', message: '' });
@@ -69,8 +71,8 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
   };
 
   return (
-    <div className="pb-4 d-flex flex-column align-items-center">
-      <ContractIcon />
+    <div style={{ backgroundColor: 'var(--whiteToDarkGray)' }} className="pb-4 d-flex flex-column align-items-center">
+      {currentTheme === 'light' ? <ContractIcon /> : <ContractDarkIcon />}
       <h6 className={styles.title}>Confirm proposal</h6>
       <p className={styles.text}>Your proposal will not be editable after publishing.</p>
       <Button

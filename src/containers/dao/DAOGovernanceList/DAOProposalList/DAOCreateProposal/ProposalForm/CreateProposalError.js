@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 function CreateProposalError({ error }) {
   return (
     <div className={styles['error-container']}>
-      <AlertIcon color="#db2f2f" className={styles['error-container-icon']} />
+      <AlertIcon color="var(--punch)" className={styles['error-container-icon']} />
       <div className={styles['error-container-text']}>{error}</div>
     </div>
   );

@@ -25,6 +25,7 @@
 
 .button-primary:hover {
   background: var(--highBlue);
+  border: 1px solid var(--highBlue);
 }
 
 .button-secondary,
@@ -49,9 +50,9 @@
 }
 
 .button-basic {
-  background-color: white;
+  background-color: var(--whiteToZumthor);
   color: var(--rollingStone);
-  border: 1px solid var(--catsKillWhite);
+  border: 1px solid var(--catsKillWhiteToZumthor);
 }
 
 .button-primary-outline {

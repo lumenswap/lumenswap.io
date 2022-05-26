@@ -1,11 +1,26 @@
 import classNames from 'classnames';
 import ArrowPagination from 'assets/images/arrow-pagination.svg';
+import ArrowWhitePagination from 'assets/images/arrow-white.svg';
+import ArrowGrayPagination from 'assets/images/arrow-gray-pagination.svg';
 import { useEffect, useState } from 'react';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import { generateRange } from './helpers';
 import styles from './style.module.scss';
 
+const arrowIconSRC = {
+  light: {
+    disabled: ArrowGrayPagination,
+    enabled: ArrowPagination,
+  },
+  dark: {
+    disabled: ArrowGrayPagination,
+    enabled: ArrowWhitePagination,
+  },
+};
+
 const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
   const [currentPage, setCurrentPage] = useState(initCurrentPage);
+  const currentTheme = useCurrentTheme();
 
   useEffect(() => {
     setCurrentPage(initCurrentPage);
@@ -36,8 +51,8 @@ const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
     <div className={styles['pagination-container']}>
       <button disabled={currentPage <= 1} type="button" onClick={() => onPageClick(currentPage - 1)}>
         <img
-          className={classNames(styles.arrowLeft, currentPage <= 1 && styles.disabled)}
-          src={ArrowPagination}
+          className={styles.arrowLeft}
+          src={arrowIconSRC[currentTheme][currentPage <= 1 ? 'disabled' : 'enabled']}
           objectFit="contain"
         />
       </button>
@@ -57,8 +72,8 @@ const CPagination = ({ pages, currentPage: initCurrentPage, onPageClick }) => {
       </div>
       <button type="button" disabled={currentPage >= pages} onClick={() => onPageClick(currentPage + 1)}>
         <img
-          className={classNames(styles.arrowRight, currentPage >= pages && styles.disabled)}
-          src={ArrowPagination}
+          className={styles.arrowRight}
+          src={arrowIconSRC[currentTheme][currentPage >= pages ? 'disabled' : 'enabled']}
           objectFit="contain"
         />
       </button>

@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 const TableRow = ({ columns, data, height }) => (
-  <tr style={{ height: `${height}px` }} className={styles.row}>
+  <tr style={{ height: `${height}px`, color: 'var(--blackToWhite)' }} className={styles.row}>
     {columns.map((column, index) => (
       <td key={index} className={styles['row-item']}>
         <section>

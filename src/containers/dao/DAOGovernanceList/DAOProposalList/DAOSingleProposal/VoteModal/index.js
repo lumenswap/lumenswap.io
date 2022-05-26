@@ -48,6 +48,7 @@ const VoteModal = ({ proposalInfo }) => {
       modalProps: {
         title: 'Confirm vote',
         mainClassName: 'modal-br8',
+        className: `${styles.modal}`,
       },
       content: <ConfirmVoteModal proposalInfo={{
         ...proposalInfo,
@@ -68,7 +69,7 @@ const VoteModal = ({ proposalInfo }) => {
   }
 
   return (
-    <div className="pb-4 main">
+    <div style={{ backgroundColor: 'var(--whiteToDarkGray)' }} className="pb-4 main">
       <p className={styles.title}>
         {proposalInfo.title}
       </p>

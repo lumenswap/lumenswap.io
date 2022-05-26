@@ -3,7 +3,7 @@
 .select {
   :global(.select__control) {
     cursor: pointer;
-    background: white;
+    background: var(--white);
     border-color: transparent;
     margin: 0 auto;
     border-radius: 4px;
@@ -24,13 +24,14 @@
     transform: translate(-50%);
     box-shadow: 0 0 0 0;
     margin-top: 6px;
+    background-color: var(--white);
   }
 
   :global(.select__menu-list) {
     max-height: initial;
     border-radius: 2px;
     padding: 0;
-    box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.09);
+    box-shadow: var(--dropdownBoxShadow);
   }
 
   :global(.select__menu-list) {
@@ -50,8 +51,8 @@
 
   :global(.select__option--is-selected),
   :global(.select__option--is-focused) {
-    background-color: white !important;
-    color: black;
+    background-color: var(--white) !important;
+    color: var(--blackToWhite);
   }
 
   :global(.select__option):hover {

@@ -8,6 +8,10 @@
   margin: 0;
 }
 
+.modal {
+  background-color: var(--whiteToDarkGray);
+}
+
 .hr {
   margin: 24px -17px;
   border-top: 1px solid var(--catsKillWhite);
@@ -41,7 +45,7 @@
     color: var(--rollingStone);
   }
 
-  &-value {
+  &-amount {
     color: var(--codGray);
   }
 }

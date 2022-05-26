@@ -84,7 +84,7 @@ const GovernanceInfo = ({ governance }) => {
           />
         </div>
       </div>
-      <p className={classNames(styles.text, 'mb-0')}>{description}</p>
+      <p style={{ color: 'var(--rollingStoneToBombay)' }} className={classNames(styles.text, 'mb-0')}>{description}</p>
       <div className="mt-4">
         <div className={styles.detail}>
           <span className={styles.text}>Asset:</span>

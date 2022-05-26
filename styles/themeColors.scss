@@ -12,6 +12,18 @@
   --lightAthensGray: #f8f9fb;
   --blueGray: #0c34c3;
   --mischka: #cfd5e2;
+  --boxShadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  /*special dark mode and custom colors */
+  --whiteToDarkGray: #ffffff;
+  --whiteToZumthor: #ffffff;
+  --catsKillWhiteToZumthor: #ecf0f5;
+  --rollingStoneToBombay: #656872;
+  --rollingStoneToWhite: #656872;
+  --cccToRollingStone: #ccc;
+  --blackToWhite: black;
+  --dropdownBoxShadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
+  --blueRibbonToWhite: #0e41f5;
+  --lightRedToDarkGray: #fff2f2;
   /*not included in dark mode colors */
   --highBlue: #1d42c5;
   --rollingStone: #656872;
@@ -38,4 +50,16 @@
   --lightAthensGray: #0e1116;
   --blueGray: #3a66ff;
   --mischka: #383a42;
+  --boxShadow: 0 2px 20px 0 rgba(0, 0, 0, 0.08);
+  /*special dark mode and custom colors */
+  --whiteToDarkGray: #0e1116;
+  --whiteToZumthor: #252b35;
+  --catsKillWhiteToZumthor: #252b35;
+  --rollingStoneToBombay: #aeb1b7;
+  --rollingStoneToWhite: #ffffff;
+  --cccToRollingStone: #656872;
+  --blackToWhite: #ffffff;
+  --blueRibbonToWhite: #f8f9fb;
+  --dropdownBoxShadow: 0 2px 32px 0 rgba(0, 0, 0, 0.39);
+  --lightRedToDarkGray: #0e1116;
 }
