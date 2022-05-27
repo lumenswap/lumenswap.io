@@ -20,7 +20,7 @@ function ShowFeeSection({ convertInfo }) {
     <div className={styles['show-info']}>
       <div className={styles['show-info-item']}>
         <p className={styles['show-info-item-text']}>You’ll convert</p>
-        <div className={styles['show-info-item-number']}>{convertInfo.amount} {convertInfo[TOKEN_A_FORM_NAME].name}</div>
+        <div className={styles['show-info-item-number']}>{humanizeAmount(convertInfo.amount)} {convertInfo[TOKEN_A_FORM_NAME].name}</div>
       </div>
       <div className={styles['show-info-item']}>
         <p className={styles['show-info-item-text']}>Fee</p>
