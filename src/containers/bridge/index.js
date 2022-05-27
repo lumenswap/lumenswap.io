@@ -59,6 +59,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
     getValues,
     formState,
     trigger,
+    setError,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -124,6 +125,9 @@ const BridgeConvert = ({ bridgeTokens }) => {
           },
           content: <FailDialog />,
         }));
+      }).catch((err) => {
+        setError('tokenA', { type: 'custom', message: 'Failed to create order' });
+        setCreateOrderLoading(false);
       });
     } else {
       dispatch(openConnectModal());
