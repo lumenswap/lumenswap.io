@@ -52,13 +52,13 @@ function WithdrawLiquiditySliderInput({ value, onChange, defaultValue }) {
           defaultValue={defaultValue}
           min={1}
           max={100}
-          railStyle={{ height: 2, backgroundColor: '#e3e9ff' }}
-          trackStyle={{ backgroundColor: '#0e41f5', height: 2 }}
+          railStyle={{ height: 2, backgroundColor: 'var(--zumthor)' }}
+          trackStyle={{ backgroundColor: 'var(--blueRibbon)', height: 2 }}
           handleStyle={{
             height: 24,
             width: 24,
             marginTop: -12,
-            backgroundColor: '#0e41f5',
+            backgroundColor: 'var(--blueRibbon)',
             border: 0,
           }}
           value={value}

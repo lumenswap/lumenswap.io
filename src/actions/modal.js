@@ -1,5 +1,6 @@
 import actionTypes from 'actions';
 import ConnectWallet from 'blocks/ConnectWallet';
+import styles from './styles.module.scss';
 
 export function openModalAction({ modalProps, content }) {
   return (dispatch) => {
@@ -33,6 +34,7 @@ export function openConnectModal() {
     openModalAction({
       modalProps: {
         title: 'Connect Wallet',
+        className: `${styles.modal}`,
       },
       content: <ConnectWallet />,
     })(dispatch);

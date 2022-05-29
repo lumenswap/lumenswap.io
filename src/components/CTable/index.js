@@ -2,10 +2,24 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import ArrowDown from 'assets/images/arrow-down.svg';
 import ArrowDownFill from 'assets/images/arrow-down-fill.svg';
+import ArrowDownFillDark from 'assets/images/arrow-fill-dark.svg';
+import ArrowDownDark from 'assets/images/arrow-down-dark.svg';
 import Link from 'next/link';
 import Loading from 'components/Loading';
 import classNames from 'classnames';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
+
+const arrowIcons = {
+  light: {
+    filled: ArrowDownFill,
+    default: ArrowDown,
+  },
+  dark: {
+    filled: ArrowDownFillDark,
+    default: ArrowDownDark,
+  },
+};
 
 const TableRow = ({ columns, data, height }) => (
   <tr style={{ height: `${height}px`, color: 'var(--blackToWhite)' }} className={styles.row}>
@@ -66,6 +80,8 @@ const CTable = ({
   const [sortIndex, setSortIndex] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
 
+  const currentTheme = useCurrentTheme();
+
   const handleSort = (newSortIndex) => {
     setSortOrder((prev) => {
       let newSortOrder;
@@ -103,13 +119,13 @@ const CTable = ({
                     onClick={() => handleSort(title.dataIndex)}
                   >
                     <img
-                      src={sortIndex === title.dataIndex && sortOrder === 'asc' ? ArrowDownFill : ArrowDown}
+                      src={sortIndex === title.dataIndex && sortOrder === 'asc' ? arrowIcons[currentTheme].filled : arrowIcons[currentTheme].default}
                       width={8}
                       height={5}
                       className={styles.sort_icon}
                     />
                     <img
-                      src={sortIndex === title.dataIndex && sortOrder === 'desc' ? ArrowDownFill : ArrowDown}
+                      src={sortIndex === title.dataIndex && sortOrder === 'desc' ? arrowIcons[currentTheme].filled : arrowIcons[currentTheme].default}
                       width={8}
                       height={5}
                     />

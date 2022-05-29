@@ -4,6 +4,7 @@
   border: 1px solid var(--catsKillWhite);
   border-radius: 8px;
   padding: 10px 20px 18px 16px;
+  background-color: var(--whiteToDarkGray);
 }
 
 .label,
@@ -27,7 +28,7 @@
     border: none;
     font-size: 24px;
     color: var(--codGray);
-    background-color: white;
+    background-color: var(--whiteToDarkGray);
     width: 0;
     height: 24px;
     flex: 1 1 auto;
@@ -98,6 +99,10 @@
   img {
     margin: 2px 0 1px 6px;
   }
+}
+
+.modal {
+  background-color: var(--white);
 }
 
 .no-asset-drop-down:hover {

@@ -4,6 +4,9 @@
   :global(.label-optional) {
     color: var(--rollingStone);
   }
+  input {
+    background-color: var(--whiteToDarkGray);
+  }
 }
 
 .input-asset {

@@ -20,7 +20,13 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
+.styles_label__auWwO span {
+  color: var(--rollingStoneToWhite) !important;
+}
+.modal-backdrop.show {
+  background-color: var(--modalBackDrop);
+  opacity: var(--modalBackdropOpacity) !important;
+}
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
@@ -161,7 +167,7 @@ input[type="number"] {
   position: absolute;
   top: 0;
   z-index: -1;
-  border: 5px solid white;
+  border: 5px solid var(--white);
   transform-origin: 0 0;
   transform: rotate(-45deg);
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);

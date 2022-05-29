@@ -1,7 +1,10 @@
-
 .form {
   padding-top: 11px;
   padding-bottom: 32px;
+
+  input {
+    background-color: var(--whiteToDarkGray);
+  }
 
   button {
     margin-top: 32px;

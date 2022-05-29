@@ -33,7 +33,7 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: var(--white);
+  color: var(--absoluteWhite);
 }
 .withdraw-btn {
   width: 120px;
@@ -47,8 +47,9 @@
   font-style: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  color: var(--rollingStone);
+  color: var(--rollingStoneToWhite);
   margin-left: 8px;
+  background-color: var(--whiteToDarkGray);
 }
 
 .bread-crumb-container {

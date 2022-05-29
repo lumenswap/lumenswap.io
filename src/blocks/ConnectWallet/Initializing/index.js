@@ -6,6 +6,7 @@ import rabetIcon from 'assets/images/rabet.svg';
 import albedoIcon from 'assets/images/albedo.svg';
 import xbullIcon from 'assets/images/xbull.webp';
 import ledgerIcon from 'assets/images/ledger.svg';
+import ledgerDarkIcon from 'assets/images/ledger-dark.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import loginWithAlbedo from 'walletIntegeration/logins/loginWithAlbedo';
 import { closeModalAction } from 'actions/modal';
@@ -18,6 +19,7 @@ import loginWithFreighter from 'walletIntegeration/logins/loginWithFreighter';
 import loginWithRabet from 'walletIntegeration/logins/loginWithRabet';
 import loginWithXbull from 'walletIntegeration/logins/loginWithXbull';
 import { useDispatch } from 'react-redux';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
 const Initializing = ({ loginMethod }) => {
@@ -56,6 +58,7 @@ const Initializing = ({ loginMethod }) => {
       setConnecting(false);
     }
   }
+  const currentTheme = useCurrentTheme();
 
   useEffect(() => {
     connectWallet();
@@ -75,7 +78,7 @@ const Initializing = ({ loginMethod }) => {
   } else if (loginMethod === loginTypes.LEDGER_S) {
     wallet = 'Ledger';
     walletDesc = 'Easy-to-use hardware wallet';
-    walletIcon = ledgerIcon;
+    walletIcon = currentTheme === 'light' ? ledgerIcon : ledgerDarkIcon;
   } else if (loginMethod === loginTypes.RABET) {
     wallet = 'Rabet';
     walletDesc = 'Easy-to-use browser extension wallet';

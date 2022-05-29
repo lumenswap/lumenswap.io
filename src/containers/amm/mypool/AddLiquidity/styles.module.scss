@@ -8,6 +8,14 @@
   margin-bottom: 10px;
 }
 
+.form {
+  input {
+    background-color: var(--whiteToDarkGray);
+  }
+}
+.modal {
+  background-color: var(--white);
+}
 .select {
   width: 154px;
   height: 38px;

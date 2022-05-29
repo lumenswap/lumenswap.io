@@ -185,11 +185,14 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                       styles={{
                         root: {},
                         path: {
-                          stroke: '#0e41f5',
+                          stroke: 'var(--blueRibbon)',
                         },
                         trail: {
-                          stroke: '#ecf0f5',
+                          stroke: 'var(--catsKillWhite)',
                           strokeWidth: 2,
+                        },
+                        background: {
+                          fill: 'var(--whiteToDarkGray)',
                         },
                       }}
                     />

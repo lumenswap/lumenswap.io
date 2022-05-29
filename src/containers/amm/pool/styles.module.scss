@@ -42,6 +42,11 @@
     width: 297px;
   }
 }
+.input {
+  input {
+    background-color: var(--whiteToDarkGray);
+  }
+}
 
 .table-container {
   margin-top: 12px;

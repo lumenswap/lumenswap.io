@@ -5,6 +5,7 @@ import Loading from 'components/Loading';
 import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import classNames from 'classnames';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
 const ChartLoading = () => (
@@ -52,6 +53,8 @@ function AMMOVerallVolumeChart({ chartData }) {
     volume: 0,
   });
 
+  const currentTheme = useCurrentTheme();
+
   const volumeOptions = useMemo(() => ({
     // tooltip: {},
     dataZoom: {
@@ -75,7 +78,7 @@ function AMMOVerallVolumeChart({ chartData }) {
       axisLine: {
         show: false,
         lineStyle: {
-          color: '#656872',
+          color: `${currentTheme === 'light' ? '#656872' : '#f8f9fb'}`,
         },
       },
       axisTick: {
@@ -98,7 +101,7 @@ function AMMOVerallVolumeChart({ chartData }) {
         barGap: '100%',
         data: chartData?.map((i) => i.volume),
         itemStyle: {
-          color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
+          color: `${currentTheme === 'light' ? '#0e41f5' : '#3A66FF'}`, borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
