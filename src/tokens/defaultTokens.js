@@ -12,7 +12,6 @@ import USDT from './USDT';
 import BTC from './BTC';
 import ETH from './ETH';
 import USDS from './USDS';
-import DOGET from './DOGET';
 import LSP from './LSP';
 import SHX from './SHX';
 import ANSR from './ANSR';
@@ -46,7 +45,6 @@ const defaultTokens = [
   USDS,
   BTC,
   ETH,
-  DOGET,
   SHX,
   ANSR,
   PEN,
