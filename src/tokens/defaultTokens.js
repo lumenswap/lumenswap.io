@@ -12,7 +12,6 @@ import USDT from './USDT';
 import BTC from './BTC';
 import ETH from './ETH';
 import USDS from './USDS';
-import DOGET from './DOGET';
 import LSP from './LSP';
 import SHX from './SHX';
 import ANSR from './ANSR';
@@ -25,6 +24,8 @@ import RBT from './RBT';
 import DRIFT from './DRIFT';
 import UNBNK from './UNBNK';
 import MOBI from './MOBI';
+import BRAVE from './BRAVE';
+import BRC from './BRC';
 
 const defaultTokens = [
   XLM,
@@ -44,7 +45,6 @@ const defaultTokens = [
   USDS,
   BTC,
   ETH,
-  DOGET,
   SHX,
   ANSR,
   PEN,
@@ -54,6 +54,8 @@ const defaultTokens = [
   RBT,
   DRIFT,
   MOBI,
+  BRAVE,
+  BRC,
 ];
 
 export default defaultTokens;
