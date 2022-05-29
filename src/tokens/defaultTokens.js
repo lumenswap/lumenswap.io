@@ -25,6 +25,8 @@ import RBT from './RBT';
 import DRIFT from './DRIFT';
 import UNBNK from './UNBNK';
 import MOBI from './MOBI';
+import BRAVE from './BRAVE';
+import BRC from './BRC';
 
 const defaultTokens = [
   XLM,
@@ -54,6 +56,8 @@ const defaultTokens = [
   RBT,
   DRIFT,
   MOBI,
+  BRAVE,
+  BRC,
 ];
 
 export default defaultTokens;
