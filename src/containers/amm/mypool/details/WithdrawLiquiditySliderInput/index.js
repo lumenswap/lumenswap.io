@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import SecondStyles from 'components/Button/styles.module.scss';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import Slider from 'rc-slider';
 import styles from './styles.module.scss';
 
@@ -52,13 +53,13 @@ function WithdrawLiquiditySliderInput({ value, onChange, defaultValue }) {
           defaultValue={defaultValue}
           min={1}
           max={100}
-          railStyle={{ height: 2, backgroundColor: 'var(--zumthor)' }}
-          trackStyle={{ backgroundColor: 'var(--blueRibbon)', height: 2 }}
+          railStyle={{ height: 2, backgroundColor: jsxThemeColors.zumthor }}
+          trackStyle={{ backgroundColor: jsxThemeColors.blueRibbon, height: 2 }}
           handleStyle={{
             height: 24,
             width: 24,
             marginTop: -12,
-            backgroundColor: 'var(--blueRibbon)',
+            backgroundColor: jsxThemeColors.blueRibbon,
             border: 0,
           }}
           value={value}

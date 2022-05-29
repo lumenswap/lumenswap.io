@@ -4,6 +4,7 @@ import AMMHeader from 'containers/amm/AMMHeader';
 import React, { useEffect, useState } from 'react';
 import { getAmmOverallPoolStats } from 'api/amm';
 import ServerSideLoading from 'components/ServerSideLoading';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 import AMMOverallTVLChart from './AMMOverallTVLChart';
 import AMMOverallVolumeChart from './AMMOverallVolumeChart';
@@ -11,6 +12,7 @@ import PoolData from './poolData';
 
 const PoolPage = () => {
   const [chartData, setChartData] = useState(null);
+  const currentTheme = useCurrentTheme();
 
   useEffect(() => {
     getAmmOverallPoolStats().then((res) => {
@@ -32,8 +34,14 @@ const PoolPage = () => {
                 <h1 className={styles.label}>Pools</h1>
               </div>
               <div className="row">
-                <AMMOverallTVLChart chartData={chartData} />
-                <AMMOverallVolumeChart chartData={chartData} />
+                <AMMOverallTVLChart
+                  currentTheme={currentTheme}
+                  chartData={chartData}
+                />
+                <AMMOverallVolumeChart
+                  currentTheme={currentTheme}
+                  chartData={chartData}
+                />
               </div>
               <h1 className={styles['label-second']}>Pools</h1>
               <PoolData />

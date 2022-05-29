@@ -5,7 +5,6 @@ import Loading from 'components/Loading';
 import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
 import classNames from 'classnames';
-import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
 const ChartLoading = () => (
@@ -47,13 +46,11 @@ function VolumeChart({ options, setCurrentVolume, chartData }) {
 
 const InnerChartMemo = React.memo(VolumeChart);
 
-function AMMOVerallVolumeChart({ chartData }) {
+function AMMOVerallVolumeChart({ chartData, currentTheme }) {
   const [currentVolume, setCurrentVolume] = useState({
     tvl: 0,
     volume: 0,
   });
-
-  const currentTheme = useCurrentTheme();
 
   const volumeOptions = useMemo(() => ({
     // tooltip: {},
@@ -78,7 +75,7 @@ function AMMOVerallVolumeChart({ chartData }) {
       axisLine: {
         show: false,
         lineStyle: {
-          color: `${currentTheme === 'light' ? '#656872' : '#f8f9fb'}`,
+          color: '#656872',
         },
       },
       axisTick: {
@@ -101,7 +98,7 @@ function AMMOVerallVolumeChart({ chartData }) {
         barGap: '100%',
         data: chartData?.map((i) => i.volume),
         itemStyle: {
-          color: `${currentTheme === 'light' ? '#0e41f5' : '#3A66FF'}`, borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
+          color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`, borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
@@ -115,7 +112,7 @@ function AMMOVerallVolumeChart({ chartData }) {
     animationDelayUpdate(idx) {
       return idx * 5;
     },
-  }), [chartData]);
+  }), [chartData, currentTheme]);
 
   useEffect(() => {
     if (chartData !== null) {
