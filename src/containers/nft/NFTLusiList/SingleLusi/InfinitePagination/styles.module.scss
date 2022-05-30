@@ -21,7 +21,7 @@
   line-height: 1.43;
   letter-spacing: normal;
   border: none;
-  color: var(--blueRibbon);
+  color: var(--blueRibbonToWhite);
   margin-left: 16px;
   span {
     margin-right: 4px;
@@ -63,7 +63,7 @@
   line-height: 1.43;
   letter-spacing: normal;
   border: none;
-  color: var(--blueRibbon);
+  color: var(--blueRibbonToWhite);
   span {
     margin-left: 4px;
   }
@@ -90,4 +90,8 @@
 }
 .arrow-icon {
   margin-top: -4px;
+  &-left {
+    rotate: 180deg;
+    margin-top: -4px;
+  }
 }
