@@ -40,7 +40,7 @@
 .tableContainer {
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   border-radius: 4px;
-  background: white;
+  background: var(--white);
   margin-top: 6px;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .card {
-  background-color: white;
+  background-color: var(--white);
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   margin-top: 24px;

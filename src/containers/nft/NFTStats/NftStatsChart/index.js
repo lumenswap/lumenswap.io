@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import moment from 'moment';
 import CChart from 'components/CChart';
 
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
 const Chart = ({ option, setStatsVolumeInfo, data }) => (
@@ -30,6 +31,7 @@ const NftStatsChart = ({ setStatsVolumeInfo, data }) => {
       currentVolume: data[data.length - 1].tradeAmount,
     });
   }, []);
+  const currentTheme = useCurrentTheme();
 
   const option = useMemo(() => (
     {
@@ -81,7 +83,7 @@ const NftStatsChart = ({ setStatsVolumeInfo, data }) => {
           barGap: '100%',
           data: data?.map((i) => i.tradeAmount),
           itemStyle: {
-            color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
+            color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`, borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
           },
           emphasis: {
             focus: 'series',
@@ -96,7 +98,7 @@ const NftStatsChart = ({ setStatsVolumeInfo, data }) => {
         return idx * 5;
       },
     }
-  ), [data]);
+  ), [data, currentTheme]);
 
   return (
     <div className={styles.echart}>
