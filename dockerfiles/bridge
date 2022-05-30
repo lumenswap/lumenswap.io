@@ -11,13 +11,13 @@ RUN rm -r ./src/pages/amm
 RUN rm -r ./src/pages/auction
 RUN rm -r ./src/pages/lottery
 RUN rm -r ./src/pages/nft
+RUN rm -r ./src/pages/obm
 RUN rm -r ./src/pages/reward
 RUN rm -r ./src/pages/dao
+RUN mv ./src/pages/bridge/* ./src/pages
 RUN rm -r ./src/pages/bridge
-RUN mv ./src/pages/obm/* ./src/pages
-RUN rm -r ./src/pages/obm
 
-ENV REACT_APP_MODE=OBM
+ENV REACT_APP_MODE=BRIDGE
 ENV REACT_APP_HORIZON=https://horizon.stellar.org
 ENV REACT_APP_LUMENSCAN_URL=https://lumenscan.io
 ENV REACT_APP_HOST=https://amm.lumenswap.io

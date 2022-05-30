@@ -13,6 +13,7 @@ RUN rm -r ./src/pages/nft
 RUN rm -r ./src/pages/obm
 RUN rm -r ./src/pages/reward
 RUN rm -r ./src/pages/dao
+RUN rm -r ./src/pages/bridge
 RUN mv ./src/pages/amm/* ./src/pages
 RUN rm -r ./src/pages/amm
 
