@@ -5,7 +5,9 @@ import moment from 'moment';
 import Loading from 'components/Loading';
 import { getOneDayPoolStatsForPoolId } from 'api/amm';
 import BN from 'helpers/BN';
-import chartIcon from '../../../../assets/images/chart-icon.png';
+import chartIcon from 'assets/images/chart-icon.png';
+import chartIconDark from 'assets/images/chart-icon-dark.png';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import ChartDetail from './ChartSection/ChartDetail';
 import styles from './styles.module.scss';
 
@@ -18,6 +20,7 @@ const ChartLoading = () => (
 const Chart = ({
   currentChart, setCurrentValue, chartData,
 }) => {
+  const currentTheme = useCurrentTheme();
   const tvlOptions = {
     tooltip: {
       show: true,
@@ -62,16 +65,16 @@ const Chart = ({
         type: 'line',
         showSymbol: false,
         data: chartData?.map((i) => i?.tvl),
-        lineStyle: { backgroundColor: '#0e41f5' },
+        lineStyle: { backgroundColor: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}` },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#aab6cc',
+              color: `${currentTheme === 'light' ? '#aab6cc' : '#1C2B5F'}`,
             },
             {
               offset: 1,
-              color: '#e8f0fe',
+              color: `${currentTheme === 'light' ? '#e8f0fe' : '#171B21'}`,
             },
           ]),
         },
@@ -122,7 +125,7 @@ const Chart = ({
         barWidth: Math.max(2, 20 / Math.round(Math.sqrt(chartData?.length))),
         data: chartData?.map((i) => new BN(i.volume).div(10 ** 7).toString()),
         itemStyle: {
-          color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
+          color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`, borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
@@ -181,7 +184,7 @@ const Chart = ({
         barWidth: Math.max(2, 20 / Math.round(Math.sqrt(chartData?.length))),
         data: chartData?.map((i) => new BN(i.volume).div(10 ** 7).times(0.003).toString()),
         itemStyle: {
-          color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
+          color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`, borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
@@ -251,6 +254,7 @@ function PoolMultiCharts({ poolId }) {
     volume: 0,
   });
   const [chartData, setChartData] = useState(null);
+  const currentTheme = useCurrentTheme();
 
   useEffect(() => {
     getOneDayPoolStatsForPoolId(poolId).then((data) => {
@@ -272,7 +276,7 @@ function PoolMultiCharts({ poolId }) {
   if (!currentValue) {
     return (
       <div className={styles['chart-pool']}>
-        <div className={styles['chart-icon-container']}><img src={chartIcon} width={32} height={27} /></div>
+        <div className={styles['chart-icon-container']}><img src={currentTheme === 'light' ? chartIcon : chartIconDark} width={32} height={27} /></div>
         <span>The chart is not available for this pool</span>
       </div>
     );
@@ -281,7 +285,7 @@ function PoolMultiCharts({ poolId }) {
   if (chartData === []) {
     return (
       <div className={styles['chart-pool']}>
-        <div className={styles['chart-icon-container']}><img src={chartIcon} width={32} height={27} /></div>
+        <div className={styles['chart-icon-container']}><img src={currentTheme === 'light' ? chartIcon : chartIconDark} width={32} height={27} /></div>
         <span>The chart is not available for this pool</span>
       </div>
     );

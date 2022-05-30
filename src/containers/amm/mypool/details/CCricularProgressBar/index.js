@@ -5,7 +5,13 @@ function CCricularProgressBar({
 }) {
   return (
     <div className={className} style={{ width: `${size}px`, height: `${size}px` }}>
-      <CircularProgressbar value={value} text={text} styles={styles} strokeWidth={strokeWidth} />
+      <CircularProgressbar
+        background
+        value={value}
+        text={text}
+        styles={styles}
+        strokeWidth={strokeWidth}
+      />
     </div>
   );
 }

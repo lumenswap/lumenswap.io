@@ -39,7 +39,7 @@ const InnerChartMemo = React.memo(({ setCurrentTVL, tvlOptions, chartData }) => 
   />
 ));
 
-function AMMOverallTVLChart({ chartData }) {
+function AMMOverallTVLChart({ chartData, currentTheme }) {
   const [currentTVL, setCurrentTVL] = useState({
     tvl: 0,
     volume: 0,
@@ -88,22 +88,22 @@ function AMMOverallTVLChart({ chartData }) {
         type: 'line',
         showSymbol: false,
         data: chartData?.map((i) => i.tvl),
-        lineStyle: { backgroundColor: '#0e41f5' },
+        lineStyle: { backgroundColor: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}` },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#aab6cc',
+              color: `${currentTheme === 'light' ? '#aab6cc' : '#1C2B5F'}`,
             },
             {
               offset: 1,
-              color: '#e8f0fe',
+              color: `${currentTheme === 'light' ? '#e8f0fe' : '#171B21'}`,
             },
           ]),
         },
       },
     ],
-  }), [chartData]);
+  }), [chartData, currentTheme]);
 
   useEffect(() => {
     if (chartData !== null) {

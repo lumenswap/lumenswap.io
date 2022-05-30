@@ -46,7 +46,7 @@ function VolumeChart({ options, setCurrentVolume, chartData }) {
 
 const InnerChartMemo = React.memo(VolumeChart);
 
-function AMMOVerallVolumeChart({ chartData }) {
+function AMMOVerallVolumeChart({ chartData, currentTheme }) {
   const [currentVolume, setCurrentVolume] = useState({
     tvl: 0,
     volume: 0,
@@ -98,7 +98,7 @@ function AMMOVerallVolumeChart({ chartData }) {
         barGap: '100%',
         data: chartData?.map((i) => i.volume),
         itemStyle: {
-          color: '#0e41f5', borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
+          color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`, borderColor: '#fff', borderWidth: 0, borderRadius: [5, 5, 0, 0],
         },
         emphasis: {
           focus: 'series',
@@ -112,7 +112,7 @@ function AMMOVerallVolumeChart({ chartData }) {
     animationDelayUpdate(idx) {
       return idx * 5;
     },
-  }), [chartData]);
+  }), [chartData, currentTheme]);
 
   useEffect(() => {
     if (chartData !== null) {

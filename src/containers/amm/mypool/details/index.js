@@ -11,6 +11,7 @@ import { fetchAccountDetails } from 'api/stellar';
 import humanizeAmount from 'helpers/humanizeAmount';
 import CCricularProgressBar from 'containers/amm/mypool/details/CCricularProgressBar';
 import WithdrawLiquidity from 'containers/amm/mypool/details/WithdrawLiquidity';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import DepositLiquidity from 'containers/amm/mypool/details/DepositLiquidity';
 import { openModalAction } from 'actions/modal';
 import useIsLogged from 'hooks/useIsLogged';
@@ -185,11 +186,14 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                       styles={{
                         root: {},
                         path: {
-                          stroke: '#0e41f5',
+                          stroke: jsxThemeColors.blueRibbon,
                         },
                         trail: {
-                          stroke: '#ecf0f5',
+                          stroke: jsxThemeColors.catsKillWhite,
                           strokeWidth: 2,
+                        },
+                        background: {
+                          fill: jsxThemeColors.whiteToDarkGray,
                         },
                       }}
                     />

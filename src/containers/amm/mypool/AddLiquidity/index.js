@@ -12,6 +12,7 @@ import {
 } from 'helpers/asset';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetails } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
+import classNames from 'classnames';
 import CSelectToken from './CSelectToken';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
@@ -117,7 +118,7 @@ const AddLiquidity = ({
       openModalAction({
         modalProps: {
           title: 'Select asset',
-          className: 'main',
+          className: classNames('main', styles.modal),
         },
         content: <CSelectToken onTokenSelect={onTokenSelect} />,
       }),
@@ -246,7 +247,7 @@ const AddLiquidity = ({
       <hr className={styles.hr} />
 
       <h6 className={styles.label}>Deposit liquidity</h6>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="amountTokenA"
           control={control}

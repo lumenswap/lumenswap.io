@@ -31,13 +31,16 @@
 .error {
   color: var(--punch);
   border: 1px solid var(--punch);
+  button {
+    color: var(--blackToBlueRibbon);
+  }
 }
 
 .btn {
   width: 100%;
   height: 72px;
   border-radius: 8px;
-  background-color: white;
+  background-color: var(--whiteToDarkGray);
   border: 1px solid var(--catsKillWhite);
   display: flex;
   align-items: center;

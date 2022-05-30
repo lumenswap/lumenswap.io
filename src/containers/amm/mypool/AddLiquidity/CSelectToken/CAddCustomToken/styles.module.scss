@@ -1,6 +1,19 @@
 .btn {
-    margin-bottom: 32px;
-    margin-top: 24px;
-    font-weight: 600;
-    font-size: 18px;
+  margin-bottom: 32px;
+  margin-top: 24px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.form {
+  input {
+    border: 1px solid var(--catsKillWhite);
+    background-color: var(--whiteToDarkGray);
+    color: var(--blackToWhite);
   }
+
+  input:focus {
+    background-color: var(--whiteToDarkGray);
+    color: var(--blackToWhite);
+  }
+}

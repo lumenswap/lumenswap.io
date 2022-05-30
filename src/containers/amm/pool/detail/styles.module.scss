@@ -272,7 +272,7 @@
 .card {
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  background-color: white;
+  background-color: var(--white);
 
   &-liquidity {
     margin-top: 14px;
@@ -459,7 +459,7 @@
 }
 
 .card {
-  background-color: white;
+  background-color: var(--white);
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
   margin-bottom: 24px;
@@ -506,7 +506,7 @@
   height: 24px;
   display: flex;
   align-items: center;
-  background-color: var(--white);
+  background-color: var(--whiteToGray);
   &-active {
     padding-right: 14px;
     padding-left: 14px;
@@ -517,14 +517,13 @@
     font-style: normal;
     line-height: 1.4;
     letter-spacing: normal;
-    color: var(--rollingStone);
     cursor: pointer;
     height: 24px;
     display: flex;
     align-items: center;
     background-color: var(--blueRibbon);
     border-radius: 4px;
-    color: var(--white);
+    color: var(--absoluteWhite);
   }
 }
 

@@ -3,6 +3,7 @@ import privateKeyIcon from 'assets/images/keyword.svg';
 import albedoIcon from 'assets/images/albedo.svg';
 import xbullIcon from 'assets/images/xbull.webp';
 import ledgerIcon from 'assets/images/ledger.svg';
+import ledgerDarkIcon from 'assets/images/ledger-dark.svg';
 import freighterIcon from 'assets/images/freighter.svg';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import EnterKey from 'blocks/ConnectWallet/EnterKey';
@@ -12,10 +13,12 @@ import validateFreighterPresent from 'walletIntegeration/logins/validateFreighte
 import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent';
 import validateXbullPresent from 'walletIntegeration/logins/validateXbullPresent';
 import { useDispatch } from 'react-redux';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
 const ConnectWallet = () => {
   const dispatch = useDispatch();
+  const currentTheme = useCurrentTheme();
 
   const items = [
     {
@@ -35,7 +38,7 @@ const ConnectWallet = () => {
       link: 'https://www.freighter.app',
     },
     {
-      icon: ledgerIcon,
+      icon: currentTheme === 'light' ? ledgerIcon : ledgerDarkIcon,
       iconSize: '18',
       text: 'Ledger',
       loginMethod: loginTypes.LEDGER_S,
@@ -69,6 +72,7 @@ const ConnectWallet = () => {
             backAction: () => {
               dispatch(openConnectModal());
             },
+            className: `${styles.modal}`,
           },
           content: <EnterKey />,
         }));

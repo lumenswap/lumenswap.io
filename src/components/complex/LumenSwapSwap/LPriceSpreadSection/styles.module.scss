@@ -3,7 +3,7 @@
 .card {
   width: 343px;
   border-radius: 8px;
-  background-color: white;
+  background-color: var(--whiteToSuperGray);
   padding: 28px 12px 14px 12px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.07);
   z-index: -1;
@@ -50,7 +50,7 @@
   :global(.icon-arrow-right) {
     margin: 0 4px;
     font-size: 9px;
-    color: var(--catsKillWhite);
+    color: var(--catsKillWhiteToLightGray);
   }
 }
 
@@ -70,8 +70,8 @@
     align-items: center;
     color: var(--rollingStone);
     font-size: 12px;
-    background-color: var(--lightAthensGray);
-    border: 1px solid var(--lightAthensGray);
+    background-color: var(--lightAthensGrayToGray);
+    border: 1px solid var(--lightAthensGrayToGray);
     margin-left: 6px;
     transition: ease-in;
   }
@@ -99,7 +99,7 @@
     width: 60px;
     border: none;
     outline: none;
-    background-color: var(--lightAthensGray);
+    background-color: var(--lightAthensGrayToGray);
     color: var(--rollingStone);
     padding-left: 0;
     transition: ease-in;
