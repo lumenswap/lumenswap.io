@@ -3,13 +3,15 @@
 .box {
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  background-color: white;
+  background-color: var(--white);
   cursor: pointer;
 }
 
 .banner {
   min-height: 198px;
+  height: 100%;
   position: relative;
+  border-right: 1px solid var(--catsKillWhite);
 }
 
 .title-container {
@@ -75,6 +77,7 @@
   white-space: nowrap;
   margin-top: 8px;
   color: var(--codGray);
+  border: var(--auctionInfoBoxBorder);
 
   &-subject {
     color: var(--rollingStone);
@@ -115,7 +118,7 @@
 
 .status-ended {
   color: var(--manatee);
-  background: var(--catsKillWhite);
+  background: var(--catsKillWhiteToGray);
 
   .status-circle {
     background-color: var(--manatee);

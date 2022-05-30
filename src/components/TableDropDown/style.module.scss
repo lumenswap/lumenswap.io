@@ -1,7 +1,7 @@
 @import "styles/vars";
 
 .dropdown-container {
-  background: white;
+  background: var(--white);
   width: 144px;
   display: flex;
   align-items: center;
@@ -13,6 +13,7 @@
   border-radius: 4px;
   cursor: pointer;
   position: relative;
+  color: var(--blackToWhite);
 }
 
 .dropdown-content {
@@ -21,7 +22,7 @@
   opacity: 0;
   visibility: hidden;
   position: absolute;
-  background: white;
+  background: var(--white);
   padding: 14px;
   width: 144px;
   border-radius: 4px;
