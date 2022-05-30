@@ -51,7 +51,7 @@ const ConfirmSendAmount = ({ convertInfo, openPreviousModal }) => {
       </div>
 
       <div className={classNames(styles.note, styles['note-base'])}>
-        When the {capitalizeFirstLetter(convertInfo.to_asset.network)}
+        When the {capitalizeFirstLetter(convertInfo.from_asset.network)}
         {' '} network approval the transaction,
         you will automatically be redirected to the next step.
       </div>

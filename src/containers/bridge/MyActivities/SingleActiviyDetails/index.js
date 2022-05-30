@@ -51,7 +51,7 @@ const SingleActivityDetails = ({ activityInfo }) => {
         <CExternalLink
           href={generateBridgeAddressURL(activityInfo.user_destination,
             activityInfo.to_asset.network)}
-          content={minimizeAddress(activityInfo.user_destination.toUpperCase())}
+          content={minimizeAddress(activityInfo.user_destination)}
         />
       ),
     },
