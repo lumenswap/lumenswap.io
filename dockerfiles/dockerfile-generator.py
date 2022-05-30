@@ -1,4 +1,4 @@
-applicationList = ["amm","auction","lottery","nft","obm","reward","dao"]
+applicationList = ["amm","auction","lottery","nft","obm","reward","dao","bridge"]
 nodeVersion="16.14.2-slim"
 
 
