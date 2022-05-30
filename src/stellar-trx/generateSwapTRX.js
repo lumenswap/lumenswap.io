@@ -16,10 +16,12 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
     networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
 
-  if ((needToTrust) && !checkout.to.asset.details.isNative()) {
+  const toAssetDetail = getAssetDetails(checkout.to.asset.details);
+
+  if ((needToTrust) && !toAssetDetail.isNative()) {
     transaction = transaction.addOperation(
       StellarSDK.Operation.changeTrust({
-        asset: checkout.to.asset.details,
+        asset: toAssetDetail,
       }),
     );
   }

@@ -59,7 +59,7 @@
         "redux-thunk": "^2.3.0",
         "sass": "^1.49.9",
         "slugify": "^1.6.5",
-        "stellar-sdk": "^9.0.1",
+        "stellar-sdk": "^9.1.0",
         "trezor-connect": "^8.1.25",
         "use-breakpoint": "^2.0.1",
         "web-vitals": "^1.1.0"
