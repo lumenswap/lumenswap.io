@@ -4,9 +4,9 @@ import Loading from 'components/Loading';
 import CCard from 'components/CCard';
 import React, { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './styles.module.scss';
 
-const lineColor = '#e3e9ff';
 const textColor = '#656872';
 
 const tooltipFormatter = (values) => {
@@ -21,17 +21,18 @@ const tooltipFormatter = (values) => {
 
 const AuctionLineChart = ({ chartData, height }) => {
   const [isFullScreen, setFullScreen] = useState(false);
-
+  const currentTheme = useCurrentTheme();
   const initialChartSize = { CHeight: `${height + 60}px`, CWidth: 'auto' };
   const [chartSize, setChartSize] = useState(initialChartSize);
 
+  const lineColor = currentTheme === 'light' ? '#e3e9ff' : '#252b35';
   const fullScreenView = {
     myTool: {
       show: true,
       title: 'Fullscreen',
       iconStyle: {
-        color: '#0e41f5',
-        borderColor: '#0e41f5',
+        color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`,
+        borderColor: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`,
         borderWidth: 0,
       },
       icon: 'M.73 0a.726.726 0 0 0-.72.827v3.539a.726.726 0 1 0 1.453 0V2.487L4.58 5.605a.726.726 0 1 0 1.027-1.027L2.49 1.46h1.878a.726.726 0 1 0 0-1.453H.822A.726.726 0 0 0 .729 0zm14.52 0a.726.726 0 0 0-.082.007h-3.536a.726.726 0 1 0 0 1.453h1.878l-3.118 3.118a.726.726 0 1 0 1.027 1.027l3.118-3.118v1.879a.726.726 0 1 0 1.453 0V.826A.726.726 0 0 0 15.25 0zM5.08 10.17a.726.726 0 0 0-.499.22l-3.118 3.117V11.63a.726.726 0 1 0-1.453 0v3.521a.726.726 0 0 0 .837.837h3.521a.726.726 0 1 0 0-1.453H2.49l3.118-3.118a.726.726 0 0 0-.528-1.247zm5.818 0a.726.726 0 0 0-.506 1.246l3.118 3.118h-1.878a.726.726 0 1 0 0 1.453h3.52a.726.726 0 0 0 .838-.837v-3.52a.726.726 0 1 0-1.453 0v1.877L11.42 10.39a.726.726 0 0 0-.52-.22z',
@@ -46,6 +47,8 @@ const AuctionLineChart = ({ chartData, height }) => {
     tooltip: {
       trigger: 'axis',
       formatter: (params) => tooltipFormatter(params),
+      backgroundColor: `${currentTheme === 'light' ? '#ffffff' : '#171b21'}`,
+      borderColor: `${currentTheme === 'light' ? '#ffffff' : '#171b21'}`,
     },
     responsive: true,
     maintainAspectRatio: false,
@@ -89,7 +92,7 @@ const AuctionLineChart = ({ chartData, height }) => {
       name: `Amount(${chartData?.assetCode})`,
       min: 0,
       nameTextStyle: {
-        color: '#1d1d1d',
+        color: `${currentTheme === 'light' ? '#1d1d1d' : '#ffffff'}`,
         fontSize: '14',
         fontFamily: '"SofiaPro", sans-serif',
         padding: [0, 0, 10, 50],
@@ -126,7 +129,7 @@ const AuctionLineChart = ({ chartData, height }) => {
           opacity: 0.09,
         },
         lineStyle: {
-          color: '#0e41f5',
+          color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`,
         },
       },
     ],
@@ -148,8 +151,8 @@ const AuctionLineChart = ({ chartData, height }) => {
           show: true,
           title: 'Exit fullscreen',
           iconStyle: {
-            color: '#0e41f5',
-            borderColor: '#0e41f5',
+            color: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`,
+            borderColor: `${currentTheme === 'light' ? '#0e41f5' : '#3a66ff'}`,
             borderWidth: 0,
           },
           icon: 'm8.874 7.5 5.84-5.84A.97.97 0 1 0 13.342.284L7.5 6.125 1.66.286A.97.97 0 1 0 .284 1.659L6.125 7.5l-5.84 5.841a.97.97 0 1 0 1.374 1.374l5.84-5.84 5.842 5.84a.97.97 0 0 0 1.374 0 .97.97 0 0 0 0-1.374l-5.84-5.84z',

@@ -73,7 +73,7 @@ function SingleAuctionAllBids({ pageName, assetCode, auction }) {
               />
 
               <div className="d-flex align-items-center">
-                <span className="mr-3">Sort By</span>
+                <span className={classNames('mr-3', styles['sort-text'])}>Sort By</span>
                 <TableDropDown defaultOption={dropDownItems[0]} onChange={(filter) => setSortBy(filter.value)} items={dropDownItems} placeholder="Sort by" />
               </div>
             </div>

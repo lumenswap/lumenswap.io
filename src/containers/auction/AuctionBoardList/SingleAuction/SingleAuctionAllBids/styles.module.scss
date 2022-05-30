@@ -28,7 +28,7 @@
 .card {
   border-radius: 4px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  background-color: white;
+  background-color: var(--white);
 
   &-table {
     padding-top: 10px;
@@ -54,6 +54,8 @@
     border-radius: 6px;
     margin-left: auto;
     width: 290px !important;
+    background-color: var(--whiteToDarkGray);
+    border: var(--auctionSearchInputBorder);
 
     @media (max-width: $lg) {
       width: 100% !important;
@@ -64,4 +66,7 @@
       height: 30px !important;
     }
   }
+}
+.sort-text {
+  color: var(--blackToWhite);
 }
