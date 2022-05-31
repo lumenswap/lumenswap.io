@@ -6,12 +6,16 @@
   padding: 24px 15px;
   border-radius: 12px;
   box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
-  background-color: white;
+  background-color: var(--white);
   margin: 82px 0;
 
   @media (max-width: $sm) {
     margin: 45px 0;
   }
+}
+
+.destination-input {
+  background-color: var(--whiteToDarkGray);
 }
 
 .amount-container {
@@ -66,6 +70,7 @@
   box-shadow: none;
   padding: 0 16px;
   justify-content: space-between;
+  background-color: var(--whiteToDarkGray);
 
   :global(.icon-angle-down) {
     font-size: 10px;

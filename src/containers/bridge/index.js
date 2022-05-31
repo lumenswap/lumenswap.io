@@ -255,6 +255,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
               control={control}
               render={({ field }) => (
                 <Input
+                  className={styles['destination-input']}
                   type="text"
                   disabled={getValues()[TOKEN_B_FORM_NAME].network === 'stellar'}
                   placeholder="G …"

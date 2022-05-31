@@ -4,6 +4,7 @@
   font-weight: 400 !important;
   font-size: 16px !important;
   margin-top: -4px;
+  background-color: var(--whiteToDarkGray);
 }
 .loading-container {
   height: 100px;
@@ -26,13 +27,14 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
+    color: var(--blackToWhite);
 
     img {
       margin-right: 6px;
     }
 
     &:hover {
-      background-color: var(--lightAthensGray);
+      background-color: var(--lightAthensGrayToDark);
     }
   }
 }
