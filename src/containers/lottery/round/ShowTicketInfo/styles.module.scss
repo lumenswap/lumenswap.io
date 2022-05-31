@@ -5,7 +5,7 @@
 }
 
 .ticket-id-container {
-  background-color: #fff;
+  background-color: var(--whiteToDarkGray);
   min-height: 89px;
   width: 100%;
   padding: 0 17px;
@@ -14,7 +14,7 @@
 }
 
 .address-container {
-  background-color: #fff;
+  background-color: var(--whiteToDarkGray);
   min-height: 96px;
   width: 100%;
   padding: 0 17px;
@@ -22,7 +22,7 @@
   flex-direction: column;
 }
 .date-container {
-  background-color: #fff;
+  background-color: var(--whiteToDarkGray);
   min-height: 94px;
   border-radius: 0px 0px 12px 12px;
   padding: 0 17px;
@@ -42,7 +42,7 @@
       circle at right,
       transparent,
       transparent 11px,
-      #fff 12px
+      var(--whiteToDarkGray) 12px
     );
   }
   &-left {
@@ -53,14 +53,14 @@
       circle at left,
       transparent,
       transparent 11px,
-      #fff 12px
+      var(--whiteToDarkGray) 12px
     );
   }
   &-border {
     width: 90%;
     border-top: 2px dashed var(--bombay);
     margin: 0 !important;
-    background-color: #fff;
+    background-color: var(--whiteToDarkGray);
     position: absolute;
     left: 18px;
     right: 18px;
