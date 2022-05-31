@@ -10,14 +10,16 @@ function ShowFeeSection({ convertInfo }) {
   const [assetFee, setAssetFee] = useState(null);
   const fetchFeeTimeOutRef = useRef(null);
 
-  function fetchFeeFromServer() {
-    setAssetFee(null);
+  function fetchFeeFromServer(refreshData) {
+    if (refreshData) {
+      setAssetFee(null);
+    }
     getAssetFee(convertInfo[TOKEN_B_FORM_NAME]).then((feeData) => {
       setAssetFee(feeData.fee);
     }).catch((err) => console.error(err));
   }
   useEffect(() => {
-    fetchFeeFromServer();
+    fetchFeeFromServer(true);
     fetchFeeTimeOutRef.current = setInterval(() => fetchFeeFromServer(), 10000);
 
     return () => {
