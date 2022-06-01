@@ -7,6 +7,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import eyeShowIcon from 'assets/images/eye-show-icon.png';
 import { openModalAction } from 'actions/modal';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import ShowTicketInfo from './ShowTicketInfo';
 import styles from '../style.module.scss';
 
@@ -98,7 +99,7 @@ const Tickets = ({
   }, [searchQuery]);
 
   return (
-    <div style={{ background: 'var(--white)', marginLeft: -24, marginTop: 15 }}>
+    <div style={{ background: jsxThemeColors.white, marginLeft: -24, marginTop: 15 }}>
       <CTable
         className={styles.table}
         columns={tableHeaders}

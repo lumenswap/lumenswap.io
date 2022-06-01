@@ -8,6 +8,11 @@
   font-family: "SofiaPro";
 }
 
+.mobile-menu-container {
+  div {
+    background-color: var(--white);
+  }
+}
 .list {
   list-style: none;
   display: flex;
@@ -56,7 +61,7 @@
   font-weight: bold !important;
   border-radius: 4px !important;
   margin-left: auto;
-  background-color: white;
+  background-color: var(--white);
   border: 1px solid var(--blueRibbon);
   color: var(--blueRibbon);
   display: flex;

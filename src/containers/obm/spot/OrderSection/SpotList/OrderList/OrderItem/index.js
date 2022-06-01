@@ -6,10 +6,11 @@ import BN from 'helpers/BN';
 import { useDispatch } from 'react-redux';
 import Tooltips from 'components/Tooltip';
 import avgPriceIcon from 'assets/images/avg.price.png';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from '../../styles.module.scss';
 
 function generateProgressStyle(percent, isSell) {
-  return `linear-gradient(to left, ${isSell ? 'var(--veryLightRed)' : 'var(--veryLightGreen)'} ${percent}%, transparent 0%)`;
+  return `linear-gradient(to left, ${isSell ? jsxThemeColors.veryLightRed : jsxThemeColors.veryLightGreen} ${percent}%, transparent 0%)`;
 }
 
 function SumTooltip({ data }) {
@@ -67,7 +68,7 @@ const OrderItem = ({
         className={classNames(styles.progress, isSell ? styles.sell : styles.buy)}
         style={{
           background: hover
-            ? 'var(--lightAthensGray)' : generateProgressStyle(row.percent, isSell),
+            ? jsxThemeColors.lightAthensGray : generateProgressStyle(row.percent, isSell),
         }}
       >
         <div

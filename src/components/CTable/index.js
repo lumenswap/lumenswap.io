@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Loading from 'components/Loading';
 import classNames from 'classnames';
 import useCurrentTheme from 'hooks/useCurrentTheme';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './styles.module.scss';
 
 const arrowIcons = {
@@ -22,7 +23,7 @@ const arrowIcons = {
 };
 
 const TableRow = ({ columns, data, height }) => (
-  <tr style={{ height: `${height}px`, color: 'var(--blackToWhite)' }} className={styles.row}>
+  <tr style={{ height: `${height}px`, color: jsxThemeColors.blackToWhite }} className={styles.row}>
     {columns.map((column, index) => (
       <td key={index} className={styles['row-item']}>
         <section>

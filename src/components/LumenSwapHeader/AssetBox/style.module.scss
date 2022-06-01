@@ -1,4 +1,4 @@
-@import 'styles/vars';
+@import "styles/vars";
 
 .lsp {
   margin: 0;
@@ -12,7 +12,7 @@
   font-weight: bold !important;
   border-radius: 4px !important;
   margin-left: auto;
-  background-color: white;
+  background-color: var(--lightAthensGray);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import SelectOption from 'components/SelectOption';
 import useIsLogged from 'hooks/useIsLogged';
 import { getGovernanceProposals } from 'api/daoAPI';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import DAOProposalItems from './DAOProposalItems';
 import DAOContainer from '../../DAOContainer';
 import styles from './styles.module.scss';
@@ -42,7 +43,10 @@ const DAOProposalList = ({ governanceInfo, proposals: fetchedProposals }) => {
       `${governanceInfo.name} DAO | Lumenswap
       `
     }
-      info={governanceInfo}
+      info={{
+        ...governanceInfo,
+        assetColor: governanceInfo.assetColor === '#1d1d1d' ? jsxThemeColors.blackToWhite : governanceInfo.assetColor,
+      }}
     >
       <div className={classNames('layout main', styles.layout)}>
         <div className="row justify-content-center">

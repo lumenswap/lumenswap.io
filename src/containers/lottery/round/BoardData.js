@@ -1,6 +1,7 @@
 import CTabs from 'components/CTabs';
 import Input from 'components/Input';
 import { useCallback, useRef, useState } from 'react';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './style.module.scss';
 import BoardTabContent from './BoardTabContent';
 
@@ -46,7 +47,7 @@ function BoardData({ round, onTabChange }) {
 
   return (
     <>
-      <div style={{ boxShadow: 'var(--boxShadow)' }} className={styles['table-container']}>
+      <div style={{ boxShadow: jsxThemeColors.boxShadow }} className={styles['table-container']}>
         <div className={styles.header}>
           <div className={styles.ctab}>
             <CTabs
