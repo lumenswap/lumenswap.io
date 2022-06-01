@@ -20,7 +20,7 @@ export default function OpenDialogElement({
         onClick={() => {
           dispatch(
             openModalAction({
-              modalProps: { title: 'Select a pair' },
+              modalProps: { title: 'Select a pair', className: `${styles.modal}` },
               content: <SelectPair setAppSpotPair={setAppSpotPair} />,
             }),
           );

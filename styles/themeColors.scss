@@ -20,7 +20,7 @@
   --rollingStoneToBombay: #656872;
   --rollingStoneToWhite: #656872;
   --cccToRollingStone: #ccc;
-  --blackToWhite: black;
+  --blackToWhite: #1d1d1d;
   --dropdownBoxShadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
   --blueRibbonToWhite: #0e41f5;
   --lightRedToDarkGray: #fff2f2;
@@ -37,6 +37,12 @@
   --catsKillWhiteToGray: #ecf0f5;
   --auctionSearchInputBorder: 1px solid #eff2f7;
   --lightAthensGrayToDark: #f8f9fb;
+  --blackToRollingStone: black;
+  --veryLightGreen: #e8eedc;
+  --veryLightRed: #f5dce6;
+  --rollingStoneToDark: #656872;
+  --lightAthensGrayToLightGray: #f8f9fb;
+  --codGrayToRollingStone: #1d1d1d;
   /*not included in dark mode colors */
   --highBlue: #1d42c5;
   --rollingStone: #656872;
@@ -47,6 +53,7 @@
   --limeade: #74a700;
   --pink: #df4886;
   --absoluteWhite: #ffffff;
+  --absoluteBombay: #aeb1b7;
 }
 
 [data-theme="dark"] {
@@ -89,4 +96,10 @@
   --catsKillWhiteToGray: #252b35;
   --auctionSearchInputBorder: none;
   --lightAthensGrayToDark: #171b22;
+  --blackToRollingStone: #656872;
+  --veryLightGreen: #2e3422;
+  --veryLightRed: #38282e;
+  --rollingStoneToDark: #171b21;
+  --lightAthensGrayToLightGray: #212429;
+  --codGrayToRollingStone: #656872;
 }

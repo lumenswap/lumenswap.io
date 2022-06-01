@@ -105,7 +105,7 @@ const SelectPair = ({ setAppSpotPair }) => {
   }, [JSON.stringify(customPairs), searchQuery]);
 
   return (
-    <div style={{ paddingBottom: 50 }}>
+    <div className={styles.main} style={{ paddingBottom: 50 }}>
       <Input
         type="text"
         placeholder="Search asset pair"
@@ -121,7 +121,7 @@ const SelectPair = ({ setAppSpotPair }) => {
           <p style={{ padding: 16 }}>There is no asset pair</p>
         ) : (
           enrichedPairs.map((item, index) => (
-            <div key={index}>
+            <div className={styles.item} key={index}>
               <div
                 className={styles['select-logo']}
                 onClick={() => {

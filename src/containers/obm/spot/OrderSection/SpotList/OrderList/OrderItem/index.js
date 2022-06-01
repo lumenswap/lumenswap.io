@@ -9,11 +9,7 @@ import avgPriceIcon from 'assets/images/avg.price.png';
 import styles from '../../styles.module.scss';
 
 function generateProgressStyle(percent, isSell) {
-  return `linear-gradient(to left, ${isSell ? '#f5dce6' : '#e8eedc'} ${percent}%, transparent 0%)`;
-}
-
-function generateHoverStyle() {
-  return '#f8f9fb';
+  return `linear-gradient(to left, ${isSell ? 'var(--veryLightRed)' : 'var(--veryLightGreen)'} ${percent}%, transparent 0%)`;
 }
 
 function SumTooltip({ data }) {
@@ -71,7 +67,7 @@ const OrderItem = ({
         className={classNames(styles.progress, isSell ? styles.sell : styles.buy)}
         style={{
           background: hover
-            ? generateHoverStyle(row.percent, isSell) : generateProgressStyle(row.percent, isSell),
+            ? 'var(--lightAthensGray)' : generateProgressStyle(row.percent, isSell),
         }}
       >
         <div

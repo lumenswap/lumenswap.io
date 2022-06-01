@@ -204,6 +204,7 @@ const InnerForm = ({
           defaultValue=""
           render={({ field }) => (
             <InputGroup
+              className={styles['input-group']}
               value={field.value}
               onChange={field.onChange}
               rightLabel={counterAsset.getCode()}
@@ -221,6 +222,7 @@ const InnerForm = ({
           defaultValue=""
           render={({ field }) => (
             <InputGroup
+              className={styles['input-group']}
               value={field.value}
               onChange={field.onChange}
               rightLabel={baseAsset.getCode()}
@@ -253,6 +255,7 @@ const InnerForm = ({
           }}
           render={({ field }) => (
             <InputGroup
+              className={styles['input-group']}
               value={field.value}
               onChange={field.onChange}
               rightLabel={counterAsset.getCode()}

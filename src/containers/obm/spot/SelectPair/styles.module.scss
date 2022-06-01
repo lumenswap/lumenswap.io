@@ -1,5 +1,17 @@
 @import "styles/vars";
-
+.main {
+  background-color: var(--white);
+  color: var(--blackToWhite);
+  input {
+    background-color: var(--whiteToDarkGray);
+  }
+}
+.item {
+  color: var(--blackToWhite);
+  &:hover {
+    background-color: var(--lightAthensGray);
+  }
+}
 .submit {
   height: 50px;
   width: 100%;
@@ -9,10 +21,10 @@
   font-size: 16px;
   font-weight: 500;
   color: var(--blueRibbon);
-  background-color: white;
+  background-color: var(--whiteToGray);
   border: none;
   outline: none;
-  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   border-top: 1px solid var(--catsKillWhite);
   position: absolute;
   bottom: 0;

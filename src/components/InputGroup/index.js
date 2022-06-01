@@ -8,7 +8,7 @@ const InputGroup = (props) => (
     {props.variant === 'primary'
       ? (
         <div
-          className={classNames('input-group', styles['input-group'])}
+          className={classNames('input-group', styles['input-group'], props?.className)}
           style={{ width: `${props.size}`, fontSize: `${props.fontSize}px` }}
         >
           <InputElement {...props} />
@@ -17,7 +17,7 @@ const InputGroup = (props) => (
       )
       : (
         <div
-          className={classNames('input-group', styles['input-group-advance'])}
+          className={classNames('input-group', styles['input-group-advance'], props?.className)}
           style={{ width: `${props.size}`, fontSize: `${props.fontSize}px` }}
         >
           <InputElementText {...props} text={props.leftLabel} />

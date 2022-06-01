@@ -152,6 +152,8 @@
 
   input {
     border-radius: 6px;
+    background-color: var(--whiteToDarkGray);
+    border: var(--auctionSearchInputBorder);
   }
   input::placeholder {
     font-family: SofiaPro;
