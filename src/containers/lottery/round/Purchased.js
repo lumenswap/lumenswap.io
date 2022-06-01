@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import Loading from 'components/Loading';
 import Ticket from 'assets/images/ticket.svg';
+import TicketDark from 'assets/images/ticket-dark.svg';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAssetDetails } from 'helpers/asset';
 import LSP from 'tokens/LSP';
 import signForThem from 'walletIntegeration/signForThem';
 import { updateModalProps } from 'actions/modal';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import styles from './style.module.scss';
 
 const Purchased = ({ numTickets }) => {
   const [loading, setLoading] = useState(true);
   const [purchasedTickets, setPurchasedTickets] = useState(0);
   const [error, setError] = useState(null);
+  const currentTheme = useCurrentTheme();
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
 
@@ -59,7 +62,7 @@ const Purchased = ({ numTickets }) => {
 
   if (error) {
     return (
-      <div>
+      <div style={{ color: 'var(--blackToWhite)' }}>
         <p>{message}</p>
         <p>
           but faced an issue, error: {error}
@@ -71,7 +74,7 @@ const Purchased = ({ numTickets }) => {
   return (
     <div className={styles['purchased-modal']}>
       <span className={styles['ticket-icon']}>
-        <img src={Ticket} width={36} height={36} />
+        <img src={currentTheme === 'light' ? Ticket : TicketDark} width={36} height={36} />
       </span>
       <p className={styles.bold}>{message}</p>
       {loading && (

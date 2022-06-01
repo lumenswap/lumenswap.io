@@ -98,7 +98,7 @@ const Tickets = ({
   }, [searchQuery]);
 
   return (
-    <div style={{ background: 'white', marginLeft: -24, marginTop: 15 }}>
+    <div style={{ background: 'var(--white)', marginLeft: -24, marginTop: 15 }}>
       <CTable
         className={styles.table}
         columns={tableHeaders}
