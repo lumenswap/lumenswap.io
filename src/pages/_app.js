@@ -14,6 +14,7 @@ import { closeModalAction } from 'actions/modal';
 import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent';
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
+// import useOptimizely from 'hooks/useOptimizely';
 import ToggleDarkModeBtn from 'components/ToggleDarkModeBtn';
 import LModal from '../containers/LModal';
 
@@ -23,8 +24,8 @@ import 'rc-slider/assets/index.css';
 import 'react-circular-progressbar/dist/styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-steps/assets/index.css';
+
 import '../../styles/themeColors.scss';
-import useOptimizely from 'hooks/useOptimizely';
 
 async function fullRabetLogin(dispatch) {
   try {
@@ -77,7 +78,7 @@ function MyApp({ Component, pageProps }) {
     };
   }, []);
 
-  const isDarkModeEnabled = useOptimizely('is_dark_mode');
+  // const isDarkModeEnabled = useOptimizely('is_dark_mode');
 
   useEffect(() => {
     setTimeout(() => {
@@ -97,7 +98,7 @@ function MyApp({ Component, pageProps }) {
           <div style={{ minHeight: 'calc(100vh - 56px)' }}>
             <Component {...pageProps} />
           </div>
-          {isDarkModeEnabled && <ToggleDarkModeBtn /> }
+          <ToggleDarkModeBtn />
         </PersistGate>
       </Provider>
     </>
