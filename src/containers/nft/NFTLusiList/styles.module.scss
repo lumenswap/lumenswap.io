@@ -38,7 +38,7 @@
 
   :global(.select__menu-list) {
     border-radius: 4px;
-    box-shadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
+    box-shadow: var(--dropdownBoxShadow);
     padding: 10px 0;
   }
 }

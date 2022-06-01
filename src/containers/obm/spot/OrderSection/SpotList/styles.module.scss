@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.25rem;
-  box-shadow: 0 3px 12px 0 rgba(134, 146, 164, 0.11);
+  box-shadow: var(--boxShadow);
 }
 .avg-icon {
   margin-right: 2px;

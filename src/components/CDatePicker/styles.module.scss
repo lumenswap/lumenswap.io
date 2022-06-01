@@ -53,7 +53,7 @@
   :global(.react-datepicker) {
     border: none;
     border-radius: 4px;
-    box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.23);
+    box-shadow: var(--boxShadow);
   }
 
   :global(.react-datepicker__triangle)::before {

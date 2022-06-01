@@ -77,7 +77,7 @@
   border: none;
   outline: none;
   background-color: var(--whiteToGray);
-  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   border-top: 1px solid var(--catsKillWhite);
   position: absolute;
   bottom: 0;

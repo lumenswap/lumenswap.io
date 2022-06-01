@@ -7,7 +7,9 @@ import generateBulkCancelOrderTRX from 'stellar-trx/generateBulkCancelOrderTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import orderConnectIcon from 'assets/images/orderNotConnected.png';
+import orderConnectIconDark from 'assets/images/order-login-dark.png';
 import ServerSideLoading from 'components/ServerSideLoading';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import OrderData from './OrderData';
 import styles from './styles.module.scss';
 
@@ -17,6 +19,7 @@ function OrderPage() {
   const [showCancel, setShowCancel] = useState(true);
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
+  const currentTheme = useCurrentTheme();
 
   async function cancelAllOrders() {
     function func() {
@@ -70,7 +73,7 @@ function OrderPage() {
             : (
               <LoginRequired
                 text="To see the orders and trades, please connect your account"
-                logo={orderConnectIcon}
+                logo={currentTheme === 'light' ? orderConnectIcon : orderConnectIconDark}
               />
             )}
         </div>
