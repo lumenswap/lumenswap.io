@@ -28,7 +28,7 @@
   border-radius: 4px;
   left: 0;
   top: 0;
-  box-shadow: 0 4px 20px 0 rgba(134, 146, 164, 0.17);
+  box-shadow: var(--boxShadow);
 
   &.active {
     visibility: visible;

@@ -65,7 +65,7 @@
   background-color: var(--white);
   margin-right: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   height: 40px;
   display: flex;
   flex-direction: row;
@@ -131,7 +131,7 @@
   width: 100%;
   background-color: var(--white);
   border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   margin-top: 18px;
   overflow: hidden;
 }
@@ -152,6 +152,8 @@
 
   input {
     border-radius: 6px;
+    background-color: var(--whiteToDarkGray);
+    border: var(--auctionSearchInputBorder);
   }
   input::placeholder {
     font-family: SofiaPro;

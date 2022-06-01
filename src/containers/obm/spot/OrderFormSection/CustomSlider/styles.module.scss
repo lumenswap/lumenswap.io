@@ -9,7 +9,7 @@
   }
 
   :global(.rc-slider-dot) {
-    border: 2px solid white;
+    border: 2px solid var(--catsKillWhite);
     background-color: var(--catsKillWhite);
     width: 12px;
     height: 12px;
@@ -26,7 +26,7 @@
   }
 
   :global(.rc-slider-handle) {
-    background-color: white;
+    background-color: var(--white);
     border: 2px solid var(--rollingStone) !important;
     height: 12px;
     width: 12px;

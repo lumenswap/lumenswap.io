@@ -4,7 +4,7 @@
   margin-top: 12px;
   background-color: var(--white);
   border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   max-height: 474px;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .table {
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   border-radius: 4px;
   background-color: var(--white);
   max-height: 474px;
@@ -86,7 +86,7 @@
   height: 474px;
   background-color: var(--white);
   border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   display: flex;
   justify-content: center;
   align-items: center;

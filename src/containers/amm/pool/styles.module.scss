@@ -53,7 +53,7 @@
   margin-bottom: 34px;
   background-color: var(--white);
   border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -151,7 +151,7 @@
   width: 100%;
   height: 474px;
   background-color: var(--white);
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   border-radius: 4px;
   display: flex;
   justify-content: center;
@@ -180,7 +180,7 @@
 .chart-container {
   background-color: var(--white);
   border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   width: 100%;
   height: 220px;
 }

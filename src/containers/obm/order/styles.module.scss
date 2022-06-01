@@ -55,7 +55,7 @@
   width: 100%;
   background-color: var(--white);
   border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+  box-shadow: var(--boxShadow);
   margin-top: 23px;
 }
 
@@ -121,4 +121,7 @@
     margin-right: 15px;
     margin-left: 15px;
   }
+}
+.date-table {
+  color: var(--rollingStone);
 }

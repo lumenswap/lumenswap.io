@@ -46,7 +46,7 @@ function BoardData({ round, onTabChange }) {
 
   return (
     <>
-      <div style={{ boxShadow: '0 2px 20px 0 rgba(134, 146, 164, 0.08)' }} className={styles['table-container']}>
+      <div style={{ boxShadow: 'var(--boxShadow)' }} className={styles['table-container']}>
         <div className={styles.header}>
           <div className={styles.ctab}>
             <CTabs

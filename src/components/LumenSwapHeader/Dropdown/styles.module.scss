@@ -37,9 +37,10 @@
 
   :global(.dropdown-menu) {
     border-radius: 4px;
-    box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.08);
+    box-shadow: var(--boxShadow);
     border: none;
     padding: 0;
+    background-color: var(--white);
 
     :global(.dropdown-item) {
       font-size: 12px;
@@ -76,7 +77,7 @@
     }
 
     :global(.dropdown-item):active {
-      background: #fff !important;
+      background: var(--white) !important;
       color: var(--codGray) !important;
     }
   }
@@ -84,6 +85,6 @@
 
 .hover {
   :global(.dropdown-toggle) {
-    background-color: #fff;
+    background-color: var(--white);
   }
 }

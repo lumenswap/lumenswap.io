@@ -24,7 +24,7 @@ const TradeList = ({
               <div className={styles['table-row']} style={{ cursor: 'auto' }}>
                 <div className={styles['row-item']}>{humanizeAmount(row.counter_amount)}</div>
                 <div className={styles['row-item']}>{humanizeAmount(row.base_amount)}</div>
-                <div className={styles['row-item']}>{moment(row.time).format('hh:mm:ss')}</div>
+                <div className={classNames(styles['row-item'], styles.date)}>{moment(row.time).format('hh:mm:ss')}</div>
               </div>
             </div>
           </div>

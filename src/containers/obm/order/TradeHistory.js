@@ -64,7 +64,7 @@ function TradeHistory() {
       dataIndex: 'time',
       key: '1',
       render: (data) => (
-        <span>{moment(data.time).fromNow()}</span>
+        <span className={styles['date-table']}>{moment(data.time).fromNow()}</span>
       ),
     },
     {

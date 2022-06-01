@@ -3,13 +3,13 @@
 .table-container {
   display: flex;
   flex-flow: column nowrap;
-  background-color: white;
+  background-color: var(--white);
   width: 100%;
   margin: 0 auto;
 }
 
 .tooltip {
-  color: var(--white);
+  color: var(--absoluteWhite);
   display: flex;
   flex-direction: column;
   height: 68px;
@@ -33,16 +33,20 @@
     }
   }
 }
+.date {
+  color: var(--codGrayToRollingStone) !important;
+}
 .tooltip-container {
+  font-family: Roboto;
   height: 97px;
   min-width: 206px;
   width: auto;
-  background-color: var(--rollingStone);
+  background-color: var(--rollingStoneToDark);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.25rem;
-  box-shadow: 0 3px 12px 0 rgba(134, 146, 164, 0.11);
+  box-shadow: var(--boxShadow);
 }
 .avg-icon {
   margin-right: 2px;

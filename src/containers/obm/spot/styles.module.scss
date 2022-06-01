@@ -8,11 +8,26 @@
     padding: 0 2px 4px 2px !important;
   }
 }
+.input-group {
+  background-color: var(--lightAthensGrayToLightGray) !important;
+  span {
+    background-color: var(--lightAthensGrayToLightGray) !important;
+    color: var(--absoluteBombay) !important;
+  }
+  input {
+    background-color: var(--lightAthensGrayToLightGray) !important;
+    color: var(--blackToWhite) !important;
+  }
+  input:focus {
+    background-color: var(--lightAthensGrayToLightGray) !important;
+  }
+}
 
 .card {
   border-radius: 2px;
-  background-color: white;
+  background-color: var(--white);
   height: 100%;
+  font-family: Roboto;
 }
 
 .card-left {
@@ -51,6 +66,10 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 0;
+  color: var(--blackToWhite);
+}
+.modal {
+  background-color: var(--white);
 }
 
 .container-checkbox {
@@ -73,7 +92,7 @@
 }
 
 .card-select {
-  background-color: white;
+  background-color: var(--white);
   display: grid;
   align-items: center;
 }

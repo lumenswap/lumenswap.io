@@ -46,7 +46,7 @@
   background-color: white;
   color: var(--catsKillWhite);
   border: 1px solid var(--catsKillWhite);
-  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.05);
+  box-shadow: var(--boxShadow);
 }
 
 .button-basic {
@@ -59,7 +59,7 @@
   background-color: white;
   color: var(--blueRibbon);
   border: 1px solid var(--blueRibbon);
-  box-shadow: 0 2px 10px 0 rgba(134, 146, 164, 0.05);
+  box-shadow: var(--boxShadow);
 }
 
 .button-default {
