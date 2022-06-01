@@ -16,14 +16,6 @@ class MyDocument extends Document {
           <script
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: `
-              document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
-              `,
-            }}
-          />
-          <script
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
               __html: `if (document.location.hostname.search("lumenswap.io") !== -1) {
                 window.dataLayer = window.dataLayer || [];
                 function gtag() { dataLayer.push(arguments); }
@@ -50,6 +42,14 @@ class MyDocument extends Document {
           <meta name="distribution" content="Global" />
         </Head>
         <body>
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: `
+              document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+              `,
+            }}
+          />
           <Main />
           <NextScript />
         </body>
