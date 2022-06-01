@@ -13,7 +13,14 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-196265354-1" />
-
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: `
+              document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+              `,
+            }}
+          />
           <script
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
