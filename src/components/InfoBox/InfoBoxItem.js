@@ -1,6 +1,7 @@
 import Tooltips, { PrimaryTooltip } from 'components/Tooltip';
 import classNames from 'classnames';
 import QuestionIcon from 'assets/images/question-icon.png';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import InfoBoxLink from './InfoBoxLink';
 
 import styles from './styles.module.scss';
@@ -35,7 +36,7 @@ function InfoBoxItem({
           )}
         </span>
       </div>
-      <div style={{ color: 'var(--blackToWhite)' }} className={styles['align-center']}>{url ? <InfoBoxLink item={item} /> : item.render(data)}</div>
+      <div style={{ color: jsxThemeColors.blackToWhite }} className={styles['align-center']}>{url ? <InfoBoxLink item={item} /> : item.render(data)}</div>
     </div>
 
   );

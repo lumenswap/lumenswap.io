@@ -3,10 +3,12 @@ import { slide as Menu } from 'react-burger-menu';
 import PropTypes from 'prop-types';
 import NavLink from 'components/LumenSwapHeader/NavLink';
 import BurgerMenu from 'assets/images/burgerMenu';
+import styles from '../styles.module.scss';
 
 const MobileMenu = ({ menus, isLogged }) => (
   <div id="outer-container">
     <Menu
+      className={styles['mobile-menu-container']}
       pageWrapId="page-wrap"
       outerContainerId="outer-container"
       customBurgerIcon={<BurgerMenu />}

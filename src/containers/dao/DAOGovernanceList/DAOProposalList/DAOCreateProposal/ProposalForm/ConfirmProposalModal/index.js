@@ -12,6 +12,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { Claimant } from 'stellar-sdk';
 import useCurrentTheme from 'hooks/useCurrentTheme';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './styles.module.scss';
 
 const ConfirmProposalModal = ({ formData, setStatus }) => {
@@ -71,7 +72,7 @@ const ConfirmProposalModal = ({ formData, setStatus }) => {
   };
 
   return (
-    <div style={{ backgroundColor: 'var(--whiteToDarkGray)' }} className="pb-4 d-flex flex-column align-items-center">
+    <div style={{ backgroundColor: jsxThemeColors.whiteToDarkGray }} className="pb-4 d-flex flex-column align-items-center">
       {currentTheme === 'light' ? <ContractIcon /> : <ContractDarkIcon />}
       <h6 className={styles.title}>Confirm proposal</h6>
       <p className={styles.text}>Your proposal will not be editable after publishing.</p>

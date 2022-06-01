@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import LSP from 'tokens/LSP';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './style.module.scss';
 
 const AssetBox = ({ color, asset }) => {
@@ -12,7 +13,7 @@ const AssetBox = ({ color, asset }) => {
   if (!isLogged) return null;
 
   return (
-    <p className={styles.lsp} style={{ color: color ?? '#0e41f5', border: `1px solid ${color ?? '#0e41f5'}` }}>
+    <p className={styles.lsp} style={{ color: color ?? jsxThemeColors.blueRibbon, border: `1px solid ${color ?? jsxThemeColors.blueRibbon}` }}>
       {humanizeAmount(userAssetBalance?.balance || 0)} {asset?.code ?? 'LSP'}
     </p>
   );

@@ -1,6 +1,7 @@
 import CTable from 'components/CTable';
 import { getRoundParticipants } from 'api/lottery';
 import { useEffect, useState } from 'react';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import tableHeaders from './participantsTableHeaders';
 import styles from '../style.module.scss';
 
@@ -29,7 +30,7 @@ const Participants = ({ searchQuery, round }) => {
   }, [searchQuery]);
 
   return (
-    <div style={{ background: 'var(--white)', marginLeft: -24, marginTop: 15 }}>
+    <div style={{ background: jsxThemeColors.white, marginLeft: -24, marginTop: 15 }}>
       <CTable
         className={styles.table}
         columns={tableHeaders}

@@ -33,7 +33,7 @@ function ToggleDarkModeBtn() {
   }, []);
   useEffect(() => {
     if (reduxTheme !== theme) {
-      dispatch(toggleTheme());
+      setTimeout(() => { dispatch(toggleTheme()); }, firstTimeRef.current ? 0 : 400);
     }
     setDocumentElementAttribute(theme, firstTimeRef.current ? 0 : 400);
   }, [theme]);

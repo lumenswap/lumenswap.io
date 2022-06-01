@@ -8,6 +8,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import generateClaimableBalanceForDaoTRX from 'stellar-trx/generateClaimableBalanceForDaoTRX';
 import showSignResponse from 'helpers/showSignResponse';
 import { TIME_AFTER_PROPOSAL_END_TIME } from 'containers/dao/consts';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './styles.module.scss';
 
 const ConfirmVoteModal = ({ proposalInfo }) => {
@@ -52,7 +53,7 @@ const ConfirmVoteModal = ({ proposalInfo }) => {
       });
   };
   return (
-    <div style={{ backgroundColor: 'var(--whiteToDarkGray)' }} className="pb-4 main">
+    <div style={{ backgroundColor: jsxThemeColors.whiteToDarkGray }} className="pb-4 main">
       <p className={styles.title}>
         {proposalInfo.title}
       </p>

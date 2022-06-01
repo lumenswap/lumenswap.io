@@ -14,6 +14,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { listAssets } from 'api/stellar';
 import { useEffect, useState } from 'react';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './styles.module.scss';
 
 function stellarExpertURLGenerator(code, issuer) {
@@ -84,7 +85,7 @@ const GovernanceInfo = ({ governance }) => {
           />
         </div>
       </div>
-      <p style={{ color: 'var(--rollingStoneToBombay)' }} className={classNames(styles.text, 'mb-0')}>{description}</p>
+      <p style={{ color: jsxThemeColors.rollingStoneToBombay }} className={classNames(styles.text, 'mb-0')}>{description}</p>
       <div className="mt-4">
         <div className={styles.detail}>
           <span className={styles.text}>Asset:</span>

@@ -9,6 +9,7 @@ import LSP from 'tokens/LSP';
 import signForThem from 'walletIntegeration/signForThem';
 import { updateModalProps } from 'actions/modal';
 import useCurrentTheme from 'hooks/useCurrentTheme';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './style.module.scss';
 
 const Purchased = ({ numTickets }) => {
@@ -62,7 +63,7 @@ const Purchased = ({ numTickets }) => {
 
   if (error) {
     return (
-      <div style={{ color: 'var(--blackToWhite)' }}>
+      <div style={{ color: jsxThemeColors.blackToWhite }}>
         <p>{message}</p>
         <p>
           but faced an issue, error: {error}

@@ -8,6 +8,7 @@ import { openModalAction } from 'actions/modal';
 import BN from 'helpers/BN';
 import { getAssetDetails } from 'helpers/asset';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
+import jsxThemeColors from 'helpers/jsxThemeColors';
 import styles from './styles.module.scss';
 import ConfirmVoteModal from './ConfirmVoteModal';
 
@@ -69,7 +70,7 @@ const VoteModal = ({ proposalInfo }) => {
   }
 
   return (
-    <div style={{ backgroundColor: 'var(--whiteToDarkGray)' }} className="pb-4 main">
+    <div style={{ backgroundColor: jsxThemeColors.whiteToDarkGray }} className="pb-4 main">
       <p className={styles.title}>
         {proposalInfo.title}
       </p>
