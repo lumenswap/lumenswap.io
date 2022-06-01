@@ -10,15 +10,6 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <>
-      <script
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: `
-              document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
-              `,
-            }}
-          />
       <Html>
         <Head>
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-196265354-1" />
@@ -51,11 +42,19 @@ class MyDocument extends Document {
           <meta name="distribution" content="Global" />
         </Head>
         <body>
+         <script
+            // eslint-disable-next-line react/no-danger
+            
+            dangerouslySetInnerHTML={{
+              __html: `
+              document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+              `,
+            }}
+          />
           <Main />
           <NextScript />
         </body>
       </Html>
-      </>
     );
   }
 }
