@@ -18,14 +18,13 @@ import updateUserDetail from 'actions/user/updateUserDetail';
 import ToggleDarkModeBtn from 'components/ToggleDarkModeBtn';
 import LModal from '../containers/LModal';
 
+import '../../styles/themeColors.scss';
 import '../../styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rc-slider/assets/index.css';
 import 'react-circular-progressbar/dist/styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-steps/assets/index.css';
-
-import '../../styles/themeColors.scss';
 
 async function fullRabetLogin(dispatch) {
   try {
