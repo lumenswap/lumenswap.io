@@ -43,15 +43,13 @@ class MyDocument extends Document {
         </Head>
         <body>
          <script
+            data-cfasync="false"
             // eslint-disable-next-line react/no-danger
-            
             dangerouslySetInnerHTML={{
               __html: `
-                (function(){
-                  document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
-                })()
+              document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
               `,
-            }}
+            }} 
           />
           <Main />
           <NextScript />
