@@ -14,7 +14,6 @@ import { closeModalAction } from 'actions/modal';
 import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent';
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
-// import useOptimizely from 'hooks/useOptimizely';
 import ToggleDarkModeBtn from 'components/ToggleDarkModeBtn';
 import LModal from '../containers/LModal';
 
@@ -76,8 +75,6 @@ function MyApp({ Component, pageProps }) {
       clearInterval(xlmPriceIntervalRef.current);
     };
   }, []);
-
-  // const isDarkModeEnabled = useOptimizely('is_dark_mode');
 
   useEffect(() => {
     setTimeout(() => {

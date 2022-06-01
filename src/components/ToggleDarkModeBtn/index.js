@@ -6,6 +6,7 @@ import { useEffect, useState, useRef } from 'react';
 import { toggleTheme } from 'actions/theme';
 import { useDispatch } from 'react-redux';
 import useCurrentTheme from 'hooks/useCurrentTheme';
+import useOptimizely from 'hooks/useOptimizely';
 import styles from './styles.module.scss';
 
 function setDocumentElementAttribute(attribute, timeOut) {
@@ -22,6 +23,7 @@ function ToggleDarkModeBtn() {
   const firstTimeRef = useRef(true);
   const dispatch = useDispatch();
   const reduxTheme = useCurrentTheme();
+  const isDarkModeEnabled = useOptimizely('is_dark_mode');
 
   useEffect(() => {
     const currentTheme = localStorage.getItem('theme');
@@ -45,6 +47,11 @@ function ToggleDarkModeBtn() {
       localStorage.setItem('theme', 'light');
     }
   };
+
+  if (!isDarkModeEnabled) {
+    return null;
+  }
+
   return (
     <div onClick={handleChangeTheme} className={styles.main}>
       <div className={styles['main-relative']}>
