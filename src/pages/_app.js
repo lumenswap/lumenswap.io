@@ -106,7 +106,6 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <LModal />
       <Component {...pageProps} />
-      <ToggleDarkModeBtn />
     </Provider>
   );
 }
