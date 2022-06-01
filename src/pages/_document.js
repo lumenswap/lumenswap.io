@@ -47,7 +47,9 @@ class MyDocument extends Document {
             
             dangerouslySetInnerHTML={{
               __html: `
-              document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+                (function(){
+                  document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+                })()
               `,
             }}
           />
