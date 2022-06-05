@@ -26,6 +26,7 @@ import UNBNK from './UNBNK';
 import MOBI from './MOBI';
 import BRAVE from './BRAVE';
 import BRC from './BRC';
+import DicInu from './DicInu';
 
 const defaultTokens = [
   XLM,
@@ -56,6 +57,7 @@ const defaultTokens = [
   MOBI,
   BRAVE,
   BRC,
+  DicInu,
 ];
 
 export default defaultTokens;
