@@ -100,6 +100,8 @@ export default function TVChart({ appSpotPair }) {
       tvWidget.current.remove();
     }
 
+    console.log(widget);
+
     tvWidget.current = new widget(widgetOptions);
   }, [appSpotPair.base, appSpotPair.counter]);
 
