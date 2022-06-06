@@ -93,14 +93,13 @@ export default function TVChart({ appSpotPair }) {
         'header_settings',
         'timeframes_toolbar',
       ],
-
+      // custom_css_url: 'lumenswap_style.css',
+      // theme: 'Dark',
     };
 
     if (tvWidget.current) {
       tvWidget.current.remove();
     }
-
-    console.log(widget);
 
     tvWidget.current = new widget(widgetOptions);
   }, [appSpotPair.base, appSpotPair.counter]);
