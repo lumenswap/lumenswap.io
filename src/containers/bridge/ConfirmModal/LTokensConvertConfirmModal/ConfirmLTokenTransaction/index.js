@@ -37,7 +37,7 @@ const ConfirmLTokenTransaction = ({ sendConvertRequest, convertInfo, signLoading
 
       <Button
         variant="primary"
-        content="Sign"
+        content="Sign & Send"
         size="100%"
         className="mt-5"
         onClick={handleSign()}
