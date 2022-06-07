@@ -233,13 +233,14 @@ const BridgeConvert = ({ bridgeTokens }) => {
               </div>
               )}
             </div>
+
             <Controller
               name="amount"
               control={control}
               render={({ field }) => (
                 <NumberOnlyInput
                   type="number"
-                  placeholder="1"
+                  placeholder={`${new BN(getValues()[TOKEN_B_FORM_NAME].minimum_amount).div(10 ** (getValues()[TOKEN_A_FORM_NAME].precision)).toString()}`}
                   value={field.value}
                   onChange={(value) => {
                     customValidateAmount(value, field.onChange, getValues());
@@ -258,7 +259,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
                   className={styles['destination-input']}
                   type="text"
                   disabled={getValues()[TOKEN_B_FORM_NAME].network === 'stellar'}
-                  placeholder="G …"
+                  placeholder="Enter your destination"
                   value={field.value}
                   onChange={field.onChange}
                 />
