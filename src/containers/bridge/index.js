@@ -240,7 +240,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
               render={({ field }) => (
                 <NumberOnlyInput
                   type="number"
-                  placeholder={`${new BN(getValues()[TOKEN_B_FORM_NAME].minimum_amount).div(10 ** (getValues()[TOKEN_A_FORM_NAME].precision)).toString()}`}
+                  placeholder={`${new BN(getValues()[TOKEN_A_FORM_NAME].minimum_amount).div(10 ** (getValues()[TOKEN_A_FORM_NAME].precision)).toString()}`}
                   value={field.value}
                   onChange={(value) => {
                     customValidateAmount(value, field.onChange, getValues());
