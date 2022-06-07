@@ -49,7 +49,7 @@ const ConvertConfirmModal = ({ convertInfo }) => {
       openModalAction({
         modalProps: {
           className: 'main pb-0',
-          hasClose: false,
+          hasClose: true,
         },
         content: <ConvertConfirmModal
           convertInfo={currentConvertInfo}
