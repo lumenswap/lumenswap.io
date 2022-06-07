@@ -23,6 +23,8 @@ if (process.env.REACT_APP_MODE === 'OBM') {
   rootUrl.auction = '';
 } else if (process.env.REACT_APP_MODE === 'DAO') {
   rootUrl.dao = '';
+} else if (process.env.REACT_APP_MODE === 'BRIDGE') {
+  rootUrl.bridge = '';
 }
 
 const urlMaker = {
