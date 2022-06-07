@@ -95,10 +95,12 @@ export default function TVChart({ appSpotPair }) {
         'header_settings',
         'timeframes_toolbar',
       ],
-      // custom_css_url: 'lumenswap_style.css',
-      // theme: `${currentTheme === 'light' ? 'Light' : 'Dark'}`,
+      toolbar_bg: 'red',
+      custom_css_url: 'lumenswap_style.css',
+      theme: `${currentTheme === 'light' ? 'Light' : 'Dark'}`,
     };
 
+    // setTimeout(() => tvWidget.current.changeTheme('Light'), 2000);
     if (tvWidget.current) {
       tvWidget.current.remove();
     }
