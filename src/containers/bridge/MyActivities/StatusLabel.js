@@ -15,8 +15,8 @@ const StatusLabel = ({ status, orderInfo }) => {
     dispatch(
       openModalAction({
         modalProps: {
-          className: 'main p-0',
-          hasClose: false,
+          className: 'main pb-0',
+          hasClose: true,
         },
         content: <ConvertConfirmModalContent convertInfo={orderInfo} />,
       }),

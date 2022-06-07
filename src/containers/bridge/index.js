@@ -113,8 +113,8 @@ const BridgeConvert = ({ bridgeTokens }) => {
           return dispatch(
             openModalAction({
               modalProps: {
-                className: 'main p-0',
-                hasClose: false,
+                className: 'main pb-0',
+                hasClose: true,
               },
               content: <ConvertConfirmModalContent convertInfo={res.data} />,
             }),

@@ -48,7 +48,7 @@ const ConvertConfirmModal = ({ convertInfo }) => {
     dispatch(
       openModalAction({
         modalProps: {
-          className: 'main p-0',
+          className: 'main pb-0',
           hasClose: false,
         },
         content: <ConvertConfirmModal
