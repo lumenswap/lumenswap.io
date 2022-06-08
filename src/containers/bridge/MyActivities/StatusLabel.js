@@ -39,14 +39,15 @@ const StatusLabel = ({ status, orderInfo }) => {
     || status.toLowerCase() === orderStates.SENDING
     || status.toLowerCase() === orderStates.PRE_SENDING) {
     return (
-      <div className={classNames('d-flex align-items-center',
-        styles['status-pending'])}
+      <div
+        className={classNames('d-flex align-items-center',
+          styles['status-pending'])}
+        onClick={(e) => { handleOpenCurrentStep(e); }}
       >
         <Clock />
         <div className="mx-1">Pending</div>
         <ArrowRight
           className={styles['arrow-right']}
-          onClick={(e) => { handleOpenCurrentStep(e); }}
         />
       </div>
     );
