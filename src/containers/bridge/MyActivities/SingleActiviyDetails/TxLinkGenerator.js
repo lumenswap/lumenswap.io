@@ -28,7 +28,7 @@ const TxLinkGenerator = ({ tx, url }) => {
   return (
     <CExternalLink
       href={url}
-      content={minimizeAddress(tx.toLowerCase(), 8)}
+      content={minimizeAddress(tx, 8)}
     />
   );
 };
