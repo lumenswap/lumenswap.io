@@ -64,6 +64,7 @@
 
 .status-pending {
   color: var(--tanHide);
+  cursor: pointer;
 
   svg:last-child {
     width: 14px;
