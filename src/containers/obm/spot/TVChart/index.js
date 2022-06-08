@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { getAssetDetails } from 'helpers/asset';
 import moment from 'moment';
+import useCurrentTheme from 'hooks/useCurrentTheme';
 import { widget } from '../../../../../public/static/charting_library/charting_library';
 import { tvChartTrageAggregator } from './utils';
 
@@ -25,6 +26,7 @@ const reso = {
 
 export default function TVChart({ appSpotPair }) {
   const tvWidget = useRef();
+  const currentTheme = useCurrentTheme();
 
   useEffect(() => {
     const datafeed = {
@@ -93,16 +95,22 @@ export default function TVChart({ appSpotPair }) {
         'header_settings',
         'timeframes_toolbar',
       ],
-      // custom_css_url: 'lumenswap_style.css',
-      // theme: 'Dark',
+      overrides: {
+        'paneProperties.background': `${currentTheme === 'light' ? '#ffffff' : '#171b21'}`,
+        'paneProperties.backgroundType': 'solid',
+      },
+      toolbar_bg: 'red',
+      custom_css_url: 'lumenswap_style.css',
+      theme: `${currentTheme === 'light' ? 'Light' : 'Dark'}`,
     };
+    localStorage.removeItem('tradingview.current_theme.name');
 
     if (tvWidget.current) {
       tvWidget.current.remove();
     }
 
     tvWidget.current = new widget(widgetOptions);
-  }, [appSpotPair.base, appSpotPair.counter]);
+  }, [appSpotPair.base, appSpotPair.counter, currentTheme]);
 
   return (
     <div
