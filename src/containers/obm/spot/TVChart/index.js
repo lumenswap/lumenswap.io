@@ -95,12 +95,16 @@ export default function TVChart({ appSpotPair }) {
         'header_settings',
         'timeframes_toolbar',
       ],
+      overrides: {
+        'paneProperties.background': `${currentTheme === 'light' ? '#ffffff' : '#171b21'}`,
+        'paneProperties.backgroundType': 'solid',
+      },
       toolbar_bg: 'red',
       custom_css_url: 'lumenswap_style.css',
       theme: `${currentTheme === 'light' ? 'Light' : 'Dark'}`,
     };
+    localStorage.removeItem('tradingview.current_theme.name');
 
-    // setTimeout(() => tvWidget.current.changeTheme('Light'), 2000);
     if (tvWidget.current) {
       tvWidget.current.remove();
     }
