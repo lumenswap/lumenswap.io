@@ -27,11 +27,17 @@ import MOBI from './MOBI';
 import BRAVE from './BRAVE';
 import BRC from './BRC';
 import DicInu from './DicInu';
+import LETH from './LETH';
+import LBTC from './LBTC';
+import LSOL from './LSOL';
 
 const defaultTokens = [
   XLM,
   LSP,
   USDC,
+  LETH,
+  LBTC,
+  LSOL,
   NLSP,
   CNY,
   ARS,
