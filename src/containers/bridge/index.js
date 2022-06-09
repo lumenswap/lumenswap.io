@@ -38,11 +38,13 @@ const customValidateAmount = (value, onChange, formValues) => {
 
 function userHasTrustLine(currentToToken, balances) {
   return !!balances
-    .find((balance) => isSameAsset(getAssetDetails({
-      code: balance.asset.code,
-      issuer: balance.asset.issuer,
-    }),
-    getAssetDetails({ code: currentToToken.name, issuer: process.env.REACT_APP_L_ISSUER })));
+    .find((balance) => isSameAsset(
+      getAssetDetails({
+        code: balance.asset.code,
+        issuer: balance.asset.issuer,
+      }),
+      getAssetDetails({ code: currentToToken.name, issuer: process.env.REACT_APP_L_ISSUER }),
+    ));
 }
 
 const BridgeConvert = ({ bridgeTokens }) => {
@@ -91,7 +93,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
 
         generateTrustLineFunction = () => generateAddTrustLineTRX(userAddress, toAsset);
 
-        if (currentToToken.network === 'stellar' && destination?.length === 56 && destinationFullDetails?.data?.balances) {
+        if (currentToToken.network === 'stellar' && destination?.length === 56 && userBalances) {
           if (!userHasTrustLine(currentToToken, userBalances)) {
             const trx = await showGenerateTrx(generateTrustLineFunction, dispatch);
             await showSignResponse(trx, dispatch);
@@ -143,7 +145,7 @@ const BridgeConvert = ({ bridgeTokens }) => {
     const formValues = getValues();
     const currentToToken = formValues[TOKEN_B_FORM_NAME];
 
-    if (currentToToken.network === 'stellar' && userAddress && destinationFullDetails?.data?.balances) {
+    if (currentToToken.network === 'stellar' && userAddress && userBalances) {
       if (!userHasTrustLine(currentToToken, userBalances)) {
         return `Create trustline for ${currentToToken.name}`;
       }
