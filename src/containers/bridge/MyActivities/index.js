@@ -61,7 +61,7 @@ const MyActivities = () => {
       setUserActivities(activitiyData.data);
       setPages(activitiyData.total_pages);
     });
-  }, [currentPage]);
+  }, [currentPage, userAddress]);
   return (
     <BridgeContainer title="Bridge Activity | Lumenswap">
       <div className={classNames('layout main', styles.layout)}>
