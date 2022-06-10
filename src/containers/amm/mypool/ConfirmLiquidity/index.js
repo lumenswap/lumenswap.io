@@ -23,8 +23,12 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
       currentPrice = new BN(data.tokenA.amount).div(data.tokenB.amount);
     }
 
-    const max = currentPrice.plus(currentPrice.times(data.tolerance));
-    const min = currentPrice.minus(currentPrice.times(data.tolerance));
+    let max = currentPrice.plus(currentPrice.times(data.tolerance));
+    let min = currentPrice.minus(currentPrice.times(data.tolerance));
+    if (max.toFixed(7) === min.toFixed(7)) {
+      max = max.plus(0.0000001);
+      min = min.minus(0.0000001);
+    }
 
     function func() {
       return generateDepositPoolTRX(
