@@ -10,9 +10,7 @@ async function bridgeFormCustomValidator(formValues, userBalances) {
   if (formValues[TOKEN_A_FORM_NAME].disabled) {
     return { values: formValues, errors: generateFormResolverErrors(TOKEN_A_FORM_NAME, `${formValues[TOKEN_A_FORM_NAME].name} is unavailable now`) };
   }
-  if (formValues[TOKEN_B_FORM_NAME].disabled) {
-    return { values: formValues, errors: generateFormResolverErrors(TOKEN_B_FORM_NAME, `${formValues[TOKEN_B_FORM_NAME].name} is unavailable now`) };
-  }
+
   if (currentFromToken.network === 'stellar' && userBalances) {
     const foundAssetInUserBalances = userBalances?.find((balance) => isSameAsset(balance.asset,
       getAssetDetails({ code: currentFromToken.name, issuer: process.env.REACT_APP_L_ISSUER })));
