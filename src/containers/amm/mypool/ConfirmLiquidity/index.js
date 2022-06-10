@@ -30,6 +30,11 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
       min = min.minus(0.0000001);
     }
 
+    if (max.minus(min).isLessThanOrEqualTo(0.0000001)) {
+      max = max.plus(0.0000001);
+      min = min.minus(0.0000001);
+    }
+
     function func() {
       return generateDepositPoolTRX(
         storeData.user.detail.address,
