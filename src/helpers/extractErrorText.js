@@ -98,11 +98,15 @@ export default function extractErrorText(error) {
     const { result_codes } = error.response.data.extras;
 
     if (result_codes.transaction && (!result_codes.operations || !result_codes.operations.length)) {
-      return `${transactionResultCodes[result_codes.transaction]}`;
+      return transactionResultCodes[result_codes.transaction] || result_codes.transaction;
     }
 
-    return `${operationResultCodes[result_codes.operations[0]]}`;
+    for (const resultOp of result_codes.operations) {
+      if (resultOp !== 'op_success') {
+        return operationResultCodes[resultOp] || resultOp;
+      }
+    }
   }
 
-  return error.message;
+  return error.message || error;
 }
