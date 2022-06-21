@@ -1,6 +1,7 @@
 import { applyMiddleware, createStore } from 'redux';
 import { useMemo } from 'react';
 import { persistReducer, createTransform } from 'redux-persist';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import persistStorage from 'redux-persist/lib/storage';
 import reducers from 'reducers';
 import { getAssetDetails } from 'helpers/asset';
@@ -31,9 +32,20 @@ const persistorConfig = {
   transforms: [UserCustomTokenTransfer, UserCustomPairTransfer],
 };
 
-const persistedReducer = persistReducer(persistorConfig, reducers);
+const mainReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state,
+      ...action.payload,
+    };
+    return nextState;
+  }
+  return reducers(state, action);
+};
 
-function makeStore() {
+const persistedReducer = persistReducer(persistorConfig, mainReducer);
+
+export function makeStore() {
   return createStore(
     persistedReducer,
     composeWithDevTools(applyMiddleware(thunkMiddleware)),
@@ -64,3 +76,5 @@ export function useStore(initialState) {
   const storeCpy = useMemo(() => initializeStore(initialState), [initialState]);
   return storeCpy;
 }
+
+export const wrapper = createWrapper(makeStore, { debug: false });

@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { useStore } from 'store';
+import { useStore, wrapper } from 'store';
 import { persistStore } from 'redux-persist';
 import { useRef, useEffect } from 'react';
 import { setUserBalance } from 'actions/userBalance';
@@ -15,6 +15,8 @@ import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
 import ToggleDarkModeBtn from 'components/ToggleDarkModeBtn';
+import { setDefaultTokens } from 'actions/deafultTokens';
+import { getDefaultAssets } from 'api/assets';
 import LModal from '../containers/LModal';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,7 +34,6 @@ async function fullRabetLogin(dispatch) {
     const accountDetail = await fetchAccountDetails(address);
     dispatch(userLogin(loginTypes.RABET, { address, subentry: accountDetail.subentry }));
     dispatch(setUserBalance(filterUserBalance(accountDetail.balances)));
-
     dispatch(closeModalAction());
   } catch (e) {}
 }
@@ -106,4 +107,9 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+MyApp.getInitialProps = wrapper.getInitialPageProps((store) => async () => {
+  const assets = await getDefaultAssets();
+  store.dispatch(setDefaultTokens(assets));
+});
+
+export default wrapper.withRedux(MyApp);

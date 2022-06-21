@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { fetchTradeAPI } from 'api/stellar';
 import CustomTabs from 'containers/obm/spot/TradeSection/CustomTabs';
 import FetchDataLoading from 'components/FetchDataLoading';
+import { getAssetDetails } from 'helpers/asset';
 import TradeList from '../OrderSection/SpotList/TradeList';
 
 import styles from '../styles.module.scss';
@@ -13,7 +14,7 @@ const TradeSection = ({ appSpotPair }) => {
   const intervalRef = useRef(null);
 
   function fetchingTradeApiCallWrapper() {
-    fetchTradeAPI(appSpotPair.base, appSpotPair.counter, {
+    fetchTradeAPI(getAssetDetails(appSpotPair.base), getAssetDetails(appSpotPair.counter), {
       limit: 37,
       order: 'desc',
     }).then((res) => {
@@ -55,8 +56,8 @@ const TradeSection = ({ appSpotPair }) => {
   ];
 
   const tradeListHeader = [
-    `Price (${appSpotPair.counter.getCode()})`,
-    `Amount (${appSpotPair.base.getCode()})`,
+    `Price (${appSpotPair.counter.code})`,
+    `Amount (${appSpotPair.base.code})`,
     'Time',
   ];
 

@@ -11,22 +11,22 @@ const DetailList = ({ appSpotPair, price }) => {
     { title: '24 Change', value: '-', status: 'buy' },
     { title: '24 High', value: '-' },
     { title: '24 Low', value: '-' },
-    { title: `24 Volume (${appSpotPair.base.getCode()})`, value: '-' },
-    { title: `24 Volume (${appSpotPair.counter.getCode()})`, value: '-' },
+    { title: `24 Volume (${appSpotPair.base.code})`, value: '-' },
+    { title: `24 Volume (${appSpotPair.counter.code})`, value: '-' },
     {
-      title: `${appSpotPair.base.getCode()} asset issuer`,
-      value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.base.getIssuer()) : 'Stellar Foundation',
-      status: appSpotPair.base.getIssuer() ? 'link' : false,
-      link: appSpotPair.base.getIssuer()
-        ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.base.getCode()}-${appSpotPair.base.getIssuer()}`
+      title: `${appSpotPair.base.code} asset issuer`,
+      value: appSpotPair.base.issuer ? minimizeAddress(appSpotPair.base.issuer) : 'Stellar Foundation',
+      status: appSpotPair.base.issuer ? 'link' : false,
+      link: appSpotPair.base.issuer
+        ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.base.code}-${appSpotPair.base.issuer}`
         : false,
     },
     {
-      title: `${appSpotPair.counter.getCode()} asset issuer`,
-      value: appSpotPair.counter.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
-      status: appSpotPair.counter.getIssuer() ? 'link' : false,
-      link: appSpotPair.counter.getIssuer()
-        ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.counter.getCode()}-${appSpotPair.counter.getIssuer()}`
+      title: `${appSpotPair.counter.code} asset issuer`,
+      value: appSpotPair.counter.issuer ? minimizeAddress(appSpotPair.counter.issuer) : 'Stellar Foundation',
+      status: appSpotPair.counter.issuer ? 'link' : false,
+      link: appSpotPair.counter.issuer
+        ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.counter.code}-${appSpotPair.counter.issuer}`
         : false,
     },
   ]);
@@ -81,22 +81,22 @@ const DetailList = ({ appSpotPair, price }) => {
           { title: '24 Change', value: `${Number.isNaN(+ch24.toFixed(2)) ? '0.0%' : `${ch24.toFixed(2)}%`} `, status: ch24.gte(0) ? 'buy' : 'sell' },
           { title: '24 High', value: numeral(aggregatedData.high.toString()).format('0.0[00]a') },
           { title: '24 Low', value: numeral(aggregatedData.low.toString()).format('0.0[00]a') },
-          { title: `24 Volume (${appSpotPair.base.getCode()})`, value: numeral(aggregatedData.baseVolume.toString()).format('0.0a') },
-          { title: `24 Volume (${appSpotPair.counter.getCode()})`, value: numeral(aggregatedData.counterVolume.toString()).format('0.0a') },
+          { title: `24 Volume (${appSpotPair.base.code})`, value: numeral(aggregatedData.baseVolume.toString()).format('0.0a') },
+          { title: `24 Volume (${appSpotPair.counter.code})`, value: numeral(aggregatedData.counterVolume.toString()).format('0.0a') },
           {
-            title: `${appSpotPair.base.getCode()} asset issuer`,
-            value: appSpotPair.base.getIssuer() ? minimizeAddress(appSpotPair.base.getIssuer()) : 'Stellar Foundation',
-            status: appSpotPair.base.getIssuer() ? 'link' : false,
-            link: appSpotPair.base.getIssuer()
-              ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.base.getCode()}-${appSpotPair.base.getIssuer()}`
+            title: `${appSpotPair.base.code} asset issuer`,
+            value: appSpotPair.base.issuer ? minimizeAddress(appSpotPair.base.issuer) : 'Stellar Foundation',
+            status: appSpotPair.base.issuer ? 'link' : false,
+            link: appSpotPair.base.issuer
+              ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.base.code}-${appSpotPair.base.issuer}`
               : false,
           },
           {
-            title: `${appSpotPair.counter.getCode()} asset issuer`,
-            value: appSpotPair.counter.getIssuer() ? minimizeAddress(appSpotPair.counter.getIssuer()) : 'Stellar Foundation',
-            status: appSpotPair.counter.getIssuer() ? 'link' : false,
-            link: appSpotPair.counter.getIssuer()
-              ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.counter.getCode()}-${appSpotPair.counter.getIssuer()}`
+            title: `${appSpotPair.counter.code} asset issuer`,
+            value: appSpotPair.counter.issuer ? minimizeAddress(appSpotPair.counter.issuer) : 'Stellar Foundation',
+            status: appSpotPair.counter.issuer ? 'link' : false,
+            link: appSpotPair.counter.issuer
+              ? `${process.env.REACT_APP_LUMENSCAN_URL}/assets/${appSpotPair.counter.code}-${appSpotPair.counter.issuer}`
               : false,
           },
         ]);
@@ -124,7 +124,7 @@ const DetailList = ({ appSpotPair, price }) => {
       {[
         {
           title: 'Price',
-          value: `${price || price === 0 ? price : '-'} ${price || price === 0 ? appSpotPair.counter.getCode() : ''}`,
+          value: `${price || price === 0 ? price : '-'} ${price || price === 0 ? appSpotPair.counter.code : ''}`,
         },
         ...detailData,
       ].map((item, index) => (

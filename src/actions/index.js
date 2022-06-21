@@ -36,6 +36,9 @@ const actionTypes = {
   theme: {
     TOGGLE: 'theme/TOGGLE',
   },
+  defaultTokens: {
+    GET: 'defaltTokens/GET',
+  },
 };
 
 export default actionTypes;

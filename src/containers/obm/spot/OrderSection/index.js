@@ -1,5 +1,6 @@
 import { setCustomOrderPriceAction } from 'actions/customOrderPrice';
 import { fetchOrderBookAPI } from 'api/stellar';
+import { getAssetDetails } from 'helpers/asset';
 import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { useEffect, useRef, useState } from 'react';
@@ -19,9 +20,10 @@ const OrderSection = ({ appSpotPair, price, setPrice }) => {
   const dispatch = useDispatch();
 
   function fetchingOrderAPICallWrapper() {
-    return fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, {
-      limit: 17,
-    }).then((res) => {
+    return fetchOrderBookAPI(getAssetDetails(appSpotPair.base),
+      getAssetDetails(appSpotPair.counter), {
+        limit: 17,
+      }).then((res) => {
       setOrderBookData(res.data);
       return res.data;
     }).catch(console.error);
@@ -65,8 +67,8 @@ const OrderSection = ({ appSpotPair, price, setPrice }) => {
   }, []);
 
   const orderListHeader = [
-    `Price (${appSpotPair.counter.getCode()})`,
-    `Amount (${appSpotPair.base.getCode()})`,
+    `Price (${appSpotPair.counter.code})`,
+    `Amount (${appSpotPair.base.code})`,
     'Total',
   ];
 

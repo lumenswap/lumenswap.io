@@ -1,108 +1,35 @@
 import classNames from 'classnames';
 import AddCustomPair from 'containers/obm/spot/SelectPair/AddCustomPair';
 import { closeModalAction, openModalAction } from 'actions/modal';
-import defaultTokens from 'tokens/defaultTokens';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
-import XLM from 'tokens/XLM';
-import {
-  isSameAsset, getAssetDetails, isSamePair, extractInfoByToken,
-} from 'helpers/asset';
-import USDC from 'tokens/USDC';
 import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import styles from './styles.module.scss';
-import purePairs from './purePairs';
-import createPairForDefaultTokens from './createPairForDefaultTokens';
 
-const createdDefaultPairs = createPairForDefaultTokens();
-
-const SelectPair = ({ setAppSpotPair }) => {
+const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
   const [searchQuery, setSearchQuery] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const enrichedPairs = useMemo(() => {
-    const result = purePairs([
-      {
-        base: getAssetDetails(XLM),
-        counter: getAssetDetails(USDC),
-      },
-      ...createdDefaultPairs,
-      ...customPairs,
-    ]).map((item) => {
-      const foundBaseToken = defaultTokens
-        .find((tok) => isSameAsset(getAssetDetails(tok), item.base));
-      const foundCounterToken = defaultTokens
-        .find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
-
-      let enrichedBaseToken = {
-        details: item.base,
-        // web: foundBaseToken.web,
-        logo: extractInfoByToken(item.base).logo,
-        type: 'default',
-      };
-      if (!foundBaseToken) {
-        enrichedBaseToken = {
-          ...enrichedBaseToken,
-          type: 'custom',
-        };
-      }
-
-      let enrichedCounterToken = {
-        details: item.counter,
-        // web: foundCounterToken.web,
-        logo: extractInfoByToken(item.counter).logo,
-        type: 'default',
-      };
-      if (!foundCounterToken) {
-        enrichedCounterToken = {
-          ...enrichedCounterToken,
-          type: 'custom',
-        };
-      }
-
-      const richedAssets = {
-        base: enrichedBaseToken,
-        counter: enrichedCounterToken,
-      };
-
-      if (
-        createdDefaultPairs.find((i) => isSamePair(i, {
-          base: richedAssets.base.details,
-          counter: richedAssets.counter.details,
-        }))
-      ) {
-        return richedAssets;
-      }
-      return {
-        base: {
-          ...richedAssets.base,
-          type: 'custom',
-        },
-        counter: {
-          ...richedAssets.counter,
-          type: 'custom',
-        },
-      };
-    });
-
-    if (searchQuery && searchQuery !== '') {
-      return result.filter((item) => {
-        const modified = searchQuery.trim().toLowerCase();
-        return `${item.base.details
-          .getCode()
-          .toLowerCase()}/${item.counter.details
-          .getCode()
-          .toLowerCase()}`.match(modified);
-      });
+    let tokenPairs = [...createdDefaultPairs];
+    if (customPairs !== []) {
+      tokenPairs = [...tokenPairs, ...customPairs];
     }
 
-    return result;
-  }, [JSON.stringify(customPairs), searchQuery]);
+    if (searchQuery && searchQuery !== '') {
+      tokenPairs = tokenPairs.filter((pair) => {
+        const modified = searchQuery.trim().toLowerCase();
+        return `${pair.base.code.toLowerCase()}/${pair.counter.code.toLowerCase()}`.match(modified);
+      });
+    }
+    return tokenPairs;
+  },
+  [JSON.stringify(customPairs), searchQuery]);
 
   return (
     <div className={styles.main} style={{ paddingBottom: 50 }}>
@@ -126,39 +53,25 @@ const SelectPair = ({ setAppSpotPair }) => {
                 className={styles['select-logo']}
                 onClick={() => {
                   setAppSpotPair({
-                    base: item.base.details,
-                    counter: item.counter.details,
+                    base: item.base,
+                    counter: item.counter,
                   });
-                  const found = customPairs.find(
-                    (pair) => pair.base.code === item.base.details.code
-                      && pair.counter.code === item.counter.details.code,
+                  router.push(
+                    urlMaker.obm.spot.custom(
+                      item.base.code,
+                      item.base.issuer,
+                      item.counter.code,
+                      item.counter.issuer,
+                    ),
                   );
-                  if (found) {
-                    router.push(
-                      urlMaker.obm.spot.custom(
-                        item.base.details.code,
-                        item.base.details.issuer,
-                        item.counter.details.code,
-                        item.counter.details.issuer,
-                      ),
-                    );
-                  } else {
-                    router.push(
-                      urlMaker.obm.spot.custom(
-                        item.base.details.code,
-                        item.base.details.issuer,
-                        item.counter.details.code,
-                        item.counter.details.issuer,
-                      ),
-                    );
-                  }
+
                   dispatch(closeModalAction());
                 }}
               >
                 <img src={item.base.logo} alt="baselogo" />
                 <img src={item.counter.logo} alt="counterlogo" />
                 <span>
-                  {item.base.details.getCode()}/{item.counter.details.getCode()}
+                  {item.base.code}/{item.counter.code}
                 </span>
                 {(item.base.type === 'custom'
                   || item.counter.type === 'custom') && (
@@ -168,8 +81,8 @@ const SelectPair = ({ setAppSpotPair }) => {
                       e.stopPropagation();
                       dispatch(
                         removeCustomPairAction({
-                          base: item.base.details,
-                          counter: item.counter.details,
+                          base: item.base,
+                          counter: item.counter,
                         }),
                       );
                     }}

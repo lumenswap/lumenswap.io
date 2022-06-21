@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import defaultTokens from 'tokens/defaultTokens';
 import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
@@ -20,6 +19,7 @@ const SelectAsset = ({
   swapFromWithTo,
   changeToAsset,
   currentFrom,
+  defaultTokens,
   type,
 }) => {
   const userBalance = useSelector((state) => state.userBalance);

@@ -16,6 +16,7 @@ const CurrencyInput = ({
   getFormValues,
   swapFromWithTo,
   changeToAsset,
+  defaultTokens,
   type,
 }) => {
   const [show, setShow] = useState(false);
@@ -66,7 +67,7 @@ const CurrencyInput = ({
             </>
           )}
         </button>
-        <ModalDialog show={show} setShow={setShow} title="Select an assets" className={styles.modal}>
+        <ModalDialog show={show} setShow={setShow} title="Select an assets">
           <SelectAsset
             getFormValues={getFormValues}
             swapFromWithTo={swapFromWithTo}
@@ -75,6 +76,7 @@ const CurrencyInput = ({
             changeToAsset={changeToAsset}
             currentFrom={getFormValues()?.from?.asset}
             type={type}
+            defaultTokens={defaultTokens}
           />
         </ModalDialog>
       </div>

@@ -6,7 +6,6 @@ import { Controller, useForm } from 'react-hook-form';
 import ModalDialog from 'components/ModalDialog';
 import ConfirmSwap from 'components/complex/LumenSwapSwap/ConfirmSwap';
 import AMMHeader from 'containers/amm/AMMHeader';
-import XLM from 'tokens/XLM';
 import LPriceSpreadSection from 'components/complex/LumenSwapSwap/LPriceSpreadSection';
 import calculateSendEstimatedAndPath from 'api/swapAPI/calculateSendEstimatedAndPath';
 import calculateReceiveEstimatedAndPath from 'api/swapAPI/calculateReceiveEstimatedAndPath';
@@ -27,7 +26,9 @@ import styles from './styles.module.scss';
 
 const REQ_TIMEOUT_MS = 1000;
 
-const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
+const LumenSwapSwap = ({
+  custom, errorCode, type = walletTypes.OBM, defaultTokens,
+}) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
@@ -37,6 +38,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const timeoutRef = useRef();
+  const XLM = defaultTokens.find((token) => token.code === 'XLM');
 
   let swapBaseURL = urlMaker.obm.swap;
   if (type === 'amm') {
@@ -50,8 +52,8 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
       from: {
         asset: {
           details: XLM,
-          logo: XLM.logo,
-          web: XLM.web,
+          logo: XLM?.logo,
+          web: XLM?.web,
         },
         amount: null,
       },
@@ -289,6 +291,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
                     swapFromWithTo={swapFromWithTo}
                     type={type}
                     changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
+                    defaultTokens={defaultTokens}
                   />
                 )}
               />
@@ -317,6 +320,7 @@ const LumenSwapSwap = ({ custom, errorCode, type = walletTypes.OBM }) => {
                     swapFromWithTo={swapFromWithTo}
                     type={type}
                     changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
+                    defaultTokens={defaultTokens}
                   />
                 )}
               />

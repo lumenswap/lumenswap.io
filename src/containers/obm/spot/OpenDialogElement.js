@@ -9,6 +9,7 @@ export default function OpenDialogElement({
   className,
   appSpotPair,
   setAppSpotPair,
+  createdDefaultPairs,
 }) {
   const dispatch = useDispatch();
 
@@ -21,14 +22,17 @@ export default function OpenDialogElement({
           dispatch(
             openModalAction({
               modalProps: { title: 'Select a pair', className: `${styles.modal}` },
-              content: <SelectPair setAppSpotPair={setAppSpotPair} />,
+              content: <SelectPair
+                createdDefaultPairs={createdDefaultPairs}
+                setAppSpotPair={setAppSpotPair}
+              />,
             }),
           );
         }}
       >
         <img className={styles['first-coin']} src={extractInfoByToken(appSpotPair.base).logo} alt="" />
         <img className={styles['second-coin']} src={extractInfoByToken(appSpotPair.counter).logo} alt="" />
-        <h1>{appSpotPair.base.getCode()}/{appSpotPair.counter.getCode()}</h1>
+        <h1>{appSpotPair.base.code}/{appSpotPair.counter.code}</h1>
         <span className="icon-angle-down ml-auto" />
       </button>
     </div>

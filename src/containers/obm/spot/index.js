@@ -3,8 +3,6 @@ import Error from 'containers/404';
 import classNames from 'classnames';
 import ObmHeader from 'containers/obm/ObmHeader';
 import { getAssetDetails } from 'helpers/asset';
-import USDC from 'tokens/USDC';
-import XLM from 'tokens/XLM';
 import DetailList from 'containers/obm/spot/DetailList';
 import InfoSection from 'containers/obm/spot/InfoSection';
 import CTabs from 'components/CTabs';
@@ -17,28 +15,28 @@ import useBreakPoint from 'hooks/useMyBreakpoint';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { useDispatch, useSelector } from 'react-redux';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
-import createPairForDefaultTokens from 'containers/obm/spot/SelectPair/createPairForDefaultTokens';
 import ServerSideLoading from 'components/ServerSideLoading';
 import ChartTab from './ChartTab';
 import styles from './styles.module.scss';
 
-const createdDefaultPairs = createPairForDefaultTokens();
-
-function getInitialPair(pair) {
-  if (pair) {
-    return {
-      base: pair.base.issuer
-        ? getAssetDetails(pair.base)
-        : getAssetDetails(extractTokenFromCode(pair.base.code)),
-      counter: pair.counter.issuer
-        ? getAssetDetails(pair.counter)
-        : getAssetDetails(extractTokenFromCode(pair.counter.code)),
-    };
+const Spot = ({
+  tokens, custom, errorCode, createdDefaultPairs,
+}) => {
+  function getInitialPair(pair) {
+    if (pair) {
+      return {
+        base: pair.base.issuer
+          ? getAssetDetails(pair.base)
+          : getAssetDetails(extractTokenFromCode(pair.base.code)),
+        counter: pair.counter.issuer
+          ? getAssetDetails(pair.counter)
+          : getAssetDetails(extractTokenFromCode(pair.counter.code)),
+      };
+    }
+    const defaultPair = createdDefaultPairs.find((createdPair) => createdPair.base.code === 'XLM' && createdPair.counter.code === 'USDC');
+    return defaultPair;
   }
-  return { base: XLM, counter: USDC };
-}
 
-const Spot = ({ tokens, custom, errorCode }) => {
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
@@ -139,6 +137,7 @@ const Spot = ({ tokens, custom, errorCode }) => {
             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
               <div className={classNames(styles.card, styles['card-select'])}>
                 <OpenDialogElement
+                  createdDefaultPairs={createdDefaultPairs}
                   className="w-100"
                   appSpotPair={appSpotPair}
                   setAppSpotPair={setAppSpotPair}
