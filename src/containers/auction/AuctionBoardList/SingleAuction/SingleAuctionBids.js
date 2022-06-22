@@ -4,12 +4,13 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { fetchOfferAPI } from 'api/stellar';
-import { getAssetDetails, getSingleToken } from 'helpers/asset';
+import { getAssetDetails } from 'helpers/asset';
 import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { getAuctionBids } from 'api/auction';
 import { STATUS_NAMES } from 'containers/auction/consts';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 const SingleAuctionBids = ({
@@ -101,7 +102,7 @@ const SingleAuctionBids = ({
       fetchOfferAPI(
         getAssetDetails(
           { code: assetCode, issuer: assetIssuer },
-        ), getAssetDetails(getSingleToken('XLM', defaultTokens)),
+        ), getAssetDetails(extractTokenFromCode('XLM', defaultTokens)),
         { order: 'desc', limit: 200 },
       )
         .then((res) => {

@@ -8,11 +8,12 @@ import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { fetchOfferAPI } from 'api/stellar';
-import { getAssetDetails, getSingleToken } from 'helpers/asset';
+import { getAssetDetails } from 'helpers/asset';
 import humanizeAmount from 'helpers/humanizeAmount';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from 'containers/nft/NFTHeader';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import InfinitePagination from '../InfinitePagination';
 import styles from './styles.module.scss';
 
@@ -21,7 +22,7 @@ const OFFER_FETCH_LIMIT = 20;
 function fetchLusiOffers(cursor, id, defaultTokens) {
   return fetchOfferAPI(
     getAssetDetails({ code: `Lusi${id}`, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(getSingleToken('NLSP', defaultTokens)),
+    getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
     {
       limit: OFFER_FETCH_LIMIT,
       order: 'desc',

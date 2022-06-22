@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Error from 'containers/404';
 import classNames from 'classnames';
 import ObmHeader from 'containers/obm/ObmHeader';
-import { getAssetDetails, getSingleToken } from 'helpers/asset';
+import { getAssetDetails } from 'helpers/asset';
 import DetailList from 'containers/obm/spot/DetailList';
 import InfoSection from 'containers/obm/spot/InfoSection';
 import CTabs from 'components/CTabs';
@@ -31,7 +31,7 @@ function getInitialPair(pair, defaultTokens) {
         : getAssetDetails(extractTokenFromCode(pair.counter.code, defaultTokens)),
     };
   }
-  return { base: getSingleToken('XLM', defaultTokens), counter: getSingleToken('USDC', defaultTokens) };
+  return { base: extractTokenFromCode('XLM', defaultTokens), counter: extractTokenFromCode('USDC', defaultTokens) };
 }
 
 const Spot = ({

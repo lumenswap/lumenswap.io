@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { getAssetDetails, getSingleToken } from 'helpers/asset';
+import { getAssetDetails } from 'helpers/asset';
 import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'components/InputGroup';
 import Button from 'components/Button';
@@ -11,6 +11,7 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import numeral from 'numeral';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 const SetOrUpdateNFTPrice = ({
@@ -29,7 +30,7 @@ const SetOrUpdateNFTPrice = ({
       if (mode === 'update') {
         return generateManageSellTRX(
           userAddress,
-          getAssetDetails(getSingleToken('NLSP', defaultTokens)),
+          getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
           getAssetDetails({
             code: lusiAssetCode,
             issuer: process.env.REACT_APP_LUSI_ISSUER,
@@ -42,7 +43,7 @@ const SetOrUpdateNFTPrice = ({
 
       return generateManageSellTRX(
         userAddress,
-        getAssetDetails(getSingleToken('NLSP', defaultTokens)),
+        getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
         getAssetDetails({
           code: lusiAssetCode,
           issuer: process.env.REACT_APP_LUSI_ISSUER,

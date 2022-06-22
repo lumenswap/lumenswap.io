@@ -1,11 +1,12 @@
 import Button from 'components/Button';
 import BN from 'helpers/BN';
 import {
-  getAssetDetails, isSameAsset, calculateMaxXLM, getSingleToken,
+  getAssetDetails, isSameAsset, calculateMaxXLM,
 } from 'helpers/asset';
 import { useWatch } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 
 export default function SwapButton({ control }) {
   const isLogged = useSelector((state) => state.user.logged);
@@ -18,7 +19,7 @@ export default function SwapButton({ control }) {
   const userSubentry = useSelector((state) => state.user.detail.subentry);
   const defaultTokens = useDefaultTokens();
 
-  if (isSameAsset(fromAssetDetails, getAssetDetails(getSingleToken('XLM', defaultTokens)))) {
+  if (isSameAsset(fromAssetDetails, getAssetDetails(extractTokenFromCode('XLM', defaultTokens)))) {
     currentBalance = calculateMaxXLM(currentBalance, userSubentry);
   }
 

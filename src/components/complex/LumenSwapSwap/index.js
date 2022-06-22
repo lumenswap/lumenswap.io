@@ -9,7 +9,7 @@ import AMMHeader from 'containers/amm/AMMHeader';
 import LPriceSpreadSection from 'components/complex/LumenSwapSwap/LPriceSpreadSection';
 import calculateSendEstimatedAndPath from 'api/swapAPI/calculateSendEstimatedAndPath';
 import calculateReceiveEstimatedAndPath from 'api/swapAPI/calculateReceiveEstimatedAndPath';
-import { getAssetDetails, getSingleToken, isSameAsset } from 'helpers/asset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import BN from 'helpers/BN';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import ObmHeader from 'containers/obm/ObmHeader';
 import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import { changeToAsset } from './swapHelpers';
 import SwapHead from './SwapHead';
 import useUrl from './useUrl';
@@ -40,7 +41,7 @@ const LumenSwapSwap = ({
   const dispatch = useDispatch();
   const timeoutRef = useRef();
   const defaultTokens = useDefaultTokens();
-  const XLM = getSingleToken('XLM', defaultTokens);
+  const XLM = extractTokenFromCode('XLM', defaultTokens);
 
   let swapBaseURL = urlMaker.obm.swap;
   if (type === 'amm') {

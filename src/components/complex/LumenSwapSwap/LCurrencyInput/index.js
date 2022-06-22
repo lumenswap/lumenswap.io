@@ -3,10 +3,11 @@ import Button from 'components/Button';
 import CurrencyInput from 'components/complex/LumenSwapSwap/CurrencyInput';
 import BN from 'helpers/BN';
 import {
-  isSameAsset, getAssetDetails, calculateMaxXLM, getSingleToken,
+  isSameAsset, getAssetDetails, calculateMaxXLM,
 } from 'helpers/asset';
 import { useSelector } from 'react-redux';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
@@ -101,7 +102,7 @@ export default function LCurrencyInput({
 
     if (found) {
       let amount = found.balance;
-      if (isSameAsset(getAssetDetails(found.asset), getAssetDetails(getSingleToken('XLM', defaultTokens)))) {
+      if (isSameAsset(getAssetDetails(found.asset), getAssetDetails(extractTokenFromCode('XLM', defaultTokens)))) {
         amount = calculateMaxXLM(found.balance, userSubentry);
       }
 

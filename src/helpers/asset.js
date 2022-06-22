@@ -1,11 +1,8 @@
 import questionLogo from 'assets/images/question.png';
 import StellarSDK from 'stellar-sdk';
 import BN from './BN';
+import { extractTokenFromCode } from './defaultTokenUtils';
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from './stellarPool';
-
-export function getSingleToken(code, defaultTokens) {
-  return defaultTokens.find((token) => token.code === code);
-}
 
 export function getAssetDetails(asset) {
   if (asset?.type === 'liquidity_pool_shares') {
@@ -55,9 +52,9 @@ export function listOfKnownPoolIds(defaultTokens) {
   const poolIds = [];
 
   {
-    const main = getAssetDetails(getSingleToken('XLM', defaultTokens));
-    const poolId = getLiquidityPoolIdFromAssets(getAssetDetails(getSingleToken('USDC', defaultTokens)), main);
-    const [A, B] = lexoOrderAssets(getAssetDetails(getSingleToken('USDC', defaultTokens)), main);
+    const main = getAssetDetails(extractTokenFromCode('XLM', defaultTokens));
+    const poolId = getLiquidityPoolIdFromAssets(extractTokenFromCode(extractTokenFromCode('USDC', defaultTokens)), main);
+    const [A, B] = lexoOrderAssets(getAssetDetails(extractTokenFromCode('USDC', defaultTokens)), main);
 
     poolIds.push({
       id: poolId,
@@ -69,9 +66,9 @@ export function listOfKnownPoolIds(defaultTokens) {
   }
 
   for (const token of defaultTokens) {
-    if (!isSameAsset(getAssetDetails(token), getAssetDetails(getSingleToken('XLM', defaultTokens)))
-    && !isSameAsset(getAssetDetails(token), getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
-      const main = getAssetDetails(getSingleToken('XLM', defaultTokens));
+    if (!isSameAsset(getAssetDetails(token), getAssetDetails(extractTokenFromCode('XLM', defaultTokens)))
+    && !isSameAsset(getAssetDetails(token), getAssetDetails(extractTokenFromCode('USDC', defaultTokens)))) {
+      const main = getAssetDetails(extractTokenFromCode('XLM', defaultTokens));
       const poolId = getLiquidityPoolIdFromAssets(getAssetDetails(token), main);
       const [A, B] = lexoOrderAssets(getAssetDetails(token), main);
 
@@ -86,9 +83,9 @@ export function listOfKnownPoolIds(defaultTokens) {
   }
 
   for (const token of defaultTokens) {
-    if (!isSameAsset(getAssetDetails(token), getAssetDetails(getSingleToken('XLM', defaultTokens)))
-    && !isSameAsset(getAssetDetails(token), getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
-      const main = getAssetDetails(getSingleToken('USDC', defaultTokens));
+    if (!isSameAsset(getAssetDetails(token), getAssetDetails(extractTokenFromCode('XLM', defaultTokens)))
+    && !isSameAsset(getAssetDetails(token), getAssetDetails(extractTokenFromCode('USDC', defaultTokens)))) {
+      const main = getAssetDetails(extractTokenFromCode('USDC', defaultTokens));
       const poolId = getLiquidityPoolIdFromAssets(getAssetDetails(token), main);
       const [A, B] = lexoOrderAssets(getAssetDetails(token), main);
 

@@ -22,13 +22,14 @@ import {
 import Breadcrumb from 'components/BreadCrumb';
 import urlMaker from 'helpers/urlMaker';
 import Submitting from 'components/Submitting';
-import { isSameAsset, getAssetDetails, getSingleToken } from 'helpers/asset';
+import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import { fetchOfferAPI, fetchOffersOfAccount, fetchOrderBookAPI } from 'api/stellar';
 import humanizeAmount from 'helpers/humanizeAmount';
 import numeral from 'numeral';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from 'containers/nft/NFTHeader';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import PlaceNFTOrder from './PlaceNFTOrder';
 import styles from './styles.module.scss';
 import SingleLusiTabContent from './SingleLusiTabContent';
@@ -58,7 +59,7 @@ function PlaceOrSetPriceButtonContent({ buttonState }) {
 function loadLusiOffers(data, setLusiOffers, defaultTokens) {
   fetchOfferAPI(
     getAssetDetails({ code: data.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(getSingleToken('NLSP', defaultTokens)),
+    getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
     {
       limit: 10,
       order: 'desc',
@@ -75,7 +76,7 @@ function loadLusiOffers(data, setLusiOffers, defaultTokens) {
 function loadLusiPrice(assetCode, setLusiPrice, defaultTokens) {
   fetchOrderBookAPI(
     getAssetDetails({ code: assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(getSingleToken('NLSP', defaultTokens)),
+    getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
     {
       limit: 1,
     },

@@ -1,6 +1,6 @@
 import LumenSwapHeader from 'components/LumenSwapHeader';
 import AssetBox from 'components/LumenSwapHeader/AssetBox';
-import { getSingleToken } from 'helpers/asset';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import urlMaker from 'helpers/urlMaker';
 import useDefaultTokens from 'hooks/useDefaultTokens';
 import ClaimLusiBtn from './ClaimLusiBtn';
@@ -32,7 +32,7 @@ const NFTHeader = () => {
   return (
     <LumenSwapHeader
       leftSide={leftSideLinks}
-      extraRightComponent={[<ClaimLusiBtn />, <AssetBox color="#DF4886" asset={getSingleToken('NLSP', defaultTokens)} />]}
+      extraRightComponent={[<ClaimLusiBtn />, <AssetBox color="#DF4886" asset={extractTokenFromCode('NLSP', defaultTokens)} />]}
     />
   );
 };

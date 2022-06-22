@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { getAssetDetails, getSingleToken, isSameAsset } from 'helpers/asset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'components/InputGroup';
 import Button from 'components/Button';
@@ -11,12 +11,13 @@ import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import numeral from 'numeral';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
   const dispatch = useDispatch();
   const userNLSPBalance = useSelector((state) => state.userBalance)
-    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(getSingleToken('NLSP'))));
+    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(extractTokenFromCode('NLSP'))));
   const userAddress = useSelector((state) => state.user.detail.address);
   const defaultTokens = useDefaultTokens();
 
@@ -32,7 +33,7 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
           code: lusiAssetCode,
           issuer: process.env.REACT_APP_LUSI_ISSUER,
         }),
-        getAssetDetails(getSingleToken('NLSP', defaultTokens)),
+        getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
         ONE_LUSI_AMOUNT,
         new BN(data.price).times(10 ** 7).toFixed(0),
         0,

@@ -9,13 +9,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import {
-  getAssetDetails, isSameAsset, getAssetFromLPAsset, getSingleToken,
+  getAssetDetails, isSameAsset, getAssetFromLPAsset,
 } from 'helpers/asset';
 import { fetchAccountDetails } from 'api/stellar';
 import { getPoolDetailsById } from 'api/stellarPool';
 import BN from 'helpers/BN';
 import ServerSideLoading from 'components/ServerSideLoading';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
@@ -23,13 +24,13 @@ function calculateBalanceUSD(data, xlmPrice, lspPrice, defaultTokens) {
   const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
   const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
 
-  if (isSameAsset(tokenA, getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
+  if (isSameAsset(tokenA, getAssetDetails(extractTokenFromCode('USDC', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[0].amount))
       .times(2)
       .toFixed(7);
   }
 
-  if (isSameAsset(tokenB, getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
+  if (isSameAsset(tokenB, getAssetDetails(extractTokenFromCode('USDC', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(2)
       .toFixed(7);
@@ -49,14 +50,14 @@ function calculateBalanceUSD(data, xlmPrice, lspPrice, defaultTokens) {
       .toFixed(7);
   }
 
-  if (isSameAsset(tokenA, getAssetDetails(getSingleToken('LSP', defaultTokens)))) {
+  if (isSameAsset(tokenA, getAssetDetails(extractTokenFromCode('LSP', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(lspPrice)
       .times(2)
       .toFixed(7);
   }
 
-  if (isSameAsset(tokenB, getAssetDetails(getSingleToken('LSP', defaultTokens)))) {
+  if (isSameAsset(tokenB, getAssetDetails(extractTokenFromCode('LSP', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(lspPrice)
       .times(2)
@@ -129,8 +130,8 @@ function MyPoolPage() {
           className: 'main',
         },
         content: <AddLiquidity
-          tokenA={getAssetDetails(getSingleToken('XLM', defaultTokens))}
-          tokenB={getAssetDetails(getSingleToken('LSP', defaultTokens))}
+          tokenA={getAssetDetails(extractTokenFromCode('XLM', defaultTokens))}
+          tokenB={getAssetDetails(extractTokenFromCode('LSP', defaultTokens))}
           selectAsset={handleSelectAsset}
           afterAdd={() => fetchData(userAddress, xlmPrice, setPools, null, defaultTokens)}
         />,

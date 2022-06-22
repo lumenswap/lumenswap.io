@@ -1,9 +1,10 @@
 import StellarSDK from 'stellar-sdk';
 import {
-  getAssetDetails, isSameAsset, getAssetFromLPAsset, getSingleToken,
+  getAssetDetails, isSameAsset, getAssetFromLPAsset,
 } from 'helpers/asset';
 import humanizeAmount from './humanizeAmount';
 import BN from './BN';
+import { extractTokenFromCode } from './defaultTokenUtils';
 
 export function lexoOrderAssets(A, B) {
   return (StellarSDK.Asset.compare(A, B) <= 0) ? [A, B] : [B, A];
@@ -37,11 +38,11 @@ export function getTVLInUSD(reserves, xlmPrice, lspPrice, defaultTokens) {
   const tokenA = getAssetFromLPAsset(reserves[0].asset);
   const tokenB = getAssetFromLPAsset(reserves[1].asset);
 
-  if (isSameAsset(tokenA, getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
+  if (isSameAsset(tokenA, getAssetDetails(extractTokenFromCode('USDC', defaultTokens)))) {
     balance = humanizeAmount(new BN(reserves[0].amount).times(2).toFixed(7), true);
   }
 
-  if (isSameAsset(tokenB, getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
+  if (isSameAsset(tokenB, getAssetDetails(extractTokenFromCode('USDC', defaultTokens)))) {
     balance = humanizeAmount(new BN(reserves[1].amount).times(2).toFixed(7), true);
   }
 
@@ -59,11 +60,11 @@ export function getTVLInUSD(reserves, xlmPrice, lspPrice, defaultTokens) {
     );
   }
 
-  if (isSameAsset(tokenA, getAssetDetails(getSingleToken('LSP', defaultTokens)))) {
+  if (isSameAsset(tokenA, getAssetDetails(extractTokenFromCode('LSP', defaultTokens)))) {
     balance = humanizeAmount(new BN(reserves[0].amount).times(lspPrice).times(2).toFixed(7), true);
   }
 
-  if (isSameAsset(tokenB, getAssetDetails(getSingleToken('LSP', defaultTokens)))) {
+  if (isSameAsset(tokenB, getAssetDetails(extractTokenFromCode('LSP', defaultTokens)))) {
     balance = humanizeAmount(new BN(reserves[1].amount).times(lspPrice).times(2).toFixed(7), true);
   }
 

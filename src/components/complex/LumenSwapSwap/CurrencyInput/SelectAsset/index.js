@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
 import {
-  getAssetDetails, getSingleToken, isSameAsset, pureTokens,
+  getAssetDetails, isSameAsset, pureTokens,
 } from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
@@ -12,6 +12,7 @@ import { openModalAction } from 'actions/modal';
 import AddAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset/AddAsset';
 import { removeCustomTokenAction } from 'actions/userCustomTokens';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 const SelectAsset = ({
@@ -32,7 +33,7 @@ const SelectAsset = ({
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([
-      getAssetDetails(getSingleToken('XLM', defaultTokens)),
+      getAssetDetails(extractTokenFromCode('XLM', defaultTokens)),
       ...defaultTokens.filter((i) => !i.isHide).map((i) => getAssetDetails(i)),
       ...userCustomTokens,
     ]).map((item) => {

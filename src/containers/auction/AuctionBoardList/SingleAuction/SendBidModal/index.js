@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
-import { calculateMaxXLM, getAssetDetails, getSingleToken } from 'helpers/asset';
+import { calculateMaxXLM, getAssetDetails } from 'helpers/asset';
 import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { useEffect } from 'react';
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import ConfirmBidModal from './ConfirmBidModal';
 import styles from './styles.module.scss';
 
@@ -43,7 +44,7 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
     total = new BN(price).times(token);
   }
 
-  const userXlm = useUserSingleAsset(getAssetDetails(getSingleToken('XLM', defaultTokens)));
+  const userXlm = useUserSingleAsset(getAssetDetails(extractTokenFromCode('XLM', defaultTokens)));
 
   function buttonContent() {
     for (const error of Object.values(formState.errors)) {

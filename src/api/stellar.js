@@ -1,7 +1,8 @@
 import axios from 'axios';
 import BN from 'helpers/BN';
 import CoinGecko from 'coingecko-api';
-import { getAssetDetails, getSingleToken } from 'helpers/asset';
+import { getAssetDetails } from 'helpers/asset';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 
 export function getSendEstimatedValueAPI(params) {
   return axios.get(`${process.env.REACT_APP_HORIZON}/paths/strict-send`, { params }).then((res) => res.data._embedded.records[0]);
@@ -163,13 +164,13 @@ export function checkAssetAPI(assetCode, assetIssuer) {
 }
 
 export function fetchXLMPrice(defaultTokens) {
-  return fetchOrderBookAPI(getAssetDetails(getSingleToken('XLM', defaultTokens)), getAssetDetails(getSingleToken('USDC', defaultTokens)), { limit: 1 })
+  return fetchOrderBookAPI(getAssetDetails(extractTokenFromCode('XLM', defaultTokens)), getAssetDetails(extractTokenFromCode('USDC', defaultTokens)), { limit: 1 })
     .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2));
 }
 
 export function fetchLSPPriceFromHorizon(defaultTokens) {
   // eslint-disable-next-line new-cap
-  return fetchOrderBookAPI(getAssetDetails(getSingleToken('LSP', defaultTokens)), getAssetDetails(getSingleToken('USDC', defaultTokens)), { limit: 1 })
+  return fetchOrderBookAPI(getAssetDetails(extractTokenFromCode('LSP', defaultTokens)), getAssetDetails(extractTokenFromCode('USDC', defaultTokens)), { limit: 1 })
     .then((res) => new BN(res.data.asks[0].price).plus(res.data.bids[0].price).div(2).toFixed(3));
 }
 

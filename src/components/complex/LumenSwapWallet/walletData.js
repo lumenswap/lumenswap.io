@@ -9,13 +9,14 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import CStatistics, { Info } from 'components/CStatistics';
 import { useEffect, useState } from 'react';
 import {
-  getAssetDetails, extractInfoByToken, isSameAsset, calculateMaxXLM, getSingleToken,
+  getAssetDetails, extractInfoByToken, isSameAsset, calculateMaxXLM,
 } from 'helpers/asset';
 import BN from 'helpers/BN';
 import Link from 'next/link';
 import { fetchXLMPrice } from 'api/stellar';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
@@ -36,7 +37,7 @@ function WalletData({ type }) {
   const [filterZeroBalance, setFilterZeroBalance] = useState(true);
   const [xlmPrice, setXLMPrice] = useState(null);
   const defaultTokens = useDefaultTokens();
-  const XLM = getSingleToken('XLM', defaultTokens);
+  const XLM = extractTokenFromCode('XLM', defaultTokens);
 
   const xlmBalance = userBalances.find((i) => isSameAsset(getAssetDetails(XLM), i.asset));
   const userSubentry = useSelector((state) => state.user.detail.subentry);

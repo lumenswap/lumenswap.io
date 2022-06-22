@@ -1,12 +1,13 @@
 import Button from 'components/Button';
 import BN from 'helpers/BN';
-import { getAssetDetails, getSingleToken, isSameAsset } from 'helpers/asset';
+import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import Ticket from 'assets/images/ticket.svg';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
 import { useDispatch, useSelector } from 'react-redux';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './style.module.scss';
 
 const BuyTicketSingle = () => {
@@ -14,7 +15,7 @@ const BuyTicketSingle = () => {
   const userAddress = useSelector((state) => state.user.detail.address);
   const userBalances = useSelector((state) => state.userBalance);
   const defaultTokens = useDefaultTokens();
-  const lspBalance = userBalances.find((i) => isSameAsset(getAssetDetails(getSingleToken('LSP', defaultTokens)), i.asset));
+  const lspBalance = userBalances.find((i) => isSameAsset(getAssetDetails(extractTokenFromCode('LSP', defaultTokens)), i.asset));
   let buttonContent = 'Confirm';
   let buttonDisabled = false;
 
@@ -28,7 +29,7 @@ const BuyTicketSingle = () => {
       return generatePaymentTRX(
         userAddress,
         '1',
-        getAssetDetails(getSingleToken('LSP', defaultTokens)),
+        getAssetDetails(extractTokenFromCode('LSP', defaultTokens)),
         process.env.REACT_APP_LOTTERY_ACCOUNT,
         null,
       );

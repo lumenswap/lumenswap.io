@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { openConnectModal } from 'actions/modal';
 import {
-  isSameAsset, getAssetDetails, calculateMaxXLM, getSingleToken,
+  isSameAsset, getAssetDetails, calculateMaxXLM,
 } from 'helpers/asset';
 import BN from 'helpers/BN';
 import { useEffect, useState } from 'react';
@@ -16,6 +16,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import humanizeAmount from 'helpers/humanizeAmount';
 import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from '../styles.module.scss';
 
 function showBalance(isLogged, foundBalance) {
@@ -48,7 +49,7 @@ const InnerForm = ({
   const defaultTokens = useDefaultTokens();
 
   let foundBalance = foundUserAsset?.balance;
-  if (foundUserAsset && isSameAsset(getAssetDetails(foundUserAsset.asset), getAssetDetails(getSingleToken('XLM', defaultTokens)))) {
+  if (foundUserAsset && isSameAsset(getAssetDetails(foundUserAsset.asset), getAssetDetails(extractTokenFromCode('XLM', defaultTokens)))) {
     foundBalance = calculateMaxXLM(foundUserAsset.balance, userSubentry);
   }
 
