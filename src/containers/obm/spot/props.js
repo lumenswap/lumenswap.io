@@ -228,6 +228,7 @@ export const customSpotPageGetServerSideProps = wrapper
           if (!checkedAssetStatus.every((i) => i)) {
             return notFoundError();
           }
+          console.log(fromAsset, toAsset);
 
           return {
             props: {

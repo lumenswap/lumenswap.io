@@ -11,6 +11,7 @@ import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { getTVLInUSD } from 'helpers/stellarPool';
 import urlMaker from 'helpers/urlMaker';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import PoolMultiCharts from './PoolMultiCharts';
 import PoolDetailsTabContent from './PoolDetailsTabContent';
 import refreshIcon from '../../../../assets/images/refresh-icon.png';
@@ -24,6 +25,7 @@ const Details = ({ poolDetail }) => {
   const xlmPrice = useSelector((state) => state.xlmPrice);
   const lspPrice = useSelector((state) => state.lspPrice);
   const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice, lspPrice);
+  const defaultTokens = useDefaultTokens();
 
   const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
 
@@ -47,7 +49,7 @@ const Details = ({ poolDetail }) => {
         <div className={styles['pair-data']}>
           <CurrencyPair
             size={26}
-            source={[extractLogoByToken(refinedA), extractLogoByToken(refinedB)]}
+            source={[extractLogoByToken(refinedA, defaultTokens), extractLogoByToken(refinedB, defaultTokens)]}
           />
           <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
         </div>

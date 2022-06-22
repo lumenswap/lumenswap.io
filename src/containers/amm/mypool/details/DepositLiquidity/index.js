@@ -13,6 +13,7 @@ import { getLiquidityPoolIdFromAssets, lexoOrderAssets } from 'helpers/stellarPo
 import { getPoolDetailsById } from 'api/stellarPool';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { fetchAccountDetails } from 'api/stellar';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 // import Tolerance from '../Tolerance';
 import ConfirmLiquidity from '../../ConfirmLiquidity';
@@ -43,6 +44,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
   const tokenBBalance = userBalance
     .find((i) => isSameAsset(getAssetDetails(i.asset), tokenB))
     ?.balance ?? '0';
+  const defaultTokens = useDefaultTokens();
 
   const {
     handleSubmit,
@@ -108,12 +110,12 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
 
   const inpoolData = [
     {
-      logo: extractLogoByToken(tokenA),
+      logo: extractLogoByToken(tokenA, defaultTokens),
       code: tokenA.code,
       balance: poolData ? shareA.toFixed(7) : '',
     },
     {
-      logo: extractLogoByToken(tokenB),
+      logo: extractLogoByToken(tokenB, defaultTokens),
       code: tokenB.code,
       balance: poolData ? shareB.toFixed(7) : '',
     },
@@ -265,7 +267,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               currency={tokenA.code}
               onChange={amountAChange(field.onChange)}
               value={field.value}
-              currencySrc={extractLogoByToken(tokenA)}
+              currencySrc={extractLogoByToken(tokenA, defaultTokens)}
               disabled={poolData === null}
               maxValue={tokenABalance}
             />
@@ -285,7 +287,7 @@ function DepositLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterDeposit
               value={field.value}
               balance={`${tokenBBalance} ${tokenB.code}`}
               currency={tokenB.code}
-              currencySrc={extractLogoByToken(tokenB)}
+              currencySrc={extractLogoByToken(tokenB, defaultTokens)}
               className="mt-3"
               disabled={poolData === null}
               maxValue={tokenBBalance}

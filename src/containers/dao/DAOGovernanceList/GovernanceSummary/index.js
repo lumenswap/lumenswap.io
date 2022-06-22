@@ -17,6 +17,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import { useEffect, useState } from 'react';
 import { listAssets } from 'api/stellar';
 import truncateText from 'helpers/truncateText';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 const GovernanceSummary = ({ item }) => {
@@ -28,6 +29,7 @@ const GovernanceSummary = ({ item }) => {
   const userAddress = useSelector((state) => state.user.detail.address);
   const asset = getAssetDetails({ code: assetCode, issuer: assetIssuer });
   const foundUserAsset = useUserSingleAsset(asset);
+  const defaultTokens = useDefaultTokens();
 
   const dispatch = useDispatch();
 
@@ -69,7 +71,7 @@ const GovernanceSummary = ({ item }) => {
             <div className="d-flex align-items-center justify-content-between">
               <div className={styles.img}>
                 <img
-                  src={extractLogoByToken(asset)}
+                  src={extractLogoByToken(asset, defaultTokens)}
                   width={40}
                   height={40}
                   alt={name}

@@ -9,6 +9,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { extractLogoByToken } from 'helpers/asset';
 import BN from 'helpers/BN';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import DAOPRoposalStatusBadge from '../../../DAOProposalStatusBadge';
 import styles from './styles.module.scss';
 
@@ -35,6 +36,7 @@ const ProposalInfo = ({ item, pageName }) => {
   const {
     title, description, proposer, status, id, Governance,
   } = item;
+  const defaultTokens = useDefaultTokens();
 
   function findOptionWithMostVotes() {
     let mostAmount = 0;
@@ -61,6 +63,7 @@ const ProposalInfo = ({ item, pageName }) => {
                     src={
                       extractLogoByToken(
                         { code: Governance.assetCode, issuer: Governance.assetIssuer },
+                        defaultTokens,
                       )
                     }
                     width={24}

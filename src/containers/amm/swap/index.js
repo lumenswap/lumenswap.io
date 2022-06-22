@@ -1,9 +1,8 @@
 import LumenSwapSwap from 'components/complex/LumenSwapSwap';
 import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
 
-const SwapPage = ({ custom, errorCode, defaultTokens }) => (
+const SwapPage = ({ custom, errorCode }) => (
   <LumenSwapSwap
-    defaultTokens={defaultTokens}
     custom={custom}
     errorCode={errorCode}
     type={walletTypes.AMM}

@@ -38,6 +38,16 @@ const mainReducer = (state, action) => {
       ...state,
       ...action.payload,
     };
+    if (state.theme) nextState.theme = state.theme;
+    if (state.user) nextState.user = state.user;
+    if (state.userCustomTokens) nextState.userCustomTokens = state.userCustomTokens;
+    if (state.modal) nextState.modal = state.modal;
+    if (state.userCustomPairs) nextState.userCustomPairs = state.userCustomPairs;
+    if (state.userBalance) nextState.userBalance = state.userBalance;
+    if (state.xlmPrice) nextState.xlmPrice = state.xlmPrice;
+    if (state.lspPrice) nextState.lspPrice = state.lspPrice;
+    if (state.customOrderPrice) nextState.customOrderPrice = state.customOrderPrice;
+    if (state.userCustomPairs) nextState.userCustomPairs = state.userCustomPairs;
     return nextState;
   }
   return reducers(state, action);
@@ -77,4 +87,4 @@ export function useStore(initialState) {
   return storeCpy;
 }
 
-export const wrapper = createWrapper(makeStore, { debug: false });
+export const wrapper = createWrapper(initializeStore, { debug: false });

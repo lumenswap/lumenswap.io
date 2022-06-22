@@ -9,9 +9,11 @@ import { initializeStore } from 'store';
 
 // import ShowTolerance from 'containers/amm/ShowTolerance';
 import BN from 'helpers/BN';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
+  const defaultTokens = useDefaultTokens();
   async function confirm() {
     const store = initializeStore();
     const storeData = store.getState();
@@ -58,7 +60,7 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
     <div className="pb-4">
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenA, defaultTokens)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
         <div>{data.tokenA.amount}</div>
@@ -66,7 +68,7 @@ const ConfirmLiquidity = ({ data, afterDeposit = () => {} }) => {
 
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenB, defaultTokens)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
         <div>{data.tokenB.amount}</div>

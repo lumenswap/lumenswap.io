@@ -22,6 +22,7 @@ import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { STATUS_NAMES } from 'containers/auction/consts';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import AuctionLineChart from './AuctionLineChart';
 import SendBidModal from './SendBidModal';
 import AuctionDetailTabContent from './SingleAuctionTabContent';
@@ -35,6 +36,7 @@ const SingleAuction = ({ auction, pageName, assetCode }) => {
   const [refreshData, setRefreshData] = useState(false);
   const dispatch = useDispatch();
   const isLogged = useIsLogged();
+  const defaultTokens = useDefaultTokens();
 
   const handleTabChange = (tab) => {
     setCurrentTab(tab);
@@ -87,7 +89,7 @@ const SingleAuction = ({ auction, pageName, assetCode }) => {
       title: 'Asset code',
       render: (auctionDetails) => (
         <>
-          <img src={extractLogoByToken({ code: auctionDetails.assetCode, issuer: auctionDetails.assetIssuer })} height={22} width={22} className="rounded-circle" alt="logo" />
+          <img src={extractLogoByToken({ code: auctionDetails.assetCode, issuer: auctionDetails.assetIssuer }, defaultTokens)} height={22} width={22} className="rounded-circle" alt="logo" />
           <div className="ml-1">{auctionDetails.assetCode}</div>
         </>
       ),

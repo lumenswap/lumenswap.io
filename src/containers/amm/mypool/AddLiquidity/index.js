@@ -13,6 +13,7 @@ import {
 import { getLiquidityPoolIdFromAssets, lexoOrderAssets, lexoOrderTokenWithDetails } from 'helpers/stellarPool';
 import { getPoolDetailsById } from 'api/stellarPool';
 import classNames from 'classnames';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import CSelectToken from './CSelectToken';
 import ConfirmLiquidity from '../ConfirmLiquidity';
 import styles from './styles.module.scss';
@@ -31,6 +32,7 @@ const AddLiquidity = ({
   const [poolData, setPoolData] = useState(null);
   const userBalance = useSelector((state) => state.userBalance);
   const userSubentry = useSelector((state) => state.user.detail.subentry);
+  const defaultTokens = useDefaultTokens();
 
   const [tokenA, tokenB] = lexoOrderTokenWithDetails(
     initTokenA,
@@ -231,11 +233,11 @@ const AddLiquidity = ({
       <h6 className={styles.label}>Select pair</h6>
       <div className="d-flex justify-content-between">
         <div className={styles.select} onClick={() => handleSelectAsset('tokenA')}>
-          {setLabel(initTokenA.code, extractLogoByToken(initTokenA))}
+          {setLabel(initTokenA.code, extractLogoByToken(initTokenA, defaultTokens))}
           <span className="icon-angle-down" />
         </div>
         <div className={styles.select} onClick={() => handleSelectAsset('tokenB')}>
-          {setLabel(initTokenB.code, extractLogoByToken(initTokenB))}
+          {setLabel(initTokenB.code, extractLogoByToken(initTokenB, defaultTokens))}
           <span className="icon-angle-down" />
         </div>
       </div>
@@ -261,7 +263,7 @@ const AddLiquidity = ({
               currency={tokenA.code}
               onChange={amountAChange(field.onChange)}
               value={field.value}
-              currencySrc={extractLogoByToken(tokenA)}
+              currencySrc={extractLogoByToken(tokenA, defaultTokens)}
               disabled={poolData === null}
               maxValue={tokenABalance}
             />
@@ -280,7 +282,7 @@ const AddLiquidity = ({
               value={field.value}
               balance={`${numeral(tokenBBalance).format('0,0.[0000000]')} ${tokenB.code}`}
               currency={tokenB.code}
-              currencySrc={extractLogoByToken(tokenB)}
+              currencySrc={extractLogoByToken(tokenB, defaultTokens)}
               className="mt-3"
               disabled={poolData === null}
               maxValue={tokenBBalance}

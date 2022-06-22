@@ -37,8 +37,8 @@ export default function TVChart({ appSpotPair }) {
       resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         console.log('[resolveSymbol] called');
         onSymbolResolvedCallback({
-          ticker: `${appSpotPair.base.getCode()}/${appSpotPair.counter.getCode()}`,
-          symbol: `${appSpotPair.base.getCode()}/${appSpotPair.counter.getCode()}`,
+          ticker: `${appSpotPair.base.code}/${appSpotPair.counter.code}`,
+          symbol: `${appSpotPair.base.code}/${appSpotPair.counter.code}`,
           has_intraday: true,
           supported_resolutions: configurationData.supported_resolutions,
           session: '24x7',

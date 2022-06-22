@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
   const updateUserDetailIntervalRef = useRef(null);
   const xlmPriceIntervalRef = useRef(null);
 
-  const store = useStore(pageProps.initialReduxState);
+  const store = useStore();
   const persistor = persistStore(store, {}, () => {
     persistor.persist();
   });
@@ -107,7 +107,7 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-MyApp.getInitialProps = wrapper.getInitialPageProps((store) => async () => {
+MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async () => {
   const assets = await getDefaultAssets();
   store.dispatch(setDefaultTokens(assets));
 });

@@ -4,20 +4,23 @@ import ObmHeader from 'containers/obm/ObmHeader';
 import topPairIcon from 'assets/images/top-pair.svg';
 import { extractInfoByToken } from 'helpers/asset';
 import ServerSideLoading from 'components/ServerSideLoading';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import MarketData from './MarketData';
 import styles from './styles.module.scss';
 import TopPair from './TopPair';
 
 const MarketPage = ({ assets }) => {
   const sortedAssets = assets?.data.sort((a, b) => b.change24h - a.change24h);
+  const defaultTokens = useDefaultTokens();
   const topChangeAssets = sortedAssets.slice(0, 3).map((pair) => {
     const mainPair = {
       ...pair,
-      baseLogo: extractInfoByToken({ code: pair.baseAssetCode, issuer: pair.baseAssetIssuer }).logo,
+      baseLogo: extractInfoByToken({ code: pair.baseAssetCode, issuer: pair.baseAssetIssuer },
+        defaultTokens).logo,
       counterLogo: extractInfoByToken({
         code: pair.counterAssetCode,
         issuer: pair.counterAssetIssuer,
-      }).logo,
+      }, defaultTokens).logo,
     };
     return mainPair;
   });

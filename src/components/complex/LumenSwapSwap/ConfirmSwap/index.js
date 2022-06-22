@@ -50,11 +50,11 @@ const ConfirmSwap = ({ data }) => {
   }
 
   const leftSide = !reverse
-    ? fromAssetDetails.getCode()
-    : toAssetDetails.getCode();
+    ? fromAssetDetails.code
+    : toAssetDetails.code;
   const rightSide = !reverse
-    ? toAssetDetails.getCode()
-    : fromAssetDetails.getCode();
+    ? toAssetDetails.code
+    : fromAssetDetails.code;
 
   const calculatedMin = new BN(data.estimatedPrice)
     .times(new BN(1).minus(new BN(data.priceSpread).div(100)));
@@ -103,7 +103,7 @@ const ConfirmSwap = ({ data }) => {
       <p className={styles.message}>
         output is estimated. you will receive at least{' '}
         {humanizeAmount(calculatedMin.toString())}{' '}
-        {toAssetDetails.getCode()} or the transaction will revert.
+        {toAssetDetails.code} or the transaction will revert.
       </p>
       <div className={styles.info}>
         <div className={styles.container}>
@@ -117,7 +117,7 @@ const ConfirmSwap = ({ data }) => {
           <div className={styles.label}>Minimum received
             <Tooltips id="minimum" text={<PrimaryTooltip text={appConsts.tooltip.min} />}><span className="icon-question-circle" /></Tooltips>
           </div>
-          <div className={classNames(styles.value)}>{loading ? 'Loading' : humanizeAmount(calculatedMin.toString())} {toAssetDetails.getCode()}</div>
+          <div className={classNames(styles.value)}>{loading ? 'Loading' : humanizeAmount(calculatedMin.toString())} {toAssetDetails.code}</div>
         </div>
         <div className={styles.container}>
           <div className={styles.label}>Price impact

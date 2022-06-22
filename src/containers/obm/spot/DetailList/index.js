@@ -4,6 +4,7 @@ import numeral from 'numeral';
 import BN from 'helpers/BN';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { useEffect, useState } from 'react';
+import { getAssetDetails } from 'helpers/asset';
 import styles from './styles.module.scss';
 
 const DetailList = ({ appSpotPair, price }) => {
@@ -34,14 +35,15 @@ const DetailList = ({ appSpotPair, price }) => {
   useEffect(() => {
     async function loadData() {
       try {
-        const tradeData = await fetchTradeAggregationAPI(appSpotPair.base, appSpotPair.counter, {
-          end_time: Date.now(),
-          start_time: Date.now() - (60 * 60 * 24 * 1000),
-          resolution: 900000,
-          limit: 96,
-          offset: 0,
-          order: 'desc',
-        });
+        const tradeData = await fetchTradeAggregationAPI(getAssetDetails(appSpotPair.base),
+          getAssetDetails(appSpotPair.counter), {
+            end_time: Date.now(),
+            start_time: Date.now() - (60 * 60 * 24 * 1000),
+            resolution: 900000,
+            limit: 96,
+            offset: 0,
+            order: 'desc',
+          });
 
         const firstChunk = tradeData.data._embedded.records[0];
         const aggregatedData = tradeData.data._embedded.records.reduce((acc, current, index) => {

@@ -16,6 +16,7 @@ import { addCustomPairAction } from 'actions/userCustomPairs';
 import { useDispatch, useSelector } from 'react-redux';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import ServerSideLoading from 'components/ServerSideLoading';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import ChartTab from './ChartTab';
 import styles from './styles.module.scss';
 
@@ -39,6 +40,7 @@ const Spot = ({
 
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
+  const defaultTokens = useDefaultTokens();
 
   const initialAsset = getInitialPair(custom);
 
@@ -71,7 +73,7 @@ const Spot = ({
         });
 
         if (custom.base.isDefault) {
-          base = getAssetDetails(extractTokenFromCode(custom.base.code));
+          base = getAssetDetails(extractTokenFromCode(custom.base.code, defaultTokens));
         }
 
         let counter = getAssetDetails({
@@ -80,7 +82,7 @@ const Spot = ({
         });
 
         if (custom.counter.isDefault) {
-          counter = getAssetDetails(extractTokenFromCode(custom.counter.code));
+          counter = getAssetDetails(extractTokenFromCode(custom.counter.code, defaultTokens));
         }
 
         setAppSpotPair({
@@ -89,18 +91,18 @@ const Spot = ({
         });
 
         const defaultFoundPair = createdDefaultPairs.find(
-          (pair) => pair.base.code === base.code
-            && pair.counter.code === counter.code
-            && pair.base.issuer === base.issuer
-            && pair.counter.issuer === counter.issuer,
+          (pair) => getAssetDetails(pair.base).getCode() === base.getCode()
+            && getAssetDetails(pair.counter).getCode() === counter.getCode()
+            && getAssetDetails(pair.base).getIssuer() === base.getIssuer()
+            && getAssetDetails(pair.counter).getIssuer() === counter.getIssuer(),
         );
 
         if (!defaultFoundPair) {
           const found = userCustomPairs.find(
-            (pair) => pair.base.code === base.code
-              && pair.counter.code === counter.code
-              && pair.base.issuer === base.issuer
-              && pair.counter.issuer === counter.issuer,
+            (pair) => pair.base.code === base.getCode()
+              && pair.counter.code === counter.getCode()
+              && pair.base.issuer === base.getIssuer()
+              && pair.counter.issuer === counter.getIssuer(),
           );
           if (!found) {
             dispatch(

@@ -1,8 +1,7 @@
 import LumenSwapSwap from 'components/complex/LumenSwapSwap';
 
-const SwapPage = ({ custom, errorCode, defaultTokens }) => (
+const SwapPage = ({ custom, errorCode }) => (
   <LumenSwapSwap
-    defaultTokens={defaultTokens}
     custom={custom}
     errorCode={errorCode}
   />

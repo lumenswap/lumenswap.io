@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import BN from 'helpers/BN';
 import { getPoolDetailsById } from 'api/stellarPool';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import secondStyles from '../../../../components/Button/styles.module.scss';
 import styles from './styles.module.scss';
 
@@ -58,6 +59,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
   const [poolDetail, setPoolDetail] = useState(initPoolDetail);
   const refinedA = getAssetFromLPAsset(poolDetail.reserves[0].asset);
   const refinedB = getAssetFromLPAsset(poolDetail.reserves[1].asset);
+  const defaultTokens = useDefaultTokens();
 
   const handleDeposit = () => {
     dispatch(
@@ -104,7 +106,8 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
         <div className={styles['pair-data']}>
           <CurrencyPair
             size={26}
-            source={[extractLogoByToken(refinedA), extractLogoByToken(refinedB)]}
+            source={[extractLogoByToken(refinedA, defaultTokens),
+              extractLogoByToken(refinedB, defaultTokens)]}
           />
           <div className="ml-2">{refinedA.code}/{refinedB.code}</div>
         </div>

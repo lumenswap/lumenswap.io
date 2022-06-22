@@ -1,4 +1,5 @@
 import { fetchTradeAggregationAPI } from 'api/stellar';
+import { getAssetDetails } from 'helpers/asset';
 
 function mapStellarAggregationData(data) {
   return data.map((item, index) => {

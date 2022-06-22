@@ -6,18 +6,23 @@ import Loading from 'components/Loading';
 import urlMaker from 'helpers/urlMaker';
 import { extractInfoByToken } from 'helpers/asset';
 import humanizeAmount from 'helpers/humanizeAmount';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 function KnownAssets({ assets, searchQuery }) {
   const [knownAssets, setKnownAssets] = useState(null);
   const [filteredAssets, setFilteredAssets] = useState(null);
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     const pairedAssets = assets?.data.map((asset) => {
       const base = {
         code: asset.baseAssetCode,
         issuer: asset.baseAssetIssuer,
-        logo: extractInfoByToken({ code: asset.baseAssetCode, issuer: asset.baseAssetIssuer }).logo,
+        logo: extractInfoByToken({
+          code: asset.baseAssetCode,
+          issuer: asset.baseAssetIssuer,
+        }, defaultTokens).logo,
       };
       const counter = {
         code: asset.counterAssetCode,
@@ -25,7 +30,7 @@ function KnownAssets({ assets, searchQuery }) {
         logo: extractInfoByToken({
           code: asset.counterAssetCode,
           issuer: asset.counterAssetIssuer,
-        }).logo,
+        }, defaultTokens).logo,
       };
 
       return {

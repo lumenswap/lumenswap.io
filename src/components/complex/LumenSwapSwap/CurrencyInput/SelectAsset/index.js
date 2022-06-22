@@ -10,6 +10,7 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import { openModalAction } from 'actions/modal';
 import AddAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset/AddAsset';
 import { removeCustomTokenAction } from 'actions/userCustomTokens';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 const SelectAsset = ({
@@ -19,7 +20,6 @@ const SelectAsset = ({
   swapFromWithTo,
   changeToAsset,
   currentFrom,
-  defaultTokens,
   type,
 }) => {
   const userBalance = useSelector((state) => state.userBalance);
@@ -27,6 +27,7 @@ const SelectAsset = ({
   const [searchQuery, setSearchQuery] = useState(null);
   const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([

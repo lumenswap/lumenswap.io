@@ -7,11 +7,13 @@ import { getAssetDetails } from 'helpers/asset';
 import { addCustomTokenAction } from 'actions/userCustomTokens';
 import { closeModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import customValidateCAddToken from './customValidateCAddToken';
 import styles from './styles.module.scss';
 
 const CAddCustomToken = ({ onAddToken }) => {
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
+  const defaultTokens = useDefaultTokens();
 
   const {
     handleSubmit,
@@ -19,7 +21,7 @@ const CAddCustomToken = ({ onAddToken }) => {
     control,
   } = useForm({
     mode: 'onChange',
-    resolver: (formValues) => customValidateCAddToken(formValues, userCustomTokens),
+    resolver: (formValues) => customValidateCAddToken(formValues, userCustomTokens, defaultTokens),
   });
   const dispatch = useDispatch();
 

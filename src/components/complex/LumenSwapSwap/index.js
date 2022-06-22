@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import ObmHeader from 'containers/obm/ObmHeader';
 import { walletTypes } from 'components/complex/LumenSwapWallet/walletData';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import { changeToAsset } from './swapHelpers';
 import SwapHead from './SwapHead';
 import useUrl from './useUrl';
@@ -27,7 +28,7 @@ import styles from './styles.module.scss';
 const REQ_TIMEOUT_MS = 1000;
 
 const LumenSwapSwap = ({
-  custom, errorCode, type = walletTypes.OBM, defaultTokens,
+  custom, errorCode, type = walletTypes.OBM,
 }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,7 @@ const LumenSwapSwap = ({
   const router = useRouter();
   const dispatch = useDispatch();
   const timeoutRef = useRef();
+  const defaultTokens = useDefaultTokens();
   const XLM = defaultTokens.find((token) => token.code === 'XLM');
 
   let swapBaseURL = urlMaker.obm.swap;
@@ -291,7 +293,6 @@ const LumenSwapSwap = ({
                     swapFromWithTo={swapFromWithTo}
                     type={type}
                     changeToAsset={(asset) => changeToAsset(asset, setValue, getValues)}
-                    defaultTokens={defaultTokens}
                   />
                 )}
               />

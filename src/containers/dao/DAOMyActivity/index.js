@@ -14,6 +14,7 @@ import { fetchClaimableBalances } from 'api/stellar';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import CountDown from './Countdown';
 import DAOContainer from '../DAOContainer';
 import styles from './styles.module.scss';
@@ -44,7 +45,7 @@ function calcualateActivityAmount(activity) {
   return `${humanizeAmount(new BN(activity.Vote.amount).div(10 ** 7).toFixed(7))} ${activity.Vote.Proposal.Governance.assetCode}`;
 }
 
-const activityTableHeaders = [
+const activityTableHeaders = (defaultTokens) => [
   {
     title: 'Governance',
     dataIndex: 'governance',
@@ -58,7 +59,7 @@ const activityTableHeaders = [
           getAssetDetails({
             code: activity.Proposal.Governance.assetCode,
             issuer: activity.Proposal.Governance.assetIssuer,
-          }),
+          }), defaultTokens,
         );
         governanceName = activity.Proposal.Governance.name;
       } else if (activity.Vote) {
@@ -66,7 +67,7 @@ const activityTableHeaders = [
           getAssetDetails({
             code: activity.Vote.Proposal.Governance.assetCode,
             issuer: activity.Vote.Proposal.Governance.assetIssuer,
-          }),
+          }), defaultTokens,
         );
         governanceName = activity.Vote.Proposal.Governance.name;
       }
@@ -154,6 +155,7 @@ function ActivityTableAction({ activityInfo }) {
 const DAOMyActivity = () => {
   const [userActivities, setUserActivities] = useState(null);
   const [userClaimableBalances, setUserClaimableBalances] = useState(null);
+  const defaultTokens = useDefaultTokens();
 
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
@@ -244,7 +246,7 @@ const DAOMyActivity = () => {
             <div className={styles.card}>
               <CTable
                 className={styles.table}
-                columns={activityTableHeaders}
+                columns={activityTableHeaders(defaultTokens)}
                 dataSource={enrichedDataSource}
                 loading={!userActivities}
                 noDataMessage="There is no activity"

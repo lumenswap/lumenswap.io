@@ -7,27 +7,93 @@ import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import {
+  extractInfoByToken, getAssetDetails, isSameAsset, isSamePair,
+} from 'helpers/asset';
 import styles from './styles.module.scss';
+import purePairs from './purePairs';
 
 const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
   const [searchQuery, setSearchQuery] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
+  const defaultTokens = useDefaultTokens();
 
   const enrichedPairs = useMemo(() => {
-    let tokenPairs = [...createdDefaultPairs];
-    if (customPairs !== []) {
-      tokenPairs = [...tokenPairs, ...customPairs];
-    }
+    const result = purePairs([
+      ...createdDefaultPairs,
+      ...customPairs,
+    ]).map((item) => {
+      const foundBaseToken = defaultTokens
+        .find((tok) => isSameAsset(getAssetDetails(tok), item.base));
+      const foundCounterToken = defaultTokens
+        .find((tok) => isSameAsset(getAssetDetails(tok), item.counter));
+
+      let enrichedBaseToken = {
+        details: item.base,
+        // web: foundBaseToken.web,
+        logo: extractInfoByToken(item.base, defaultTokens).logo,
+        type: 'default',
+      };
+      if (!foundBaseToken) {
+        enrichedBaseToken = {
+          ...enrichedBaseToken,
+          type: 'custom',
+        };
+      }
+
+      let enrichedCounterToken = {
+        details: item.counter,
+        // web: foundCounterToken.web,
+        logo: extractInfoByToken(item.counter, defaultTokens).logo,
+        type: 'default',
+      };
+      if (!foundCounterToken) {
+        enrichedCounterToken = {
+          ...enrichedCounterToken,
+          type: 'custom',
+        };
+      }
+
+      const richedAssets = {
+        base: enrichedBaseToken,
+        counter: enrichedCounterToken,
+      };
+
+      if (
+        createdDefaultPairs.find((i) => isSamePair(i, {
+          base: richedAssets.base.details,
+          counter: richedAssets.counter.details,
+        }))
+      ) {
+        return richedAssets;
+      }
+      return {
+        base: {
+          ...richedAssets.base,
+          type: 'custom',
+        },
+        counter: {
+          ...richedAssets.counter,
+          type: 'custom',
+        },
+      };
+    });
 
     if (searchQuery && searchQuery !== '') {
-      tokenPairs = tokenPairs.filter((pair) => {
+      return result.filter((item) => {
         const modified = searchQuery.trim().toLowerCase();
-        return `${pair.base.code.toLowerCase()}/${pair.counter.code.toLowerCase()}`.match(modified);
+        return `${item.base.details
+          .getCode()
+          .toLowerCase()}/${item.counter.details
+          .getCode()
+          .toLowerCase()}`.match(modified);
       });
     }
-    return tokenPairs;
+
+    return result;
   },
   [JSON.stringify(customPairs), searchQuery]);
 

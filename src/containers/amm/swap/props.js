@@ -6,18 +6,18 @@ import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import { checkAssetValidation } from 'api/tokens';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
-const customTokenValidation = (tokenString) => {
+const customTokenValidation = (tokenString, defaultTokens) => {
   const extracted = tokenString.split('-');
 
   if (extracted.length > 2) return null;
 
-  if (extracted.length === 1 && isDefaultCode(extracted[0])) {
+  if (extracted.length === 1 && isDefaultCode(extracted[0], defaultTokens)) {
     return {
       code: extracted[0],
     };
   }
-  if (isDefaultCode(extracted[0])) {
-    const token = extractTokenFromCode(extracted[0]);
+  if (isDefaultCode(extracted[0], defaultTokens)) {
+    const token = extractTokenFromCode(extracted[0], defaultTokens);
     const defaultIssuer = token.issuer;
 
     if (defaultIssuer === extracted[1]) {
@@ -100,7 +100,7 @@ export const swapPageGetServerSideProps = wrapper.getServerSideProps((store) => 
   }
 
   return {
-    props: { defaultTokens },
+    props: { },
   };
 });
 
@@ -121,8 +121,8 @@ export const swapCustomTokenGetServerSideProps = wrapper
     };
 
     if (context.query.tokens && context.query.customTokens) {
-      const fromResult = customTokenValidation(context.query.tokens);
-      const toResult = customTokenValidation(context.query.customTokens);
+      const fromResult = customTokenValidation(context.query.tokens, defaultTokens);
+      const toResult = customTokenValidation(context.query.customTokens, defaultTokens);
 
       const queryFromIssuer = context.query.tokens.split('-')[1];
       const queryToIssuer = context.query.customTokens.split('-')[1];
@@ -213,7 +213,6 @@ export const swapCustomTokenGetServerSideProps = wrapper
 
         return {
           props: {
-            defaultTokens,
             custom: {
               from: fromAsset,
               to: toAsset,

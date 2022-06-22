@@ -8,9 +8,12 @@ import { initializeStore } from 'store';
 import generateWithdrawPoolTRX from 'stellar-trx/generateWithdrawPoolTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+
 import styles from './styles.module.scss';
 
 const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
+  const defaultTokens = useDefaultTokens();
   async function withdrawPool() {
     const store = initializeStore();
     const storeData = store.getState();
@@ -41,7 +44,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
     <div className="pb-4">
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenA)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenA, defaultTokens)} width={20} height={20} /></div>
           <div>{data.tokenA.code}</div>
         </div>
         <div>{humanizeAmount(data.tokenA.balance)}</div>
@@ -49,7 +52,7 @@ const WithdrawLiquidityConfirm = ({ data, afterWithdraw }) => {
 
       <div className={styles.inpool}>
         <div className={styles.pair}>
-          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenB)} width={20} height={20} /></div>
+          <div className={styles['pair-img']}><img src={extractLogoByToken(data.tokenB, defaultTokens)} width={20} height={20} /></div>
           <div>{data.tokenB.code}</div>
         </div>
         <div>{humanizeAmount(data.tokenB.balance)}</div>

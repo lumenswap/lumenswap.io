@@ -3,6 +3,7 @@ import SelectPair from 'containers/obm/spot/SelectPair';
 import classNames from 'classnames';
 import { extractInfoByToken } from 'helpers/asset';
 import { useDispatch } from 'react-redux';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 export default function OpenDialogElement({
@@ -12,6 +13,7 @@ export default function OpenDialogElement({
   createdDefaultPairs,
 }) {
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   return (
     <div className={styles['container-select']}>
@@ -30,8 +32,8 @@ export default function OpenDialogElement({
           );
         }}
       >
-        <img className={styles['first-coin']} src={extractInfoByToken(appSpotPair.base).logo} alt="" />
-        <img className={styles['second-coin']} src={extractInfoByToken(appSpotPair.counter).logo} alt="" />
+        <img className={styles['first-coin']} src={extractInfoByToken(appSpotPair.base, defaultTokens).logo} alt="" />
+        <img className={styles['second-coin']} src={extractInfoByToken(appSpotPair.counter, defaultTokens).logo} alt="" />
         <h1>{appSpotPair.base.code}/{appSpotPair.counter.code}</h1>
         <span className="icon-angle-down ml-auto" />
       </button>

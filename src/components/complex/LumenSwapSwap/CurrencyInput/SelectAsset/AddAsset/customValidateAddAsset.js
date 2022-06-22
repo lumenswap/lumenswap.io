@@ -1,9 +1,8 @@
 import { checkAssetAPI } from 'api/stellar';
 import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
 import generateFormResolverErrors from 'helpers/generateFormResolverErrors';
-import defaultTokens from 'tokens/defaultTokens';
 
-async function customValidateAddNewAsset(formValues, userCustomTokens) {
+async function customValidateAddNewAsset(formValues, userCustomTokens, defaultTokens) {
   const { issuer, code } = formValues;
   if (!issuer || issuer === '' || !code || code === '') {
     return { values: formValues, errors: generateFormResolverErrors('code', 'Add asset') };
