@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import Loading from 'components/Loading';
 import { fetchOrderBookAPI } from 'api/stellar';
-import { getAssetDetails } from 'helpers/asset';
 import aggregateData from './aggregateData';
 import generateOptions from './generateOptions';
 import styles from './styles.module.scss';
@@ -12,8 +11,7 @@ const DepthChart = ({ appSpotPair }) => {
 
   useEffect(() => {
     setData(null);
-    fetchOrderBookAPI(getAssetDetails(appSpotPair.base),
-      getAssetDetails(appSpotPair.counter), { limit: 200 }).then((res) => {
+    fetchOrderBookAPI(appSpotPair.base, appSpotPair.counter, { limit: 200 }).then((res) => {
       setData(aggregateData(res));
     });
   }, [appSpotPair]);

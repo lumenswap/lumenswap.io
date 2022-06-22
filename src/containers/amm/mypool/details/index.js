@@ -220,6 +220,7 @@ function MyPoolDetails({ poolDetail: initPoolDetail }) {
                         ],
                         xlmPrice,
                         lspPrice,
+                        defaultTokens,
                       )}
                       </span>
                     </div>

@@ -2,9 +2,11 @@ import { useRouter } from 'next/router';
 import Button from 'components/Button';
 import CurrencyInput from 'components/complex/LumenSwapSwap/CurrencyInput';
 import BN from 'helpers/BN';
-import { isSameAsset, getAssetDetails, calculateMaxXLM } from 'helpers/asset';
+import {
+  isSameAsset, getAssetDetails, calculateMaxXLM, getSingleToken,
+} from 'helpers/asset';
 import { useSelector } from 'react-redux';
-import XLM from 'tokens/XLM';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 export default function LCurrencyInput({
@@ -24,6 +26,7 @@ export default function LCurrencyInput({
   const userBalance = useSelector((state) => state.userBalance);
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const userSubentry = useSelector((state) => state.user.detail.subentry);
+  const defaultTokens = useDefaultTokens();
 
   const router = useRouter();
 
@@ -98,7 +101,7 @@ export default function LCurrencyInput({
 
     if (found) {
       let amount = found.balance;
-      if (isSameAsset(getAssetDetails(found.asset), getAssetDetails(XLM))) {
+      if (isSameAsset(getAssetDetails(found.asset), getAssetDetails(getSingleToken('XLM', defaultTokens)))) {
         amount = calculateMaxXLM(found.balance, userSubentry);
       }
 

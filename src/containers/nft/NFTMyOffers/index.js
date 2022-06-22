@@ -9,20 +9,19 @@ import { fetchOffersOfAccount } from 'api/stellar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import useIsLogged from 'hooks/useIsLogged';
-import { isSameAsset, getAssetDetails } from 'helpers/asset';
+import { isSameAsset, getAssetDetails, getSingleToken } from 'helpers/asset';
 
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
-import XLM from 'tokens/XLM';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import BN from 'helpers/BN';
-import NLSP from 'tokens/NLSP';
 import humanizeAmount from 'helpers/humanizeAmount';
 import ServerSideLoading from 'components/ServerSideLoading';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import NFTHeader from '../NFTHeader';
 import styles from './styles.module.scss';
 
-function loadOfferData(userAddress, setOrders) {
+function loadOfferData(userAddress, setOrders, defaultTokens) {
   const allOffers = [];
   fetchOffersOfAccount(userAddress, { limit: 200 }).then((data) => {
     allOffers.push(...data.data._embedded.records);
@@ -40,11 +39,11 @@ function loadOfferData(userAddress, setOrders) {
       .filter((offer) => {
         const isSellAssetLusi = offer.selling.asset_issuer === process.env.REACT_APP_LUSI_ISSUER;
         const isBuyAssetLusi = offer.buying.asset_issuer === process.env.REACT_APP_LUSI_ISSUER;
-        const isSellAssetLSP = isSameAsset(getAssetDetails(NLSP), getAssetDetails({
+        const isSellAssetLSP = isSameAsset(getAssetDetails(getSingleToken('NLSP', defaultTokens)), getAssetDetails({
           code: offer.selling.asset_code,
           issuer: offer.selling.asset_issuer,
         }));
-        const isBuyAssetLSP = isSameAsset(getAssetDetails(NLSP), getAssetDetails({
+        const isBuyAssetLSP = isSameAsset(getAssetDetails(getSingleToken('NLSP', defaultTokens)), getAssetDetails({
           code: offer.buying.asset_code,
           issuer: offer.buying.asset_issuer,
         }));
@@ -52,7 +51,7 @@ function loadOfferData(userAddress, setOrders) {
         return (isSellAssetLusi || isBuyAssetLusi) && (isSellAssetLSP || isBuyAssetLSP);
       }).map((offer) => {
         const isSellAssetLusi = offer.selling.asset_issuer === process.env.REACT_APP_LUSI_ISSUER;
-        const isBuyAssetLSP = isSameAsset(getAssetDetails(NLSP), getAssetDetails({
+        const isBuyAssetLSP = isSameAsset(getAssetDetails(getSingleToken('NLSP', defaultTokens)), getAssetDetails({
           code: offer.buying.asset_code,
           issuer: offer.buying.asset_issuer,
         }));
@@ -100,6 +99,7 @@ const NFTOrder = () => {
   const isLogged = useIsLogged();
   const router = useRouter();
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     if (!isLogged) {
@@ -115,8 +115,8 @@ const NFTOrder = () => {
     function func() {
       return generateManageBuyTRX(
         userAddress,
-        getAssetDetails(XLM),
-        getAssetDetails(NLSP),
+        getAssetDetails(getSingleToken('XLM', defaultTokens)),
+        getAssetDetails(getSingleToken('NLSP', defaultTokens)),
         '0',
         '0.1',
         offerId,
@@ -128,7 +128,7 @@ const NFTOrder = () => {
       .catch(console.error);
 
     setOrders(null);
-    loadOfferData(userAddress, setOrders);
+    loadOfferData(userAddress, setOrders, defaultTokens);
   };
 
   const tableHeaders = [

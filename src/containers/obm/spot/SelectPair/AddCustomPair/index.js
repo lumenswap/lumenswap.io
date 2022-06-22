@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import customValidateAddNewPair from './customValidateAddNewPair';
 import styles from './styles.module.scss';
 
-const AddCustomPair = () => {
+const AddCustomPair = ({ createdDefaultPairs }) => {
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
   const {
@@ -23,7 +23,8 @@ const AddCustomPair = () => {
     watch,
   } = useForm({
     mode: 'onChange',
-    resolver: (formValues) => customValidateAddNewPair(formValues, userCustomPairs),
+    resolver: (formValues) => customValidateAddNewPair(formValues, userCustomPairs,
+      createdDefaultPairs),
   });
   const dispatch = useDispatch();
 

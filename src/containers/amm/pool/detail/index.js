@@ -24,8 +24,8 @@ const Details = ({ poolDetail }) => {
   const [reverseHeaderInfo, setReverseHeaderInfo] = useState(false);
   const xlmPrice = useSelector((state) => state.xlmPrice);
   const lspPrice = useSelector((state) => state.lspPrice);
-  const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice, lspPrice);
   const defaultTokens = useDefaultTokens();
+  const usdTvl = getTVLInUSD(poolDetail.reserves, xlmPrice, lspPrice, defaultTokens);
 
   const grid2 = 'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12';
 

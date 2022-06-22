@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
+import {
+  getAssetDetails, getSingleToken, isSameAsset, pureTokens,
+} from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
@@ -17,7 +19,7 @@ const CSelectToken = ({ onTokenSelect }) => {
   const [searchQuery, setSearchQuery] = useState(null);
   const dispatch = useDispatch();
   const defaultTokens = useDefaultTokens();
-  const XLM = defaultTokens.find((token) => token.code === 'XLM');
+  const XLM = getSingleToken('XLM', defaultTokens);
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([

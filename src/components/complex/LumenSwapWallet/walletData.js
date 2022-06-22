@@ -66,7 +66,7 @@ function WalletData({ type }) {
   };
 
   useEffect(() => {
-    fetchXLMPrice().then((res) => {
+    fetchXLMPrice(defaultTokens).then((res) => {
       setXLMPrice(res.toFixed(7));
     });
   }, []);

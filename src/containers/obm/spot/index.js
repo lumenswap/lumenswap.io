@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Error from 'containers/404';
 import classNames from 'classnames';
 import ObmHeader from 'containers/obm/ObmHeader';
-import { getAssetDetails } from 'helpers/asset';
+import { getAssetDetails, getSingleToken } from 'helpers/asset';
 import DetailList from 'containers/obm/spot/DetailList';
 import InfoSection from 'containers/obm/spot/InfoSection';
 import CTabs from 'components/CTabs';
@@ -20,35 +20,37 @@ import useDefaultTokens from 'hooks/useDefaultTokens';
 import ChartTab from './ChartTab';
 import styles from './styles.module.scss';
 
-const Spot = ({
-  tokens, custom, errorCode, createdDefaultPairs,
-}) => {
-  function getInitialPair(pair) {
-    if (pair) {
-      return {
-        base: pair.base.issuer
-          ? getAssetDetails(pair.base)
-          : getAssetDetails(extractTokenFromCode(pair.base.code)),
-        counter: pair.counter.issuer
-          ? getAssetDetails(pair.counter)
-          : getAssetDetails(extractTokenFromCode(pair.counter.code)),
-      };
-    }
-    const defaultPair = createdDefaultPairs.find((createdPair) => createdPair.base.code === 'XLM' && createdPair.counter.code === 'USDC');
-    return defaultPair;
+function getInitialPair(pair, defaultTokens) {
+  if (pair) {
+    return {
+      base: pair.base.issuer
+        ? getAssetDetails(pair.base)
+        : getAssetDetails(extractTokenFromCode(pair.base.code, defaultTokens)),
+      counter: pair.counter.issuer
+        ? getAssetDetails(pair.counter)
+        : getAssetDetails(extractTokenFromCode(pair.counter.code, defaultTokens)),
+    };
   }
+  return { base: getSingleToken('XLM', defaultTokens), counter: getSingleToken('USDC', defaultTokens) };
+}
 
+const Spot = ({
+  tokens, custom, errorCode, createdDefaultPairsFromServer,
+}) => {
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
   const defaultTokens = useDefaultTokens();
-
-  const initialAsset = getInitialPair(custom);
+  const initialAsset = getInitialPair(custom, defaultTokens);
 
   const [appSpotPair, setAppSpotPair] = useState(initialAsset);
 
   const [price, setPrice] = useState(null);
 
   const { deviceSize } = useBreakPoint();
+  const createdDefaultPairs = createdDefaultPairsFromServer.createdDefaultPairs.map((pair) => ({
+    base: getAssetDetails(pair.base),
+    counter: getAssetDetails(pair.counter),
+  }));
 
   const tabs = [
     { title: 'TradingView', id: 'tvChart' },
@@ -91,18 +93,18 @@ const Spot = ({
         });
 
         const defaultFoundPair = createdDefaultPairs.find(
-          (pair) => getAssetDetails(pair.base).getCode() === base.getCode()
-            && getAssetDetails(pair.counter).getCode() === counter.getCode()
-            && getAssetDetails(pair.base).getIssuer() === base.getIssuer()
-            && getAssetDetails(pair.counter).getIssuer() === counter.getIssuer(),
+          (pair) => pair.base.code === base.code
+            && pair.counter.code === counter.code
+            && pair.base.issuer === base.issuer
+            && pair.counter.issuer === counter.issuer,
         );
 
         if (!defaultFoundPair) {
           const found = userCustomPairs.find(
-            (pair) => pair.base.code === base.getCode()
-              && pair.counter.code === counter.getCode()
-              && pair.base.issuer === base.getIssuer()
-              && pair.counter.issuer === counter.getIssuer(),
+            (pair) => pair.base.code === base.code
+              && pair.counter.code === counter.code
+              && pair.base.issuer === base.issuer
+              && pair.counter.issuer === counter.issuer,
           );
           if (!found) {
             dispatch(
@@ -139,10 +141,10 @@ const Spot = ({
             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 c-col d-lg-inline d-md-none d-sm-none d-none">
               <div className={classNames(styles.card, styles['card-select'])}>
                 <OpenDialogElement
-                  createdDefaultPairs={createdDefaultPairs}
                   className="w-100"
                   appSpotPair={appSpotPair}
                   setAppSpotPair={setAppSpotPair}
+                  createdDefaultPairs={createdDefaultPairs}
                 />
               </div>
             </div>

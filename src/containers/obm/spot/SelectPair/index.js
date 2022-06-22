@@ -3,14 +3,14 @@ import AddCustomPair from 'containers/obm/spot/SelectPair/AddCustomPair';
 import { closeModalAction, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
+import {
+  isSameAsset, getAssetDetails, isSamePair, extractInfoByToken,
+} from 'helpers/asset';
 import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
 import useDefaultTokens from 'hooks/useDefaultTokens';
-import {
-  extractInfoByToken, getAssetDetails, isSameAsset, isSamePair,
-} from 'helpers/asset';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
 
@@ -84,7 +84,7 @@ const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
 
     if (searchQuery && searchQuery !== '') {
       return result.filter((item) => {
-        const modified = searchQuery.trim().toLowerCase();
+        const modified = searchQuery.trim().toLowerCase().replace(new RegExp('\\\\', 'g'), '\\\\');
         return `${item.base.details
           .getCode()
           .toLowerCase()}/${item.counter.details
@@ -94,8 +94,7 @@ const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
     }
 
     return result;
-  },
-  [JSON.stringify(customPairs), searchQuery]);
+  }, [JSON.stringify(customPairs), searchQuery]);
 
   return (
     <div className={styles.main} style={{ paddingBottom: 50 }}>
@@ -119,25 +118,39 @@ const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
                 className={styles['select-logo']}
                 onClick={() => {
                   setAppSpotPair({
-                    base: item.base,
-                    counter: item.counter,
+                    base: item.base.details,
+                    counter: item.counter.details,
                   });
-                  router.push(
-                    urlMaker.obm.spot.custom(
-                      item.base.code,
-                      item.base.issuer,
-                      item.counter.code,
-                      item.counter.issuer,
-                    ),
+                  const found = customPairs.find(
+                    (pair) => pair.base.code === item.base.details.code
+                      && pair.counter.code === item.counter.details.code,
                   );
-
+                  if (found) {
+                    router.push(
+                      urlMaker.obm.spot.custom(
+                        item.base.details.code,
+                        item.base.details.issuer,
+                        item.counter.details.code,
+                        item.counter.details.issuer,
+                      ),
+                    );
+                  } else {
+                    router.push(
+                      urlMaker.obm.spot.custom(
+                        item.base.details.code,
+                        item.base.details.issuer,
+                        item.counter.details.code,
+                        item.counter.details.issuer,
+                      ),
+                    );
+                  }
                   dispatch(closeModalAction());
                 }}
               >
                 <img src={item.base.logo} alt="baselogo" />
                 <img src={item.counter.logo} alt="counterlogo" />
                 <span>
-                  {item.base.code}/{item.counter.code}
+                  {item.base.details.getCode()}/{item.counter.details.getCode()}
                 </span>
                 {(item.base.type === 'custom'
                   || item.counter.type === 'custom') && (
@@ -147,8 +160,8 @@ const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
                       e.stopPropagation();
                       dispatch(
                         removeCustomPairAction({
-                          base: item.base,
-                          counter: item.counter,
+                          base: item.base.details,
+                          counter: item.counter.details,
                         }),
                       );
                     }}
@@ -167,7 +180,7 @@ const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
             dispatch(
               openModalAction({
                 modalProps: { title: 'Add custom pair' },
-                content: <AddCustomPair />,
+                content: <AddCustomPair createdDefaultPairs={createdDefaultPairs} />,
               }),
             );
           }}

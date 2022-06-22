@@ -5,9 +5,9 @@ import BN from 'helpers/BN';
 import Button from 'components/Button';
 import NumberOnlyInput from 'components/NumberOnlyInput';
 import { useDispatch, useSelector } from 'react-redux';
-import LSP from 'tokens/LSP';
-import { isSameAsset, getAssetDetails } from 'helpers/asset';
+import { isSameAsset, getAssetDetails, getSingleToken } from 'helpers/asset';
 import { openModalAction } from 'actions/modal';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './style.module.scss';
 import Purchased from './Purchased';
 
@@ -24,6 +24,7 @@ const BuyTicketPrivateKey = () => {
 
   const dispatch = useDispatch();
   const userBalances = useSelector((state) => state.userBalance);
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     trigger();
@@ -32,7 +33,7 @@ const BuyTicketPrivateKey = () => {
   function validateQuantity(value) {
     if (value <= 0) return 'Invalid Amount';
 
-    const lspBalance = userBalances.find((i) => isSameAsset(getAssetDetails(LSP), i.asset));
+    const lspBalance = userBalances.find((i) => isSameAsset(getAssetDetails(getSingleToken('LSP', defaultTokens)), i.asset));
 
     if (!lspBalance || new BN(value).gt(lspBalance.balance)) {
       return 'Insufficient LSP';

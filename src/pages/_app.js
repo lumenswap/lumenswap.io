@@ -17,6 +17,7 @@ import updateUserDetail from 'actions/user/updateUserDetail';
 import ToggleDarkModeBtn from 'components/ToggleDarkModeBtn';
 import { setDefaultTokens } from 'actions/deafultTokens';
 import { getDefaultAssets } from 'api/assets';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import LModal from '../containers/LModal';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -41,6 +42,7 @@ async function fullRabetLogin(dispatch) {
 function MyApp({ Component, pageProps }) {
   const updateUserDetailIntervalRef = useRef(null);
   const xlmPriceIntervalRef = useRef(null);
+  const defaultTokens = useDefaultTokens();
 
   const store = useStore();
   const persistor = persistStore(store, {}, () => {
@@ -58,7 +60,7 @@ function MyApp({ Component, pageProps }) {
       }
     }, 2000);
 
-    fetchLSPPriceFromHorizon().then((price) => {
+    fetchLSPPriceFromHorizon(defaultTokens).then((price) => {
       store.dispatch(updateLSPPrice(price));
     }).catch(() => {});
 
@@ -108,8 +110,12 @@ function MyApp({ Component, pageProps }) {
 }
 
 MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async () => {
-  const assets = await getDefaultAssets();
-  store.dispatch(setDefaultTokens(assets));
+  try {
+    const assets = await getDefaultAssets();
+    store.dispatch(setDefaultTokens(assets));
+  } catch (err) {
+    throw new Error(err);
+  }
 });
 
 export default wrapper.withRedux(MyApp);

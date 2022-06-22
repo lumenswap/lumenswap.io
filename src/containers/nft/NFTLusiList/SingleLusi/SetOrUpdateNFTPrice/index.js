@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { getAssetDetails } from 'helpers/asset';
+import { getAssetDetails, getSingleToken } from 'helpers/asset';
 import { useSelector, useDispatch } from 'react-redux';
 import InputGroup from 'components/InputGroup';
 import Button from 'components/Button';
@@ -10,7 +10,7 @@ import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import numeral from 'numeral';
-import NLSP from 'tokens/NLSP';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 const SetOrUpdateNFTPrice = ({
@@ -18,6 +18,7 @@ const SetOrUpdateNFTPrice = ({
 }) => {
   const dispatch = useDispatch();
   const userAddress = useSelector((state) => state.user.detail.address);
+  const defaultTokens = useDefaultTokens();
 
   const {
     control, handleSubmit, formState, trigger, getValues,
@@ -28,7 +29,7 @@ const SetOrUpdateNFTPrice = ({
       if (mode === 'update') {
         return generateManageSellTRX(
           userAddress,
-          getAssetDetails(NLSP),
+          getAssetDetails(getSingleToken('NLSP', defaultTokens)),
           getAssetDetails({
             code: lusiAssetCode,
             issuer: process.env.REACT_APP_LUSI_ISSUER,
@@ -41,7 +42,7 @@ const SetOrUpdateNFTPrice = ({
 
       return generateManageSellTRX(
         userAddress,
-        getAssetDetails(NLSP),
+        getAssetDetails(getSingleToken('NLSP', defaultTokens)),
         getAssetDetails({
           code: lusiAssetCode,
           issuer: process.env.REACT_APP_LUSI_ISSUER,

@@ -4,8 +4,8 @@ import urlMaker from 'helpers/urlMaker';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import { checkAssetValidation } from 'api/tokens';
-import { getAssetPairs } from 'api/assets';
 import { wrapper } from 'store';
+import { getAssetPairs } from 'api/assets';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
 const customTokenValidation = (tokenString, defaultTokens) => {
@@ -45,9 +45,10 @@ const customTokenValidation = (tokenString, defaultTokens) => {
 
   return null;
 };
-export async function spotPageGetServerSideProps(context) {
+export const spotPageGetServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
   try {
     const createdDefaultPairs = await getAssetPairs();
+    const defaultTokens = store.getState().defaultTokens;
     const redirectObj = {
       redirect: {
         destination: urlMaker.obm.spot.custom('XLM', null, 'USDC', null),
@@ -80,11 +81,11 @@ export async function spotPageGetServerSideProps(context) {
 
       if (!found) return redirectObj;
 
-      const fromTokenDetails = createdDefaultPairs.find(
-        (token) => token.base.code.toLowerCase() === fromToken.toLowerCase(),
+      const fromTokenDetails = defaultTokens.find(
+        (token) => token.code.toLowerCase() === fromToken.toLowerCase(),
       );
-      const toTokenDetails = createdDefaultPairs.find(
-        (token) => token.counter.code.toLowerCase() === toToken.toLowerCase(),
+      const toTokenDetails = defaultTokens.find(
+        (token) => token.code.toLowerCase() === toToken.toLowerCase(),
       );
 
       if (
@@ -110,15 +111,15 @@ export async function spotPageGetServerSideProps(context) {
     }
 
     return redirectObj;
-  } catch (e) {
-    if (e.response?.status === 404) {
+  } catch (err) {
+    if (err?.response.status === 404) {
       return {
         notFound: true,
       };
     }
-    throw e;
+    throw new Error(err);
   }
-}
+});
 
 export const customSpotPageGetServerSideProps = wrapper
   .getServerSideProps((store) => async (context) => {
@@ -228,11 +229,10 @@ export const customSpotPageGetServerSideProps = wrapper
           if (!checkedAssetStatus.every((i) => i)) {
             return notFoundError();
           }
-          console.log(fromAsset, toAsset);
 
           return {
             props: {
-              createdDefaultPairs,
+              createdDefaultPairsFromServer: { createdDefaultPairs },
               custom: {
                 base: fromAsset,
                 counter: toAsset,
@@ -244,12 +244,12 @@ export const customSpotPageGetServerSideProps = wrapper
         }
       }
       return redirectObj;
-    } catch (e) {
-      if (e.response?.status === 404) {
+    } catch (err) {
+      if (err?.response.status === 404) {
         return {
           notFound: true,
         };
       }
-      throw e;
+      throw new Error(err);
     }
   });

@@ -1,14 +1,15 @@
 import { useSelector } from 'react-redux';
 import humanizeAmount from 'helpers/humanizeAmount';
-import { isSameAsset, getAssetDetails } from 'helpers/asset';
-import LSP from 'tokens/LSP';
+import { isSameAsset, getAssetDetails, getSingleToken } from 'helpers/asset';
 import jsxThemeColors from 'helpers/jsxThemeColors';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './style.module.scss';
 
 const AssetBox = ({ color, asset }) => {
   const isLogged = useSelector((state) => state.user.logged);
+  const defaultTokens = useDefaultTokens();
   const userAssetBalance = useSelector((state) => state.userBalance)
-    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(asset ?? LSP)));
+    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(asset ?? getSingleToken('LSP', defaultTokens))));
 
   if (!isLogged) return null;
 

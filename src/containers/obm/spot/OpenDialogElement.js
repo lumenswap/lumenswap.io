@@ -34,7 +34,7 @@ export default function OpenDialogElement({
       >
         <img className={styles['first-coin']} src={extractInfoByToken(appSpotPair.base, defaultTokens).logo} alt="" />
         <img className={styles['second-coin']} src={extractInfoByToken(appSpotPair.counter, defaultTokens).logo} alt="" />
-        <h1>{appSpotPair.base.code}/{appSpotPair.counter.code}</h1>
+        <h1>{appSpotPair.base.getCode()}/{appSpotPair.counter.getCode()}</h1>
         <span className="icon-angle-down ml-auto" />
       </button>
     </div>

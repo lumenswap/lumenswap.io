@@ -9,7 +9,7 @@ import AMMHeader from 'containers/amm/AMMHeader';
 import LPriceSpreadSection from 'components/complex/LumenSwapSwap/LPriceSpreadSection';
 import calculateSendEstimatedAndPath from 'api/swapAPI/calculateSendEstimatedAndPath';
 import calculateReceiveEstimatedAndPath from 'api/swapAPI/calculateReceiveEstimatedAndPath';
-import { getAssetDetails, isSameAsset } from 'helpers/asset';
+import { getAssetDetails, getSingleToken, isSameAsset } from 'helpers/asset';
 import BN from 'helpers/BN';
 import { openConnectModal, openModalAction } from 'actions/modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ const LumenSwapSwap = ({
   const dispatch = useDispatch();
   const timeoutRef = useRef();
   const defaultTokens = useDefaultTokens();
-  const XLM = defaultTokens.find((token) => token.code === 'XLM');
+  const XLM = getSingleToken('XLM', defaultTokens);
 
   let swapBaseURL = urlMaker.obm.swap;
   if (type === 'amm') {

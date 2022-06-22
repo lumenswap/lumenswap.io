@@ -3,10 +3,10 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import { useState, useEffect } from 'react';
 import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import { fetchTradeAPI } from 'api/stellar';
-import { getAssetDetails } from 'helpers/asset';
-import NLSP from 'tokens/NLSP';
+import { getAssetDetails, getSingleToken } from 'helpers/asset';
 import humanizeAmount from 'helpers/humanizeAmount';
 import moment from 'moment';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import LoadingWithContainer from './LoadingWithContainer/LoadingWithContainer';
 import styles from './styles.module.scss';
 
@@ -50,11 +50,12 @@ const tableHeaders = [
 
 function TradesData({ lusiData }) {
   const [tradesData, setTradesData] = useState(null);
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     fetchTradeAPI(
       getAssetDetails({ code: lusiData.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-      getAssetDetails(NLSP), {
+      getAssetDetails(getSingleToken('NLSP', defaultTokens)), {
         limit: 10,
         order: 'desc',
       },

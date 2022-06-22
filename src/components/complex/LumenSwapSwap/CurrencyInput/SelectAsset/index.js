@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
+import {
+  getAssetDetails, getSingleToken, isSameAsset, pureTokens,
+} from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
-import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { openModalAction } from 'actions/modal';
@@ -31,7 +32,7 @@ const SelectAsset = ({
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([
-      getAssetDetails(XLM),
+      getAssetDetails(getSingleToken('XLM', defaultTokens)),
       ...defaultTokens.filter((i) => !i.isHide).map((i) => getAssetDetails(i)),
       ...userCustomTokens,
     ]).map((item) => {
@@ -59,7 +60,7 @@ const SelectAsset = ({
 
     if (searchQuery && searchQuery !== '') {
       return result.filter((item) => {
-        const modified = searchQuery.trim().toLowerCase();
+        const modified = searchQuery.trim().toLowerCase().replace(new RegExp('\\\\', 'g'), '\\\\');
         return item.details.getCode().toLowerCase().match(modified);
       });
     }

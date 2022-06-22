@@ -4,18 +4,19 @@ import { generateAddressURL } from 'helpers/explorerURLGenerator';
 import minimizeAddress from 'helpers/minimizeAddress';
 import moment from 'moment';
 import { fetchOfferAPI } from 'api/stellar';
-import { getAssetDetails } from 'helpers/asset';
-import XLM from 'tokens/XLM';
+import { getAssetDetails, getSingleToken } from 'helpers/asset';
 import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { getAuctionBids } from 'api/auction';
 import { STATUS_NAMES } from 'containers/auction/consts';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 const SingleAuctionBids = ({
   searchQuery, tab, assetCode, assetIssuer, basePrice, refreshData, auctionStatus, auctionId,
 }) => {
   const [auctionBids, setAuctionBids] = useState(null);
+  const defaultTokens = useDefaultTokens();
 
   let filteredBids = auctionBids && [...auctionBids];
   if (searchQuery) {
@@ -100,7 +101,7 @@ const SingleAuctionBids = ({
       fetchOfferAPI(
         getAssetDetails(
           { code: assetCode, issuer: assetIssuer },
-        ), getAssetDetails(XLM),
+        ), getAssetDetails(getSingleToken('XLM', defaultTokens)),
         { order: 'desc', limit: 200 },
       )
         .then((res) => {

@@ -8,28 +8,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
-import XLM from 'tokens/XLM';
-import LSP from 'tokens/LSP';
-import { getAssetDetails, isSameAsset, getAssetFromLPAsset } from 'helpers/asset';
+import {
+  getAssetDetails, isSameAsset, getAssetFromLPAsset, getSingleToken,
+} from 'helpers/asset';
 import { fetchAccountDetails } from 'api/stellar';
 import { getPoolDetailsById } from 'api/stellarPool';
-import USDC from 'tokens/USDC';
 import BN from 'helpers/BN';
 import ServerSideLoading from 'components/ServerSideLoading';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import MyPoolData from './myPoolData';
 import styles from './styles.module.scss';
 
-function calculateBalanceUSD(data, xlmPrice, lspPrice) {
+function calculateBalanceUSD(data, xlmPrice, lspPrice, defaultTokens) {
   const tokenA = getAssetFromLPAsset(data.reserves[0].asset);
   const tokenB = getAssetFromLPAsset(data.reserves[1].asset);
 
-  if (isSameAsset(tokenA, getAssetDetails(USDC))) {
+  if (isSameAsset(tokenA, getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[0].amount))
       .times(2)
       .toFixed(7);
   }
 
-  if (isSameAsset(tokenB, getAssetDetails(USDC))) {
+  if (isSameAsset(tokenB, getAssetDetails(getSingleToken('USDC', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(2)
       .toFixed(7);
@@ -49,14 +49,14 @@ function calculateBalanceUSD(data, xlmPrice, lspPrice) {
       .toFixed(7);
   }
 
-  if (isSameAsset(tokenA, getAssetDetails(LSP))) {
+  if (isSameAsset(tokenA, getAssetDetails(getSingleToken('LSP', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(lspPrice)
       .times(2)
       .toFixed(7);
   }
 
-  if (isSameAsset(tokenB, getAssetDetails(LSP))) {
+  if (isSameAsset(tokenB, getAssetDetails(getSingleToken('LSP', defaultTokens)))) {
     return new BN(data.calculateUserBalance(data.reserves[1].amount))
       .times(lspPrice)
       .times(2)
@@ -66,7 +66,7 @@ function calculateBalanceUSD(data, xlmPrice, lspPrice) {
   return '-';
 }
 
-async function fetchData(userAddress, xlmPrice, setPools, lspPrice) {
+async function fetchData(userAddress, xlmPrice, setPools, lspPrice, defaultTokens) {
   const result = await fetchAccountDetails(userAddress);
   const filteredBalances = result.balances
     .filter((balance) => balance.asset_type === 'liquidity_pool_shares')
@@ -85,7 +85,7 @@ async function fetchData(userAddress, xlmPrice, setPools, lspPrice) {
   );
 
   const poolsWithBalances = fetchedPools.map((pool) => {
-    const balanceUSD = calculateBalanceUSD(pool, xlmPrice, lspPrice);
+    const balanceUSD = calculateBalanceUSD(pool, xlmPrice, lspPrice, defaultTokens);
     return {
       ...pool,
       balanceUSD,
@@ -103,6 +103,7 @@ function MyPoolPage() {
   const isLogged = useSelector((state) => state.user.logged);
   const router = useRouter();
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   const handleSelectAsset = (newSelectTokens) => {
     dispatch(
@@ -114,7 +115,7 @@ function MyPoolPage() {
         content: <AddLiquidity
           selectAsset={handleSelectAsset}
           {...newSelectTokens}
-          afterAdd={() => fetchData(userAddress, xlmPrice, setPools, lspPrice)}
+          afterAdd={() => fetchData(userAddress, xlmPrice, setPools, lspPrice, defaultTokens)}
         />,
       }),
     );
@@ -128,10 +129,10 @@ function MyPoolPage() {
           className: 'main',
         },
         content: <AddLiquidity
-          tokenA={getAssetDetails(XLM)}
-          tokenB={getAssetDetails(LSP)}
+          tokenA={getAssetDetails(getSingleToken('XLM', defaultTokens))}
+          tokenB={getAssetDetails(getSingleToken('LSP', defaultTokens))}
           selectAsset={handleSelectAsset}
-          afterAdd={() => fetchData(userAddress, xlmPrice, setPools)}
+          afterAdd={() => fetchData(userAddress, xlmPrice, setPools, null, defaultTokens)}
         />,
       }),
     );
@@ -145,7 +146,7 @@ function MyPoolPage() {
 
   useEffect(() => {
     if (isLogged) {
-      fetchData(userAddress, xlmPrice, setPools);
+      fetchData(userAddress, xlmPrice, setPools, null, defaultTokens);
     }
   }, [isLogged, userAddress]);
 
