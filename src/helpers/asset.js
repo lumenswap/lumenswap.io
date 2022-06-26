@@ -9,11 +9,17 @@ export function getAssetDetails(asset) {
     return null;
   }
 
-  if (asset?.code !== 'XLM' && asset?.type !== 'native' && asset?.code && asset?.issuer) {
+  if (asset.type === 'native'
+    || (asset.code === 'XLM' && asset.issuer === 'native')
+    || (asset.code === 'XLM' && asset.issuer === undefined)) {
+    return new StellarSDK.Asset.native(); // eslint-disable-line
+  }
+
+  if (asset.code && asset.issuer) {
     return new StellarSDK.Asset(asset.code, asset.issuer);
   }
 
-  return new StellarSDK.Asset.native(); // eslint-disable-line
+  throw new Error('cannot cast asset');
 }
 
 export function isSameAsset(first, second) {

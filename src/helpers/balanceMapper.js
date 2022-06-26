@@ -10,6 +10,7 @@ export default function balanceMapper(item) {
     asset: getAssetDetails({
       code: item.asset_code,
       issuer: item.asset_issuer,
+      type: item.asset_type,
     }),
     balance,
     rawBalance: item.balance,
