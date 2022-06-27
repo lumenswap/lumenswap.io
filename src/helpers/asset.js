@@ -13,7 +13,7 @@ export function getAssetDetails(asset) {
 
   if (asset.type === 'native'
     || (asset.code === 'XLM' && asset.issuer === 'native')
-    || (asset.code === 'XLM' && asset.issuer === undefined)) {
+    || (asset.code === 'XLM' && (asset.issuer === undefined || asset.issuer === null))) {
     return new StellarSDK.Asset.native(); // eslint-disable-line
   }
 
@@ -142,8 +142,14 @@ export function calculateMaxXLM(xlmBalance, subentry) {
 
 export function getAssetFromLPAsset(asset) {
   const splitted = asset.split(':');
+
+  let issuer = null;
+  if (splitted[1] !== 'undefined') {
+    issuer = splitted[1];
+  }
+
   return getAssetDetails({
     code: splitted[0],
-    issuer: splitted[1],
+    issuer,
   });
 }
