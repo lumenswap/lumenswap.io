@@ -12,6 +12,7 @@ export function getAssetDetails(asset) {
   }
 
   if (asset.type === 'native'
+    || (asset.code === 'native' && asset.issuer === undefined)
     || (asset.code === 'XLM' && asset.issuer === 'native')
     || (asset.code === 'XLM' && (asset.issuer === undefined || asset.issuer === null))) {
     return new StellarSDK.Asset.native(); // eslint-disable-line
