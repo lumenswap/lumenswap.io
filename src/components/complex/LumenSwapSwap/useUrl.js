@@ -14,22 +14,24 @@ export default function useUrl(custom, setValues, getValues, dependencies) {
   useEffect(() => {
     async function check() {
       if (custom) {
-        let from = getAssetDetails({
-          code: custom.from.code,
-          issuer: custom.from.issuer,
-        });
-
+        let from;
         if (custom.from.isDefault) {
           from = getAssetDetails(extractTokenFromCode(custom.from.code));
+        } else {
+          from = getAssetDetails({
+            code: custom.from.code,
+            issuer: custom.from.issuer,
+          });
         }
 
-        let to = getAssetDetails({
-          code: custom.to.code,
-          issuer: custom.to.issuer,
-        });
-
+        let to;
         if (custom.to.isDefault) {
           to = getAssetDetails(extractTokenFromCode(custom.to.code));
+        } else {
+          to = getAssetDetails({
+            code: custom.to.code,
+            issuer: custom.to.issuer,
+          });
         }
 
         if (!custom.from.isDefault) {
