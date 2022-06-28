@@ -29,14 +29,20 @@ const AddCustomPair = ({ createdDefaultPairs }) => {
   const dispatch = useDispatch();
 
   function onSubmit(formData) {
-    let base = getAssetDetails({
-      code: formData.baseCode,
-      issuer: formData.baseIssuer,
-    });
-    let counter = getAssetDetails({
-      code: formData.counterCode,
-      issuer: formData.counterIssuer,
-    });
+    let base;
+    if (formData.baseCode && formData.baseIssuer) {
+      base = getAssetDetails({
+        code: formData.baseCode,
+        issuer: formData.baseIssuer,
+      });
+    }
+    let counter;
+    if (formData.counterCode && formData.counterIssuer) {
+      counter = getAssetDetails({
+        code: formData.counterCode,
+        issuer: formData.counterIssuer,
+      });
+    }
     if (formData.baseNativeCheckbox) {
       base = StellarSDK.Asset.native();
     } else if (formData.counterNativeCheckbox) {

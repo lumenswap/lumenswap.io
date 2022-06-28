@@ -44,14 +44,22 @@ async function customValidateAddNewPair(formValues, userCustomPairs, createdDefa
     ...createdDefaultPairs,
     ...userCustomPairs,
   ]);
-  let base = getAssetDetails({
-    code: formValues.baseCode,
-    issuer: formValues.baseIssuer,
-  });
-  let counter = getAssetDetails({
-    code: formValues.counterCode,
-    issuer: formValues.counterIssuer,
-  });
+  let base;
+
+  if (formValues.baseCode && formValues.baseIssuer) {
+    base = getAssetDetails({
+      code: formValues.baseCode,
+      issuer: formValues.baseIssuer,
+    });
+  }
+  let counter;
+  if (formValues.counterCode && formValues.counterIssuer) {
+    counter = getAssetDetails({
+      code: formValues.counterCode,
+      issuer: formValues.counterIssuer,
+    });
+  }
+
   if (formValues.baseNativeCheckbox) {
     base = StellarSDK.Asset.native();
   } else if (formValues.counterNativeCheckbox) {

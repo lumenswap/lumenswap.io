@@ -19,6 +19,7 @@ import ServerSideLoading from 'components/ServerSideLoading';
 import useDefaultTokens from 'hooks/useDefaultTokens';
 import ChartTab from './ChartTab';
 import styles from './styles.module.scss';
+import createPairForDefaultTokens from './SelectPair/createPairForDefaultTokens';
 
 function getInitialPair(pair, defaultTokens) {
   if (pair) {
@@ -35,23 +36,19 @@ function getInitialPair(pair, defaultTokens) {
 }
 
 const Spot = ({
-  tokens, custom, errorCode, createdDefaultPairsFromServer,
+  tokens, custom, errorCode,
 }) => {
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
   const defaultTokens = useDefaultTokens();
   const initialAsset = getInitialPair(custom, defaultTokens);
+  const createdDefaultPairs = createPairForDefaultTokens(defaultTokens);
 
   const [appSpotPair, setAppSpotPair] = useState(initialAsset);
 
   const [price, setPrice] = useState(null);
 
   const { deviceSize } = useBreakPoint();
-  const createdDefaultPairs = createdDefaultPairsFromServer.createdDefaultPairs.map((pair) => ({
-    base: getAssetDetails(pair.base),
-    counter: getAssetDetails(pair.counter),
-  }));
-
   const tabs = [
     { title: 'TradingView', id: 'tvChart' },
     { title: 'Depth', id: 'depthChart' },
@@ -148,7 +145,6 @@ const Spot = ({
                   className="w-100"
                   appSpotPair={appSpotPair}
                   setAppSpotPair={setAppSpotPair}
-                  createdDefaultPairs={createdDefaultPairs}
                 />
               </div>
             </div>

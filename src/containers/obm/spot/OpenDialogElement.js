@@ -10,7 +10,6 @@ export default function OpenDialogElement({
   className,
   appSpotPair,
   setAppSpotPair,
-  createdDefaultPairs,
 }) {
   const dispatch = useDispatch();
   const defaultTokens = useDefaultTokens();
@@ -25,7 +24,6 @@ export default function OpenDialogElement({
             openModalAction({
               modalProps: { title: 'Select a pair', className: `${styles.modal}` },
               content: <SelectPair
-                createdDefaultPairs={createdDefaultPairs}
                 setAppSpotPair={setAppSpotPair}
               />,
             }),

@@ -13,13 +13,15 @@ import urlMaker from 'helpers/urlMaker';
 import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
+import createPairForDefaultTokens from './createPairForDefaultTokens';
 
-const SelectPair = ({ setAppSpotPair, createdDefaultPairs }) => {
+const SelectPair = ({ setAppSpotPair }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
   const [searchQuery, setSearchQuery] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
   const defaultTokens = useDefaultTokens();
+  const createdDefaultPairs = createPairForDefaultTokens(defaultTokens);
 
   const enrichedPairs = useMemo(() => {
     const result = purePairs([
