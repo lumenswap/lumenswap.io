@@ -1,5 +1,5 @@
-import { Provider } from 'react-redux';
-import { useStore, wrapper } from 'store';
+import { useStore } from 'react-redux';
+import { wrapper } from 'store';
 import { persistStore } from 'redux-persist';
 import { useRef, useEffect } from 'react';
 import { setUserBalance } from 'actions/userBalance';
@@ -89,23 +89,22 @@ function MyApp({ Component, pageProps }) {
       }
     }, 1000);
   }, []);
+
   return process.browser ? (
     <>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <LModal />
-          <div style={{ minHeight: 'calc(100vh - 72px)' }}>
-            <Component {...pageProps} />
-          </div>
-          <ToggleDarkModeBtn />
-        </PersistGate>
-      </Provider>
+      <PersistGate loading={null} persistor={persistor}>
+        <LModal />
+        <div style={{ minHeight: 'calc(100vh - 72px)' }}>
+          <Component {...pageProps} />
+        </div>
+        <ToggleDarkModeBtn />
+      </PersistGate>
     </>
   ) : (
-    <Provider store={store}>
+    <>
       <LModal />
       <Component {...pageProps} />
-    </Provider>
+    </>
   );
 }
 
