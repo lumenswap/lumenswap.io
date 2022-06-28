@@ -69,22 +69,26 @@ const Spot = ({
   useEffect(() => {
     async function check() {
       if (custom) {
-        let base = getAssetDetails({
-          code: custom.base.code,
-          issuer: custom.base.issuer,
-        });
+        let base;
 
         if (custom.base.isDefault) {
           base = getAssetDetails(extractTokenFromCode(custom.base.code, defaultTokens));
+        } else {
+          base = getAssetDetails({
+            code: custom.base.code,
+            issuer: custom.base.issuer,
+          });
         }
 
-        let counter = getAssetDetails({
-          code: custom.counter.code,
-          issuer: custom.counter.issuer,
-        });
+        let counter;
 
         if (custom.counter.isDefault) {
           counter = getAssetDetails(extractTokenFromCode(custom.counter.code, defaultTokens));
+        } else {
+          counter = getAssetDetails({
+            code: custom.counter.code,
+            issuer: custom.counter.issuer,
+          });
         }
 
         setAppSpotPair({
