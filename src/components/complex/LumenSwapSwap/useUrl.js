@@ -18,7 +18,7 @@ export default function useUrl(custom, setValues, getValues, dependencies) {
       if (custom) {
         let from;
         if (custom.from.isDefault) {
-          from = getAssetDetails(extractTokenFromCode(custom.from.code));
+          from = getAssetDetails(extractTokenFromCode(custom.from.code, defaultTokens));
         } else {
           from = getAssetDetails({
             code: custom.from.code,
@@ -28,7 +28,7 @@ export default function useUrl(custom, setValues, getValues, dependencies) {
 
         let to;
         if (custom.to.isDefault) {
-          to = getAssetDetails(extractTokenFromCode(custom.to.code));
+          to = getAssetDetails(extractTokenFromCode(custom.to.code, defaultTokens));
         } else {
           to = getAssetDetails({
             code: custom.to.code,
