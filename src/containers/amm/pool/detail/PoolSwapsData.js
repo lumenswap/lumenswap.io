@@ -30,13 +30,13 @@ function PoolSwapsData({ poolId }) {
         const isSell = data.base_is_seller;
 
         const tokenA = getAssetDetails({
-          code: data.base_asset_code,
-          issuer: data.base_asset_issuer,
+          code: data.base_asset_code || 'XLM',
+          issuer: data.base_asset_issuer || 'native',
         });
 
         const tokenB = getAssetDetails({
-          code: data.counter_asset_code,
-          issuer: data.counter_asset_issuer,
+          code: data.counter_asset_code || 'XLM',
+          issuer: data.counter_asset_issuer || 'native',
         });
 
         let base;
