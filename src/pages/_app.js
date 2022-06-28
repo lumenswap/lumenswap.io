@@ -109,11 +109,13 @@ function MyApp({ Component, pageProps }) {
 }
 
 MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async () => {
-  try {
-    const assets = await getDefaultAssets();
-    store.dispatch(setDefaultTokens(assets));
-  } catch (err) {
-    throw new Error(err);
+  if (typeof window === 'undefined') {
+    try {
+      const assets = await getDefaultAssets();
+      store.dispatch(setDefaultTokens(assets));
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 });
 
