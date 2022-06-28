@@ -1,36 +1,30 @@
 import classNames from 'classnames';
 import AddCustomPair from 'containers/obm/spot/SelectPair/AddCustomPair';
 import { closeModalAction, openModalAction } from 'actions/modal';
-import defaultTokens from 'tokens/defaultTokens';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
-import XLM from 'tokens/XLM';
 import {
   isSameAsset, getAssetDetails, isSamePair, extractInfoByToken,
 } from 'helpers/asset';
-import USDC from 'tokens/USDC';
 import { removeCustomPairAction } from 'actions/userCustomPairs';
 import Input from 'components/Input';
 import { useRouter } from 'next/router';
 import urlMaker from 'helpers/urlMaker';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 import purePairs from './purePairs';
 import createPairForDefaultTokens from './createPairForDefaultTokens';
-
-const createdDefaultPairs = createPairForDefaultTokens();
 
 const SelectPair = ({ setAppSpotPair }) => {
   const customPairs = useSelector((state) => state.userCustomPairs);
   const [searchQuery, setSearchQuery] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
+  const defaultTokens = useDefaultTokens();
+  const createdDefaultPairs = createPairForDefaultTokens(defaultTokens);
 
   const enrichedPairs = useMemo(() => {
     const result = purePairs([
-      {
-        base: getAssetDetails(XLM),
-        counter: getAssetDetails(USDC),
-      },
       ...createdDefaultPairs,
       ...customPairs,
     ]).map((item) => {
@@ -42,7 +36,7 @@ const SelectPair = ({ setAppSpotPair }) => {
       let enrichedBaseToken = {
         details: item.base,
         // web: foundBaseToken.web,
-        logo: extractInfoByToken(item.base).logo,
+        logo: extractInfoByToken(item.base, defaultTokens).logo,
         type: 'default',
       };
       if (!foundBaseToken) {
@@ -55,7 +49,7 @@ const SelectPair = ({ setAppSpotPair }) => {
       let enrichedCounterToken = {
         details: item.counter,
         // web: foundCounterToken.web,
-        logo: extractInfoByToken(item.counter).logo,
+        logo: extractInfoByToken(item.counter, defaultTokens).logo,
         type: 'default',
       };
       if (!foundCounterToken) {
@@ -92,7 +86,7 @@ const SelectPair = ({ setAppSpotPair }) => {
 
     if (searchQuery && searchQuery !== '') {
       return result.filter((item) => {
-        const modified = searchQuery.trim().toLowerCase();
+        const modified = searchQuery.trim().toLowerCase().replace(new RegExp('\\\\', 'g'), '\\\\');
         return `${item.base.details
           .getCode()
           .toLowerCase()}/${item.counter.details
@@ -188,7 +182,7 @@ const SelectPair = ({ setAppSpotPair }) => {
             dispatch(
               openModalAction({
                 modalProps: { title: 'Add custom pair' },
-                content: <AddCustomPair />,
+                content: <AddCustomPair createdDefaultPairs={createdDefaultPairs} />,
               }),
             );
           }}

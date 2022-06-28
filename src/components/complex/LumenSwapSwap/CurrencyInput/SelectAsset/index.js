@@ -1,16 +1,17 @@
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import defaultTokens from 'tokens/defaultTokens';
-import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
+import {
+  getAssetDetails, isSameAsset, pureTokens,
+} from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
-import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { openModalAction } from 'actions/modal';
 import AddAsset from 'components/complex/LumenSwapSwap/CurrencyInput/SelectAsset/AddAsset';
 import { removeCustomTokenAction } from 'actions/userCustomTokens';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 const SelectAsset = ({
@@ -27,10 +28,10 @@ const SelectAsset = ({
   const [searchQuery, setSearchQuery] = useState(null);
   const isLogged = useSelector((state) => state.user.logged);
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([
-      getAssetDetails(XLM),
       ...defaultTokens.filter((i) => !i.isHide).map((i) => getAssetDetails(i)),
       ...userCustomTokens,
     ]).map((item) => {
@@ -58,7 +59,7 @@ const SelectAsset = ({
 
     if (searchQuery && searchQuery !== '') {
       return result.filter((item) => {
-        const modified = searchQuery.trim().toLowerCase();
+        const modified = searchQuery.trim().toLowerCase().replace(new RegExp('\\\\', 'g'), '\\\\');
         return item.details.getCode().toLowerCase().match(modified);
       });
     }

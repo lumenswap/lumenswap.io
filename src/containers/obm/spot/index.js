@@ -3,8 +3,6 @@ import Error from 'containers/404';
 import classNames from 'classnames';
 import ObmHeader from 'containers/obm/ObmHeader';
 import { getAssetDetails } from 'helpers/asset';
-import USDC from 'tokens/USDC';
-import XLM from 'tokens/XLM';
 import DetailList from 'containers/obm/spot/DetailList';
 import InfoSection from 'containers/obm/spot/InfoSection';
 import CTabs from 'components/CTabs';
@@ -17,39 +15,40 @@ import useBreakPoint from 'hooks/useMyBreakpoint';
 import { addCustomPairAction } from 'actions/userCustomPairs';
 import { useDispatch, useSelector } from 'react-redux';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
-import createPairForDefaultTokens from 'containers/obm/spot/SelectPair/createPairForDefaultTokens';
 import ServerSideLoading from 'components/ServerSideLoading';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import ChartTab from './ChartTab';
 import styles from './styles.module.scss';
+import createPairForDefaultTokens from './SelectPair/createPairForDefaultTokens';
 
-const createdDefaultPairs = createPairForDefaultTokens();
-
-function getInitialPair(pair) {
+function getInitialPair(pair, defaultTokens) {
   if (pair) {
     return {
       base: pair.base.issuer
         ? getAssetDetails(pair.base)
-        : getAssetDetails(extractTokenFromCode(pair.base.code)),
+        : getAssetDetails(extractTokenFromCode(pair.base.code, defaultTokens)),
       counter: pair.counter.issuer
         ? getAssetDetails(pair.counter)
-        : getAssetDetails(extractTokenFromCode(pair.counter.code)),
+        : getAssetDetails(extractTokenFromCode(pair.counter.code, defaultTokens)),
     };
   }
-  return { base: XLM, counter: USDC };
+  return { base: extractTokenFromCode('XLM', defaultTokens), counter: extractTokenFromCode('USDC', defaultTokens) };
 }
 
-const Spot = ({ tokens, custom, errorCode }) => {
+const Spot = ({
+  tokens, custom, errorCode,
+}) => {
   const dispatch = useDispatch();
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
-
-  const initialAsset = getInitialPair(custom);
+  const defaultTokens = useDefaultTokens();
+  const initialAsset = getInitialPair(custom, defaultTokens);
+  const createdDefaultPairs = createPairForDefaultTokens(defaultTokens);
 
   const [appSpotPair, setAppSpotPair] = useState(initialAsset);
 
   const [price, setPrice] = useState(null);
 
   const { deviceSize } = useBreakPoint();
-
   const tabs = [
     { title: 'TradingView', id: 'tvChart' },
     { title: 'Depth', id: 'depthChart' },
@@ -67,22 +66,26 @@ const Spot = ({ tokens, custom, errorCode }) => {
   useEffect(() => {
     async function check() {
       if (custom) {
-        let base = getAssetDetails({
-          code: custom.base.code,
-          issuer: custom.base.issuer,
-        });
+        let base;
 
         if (custom.base.isDefault) {
-          base = getAssetDetails(extractTokenFromCode(custom.base.code));
+          base = getAssetDetails(extractTokenFromCode(custom.base.code, defaultTokens));
+        } else {
+          base = getAssetDetails({
+            code: custom.base.code,
+            issuer: custom.base.issuer,
+          });
         }
 
-        let counter = getAssetDetails({
-          code: custom.counter.code,
-          issuer: custom.counter.issuer,
-        });
+        let counter;
 
         if (custom.counter.isDefault) {
-          counter = getAssetDetails(extractTokenFromCode(custom.counter.code));
+          counter = getAssetDetails(extractTokenFromCode(custom.counter.code, defaultTokens));
+        } else {
+          counter = getAssetDetails({
+            code: custom.counter.code,
+            issuer: custom.counter.issuer,
+          });
         }
 
         setAppSpotPair({

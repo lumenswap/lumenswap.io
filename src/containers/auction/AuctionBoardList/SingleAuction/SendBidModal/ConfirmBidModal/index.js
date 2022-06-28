@@ -4,22 +4,24 @@ import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import { getAssetDetails } from 'helpers/asset';
-import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import humanizeAmount from 'helpers/humanizeAmount';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 const ConfirmBidModal = ({ data, baseToken, reloadData }) => {
   const dispatch = useDispatch();
   const userAddress = useSelector((state) => state.user.detail.address);
+  const defaultTokens = useDefaultTokens();
   const handleConfirm = () => {
     function func() {
       return generateManageBuyTRX(
         userAddress,
         getAssetDetails(baseToken),
-        getAssetDetails(XLM),
+        getAssetDetails(extractTokenFromCode('XLM', defaultTokens)),
         new BN(data.tokenAmount).toFixed(7),
         new BN(data.price).toFixed(7),
         0,

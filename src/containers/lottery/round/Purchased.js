@@ -5,11 +5,12 @@ import TicketDark from 'assets/images/ticket-dark.svg';
 import generatePaymentTRX from 'stellar-trx/generatePaymentTRX';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAssetDetails } from 'helpers/asset';
-import LSP from 'tokens/LSP';
 import signForThem from 'walletIntegeration/signForThem';
 import { updateModalProps } from 'actions/modal';
 import useCurrentTheme from 'hooks/useCurrentTheme';
 import jsxThemeColors from 'helpers/jsxThemeColors';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './style.module.scss';
 
 const Purchased = ({ numTickets }) => {
@@ -19,6 +20,7 @@ const Purchased = ({ numTickets }) => {
   const currentTheme = useCurrentTheme();
   const userAddress = useSelector((state) => state.user.detail.address);
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     async function purchase() {
@@ -29,7 +31,7 @@ const Purchased = ({ numTickets }) => {
           const trx = await generatePaymentTRX(
             userAddress,
             '1',
-            getAssetDetails(LSP),
+            getAssetDetails(extractTokenFromCode('LSP', defaultTokens)),
             process.env.REACT_APP_LOTTERY_ACCOUNT,
             null,
           );

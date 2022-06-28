@@ -3,12 +3,14 @@ import urlMaker from 'helpers/urlMaker';
 import CurrencyPair from 'components/CurrencyPair';
 import { getAssetFromLPAsset, extractLogoByToken } from 'helpers/asset';
 import humanizeAmount from 'helpers/humanizeAmount';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 function MyPoolData({ pools }) {
   const renderAssetInfo = (data) => {
     const token1 = getAssetFromLPAsset(data.reserves[0].asset);
     const token2 = getAssetFromLPAsset(data.reserves[1].asset);
+    const defaultTokens = useDefaultTokens();
 
     return (
     // <Link href={urlMaker.amm.pool.poolId(data.id)}>
@@ -16,7 +18,7 @@ function MyPoolData({ pools }) {
       <div className={styles.tokens}>
         <CurrencyPair
           size={22}
-          source={[extractLogoByToken(token1), extractLogoByToken(token2)]}
+          source={[extractLogoByToken(token1, defaultTokens), extractLogoByToken(token2, defaultTokens)]}
         />
         <span>
           {token1.code}/{token2.code}

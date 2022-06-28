@@ -1,13 +1,15 @@
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import defaultTokens from 'tokens/defaultTokens';
-import { getAssetDetails, isSameAsset, pureTokens } from 'helpers/asset';
+import {
+  getAssetDetails, isSameAsset, pureTokens,
+} from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
 import minimizeAddress from 'helpers/minimizeAddress';
-import XLM from 'tokens/XLM';
 import questionLogo from 'assets/images/question.png';
 import { openModalAction, closeModalAction } from 'actions/modal';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import CAddCustomToken from './CAddCustomToken';
 import TokenItem from './TokenItem';
 import styles from './styles.module.scss';
@@ -17,6 +19,8 @@ const CSelectToken = ({ onTokenSelect }) => {
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const [searchQuery, setSearchQuery] = useState(null);
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
+  const XLM = extractTokenFromCode('XLM', defaultTokens);
 
   const enrichedTokens = useMemo(() => {
     const result = pureTokens([

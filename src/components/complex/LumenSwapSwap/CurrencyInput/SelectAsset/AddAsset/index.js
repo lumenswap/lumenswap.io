@@ -11,6 +11,7 @@ import minimizeAddress from 'helpers/minimizeAddress';
 import questionLogo from 'assets/images/question.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import customValidateAddNewAsset from './customValidateAddAsset';
 import styles from './styles.module.scss';
 
@@ -19,13 +20,15 @@ const AddAsset = ({
 }) => {
   const router = useRouter();
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
+  const defaultTokens = useDefaultTokens();
   const {
     control,
     handleSubmit,
     formState,
   } = useForm({
     mode: 'onChange',
-    resolver: (formValues) => customValidateAddNewAsset(formValues, userCustomTokens),
+    resolver: (formValues) => customValidateAddNewAsset(formValues,
+      userCustomTokens, defaultTokens),
   });
   const dispatch = useDispatch();
 

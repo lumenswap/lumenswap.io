@@ -4,7 +4,9 @@ import Button from 'components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { openConnectModal } from 'actions/modal';
-import { isSameAsset, getAssetDetails, calculateMaxXLM } from 'helpers/asset';
+import {
+  isSameAsset, getAssetDetails, calculateMaxXLM,
+} from 'helpers/asset';
 import BN from 'helpers/BN';
 import { useEffect, useState } from 'react';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
@@ -12,8 +14,9 @@ import generateManageSellTRX from 'stellar-trx/generateManageSellTRX';
 import { initializeStore } from 'store';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
-import XLM from 'tokens/XLM';
 import humanizeAmount from 'helpers/humanizeAmount';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from '../styles.module.scss';
 
 function showBalance(isLogged, foundBalance) {
@@ -43,9 +46,10 @@ const InnerForm = ({
   const [sliderValue, setSliderValue] = useState(0);
   const userSubentry = useSelector((state) => state.user.detail.subentry);
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   let foundBalance = foundUserAsset?.balance;
-  if (foundUserAsset && isSameAsset(getAssetDetails(foundUserAsset.asset), getAssetDetails(XLM))) {
+  if (foundUserAsset && isSameAsset(getAssetDetails(foundUserAsset.asset), getAssetDetails(extractTokenFromCode('XLM', defaultTokens)))) {
     foundBalance = calculateMaxXLM(foundUserAsset.balance, userSubentry);
   }
 

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import customValidateAddNewPair from './customValidateAddNewPair';
 import styles from './styles.module.scss';
 
-const AddCustomPair = () => {
+const AddCustomPair = ({ createdDefaultPairs }) => {
   const userCustomPairs = useSelector((state) => state.userCustomPairs);
 
   const {
@@ -23,19 +23,26 @@ const AddCustomPair = () => {
     watch,
   } = useForm({
     mode: 'onChange',
-    resolver: (formValues) => customValidateAddNewPair(formValues, userCustomPairs),
+    resolver: (formValues) => customValidateAddNewPair(formValues, userCustomPairs,
+      createdDefaultPairs),
   });
   const dispatch = useDispatch();
 
   function onSubmit(formData) {
-    let base = getAssetDetails({
-      code: formData.baseCode,
-      issuer: formData.baseIssuer,
-    });
-    let counter = getAssetDetails({
-      code: formData.counterCode,
-      issuer: formData.counterIssuer,
-    });
+    let base;
+    if (formData.baseCode && formData.baseIssuer) {
+      base = getAssetDetails({
+        code: formData.baseCode,
+        issuer: formData.baseIssuer,
+      });
+    }
+    let counter;
+    if (formData.counterCode && formData.counterIssuer) {
+      counter = getAssetDetails({
+        code: formData.counterCode,
+        issuer: formData.counterIssuer,
+      });
+    }
     if (formData.baseNativeCheckbox) {
       base = StellarSDK.Asset.native();
     } else if (formData.counterNativeCheckbox) {

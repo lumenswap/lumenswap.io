@@ -10,6 +10,7 @@ import { getPoolDetailsById } from 'api/stellarPool';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { fetchAccountDetails } from 'api/stellar';
 import BN from 'helpers/BN';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import WithdrawLiquiditySliderInput from '../WithdrawLiquiditySliderInput';
 import styles from './styles.module.scss';
 
@@ -31,6 +32,7 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
   const [userShare, setUserShare] = useState(null);
   const userAddress = useSelector((state) => state.user.detail.address);
   const [tokenA, tokenB] = lexoOrderAssets(initTokenA, initTokenB);
+  const defaultTokens = useDefaultTokens();
 
   const {
     handleSubmit,
@@ -108,12 +110,12 @@ function WithdrawLiquidity({ tokenA: initTokenA, tokenB: initTokenB, afterWithdr
 
   const inpoolData = [
     {
-      logo: extractLogoByToken(tokenA),
+      logo: extractLogoByToken(tokenA, defaultTokens),
       code: tokenA.code,
       balance: poolData ? shareA.toFixed(7) : '',
     },
     {
-      logo: extractLogoByToken(tokenB),
+      logo: extractLogoByToken(tokenB, defaultTokens),
       code: tokenB.code,
       balance: poolData ? shareB.toFixed(7) : '',
     },

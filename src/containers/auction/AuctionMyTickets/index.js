@@ -10,12 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOfferAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
 import BN from 'helpers/BN';
-import XLM from 'tokens/XLM';
 import humanizeAmount from 'helpers/humanizeAmount';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import useRequiredLogin from 'hooks/useRequiredLogin';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 const AuctionMyTickets = ({ auctions }) => {
@@ -25,6 +26,7 @@ const AuctionMyTickets = ({ auctions }) => {
   const [dropdownItems, setDropDownItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [tickets, setTickets] = useState(null);
+  const defaultTokens = useDefaultTokens();
   useRequiredLogin(urlMaker.auction.root());
 
   function fetchAuctionMyBids() {
@@ -41,7 +43,7 @@ const AuctionMyTickets = ({ auctions }) => {
       fetchOfferAPI(
         getAssetDetails(
           { code: selectedItem.assetCode, issuer: selectedItem.assetIssuer },
-        ), getAssetDetails(XLM),
+        ), getAssetDetails(extractTokenFromCode('XLM', defaultTokens)),
         { order: 'desc', limit: 200, seller: userAddress },
       )
         .then((data) => {
@@ -72,7 +74,7 @@ const AuctionMyTickets = ({ auctions }) => {
       return generateManageBuyTRX(
         userAddress,
         getAssetDetails({ code: selectedItem.assetCode, issuer: selectedItem.assetIssuer }),
-        getAssetDetails(XLM),
+        getAssetDetails(extractTokenFromCode('XLM', defaultTokens)),
         0,
         data.price,
         data.id,

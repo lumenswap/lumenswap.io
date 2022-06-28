@@ -9,19 +9,20 @@ import CTable from 'components/CTable';
 import minimizeAddress from 'helpers/minimizeAddress';
 import { fetchTradeAPI } from 'api/stellar';
 import { getAssetDetails } from 'helpers/asset';
-import NLSP from 'tokens/NLSP';
 import humanizeAmount from 'helpers/humanizeAmount';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from 'containers/nft/NFTHeader';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import InfinitePagination from '../InfinitePagination';
 import styles from './styles.module.scss';
 
 const OFFER_FETCH_LIMIT = 20;
 
-function fetchLusiTrades(cursor, id) {
+function fetchLusiTrades(cursor, id, defaultTokens) {
   return fetchTradeAPI(
     getAssetDetails({ code: `Lusi${id}`, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(NLSP),
+    getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
     {
       limit: OFFER_FETCH_LIMIT,
       order: 'desc',
@@ -34,6 +35,7 @@ function SingleLusiAllTrades({ id }) {
   const [nextPageToken, setNextPageToken] = useState(null);
   const [currentPagingToken, setCurrentPagingToken] = useState(null);
   const [pagingTokens, setPagingTokens] = useState([]);
+  const defaultTokens = useDefaultTokens();
   const headerData = [
     {
       name: "All Lusi's",
@@ -91,7 +93,7 @@ function SingleLusiAllTrades({ id }) {
   const handlePrevPage = () => {
     if (pagingTokens.length > 0) {
       const prevPageToken = pagingTokens[pagingTokens.length - 1];
-      fetchLusiTrades(prevPageToken, id).then(async (res) => {
+      fetchLusiTrades(prevPageToken, id, defaultTokens).then(async (res) => {
         setNextPageToken(currentPagingToken);
         setCurrentPagingToken(prevPageToken);
         setPagingTokens((prev) => prev.slice(0, -1));
@@ -107,7 +109,7 @@ function SingleLusiAllTrades({ id }) {
 
   const handleNextPage = () => {
     if (nextPageToken) {
-      fetchLusiTrades(nextPageToken, id).then(async (res) => {
+      fetchLusiTrades(nextPageToken, id, defaultTokens).then(async (res) => {
         if (res.data._embedded.records.length < 1) {
           setNextPageToken(null);
           return;
@@ -135,7 +137,7 @@ function SingleLusiAllTrades({ id }) {
   };
 
   useEffect(() => {
-    fetchLusiTrades(null, id).then(async (res) => {
+    fetchLusiTrades(null, id, defaultTokens).then(async (res) => {
       if (res.data._embedded.records.length >= OFFER_FETCH_LIMIT) {
         setNextPageToken(res
           .data._embedded

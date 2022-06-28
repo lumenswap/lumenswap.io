@@ -7,12 +7,14 @@ import { getTopVolume } from 'api/market';
 import BN from 'helpers/BN';
 import urlMaker from 'helpers/urlMaker';
 import humanizeAmount from 'helpers/humanizeAmount';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 function TopVolumeMarket({ searchQuery }) {
   const [topVolumeList, setTopVolumeList] = useState(null);
   const [assets, setAssets] = useState(null);
   const [filteredAssets, setFilteredAssets] = useState(null);
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     async function loadData() {
@@ -31,7 +33,7 @@ function TopVolumeMarket({ searchQuery }) {
           logo: extractInfoByToken({
             code: asset.baseAssetCode,
             issuer: asset.baseAssetIssuer,
-          }).logo,
+          }, defaultTokens).logo,
         };
         const counter = {
           code: asset.counterAssetCode,
@@ -39,7 +41,7 @@ function TopVolumeMarket({ searchQuery }) {
           logo: extractInfoByToken({
             code: asset.counterAssetCode,
             issuer: asset.counterAssetIssuer,
-          }).logo,
+          }, defaultTokens).logo,
         };
 
         return {

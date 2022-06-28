@@ -5,18 +5,20 @@ import { addCustomTokenAction } from 'actions/userCustomTokens';
 import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import { getAssetDetails, isSameAsset } from 'helpers/asset';
 import { useDispatch, useSelector } from 'react-redux';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import { changeFromAsset, changeToAsset } from './swapHelpers';
 
 export default function useUrl(custom, setValues, getValues, dependencies) {
   const userCustomTokens = useSelector((state) => state.userCustomTokens);
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     async function check() {
       if (custom) {
         let from;
         if (custom.from.isDefault) {
-          from = getAssetDetails(extractTokenFromCode(custom.from.code));
+          from = getAssetDetails(extractTokenFromCode(custom.from.code, defaultTokens));
         } else {
           from = getAssetDetails({
             code: custom.from.code,
@@ -26,7 +28,7 @@ export default function useUrl(custom, setValues, getValues, dependencies) {
 
         let to;
         if (custom.to.isDefault) {
-          to = getAssetDetails(extractTokenFromCode(custom.to.code));
+          to = getAssetDetails(extractTokenFromCode(custom.to.code, defaultTokens));
         } else {
           to = getAssetDetails({
             code: custom.to.code,
@@ -46,11 +48,11 @@ export default function useUrl(custom, setValues, getValues, dependencies) {
         let toLogo = questionLogo;
 
         if (custom.from.isDefault) {
-          fromLogo = extractTokenFromCode(custom.from.code).logo;
+          fromLogo = extractTokenFromCode(custom.from.code, defaultTokens).logo;
         }
 
         if (custom.to.isDefault) {
-          toLogo = extractTokenFromCode(custom.to.code).logo;
+          toLogo = extractTokenFromCode(custom.to.code, defaultTokens).logo;
         }
 
         changeFromAsset({

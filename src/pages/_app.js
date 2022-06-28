@@ -1,5 +1,5 @@
-import { Provider } from 'react-redux';
-import { useStore } from 'store';
+import { useStore } from 'react-redux';
+import { wrapper } from 'store';
 import { persistStore } from 'redux-persist';
 import { useRef, useEffect } from 'react';
 import { setUserBalance } from 'actions/userBalance';
@@ -15,6 +15,9 @@ import validateRabetPresent from 'walletIntegeration/logins/validateRabetPresent
 import { PersistGate } from 'redux-persist/integration/react';
 import updateUserDetail from 'actions/user/updateUserDetail';
 import ToggleDarkModeBtn from 'components/ToggleDarkModeBtn';
+import { setDefaultTokens } from 'actions/deafultTokens';
+import { getDefaultAssets } from 'api/assets';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import LModal from '../containers/LModal';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,7 +35,6 @@ async function fullRabetLogin(dispatch) {
     const accountDetail = await fetchAccountDetails(address);
     dispatch(userLogin(loginTypes.RABET, { address, subentry: accountDetail.subentry }));
     dispatch(setUserBalance(filterUserBalance(accountDetail.balances)));
-
     dispatch(closeModalAction());
   } catch (e) {}
 }
@@ -40,8 +42,9 @@ async function fullRabetLogin(dispatch) {
 function MyApp({ Component, pageProps }) {
   const updateUserDetailIntervalRef = useRef(null);
   const xlmPriceIntervalRef = useRef(null);
+  const defaultTokens = useDefaultTokens();
 
-  const store = useStore(pageProps.initialReduxState);
+  const store = useStore();
   const persistor = persistStore(store, {}, () => {
     persistor.persist();
   });
@@ -57,7 +60,7 @@ function MyApp({ Component, pageProps }) {
       }
     }, 2000);
 
-    fetchLSPPriceFromHorizon().then((price) => {
+    fetchLSPPriceFromHorizon(defaultTokens).then((price) => {
       store.dispatch(updateLSPPrice(price));
     }).catch(() => {});
 
@@ -86,24 +89,32 @@ function MyApp({ Component, pageProps }) {
       }
     }, 1000);
   }, []);
+
   return process.browser ? (
     <>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <LModal />
-          <div style={{ minHeight: 'calc(100vh - 72px)' }}>
-            <Component {...pageProps} />
-          </div>
-          <ToggleDarkModeBtn />
-        </PersistGate>
-      </Provider>
+      <PersistGate loading={null} persistor={persistor}>
+        <LModal />
+        <div style={{ minHeight: 'calc(100vh - 72px)' }}>
+          <Component {...pageProps} />
+        </div>
+        <ToggleDarkModeBtn />
+      </PersistGate>
     </>
   ) : (
-    <Provider store={store}>
+    <>
       <LModal />
       <Component {...pageProps} />
-    </Provider>
+    </>
   );
 }
 
-export default MyApp;
+MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async () => {
+  try {
+    const assets = await getDefaultAssets();
+    store.dispatch(setDefaultTokens(assets));
+  } catch (err) {
+    throw new Error(err);
+  }
+});
+
+export default wrapper.withRedux(MyApp);

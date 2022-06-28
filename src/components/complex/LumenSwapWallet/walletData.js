@@ -3,7 +3,6 @@ import Input from 'components/Input';
 import CTable from 'components/CTable';
 import numeral from 'numeral';
 import urlMaker from 'helpers/urlMaker';
-import defaultTokens from 'tokens/defaultTokens';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import minimizeAddress from 'helpers/minimizeAddress';
@@ -14,9 +13,10 @@ import {
 } from 'helpers/asset';
 import BN from 'helpers/BN';
 import Link from 'next/link';
-import XLM from 'tokens/XLM';
 import { fetchXLMPrice } from 'api/stellar';
 import humanizeAmount from 'helpers/humanizeAmount';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import SendAsset from './SendAsset';
 import styles from './styles.module.scss';
 
@@ -36,6 +36,8 @@ function WalletData({ type }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterZeroBalance, setFilterZeroBalance] = useState(true);
   const [xlmPrice, setXLMPrice] = useState(null);
+  const defaultTokens = useDefaultTokens();
+  const XLM = extractTokenFromCode('XLM', defaultTokens);
 
   const xlmBalance = userBalances.find((i) => isSameAsset(getAssetDetails(XLM), i.asset));
   const userSubentry = useSelector((state) => state.user.detail.subentry);
@@ -65,7 +67,7 @@ function WalletData({ type }) {
   };
 
   useEffect(() => {
-    fetchXLMPrice().then((res) => {
+    fetchXLMPrice(defaultTokens).then((res) => {
       setXLMPrice(res.toFixed(7));
     });
   }, []);
@@ -128,11 +130,11 @@ function WalletData({ type }) {
       render: (data) => (
         <div className={styles.asset}>
           <div className={styles['asset-logo']}>
-            <img src={extractInfoByToken(data.asset).logo} width="100%" height="100%" />
+            <img src={extractInfoByToken(data.asset, defaultTokens).logo} width="100%" height="100%" />
           </div>
           <div className={styles['asset-div']}>
             <span className={styles['asset-code']}>{data.asset.code}</span>
-            <span className={styles['asset-info']}>{extractInfoByToken(data.asset).isWebIssuer ? minimizeAddress(extractInfoByToken(data.asset).web) : extractInfoByToken(data.asset).web}</span>
+            <span className={styles['asset-info']}>{extractInfoByToken(data.asset, defaultTokens).isWebIssuer ? minimizeAddress(extractInfoByToken(data.asset, defaultTokens).web) : extractInfoByToken(data.asset, defaultTokens).web}</span>
           </div>
         </div>
       )

@@ -7,19 +7,21 @@ import generateCreateAccountTRX from 'stellar-trx/generateCreateAccountTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
 import { isActiveAccount } from 'api/stellar';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 const ConfirmSendAsset = ({ data }) => {
   const dispatch = useDispatch();
   const userAddress = useSelector((state) => state.user.detail.address);
+  const defaultTokens = useDefaultTokens();
 
   return (
     <div>
       <label className={styles.label}>Asset</label>
       <div className="d-flex align-items-center mt-1">
-        <img src={extractInfoByToken(data.selectedAsset).logo} width={26} height={26} alt="logo" />
+        <img src={extractInfoByToken(data.selectedAsset, defaultTokens).logo} width={26} height={26} alt="logo" />
         <span className={styles['asset-name']}>{data.selectedAsset.code}</span>
-        <span className={styles['asset-web']}>{extractInfoByToken(data.selectedAsset).isWebIssuer ? minimizeAddress(extractInfoByToken(data.selectedAsset).web) : extractInfoByToken(data.selectedAsset).web}</span>
+        <span className={styles['asset-web']}>{extractInfoByToken(data.selectedAsset, defaultTokens).isWebIssuer ? minimizeAddress(extractInfoByToken(data.selectedAsset, defaultTokens).web) : extractInfoByToken(data.selectedAsset, defaultTokens).web}</span>
       </div>
       <hr className={styles.hr} />
       <label className={styles.label}>Amount</label>

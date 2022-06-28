@@ -1,24 +1,23 @@
 import StellarSDK from 'stellar-sdk';
-
+import { wrapper } from 'store';
 import { isSameAsset, getAssetDetails } from 'helpers/asset';
-import defaultTokens from 'tokens/defaultTokens';
 import urlMaker from 'helpers/urlMaker';
 import { isDefaultCode, extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import { checkAssetValidation } from 'api/tokens';
 
 const tokensValid = (tokenString) => tokenString.split('-').length === 2;
-const customTokenValidation = (tokenString) => {
+const customTokenValidation = (tokenString, defaultTokens) => {
   const extracted = tokenString.split('-');
 
   if (extracted.length > 2) return null;
 
-  if (extracted.length === 1 && isDefaultCode(extracted[0])) {
+  if (extracted.length === 1 && isDefaultCode(extracted[0], defaultTokens)) {
     return {
       code: extracted[0],
     };
   }
-  if (isDefaultCode(extracted[0])) {
-    const token = extractTokenFromCode(extracted[0]);
+  if (isDefaultCode(extracted[0], defaultTokens)) {
+    const token = extractTokenFromCode(extracted[0], defaultTokens);
     const defaultIssuer = token.issuer;
 
     if (defaultIssuer === extracted[1]) {
@@ -44,7 +43,8 @@ const customTokenValidation = (tokenString) => {
 
   return null;
 };
-export async function swapPageGetServerSideProps(context) {
+export const swapPageGetServerSideProps = wrapper.getServerSideProps((store) => (context) => {
+  const defaultTokens = store.getState().defaultTokens;
   const redirectObj = {
     redirect: {
       destination: urlMaker.amm.swap.root(),
@@ -100,127 +100,129 @@ export async function swapPageGetServerSideProps(context) {
   }
 
   return {
-    props: {},
+    props: { },
   };
-}
+});
 
-export async function swapCustomTokenGetServerSideProps(context) {
-  const redirectObj = {
-    redirect: {
-      destination: urlMaker.amm.swap.root(),
-    },
-  };
-
-  const notFoundError = () => {
-    context.res.statusCode = 404;
-    return {
-      props: { errorCode: 404, message: 'Invalid ' },
+export const swapCustomTokenGetServerSideProps = wrapper
+  .getServerSideProps((store) => async (context) => {
+    const defaultTokens = store.getState().defaultTokens;
+    const redirectObj = {
+      redirect: {
+        destination: urlMaker.amm.swap.root(),
+      },
     };
-  };
 
-  if (context.query.tokens && context.query.customTokens) {
-    const fromResult = customTokenValidation(context.query.tokens);
-    const toResult = customTokenValidation(context.query.customTokens);
-
-    const queryFromIssuer = context.query.tokens.split('-')[1];
-    const queryToIssuer = context.query.customTokens.split('-')[1];
-
-    if (!fromResult || !toResult) {
-      return notFoundError();
-    }
-
-    if (fromResult.redirect || toResult.redirect) {
+    const notFoundError = () => {
+      context.res.statusCode = 404;
       return {
-        redirect: {
-          destination: urlMaker.amm.swap.custom(
-            fromResult.code,
-            fromResult.issuer,
-            toResult.code,
-            toResult.issuer,
-          ),
-        },
+        props: { errorCode: 404, message: 'Invalid ' },
       };
-    }
+    };
 
-    if (
-      (queryFromIssuer
+    if (context.query.tokens && context.query.customTokens) {
+      const fromResult = customTokenValidation(context.query.tokens, defaultTokens);
+      const toResult = customTokenValidation(context.query.customTokens, defaultTokens);
+
+      const queryFromIssuer = context.query.tokens.split('-')[1];
+      const queryToIssuer = context.query.customTokens.split('-')[1];
+
+      if (!fromResult || !toResult) {
+        return notFoundError();
+      }
+
+      if (fromResult.redirect || toResult.redirect) {
+        return {
+          redirect: {
+            destination: urlMaker.amm.swap.custom(
+              fromResult.code,
+              fromResult.issuer,
+              toResult.code,
+              toResult.issuer,
+            ),
+          },
+        };
+      }
+
+      if (
+        (queryFromIssuer
           && queryFromIssuer.toUpperCase() !== queryFromIssuer)
         || (queryToIssuer && queryToIssuer.toUpperCase() !== queryToIssuer)
-    ) {
-      const checkedFromIssuer = !fromResult.issuer
-        ? null
-        : fromResult.issuer.toUpperCase();
-      const checkedToIssuer = !toResult.issuer
-        ? null
-        : toResult.issuer.toUpperCase();
+      ) {
+        const checkedFromIssuer = !fromResult.issuer
+          ? null
+          : fromResult.issuer.toUpperCase();
+        const checkedToIssuer = !toResult.issuer
+          ? null
+          : toResult.issuer.toUpperCase();
 
-      return {
-        redirect: {
-          destination: urlMaker.amm.swap.custom(
-            fromResult.code,
-            checkedFromIssuer,
-            toResult.code,
-            checkedToIssuer,
-          ),
-        },
-      };
-    }
+        return {
+          redirect: {
+            destination: urlMaker.amm.swap.custom(
+              fromResult.code,
+              checkedFromIssuer,
+              toResult.code,
+              checkedToIssuer,
+            ),
+          },
+        };
+      }
 
-    try {
-      if (
-        (fromResult.issuer
+      try {
+        if (
+          (fromResult.issuer
           && !StellarSDK.StrKey.isValidEd25519PublicKey(fromResult.issuer))
         || (toResult.issuer
           && !StellarSDK.StrKey.isValidEd25519PublicKey(toResult.issuer))
-      ) {
-        return notFoundError();
-      }
+        ) {
+          return notFoundError();
+        }
 
-      const fromAsset = {
-        ...fromResult,
-        isDefault: !fromResult.issuer,
-      };
+        const fromAsset = {
+          ...fromResult,
+          isDefault: !fromResult.issuer,
+        };
 
-      const toAsset = {
-        ...toResult,
-        isDefault: !toResult.issuer,
-      };
+        const toAsset = {
+          ...toResult,
+          isDefault: !toResult.issuer,
+        };
 
-      if (fromAsset.code === toAsset.code && fromAsset.issuer === toAsset.issuer) {
+        if (fromAsset.code === toAsset.code && fromAsset.issuer === toAsset.issuer) {
+          return redirectObj;
+        }
+
+        let checkedAssetStatus = [true];
+        const reqs = [];
+
+        if (!fromAsset.isDefault) {
+          reqs.push(checkAssetValidation(fromAsset.code, fromAsset.issuer));
+        }
+
+        if (!toAsset.isDefault) {
+          reqs.push(checkAssetValidation(toAsset.code, toAsset.issuer));
+        }
+
+        if (reqs.length > 1) {
+          checkedAssetStatus = await Promise.all(reqs);
+        }
+
+        if (!checkedAssetStatus.every((i) => i)) {
+          return notFoundError();
+        }
+
+        return {
+          props: {
+            custom: {
+              from: fromAsset,
+              to: toAsset,
+            },
+          },
+        };
+      } catch (error) {
         return redirectObj;
       }
-
-      let checkedAssetStatus = [true];
-      const reqs = [];
-
-      if (!fromAsset.isDefault) {
-        reqs.push(checkAssetValidation(fromAsset.code, fromAsset.issuer));
-      }
-
-      if (!toAsset.isDefault) {
-        reqs.push(checkAssetValidation(toAsset.code, toAsset.issuer));
-      }
-
-      if (reqs.length > 1) {
-        checkedAssetStatus = await Promise.all(reqs);
-      }
-
-      if (!checkedAssetStatus.every((i) => i)) {
-        return notFoundError();
-      }
-
-      return {
-        props: {
-          custom: {
-            from: fromAsset,
-            to: toAsset,
-          },
-        },
-      };
-    } catch (error) {
-      return redirectObj;
     }
-  }
 
-  return redirectObj;
-}
+    return redirectObj;
+  });

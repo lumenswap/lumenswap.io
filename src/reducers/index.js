@@ -8,6 +8,7 @@ import customOrderPriceReducer from './customOrderPrice';
 import xlmPriceReducer from './xlmPrice';
 import lspPriceReducer from './lspPrice';
 import themeReducer from './theme';
+import defaultTokensReducer from './defaultTokens';
 
 export default combineReducers({
   user,
@@ -19,4 +20,5 @@ export default combineReducers({
   xlmPrice: xlmPriceReducer,
   lspPrice: lspPriceReducer,
   theme: themeReducer,
+  defaultTokens: defaultTokensReducer,
 });

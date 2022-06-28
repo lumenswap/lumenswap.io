@@ -8,9 +8,10 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchAddressReward, fetchAddressRewardStats } from 'api/rewards';
 import { isSameAsset, getAssetDetails } from 'helpers/asset';
-import LSP from 'tokens/LSP';
 import humanizeAmount from 'helpers/humanizeAmount';
 import BN from 'helpers/BN';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 function rewardAmountHumanize(amount) {
@@ -22,8 +23,9 @@ const RewardContent = () => {
   const [rewardStats, setRewardStats] = useState(null);
   const [addressReward, setAddressReward] = useState(null);
   const userBalances = useSelector((state) => state.userBalance);
+  const defaultTokens = useDefaultTokens();
   const foundLSP = userBalances
-    .find((i) => isSameAsset(getAssetDetails(LSP), getAssetDetails(i.asset)));
+    .find((i) => isSameAsset(getAssetDetails(extractTokenFromCode('LSP', defaultTokens)), getAssetDetails(i.asset)));
 
   useEffect(() => {
     function loadingUserData() {

@@ -1,20 +1,16 @@
 import { getAssetDetails, isSameAsset } from 'helpers/asset';
-import defaultTokens from 'tokens/defaultTokens';
-import LSP from 'tokens/LSP';
-import NLSP from 'tokens/NLSP';
-import USDC from 'tokens/USDC';
-import XLM from 'tokens/XLM';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 
-export default function createPairForDefaultTokens() {
+export default function createPairForDefaultTokens(defaultTokens) {
   const result = [];
 
   for (const token of defaultTokens) {
     if (!token.isHide) {
-      if (!isSameAsset(getAssetDetails(USDC), getAssetDetails(token))
-      && !isSameAsset(getAssetDetails(NLSP), getAssetDetails(token))) {
+      if (!isSameAsset(getAssetDetails(extractTokenFromCode('USDC', defaultTokens)), getAssetDetails(token))
+      && !isSameAsset(getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)), getAssetDetails(token))) {
         result.push({
           base: getAssetDetails(token),
-          counter: getAssetDetails(USDC),
+          counter: getAssetDetails(extractTokenFromCode('USDC', defaultTokens)),
         });
       }
     }
@@ -22,19 +18,19 @@ export default function createPairForDefaultTokens() {
 
   for (const token of defaultTokens) {
     if (!token.isHide) {
-      if (!isSameAsset(getAssetDetails(XLM), getAssetDetails(token))
-      && !isSameAsset(getAssetDetails(NLSP), getAssetDetails(token))) {
+      if (!isSameAsset(getAssetDetails(extractTokenFromCode('XLM', defaultTokens)), getAssetDetails(token))
+      && !isSameAsset(getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)), getAssetDetails(token))) {
         result.push({
           base: getAssetDetails(token),
-          counter: getAssetDetails(XLM),
+          counter: getAssetDetails(extractTokenFromCode('XLM', defaultTokens)),
         });
       }
     }
   }
 
   result.push({
-    base: getAssetDetails(NLSP),
-    counter: getAssetDetails(LSP),
+    base: getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
+    counter: getAssetDetails(extractTokenFromCode('LSP', defaultTokens)),
   });
 
   return result;

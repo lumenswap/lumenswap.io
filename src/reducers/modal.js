@@ -1,6 +1,6 @@
 import actionTypes from 'actions';
 
-const defaultState = { open: false, modalProps: {}, content: () => null };
+const defaultState = { open: false, modalProps: {}, content: null };
 
 export default function modalReducer(state = defaultState, action) {
   switch (action.type) {

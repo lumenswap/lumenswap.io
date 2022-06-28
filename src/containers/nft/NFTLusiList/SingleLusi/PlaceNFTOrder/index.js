@@ -9,15 +9,17 @@ import { ONE_LUSI_AMOUNT } from 'appConsts';
 import generateManageBuyTRX from 'stellar-trx/generateManageBuyTRX';
 import showGenerateTrx from 'helpers/showGenerateTrx';
 import showSignResponse from 'helpers/showSignResponse';
-import NLSP from 'tokens/NLSP';
 import numeral from 'numeral';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import styles from './styles.module.scss';
 
 const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
   const dispatch = useDispatch();
   const userNLSPBalance = useSelector((state) => state.userBalance)
-    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(NLSP)));
+    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(extractTokenFromCode('NLSP'))));
   const userAddress = useSelector((state) => state.user.detail.address);
+  const defaultTokens = useDefaultTokens();
 
   const {
     control, handleSubmit, formState, trigger, getValues,
@@ -31,7 +33,7 @@ const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
           code: lusiAssetCode,
           issuer: process.env.REACT_APP_LUSI_ISSUER,
         }),
-        getAssetDetails(NLSP),
+        getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
         ONE_LUSI_AMOUNT,
         new BN(data.price).times(10 ** 7).toFixed(0),
         0,

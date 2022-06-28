@@ -1,12 +1,11 @@
-import defaultTokens from 'tokens/defaultTokens';
 import { isSameAsset } from 'helpers/asset';
 
-export default function isDefaultToken(token) {
-  return defaultTokens.find((defaultToken) => isSameAsset(defaultToken, token));
+export default function isDefaultToken(token, defaultTokens) {
+  return defaultTokens?.find((defaultToken) => isSameAsset(defaultToken, token));
 }
 
-export const isDefaultCode = (tokenCode) => defaultTokens
-  .some((defaultToken) => defaultToken.code === tokenCode);
+export const isDefaultCode = (tokenCode, defaultTokens) => defaultTokens
+  ?.some((defaultToken) => defaultToken.code === tokenCode);
 
-export const extractTokenFromCode = (tokenCode) => defaultTokens
-  .find((defaultToken) => defaultToken.code === tokenCode);
+export const extractTokenFromCode = (tokenCode, defaultTokens) => defaultTokens
+  ?.find((defaultToken) => defaultToken.code === tokenCode);

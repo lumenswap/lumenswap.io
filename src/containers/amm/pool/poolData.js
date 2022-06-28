@@ -7,11 +7,13 @@ import humanizeAmount from 'helpers/humanizeAmount';
 import Input from 'components/Input';
 import { getKnownPools } from 'api/amm';
 import BN from 'helpers/BN';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 function PoolData() {
   const [knownPools, setKnownPools] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const defaultTokens = useDefaultTokens();
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.replace(new RegExp('\\\\', 'g'), '\\\\'));
@@ -25,7 +27,8 @@ function PoolData() {
       <div className={styles.pairs}>
         <CurrencyPair
           size={22}
-          source={[extractLogoByToken(assetA), extractLogoByToken(assetB)]}
+          source={[extractLogoByToken(assetA, defaultTokens),
+            extractLogoByToken(assetB, defaultTokens)]}
         />
         <span>{`${assetA.code}/${assetB.code}`}</span>
       </div>

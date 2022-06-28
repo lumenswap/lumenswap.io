@@ -2,13 +2,14 @@ import { Controller, useForm } from 'react-hook-form';
 import Button from 'components/Button';
 import InputGroup from 'components/InputGroup';
 import { calculateMaxXLM, getAssetDetails } from 'helpers/asset';
-import XLM from 'tokens/XLM';
 import BN from 'helpers/BN';
 import humanizeAmount from 'helpers/humanizeAmount';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModalAction } from 'actions/modal';
 import useUserSingleAsset from 'hooks/useUserSingleAsset';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import ConfirmBidModal from './ConfirmBidModal';
 import styles from './styles.module.scss';
 
@@ -19,6 +20,7 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
     handleSubmit, control, watch, formState, trigger, getValues,
   } = useForm({ mode: 'onChange' });
   const dispatch = useDispatch();
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
     trigger(['tokenAmount', 'price']);
@@ -42,7 +44,7 @@ const SendBidModal = ({ baseToken, basePrice, reloadData }) => {
     total = new BN(price).times(token);
   }
 
-  const userXlm = useUserSingleAsset(getAssetDetails(XLM));
+  const userXlm = useUserSingleAsset(getAssetDetails(extractTokenFromCode('XLM', defaultTokens)));
 
   function buttonContent() {
     for (const error of Object.values(formState.errors)) {

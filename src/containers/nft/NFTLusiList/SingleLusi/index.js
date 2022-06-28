@@ -25,10 +25,11 @@ import Submitting from 'components/Submitting';
 import { isSameAsset, getAssetDetails } from 'helpers/asset';
 import { fetchOfferAPI, fetchOffersOfAccount, fetchOrderBookAPI } from 'api/stellar';
 import humanizeAmount from 'helpers/humanizeAmount';
-import NLSP from 'tokens/NLSP';
 import numeral from 'numeral';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from 'containers/nft/NFTHeader';
+import useDefaultTokens from 'hooks/useDefaultTokens';
+import { extractTokenFromCode } from 'helpers/defaultTokenUtils';
 import PlaceNFTOrder from './PlaceNFTOrder';
 import styles from './styles.module.scss';
 import SingleLusiTabContent from './SingleLusiTabContent';
@@ -55,10 +56,10 @@ function PlaceOrSetPriceButtonContent({ buttonState }) {
   return null;
 }
 
-function loadLusiOffers(data, setLusiOffers) {
+function loadLusiOffers(data, setLusiOffers, defaultTokens) {
   fetchOfferAPI(
     getAssetDetails({ code: data.assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(NLSP),
+    getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
     {
       limit: 10,
       order: 'desc',
@@ -72,10 +73,10 @@ function loadLusiOffers(data, setLusiOffers) {
     });
 }
 
-function loadLusiPrice(assetCode, setLusiPrice) {
+function loadLusiPrice(assetCode, setLusiPrice, defaultTokens) {
   fetchOrderBookAPI(
     getAssetDetails({ code: assetCode, issuer: process.env.REACT_APP_LUSI_ISSUER }),
-    getAssetDetails(NLSP),
+    getAssetDetails(extractTokenFromCode('NLSP', defaultTokens)),
     {
       limit: 1,
     },
@@ -91,15 +92,16 @@ function loadLusiPrice(assetCode, setLusiPrice) {
   });
 }
 
-function loadAllRelatedDataToLusi(data, setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice) {
+function loadAllRelatedDataToLusi(data, setLusiOffers,
+  lusiId, setOwnerInfoData, setLusiPrice, defaultTokens) {
   setOwnerInfoData(null);
   setLusiOffers(null);
   setLusiPrice(null);
-  loadLusiOffers(data, setLusiOffers);
+  loadLusiOffers(data, setLusiOffers, defaultTokens);
   getLusiOwner(`Lusi${lusiId}`).then((ownerInfo) => {
     setOwnerInfoData(ownerInfo);
   });
-  loadLusiPrice(data.assetCode, setLusiPrice);
+  loadLusiPrice(data.assetCode, setLusiPrice, defaultTokens);
 }
 
 const NFTDetail = ({ id: lusiId, data }) => {
@@ -114,9 +116,11 @@ const NFTDetail = ({ id: lusiId, data }) => {
   const [lusiOffers, setLusiOffers] = useState(null);
   const [showNLSP, setShowNLSP] = useState(true);
   const [lusiPrice, setLusiPrice] = useState(null);
+  const defaultTokens = useDefaultTokens();
 
   useEffect(() => {
-    loadAllRelatedDataToLusi(data, setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice);
+    loadAllRelatedDataToLusi(data, setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice,
+      defaultTokens);
   }, []);
 
   useEffect(() => {
@@ -329,7 +333,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
     setTab(tabId);
     if (tabId === 'offer') {
       setLusiOffers(null);
-      loadLusiOffers(data, setLusiOffers);
+      loadLusiOffers(data, setLusiOffers, defaultTokens);
     }
   };
 

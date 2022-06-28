@@ -1,6 +1,7 @@
 import { applyMiddleware, createStore } from 'redux';
 import { useMemo } from 'react';
 import { persistReducer, createTransform } from 'redux-persist';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import persistStorage from 'redux-persist/lib/storage';
 import reducers from 'reducers';
 import { getAssetDetails } from 'helpers/asset';
@@ -31,9 +32,30 @@ const persistorConfig = {
   transforms: [UserCustomTokenTransfer, UserCustomPairTransfer],
 };
 
-const persistedReducer = persistReducer(persistorConfig, reducers);
+const mainReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state,
+      ...action.payload,
+    };
+    if (state.theme) nextState.theme = state.theme;
+    if (state.user) nextState.user = state.user;
+    if (state.userCustomTokens) nextState.userCustomTokens = state.userCustomTokens;
+    if (state.modal) nextState.modal = state.modal;
+    if (state.userCustomPairs) nextState.userCustomPairs = state.userCustomPairs;
+    if (state.userBalance) nextState.userBalance = state.userBalance;
+    if (state.xlmPrice) nextState.xlmPrice = state.xlmPrice;
+    if (state.lspPrice) nextState.lspPrice = state.lspPrice;
+    if (state.customOrderPrice) nextState.customOrderPrice = state.customOrderPrice;
+    if (state.userCustomPairs) nextState.userCustomPairs = state.userCustomPairs;
+    return nextState;
+  }
+  return reducers(state, action);
+};
 
-function makeStore() {
+const persistedReducer = persistReducer(persistorConfig, mainReducer);
+
+export function makeStore() {
   return createStore(
     persistedReducer,
     composeWithDevTools(applyMiddleware(thunkMiddleware)),
@@ -64,3 +86,5 @@ export function useStore(initialState) {
   const storeCpy = useMemo(() => initializeStore(initialState), [initialState]);
   return storeCpy;
 }
+
+export const wrapper = createWrapper(initializeStore, { debug: false });

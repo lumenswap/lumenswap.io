@@ -15,6 +15,7 @@ import showSignResponse from 'helpers/showSignResponse';
 import { listAssets } from 'api/stellar';
 import { useEffect, useState } from 'react';
 import jsxThemeColors from 'helpers/jsxThemeColors';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import styles from './styles.module.scss';
 
 function stellarExpertURLGenerator(code, issuer) {
@@ -25,6 +26,7 @@ const GovernanceInfo = ({ governance }) => {
   const {
     name, description, assetCode, assetIssuer, website,
   } = governance;
+  const defaultTokens = useDefaultTokens();
 
   const asset = getAssetDetails({ code: assetCode, issuer: assetIssuer });
   const [communityMembersCount, setCommunityMembersCount] = useState(0);
@@ -69,7 +71,7 @@ const GovernanceInfo = ({ governance }) => {
       <div className="d-flex justify-content-between">
         <div className="d-flex align-items-center">
           <div className={styles.img}>
-            <img src={extractLogoByToken(asset)} width={80} height={80} alt={name} />
+            <img src={extractLogoByToken(asset, defaultTokens)} width={80} height={80} alt={name} />
           </div>
           <div className={classNames('d-flex flex-column', styles['title-info'])}>
             <div className={styles.title}>{name}</div>

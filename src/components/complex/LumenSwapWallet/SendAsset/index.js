@@ -12,6 +12,7 @@ import { isActiveAccount } from 'api/stellar';
 import BN from 'helpers/BN';
 import StellarSDK from 'stellar-sdk';
 import minimizeAddress from 'helpers/minimizeAddress';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import ConfirmSendAsset from './ConfirmSendAsset';
 import styles from './styles.module.scss';
 
@@ -31,6 +32,7 @@ const SendAsset = ({ selectedAsset }) => {
   const foundBalance = userBalance.find((balance) => isSameAsset(balance.asset, selectedAsset));
   const userSubentry = useSelector((state) => state.user.detail.subentry);
   const userAddress = useSelector((state) => state.user.detail.address);
+  const defaultTokens = useDefaultTokens();
 
   const setMaxAmount = () => {
     if (getAssetDetails(selectedAsset).isNative()) {
@@ -143,9 +145,9 @@ const SendAsset = ({ selectedAsset }) => {
       <div className="form-group mb-3">
         <label htmlFor="destination" className="label-primary mb-1">Asset</label>
         <div className={styles['input-asset']}>
-          <img src={extractInfoByToken(selectedAsset).logo} width={26} height={26} alt="logo" />
+          <img src={extractInfoByToken(selectedAsset, defaultTokens).logo} width={26} height={26} alt="logo" />
           <span className={styles['asset-name']}>{selectedAsset.code}</span>
-          <span className={styles['asset-web']}>{extractInfoByToken(selectedAsset).isWebIssuer ? minimizeAddress(extractInfoByToken(selectedAsset).web) : extractInfoByToken(selectedAsset).web}</span>
+          <span className={styles['asset-web']}>{extractInfoByToken(selectedAsset, defaultTokens).isWebIssuer ? minimizeAddress(extractInfoByToken(selectedAsset, defaultTokens).web) : extractInfoByToken(selectedAsset, defaultTokens).web}</span>
         </div>
       </div>
       <div className="form-group mb-3">

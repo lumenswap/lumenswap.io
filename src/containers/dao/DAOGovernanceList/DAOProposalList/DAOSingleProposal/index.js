@@ -19,6 +19,7 @@ import { extractLogoByToken, getAssetDetails } from 'helpers/asset';
 import { useEffect, useState } from 'react';
 import { getVotesForProposal } from 'api/daoAPI';
 import BN from 'helpers/BN';
+import useDefaultTokens from 'hooks/useDefaultTokens';
 import DAOContainer from '../../../DAOContainer';
 import DAOSingleProposalVotes from './DAOSingleProposalVotes';
 import VoteModal from './VoteModal';
@@ -28,6 +29,7 @@ import DAOProposalStatusBadge from '../../../DAOProposalStatusBadge';
 const DAOSingleProposal = ({ proposalInfo }) => {
   const [votes, setVotes] = useState(null);
   const [status, setStatus] = useState(null);
+  const defaultTokens = useDefaultTokens();
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -122,7 +124,7 @@ const DAOSingleProposal = ({ proposalInfo }) => {
         <Link href={urlMaker.dao.singleDao.root(proposalInfo.Governance.name.toLowerCase())}>
           <a className={styles['governance-link']}>
             <div className="d-flex align-items-center">
-              <img src={extractLogoByToken(asset)} height={24} width={24} />
+              <img src={extractLogoByToken(asset, defaultTokens)} height={24} width={24} />
               <div className="ml-1">{proposalDetails.Governance.name}</div>
             </div>
           </a>
