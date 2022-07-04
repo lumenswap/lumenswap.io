@@ -84,7 +84,6 @@ async function fetchData(userAddress, xlmPrice, setPools, lspPrice, defaultToken
       },
     }))),
   );
-
   const poolsWithBalances = fetchedPools.map((pool) => {
     const balanceUSD = calculateBalanceUSD(pool, xlmPrice, lspPrice, defaultTokens);
     return {
@@ -147,7 +146,7 @@ function MyPoolPage() {
 
   useEffect(() => {
     if (isLogged) {
-      fetchData(userAddress, xlmPrice, setPools, null, defaultTokens);
+      fetchData(userAddress, xlmPrice, setPools, lspPrice, defaultTokens);
     }
   }, [isLogged, userAddress]);
 

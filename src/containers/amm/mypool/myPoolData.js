@@ -18,7 +18,8 @@ function MyPoolData({ pools }) {
       <div className={styles.tokens}>
         <CurrencyPair
           size={22}
-          source={[extractLogoByToken(token1, defaultTokens), extractLogoByToken(token2, defaultTokens)]}
+          source={[extractLogoByToken(token1, defaultTokens),
+            extractLogoByToken(token2, defaultTokens)]}
         />
         <span>
           {token1.code}/{token2.code}
