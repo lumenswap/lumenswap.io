@@ -19,7 +19,6 @@ export function getAssetDetails(asset) {
   if (asset.code && asset.issuer) {
     return new StellarSDK.Asset(asset.code, asset.issuer);
   }
-
   throw new Error('cannot cast asset');
 }
 

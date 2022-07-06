@@ -15,7 +15,6 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
     fee: transactionConsts.FEE,
     networkPassphrase: StellarSDK.Networks.PUBLIC,
   });
-
   const toAssetDetail = getAssetDetails(checkout.to.asset.details);
 
   if ((needToTrust) && !toAssetDetail.isNative()) {
@@ -25,9 +24,13 @@ export default async function generateSwapTRX({ checkout, needToTrust }, forceTr
       }),
     );
   }
-
   const path = checkout.paths
-    .map((i) => getAssetDetails({ issuer: i.asset_issuer, code: i.asset_code }));
+    .map((i) => {
+      if (i.asset_type && i.asset_type === 'native') {
+        return getAssetDetails({ type: 'native' });
+      }
+      return getAssetDetails({ issuer: i.asset_issuer, code: i.asset_code });
+    });
 
   transaction = transaction
     .addOperation(

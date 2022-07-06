@@ -12,8 +12,7 @@ import ColorizedPriceImpact from 'components/complex/LumenSwapSwap/ColorizedPric
 import appConsts from 'appConsts';
 import showSignResponse from 'helpers/showSignResponse';
 import showGenerateTrx from 'helpers/showGenerateTrx';
-import { initializeStore } from 'store';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './styles.module.scss';
 
@@ -22,6 +21,7 @@ const ConfirmSwap = ({ data }) => {
   const [marketPrice, setMarketPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const storeData = useSelector((state) => state);
 
   useEffect(() => {
     setLoading(true);
@@ -69,8 +69,6 @@ const ConfirmSwap = ({ data }) => {
 
   async function SwapTheTokens() {
     function func() {
-      const store = initializeStore();
-      const storeData = store.getState();
       const found = storeData.userBalance.find((i) => isSameAsset(i.asset, toAssetDetails));
       return generateSwapTRX({
         checkout: {
