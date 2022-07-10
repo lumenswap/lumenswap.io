@@ -39,6 +39,11 @@ async function fullRabetLogin(dispatch) {
   } catch (e) {}
 }
 
+const defaultTokensCache = {
+  value: [],
+  lastUpdated: new Date().valueOf() - process.env.REACT_APP_ASSET_CACHE_INTERVAL,
+};
+
 function MyApp({ Component, pageProps }) {
   const updateUserDetailIntervalRef = useRef(null);
   const xlmPriceIntervalRef = useRef(null);
@@ -111,8 +116,17 @@ function MyApp({ Component, pageProps }) {
 MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async () => {
   if (typeof window === 'undefined') {
     try {
-      const assets = await getDefaultAssets();
-      store.dispatch(setDefaultTokens(assets));
+      if (
+        new Date().valueOf() - defaultTokensCache.lastUpdated
+      > process.env.REACT_APP_ASSET_CACHE_INTERVAL
+      ) {
+        const assets = await getDefaultAssets();
+        defaultTokensCache.value = assets;
+        defaultTokensCache.lastUpdated = new Date().valueOf();
+        store.dispatch(setDefaultTokens(assets));
+      } else {
+        store.dispatch(setDefaultTokens(defaultTokensCache.value));
+      }
     } catch (err) {
       throw new Error(err);
     }
