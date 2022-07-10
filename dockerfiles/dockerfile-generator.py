@@ -38,6 +38,7 @@ for app in applicationList:
         "ENV REACT_APP_OPTIMIZELY_SDK_KEY=TFYHrVWmbxv3ED4MtVcfF\n"
         "ENV REACT_APP_PRODUCT_ENV=production\n"
         "ENV REACT_APP_L_ISSUER=GCT6JZXDCXW5LNVYE6KZP2TSNTDPNGOXPKJW45O7ROC5NSA3O57C6K3X\n"
+        "ENV REACT_APP_ASSET_CACHE_INTERVAL=300000\n"
         "\n"
         "RUN npm run build\n"
         'CMD ["npm", "run", "start"]'
