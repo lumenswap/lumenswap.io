@@ -16,10 +16,10 @@ import styles from './styles.module.scss';
 
 const PlaceNFTOrder = ({ lusiAssetCode, afterPlace }) => {
   const dispatch = useDispatch();
-  const userNLSPBalance = useSelector((state) => state.userBalance)
-    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(extractTokenFromCode('NLSP'))));
-  const userAddress = useSelector((state) => state.user.detail.address);
   const defaultTokens = useDefaultTokens();
+  const userNLSPBalance = useSelector((state) => state.userBalance)
+    .find((balance) => isSameAsset(getAssetDetails(balance.asset), getAssetDetails(extractTokenFromCode('NLSP', defaultTokens))));
+  const userAddress = useSelector((state) => state.user.detail.address);
 
   const {
     control, handleSubmit, formState, trigger, getValues,
