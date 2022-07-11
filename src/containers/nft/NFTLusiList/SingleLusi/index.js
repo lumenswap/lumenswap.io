@@ -293,7 +293,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
             content: <PlaceNFTOrder
               lusiAssetCode={data.assetCode}
               afterPlace={() => loadAllRelatedDataToLusi(data,
-                setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice)}
+                setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice, defaultTokens)}
             />,
           }),
         );
@@ -306,7 +306,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
               mode={buttonState}
               offerId={offerIdToUpdate}
               afterSetPrice={() => loadAllRelatedDataToLusi(data,
-                setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice)}
+                setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice, defaultTokens)}
             />,
           }),
         );
@@ -319,7 +319,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
               mode={buttonState}
               offerId={offerIdToUpdate}
               afterSetPrice={() => loadAllRelatedDataToLusi(data,
-                setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice)}
+                setLusiOffers, lusiId, setOwnerInfoData, setLusiPrice, defaultTokens)}
             />,
           }),
         );
