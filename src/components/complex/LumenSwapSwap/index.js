@@ -159,7 +159,7 @@ const LumenSwapSwap = ({
         )
           .then((res) => {
             setEstimatedPrice(amount);
-            setPaths(res.path);
+            setPaths(res.path.reverse());
             setValue('from', {
               ...formValues.from,
               amount: res.minAmount,
