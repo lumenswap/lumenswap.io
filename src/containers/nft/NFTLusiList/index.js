@@ -10,10 +10,10 @@ import NFTHeader from 'containers/nft/NFTHeader';
 import AllLusiData from './allLusiData';
 import styles from './styles.module.scss';
 
-const Container = ({ children }) => (
+export const NFTListContainer = ({ children, title }) => (
   <div className="container-fluid">
     <Head>
-      <title>All Lusi’s | Lumenswap</title>
+      <title>{title}</title>
     </Head>
     <NFTHeader />
     {children}
@@ -41,11 +41,11 @@ const NftPage = () => {
 
   if (!allLusi) {
     return (
-      <Container>
+      <NFTListContainer title="All Lusi’s | Lumenswap">
         <div className={styles['loading-container']}>
           <Loading size={48} />
         </div>
-      </Container>
+      </NFTListContainer>
     );
   }
 
@@ -63,7 +63,7 @@ const NftPage = () => {
   }
 
   return (
-    <Container>
+    <NFTListContainer title="All Lusi’s | Lumenswap">
       <ServerSideLoading>
         <div className={classNames('layout main', styles.main)}>
           <div className="row justify-content-center">
@@ -83,7 +83,7 @@ const NftPage = () => {
           </div>
         </div>
       </ServerSideLoading>
-    </Container>
+    </NFTListContainer>
   );
 };
 

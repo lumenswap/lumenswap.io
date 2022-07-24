@@ -9,17 +9,17 @@ const NFTHeader = () => {
   const defaultTokens = useDefaultTokens();
   const leftSideLinks = [
     {
-      name: "All Lusi's",
+      name: 'Collections',
       link: urlMaker.nft.root(),
       disableMainHref: true,
     },
     {
-      name: 'My Lusi',
+      name: 'My items',
       link: urlMaker.nft.myLusi(),
       restricted: true,
     },
     {
-      name: 'My Offers',
+      name: 'My offers',
       link: urlMaker.nft.orders(),
       restricted: true,
     },

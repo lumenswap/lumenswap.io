@@ -1,0 +1,38 @@
+.loading-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  div {
+    margin-top: 320px;
+  }
+}
+
+.main {
+  margin-top: 76px;
+}
+
+.m-t {
+  &-col {
+    margin-top: 24px;
+  }
+  &-row {
+    margin-top: -6px;
+  }
+}
+
+.row {
+  padding-bottom: 79px;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+}
+.col {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--codGray);
+  margin-bottom: 0;
+}
