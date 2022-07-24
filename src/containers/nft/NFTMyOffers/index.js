@@ -109,7 +109,7 @@ const NFTOrder = () => {
   }, [isLogged]);
 
   useEffect(() => {
-    loadOfferData(userAddress, setOrders);
+    loadOfferData(userAddress, setOrders, defaultTokens);
   }, []);
 
   const handleCancelOrder = async (offerId) => {

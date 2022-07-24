@@ -145,6 +145,7 @@ const NFTDetail = ({ id: lusiId, data }) => {
             const offerSellingAsset = getAssetDetails({
               code: offer.selling.asset_code,
               issuer: offer.selling.asset_issuer,
+              type: offer.selling.asset_type,
             });
             if (isSameAsset(offerSellingAsset, currentLusi)) {
               offerFound = offer.id;
