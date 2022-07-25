@@ -3,12 +3,15 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import Loading from 'components/Loading';
 import SelectOption from 'components/SelectOption';
-import fetchAllLusi from 'api/AllLusiAPI';
 import BN from 'helpers/BN';
 import ServerSideLoading from 'components/ServerSideLoading';
 import NFTHeader from 'containers/nft/NFTHeader';
-import AllLusiData from './allLusiData';
+import { getCollectionNfts } from 'api/nft';
+import { useRouter } from 'next/router';
+import Input from 'components/Input';
+import CollectionNftsData from './CollectionNftsData';
 import styles from './styles.module.scss';
+import CollectionDataCard from './CollectionDataCard';
 
 export const NFTListContainer = ({ children, title }) => (
   <div className="container-fluid">
@@ -27,19 +30,25 @@ const dropdownItems = [
   { value: '4', label: 'Number: 108 to 1' },
 ];
 
-const NftPage = () => {
+const NFTCollectionListPage = ({ collectionData, collectionStats }) => {
   const [select, setSelect] = useState(dropdownItems[1]);
-  const [allLusi, setAllLusi] = useState(null);
+  const [collectionNfts, setCollectionNfts] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
-    fetchAllLusi().then((data) => {
-      setAllLusi(data);
+    getCollectionNfts(router.query.collectionId).then((nfts) => {
+      setCollectionNfts(nfts);
     });
   }, []);
 
-  let filteredLusi = allLusi;
+  const handleSearchNfts = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
-  if (!allLusi) {
+  let filteredCollectionNfts = collectionNfts;
+
+  if (!collectionNfts) {
     return (
       <NFTListContainer title="All Lusi’s | Lumenswap">
         <div className={styles['loading-container']}>
@@ -50,26 +59,38 @@ const NftPage = () => {
   }
 
   if (select.value === '1') {
-    filteredLusi = filteredLusi.sort((a, b) => new BN(a.price).comparedTo(b.price));
+    filteredCollectionNfts = filteredCollectionNfts
+      .sort((a, b) => new BN(a.price).comparedTo(b.price));
   }
   if (select.value === '2') {
-    filteredLusi = filteredLusi.sort((a, b) => new BN(b.price).comparedTo(a.price));
+    filteredCollectionNfts = filteredCollectionNfts
+      .sort((a, b) => new BN(b.price).comparedTo(a.price));
   }
   if (select.value === '3') {
-    filteredLusi = filteredLusi.sort((a, b) => new BN(a.number).comparedTo(b.number));
+    filteredCollectionNfts = filteredCollectionNfts
+      .sort((a, b) => new BN(a.number).comparedTo(b.number));
   }
   if (select.value === '4') {
-    filteredLusi = filteredLusi.sort((a, b) => new BN(b.number).comparedTo(a.number));
+    filteredCollectionNfts = filteredCollectionNfts
+      .sort((a, b) => new BN(b.number).comparedTo(a.number));
+  }
+  if (searchQuery && searchQuery !== '') {
+    filteredCollectionNfts = filteredCollectionNfts.filter((nft) => nft.number.toString()
+      .search(searchQuery) !== -1);
   }
 
   return (
-    <NFTListContainer title="All Lusi’s | Lumenswap">
+    <NFTListContainer title="Collection nfts| Lumenswap">
       <ServerSideLoading>
         <div className={classNames('layout main', styles.main)}>
           <div className="row justify-content-center">
             <div className="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-12">
-              <div className="d-flex justify-content-between align-items-center">
-                <h1 className={styles.title}>All Lusi’s</h1>
+              <CollectionDataCard collection={collectionData} collectionStats={collectionStats} />
+              <div className={styles['search-container']}>
+                <Input
+                  onChange={handleSearchNfts}
+                  placeholder="Search by number"
+                />
                 <SelectOption
                   items={dropdownItems}
                   defaultValue={select}
@@ -78,7 +99,7 @@ const NftPage = () => {
                   isSearchable={false}
                 />
               </div>
-              <AllLusiData allLusi={filteredLusi} />
+              <CollectionNftsData collectionNfts={filteredCollectionNfts} />
             </div>
           </div>
         </div>
@@ -87,4 +108,4 @@ const NftPage = () => {
   );
 };
 
-export default NftPage;
+export default NFTCollectionListPage;

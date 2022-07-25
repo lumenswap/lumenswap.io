@@ -1,7 +1,7 @@
 @import "styles/vars";
 
 .card {
-  padding: 10px 6px;
+  padding: 0 6px 0 6px;
   background-color: var(--white);
   border-radius: 4px;
   box-shadow: var(--boxShadow);
@@ -15,7 +15,9 @@
 
 .title {
   font-size: 14px;
-  line-height: 1.43;
+  height: 20px;
+  margin-top: 2px;
+  line-height: 2;
   color: var(--rollingStone);
 }
 
@@ -24,20 +26,31 @@
   justify-content: center;
   border-radius: 4px;
   position: relative;
-  margin: 8px 0;
+  margin: 8px 0 5px 0;
+  img {
+    border-radius: 4px;
+  }
 }
 
 .value {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--codGray);
+  span {
+    font-size: 14px;
+    height: 20px;
+    font-weight: 500;
+    line-height: 1.9;
+    color: var(--codGray);
+  }
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  height: 33px;
+  position: relative;
+  padding-bottom: 13px;
 
   svg {
     width: 12px;
-    height: auto;
+    height: 14px;
     margin-right: 4px;
+    margin-top: 6px;
   }
 }

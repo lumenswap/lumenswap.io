@@ -40,14 +40,14 @@ const LusiThumbnail = ({
             <img
               loading="lazy"
               src={imgSrc}
-              style={{ width: `${dimensions.size - 12}px`, height: `${dimensions.size - 12}px` }}
+              style={{ width: `${dimensions.size - 12}px`, height: `${dimensions.size}px` }}
             />
           </div>
           <div className={styles.value}>
             {!new BN(price).isZero() ? (
               <>
                 <Logo color="#DF4886" />
-                {humanizeAmount(new BN(price).div(10 ** 7).toFixed(7))}
+                <span>{humanizeAmount(new BN(price).div(10 ** 7).toFixed(7))}</span>
               </>
             ) : '- -'}
           </div>

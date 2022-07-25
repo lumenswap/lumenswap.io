@@ -4,7 +4,7 @@ import { getNFTCollections } from 'api/nft';
 import classNames from 'classnames';
 import ServerSideLoading from 'components/ServerSideLoading';
 import styles from './styles.module.scss';
-import { NFTListContainer } from '../NFTLusiList';
+import { NFTListContainer } from '../NFTCollectionList';
 import CollectionCard from './CollectionCard';
 
 function NFTCollectionPage() {
